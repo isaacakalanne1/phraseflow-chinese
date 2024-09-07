@@ -33,7 +33,7 @@ class PhraseViewModel: ObservableObject {
     func loadPhrases() {
         fetchGoogleSheetData { [weak self] fetchedPhrases in
             self?.phrases = fetchedPhrases.shuffled()
-            self?.toLearnPhrases = fetchedPhrases // Initialize with all phrases in "To Learn"
+            self?.toLearnPhrases = fetchedPhrases.shuffled() // Initialize with all phrases in "To Learn"
             self?.currentPhraseIndex = 0
             self?.currentPhrase = self?.learningPhrases.isEmpty == false ? self?.learningPhrases.first : nil
             self?.preloadAudio()
@@ -44,7 +44,7 @@ class PhraseViewModel: ObservableObject {
     private func loadLearningPhrases() {
         if let savedData = UserDefaults.standard.data(forKey: learningKey),
            let savedPhrases = try? JSONDecoder().decode([Phrase].self, from: savedData) {
-            self.learningPhrases = savedPhrases
+            self.learningPhrases = savedPhrases.shuffled()
         }
     }
 

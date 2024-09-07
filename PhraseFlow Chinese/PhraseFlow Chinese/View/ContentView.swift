@@ -36,7 +36,7 @@ struct ContentView: View {
                 Text("Loading phrases...")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if viewModel.learningPhrases.isEmpty {
-                Button("Choose words to learn") {
+                Button("Choose phrases to learn") {
                     showPhrasePicker = true
                 }
                 .padding()
@@ -101,9 +101,12 @@ struct ContentView: View {
                         if viewModel.showCorrectText {
                             Button(action: {
                                 isTextFieldFocused = false
-                                viewModel.loadNextPhrase()
                                 showPinyinAndEnglish = false
                                 isCheckButtonVisible = true
+                                viewModel.loadNextPhrase()
+                                if selectedMode == .listeningMode {
+                                    viewModel.playTextToSpeech()
+                                }
                             }) {
                                 Text("Next")
                                     .font(.title2)
@@ -140,7 +143,7 @@ struct ContentView: View {
                         modeButton("Listening", mode: .listeningMode)
                     }
 
-                    Button("Choose words to learn") {
+                    Button("Choose phrases to learn") {
                         showPhrasePicker = true
                     }
                     .padding()
@@ -164,12 +167,28 @@ struct ContentView: View {
     // Popover Sheet to Select Phrases (Now with a toggle for To Learn and Learning lists)
     @ViewBuilder
     private func phraseSelectionView() -> some View {
-        VStack {
+        VStack(spacing: 0) {
             Text(selectedListMode == .toLearn ? "Tap phrases to learn" : "Tap phrases to stop learning")
                 .font(.headline)
                 .padding()
 
-            // Buttons to toggle between "To Learn" and "Learning" lists
+            // Display the correct list based on the selected mode
+            List {
+                if selectedListMode == .toLearn {
+                    ForEach(viewModel.toLearnPhrases.filter { !viewModel.learningPhrases.contains($0) }, id: \.mandarin) { phrase in
+                        Button(phrase.english) {
+                            viewModel.moveToLearning(phrase: phrase)
+                        }
+                    }
+                } else {
+                    ForEach(viewModel.learningPhrases, id: \.mandarin) { phrase in
+                        Button(phrase.english) {
+                            viewModel.removeFromLearning(phrase: phrase) // Remove from Learning
+                        }
+                    }
+                }
+            }
+
             HStack(spacing: 20) {
                 Button(action: {
                     selectedListMode = .toLearn
@@ -193,33 +212,7 @@ struct ContentView: View {
                         .cornerRadius(10)
                 }
             }
-            .padding(.horizontal)
-
-            // Display the correct list based on the selected mode
-            List {
-                if selectedListMode == .toLearn {
-                    ForEach(viewModel.toLearnPhrases.filter { !viewModel.learningPhrases.contains($0) }, id: \.mandarin) { phrase in
-                        Button(phrase.english) {
-                            viewModel.moveToLearning(phrase: phrase)
-                        }
-                    }
-                } else {
-                    ForEach(viewModel.learningPhrases, id: \.mandarin) { phrase in
-                        Button(phrase.english) {
-                            viewModel.removeFromLearning(phrase: phrase) // Remove from Learning
-                        }
-                    }
-                }
-            }
-
-            // Done button
-            Button("Done") {
-                showPhrasePicker = false
-            }
             .padding()
-            .background(Color.accentColor)
-            .foregroundColor(.white)
-            .cornerRadius(10)
         }
     }
 
