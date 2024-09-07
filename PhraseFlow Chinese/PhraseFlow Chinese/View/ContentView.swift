@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum Mode {
-    case defaultMode
+    case writingMode
     case readingMode
     case listeningMode
 }
@@ -23,7 +23,7 @@ struct ContentView: View {
     @FocusState var isTextFieldFocused
     @State private var showPinyinAndEnglish = false // Control when to show Pinyin and English
     @State private var isCheckButtonVisible = true  // Control the visibility of the "Check" button
-    @State private var selectedMode: Mode = .defaultMode // Track the selected mode
+    @State private var selectedMode: Mode = .readingMode // Track the selected mode
     @State private var showPhrasePicker = false // Control for showing popover
     @State private var selectedListMode: PhraseListMode = .toLearn // Toggle between To Learn and Learning lists
 
@@ -61,23 +61,16 @@ struct ContentView: View {
                 }
                 .padding(.horizontal)
 
-                Group {
-                    if viewModel.isCorrect {
-                        Text("✅ Correct!")
-                            .foregroundColor(.green)
-                    } else {
-                        Text("❌ Incorrect, try again")
-                            .foregroundColor(.red)
-                    }
-                }
-                .padding(.vertical, 10)
-                .opacity(viewModel.showCorrectText && selectedMode != .listeningMode ? 1 : 0)
+                Text(viewModel.isCorrect ? "✅ Correct!" : "❌ Incorrect, try again")
+                    .foregroundColor(viewModel.isCorrect ? .green : .red)
+                    .padding(.vertical, 10)
+                    .opacity(viewModel.showCorrectText && selectedMode == .writingMode ? 1 : 0)
 
                 Spacer()
 
                 // User Input and Interaction Buttons (Check, Next)
                 VStack(spacing: 20) {
-                    if selectedMode != .listeningMode {
+                    if selectedMode == .writingMode {
                         TextField("Enter the Chinese text", text: $viewModel.userInput)
                             .focused($isTextFieldFocused)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -124,7 +117,7 @@ struct ContentView: View {
                                 viewModel.validateInput()
                                 viewModel.playTextToSpeech()
                             }) {
-                                Text("Check")
+                                Text("Reveal")
                                     .font(.title2)
                                     .frame(maxWidth: .infinity)
                                     .padding()
@@ -138,8 +131,8 @@ struct ContentView: View {
 
                     // Mode Buttons at the bottom
                     HStack(spacing: 10) {
-                        modeButton("Default", mode: .defaultMode)
                         modeButton("Reading", mode: .readingMode)
+                        modeButton("Writing", mode: .writingMode)
                         modeButton("Listening", mode: .listeningMode)
                     }
 
@@ -246,7 +239,7 @@ struct ContentView: View {
     // Calculate the offset for the highlighting background based on selected mode
     func modeHighlightingOffset(width: CGFloat) -> CGFloat {
         switch selectedMode {
-        case .defaultMode: return 0
+        case .writingMode: return 0
         case .readingMode: return width
         case .listeningMode: return width * 2
         }
