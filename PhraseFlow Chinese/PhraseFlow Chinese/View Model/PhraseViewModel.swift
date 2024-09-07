@@ -17,25 +17,45 @@ class PhraseViewModel: ObservableObject {
     @Published var showCorrectText = false
 
     private var player: AVAudioPlayer? // Store the AVAudioPlayer as a property
+    private var audioCache: [String: Data] = [:] // In-memory cache for audio data
+    private var currentPhraseIndex: Int = 0 // Track current phrase index
 
-    // Fetch the Google Sheets data and load the first phrase
+    // Fetch the Google Sheets data and preload the first four phrases
     func loadPhrases() {
         fetchGoogleSheetData { [weak self] fetchedPhrases in
-            self?.phrases = fetchedPhrases
-            self?.loadNextPhrase()
+            self?.phrases = fetchedPhrases.shuffled()
+            self?.currentPhraseIndex = 0
+            self?.currentPhrase = self?.phrases.first
+            self?.preloadAudio() // Preload audio for the first four phrases
         }
     }
 
-    // Load a random phrase from the fetched list
-    func loadNextPhrase() {
-        guard !phrases.isEmpty else { return }
-        currentPhrase = phrases.randomElement()
-        userInput = ""
-        showCorrectText = false
+    // Preload the audio for the current phrase and the next three phrases
+    private func preloadAudio() {
+        for i in 0..<4 {
+            let index = (currentPhraseIndex + i) % phrases.count
+            let phrase = phrases[index]
+            if audioCache[phrase.mandarin] == nil {
+                // Fetch audio and cache it
+                fetchAzureTextToSpeech(phrase: phrase.mandarin) { [weak self] audioData in
+                    guard let self = self, let audioData = audioData else { return }
+                    self.audioCache[phrase.mandarin] = audioData
+                }
+            }
+        }
     }
 
+    // Load the next phrase and preload the following phrases
+    func loadNextPhrase() {
+        currentPhraseIndex = (currentPhraseIndex + 1) % phrases.count
+        currentPhrase = phrases[currentPhraseIndex]
+        userInput = ""
+        showCorrectText = false
+        preloadAudio() // Preload audio for the next 3 phrases
+    }
+
+    // Normalize punctuation between English and Chinese
     private func normalizePunctuation(_ text: String) -> String {
-        // Replace English punctuation with Chinese equivalents
         return text
             .replacingOccurrences(of: "?", with: "？")
             .replacingOccurrences(of: "!", with: "！")
@@ -54,12 +74,19 @@ class PhraseViewModel: ObservableObject {
         showCorrectText = true
     }
 
-    // Fetch the audio from Azure Text-to-Speech API and play it
+    // Play audio for the current phrase (fetch from cache or Azure)
     func playTextToSpeech() {
         guard let currentPhrase = currentPhrase else { return }
-        fetchAzureTextToSpeech(phrase: currentPhrase.mandarin) { [weak self] url in
-            if let url = url {
-                self?.playAudio(from: url)
+
+        // Check if audio is already cached
+        if let cachedAudio = audioCache[currentPhrase.mandarin] {
+            playAudio(from: cachedAudio)
+        } else {
+            // Fetch audio from Azure if not cached
+            fetchAzureTextToSpeech(phrase: currentPhrase.mandarin) { [weak self] audioData in
+                guard let self = self, let audioData = audioData else { return }
+                self.audioCache[currentPhrase.mandarin] = audioData
+                self.playAudio(from: audioData)
             }
         }
     }
@@ -67,7 +94,6 @@ class PhraseViewModel: ObservableObject {
     // Function to play the audio directly from data
     private func playAudio(from data: Data) {
         do {
-            // Initialize the AVAudioPlayer and assign it to the player property
             self.player = try AVAudioPlayer(data: data)
             self.player?.prepareToPlay()
             self.player?.play()
@@ -75,7 +101,6 @@ class PhraseViewModel: ObservableObject {
             print("Error playing audio from data: \(error.localizedDescription)")
         }
     }
-
 
     // Fetch data from Google Sheets (simplified)
     private func fetchGoogleSheetData(completion: @escaping ([Phrase]) -> Void) {
@@ -92,6 +117,7 @@ class PhraseViewModel: ObservableObject {
         task.resume()
     }
 
+    // Parse CSV data into an array of phrases
     private func parseCSVData(_ csvString: String) -> [Phrase] {
         let rows = csvString.components(separatedBy: "\n")
         var phrases = [Phrase]()
@@ -106,72 +132,38 @@ class PhraseViewModel: ObservableObject {
         return phrases
     }
 
+    // Azure TTS API call (fetch data directly)
+    private func fetchAzureTextToSpeech(phrase: String, completion: @escaping (Data?) -> Void) {
+        let subscriptionKey = "144bc0cdea4d44e499927e84e795b27a"
+        let region = "eastus"
 
-    // Azure TTS API call (simplified to return Data instead of a file URL)
-        private func fetchAzureTextToSpeech(phrase: String, completion: @escaping (Data?) -> Void) {
-            let subscriptionKey = "144bc0cdea4d44e499927e84e795b27a"
-            let region = "eastus"
+        var request = URLRequest(url: URL(string: "https://\(region).tts.speech.microsoft.com/cognitiveservices/v1")!)
+        request.httpMethod = "POST"
+        request.addValue("application/ssml+xml", forHTTPHeaderField: "Content-Type")
+        request.addValue("riff-24khz-16bit-mono-pcm", forHTTPHeaderField: "X-Microsoft-OutputFormat")
+        request.addValue(subscriptionKey, forHTTPHeaderField: "Ocp-Apim-Subscription-Key")
 
-            var request = URLRequest(url: URL(string: "https://\(region).tts.speech.microsoft.com/cognitiveservices/v1")!)
-            request.httpMethod = "POST"
-            request.addValue("application/ssml+xml", forHTTPHeaderField: "Content-Type")
-            request.addValue("riff-24khz-16bit-mono-pcm", forHTTPHeaderField: "X-Microsoft-OutputFormat")
-            request.addValue("\(subscriptionKey)", forHTTPHeaderField: "Ocp-Apim-Subscription-Key")
+        let ssml = """
+        <speak version='1.0' xml:lang='zh-CN'>
+            <voice name='zh-CN-XiaoxiaoNeural'>
+                \(phrase)
+            </voice>
+        </speak>
+        """
+        request.httpBody = ssml.data(using: .utf8)
 
-            let ssml = """
-            <speak version='1.0' xml:lang='zh-CN'>
-                <voice name='zh-CN-XiaoxiaoNeural'>
-                    \(phrase)
-                </voice>
-            </speak>
-            """
-            request.httpBody = ssml.data(using: .utf8)
-
-            let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                if let data = data, error == nil {
-                    DispatchQueue.main.async {
-                        completion(data)  // Return the audio data directly
-                    }
-                } else {
-                    print("Error fetching audio: \(error?.localizedDescription ?? "Unknown error")")
-                    DispatchQueue.main.async {
-                        completion(nil)
-                    }
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data, error == nil {
+                DispatchQueue.main.async {
+                    completion(data)  // Return the audio data directly
+                }
+            } else {
+                print("Error fetching audio: \(error?.localizedDescription ?? "Unknown error")")
+                DispatchQueue.main.async {
+                    completion(nil)
                 }
             }
-            task.resume()
         }
-
-    // Azure Text-to-Speech API
-//    private func fetchAzureTextToSpeech(phrase: String, completion: @escaping (URL?) -> Void) {
-//        let subscriptionKey = "144bc0cdea4d44e499927e84e795b27a"
-//        let region = "eastus"
-//
-//        var request = URLRequest(url: URL(string: "https://\(region).tts.speech.microsoft.com/cognitiveservices/v1")!)
-//        request.httpMethod = "POST"
-//        request.addValue("application/ssml+xml", forHTTPHeaderField: "Content-Type")
-//        request.addValue("Bearer \(subscriptionKey)", forHTTPHeaderField: "Authorization")
-//
-//        let ssml = """
-//        <speak version='1.0' xml:lang='zh-CN'>
-//            <voice name='zh-CN-XiaoxiaoNeural'>
-//                \(phrase)
-//            </voice>
-//        </speak>
-//        """
-//        request.httpBody = ssml.data(using: .utf8)
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//            if let data = data, error == nil {
-//                let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("speech.wav")
-//                try? data.write(to: tempURL)
-//                DispatchQueue.main.async {
-//                    completion(tempURL)
-//                }
-//            } else {
-//                completion(nil)
-//            }
-//        }
-//        task.resume()
-//    }
+        task.resume()
+    }
 }

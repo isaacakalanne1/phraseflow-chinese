@@ -15,101 +15,110 @@ enum Mode {
 
 struct ContentView: View {
     @StateObject private var viewModel = PhraseViewModel()
+    @FocusState var isTextFieldFocused
     @State private var showPinyinAndEnglish = false // Control when to show Pinyin and English
     @State private var isCheckButtonVisible = true  // Control the visibility of the "Check" button
     @State private var selectedMode: Mode = .defaultMode // Track the selected mode
 
     var body: some View {
-        VStack(spacing: 10) { // Reduced spacing to 10
-            // Mode selection buttons at the top
-            HStack(spacing: 10) {
-                modeButton("Default", mode: .defaultMode)
-                modeButton("Reading", mode: .readingMode)
-                modeButton("Listening", mode: .listeningMode)
-            }
-            .padding(.vertical, 10)
-            .background(GeometryReader { geometry in
-                modeHighlightingBackground(width: geometry.size.width / 3)
-            })
+        VStack(spacing: 20) { // Use spacing to separate elements neatly
 
-            Spacer()
-
+            // Display the Mandarin text and Play button together
             if let currentPhrase = viewModel.currentPhrase {
-                // Display Mandarin text
-                Text(currentPhrase.mandarin)
-                    .font(.largeTitle)
-                    .padding()
-                    .opacity(selectedMode != .listeningMode ? 1 : viewModel.showCorrectText ? 1 : 0)
+                Spacer()
+                VStack(spacing: 10) {
+                    Text(currentPhrase.pinyin)
+                        .font(.title2)
+                        .opacity(showPinyinAndEnglish ? 1 : 0)
 
-                // Pinyin text without fading animation
-                Text(currentPhrase.pinyin)
-                    .font(.title2)
-                    .padding(.bottom)
-                    .opacity(showPinyinAndEnglish ? 1 : 0) // No animation here, only opacity toggle
+                    Text(currentPhrase.mandarin)
+                        .font(.largeTitle)
+                        .opacity(selectedMode != .listeningMode ? 1 : viewModel.showCorrectText ? 1 : 0)
 
-                // English text without fading animation
-                Text(currentPhrase.english)
-                    .font(.title3)
-                    .foregroundColor(.gray)
-                    .padding(.bottom)
-                    .opacity(showPinyinAndEnglish ? 1 : 0) // No animation here, only opacity toggle
-
-                // Conditionally show Play Button and TextField based on the selected mode
-                Button(action: {
-                    viewModel.playTextToSpeech()
-                }) {
-                    Image(systemName: "play.circle")
-                        .font(.system(size: 50))
-                        .padding()
+                    Text(currentPhrase.english)
+                        .font(.title3)
+                        .foregroundColor(.gray)
+                        .opacity(showPinyinAndEnglish ? 1 : 0)
                 }
-                .opacity(selectedMode != .readingMode ? 1 : viewModel.showCorrectText ? 1 : 0)
+                .padding(.horizontal)
 
-                // User Input TextField only for Default and Reading Modes
-                TextField("Enter the Chinese text", text: $viewModel.userInput)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                    .onSubmit {
-                        viewModel.validateInput()
-                        showPinyinAndEnglish = true
-                        isCheckButtonVisible = false
-                    }
-                    .opacity(selectedMode == .listeningMode ? 0 : 1)
-
-                // Feedback for user input validation
                 Group {
                     if viewModel.isCorrect {
                         Text("✅ Correct!")
                             .foregroundColor(.green)
-                            .opacity(selectedMode == .listeningMode ? 0 : 1)
                     } else {
-                        Text("The correct answer is \(currentPhrase.mandarin)")
+                        Text("❌ Incorrect, try again")
                             .foregroundColor(.red)
-                            .opacity(selectedMode == .listeningMode ? 0 : 1)
                     }
                 }
-                .opacity(viewModel.showCorrectText ? 1 : 0)
+                .padding(.vertical, 10)
+                .opacity(viewModel.showCorrectText && selectedMode != .listeningMode ? 1 : 0)
 
-                if viewModel.showCorrectText {
-                    // Next Button
-                    Button(action: {
-                        viewModel.loadNextPhrase()
-                        showPinyinAndEnglish = false
-                        isCheckButtonVisible = true
-                    }) {
-                        Text("Next")
+                Spacer()
+
+                // User Input and Interaction Buttons (Check, Next)
+                VStack(spacing: 20) {
+                    if selectedMode != .listeningMode {
+                        TextField("Enter the Chinese text", text: $viewModel.userInput)
+                            .focused($isTextFieldFocused)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .onSubmit {
+                                viewModel.validateInput()
+                                showPinyinAndEnglish = true
+                                isCheckButtonVisible = false
+                            }
                     }
-                    .padding()
-                } else {
-                    Button(action: {
-                        viewModel.validateInput()
-                        showPinyinAndEnglish = true
-                        isCheckButtonVisible = false
-                    }) {
-                        Text("Check")
+
+                    // Check and Next buttons
+                    HStack {
+                        if selectedMode != .readingMode || (selectedMode == .readingMode && viewModel.showCorrectText) {
+                            Button(action: {
+                                viewModel.playTextToSpeech()
+                            }) {
+                                Image(systemName: "play.circle")
+                                    .font(.system(size: 50))
+                            }
+                        }
+                        if viewModel.showCorrectText {
+                            Button(action: {
+                                viewModel.loadNextPhrase()
+                                showPinyinAndEnglish = false
+                                isCheckButtonVisible = true
+                            }) {
+                                Text("Next")
+                                    .font(.title2)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(Color.blue)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                            }
+                        } else {
+                            Button(action: {
+                                viewModel.validateInput()
+                                showPinyinAndEnglish = true
+                                isCheckButtonVisible = false
+                            }) {
+                                Text("Check")
+                                    .font(.title2)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(Color.blue)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                            }
+                            .opacity(isCheckButtonVisible ? 1 : 0)
+                        }
                     }
-                    .padding()
-                    .opacity(isCheckButtonVisible ? 1 : 0)
+
+                    // Mode Buttons at the bottom
+                    HStack(spacing: 10) {
+                        modeButton("Default", mode: .defaultMode)
+                        modeButton("Reading", mode: .readingMode)
+                        modeButton("Listening", mode: .listeningMode)
+                    }
                 }
+                .padding(.horizontal)
             } else {
                 Text("Loading phrases...")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -127,9 +136,12 @@ struct ContentView: View {
             }
         }) {
             Text(text)
-                .font(.headline)
+                .font(.body)
                 .foregroundColor(selectedMode == mode ? .white : .primary)
                 .frame(maxWidth: .infinity)
+                .padding()
+                .background(selectedMode == mode ? Color.blue : Color.gray.opacity(0.3))
+                .cornerRadius(10)
         }
     }
 
@@ -138,7 +150,7 @@ struct ContentView: View {
     func modeHighlightingBackground(width: CGFloat) -> some View {
         RoundedRectangle(cornerRadius: 10)
             .fill(Color.blue)
-            .frame(width: width) // Adjust width and height for aesthetics
+            .frame(width: width)
             .offset(x: modeHighlightingOffset(width: width), y: 0)
             .animation(.easeInOut, value: selectedMode)
     }
