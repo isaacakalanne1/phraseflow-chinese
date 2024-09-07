@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Phrase {
+struct Phrase: Codable, Equatable {
     let mandarin: String
     let pinyin: String
     let english: String

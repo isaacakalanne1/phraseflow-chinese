@@ -12,6 +12,8 @@ import Combine
 class PhraseViewModel: ObservableObject {
     @Published var phrases = [Phrase]()
     @Published var currentPhrase: Phrase?
+    @Published var toLearnPhrases = [Phrase]() // Phrases to learn
+    @Published var learningPhrases = [Phrase]() // Phrases currently being learned
     @Published var userInput = ""
     @Published var isCorrect = false
     @Published var showCorrectText = false
@@ -20,23 +22,84 @@ class PhraseViewModel: ObservableObject {
     private var audioCache: [String: Data] = [:] // In-memory cache for audio data
     private var currentPhraseIndex: Int = 0 // Track current phrase index
 
-    // Fetch the Google Sheets data and preload the first four phrases
+    private let learningKey = "learningPhrases"
+
+    init() {
+        loadLearningPhrases() // Load learning phrases from UserDefaults
+        loadPhrases()
+    }
+
+    // Load all phrases and initialize toLearnPhrases
     func loadPhrases() {
         fetchGoogleSheetData { [weak self] fetchedPhrases in
             self?.phrases = fetchedPhrases.shuffled()
+            self?.toLearnPhrases = fetchedPhrases // Initialize with all phrases in "To Learn"
             self?.currentPhraseIndex = 0
-            self?.currentPhrase = self?.phrases.first
-            self?.preloadAudio() // Preload audio for the first four phrases
+            self?.currentPhrase = self?.learningPhrases.isEmpty == false ? self?.learningPhrases.first : nil
+            self?.preloadAudio()
         }
     }
 
-    // Preload the audio for the current phrase and the next three phrases
+    // Load learning phrases from UserDefaults
+    private func loadLearningPhrases() {
+        if let savedData = UserDefaults.standard.data(forKey: learningKey),
+           let savedPhrases = try? JSONDecoder().decode([Phrase].self, from: savedData) {
+            self.learningPhrases = savedPhrases
+        }
+    }
+
+    // Save learning phrases to UserDefaults
+    private func saveLearningPhrases() {
+        if let encodedData = try? JSONEncoder().encode(learningPhrases) {
+            UserDefaults.standard.set(encodedData, forKey: learningKey)
+        }
+    }
+
+    // Clear the saved learning phrases from UserDefaults
+    func clearLearningPhrases() {
+        UserDefaults.standard.removeObject(forKey: learningKey)
+        learningPhrases.removeAll() // Also clear the current in-memory learning list
+    }
+
+    // Move phrase to the "Learning" list
+    func moveToLearning(phrase: Phrase) {
+        toLearnPhrases.removeAll { $0 == phrase }
+        learningPhrases.append(phrase)
+        saveLearningPhrases() // Save to UserDefaults
+    }
+
+    // Remove a phrase from the Learning list and move it back to To Learn
+    func removeFromLearning(phrase: Phrase) {
+        learningPhrases.removeAll { $0 == phrase }
+        toLearnPhrases.append(phrase)
+        saveLearningPhrases() // Save the updated learning phrases to UserDefaults
+    }
+
+    // Load next phrase from the learningPhrases list
+    func loadNextPhrase() {
+        // Ensure there are phrases in the learning list
+        guard !learningPhrases.isEmpty else {
+            return
+        }
+
+        currentPhraseIndex = (currentPhraseIndex + 1) % learningPhrases.count
+        currentPhrase = learningPhrases[currentPhraseIndex]
+        userInput = ""
+        showCorrectText = false
+        preloadAudio() // Preload audio for the next 3 phrases
+    }
+
+
     private func preloadAudio() {
+        // Check if learningPhrases is not empty before proceeding
+        guard !learningPhrases.isEmpty else {
+            return
+        }
+
         for i in 0..<4 {
-            let index = (currentPhraseIndex + i) % phrases.count
-            let phrase = phrases[index]
+            let index = (currentPhraseIndex + i) % learningPhrases.count
+            let phrase = learningPhrases[index]
             if audioCache[phrase.mandarin] == nil {
-                // Fetch audio and cache it
                 fetchAzureTextToSpeech(phrase: phrase.mandarin) { [weak self] audioData in
                     guard let self = self, let audioData = audioData else { return }
                     self.audioCache[phrase.mandarin] = audioData
@@ -45,14 +108,6 @@ class PhraseViewModel: ObservableObject {
         }
     }
 
-    // Load the next phrase and preload the following phrases
-    func loadNextPhrase() {
-        currentPhraseIndex = (currentPhraseIndex + 1) % phrases.count
-        currentPhrase = phrases[currentPhraseIndex]
-        userInput = ""
-        showCorrectText = false
-        preloadAudio() // Preload audio for the next 3 phrases
-    }
 
     // Normalize punctuation between English and Chinese
     private func normalizePunctuation(_ text: String) -> String {

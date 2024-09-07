@@ -13,18 +13,37 @@ enum Mode {
     case listeningMode
 }
 
+enum PhraseListMode {
+    case toLearn
+    case learning
+}
+
 struct ContentView: View {
     @StateObject private var viewModel = PhraseViewModel()
     @FocusState var isTextFieldFocused
     @State private var showPinyinAndEnglish = false // Control when to show Pinyin and English
     @State private var isCheckButtonVisible = true  // Control the visibility of the "Check" button
     @State private var selectedMode: Mode = .defaultMode // Track the selected mode
+    @State private var showPhrasePicker = false // Control for showing popover
+    @State private var selectedListMode: PhraseListMode = .toLearn // Toggle between To Learn and Learning lists
+
 
     var body: some View {
         VStack(spacing: 20) { // Use spacing to separate elements neatly
 
             // Display the Mandarin text and Play button together
-            if let currentPhrase = viewModel.currentPhrase {
+            if viewModel.phrases.isEmpty {
+                Text("Loading phrases...")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else if viewModel.learningPhrases.isEmpty {
+                Button("Choose words to learn") {
+                    showPhrasePicker = true
+                }
+                .padding()
+                .background(Color.accentColor)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+            } else if let currentPhrase = viewModel.currentPhrase {
                 Spacer()
                 VStack(spacing: 10) {
                     Text(currentPhrase.pinyin)
@@ -120,15 +139,88 @@ struct ContentView: View {
                         modeButton("Reading", mode: .readingMode)
                         modeButton("Listening", mode: .listeningMode)
                     }
+
+                    Button("Choose words to learn") {
+                        showPhrasePicker = true
+                    }
+                    .padding()
+                    .background(Color.accentColor)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+
                 }
                 .padding(.horizontal)
             } else {
-                Text("Loading phrases...")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+
             }
         }
         .onAppear(perform: viewModel.loadPhrases)
         .padding(10)
+        .sheet(isPresented: $showPhrasePicker) {
+            phraseSelectionView()
+        }
+    }
+
+    // Popover Sheet to Select Phrases (Now with a toggle for To Learn and Learning lists)
+    @ViewBuilder
+    private func phraseSelectionView() -> some View {
+        VStack {
+            Text(selectedListMode == .toLearn ? "Tap phrases to learn" : "Tap phrases to stop learning")
+                .font(.headline)
+                .padding()
+
+            // Buttons to toggle between "To Learn" and "Learning" lists
+            HStack(spacing: 20) {
+                Button(action: {
+                    selectedListMode = .toLearn
+                }) {
+                    Text("To Learn")
+                        .foregroundColor(selectedListMode == .toLearn ? .white : .primary)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(selectedListMode == .toLearn ? Color.accentColor : Color.gray.opacity(0.3))
+                        .cornerRadius(10)
+                }
+
+                Button(action: {
+                    selectedListMode = .learning
+                }) {
+                    Text("Learning")
+                        .foregroundColor(selectedListMode == .learning ? .white : .primary)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(selectedListMode == .learning ? Color.accentColor : Color.gray.opacity(0.3))
+                        .cornerRadius(10)
+                }
+            }
+            .padding(.horizontal)
+
+            // Display the correct list based on the selected mode
+            List {
+                if selectedListMode == .toLearn {
+                    ForEach(viewModel.toLearnPhrases.filter { !viewModel.learningPhrases.contains($0) }, id: \.mandarin) { phrase in
+                        Button(phrase.english) {
+                            viewModel.moveToLearning(phrase: phrase)
+                        }
+                    }
+                } else {
+                    ForEach(viewModel.learningPhrases, id: \.mandarin) { phrase in
+                        Button(phrase.english) {
+                            viewModel.removeFromLearning(phrase: phrase) // Remove from Learning
+                        }
+                    }
+                }
+            }
+
+            // Done button
+            Button("Done") {
+                showPhrasePicker = false
+            }
+            .padding()
+            .background(Color.accentColor)
+            .foregroundColor(.white)
+            .cornerRadius(10)
+        }
     }
 
     // Helper function to create mode selection buttons
