@@ -81,6 +81,7 @@ struct ContentView: View {
                         }
                         if viewModel.showCorrectText {
                             Button(action: {
+                                isTextFieldFocused = false
                                 viewModel.loadNextPhrase()
                                 showPinyinAndEnglish = false
                                 isCheckButtonVisible = true
@@ -89,21 +90,23 @@ struct ContentView: View {
                                     .font(.title2)
                                     .frame(maxWidth: .infinity)
                                     .padding()
-                                    .background(Color.blue)
+                                    .background(Color.accentColor)
                                     .foregroundColor(.white)
                                     .cornerRadius(10)
                             }
                         } else {
                             Button(action: {
-                                viewModel.validateInput()
+                                isTextFieldFocused = false
                                 showPinyinAndEnglish = true
                                 isCheckButtonVisible = false
+                                viewModel.validateInput()
+                                viewModel.playTextToSpeech()
                             }) {
                                 Text("Check")
                                     .font(.title2)
                                     .frame(maxWidth: .infinity)
                                     .padding()
-                                    .background(Color.blue)
+                                    .background(Color.accentColor)
                                     .foregroundColor(.white)
                                     .cornerRadius(10)
                             }
@@ -140,7 +143,7 @@ struct ContentView: View {
                 .foregroundColor(selectedMode == mode ? .white : .primary)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(selectedMode == mode ? Color.blue : Color.gray.opacity(0.3))
+                .background(selectedMode == mode ? Color.accentColor : Color.gray.opacity(0.3))
                 .cornerRadius(10)
         }
     }
@@ -149,7 +152,7 @@ struct ContentView: View {
     @ViewBuilder
     func modeHighlightingBackground(width: CGFloat) -> some View {
         RoundedRectangle(cornerRadius: 10)
-            .fill(Color.blue)
+            .fill(Color.accentColor)
             .frame(width: width)
             .offset(x: modeHighlightingOffset(width: width), y: 0)
             .animation(.easeInOut, value: selectedMode)

@@ -117,7 +117,6 @@ class PhraseViewModel: ObservableObject {
         task.resume()
     }
 
-    // Parse CSV data into an array of phrases
     private func parseCSVData(_ csvString: String) -> [Phrase] {
         let rows = csvString.components(separatedBy: "\n")
         var phrases = [Phrase]()
@@ -125,12 +124,16 @@ class PhraseViewModel: ObservableObject {
         for row in rows {
             let columns = row.components(separatedBy: ",")
             if columns.count == 3 {
-                let phrase = Phrase(mandarin: columns[0], pinyin: columns[1], english: columns[2])
+                let mandarin = columns[0]
+                let pinyin = columns[1]
+                let english = columns[2].trimmingCharacters(in: .whitespacesAndNewlines)
+                let phrase = Phrase(mandarin: mandarin, pinyin: pinyin, english: english)
                 phrases.append(phrase)
             }
         }
         return phrases
     }
+
 
     // Azure TTS API call (fetch data directly)
     private func fetchAzureTextToSpeech(phrase: String, completion: @escaping (Data?) -> Void) {
