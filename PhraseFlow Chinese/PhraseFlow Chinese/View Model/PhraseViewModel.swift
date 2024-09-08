@@ -10,10 +10,19 @@ import AVFoundation
 import Combine
 
 class PhraseViewModel: ObservableObject {
-    @Published var phrases = [Phrase]()
+    @Published var phrases = [Phrase]() // All phrases (short + medium)
+    @Published var shortPhrases = [Phrase]() // Short phrases only
+    @Published var mediumPhrases = [Phrase]() // Medium phrases only
+
+    // Computed property to get all learning phrases (short + medium)
+    var allLearningPhrases: [Phrase] {
+        return learningShortPhrases + learningMediumPhrases
+    }
+
+    @Published var learningShortPhrases = [Phrase]() // Short phrases being learned
+    @Published var learningMediumPhrases = [Phrase]()
     @Published var currentPhrase: Phrase?
-    @Published var toLearnPhrases = [Phrase]() // Phrases to learn
-    @Published var learningPhrases = [Phrase]() // Phrases currently being learned
+    @Published var toLearnPhrases = [Phrase]() // Phrases to learn (short + medium)
     @Published var userInput = ""
     @Published var isCorrect = false
     @Published var showCorrectText = false
@@ -22,65 +31,92 @@ class PhraseViewModel: ObservableObject {
     private var audioCache: [String: Data] = [:] // In-memory cache for audio data
     private var currentPhraseIndex: Int = 0 // Track current phrase index
 
-    private let learningKey = "learningPhrases"
+    private let learningShortKey = "learningShortPhrases"
+        private let learningMediumKey = "learningMediumPhrases"
 
     init() {
+        loadPhrasesOnAppLaunch() // Load both short and medium phrases
         loadLearningPhrases() // Load learning phrases from UserDefaults
-        loadPhrases(gid: "0")
+        loadNextPhrase()
     }
 
-    // Load all phrases and initialize toLearnPhrases
-    func loadPhrases(gid: String) {
-        fetchGoogleSheetData(gid: gid) { [weak self] fetchedPhrases in
-            self?.phrases = fetchedPhrases.shuffled()
-            self?.toLearnPhrases = fetchedPhrases.shuffled() // Initialize with all phrases in "To Learn"
-            self?.currentPhraseIndex = 0
-            self?.currentPhrase = self?.learningPhrases.isEmpty == false ? self?.learningPhrases.first : nil
-            self?.preloadAudio()
+    // Load short and medium phrases on app launch
+    func loadPhrasesOnAppLaunch() {
+        // Load short phrases
+        fetchGoogleSheetData(gid: "0") { [weak self] fetchedShortPhrases in
+            self?.shortPhrases = fetchedShortPhrases.shuffled()
+            self?.phrases.append(contentsOf: fetchedShortPhrases) // Add to the main phrases list
+            self?.toLearnPhrases.append(contentsOf: fetchedShortPhrases) // Add to learnable phrases
+        }
+
+        // Load medium phrases
+        fetchGoogleSheetData(gid: "2033303776") { [weak self] fetchedMediumPhrases in
+            self?.mediumPhrases = fetchedMediumPhrases.shuffled()
+            self?.phrases.append(contentsOf: fetchedMediumPhrases) // Add to the main phrases list
+            self?.toLearnPhrases.append(contentsOf: fetchedMediumPhrases) // Add to learnable phrases
         }
     }
 
-    // Load learning phrases from UserDefaults
     private func loadLearningPhrases() {
-        if let savedData = UserDefaults.standard.data(forKey: learningKey),
-           let savedPhrases = try? JSONDecoder().decode([Phrase].self, from: savedData) {
-            self.learningPhrases = savedPhrases.shuffled()
+        if let savedShortData = UserDefaults.standard.data(forKey: learningShortKey),
+           let savedShortPhrases = try? JSONDecoder().decode([Phrase].self, from: savedShortData) {
+            self.learningShortPhrases = savedShortPhrases.shuffled()
+        }
+
+        if let savedMediumData = UserDefaults.standard.data(forKey: learningMediumKey),
+           let savedMediumPhrases = try? JSONDecoder().decode([Phrase].self, from: savedMediumData) {
+            self.learningMediumPhrases = savedMediumPhrases.shuffled()
         }
     }
 
     // Save learning phrases to UserDefaults
     private func saveLearningPhrases() {
-        if let encodedData = try? JSONEncoder().encode(learningPhrases) {
-            UserDefaults.standard.set(encodedData, forKey: learningKey)
+        if let encodedShortData = try? JSONEncoder().encode(learningShortPhrases) {
+            UserDefaults.standard.set(encodedShortData, forKey: learningShortKey)
+        }
+
+        if let encodedMediumData = try? JSONEncoder().encode(learningMediumPhrases) {
+            UserDefaults.standard.set(encodedMediumData, forKey: learningMediumKey)
         }
     }
 
     // Clear the saved learning phrases from UserDefaults
     func clearLearningPhrases() {
-        UserDefaults.standard.removeObject(forKey: learningKey)
-        learningPhrases.removeAll() // Also clear the current in-memory learning list
+        UserDefaults.standard.removeObject(forKey: learningShortKey)
+        UserDefaults.standard.removeObject(forKey: learningMediumKey)
+        learningShortPhrases.removeAll() // Also clear the current in-memory learning list
+        learningMediumPhrases.removeAll() // Also clear the current in-memory learning list
     }
 
-    // Move phrase to the "Learning" list
-    func moveToLearning(phrase: Phrase) {
-        toLearnPhrases.removeAll { $0 == phrase }
-        learningPhrases.append(phrase)
+    // Move a short phrase to the learning list
+    func moveToLearning(phrase: Phrase, category: PhraseCategory) {
+        if category == .short {
+            shortPhrases.removeAll { $0 == phrase }
+            learningShortPhrases.append(phrase)
+        } else {
+            mediumPhrases.removeAll { $0 == phrase }
+            learningMediumPhrases.append(phrase)
+        }
         saveLearningPhrases() // Save to UserDefaults
+        loadNextPhrase()
     }
 
-    // Remove a phrase from the Learning list and move it back to To Learn
-    func removeFromLearning(phrase: Phrase) {
-        learningPhrases.removeAll { $0 == phrase }
-        toLearnPhrases.append(phrase)
+    // Remove a phrase from the learning list and move it back to To Learn
+    func removeFromLearning(phrase: Phrase, category: PhraseCategory) {
+        if category == .short {
+            learningShortPhrases.removeAll { $0 == phrase }
+            shortPhrases.append(phrase)
+        } else {
+            learningMediumPhrases.removeAll { $0 == phrase }
+            mediumPhrases.append(phrase)
+        }
         saveLearningPhrases() // Save the updated learning phrases to UserDefaults
     }
 
-    // Load next phrase from the learningPhrases list
+    // Load next phrase from the allLearningPhrases list
     func loadNextPhrase() {
-        // Ensure there are phrases in the learning list
-        guard !learningPhrases.isEmpty else {
-            return
-        }
+        let learningPhrases = allLearningPhrases
+        guard !learningPhrases.isEmpty else { return }
 
         currentPhraseIndex = (currentPhraseIndex + 1) % learningPhrases.count
         currentPhrase = learningPhrases[currentPhraseIndex]
@@ -89,12 +125,10 @@ class PhraseViewModel: ObservableObject {
         preloadAudio() // Preload audio for the next 3 phrases
     }
 
-
+    // Preload audio for the next 3 phrases in the learningPhrases list
     private func preloadAudio() {
-        // Check if learningPhrases is not empty before proceeding
-        guard !learningPhrases.isEmpty else {
-            return
-        }
+        let learningPhrases = allLearningPhrases
+        guard !learningPhrases.isEmpty else { return }
 
         for i in 0..<4 {
             let index = (currentPhraseIndex + i) % learningPhrases.count
@@ -112,10 +146,10 @@ class PhraseViewModel: ObservableObject {
     // Normalize punctuation between English and Chinese
     private func normalizePunctuation(_ text: String) -> String {
         return text
-            .replacingOccurrences(of: "?", with: "？")
-            .replacingOccurrences(of: "!", with: "！")
-            .replacingOccurrences(of: ".", with: "。")
-            .replacingOccurrences(of: ",", with: "，")
+            .replacingOccurrences(of: "?", with: "")
+            .replacingOccurrences(of: "!", with: "")
+            .replacingOccurrences(of: ".", with: "")
+            .replacingOccurrences(of: ",", with: "")
     }
 
     // Validate user input with normalized punctuation
@@ -172,21 +206,7 @@ class PhraseViewModel: ObservableObject {
         task.resume()
     }
 
-    // Fetch data from Google Sheets (simplified)
-    private func fetchGoogleSheetData(completion: @escaping ([Phrase]) -> Void) {
-        let sheetURL = URL(string: "https://docs.google.com/spreadsheets/d/19B3xWuRrTMfpva_IJAyRqGN7Lj3aKlZkZW1N7TwesAE/export?format=csv&gid=2033303776")!
-
-        let task = URLSession.shared.dataTask(with: sheetURL) { data, response, error in
-            if let data = data, let csvString = String(data: data, encoding: .utf8) {
-                let phrases = self.parseCSVData(csvString)
-                DispatchQueue.main.async {
-                    completion(phrases)
-                }
-            }
-        }
-        task.resume()
-    }
-
+    // Parse CSV data into phrases
     private func parseCSVData(_ csvString: String) -> [Phrase] {
         let rows = csvString.components(separatedBy: "\n")
         var phrases = [Phrase]()
@@ -203,7 +223,6 @@ class PhraseViewModel: ObservableObject {
         }
         return phrases
     }
-
 
     // Azure TTS API call (fetch data directly)
     private func fetchAzureTextToSpeech(phrase: String, completion: @escaping (Data?) -> Void) {

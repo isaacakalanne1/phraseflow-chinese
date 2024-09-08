@@ -40,7 +40,7 @@ struct ContentView: View {
             if viewModel.phrases.isEmpty {
                 Text("Loading phrases...")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else if viewModel.learningPhrases.isEmpty {
+            } else if viewModel.allLearningPhrases.isEmpty {
                 Button("Choose phrases to learn") {
                     showPhrasePicker = true
                 }
@@ -102,7 +102,12 @@ struct ContentView: View {
                                 showPinyinAndEnglish = false
                                 isCheckButtonVisible = true
                                 viewModel.loadNextPhrase()
-                                if selectedMode == .listeningMode {
+                                switch selectedMode {
+                                case .writingMode:
+                                    isTextFieldFocused = true
+                                case .readingMode:
+                                    break
+                                case .listeningMode:
                                     viewModel.playTextToSpeech()
                                 }
                             }) {
@@ -195,20 +200,16 @@ struct ContentView: View {
 
     @State private var selectedPhraseCategory: PhraseCategory? = nil
 
-    // Function to load phrases based on the selected category
+    // Update loadPhrasesForSelectedCategory to use local memory instead of fetching from Google Sheets
     private func loadPhrasesForSelectedCategory(_ category: PhraseCategory) {
-        let gid: String
         switch category {
         case .short:
-            gid = "0" // Short phrases GID
+            viewModel.toLearnPhrases = viewModel.shortPhrases
         case .medium:
-            gid = "2033303776" // Replace with actual GID for medium phrases
+            viewModel.toLearnPhrases = viewModel.mediumPhrases
         }
 
-        viewModel.loadPhrases(gid: gid)
-//        viewModel.fetchGoogleSheetData(gid: gid) { phrases in
-//            viewModel.toLearnPhrases = phrases
-//        }
+        // No need for network requests; phrases are already in memory
     }
 
     // Helper function to create mode selection buttons
@@ -216,6 +217,9 @@ struct ContentView: View {
         Button(action: {
             withAnimation(.easeInOut) {
                 selectedMode = mode
+                if mode == .writingMode {
+                    isTextFieldFocused = true
+                }
             }
         }) {
             Text(text)
@@ -263,17 +267,17 @@ struct PhraseListView: View {
             // List of phrases
             List {
                 if selectedListMode == .toLearn {
-                    // Filter out phrases that are already in the Learning list
-                    ForEach(viewModel.toLearnPhrases.filter { !viewModel.learningPhrases.contains($0) }, id: \.mandarin) { phrase in
+                    let phrasesToDisplay = category == .short ? viewModel.shortPhrases : viewModel.mediumPhrases
+                    ForEach(phrasesToDisplay.filter { !viewModel.allLearningPhrases.contains($0) }, id: \.mandarin) { phrase in
                         Button(phrase.english) {
-                            viewModel.moveToLearning(phrase: phrase)
+                            viewModel.moveToLearning(phrase: phrase, category: category)
                         }
                     }
                 } else {
-                    // Display the Learning list
-                    ForEach(viewModel.learningPhrases, id: \.mandarin) { phrase in
+                    let learningPhrasesToDisplay = category == .short ? viewModel.learningShortPhrases : viewModel.learningMediumPhrases
+                    ForEach(learningPhrasesToDisplay, id: \.mandarin) { phrase in
                         Button(phrase.english) {
-                            viewModel.removeFromLearning(phrase: phrase)
+                            viewModel.removeFromLearning(phrase: phrase, category: category)
                         }
                     }
                 }
@@ -307,9 +311,6 @@ struct PhraseListView: View {
             }
             .padding()
         }
-        .onAppear {
-            loadPhrasesForSelectedCategory(category)
-        }
     }
 
     private var categoryTitle: String {
@@ -318,20 +319,4 @@ struct PhraseListView: View {
         case .medium: return "Medium Phrases"
         }
     }
-
-    private func loadPhrasesForSelectedCategory(_ category: PhraseCategory) {
-        let gid: String
-        switch category {
-        case .short:
-            gid = "0" // Short phrases GID
-        case .medium:
-            gid = "2033303776" // Replace with actual GID for medium phrases
-        }
-
-        viewModel.loadPhrases(gid: gid)
-//        viewModel.fetchGoogleSheetData(gid: gid) { phrases in
-//            viewModel.toLearnPhrases = phrases
-//        }
-    }
 }
-
