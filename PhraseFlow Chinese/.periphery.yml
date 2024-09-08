@@ -1,0 +1,7 @@
+project: PhraseFlow Chinese.xcodeproj
+retain_objc_accessible: true
+retain_public: true
+schemes:
+- PhraseFlow Chinese
+targets:
+- PhraseFlow Chinese
