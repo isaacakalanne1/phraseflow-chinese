@@ -13,14 +13,12 @@ struct ContentView: View {
     @State private var showPinyinAndEnglish = false // Control when to show Pinyin and English
     @State private var isCheckButtonVisible = true  // Control the visibility of the "Check" button
     @State private var selectedMode: Mode = .readingMode // Track the selected mode
-    @State private var showPhrasePicker = false // Control for showing popover
-    @State private var selectedListMode: PhraseListMode = .toLearn // Toggle between To Learn and Learning lists
-
+    @State private var showPhrasePicker = false // Control for showing phrase picker
+    @State private var showSettings = false // Control for showing settings sheet
 
     var body: some View {
-        VStack(spacing: 20) { // Use spacing to separate elements neatly
-
-            // Display the Mandarin text and Play button together
+        VStack(spacing: 20) {
+            // Display content or loading
             if viewModel.phrases.isEmpty {
                 Text("Loading phrases...")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -33,6 +31,7 @@ struct ContentView: View {
                 .foregroundColor(.white)
                 .cornerRadius(10)
             } else if let currentPhrase = viewModel.currentPhrase {
+                // Display Mandarin text and user interaction buttons
                 Spacer()
                 VStack(spacing: 10) {
                     Text(currentPhrase.pinyin)
@@ -57,7 +56,7 @@ struct ContentView: View {
 
                 Spacer()
 
-                // User Input and Interaction Buttons (Check, Next)
+                // User input and interaction buttons (Check, Next)
                 VStack(spacing: 20) {
                     if selectedMode == .writingMode {
                         TextField("Enter the Chinese text", text: $viewModel.userInput)
@@ -67,32 +66,24 @@ struct ContentView: View {
                                 viewModel.validateInput()
                                 showPinyinAndEnglish = true
                                 isCheckButtonVisible = false
-                                viewModel.playTextToSpeech()
                             }
                     }
 
                     // Check and Next buttons
                     HStack {
-                        if selectedMode != .readingMode || (selectedMode == .readingMode && viewModel.showCorrectText) {
-                            Button(action: {
-                                viewModel.playTextToSpeech()
-                            }) {
-                                Image(systemName: "play.circle")
-                                    .font(.system(size: 50))
-                            }
+                        Button(action: {
+                            viewModel.playTextToSpeech()
+                        }) {
+                            Image(systemName: "play.circle")
+                                .font(.system(size: 50))
                         }
                         if viewModel.showCorrectText {
                             Button(action: {
-                                isTextFieldFocused = false
+                                isTextFieldFocused = selectedMode == .writingMode
                                 showPinyinAndEnglish = false
                                 isCheckButtonVisible = true
                                 viewModel.loadNextPhrase()
-                                switch selectedMode {
-                                case .writingMode:
-                                    isTextFieldFocused = true
-                                case .readingMode:
-                                    break
-                                case .listeningMode:
+                                if selectedMode == .listeningMode {
                                     viewModel.playTextToSpeech()
                                 }
                             }) {
@@ -124,21 +115,16 @@ struct ContentView: View {
                         }
                     }
 
-                    // Mode Buttons at the bottom
-                    HStack(spacing: 10) {
-                        modeButton("Reading", mode: .readingMode)
-                        modeButton("Writing", mode: .writingMode)
-                        modeButton("Listening", mode: .listeningMode)
+                    Button {
+                        showSettings = true
+                    } label: {
+                        Text("Settings")
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.gray)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                     }
-
-                    Button("Choose phrases to learn") {
-                        showPhrasePicker = true
-                    }
-                    .padding()
-                    .background(Color.accentColor)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-
                 }
                 .padding(.horizontal)
             }
@@ -147,22 +133,22 @@ struct ContentView: View {
         .sheet(isPresented: $showPhrasePicker) {
             phraseSelectionView()
         }
+        .sheet(isPresented: $showSettings) {
+            settingsView()
+        }
     }
 
+    // Phrase selection view
     @ViewBuilder
     private func phraseSelectionView() -> some View {
         NavigationView {
             VStack {
                 List {
-                    // Navigation links to move to the list of phrases based on category
                     NavigationLink(destination: PhraseListView(viewModel: viewModel, category: .short)) {
                         Text("Short Phrases")
                     }
                     NavigationLink(destination: PhraseListView(viewModel: viewModel, category: .medium)) {
                         Text("Medium Phrases")
-                    }
-                    .onTapGesture {
-                        loadPhrasesForSelectedCategory(.medium)
                     }
                 }
                 .navigationTitle("Select Phrase Category")
@@ -180,27 +166,40 @@ struct ContentView: View {
         }
     }
 
+    // Settings view
+    @ViewBuilder
+    private func settingsView() -> some View {
+        NavigationView {
+            VStack(spacing: 20) {
 
-    @State private var selectedPhraseCategory: PhraseCategory? = nil
+                // Navigation list
+                List {
+                    NavigationLink(destination: phraseSelectionView()) {
+                        Text("Choose Phrases to Learn")
+                    }
+                }
+                .navigationTitle("Settings")
+                .navigationBarTitleDisplayMode(.inline)
 
-    // Update loadPhrasesForSelectedCategory to use local memory instead of fetching from Google Sheets
-    private func loadPhrasesForSelectedCategory(_ category: PhraseCategory) {
-        switch category {
-        case .short:
-            viewModel.toLearnPhrases = viewModel.shortPhrases
-        case .medium:
-            viewModel.toLearnPhrases = viewModel.mediumPhrases
+                HStack(spacing: 10) {
+                    modeButton("Reading", mode: .readingMode)
+                    modeButton("Writing", mode: .writingMode)
+                    modeButton("Listening", mode: .listeningMode)
+                }
+                .padding()
+
+                Text("Choose Mode")
+                    .font(.title2)
+                    .padding(.bottom)
+            }
         }
-
-        // No need for network requests; phrases are already in memory
     }
 
-    // Helper function to create mode selection buttons
+    // Mode selection buttons
     func modeButton(_ text: String, mode: Mode) -> some View {
         Button(action: {
             withAnimation(.easeInOut) {
                 selectedMode = mode
-                isTextFieldFocused = mode == .writingMode
             }
         }) {
             Text(text)
@@ -210,25 +209,6 @@ struct ContentView: View {
                 .padding()
                 .background(selectedMode == mode ? Color.accentColor : Color.gray.opacity(0.3))
                 .cornerRadius(10)
-        }
-    }
-
-    // Highlighting background for the selected mode button
-    @ViewBuilder
-    func modeHighlightingBackground(width: CGFloat) -> some View {
-        RoundedRectangle(cornerRadius: 10)
-            .fill(Color.accentColor)
-            .frame(width: width)
-            .offset(x: modeHighlightingOffset(width: width), y: 0)
-            .animation(.easeInOut, value: selectedMode)
-    }
-
-    // Calculate the offset for the highlighting background based on selected mode
-    func modeHighlightingOffset(width: CGFloat) -> CGFloat {
-        switch selectedMode {
-        case .writingMode: return 0
-        case .readingMode: return width
-        case .listeningMode: return width * 2
         }
     }
 }
