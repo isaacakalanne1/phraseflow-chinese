@@ -13,7 +13,6 @@ struct ContentView: View {
     @State private var showPinyinAndEnglish = false // Control when to show Pinyin and English
     @State private var isCheckButtonVisible = true  // Control the visibility of the "Check" button
     @State private var selectedMode: Mode = .readingMode // Track the selected mode
-    @State private var showPhrasePicker = false // Control for showing phrase picker
     @State private var showSettings = false // Control for showing settings sheet
 
     var body: some View {
@@ -63,9 +62,10 @@ struct ContentView: View {
                             .focused($isTextFieldFocused)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .onSubmit {
-                                viewModel.validateInput()
                                 showPinyinAndEnglish = true
                                 isCheckButtonVisible = false
+                                viewModel.validateInput()
+                                viewModel.playTextToSpeech()
                             }
                     }
 
@@ -97,7 +97,6 @@ struct ContentView: View {
                             }
                         } else {
                             Button(action: {
-                                isTextFieldFocused = false
                                 showPinyinAndEnglish = true
                                 isCheckButtonVisible = false
                                 viewModel.validateInput()
@@ -131,32 +130,8 @@ struct ContentView: View {
             }
         }
         .padding(10)
-        .sheet(isPresented: $showPhrasePicker) {
-            phraseSelectionView()
-        }
         .sheet(isPresented: $showSettings) {
             settingsView()
-        }
-    }
-
-    // Phrase selection view
-    @ViewBuilder
-    private func phraseSelectionView() -> some View {
-        VStack {
-            List {
-                NavigationLink(destination: PhraseListView(viewModel: viewModel, category: .short)) {
-                    Text("Short Phrases")
-                }
-                NavigationLink(destination: PhraseListView(viewModel: viewModel, category: .medium)) {
-                    Text("Medium Phrases")
-                }
-            }
-            .navigationTitle("Select Phrase Category")
-            .navigationBarTitleDisplayMode(.inline)
-
-            Text("Choose Phrase Length")
-                .font(.title2)
-                .padding(.vertical)
         }
     }
 
@@ -165,26 +140,47 @@ struct ContentView: View {
     private func settingsView() -> some View {
         NavigationView {
             VStack(spacing: 20) {
+                Spacer()
 
-                List {
-                    NavigationLink(destination: phraseSelectionView()) {
-                        Text("Choose Phrases to Learn")
-                    }
+                Text("Choose Phrases to Learn")
+                    .font(.title2)
+
+                NavigationLink(destination: PhraseListView(viewModel: viewModel, category: .short)) {
+                    Text("Short")
+                        .font(.body)
+                        .foregroundColor(.primary)
+                        .frame(width: 100)
+                        .padding()
+                        .background(Color.gray.opacity(0.3))
+                        .cornerRadius(10)
                 }
-                .navigationTitle("Settings")
-                .navigationBarTitleDisplayMode(.inline)
+
+                NavigationLink(destination: PhraseListView(viewModel: viewModel, category: .medium)) {
+                    Text("Medium")
+                        .font(.body)
+                        .foregroundColor(.primary)
+                        .frame(width: 100)
+                        .padding()
+                        .background(Color.gray.opacity(0.3))
+                        .cornerRadius(10)
+                }
+                .padding(.bottom)
+
+                Text("Choose Mode")
+                    .font(.title2)
 
                 HStack(spacing: 10) {
                     modeButton("Reading", mode: .readingMode)
                     modeButton("Writing", mode: .writingMode)
                     modeButton("Listening", mode: .listeningMode)
                 }
-                .padding()
 
-                Text("Choose Mode")
-                    .font(.title2)
-                    .padding(.bottom)
+                Text("Settings")
+                    .font(.title2.bold())
+                    .padding(.vertical)
             }
+            .toolbar(.hidden)
+            .padding(.horizontal)
         }
     }
 

@@ -21,14 +21,18 @@ struct PhraseListView: View {
                     let phrasesToDisplay = category == .short ? viewModel.shortPhrases : viewModel.mediumPhrases
                     ForEach(phrasesToDisplay.filter { !viewModel.allLearningPhrases.contains($0) }, id: \.mandarin) { phrase in
                         Button(phrase.english) {
-                            viewModel.moveToLearning(phrase: phrase, category: category)
+                            withAnimation {
+                                viewModel.moveToLearning(phrase: phrase, category: category)
+                            }
                         }
                     }
                 } else {
                     let learningPhrasesToDisplay = category == .short ? viewModel.learningShortPhrases : viewModel.learningMediumPhrases
                     ForEach(learningPhrasesToDisplay, id: \.mandarin) { phrase in
                         Button(phrase.english) {
-                            viewModel.removeFromLearning(phrase: phrase, category: category)
+                            withAnimation {
+                                viewModel.removeFromLearning(phrase: phrase, category: category)
+                            }
                         }
                     }
                 }
@@ -41,7 +45,7 @@ struct PhraseListView: View {
                 Button(action: {
                     selectedListMode = .toLearn
                 }) {
-                    Text("To Learn")
+                    Text("New")
                         .foregroundColor(selectedListMode == .toLearn ? .white : .primary)
                         .frame(maxWidth: .infinity)
                         .padding()
@@ -62,8 +66,8 @@ struct PhraseListView: View {
             }
             .padding()
 
-            Text(selectedListMode == .toLearn ? "Tap phrase to start learning" : "Tap to stop learning phrase")
-                .font(.title2)
+            Text(selectedListMode == .toLearn ? "Tap phrase to learn" : "Tap phrase to stop learning")
+                .font(.title2.bold())
                 .padding(.vertical)
         }
     }
