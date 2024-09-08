@@ -18,6 +18,11 @@ enum PhraseListMode {
     case learning
 }
 
+enum PhraseCategory {
+    case short
+    case medium
+}
+
 struct ContentView: View {
     @StateObject private var viewModel = PhraseViewModel()
     @FocusState var isTextFieldFocused
@@ -150,63 +155,60 @@ struct ContentView: View {
 
             }
         }
-        .onAppear(perform: viewModel.loadPhrases)
         .padding(10)
         .sheet(isPresented: $showPhrasePicker) {
             phraseSelectionView()
         }
     }
 
-    // Popover Sheet to Select Phrases (Now with a toggle for To Learn and Learning lists)
     @ViewBuilder
     private func phraseSelectionView() -> some View {
-        VStack(spacing: 0) {
-            Text(selectedListMode == .toLearn ? "Tap phrases to learn" : "Tap phrases to stop learning")
-                .font(.headline)
+        NavigationView {
+            VStack {
+                List {
+                    // Navigation links to move to the list of phrases based on category
+                    NavigationLink(destination: PhraseListView(viewModel: viewModel, category: .short)) {
+                        Text("Short Phrases")
+                    }
+                    NavigationLink(destination: PhraseListView(viewModel: viewModel, category: .medium)) {
+                        Text("Medium Phrases")
+                    }
+                    .onTapGesture {
+                        loadPhrasesForSelectedCategory(.medium)
+                    }
+                }
+                .navigationTitle("Select Phrase Category")
+                .navigationBarTitleDisplayMode(.inline)
+
+                Button("Done") {
+                    showPhrasePicker = false
+                }
                 .padding()
-
-            // Display the correct list based on the selected mode
-            List {
-                if selectedListMode == .toLearn {
-                    ForEach(viewModel.toLearnPhrases.filter { !viewModel.learningPhrases.contains($0) }, id: \.mandarin) { phrase in
-                        Button(phrase.english) {
-                            viewModel.moveToLearning(phrase: phrase)
-                        }
-                    }
-                } else {
-                    ForEach(viewModel.learningPhrases, id: \.mandarin) { phrase in
-                        Button(phrase.english) {
-                            viewModel.removeFromLearning(phrase: phrase) // Remove from Learning
-                        }
-                    }
-                }
+                .background(Color.accentColor)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+                .padding(.bottom)
             }
-
-            HStack(spacing: 20) {
-                Button(action: {
-                    selectedListMode = .toLearn
-                }) {
-                    Text("To Learn")
-                        .foregroundColor(selectedListMode == .toLearn ? .white : .primary)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(selectedListMode == .toLearn ? Color.accentColor : Color.gray.opacity(0.3))
-                        .cornerRadius(10)
-                }
-
-                Button(action: {
-                    selectedListMode = .learning
-                }) {
-                    Text("Learning")
-                        .foregroundColor(selectedListMode == .learning ? .white : .primary)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(selectedListMode == .learning ? Color.accentColor : Color.gray.opacity(0.3))
-                        .cornerRadius(10)
-                }
-            }
-            .padding()
         }
+    }
+
+
+    @State private var selectedPhraseCategory: PhraseCategory? = nil
+
+    // Function to load phrases based on the selected category
+    private func loadPhrasesForSelectedCategory(_ category: PhraseCategory) {
+        let gid: String
+        switch category {
+        case .short:
+            gid = "0" // Short phrases GID
+        case .medium:
+            gid = "2033303776" // Replace with actual GID for medium phrases
+        }
+
+        viewModel.loadPhrases(gid: gid)
+//        viewModel.fetchGoogleSheetData(gid: gid) { phrases in
+//            viewModel.toLearnPhrases = phrases
+//        }
     }
 
     // Helper function to create mode selection buttons
@@ -249,3 +251,87 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
+
+struct PhraseListView: View {
+    @ObservedObject var viewModel: PhraseViewModel
+    let category: PhraseCategory
+
+    @State private var selectedListMode: PhraseListMode = .toLearn // Default to "To Learn"
+
+    var body: some View {
+        VStack {
+            // List of phrases
+            List {
+                if selectedListMode == .toLearn {
+                    // Filter out phrases that are already in the Learning list
+                    ForEach(viewModel.toLearnPhrases.filter { !viewModel.learningPhrases.contains($0) }, id: \.mandarin) { phrase in
+                        Button(phrase.english) {
+                            viewModel.moveToLearning(phrase: phrase)
+                        }
+                    }
+                } else {
+                    // Display the Learning list
+                    ForEach(viewModel.learningPhrases, id: \.mandarin) { phrase in
+                        Button(phrase.english) {
+                            viewModel.removeFromLearning(phrase: phrase)
+                        }
+                    }
+                }
+            }
+            .navigationTitle(categoryTitle)
+            .navigationBarTitleDisplayMode(.inline)
+
+            // Buttons to switch between "To Learn" and "Learning" lists
+            HStack(spacing: 20) {
+                Button(action: {
+                    selectedListMode = .toLearn
+                }) {
+                    Text("To Learn")
+                        .foregroundColor(selectedListMode == .toLearn ? .white : .primary)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(selectedListMode == .toLearn ? Color.accentColor : Color.gray.opacity(0.3))
+                        .cornerRadius(10)
+                }
+
+                Button(action: {
+                    selectedListMode = .learning
+                }) {
+                    Text("Learning")
+                        .foregroundColor(selectedListMode == .learning ? .white : .primary)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(selectedListMode == .learning ? Color.accentColor : Color.gray.opacity(0.3))
+                        .cornerRadius(10)
+                }
+            }
+            .padding()
+        }
+        .onAppear {
+            loadPhrasesForSelectedCategory(category)
+        }
+    }
+
+    private var categoryTitle: String {
+        switch category {
+        case .short: return "Short Phrases"
+        case .medium: return "Medium Phrases"
+        }
+    }
+
+    private func loadPhrasesForSelectedCategory(_ category: PhraseCategory) {
+        let gid: String
+        switch category {
+        case .short:
+            gid = "0" // Short phrases GID
+        case .medium:
+            gid = "2033303776" // Replace with actual GID for medium phrases
+        }
+
+        viewModel.loadPhrases(gid: gid)
+//        viewModel.fetchGoogleSheetData(gid: gid) { phrases in
+//            viewModel.toLearnPhrases = phrases
+//        }
+    }
+}
+

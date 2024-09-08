@@ -26,12 +26,12 @@ class PhraseViewModel: ObservableObject {
 
     init() {
         loadLearningPhrases() // Load learning phrases from UserDefaults
-        loadPhrases()
+        loadPhrases(gid: "0")
     }
 
     // Load all phrases and initialize toLearnPhrases
-    func loadPhrases() {
-        fetchGoogleSheetData { [weak self] fetchedPhrases in
+    func loadPhrases(gid: String) {
+        fetchGoogleSheetData(gid: gid) { [weak self] fetchedPhrases in
             self?.phrases = fetchedPhrases.shuffled()
             self?.toLearnPhrases = fetchedPhrases.shuffled() // Initialize with all phrases in "To Learn"
             self?.currentPhraseIndex = 0
@@ -157,9 +157,24 @@ class PhraseViewModel: ObservableObject {
         }
     }
 
+    func fetchGoogleSheetData(gid: String, completion: @escaping ([Phrase]) -> Void) {
+        let spreadsheetId = "19B3xWuRrTMfpva_IJAyRqGN7Lj3aKlZkZW1N7TwesAE"
+        let sheetURL = URL(string: "https://docs.google.com/spreadsheets/d/\(spreadsheetId)/export?format=csv&gid=\(gid)")!
+
+        let task = URLSession.shared.dataTask(with: sheetURL) { data, response, error in
+            if let data = data, let csvString = String(data: data, encoding: .utf8) {
+                let phrases = self.parseCSVData(csvString)
+                DispatchQueue.main.async {
+                    completion(phrases)
+                }
+            }
+        }
+        task.resume()
+    }
+
     // Fetch data from Google Sheets (simplified)
     private func fetchGoogleSheetData(completion: @escaping ([Phrase]) -> Void) {
-        let sheetURL = URL(string: "https://docs.google.com/spreadsheets/d/19B3xWuRrTMfpva_IJAyRqGN7Lj3aKlZkZW1N7TwesAE/export?format=csv")!
+        let sheetURL = URL(string: "https://docs.google.com/spreadsheets/d/19B3xWuRrTMfpva_IJAyRqGN7Lj3aKlZkZW1N7TwesAE/export?format=csv&gid=2033303776")!
 
         let task = URLSession.shared.dataTask(with: sheetURL) { data, response, error in
             if let data = data, let csvString = String(data: data, encoding: .utf8) {
