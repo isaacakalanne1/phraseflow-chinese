@@ -27,6 +27,8 @@ class PhraseViewModel: ObservableObject {
     @Published var isCorrect = false
     @Published var showCorrectText = false
 
+    @Published var speechSpeed: SpeechSpeed = .normal
+
     private var player: AVAudioPlayer? // Store the AVAudioPlayer as a property
     private var audioCache: [String: Data] = [:] // In-memory cache for audio data
     private var currentPhraseIndex: Int = 0 // Track current phrase index
@@ -35,6 +37,7 @@ class PhraseViewModel: ObservableObject {
         private let learningMediumKey = "learningMediumPhrases"
 
     init() {
+        clearLearningPhrases()
         loadPhrasesOnAppLaunch() // Load both short and medium phrases
         loadLearningPhrases() // Load learning phrases from UserDefaults
         loadNextPhrase()
@@ -91,10 +94,8 @@ class PhraseViewModel: ObservableObject {
     // Move a short phrase to the learning list
     func moveToLearning(phrase: Phrase, category: PhraseCategory) {
         if category == .short {
-            shortPhrases.removeAll { $0 == phrase }
             learningShortPhrases.append(phrase)
         } else {
-            mediumPhrases.removeAll { $0 == phrase }
             learningMediumPhrases.append(phrase)
         }
         saveLearningPhrases() // Save to UserDefaults
@@ -105,10 +106,8 @@ class PhraseViewModel: ObservableObject {
     func removeFromLearning(phrase: Phrase, category: PhraseCategory) {
         if category == .short {
             learningShortPhrases.removeAll { $0 == phrase }
-            shortPhrases.append(phrase)
         } else {
             learningMediumPhrases.removeAll { $0 == phrase }
-            mediumPhrases.append(phrase)
         }
         saveLearningPhrases() // Save the updated learning phrases to UserDefaults
     }
@@ -187,6 +186,8 @@ class PhraseViewModel: ObservableObject {
     private func playAudio(from data: Data) {
         do {
             self.player = try AVAudioPlayer(data: data)
+            self.player?.enableRate = true
+            self.player?.rate = speechSpeed.rate
             self.player?.prepareToPlay()
             self.player?.play()
         } catch {
@@ -222,6 +223,8 @@ class PhraseViewModel: ObservableObject {
                 let english = columns[2].trimmingCharacters(in: .whitespacesAndNewlines)
                 let phrase = Phrase(mandarin: mandarin, pinyin: pinyin, english: english)
                 phrases.append(phrase)
+            } else {
+                print("Nah! This here is \(columns[2])")
             }
         }
         return phrases

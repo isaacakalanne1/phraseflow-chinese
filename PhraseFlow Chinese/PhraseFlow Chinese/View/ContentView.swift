@@ -166,6 +166,54 @@ struct ContentView: View {
                 }
                 .padding(.bottom)
 
+                Text("Choose Speech Speed")
+                    .font(.title2)
+
+                HStack {
+                    
+                    Button(action: {
+                        withAnimation(.easeInOut) {
+                            viewModel.speechSpeed = .slow
+                        }
+                    }) {
+                        Text("Slow")
+                            .font(.body)
+                            .foregroundColor(viewModel.speechSpeed == .slow ? .white : .primary)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(viewModel.speechSpeed == .slow ? Color.accentColor : Color.gray.opacity(0.3))
+                            .cornerRadius(10)
+                    }
+                    
+                    Button(action: {
+                        withAnimation(.easeInOut) {
+                            viewModel.speechSpeed = .normal
+                        }
+                    }) {
+                        Text("Normal")
+                            .font(.body)
+                            .foregroundColor(viewModel.speechSpeed == .normal ? .white : .primary)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(viewModel.speechSpeed == .normal ? Color.accentColor : Color.gray.opacity(0.3))
+                            .cornerRadius(10)
+                    }
+                    
+                    Button(action: {
+                        withAnimation(.easeInOut) {
+                            viewModel.speechSpeed = .fast
+                        }
+                    }) {
+                        Text("Fast")
+                            .font(.body)
+                            .foregroundColor(viewModel.speechSpeed == .fast ? .white : .primary)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(viewModel.speechSpeed == .fast ? Color.accentColor : Color.gray.opacity(0.3))
+                            .cornerRadius(10)
+                    }
+                }
+
                 Text("Choose Mode")
                     .font(.title2)
 
