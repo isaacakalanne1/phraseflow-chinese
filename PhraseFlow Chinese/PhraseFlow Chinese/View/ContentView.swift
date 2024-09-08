@@ -23,8 +23,8 @@ struct ContentView: View {
                 Text("Loading phrases...")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if viewModel.allLearningPhrases.isEmpty {
-                Button("Choose phrases to learn") {
-                    showPhrasePicker = true
+                Button("Get Started") {
+                    showSettings = true
                 }
                 .padding()
                 .background(Color.accentColor)
@@ -116,6 +116,7 @@ struct ContentView: View {
                     }
 
                     Button {
+                        isTextFieldFocused = false
                         showSettings = true
                     } label: {
                         Text("Settings")
@@ -141,28 +142,21 @@ struct ContentView: View {
     // Phrase selection view
     @ViewBuilder
     private func phraseSelectionView() -> some View {
-        NavigationView {
-            VStack {
-                List {
-                    NavigationLink(destination: PhraseListView(viewModel: viewModel, category: .short)) {
-                        Text("Short Phrases")
-                    }
-                    NavigationLink(destination: PhraseListView(viewModel: viewModel, category: .medium)) {
-                        Text("Medium Phrases")
-                    }
+        VStack {
+            List {
+                NavigationLink(destination: PhraseListView(viewModel: viewModel, category: .short)) {
+                    Text("Short Phrases")
                 }
-                .navigationTitle("Select Phrase Category")
-                .navigationBarTitleDisplayMode(.inline)
-
-                Button("Done") {
-                    showPhrasePicker = false
+                NavigationLink(destination: PhraseListView(viewModel: viewModel, category: .medium)) {
+                    Text("Medium Phrases")
                 }
-                .padding()
-                .background(Color.accentColor)
-                .foregroundColor(.white)
-                .cornerRadius(10)
-                .padding(.bottom)
             }
+            .navigationTitle("Select Phrase Category")
+            .navigationBarTitleDisplayMode(.inline)
+
+            Text("Choose Phrase Length")
+                .font(.title2)
+                .padding(.vertical)
         }
     }
 
@@ -172,7 +166,6 @@ struct ContentView: View {
         NavigationView {
             VStack(spacing: 20) {
 
-                // Navigation list
                 List {
                     NavigationLink(destination: phraseSelectionView()) {
                         Text("Choose Phrases to Learn")

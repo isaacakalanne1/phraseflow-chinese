@@ -61,6 +61,10 @@ struct PhraseListView: View {
                 }
             }
             .padding()
+
+            Text(selectedListMode == .toLearn ? "Tap phrase to start learning" : "Tap to stop learning phrase")
+                .font(.title2)
+                .padding(.vertical)
         }
     }
 
