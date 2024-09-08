@@ -8,6 +8,5 @@
 import Foundation
 
 enum PhraseCategory {
-    case short
-    case medium
+    case short, medium, long
 }

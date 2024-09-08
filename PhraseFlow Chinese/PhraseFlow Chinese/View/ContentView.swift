@@ -164,6 +164,16 @@ struct ContentView: View {
                         .background(Color.gray.opacity(0.3))
                         .cornerRadius(10)
                 }
+
+                NavigationLink(destination: PhraseListView(viewModel: viewModel, category: .long)) {
+                    Text("Long")
+                        .font(.body)
+                        .foregroundColor(.primary)
+                        .frame(width: 100)
+                        .padding()
+                        .background(Color.gray.opacity(0.3))
+                        .cornerRadius(10)
+                }
                 .padding(.bottom)
 
                 Text("Choose Speech Speed")

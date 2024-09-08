@@ -13,6 +13,7 @@ class PhraseViewModel: ObservableObject {
     @Published var phrases = [Phrase]() // All phrases (short + medium)
     @Published var shortPhrases = [Phrase]() // Short phrases only
     @Published var mediumPhrases = [Phrase]() // Medium phrases only
+    @Published var longPhrases = [Phrase]() // Medium phrases only
 
     // Computed property to get all learning phrases (short + medium)
     var allLearningPhrases: [Phrase] {
@@ -21,6 +22,7 @@ class PhraseViewModel: ObservableObject {
 
     @Published var learningShortPhrases = [Phrase]() // Short phrases being learned
     @Published var learningMediumPhrases = [Phrase]()
+    @Published var learningLongPhrases = [Phrase]()
     @Published var currentPhrase: Phrase?
     @Published var toLearnPhrases = [Phrase]() // Phrases to learn (short + medium)
     @Published var userInput = ""
@@ -34,10 +36,10 @@ class PhraseViewModel: ObservableObject {
     private var currentPhraseIndex: Int = 0 // Track current phrase index
 
     private let learningShortKey = "learningShortPhrases"
-        private let learningMediumKey = "learningMediumPhrases"
+    private let learningMediumKey = "learningMediumPhrases"
+    private let learningLongKey = "learningLongPhrases"
 
     init() {
-        clearLearningPhrases()
         loadPhrasesOnAppLaunch() // Load both short and medium phrases
         loadLearningPhrases() // Load learning phrases from UserDefaults
         loadNextPhrase()
@@ -58,6 +60,13 @@ class PhraseViewModel: ObservableObject {
             self?.phrases.append(contentsOf: fetchedMediumPhrases) // Add to the main phrases list
             self?.toLearnPhrases.append(contentsOf: fetchedMediumPhrases) // Add to learnable phrases
         }
+
+        // Load long phrases
+        fetchGoogleSheetData(gid: "547164039") { [weak self] fetchedLongPhrases in
+            self?.longPhrases = fetchedLongPhrases.shuffled()
+            self?.phrases.append(contentsOf: fetchedLongPhrases) // Add to the main phrases list
+            self?.toLearnPhrases.append(contentsOf: fetchedLongPhrases) // Add to learnable phrases
+        }
     }
 
     private func loadLearningPhrases() {
@@ -70,6 +79,11 @@ class PhraseViewModel: ObservableObject {
            let savedMediumPhrases = try? JSONDecoder().decode([Phrase].self, from: savedMediumData) {
             self.learningMediumPhrases = savedMediumPhrases.shuffled()
         }
+
+        if let savedLongData = UserDefaults.standard.data(forKey: learningLongKey),
+           let savedLongPhrases = try? JSONDecoder().decode([Phrase].self, from: savedLongData) {
+            self.learningMediumPhrases = savedLongPhrases.shuffled()
+        }
     }
 
     // Save learning phrases to UserDefaults
@@ -81,22 +95,34 @@ class PhraseViewModel: ObservableObject {
         if let encodedMediumData = try? JSONEncoder().encode(learningMediumPhrases) {
             UserDefaults.standard.set(encodedMediumData, forKey: learningMediumKey)
         }
+
+        if let encodedLongData = try? JSONEncoder().encode(learningLongPhrases) {
+            UserDefaults.standard.set(encodedLongData, forKey: learningLongKey)
+        }
     }
 
     // Clear the saved learning phrases from UserDefaults
     func clearLearningPhrases() {
         UserDefaults.standard.removeObject(forKey: learningShortKey)
         UserDefaults.standard.removeObject(forKey: learningMediumKey)
+        UserDefaults.standard.removeObject(forKey: learningLongKey)
         learningShortPhrases.removeAll() // Also clear the current in-memory learning list
         learningMediumPhrases.removeAll() // Also clear the current in-memory learning list
+        learningLongPhrases.removeAll() // Also clear the current in-memory learning list
     }
 
     // Move a short phrase to the learning list
     func moveToLearning(phrase: Phrase, category: PhraseCategory) {
-        if category == .short {
+        switch category {
+        case .short:
             learningShortPhrases.append(phrase)
-        } else {
+            shortPhrases.removeAll { $0 == phrase }
+        case .medium:
             learningMediumPhrases.append(phrase)
+            mediumPhrases.removeAll { $0 == phrase }
+        case .long:
+            learningLongPhrases.append(phrase)
+            longPhrases.removeAll { $0 == phrase }
         }
         saveLearningPhrases() // Save to UserDefaults
         loadNextPhrase()
@@ -104,10 +130,16 @@ class PhraseViewModel: ObservableObject {
 
     // Remove a phrase from the learning list and move it back to To Learn
     func removeFromLearning(phrase: Phrase, category: PhraseCategory) {
-        if category == .short {
+        switch category {
+        case .short:
             learningShortPhrases.removeAll { $0 == phrase }
-        } else {
+            shortPhrases.append(phrase)
+        case .medium:
             learningMediumPhrases.removeAll { $0 == phrase }
+            mediumPhrases.append(phrase)
+        case .long:
+            learningLongPhrases.removeAll { $0 == phrase }
+            longPhrases.append(phrase)
         }
         saveLearningPhrases() // Save the updated learning phrases to UserDefaults
     }
@@ -210,23 +242,47 @@ class PhraseViewModel: ObservableObject {
         task.resume()
     }
 
-    // Parse CSV data into phrases
     private func parseCSVData(_ csvString: String) -> [Phrase] {
-        let rows = csvString.components(separatedBy: "\n")
         var phrases = [Phrase]()
 
-        for row in rows {
-            let columns = row.components(separatedBy: ",")
-            if columns.count == 3 {
-                let mandarin = columns[0]
-                let pinyin = columns[1]
-                let english = columns[2].trimmingCharacters(in: .whitespacesAndNewlines)
-                let phrase = Phrase(mandarin: mandarin, pinyin: pinyin, english: english)
-                phrases.append(phrase)
-            } else {
-                print("Nah! This here is \(columns[2])")
+        // Split the string into lines
+        let lines = csvString.components(separatedBy: .newlines)
+
+        // Parse each line
+        for line in lines {
+            // Use a regular expression to match quoted fields
+            let pattern = #"(?<=^|,)(\"(?:[^\"]|\"\")*\"|[^,]*)"#
+            let regex = try? NSRegularExpression(pattern: pattern, options: [])
+
+            if let matches = regex?.matches(in: line, range: NSRange(location: 0, length: line.utf16.count)) {
+                var columns = [String]()
+
+                for match in matches {
+                    if let range = Range(match.range, in: line) {
+                        var column = String(line[range])
+
+                        // Remove enclosing quotes and unescape any double quotes
+                        if column.hasPrefix("\"") && column.hasSuffix("\"") {
+                            column.removeFirst()
+                            column.removeLast()
+                            column = column.replacingOccurrences(of: "\"\"", with: "\"")
+                        }
+
+                        columns.append(column)
+                    }
+                }
+
+                // Ensure there are exactly 3 columns: Mandarin, Pinyin, and English
+                if columns.count == 3 {
+                    let mandarin = columns[0]
+                    let pinyin = columns[1]
+                    let english = columns[2].trimmingCharacters(in: .whitespacesAndNewlines)
+                    let phrase = Phrase(mandarin: mandarin, pinyin: pinyin, english: english)
+                    phrases.append(phrase)
+                }
             }
         }
+
         return phrases
     }
 

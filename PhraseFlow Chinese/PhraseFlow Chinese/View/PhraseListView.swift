@@ -13,12 +13,35 @@ struct PhraseListView: View {
 
     @State private var selectedListMode: PhraseListMode = .toLearn // Default to "To Learn"
 
+    var phrasesToDisplay: [Phrase] {
+        switch category {
+        case .short:
+            viewModel.shortPhrases
+        case .medium:
+            viewModel.mediumPhrases
+        case .long:
+            viewModel.longPhrases
+        }
+    }
+
+    var learningPhrasesToDisplay: [Phrase] {
+        switch category {
+        case .short:
+            viewModel.learningShortPhrases
+        case .medium:
+            viewModel.learningMediumPhrases
+        case .long:
+            viewModel.learningLongPhrases
+        }
+    }
+
     var body: some View {
         VStack {
             // List of phrases
             List {
                 if selectedListMode == .toLearn {
-                    let phrasesToDisplay = category == .short ? viewModel.shortPhrases : viewModel.mediumPhrases
+
+
                     ForEach(phrasesToDisplay.filter { !viewModel.allLearningPhrases.contains($0) }, id: \.mandarin) { phrase in
                         Button(phrase.english) {
                             withAnimation {
@@ -27,7 +50,6 @@ struct PhraseListView: View {
                         }
                     }
                 } else {
-                    let learningPhrasesToDisplay = category == .short ? viewModel.learningShortPhrases : viewModel.learningMediumPhrases
                     ForEach(learningPhrasesToDisplay, id: \.mandarin) { phrase in
                         Button(phrase.english) {
                             withAnimation {
@@ -76,6 +98,7 @@ struct PhraseListView: View {
         switch category {
         case .short: return "Short Phrases"
         case .medium: return "Medium Phrases"
+        case .long: return "Long Phrases"
         }
     }
 }
