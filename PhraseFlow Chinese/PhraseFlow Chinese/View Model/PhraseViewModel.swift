@@ -146,10 +146,13 @@ class PhraseViewModel: ObservableObject {
     // Normalize punctuation between English and Chinese
     private func normalizePunctuation(_ text: String) -> String {
         return text
-            .replacingOccurrences(of: "?", with: "")
+            .replacingOccurrences(of: "?", with: "？")
+            .replacingOccurrences(of: ",", with: "，")
+        
             .replacingOccurrences(of: "!", with: "")
             .replacingOccurrences(of: ".", with: "")
-            .replacingOccurrences(of: ",", with: "")
+            .replacingOccurrences(of: "！", with: "")
+            .replacingOccurrences(of: "。", with: "")
     }
 
     // Validate user input with normalized punctuation

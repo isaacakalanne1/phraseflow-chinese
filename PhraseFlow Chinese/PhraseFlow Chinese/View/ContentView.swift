@@ -83,6 +83,7 @@ struct ContentView: View {
                                 viewModel.validateInput()
                                 showPinyinAndEnglish = true
                                 isCheckButtonVisible = false
+                                viewModel.playTextToSpeech()
                             }
                     }
 
@@ -217,9 +218,7 @@ struct ContentView: View {
         Button(action: {
             withAnimation(.easeInOut) {
                 selectedMode = mode
-                if mode == .writingMode {
-                    isTextFieldFocused = true
-                }
+                isTextFieldFocused = mode == .writingMode
             }
         }) {
             Text(text)
