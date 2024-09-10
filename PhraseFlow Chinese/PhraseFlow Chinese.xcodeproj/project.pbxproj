@@ -16,6 +16,8 @@
 		BB4EDAF32C90499900699E7D /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAF22C90499900699E7D /* AudioKit */; };
 		BB4EDAF72C904D2500699E7D /* ggml-tiny-encoder.mlmodelc in Resources */ = {isa = PBXBuildFile; fileRef = BB4EDAF62C904D2500699E7D /* ggml-tiny-encoder.mlmodelc */; };
 		BB4EDAF92C904DD300699E7D /* ggml-tiny.bin in Resources */ = {isa = PBXBuildFile; fileRef = BB4EDAF82C904DD300699E7D /* ggml-tiny.bin */; };
+		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
+		BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FastChineseStore.swift */; };
 		BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -52,6 +54,7 @@
 		BB34B2332C8DBC65003B95C4 /* PhraseCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseCategory.swift; sourceTree = "<group>"; };
 		BB4EDAF62C904D2500699E7D /* ggml-tiny-encoder.mlmodelc */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "ggml-tiny-encoder.mlmodelc"; sourceTree = "<group>"; };
 		BB4EDAF82C904DD300699E7D /* ggml-tiny.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = "ggml-tiny.bin"; sourceTree = "<group>"; };
+		BB4EDB022C90C86300699E7D /* FastChineseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseStore.swift; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhraseFlow Chinese.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -71,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */,
 				BB4EDAF32C90499900699E7D /* AudioKit in Frameworks */,
 				BB4EDAEE2C9047E000699E7D /* SwiftWhisper in Frameworks */,
 			);
@@ -93,6 +97,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BB4EDB012C90C85000699E7D /* Redux */ = {
+			isa = PBXGroup;
+			children = (
+				BB4EDB022C90C86300699E7D /* FastChineseStore.swift */,
+			);
+			path = Redux;
+			sourceTree = "<group>";
+		};
 		BBB6EF1A2C8C86240079D135 = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */,
+				BB4EDB012C90C85000699E7D /* Redux */,
 				BBB6EF562C8C87540079D135 /* View */,
 				BBB6EF532C8C87310079D135 /* View Model */,
 				BBB6EF502C8C86A50079D135 /* Model */,
@@ -201,6 +214,7 @@
 			packageProductDependencies = (
 				BB4EDAED2C9047E000699E7D /* SwiftWhisper */,
 				BB4EDAF22C90499900699E7D /* AudioKit */,
+				BB4EDAFF2C90C7E600699E7D /* ReduxKit */,
 			);
 			productName = "PhraseFlow Chinese";
 			productReference = BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */;
@@ -277,6 +291,7 @@
 			packageReferences = (
 				BB4EDAEC2C9047E000699E7D /* XCRemoteSwiftPackageReference "SwiftWhisper" */,
 				BB4EDAF12C90499900699E7D /* XCRemoteSwiftPackageReference "AudioKit" */,
+				BB4EDAFE2C90C7E600699E7D /* XCRemoteSwiftPackageReference "reduxkit" */,
 			);
 			productRefGroup = BBB6EF242C8C86240079D135 /* Products */;
 			projectDirPath = "";
@@ -331,6 +346,7 @@
 				BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */,
 				BBB6EF552C8C873D0079D135 /* PhraseViewModel.swift in Sources */,
 				BB34B22E2C8DBC2E003B95C4 /* PhraseListView.swift in Sources */,
+				BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -680,6 +696,14 @@
 				minimumVersion = 5.6.4;
 			};
 		};
+		BB4EDAFE2C90C7E600699E7D /* XCRemoteSwiftPackageReference "reduxkit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@git-gdd.sdo.jlrmotor.com:OFFBOARD/mobile/libraries/ios/kits/reduxkit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -692,6 +716,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BB4EDAF12C90499900699E7D /* XCRemoteSwiftPackageReference "AudioKit" */;
 			productName = AudioKit;
+		};
+		BB4EDAFF2C90C7E600699E7D /* ReduxKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BB4EDAFE2C90C7E600699E7D /* XCRemoteSwiftPackageReference "reduxkit" */;
+			productName = ReduxKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -472,9 +472,7 @@ class PhraseViewModel: ObservableObject {
         }
     }
 
-    // Azure TTS API call (fetch data directly)
     func fetchAzureCharacterDefinition(character: String, phrase: String, completion: @escaping (Data?) -> Void) {
-//        let subscriptionKey = "144bc0cdea4d44e499927e84e795b27a"
         let deploymentId = "gpt-4o-mini"
         let version = "2024-07-18"
 
@@ -482,7 +480,6 @@ class PhraseViewModel: ObservableObject {
         request.httpMethod = "POST"
         request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//        request.addValue(subscriptionKey, forHTTPHeaderField: "Ocp-Apim-Subscription-Key")
 
         let requestData = DefineCharacterRequest(messages: [
             .init(role: "system",
