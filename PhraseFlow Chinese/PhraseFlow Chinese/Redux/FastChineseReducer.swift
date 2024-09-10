@@ -12,11 +12,13 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     var newState = state
 
     switch action {
-    case .onFetchedPhrases(let phrases):
+    case .onFetchedAllPhrases(let phrases):
         newState.allPhrases = phrases
-    case .onAppear,
-            .fetchPhrases,
-            .failedToFetchPhrases:
+    case .onFetchedAllLearningPhrases(let phrases):
+        newState.allLearningPhrases = phrases
+    case .fetchAllPhrases,
+            .failedToFetchAllPhrases,
+            .fetchAllLearningPhrases:
         break
     }
 

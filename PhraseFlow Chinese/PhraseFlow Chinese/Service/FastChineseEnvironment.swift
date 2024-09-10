@@ -8,19 +8,28 @@
 import Foundation
 
 protocol FastChineseEnvironmentProtocol {
-    func fetchPhrases(gid: String) async throws -> [Phrase]
+    var service: FastChineseServicesProtocol { get }
+    var dataStore: FastChineseDataStoreProtocol { get }
+
+    func fetchAllPhrases(gid: String) async throws -> [Phrase]
+    func fetchLearningPhrases(category: PhraseCategory) -> [Phrase]
 }
 
 struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
-    func fetchPhrases(gid: String) async throws -> [Phrase] {
-        let spreadsheetId = "19B3xWuRrTMfpva_IJAyRqGN7Lj3aKlZkZW1N7TwesAE"
-        let sheetURL = URL(string: "https://docs.google.com/spreadsheets/d/\(spreadsheetId)/export?format=csv&gid=\(gid)")!
 
-        let (data, response) = try await URLSession.shared.data(from: sheetURL)
-        guard let csvString = String(data: data, encoding: .utf8) else {
-            return []
-        }
-        let phrases = csvString.getPhrases()
-        return phrases
+    let service: FastChineseServicesProtocol
+    let dataStore: FastChineseDataStoreProtocol
+
+    init() {
+        self.service = FastChineseServices()
+        self.dataStore = FastChineseDataStore()
+    }
+
+    func fetchAllPhrases(gid: String) async throws -> [Phrase] {
+        try await service.fetchAllPhrases(gid: gid)
+    }
+
+    func fetchLearningPhrases(category: PhraseCategory) -> [Phrase] {
+        dataStore.fetchLearningPhrases(category: category)
     }
 }

@@ -15,4 +15,5 @@ struct FastChineseState {
     ]
 
     var allPhrases: [Phrase] = []
+    var allLearningPhrases: [Phrase] = []
 }

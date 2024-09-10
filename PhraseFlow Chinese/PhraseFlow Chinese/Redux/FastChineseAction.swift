@@ -8,8 +8,10 @@
 import Foundation
 
 enum FastChineseAction {
-    case onAppear
-    case fetchPhrases
-    case onFetchedPhrases([Phrase])
-    case failedToFetchPhrases
+    case fetchAllPhrases
+    case onFetchedAllPhrases([Phrase])
+    case failedToFetchAllPhrases
+
+    case fetchAllLearningPhrases
+    case onFetchedAllLearningPhrases([Phrase])
 }

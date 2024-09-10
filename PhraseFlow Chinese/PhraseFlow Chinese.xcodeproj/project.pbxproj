@@ -25,6 +25,8 @@
 		BB4EDB0E2C90CA0300699E7D /* FastChineseMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0D2C90CA0300699E7D /* FastChineseMiddleware.swift */; };
 		BB4EDB102C90CA4900699E7D /* FastChineseSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0F2C90CA4900699E7D /* FastChineseSubscriber.swift */; };
 		BB4EDB132C90CBBD00699E7D /* String+Phrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB122C90CBBD00699E7D /* String+Phrase.swift */; };
+		BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB142C90CF7400699E7D /* FastChineseDataStore.swift */; };
+		BB4EDB172C90D20300699E7D /* FastChineseServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB162C90D20300699E7D /* FastChineseServices.swift */; };
 		BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -69,6 +71,8 @@
 		BB4EDB0D2C90CA0300699E7D /* FastChineseMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseMiddleware.swift; sourceTree = "<group>"; };
 		BB4EDB0F2C90CA4900699E7D /* FastChineseSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseSubscriber.swift; sourceTree = "<group>"; };
 		BB4EDB122C90CBBD00699E7D /* String+Phrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Phrase.swift"; sourceTree = "<group>"; };
+		BB4EDB142C90CF7400699E7D /* FastChineseDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseDataStore.swift; sourceTree = "<group>"; };
+		BB4EDB162C90D20300699E7D /* FastChineseServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseServices.swift; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhraseFlow Chinese.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -128,6 +132,8 @@
 			isa = PBXGroup;
 			children = (
 				BB4EDB092C90C8F100699E7D /* FastChineseEnvironment.swift */,
+				BB4EDB162C90D20300699E7D /* FastChineseServices.swift */,
+				BB4EDB142C90CF7400699E7D /* FastChineseDataStore.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -377,6 +383,7 @@
 				BB34B2342C8DBC65003B95C4 /* PhraseCategory.swift in Sources */,
 				BB4EDB072C90C8CA00699E7D /* FastChineseAction.swift in Sources */,
 				BBB6EF522C8C86B10079D135 /* Phrase.swift in Sources */,
+				BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */,
 				BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */,
 				BB34B2322C8DBC4E003B95C4 /* PhraseListMode.swift in Sources */,
 				BB4EDB0E2C90CA0300699E7D /* FastChineseMiddleware.swift in Sources */,
@@ -390,6 +397,7 @@
 				BB4EDB0C2C90C9A100699E7D /* FastChineseReducer.swift in Sources */,
 				BB4EDB0A2C90C8F100699E7D /* FastChineseEnvironment.swift in Sources */,
 				BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */,
+				BB4EDB172C90D20300699E7D /* FastChineseServices.swift in Sources */,
 				BB4EDB052C90C89C00699E7D /* FastChineseState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

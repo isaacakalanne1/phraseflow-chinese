@@ -11,21 +11,27 @@ import ReduxKit
 typealias FastChineseMiddlewareType = Middleware<FastChineseState, FastChineseAction, FastChineseEnvironmentProtocol>
 let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environment in
     switch action {
-    case .onAppear:
-        return .fetchPhrases
-    case .fetchPhrases:
+    case .fetchAllPhrases:
         var allPhrases: [Phrase] = []
-        for sheetId in state.sheetIds {
             do {
-                let phrases = try await environment.fetchPhrases(gid: sheetId)
-                allPhrases.append(contentsOf: phrases)
+                for sheetId in state.sheetIds {
+                    let phrases = try await environment.fetchAllPhrases(gid: sheetId)
+                    allPhrases.append(contentsOf: phrases)
+                }
             } catch {
-                return .failedToFetchPhrases
+                return .failedToFetchAllPhrases
             }
+        return .onFetchedAllPhrases(allPhrases)
+    case .fetchAllLearningPhrases:
+        var learningPhrases: [Phrase] = []
+        for category in PhraseCategory.allCases {
+            let phrases = environment.fetchLearningPhrases(category: category)
+            learningPhrases.append(contentsOf: phrases)
         }
-        return .onFetchedPhrases(allPhrases)
-    case .onFetchedPhrases,
-            .failedToFetchPhrases:
+        return .onFetchedAllLearningPhrases(learningPhrases)
+    case .onFetchedAllPhrases,
+            .failedToFetchAllPhrases,
+            .onFetchedAllLearningPhrases:
         return nil
     }
 }

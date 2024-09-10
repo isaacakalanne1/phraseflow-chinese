@@ -30,7 +30,8 @@ struct PhraseFlow_ChineseApp: App {
             ContentView()
                 .environmentObject(store)
                 .onAppear {
-                    store.dispatch(.onAppear)
+                    store.dispatch(.fetchPhrases)
+//                    store.dispatch(.)
                 }
         }
     }
