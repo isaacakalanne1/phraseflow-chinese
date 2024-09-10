@@ -463,16 +463,12 @@ class PhraseViewModel: ObservableObject {
     }
 
     struct DefineCharacterRequest: Codable {
+        var model = "gpt-4o-mini-2024-07-18"
         var messages: [MessageBody]
 
         struct MessageBody: Codable {
             var role: String
-            var content: [MessageContent]
-
-            struct MessageContent: Codable {
-                var type: String
-                var text: String
-            }
+            var content: String
         }
     }
 
@@ -482,21 +478,17 @@ class PhraseViewModel: ObservableObject {
         let deploymentId = "gpt-4o-mini"
         let version = "2024-07-18"
 
-        var request = URLRequest(url: URL(string: "https://smileydude-fastchinese-definitions.openai.azure.com/openai/deployments/\(deploymentId)/completions?api-version=\(version)")!)
+        var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
         request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "api-key")
-        request.addValue("657ef49baa5845bebc0d510213a06719", forHTTPHeaderField: "Content-Type")
+        request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 //        request.addValue(subscriptionKey, forHTTPHeaderField: "Ocp-Apim-Subscription-Key")
 
         let requestData = DefineCharacterRequest(messages: [
             .init(role: "system",
-                  content: [
-                    .init(type: "text",
-                          text: "You are an AI assistant that provides English definitions for characters in Chinese sentences. Your explanations are brief, and simple to understand. You provide the pinyin for the Chinese character in brackets after the Chinese character. If the character is used as part of a larger word or context, you also provide the definition for this overall word or context. If the provided word has multiple characters, you also provide pinyin and definitions for each of the characters. You never repeat the Chinese sentence, and never translate the whole of the Chinese sentence into English.")
-                  ]),
+                  content: "You are an AI assistant that provides English definitions for characters in Chinese sentences. Your explanations are brief, and simple to understand. You provide the pinyin for the Chinese character in brackets after the Chinese character. If the character is used as part of a larger word or context, you also provide the definition for this overall word or context. If the provided word has multiple characters, you also provide pinyin and definitions for each of the characters. You never repeat the Chinese sentence, and never translate the whole of the Chinese sentence into English."),
             .init(role: "user",
-                  content: [.init(type: "text",
-                                  text: "Provide a definition for \(character) in \(phrase)")])
+                  content: "Provide a definition for \(character) in \(phrase)")
         ])
         guard let data = try? JSONEncoder().encode(requestData) else {
             return
