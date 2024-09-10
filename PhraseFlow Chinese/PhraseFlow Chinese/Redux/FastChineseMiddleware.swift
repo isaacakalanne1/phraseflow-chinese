@@ -65,9 +65,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         do {
             let audioFrames = try await audioURL.convertAudioFileToPCMArray()
             let segments = try await environment.transcribe(audioFrames: audioFrames)
-            return .onTranscribedPhraseAudioAtIndex(index: index, segments: segments)
+            return .onSegmentedPhraseAudioAtIndex(index: index, segments: segments)
         } catch {
-            return .failedToTranscribePhraseAudioAtIndex
+            return .failedToSegmentPhraseAudioAtIndex
         }
 
     case .playAudio:
@@ -94,8 +94,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .revealAnswer,
             .failedToPreloadAudio,
             .failedToUpdatePhraseAudioAtIndex,
-            .failedToTranscribePhraseAudioAtIndex,
-            .onTranscribedPhraseAudioAtIndex,
+            .failedToSegmentPhraseAudioAtIndex,
+            .onSegmentedPhraseAudioAtIndex,
             .updateAudioPlayer,
             .failedToUpdateAudioPlayer:
         return nil

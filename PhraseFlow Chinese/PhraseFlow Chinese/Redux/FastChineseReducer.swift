@@ -22,7 +22,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
 
     case .updatePhraseAudioAtIndex(let index, let audioData):
         newState.allLearningPhrases[index].audioData = audioData
-    case .onTranscribedPhraseAudioAtIndex(let index, let segments):
+    case .onSegmentedPhraseAudioAtIndex(let index, let segments):
         let startTimes: [Double] = segments.map { Double($0.startTime + 50)/1000 }
         let timestamps = startTimes.map { TimeInterval($0) }
         newState.allLearningPhrases[index].characterTimestamps = timestamps
@@ -40,7 +40,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             .preloadAudio,
             .failedToPreloadAudio,
             .transcribePhraseAudioAtIndex,
-            .failedToTranscribePhraseAudioAtIndex,
+            .failedToSegmentPhraseAudioAtIndex,
             .failedToUpdatePhraseAudioAtIndex,
             .playAudio,
             .onUpdatedAudioPlayer,

@@ -9,7 +9,7 @@ import Foundation
 import SwiftWhisper
 
 enum FastChineseRepositoryError: Error {
-    case failedToTranscribe
+    case failedToSegment
 }
 
 protocol FastChineseRepositoryProtocol {
@@ -32,7 +32,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
 
     func transcribe(audioFrames: [Float]) async throws-> [Segment] {
         guard let segments = try await whisper?.transcribe(audioFrames: audioFrames) else {
-            throw FastChineseRepositoryError.failedToTranscribe
+            throw FastChineseRepositoryError.failedToSegment
         }
         return segments
     }

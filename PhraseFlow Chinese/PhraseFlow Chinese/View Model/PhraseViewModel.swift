@@ -302,7 +302,7 @@ class PhraseViewModel: ObservableObject {
                 let whisper = Whisper(fromFileURL: modelUrl, withParams: params)
                 Task {
                     let segments = try await whisper.transcribe(audioFrames: audioFrames)
-                    print("Transcribed audio:", segments.map(\.text).joined())
+                    print("Segmented audio:", segments.map(\.text).joined())
                     let segment = segments[2]
                     print("First text is \(segment.text)")
 //                    let startTimes: [Double] = segments.map { Double($0.startTime + 50)/1000 } Maybe add the extra 50, if consistently tends to start segment a touch early

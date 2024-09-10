@@ -25,9 +25,9 @@ enum FastChineseAction {
     case failedToUpdatePhraseAudioAtIndex
 
     case transcribePhraseAudioAtIndex(index: Int, url: URL)
-    case failedToTranscribePhraseAudioAtIndex
+    case failedToSegmentPhraseAudioAtIndex
     
-    case onTranscribedPhraseAudioAtIndex(index: Int, segments: [Segment])
+    case onSegmentedPhraseAudioAtIndex(index: Int, segments: [Segment])
 
     case revealAnswer
     case playAudio
