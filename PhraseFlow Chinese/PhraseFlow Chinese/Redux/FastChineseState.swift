@@ -8,5 +8,11 @@
 import Foundation
 
 struct FastChineseState {
-    
+    var sheetIds: [String] = [
+        "0",
+        "2033303776",
+        "547164039"
+    ]
+
+    var allPhrases: [Phrase] = []
 }

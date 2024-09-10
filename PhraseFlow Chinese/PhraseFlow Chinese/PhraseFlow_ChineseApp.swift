@@ -29,6 +29,9 @@ struct PhraseFlow_ChineseApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(store)
+                .onAppear {
+                    store.dispatch(.onAppear)
+                }
         }
     }
 }

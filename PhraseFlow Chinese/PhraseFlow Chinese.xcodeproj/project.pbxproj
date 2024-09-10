@@ -24,6 +24,7 @@
 		BB4EDB0C2C90C9A100699E7D /* FastChineseReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0B2C90C9A100699E7D /* FastChineseReducer.swift */; };
 		BB4EDB0E2C90CA0300699E7D /* FastChineseMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0D2C90CA0300699E7D /* FastChineseMiddleware.swift */; };
 		BB4EDB102C90CA4900699E7D /* FastChineseSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0F2C90CA4900699E7D /* FastChineseSubscriber.swift */; };
+		BB4EDB132C90CBBD00699E7D /* String+Phrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB122C90CBBD00699E7D /* String+Phrase.swift */; };
 		BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -67,6 +68,7 @@
 		BB4EDB0B2C90C9A100699E7D /* FastChineseReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseReducer.swift; sourceTree = "<group>"; };
 		BB4EDB0D2C90CA0300699E7D /* FastChineseMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseMiddleware.swift; sourceTree = "<group>"; };
 		BB4EDB0F2C90CA4900699E7D /* FastChineseSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseSubscriber.swift; sourceTree = "<group>"; };
+		BB4EDB122C90CBBD00699E7D /* String+Phrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Phrase.swift"; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhraseFlow Chinese.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -130,6 +132,14 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		BB4EDB112C90CBAE00699E7D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BB4EDB122C90CBBD00699E7D /* String+Phrase.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		BBB6EF1A2C8C86240079D135 = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */,
+				BB4EDB112C90CBAE00699E7D /* Extensions */,
 				BB4EDB012C90C85000699E7D /* Redux */,
 				BB4EDB082C90C8E100699E7D /* Service */,
 				BBB6EF562C8C87540079D135 /* View */,
@@ -371,6 +382,7 @@
 				BB4EDB0E2C90CA0300699E7D /* FastChineseMiddleware.swift in Sources */,
 				BB34B2302C8DBC40003B95C4 /* Mode.swift in Sources */,
 				BB4EDB102C90CA4900699E7D /* FastChineseSubscriber.swift in Sources */,
+				BB4EDB132C90CBBD00699E7D /* String+Phrase.swift in Sources */,
 				BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */,
 				BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */,
 				BBB6EF552C8C873D0079D135 /* PhraseViewModel.swift in Sources */,
