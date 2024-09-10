@@ -43,7 +43,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             .failedToTranscribePhraseAudioAtIndex,
             .failedToUpdatePhraseAudioAtIndex,
             .playAudio,
-            .onUpdatedAudioPlayer:
+            .onUpdatedAudioPlayer,
+            .failedToUpdateAudioPlayer:
         break
     }
 

@@ -50,6 +50,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToPreloadAudio
         }
+        return nil
 
     case .updatePhraseAudioAtIndex(let index, let audioData):
         do {
@@ -85,11 +86,18 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         state.audioPlayer?.rate = state.speechSpeed.rate
         state.audioPlayer?.prepareToPlay()
         state.audioPlayer?.play()
+        return nil
 
     case .onFetchedAllPhrases,
             .failedToFetchAllPhrases,
             .onFetchedAllLearningPhrases,
-            .revealAnswer:
+            .revealAnswer,
+            .failedToPreloadAudio,
+            .failedToUpdatePhraseAudioAtIndex,
+            .failedToTranscribePhraseAudioAtIndex,
+            .onTranscribedPhraseAudioAtIndex,
+            .updateAudioPlayer,
+            .failedToUpdateAudioPlayer:
         return nil
     }
 }
