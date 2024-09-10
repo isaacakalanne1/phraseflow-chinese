@@ -7,12 +7,8 @@
 
 import Foundation
 
-struct Phrase: Identifiable, Codable, Equatable {
-    var id = UUID() // Use a UUID for easy identification
+struct Phrase: Codable, Equatable {
     let mandarin: String
     let pinyin: String
     let english: String
-
-    // Add an array to store timestamps for each character
-    var characterTimestamps: [TimeInterval] = []
 }

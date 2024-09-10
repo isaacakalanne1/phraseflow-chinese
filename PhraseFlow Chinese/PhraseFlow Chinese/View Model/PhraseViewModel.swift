@@ -8,7 +8,6 @@
 import SwiftUI
 import AVFoundation
 import Combine
-import Speech
 
 class PhraseViewModel: ObservableObject {
     @Published var phrases = [Phrase]() // All phrases (short + medium)
@@ -18,7 +17,7 @@ class PhraseViewModel: ObservableObject {
 
     // Computed property to get all learning phrases (short + medium)
     var allLearningPhrases: [Phrase] {
-        return learningShortPhrases + learningMediumPhrases + learningLongPhrases
+        return learningShortPhrases + learningMediumPhrases
     }
 
     @Published var learningShortPhrases = [Phrase]() // Short phrases being learned
@@ -41,7 +40,6 @@ class PhraseViewModel: ObservableObject {
     private let learningLongKey = "learningLongPhrases"
 
     init() {
-        requestSpeechAuthorization()
         loadPhrasesOnAppLaunch() // Load both short and medium phrases
         loadLearningPhrases() // Load learning phrases from UserDefaults
         loadNextPhrase()
@@ -84,7 +82,7 @@ class PhraseViewModel: ObservableObject {
 
         if let savedLongData = UserDefaults.standard.data(forKey: learningLongKey),
            let savedLongPhrases = try? JSONDecoder().decode([Phrase].self, from: savedLongData) {
-            self.learningLongPhrases = savedLongPhrases.shuffled()
+            self.learningMediumPhrases = savedLongPhrases.shuffled()
         }
     }
 
@@ -158,45 +156,23 @@ class PhraseViewModel: ObservableObject {
         preloadAudio() // Preload audio for the next 3 phrases
     }
 
+    // Preload audio for the next 3 phrases in the learningPhrases list
     private func preloadAudio() {
         let learningPhrases = allLearningPhrases
         guard !learningPhrases.isEmpty else { return }
 
-        // Preload audio for the current phrase and the next 3 phrases
         for i in 0..<4 {
             let index = (currentPhraseIndex + i) % learningPhrases.count
             let phrase = learningPhrases[index]
-
-            // Check if audio is already cached
             if audioCache[phrase.mandarin] == nil {
                 fetchAzureTextToSpeech(phrase: phrase.mandarin) { [weak self] audioData in
                     guard let self = self, let audioData = audioData else { return }
-
-                    // Cache the audio data
                     self.audioCache[phrase.mandarin] = audioData
-
-                    // Segment the audio into timestamps for each character
-                    self.segmentAudio(data: audioData, mandarinText: phrase.mandarin) { timestamps in
-                        if let timestamps = timestamps {
-                            self.saveCharacterTimestamps(timestamps, for: phrase)
-                            self.saveLearningPhrases() // Save the updated learning phrases with timestamps
-                        }
-                    }
                 }
             }
         }
     }
 
-    // Save character timestamps in the Phrase
-    private func saveCharacterTimestamps(_ timestamps: [TimeInterval], for phrase: Phrase) {
-        if let index = learningShortPhrases.firstIndex(where: { $0 == phrase }) {
-            learningShortPhrases[index].characterTimestamps = timestamps
-        } else if let index = learningMediumPhrases.firstIndex(where: { $0 == phrase }) {
-            learningMediumPhrases[index].characterTimestamps = timestamps
-        } else if let index = learningLongPhrases.firstIndex(where: { $0 == phrase }) {
-           learningLongPhrases[index].characterTimestamps = timestamps
-       }
-    }
 
     // Normalize punctuation between English and Chinese
     private func normalizePunctuation(_ text: String) -> String {
@@ -233,15 +209,7 @@ class PhraseViewModel: ObservableObject {
             fetchAzureTextToSpeech(phrase: currentPhrase.mandarin) { [weak self] audioData in
                 guard let self = self, let audioData = audioData else { return }
                 self.audioCache[currentPhrase.mandarin] = audioData
-
-                // Segment the audio to get timestamps for each character
-                segmentAudio(data: audioData, mandarinText: currentPhrase.mandarin) { timestamps in
-                    if let timestamps = timestamps {
-                        self.currentPhrase?.characterTimestamps = timestamps
-                        self.saveLearningPhrases() // Save to UserDefaults
-                    }
-                    self.playAudio(from: audioData)
-                }
+                self.playAudio(from: audioData)
             }
         }
     }
@@ -258,111 +226,6 @@ class PhraseViewModel: ObservableObject {
             print("Error playing audio from data: \(error.localizedDescription)")
         }
     }
-
-    func playAudio(from characterIndex: Int) {
-        guard let currentPhrase = currentPhrase,
-              characterIndex < currentPhrase.characterTimestamps.count else {
-            return
-        }
-
-        let timestamp = currentPhrase.characterTimestamps[characterIndex]
-
-        if let audioData = audioCache[currentPhrase.mandarin] {
-            do {
-                player = try AVAudioPlayer(data: audioData)
-                player?.currentTime = timestamp
-                player?.play()
-            } catch {
-                print("Error playing audio from timestamp: \(error)")
-            }
-        }
-    }
-
-    func requestSpeechAuthorization() {
-        SFSpeechRecognizer.requestAuthorization { authStatus in
-            DispatchQueue.main.async {
-                switch authStatus {
-                case .authorized:
-                    print("Speech recognition authorized")
-                case .denied:
-                    self.showPermissionAlert()
-                case .restricted:
-                    self.showPermissionAlert()
-                case .notDetermined:
-                    self.showPermissionAlert()
-                @unknown default:
-                    self.showPermissionAlert()
-                }
-            }
-        }
-    }
-
-    func showPermissionAlert() {
-        // Show an alert that asks the user to enable speech recognition in settings
-        let alert = UIAlertController(title: "Speech Recognition Permission Required", message: "Please enable speech recognition in the device settings.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
-    }
-
-
-    func segmentAudio(data: Data, mandarinText: String, completion: @escaping ([TimeInterval]?) -> Void) {
-        // Initialize the speech recognizer and request transcription
-        guard let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "zh-CN")) else {
-            completion(nil)
-            return
-        }
-
-        guard let url = saveAudioToTempFile(mandarinText: mandarinText, data: data) else {
-            completion(nil)
-            return
-        }
-
-        let request = SFSpeechURLRecognitionRequest(url: url)
-        recognizer.recognitionTask(with: request) { result, error in
-            if let error = error {
-                print("Speech recognition error: \(error.localizedDescription)")
-                completion(nil)
-                return
-            }
-
-            guard let result = result else {
-                print("No result from speech recognizer")
-                completion(nil)
-                return
-            }
-
-            var timestamps: [TimeInterval] = []
-            for segment in result.bestTranscription.segments {
-                // Map each character in the Mandarin text to the corresponding timestamp
-                let characterIndex = segment.substringRange.location
-                if characterIndex < mandarinText.count {
-                    timestamps.append(segment.timestamp)
-                }
-            }
-            completion(timestamps)
-        }
-    }
-
-    func saveAudioToTempFile(mandarinText: String, data: Data) -> URL? {
-        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(mandarinText).wav")
-        do {
-            try data.write(to: tempURL)
-            let asset = AVAsset(url: tempURL)
-            let formatDescriptions = asset.tracks.first?.formatDescriptions
-            formatDescriptions?.forEach { description in
-                let formatDescription = description as! CMAudioFormatDescription
-                let streamBasicDescription = CMAudioFormatDescriptionGetStreamBasicDescription(formatDescription)?.pointee
-                print("Sample rate: \(streamBasicDescription?.mSampleRate ?? 0)")
-                print("Channels: \(streamBasicDescription?.mChannelsPerFrame ?? 0)")
-            }
-            return tempURL
-        } catch {
-            print("Error writing audio data to file: \(error.localizedDescription)")
-            return nil
-        }
-        return tempURL
-    }
-
 
     func fetchGoogleSheetData(gid: String, completion: @escaping ([Phrase]) -> Void) {
         let spreadsheetId = "19B3xWuRrTMfpva_IJAyRqGN7Lj3aKlZkZW1N7TwesAE"
