@@ -37,9 +37,18 @@ struct ContentView: View {
                         .font(.title2)
                         .opacity(showPinyinAndEnglish ? 1 : 0)
 
-                    Text(currentPhrase.mandarin)
-                        .font(.largeTitle)
-                        .opacity(selectedMode != .listeningMode ? 1 : viewModel.showCorrectText ? 1 : 0)
+                    HStack {
+                        ForEach(Array(currentPhrase.mandarin.indices), id: \.self) { index in
+                            let character = currentPhrase.mandarin[index]
+                            Text(String(character))
+                                .font(.largeTitle)
+                                .opacity(selectedMode != .listeningMode ? 1 : viewModel.showCorrectText ? 1 : 0)
+                                .onLongPressGesture {
+                                    let characterIndex = currentPhrase.mandarin.distance(from: currentPhrase.mandarin.startIndex, to: index)
+                                    viewModel.playAudio(from: characterIndex)  // Send the index of the selected character
+                                }
+                        }
+                    }
 
                     Text(currentPhrase.english)
                         .font(.title3)
@@ -259,6 +268,7 @@ struct ContentView: View {
         }
     }
 }
+
 
 #Preview {
     ContentView()
