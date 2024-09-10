@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftWhisper
 
 enum FastChineseAction {
     case fetchAllPhrases
@@ -18,4 +19,12 @@ enum FastChineseAction {
     case goToNextPhrase
     case preloadAudio
     case failedToPreloadAudio
+
+    case updatePhraseAudioAtIndex(index: Int, audioData: Data)
+    case failedToUpdatePhraseAudioAtIndex
+
+    case transcribePhraseAudioAtIndex(index: Int, url: URL)
+    case failedToTranscribePhraseAudioAtIndex
+    
+    case onTranscribedPhraseAudioAtIndex(index: Int, segments: [Segment])
 }

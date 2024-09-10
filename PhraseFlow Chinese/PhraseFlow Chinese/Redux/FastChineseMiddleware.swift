@@ -39,15 +39,33 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
                 if phrase.audioData == nil {
                     let audioData = try await environment.fetchSpeech(for: phrase)
                     let audioURL = try environment.saveAudioToTempFile(fileName: phrase.mandarin, data: audioData)
-                    audioURL.convertAudioFileToPCMArray { result in
-                        guard let audioFrames = try? result.get() else {
-                            return
-                        }
-                    }
+                    let audioFrames = try await audioURL.convertAudioFileToPCMArray()
+                    let segments = try await environment.transcribe(audioFrames: audioFrames)
+                    let startTimes: [Double] = segments.map { Double($0.startTime + 50)/1000 }
+                    let segmentTimes = startTimes.map { TimeInterval($0) }
+                    return .updatePhraseAudioAtIndex(index: i, audioData: audioData)
                 }
             }
         } catch {
             return .failedToPreloadAudio
+        }
+
+    case .updatePhraseAudioAtIndex(let index, let audioData):
+        do {
+            let phrase = state.allLearningPhrases[index]
+            let audioURL = try environment.saveAudioToTempFile(fileName: phrase.mandarin, data: audioData)
+            return .transcribePhraseAudioAtIndex(index: index, url: audioURL)
+        } catch {
+            return .failedToUpdatePhraseAudioAtIndex
+        }
+
+    case .transcribePhraseAudioAtIndex(let index, let audioURL):
+        do {
+            let audioFrames = try await audioURL.convertAudioFileToPCMArray()
+            let segments = try await environment.transcribe(audioFrames: audioFrames)
+            return .onTranscribedPhraseAudioAtIndex(index: index, segments: segments)
+        } catch {
+            return .failedToTranscribePhraseAudioAtIndex
         }
 
     case .onFetchedAllPhrases,

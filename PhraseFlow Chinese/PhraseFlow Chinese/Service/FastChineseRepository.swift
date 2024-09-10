@@ -13,7 +13,8 @@ enum FastChineseRepositoryError: Error {
 }
 
 protocol FastChineseRepositoryProtocol {
-
+    var whisper: Whisper? { get set }
+    func transcribe(audioFrames: [Float]) async throws-> [Segment]
 }
 
 class FastChineseRepository: FastChineseRepositoryProtocol {
