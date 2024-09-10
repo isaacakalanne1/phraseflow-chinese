@@ -16,6 +16,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.allPhrases = phrases
     case .onFetchedAllLearningPhrases(let phrases):
         newState.allLearningPhrases = phrases
+    case .goToNextPhrase:
+        newState.phraseIndex = (newState.phraseIndex + 1) % newState.allLearningPhrases.count
     case .fetchAllPhrases,
             .failedToFetchAllPhrases,
             .fetchAllLearningPhrases:

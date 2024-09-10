@@ -17,7 +17,8 @@ struct FastChineseState {
     var allPhrases: [Phrase] = []
     var allLearningPhrases: [Phrase] = []
 
-    var currentPhrase: Phrase?
+    var currentPhrase: Phrase? // Should be able to remove currentPhrase, and replace with just phraseIndex
+    var phraseIndex: Int = 0
     var userInput: String = ""
     var viewState: PracticeViewState = .normal
 }

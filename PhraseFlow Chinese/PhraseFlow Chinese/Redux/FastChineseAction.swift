@@ -14,4 +14,6 @@ enum FastChineseAction {
 
     case fetchAllLearningPhrases
     case onFetchedAllLearningPhrases([Phrase])
+
+    case goToNextPhrase
 }
