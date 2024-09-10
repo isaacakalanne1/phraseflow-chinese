@@ -16,4 +16,6 @@ enum FastChineseAction {
     case onFetchedAllLearningPhrases([Phrase])
 
     case goToNextPhrase
+    case preloadAudio
+    case failedToPreloadAudio
 }

@@ -13,6 +13,6 @@ struct Phrase: Identifiable, Codable, Equatable {
     let pinyin: String
     let english: String
 
-    // Add an array to store timestamps for each character
+    var audioData: Data?
     var characterTimestamps: [TimeInterval] = []
 }

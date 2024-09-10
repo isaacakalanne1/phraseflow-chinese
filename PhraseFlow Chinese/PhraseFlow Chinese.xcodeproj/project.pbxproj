@@ -28,6 +28,8 @@
 		BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB142C90CF7400699E7D /* FastChineseDataStore.swift */; };
 		BB4EDB172C90D20300699E7D /* FastChineseServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB162C90D20300699E7D /* FastChineseServices.swift */; };
 		BB4EDB192C90D55C00699E7D /* PracticeViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB182C90D55C00699E7D /* PracticeViewState.swift */; };
+		BB4EDB1B2C90DF8C00699E7D /* URL+ConvertPCM.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB1A2C90DF8C00699E7D /* URL+ConvertPCM.swift */; };
+		BB4EDB1D2C90DFDD00699E7D /* FastChineseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB1C2C90DFDD00699E7D /* FastChineseRepository.swift */; };
 		BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -75,6 +77,8 @@
 		BB4EDB142C90CF7400699E7D /* FastChineseDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseDataStore.swift; sourceTree = "<group>"; };
 		BB4EDB162C90D20300699E7D /* FastChineseServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseServices.swift; sourceTree = "<group>"; };
 		BB4EDB182C90D55C00699E7D /* PracticeViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeViewState.swift; sourceTree = "<group>"; };
+		BB4EDB1A2C90DF8C00699E7D /* URL+ConvertPCM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+ConvertPCM.swift"; sourceTree = "<group>"; };
+		BB4EDB1C2C90DFDD00699E7D /* FastChineseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseRepository.swift; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhraseFlow Chinese.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -136,6 +140,7 @@
 				BB4EDB092C90C8F100699E7D /* FastChineseEnvironment.swift */,
 				BB4EDB162C90D20300699E7D /* FastChineseServices.swift */,
 				BB4EDB142C90CF7400699E7D /* FastChineseDataStore.swift */,
+				BB4EDB1C2C90DFDD00699E7D /* FastChineseRepository.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -144,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				BB4EDB122C90CBBD00699E7D /* String+Phrase.swift */,
+				BB4EDB1A2C90DF8C00699E7D /* URL+ConvertPCM.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -383,10 +389,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB4EDB1B2C90DF8C00699E7D /* URL+ConvertPCM.swift in Sources */,
 				BB34B2342C8DBC65003B95C4 /* PhraseCategory.swift in Sources */,
 				BB4EDB072C90C8CA00699E7D /* FastChineseAction.swift in Sources */,
 				BBB6EF522C8C86B10079D135 /* Phrase.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */,
+				BB4EDB1D2C90DFDD00699E7D /* FastChineseRepository.swift in Sources */,
 				BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */,
 				BB34B2322C8DBC4E003B95C4 /* PhraseListMode.swift in Sources */,
 				BB4EDB0E2C90CA0300699E7D /* FastChineseMiddleware.swift in Sources */,

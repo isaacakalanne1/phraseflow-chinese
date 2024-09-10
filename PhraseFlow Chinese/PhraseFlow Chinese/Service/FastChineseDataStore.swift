@@ -7,8 +7,13 @@
 
 import Foundation
 
+enum FastChineseDataStoreError: Error {
+    case failedToSaveAudio
+}
+
 protocol FastChineseDataStoreProtocol {
     func fetchLearningPhrases(category: PhraseCategory) -> [Phrase]
+    func saveAudioToTempFile(fileName: String, data: Data) throws -> URL
 }
 
 class FastChineseDataStore: FastChineseDataStoreProtocol {
@@ -19,6 +24,16 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
             return phrases.shuffled()
         }
         return []
+    }
+
+    func saveAudioToTempFile(fileName: String, data: Data) throws -> URL {
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(fileName).wav")
+        do {
+            try data.write(to: tempURL)
+        } catch {
+            throw FastChineseDataStoreError.failedToSaveAudio
+        }
+        return tempURL
     }
 
 }

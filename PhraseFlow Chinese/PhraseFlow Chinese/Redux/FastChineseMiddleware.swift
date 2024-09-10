@@ -29,6 +29,27 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             learningPhrases.append(contentsOf: phrases)
         }
         return .onFetchedAllLearningPhrases(learningPhrases)
+    case .goToNextPhrase:
+        return .preloadAudio
+    case .preloadAudio:
+        do {
+            for i in 0..<1 {
+                let index = (state.phraseIndex + i) % state.allLearningPhrases.count
+                let phrase = state.allLearningPhrases[index]
+                if phrase.audioData == nil {
+                    let audioData = try await environment.fetchSpeech(for: phrase)
+                    let audioURL = try environment.saveAudioToTempFile(fileName: phrase.mandarin, data: audioData)
+                    audioURL.convertAudioFileToPCMArray { result in
+                        guard let audioFrames = try? result.get() else {
+                            return
+                        }
+                    }
+                }
+            }
+        } catch {
+            return .failedToPreloadAudio
+        }
+
     case .onFetchedAllPhrases,
             .failedToFetchAllPhrases,
             .onFetchedAllLearningPhrases:

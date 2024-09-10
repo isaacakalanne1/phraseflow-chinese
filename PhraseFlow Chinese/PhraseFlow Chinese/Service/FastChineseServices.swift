@@ -7,8 +7,13 @@
 
 import Foundation
 
+enum FastChineseServicesError: Error {
+    case failedToCreateSsmlData
+}
+
 protocol FastChineseServicesProtocol {
     func fetchAllPhrases(gid: String) async throws -> [Phrase]
+    func fetchAzureTextToSpeech(phrase: Phrase) async throws -> Data
 }
 
 final class FastChineseServices: FastChineseServicesProtocol {
@@ -22,5 +27,33 @@ final class FastChineseServices: FastChineseServicesProtocol {
         }
         let phrases = csvString.getPhrases()
         return phrases
+    }
+
+
+    func fetchAzureTextToSpeech(phrase: Phrase) async throws -> Data {
+        let subscriptionKey = "144bc0cdea4d44e499927e84e795b27a"
+        let region = "eastus"
+
+        var request = URLRequest(url: URL(string: "https://\(region).tts.speech.microsoft.com/cognitiveservices/v1")!)
+        request.httpMethod = "POST"
+        request.addValue("application/ssml+xml", forHTTPHeaderField: "Content-Type")
+        request.addValue("riff-24khz-16bit-mono-pcm", forHTTPHeaderField: "X-Microsoft-OutputFormat")
+        request.addValue(subscriptionKey, forHTTPHeaderField: "Ocp-Apim-Subscription-Key")
+
+        let ssml = """
+        <speak version='1.0' xml:lang='zh-CN'>
+            <voice name='zh-CN-XiaoxiaoNeural'>
+                \(phrase.mandarin)
+            </voice>
+        </speak>
+        """
+        
+        guard let ssmlData = ssml.data(using: .utf8) else {
+            throw FastChineseServicesError.failedToCreateSsmlData
+        }
+
+
+        let (data, response) = try await URLSession.shared.upload(for: request, from: ssmlData)
+        return data
     }
 }
