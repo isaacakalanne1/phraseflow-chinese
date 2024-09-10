@@ -15,17 +15,19 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     switch action {
     case .onFetchedAllPhrases(let phrases):
         newState.allPhrases = phrases
-    case .onFetchedAllLearningPhrases(let phrases):
-        newState.allLearningPhrases = phrases
     case .goToNextPhrase:
         newState.phraseIndex = (newState.phraseIndex + 1) % newState.allLearningPhrases.count
 
-    case .updatePhraseAudioAtIndex(let index, let audioData):
-        newState.allLearningPhrases[index].audioData = audioData
-    case .onSegmentedPhraseAudioAtIndex(let index, let segments):
-        let startTimes: [Double] = segments.map { Double($0.startTime + 50)/1000 }
-        let timestamps = startTimes.map { TimeInterval($0) }
-        newState.allLearningPhrases[index].characterTimestamps = timestamps
+    case .updatePhraseAudio(let phrase, let audioData):
+        if let index = newState.allPhrases.firstIndex(where: { $0.mandarin == phrase.mandarin }) {
+            newState.allPhrases[index].audioData = audioData
+        }
+    case .onSegmentedPhraseAudio(let phrase, let segments):
+        if let index = newState.allPhrases.firstIndex(where: { $0.mandarin == phrase.mandarin }) {
+            let startTimes: [Double] = segments.map { Double($0.startTime + 50)/1000 }
+            let timestamps = startTimes.map { TimeInterval($0) }
+            newState.allPhrases[index].characterTimestamps = timestamps
+        }
     case .revealAnswer:
         let normalizedUserInput = newState.userInput.normalized
         let normalizedCorrectText = newState.allPhrases[newState.phraseIndex].mandarin.normalized
@@ -33,15 +35,24 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.viewState = normalizedUserInput == normalizedCorrectText ? .revealAnswer : .normal
     case .updateAudioPlayer(let audioPlayer):
         newState.audioPlayer = audioPlayer
-
+    case .updatePhraseToLearning(let phrase):
+        if let index = newState.allPhrases.firstIndex(where: { $0.mandarin == phrase.mandarin }) {
+            newState.allPhrases[index].isLearning = true
+        }
+    case .removePhraseFromLearning(let phrase):
+        if let index = newState.allPhrases.firstIndex(where: { $0.mandarin == phrase.mandarin }) {
+            newState.allPhrases[index].isLearning = false
+        }
     case .fetchAllPhrases,
             .failedToFetchAllPhrases,
-            .fetchAllLearningPhrases,
+            .saveAllPhrases,
+            .failedToSaveAllPhrases,
+            .clearAllLearningPhrases,
             .preloadAudio,
             .failedToPreloadAudio,
-            .transcribePhraseAudioAtIndex,
+            .segmentPhraseAudio,
             .failedToSegmentPhraseAudioAtIndex,
-            .failedToUpdatePhraseAudioAtIndex,
+            .failedToUpdatePhraseAudio,
             .playAudio,
             .onUpdatedAudioPlayer,
             .failedToUpdateAudioPlayer:

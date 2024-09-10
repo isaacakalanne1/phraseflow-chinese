@@ -15,4 +15,6 @@ struct Phrase: Identifiable, Codable, Equatable {
 
     var audioData: Data?
     var characterTimestamps: [TimeInterval] = []
+    var category: PhraseCategory
+    var isLearning = false
 }

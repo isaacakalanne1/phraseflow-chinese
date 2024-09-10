@@ -15,21 +15,31 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
     case .fetchAllPhrases:
         var allPhrases: [Phrase] = []
             do {
-                for sheetId in state.sheetIds {
-                    let phrases = try await environment.fetchAllPhrases(gid: sheetId)
+                for category in PhraseCategory.allCases {
+                    let phrases = try await environment.fetchPhrases(category: category)
                     allPhrases.append(contentsOf: phrases)
                 }
             } catch {
                 return .failedToFetchAllPhrases
             }
         return .onFetchedAllPhrases(allPhrases)
-    case .fetchAllLearningPhrases:
-        var learningPhrases: [Phrase] = []
-        for category in PhraseCategory.allCases {
-            let phrases = environment.fetchLearningPhrases(category: category)
-            learningPhrases.append(contentsOf: phrases)
+    case .onFetchedAllPhrases:
+        return .saveAllPhrases
+    case .fetchSavedPhrases:
+        
+    case .saveAllPhrases:
+        do {
+            try environment.saveAllPhrases(state.allPhrases)
+        } catch {
+            return .failedToSaveAllPhrases
         }
-        return .onFetchedAllLearningPhrases(learningPhrases)
+        return nil
+    case .clearAllLearningPhrases:
+        for category in PhraseCategory.allCases {
+            environment.clearLearningPhrases(category: category)
+        }
+        return nil
+
     case .goToNextPhrase:
         return .preloadAudio
     case .preloadAudio:
@@ -44,7 +54,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
                     let segments = try await environment.transcribe(audioFrames: audioFrames)
                     let startTimes: [Double] = segments.map { Double($0.startTime + 50)/1000 }
                     let segmentTimes = startTimes.map { TimeInterval($0) }
-                    return .updatePhraseAudioAtIndex(index: i, audioData: audioData)
+                    return .updatePhraseAudio(phrase, audioData: audioData)
                 }
             }
         } catch {
@@ -52,20 +62,19 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
         return nil
 
-    case .updatePhraseAudioAtIndex(let index, let audioData):
+    case .updatePhraseAudio(let phrase, let audioData):
         do {
-            let phrase = state.allLearningPhrases[index]
             let audioURL = try environment.saveAudioToTempFile(fileName: phrase.mandarin, data: audioData)
-            return .transcribePhraseAudioAtIndex(index: index, url: audioURL)
+            return .segmentPhraseAudio(phrase, url: audioURL)
         } catch {
-            return .failedToUpdatePhraseAudioAtIndex
+            return .failedToUpdatePhraseAudio
         }
 
-    case .transcribePhraseAudioAtIndex(let index, let audioURL):
+    case .segmentPhraseAudio(let phrase, let audioURL):
         do {
             let audioFrames = try await audioURL.convertAudioFileToPCMArray()
             let segments = try await environment.transcribe(audioFrames: audioFrames)
-            return .onSegmentedPhraseAudioAtIndex(index: index, segments: segments)
+            return .onSegmentedPhraseAudio(phrase, segments: segments)
         } catch {
             return .failedToSegmentPhraseAudioAtIndex
         }
@@ -88,16 +97,17 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         state.audioPlayer?.play()
         return nil
 
-    case .onFetchedAllPhrases,
-            .failedToFetchAllPhrases,
-            .onFetchedAllLearningPhrases,
+    case .failedToFetchAllPhrases,
+            .failedToSaveAllPhrases,
             .revealAnswer,
             .failedToPreloadAudio,
-            .failedToUpdatePhraseAudioAtIndex,
+            .failedToUpdatePhraseAudio,
             .failedToSegmentPhraseAudioAtIndex,
-            .onSegmentedPhraseAudioAtIndex,
+            .onSegmentedPhraseAudio,
             .updateAudioPlayer,
-            .failedToUpdateAudioPlayer:
+            .failedToUpdateAudioPlayer,
+            .updatePhraseToLearning,
+            .removePhraseFromLearning:
         return nil
     }
 }

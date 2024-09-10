@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum PhraseCategory: CaseIterable {
+enum PhraseCategory: CaseIterable, Codable {
     case short, medium, long
 
     var storageKey: String {
@@ -18,6 +18,17 @@ enum PhraseCategory: CaseIterable {
             return "learningMediumPhrases"
         case .long:
             return "learningLongPhrases"
+        }
+    }
+
+    var sheetId: String {
+        switch self {
+        case .short:
+            "0"
+        case .medium:
+            "2033303776"
+        case .long:
+            "547164039"
         }
     }
 }

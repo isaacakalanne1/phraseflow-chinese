@@ -418,7 +418,7 @@ class PhraseViewModel: ObservableObject {
                     let mandarin = columns[0]
                     let pinyin = columns[1]
                     let english = columns[2].trimmingCharacters(in: .whitespacesAndNewlines)
-                    let phrase = Phrase(mandarin: mandarin, pinyin: pinyin, english: english)
+                    let phrase = Phrase(mandarin: mandarin, pinyin: pinyin, english: english, category: .medium)
                     phrases.append(phrase)
                 }
             }

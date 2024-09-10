@@ -9,21 +9,32 @@ import Foundation
 
 enum FastChineseDataStoreError: Error {
     case failedToSaveAudio
+    case failedToDecodePhrases
 }
 
 protocol FastChineseDataStoreProtocol {
-    func fetchLearningPhrases(category: PhraseCategory) -> [Phrase]
+    func fetchSavedPhrases() throws -> [Phrase]
+    func saveAllPhrases(_ phrases: [Phrase]) throws
+    func clearLearningPhrases(category: PhraseCategory)
     func saveAudioToTempFile(fileName: String, data: Data) throws -> URL
 }
 
 class FastChineseDataStore: FastChineseDataStoreProtocol {
 
-    func fetchLearningPhrases(category: PhraseCategory) -> [Phrase] {
-        if let savedShortData = UserDefaults.standard.data(forKey: category.storageKey),
-           let phrases = try? JSONDecoder().decode([Phrase].self, from: savedShortData) {
-            return phrases.shuffled()
+    func fetchSavedPhrases() throws -> [Phrase] {
+        do {
+            if let savedData = UserDefaults.standard.data(forKey: "allPhrasesKey") {
+                let phrases = try JSONDecoder().decode([Phrase].self, from: savedData)
+                return phrases.shuffled()
+            }
+        } catch {
+            throw FastChineseDataStoreError.failedToDecodePhrases
         }
         return []
+    }
+
+    func clearLearningPhrases(category: PhraseCategory) {
+        UserDefaults.standard.removeObject(forKey: category.storageKey)
     }
 
     func saveAudioToTempFile(fileName: String, data: Data) throws -> URL {
@@ -34,6 +45,11 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
             throw FastChineseDataStoreError.failedToSaveAudio
         }
         return tempURL
+    }
+
+    func saveAllPhrases(_ phrases: [Phrase]) throws {
+        let encodedData = try JSONEncoder().encode(phrases)
+        UserDefaults.standard.set(encodedData, forKey: "allPhrasesKey")
     }
 
 }

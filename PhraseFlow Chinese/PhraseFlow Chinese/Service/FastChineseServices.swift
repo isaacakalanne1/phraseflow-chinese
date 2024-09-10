@@ -13,20 +13,20 @@ enum FastChineseServicesError: Error {
 }
 
 protocol FastChineseServicesProtocol {
-    func fetchAllPhrases(gid: String) async throws -> [Phrase]
+    func fetchPhrases(category: PhraseCategory) async throws -> [Phrase]
     func fetchAzureTextToSpeech(phrase: Phrase) async throws -> Data
 }
 
 final class FastChineseServices: FastChineseServicesProtocol {
-    func fetchAllPhrases(gid: String) async throws -> [Phrase] {
+    func fetchPhrases(category: PhraseCategory) async throws -> [Phrase] {
         let spreadsheetId = "19B3xWuRrTMfpva_IJAyRqGN7Lj3aKlZkZW1N7TwesAE"
-        let sheetURL = URL(string: "https://docs.google.com/spreadsheets/d/\(spreadsheetId)/export?format=csv&gid=\(gid)")!
+        let sheetURL = URL(string: "https://docs.google.com/spreadsheets/d/\(spreadsheetId)/export?format=csv&gid=\(category.sheetId)")!
 
         let (data, response) = try await URLSession.shared.data(from: sheetURL)
         guard let csvString = String(data: data, encoding: .utf8) else {
             return []
         }
-        let phrases = csvString.getPhrases()
+        let phrases = csvString.getPhrases(category: category)
         return phrases
     }
 

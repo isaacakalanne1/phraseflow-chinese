@@ -9,14 +9,10 @@ import Foundation
 import AVKit
 
 struct FastChineseState {
-    var sheetIds: [String] = [
-        "0",
-        "2033303776",
-        "547164039"
-    ]
-
     var allPhrases: [Phrase] = []
-    var allLearningPhrases: [Phrase] = []
+    var allLearningPhrases: [Phrase] {
+        allPhrases.filter({ $0.isLearning })
+    }
     var phraseIndex: Int = 0
 
     var currentPhrase: Phrase? {
