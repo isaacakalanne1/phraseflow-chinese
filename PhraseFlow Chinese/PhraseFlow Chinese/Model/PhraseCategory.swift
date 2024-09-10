@@ -10,25 +10,14 @@ import Foundation
 enum PhraseCategory: CaseIterable, Codable {
     case short, medium, long
 
-    var storageKey: String {
+    var quantifier: String {
         switch self {
         case .short:
-            return "learningShortPhrases"
+            "short"
         case .medium:
-            return "learningMediumPhrases"
+            "medium length"
         case .long:
-            return "learningLongPhrases"
-        }
-    }
-
-    var sheetId: String {
-        switch self {
-        case .short:
-            "0"
-        case .medium:
-            "2033303776"
-        case .long:
-            "547164039"
+            "long"
         }
     }
 }

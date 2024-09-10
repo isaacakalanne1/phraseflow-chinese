@@ -10,6 +10,7 @@ import Foundation
 enum FastChineseServicesError: Error {
     case failedToCreateSsmlData
     case failedToEncodeJson
+    case failedToDecodeJson
 }
 
 protocol FastChineseServicesProtocol {
@@ -19,14 +20,31 @@ protocol FastChineseServicesProtocol {
 
 final class FastChineseServices: FastChineseServicesProtocol {
     func fetchPhrases(category: PhraseCategory) async throws -> [Phrase] {
-        let spreadsheetId = "19B3xWuRrTMfpva_IJAyRqGN7Lj3aKlZkZW1N7TwesAE"
-        let sheetURL = URL(string: "https://docs.google.com/spreadsheets/d/\(spreadsheetId)/export?format=csv&gid=\(category.sheetId)")!
+        let deploymentId = "gpt-4o-mini"
+        let version = "2024-07-18"
 
-        let (data, response) = try await URLSession.shared.data(from: sheetURL)
-        guard let csvString = String(data: data, encoding: .utf8) else {
-            return []
+        var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
+        request.httpMethod = "POST"
+        request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let requestData = DefineCharacterRequest(messages: [
+            .init(role: "system",
+                  content: """
+                  You are a JSON generator, who takes great pleasure and enjoyment in generating Mandarin phrases. You output only the expected JSON data for the user's input, with no explaining text. You output data in the following format: [ { "mandarin": "你好", "pinyin": "nǐ hǎo", "english": "Hello" }, { "mandarin": "谢谢", "pinyin": "xièxiè", "english": "Thank you" }, { "mandarin": "再见", "pinyin": "zàijiàn", "english": "Goodbye" } ]
+                  """),
+            .init(role: "user",
+                  content: "Write JSON to produce 5 \(category.quantifier) Mandarin phrases")
+        ])
+
+        guard let jsonData = try? JSONEncoder().encode(requestData) else {
+            throw FastChineseServicesError.failedToEncodeJson
         }
-        let phrases = csvString.getPhrases(category: category)
+
+        let (data, response) = try await URLSession.shared.upload(for: request, from: jsonData)
+        guard let phrases = try? JSONDecoder().decode([Phrase].self, from: data) else {
+            throw FastChineseServicesError.failedToDecodeJson
+        }
         return phrases
     }
 

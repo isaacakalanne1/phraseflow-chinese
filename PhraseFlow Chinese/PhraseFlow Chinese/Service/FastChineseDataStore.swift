@@ -15,7 +15,6 @@ enum FastChineseDataStoreError: Error {
 protocol FastChineseDataStoreProtocol {
     func fetchSavedPhrases() throws -> [Phrase]
     func saveAllPhrases(_ phrases: [Phrase]) throws
-    func clearLearningPhrases(category: PhraseCategory)
     func saveAudioToTempFile(fileName: String, data: Data) throws -> URL
 }
 
@@ -31,10 +30,6 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
             throw FastChineseDataStoreError.failedToDecodePhrases
         }
         return []
-    }
-
-    func clearLearningPhrases(category: PhraseCategory) {
-        UserDefaults.standard.removeObject(forKey: category.storageKey)
     }
 
     func saveAudioToTempFile(fileName: String, data: Data) throws -> URL {

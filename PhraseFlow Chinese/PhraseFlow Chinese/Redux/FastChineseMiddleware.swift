@@ -12,21 +12,23 @@ import AVKit
 typealias FastChineseMiddlewareType = Middleware<FastChineseState, FastChineseAction, FastChineseEnvironmentProtocol>
 let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environment in
     switch action {
-    case .fetchAllPhrases:
-        var allPhrases: [Phrase] = []
+    case .fetchNewPhrases(let category):
+        var newPhrases: [Phrase] = []
             do {
-                for category in PhraseCategory.allCases {
-                    let phrases = try await environment.fetchPhrases(category: category)
-                    allPhrases.append(contentsOf: phrases)
-                }
+                newPhrases = try await environment.fetchPhrases(category: category)
             } catch {
                 return .failedToFetchAllPhrases
             }
-        return .onFetchedAllPhrases(allPhrases)
-    case .onFetchedAllPhrases:
+        return .onFetchedNewPhrases(newPhrases)
+    case .onFetchedNewPhrases:
         return .saveAllPhrases
     case .fetchSavedPhrases:
-        
+        do {
+            let phrases = try environment.fetchSavedPhrases()
+            return .onFetchedSavedPhrases(phrases)
+        } catch {
+            return .failedToFetchSavedPhrases
+        }
     case .saveAllPhrases:
         do {
             try environment.saveAllPhrases(state.allPhrases)
@@ -35,10 +37,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
         return nil
     case .clearAllLearningPhrases:
-        for category in PhraseCategory.allCases {
-            environment.clearLearningPhrases(category: category)
-        }
-        return nil
+        return .saveAllPhrases
 
     case .goToNextPhrase:
         return .preloadAudio
@@ -99,6 +98,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
 
     case .failedToFetchAllPhrases,
             .failedToSaveAllPhrases,
+            .onFetchedSavedPhrases,
+            .failedToFetchSavedPhrases,
             .revealAnswer,
             .failedToPreloadAudio,
             .failedToUpdatePhraseAudio,

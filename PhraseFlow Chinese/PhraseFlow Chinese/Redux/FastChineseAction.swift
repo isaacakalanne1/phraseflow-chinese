@@ -10,13 +10,15 @@ import SwiftWhisper
 import AVKit
 
 enum FastChineseAction {
-    case fetchAllPhrases
-    case onFetchedAllPhrases([Phrase])
+    case fetchNewPhrases(PhraseCategory)
+    case onFetchedNewPhrases([Phrase])
     case failedToFetchAllPhrases
 
     case saveAllPhrases
     case failedToSaveAllPhrases
     case fetchSavedPhrases
+    case onFetchedSavedPhrases([Phrase])
+    case failedToFetchSavedPhrases
     case clearAllLearningPhrases
 
     case goToNextPhrase

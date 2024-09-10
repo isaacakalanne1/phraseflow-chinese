@@ -13,7 +13,16 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     var newState = state
 
     switch action {
-    case .onFetchedAllPhrases(let phrases):
+    case .onFetchedNewPhrases(let phrases):
+        newState.allPhrases.insert(contentsOf: phrases, at: 0)
+    case .onFetchedSavedPhrases(let phrases):
+        newState.allPhrases = phrases
+    case .clearAllLearningPhrases:
+        let phrases: [Phrase] = newState.allPhrases.map({ .init(mandarin: $0.mandarin,
+                                                                pinyin: $0.pinyin,
+                                                                english: $0.english,
+                                                                category: $0.category,
+                                                                isLearning: false) })
         newState.allPhrases = phrases
     case .goToNextPhrase:
         newState.phraseIndex = (newState.phraseIndex + 1) % newState.allLearningPhrases.count
@@ -43,11 +52,12 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         if let index = newState.allPhrases.firstIndex(where: { $0.mandarin == phrase.mandarin }) {
             newState.allPhrases[index].isLearning = false
         }
-    case .fetchAllPhrases,
+    case .fetchNewPhrases,
             .failedToFetchAllPhrases,
             .saveAllPhrases,
             .failedToSaveAllPhrases,
-            .clearAllLearningPhrases,
+            .fetchSavedPhrases,
+            .failedToFetchSavedPhrases,
             .preloadAudio,
             .failedToPreloadAudio,
             .segmentPhraseAudio,
