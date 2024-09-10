@@ -9,6 +9,7 @@ import Foundation
 
 enum FastChineseServicesError: Error {
     case failedToCreateSsmlData
+    case failedToEncodeJson
 }
 
 protocol FastChineseServicesProtocol {
@@ -47,13 +48,37 @@ final class FastChineseServices: FastChineseServicesProtocol {
             </voice>
         </speak>
         """
-        
+
         guard let ssmlData = ssml.data(using: .utf8) else {
             throw FastChineseServicesError.failedToCreateSsmlData
         }
 
 
         let (data, response) = try await URLSession.shared.upload(for: request, from: ssmlData)
+        return data
+    }
+
+    func fetchDefinition(of character: String, withinContextOf phrase: String) async throws -> Data {
+        let deploymentId = "gpt-4o-mini"
+        let version = "2024-07-18"
+
+        var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
+        request.httpMethod = "POST"
+        request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let requestData = DefineCharacterRequest(messages: [
+            .init(role: "system",
+                  content: "You are an AI assistant that provides English definitions for characters in Chinese sentences. Your explanations are brief, and simple to understand. You provide the pinyin for the Chinese character in brackets after the Chinese character. If the character is used as part of a larger word or context, you also provide the definition for this overall word or context. If the provided word has multiple characters, you also provide pinyin and definitions for each of the characters. You never repeat the Chinese sentence, and never translate the whole of the Chinese sentence into English."),
+            .init(role: "user",
+                  content: "Provide a definition for \(character) in \(phrase)")
+        ])
+
+        guard let jsonData = try? JSONEncoder().encode(requestData) else {
+            throw FastChineseServicesError.failedToEncodeJson
+        }
+
+        let (data, response) = try await URLSession.shared.upload(for: request, from: jsonData)
         return data
     }
 }

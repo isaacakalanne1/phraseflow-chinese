@@ -7,6 +7,7 @@
 
 import Foundation
 import ReduxKit
+import AVKit
 
 typealias FastChineseMiddlewareType = Middleware<FastChineseState, FastChineseAction, FastChineseEnvironmentProtocol>
 let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environment in
@@ -68,9 +69,27 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .failedToTranscribePhraseAudioAtIndex
         }
 
+    case .playAudio:
+        do {
+            if let audioData = state.currentPhrase?.audioData {
+                let audioPlayer = try AVAudioPlayer(data: audioData)
+                return .updateAudioPlayer(audioPlayer)
+            }
+            return nil
+        } catch {
+            return .failedToUpdateAudioPlayer
+        }
+
+    case .onUpdatedAudioPlayer:
+        state.audioPlayer?.enableRate = true
+        state.audioPlayer?.rate = state.speechSpeed.rate
+        state.audioPlayer?.prepareToPlay()
+        state.audioPlayer?.play()
+
     case .onFetchedAllPhrases,
             .failedToFetchAllPhrases,
-            .onFetchedAllLearningPhrases:
+            .onFetchedAllLearningPhrases,
+            .revealAnswer:
         return nil
     }
 }

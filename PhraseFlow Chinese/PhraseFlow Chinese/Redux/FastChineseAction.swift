@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftWhisper
+import AVKit
 
 enum FastChineseAction {
     case fetchAllPhrases
@@ -27,4 +28,10 @@ enum FastChineseAction {
     case failedToTranscribePhraseAudioAtIndex
     
     case onTranscribedPhraseAudioAtIndex(index: Int, segments: [Segment])
+
+    case revealAnswer
+    case playAudio
+    case updateAudioPlayer(AVAudioPlayer)
+    case onUpdatedAudioPlayer
+    case failedToUpdateAudioPlayer
 }
