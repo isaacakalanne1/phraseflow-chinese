@@ -43,7 +43,6 @@ class PhraseViewModel: ObservableObject {
     private let learningLongKey = "learningLongPhrases"
 
     init() {
-        requestSpeechAuthorization()
         loadPhrasesOnAppLaunch() // Load both short and medium phrases
         loadLearningPhrases() // Load learning phrases from UserDefaults
         loadNextPhrase()
@@ -180,7 +179,8 @@ class PhraseViewModel: ObservableObject {
                     // Segment the audio into timestamps for each character
                     self.segmentAudio(data: audioData, mandarinText: phrase.mandarin) { timestamps in
                         if let timestamps = timestamps {
-                            self.saveCharacterTimestamps(timestamps, for: phrase)
+                            self.currentPhrase?.characterTimestamps = timestamps
+//                            self.saveCharacterTimestamps(timestamps, for: phrase)
                             self.saveLearningPhrases() // Save the updated learning phrases with timestamps
                         }
                     }
@@ -280,33 +280,6 @@ class PhraseViewModel: ObservableObject {
         }
     }
 
-    func requestSpeechAuthorization() {
-        SFSpeechRecognizer.requestAuthorization { authStatus in
-            DispatchQueue.main.async {
-                switch authStatus {
-                case .authorized:
-                    print("Speech recognition authorized")
-                case .denied:
-                    self.showPermissionAlert()
-                case .restricted:
-                    self.showPermissionAlert()
-                case .notDetermined:
-                    self.showPermissionAlert()
-                @unknown default:
-                    self.showPermissionAlert()
-                }
-            }
-        }
-    }
-
-    func showPermissionAlert() {
-        // Show an alert that asks the user to enable speech recognition in settings
-        let alert = UIAlertController(title: "Speech Recognition Permission Required", message: "Please enable speech recognition in the device settings.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
-    }
-
-
     func segmentAudio(data: Data, mandarinText: String, completion: @escaping ([TimeInterval]?) -> Void) {
 
         guard let modelUrl = Bundle.main.url(forResource: "ggml-tiny", withExtension: "bin") else {
@@ -330,8 +303,12 @@ class PhraseViewModel: ObservableObject {
                 Task {
                     let segments = try await whisper.transcribe(audioFrames: audioFrames)
                     print("Transcribed audio:", segments.map(\.text).joined())
-                    let segment = segments[1]
+                    let segment = segments[2]
                     print("First text is \(segment.text)")
+//                    let startTimes: [Double] = segments.map { Double($0.startTime + 50)/1000 } Maybe add the extra 50, if consistently tends to start segment a touch early
+                    let startTimes: [Double] = segments.map { Double($0.startTime + 50)/1000 }
+                    let segmentTimes = startTimes.map { TimeInterval($0) }
+                    completion(segmentTimes)
                 }
             case .failure(let failure):
                 break
@@ -473,6 +450,63 @@ class PhraseViewModel: ObservableObject {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, error == nil {
                 DispatchQueue.main.async {
+                    completion(data)  // Return the audio data directly
+                }
+            } else {
+                print("Error fetching audio: \(error?.localizedDescription ?? "Unknown error")")
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
+            }
+        }
+        task.resume()
+    }
+
+    struct DefineCharacterRequest: Codable {
+        var messages: [MessageBody]
+
+        struct MessageBody: Codable {
+            var role: String
+            var content: [MessageContent]
+
+            struct MessageContent: Codable {
+                var type: String
+                var text: String
+            }
+        }
+    }
+
+    // Azure TTS API call (fetch data directly)
+    func fetchAzureCharacterDefinition(character: String, phrase: String, completion: @escaping (Data?) -> Void) {
+//        let subscriptionKey = "144bc0cdea4d44e499927e84e795b27a"
+        let deploymentId = "gpt-4o-mini"
+        let version = "2024-07-18"
+
+        var request = URLRequest(url: URL(string: "https://smileydude-fastchinese-definitions.openai.azure.com/openai/deployments/\(deploymentId)/completions?api-version=\(version)")!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "api-key")
+        request.addValue("657ef49baa5845bebc0d510213a06719", forHTTPHeaderField: "Content-Type")
+//        request.addValue(subscriptionKey, forHTTPHeaderField: "Ocp-Apim-Subscription-Key")
+
+        let requestData = DefineCharacterRequest(messages: [
+            .init(role: "system",
+                  content: [
+                    .init(type: "text",
+                          text: "You are an AI assistant that provides English definitions for characters in Chinese sentences. Your explanations are brief, and simple to understand. You provide the pinyin for the Chinese character in brackets after the Chinese character. If the character is used as part of a larger word or context, you also provide the definition for this overall word or context. If the provided word has multiple characters, you also provide pinyin and definitions for each of the characters. You never repeat the Chinese sentence, and never translate the whole of the Chinese sentence into English.")
+                  ]),
+            .init(role: "user",
+                  content: [.init(type: "text",
+                                  text: "Provide a definition for \(character) in \(phrase)")])
+        ])
+        guard let data = try? JSONEncoder().encode(requestData) else {
+            return
+        }
+        request.httpBody = data
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data, error == nil {
+                DispatchQueue.main.async {
+                    print(String(data: data, encoding: .utf8))
                     completion(data)  // Return the audio data directly
                 }
             } else {

@@ -43,9 +43,12 @@ struct ContentView: View {
                             Text(String(character))
                                 .font(.largeTitle)
                                 .opacity(selectedMode != .listeningMode ? 1 : viewModel.showCorrectText ? 1 : 0)
-                                .onLongPressGesture {
+                                .onTapGesture {
                                     let characterIndex = currentPhrase.mandarin.distance(from: currentPhrase.mandarin.startIndex, to: index)
                                     viewModel.playAudio(from: characterIndex)  // Send the index of the selected character
+                                    viewModel.fetchAzureCharacterDefinition(character: String(character), phrase: currentPhrase.mandarin) { data in
+
+                                    }
                                 }
                         }
                     }
