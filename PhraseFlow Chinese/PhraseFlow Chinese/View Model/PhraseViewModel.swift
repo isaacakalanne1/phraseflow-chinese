@@ -330,7 +330,7 @@ class PhraseViewModel: ObservableObject {
                 Task {
                     let segments = try await whisper.transcribe(audioFrames: audioFrames)
                     print("Transcribed audio:", segments.map(\.text).joined())
-                    let segment = segments[4]
+                    let segment = segments[1]
                     print("First text is \(segment.text)")
                 }
             case .failure(let failure):
