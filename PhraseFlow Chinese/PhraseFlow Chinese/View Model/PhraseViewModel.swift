@@ -9,6 +9,8 @@ import SwiftUI
 import AVFoundation
 import Combine
 import Speech
+import SwiftWhisper
+import AudioKit
 
 class PhraseViewModel: ObservableObject {
     @Published var phrases = [Phrase]() // All phrases (short + medium)
@@ -163,7 +165,7 @@ class PhraseViewModel: ObservableObject {
         guard !learningPhrases.isEmpty else { return }
 
         // Preload audio for the current phrase and the next 3 phrases
-        for i in 0..<4 {
+        for i in 0..<1 {
             let index = (currentPhraseIndex + i) % learningPhrases.count
             let phrase = learningPhrases[index]
 
@@ -306,8 +308,9 @@ class PhraseViewModel: ObservableObject {
 
 
     func segmentAudio(data: Data, mandarinText: String, completion: @escaping ([TimeInterval]?) -> Void) {
-        // Initialize the speech recognizer and request transcription
-        guard let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "zh-CN")) else {
+
+        guard let modelUrl = Bundle.main.url(forResource: "ggml-tiny", withExtension: "bin") else {
+            print("No model!")
             completion(nil)
             return
         }
@@ -317,29 +320,53 @@ class PhraseViewModel: ObservableObject {
             return
         }
 
-        let request = SFSpeechURLRecognitionRequest(url: url)
-        recognizer.recognitionTask(with: request) { result, error in
-            if let error = error {
-                print("Speech recognition error: \(error.localizedDescription)")
-                completion(nil)
+        convertAudioFileToPCMArray(fileURL: url) { result in
+            switch result {
+            case .success(let audioFrames):
+                let params = WhisperParams()
+                params.max_len = 1
+                params.token_timestamps = true
+                let whisper = Whisper(fromFileURL: modelUrl, withParams: params)
+                Task {
+                    let segments = try await whisper.transcribe(audioFrames: audioFrames)
+                    print("Transcribed audio:", segments.map(\.text).joined())
+                    let segment = segments[4]
+                    print("First text is \(segment.text)")
+                }
+            case .failure(let failure):
+                break
+            }
+        }
+    }
+
+    func convertAudioFileToPCMArray(fileURL: URL, completionHandler: @escaping (Result<[Float], Error>) -> Void) {
+        var options = FormatConverter.Options()
+        options.format = .wav
+        options.sampleRate = 16000
+        options.bitDepth = 16
+        options.channels = 1
+        options.isInterleaved = false
+
+        let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
+        let converter = FormatConverter(inputURL: fileURL, outputURL: tempURL, options: options)
+        converter.start { error in
+            if let error {
+                completionHandler(.failure(error))
                 return
             }
 
-            guard let result = result else {
-                print("No result from speech recognizer")
-                completion(nil)
-                return
-            }
+            let data = try! Data(contentsOf: tempURL) // Handle error here
 
-            var timestamps: [TimeInterval] = []
-            for segment in result.bestTranscription.segments {
-                // Map each character in the Mandarin text to the corresponding timestamp
-                let characterIndex = segment.substringRange.location
-                if characterIndex < mandarinText.count {
-                    timestamps.append(segment.timestamp)
+            let floats = stride(from: 44, to: data.count, by: 2).map {
+                return data[$0..<$0 + 2].withUnsafeBytes {
+                    let short = Int16(littleEndian: $0.load(as: Int16.self))
+                    return max(-1.0, min(Float(short) / 32767.0, 1.0))
                 }
             }
-            completion(timestamps)
+
+            try? FileManager.default.removeItem(at: tempURL)
+
+            completionHandler(.success(floats))
         }
     }
 
