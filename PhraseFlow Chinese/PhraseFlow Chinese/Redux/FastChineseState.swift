@@ -16,4 +16,8 @@ struct FastChineseState {
 
     var allPhrases: [Phrase] = []
     var allLearningPhrases: [Phrase] = []
+
+    var currentPhrase: Phrase?
+    var userInput: String = ""
+    var viewState: PracticeViewState = .normal
 }
