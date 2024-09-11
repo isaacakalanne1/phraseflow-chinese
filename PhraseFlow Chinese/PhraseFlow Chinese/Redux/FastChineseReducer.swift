@@ -24,6 +24,9 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
                                                                 category: $0.category,
                                                                 isLearning: false) })
         newState.allPhrases = phrases
+    case .submitAnswer(let answer):
+        newState.userInput = answer.normalized
+        newState.answerState = newState.currentPhrase?.mandarin.normalized == newState.userInput ? .correct : .wrong
     case .goToNextPhrase:
         newState.phraseIndex = (newState.phraseIndex + 1) % newState.allLearningPhrases.count
 
@@ -38,10 +41,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             newState.allPhrases[index].characterTimestamps = timestamps
         }
     case .revealAnswer:
-        let normalizedUserInput = newState.userInput.normalized
-        let normalizedCorrectText = newState.allPhrases[newState.phraseIndex].mandarin.normalized
-
-        newState.viewState = normalizedUserInput == normalizedCorrectText ? .revealAnswer : .normal
+        newState.viewState = .revealAnswer
     case .updateAudioPlayer(let audioPlayer):
         newState.audioPlayer = audioPlayer
     case .updatePhraseToLearning(let phrase):

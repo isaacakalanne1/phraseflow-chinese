@@ -38,7 +38,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         return nil
     case .clearAllLearningPhrases:
         return .saveAllPhrases
-
+    case .submitAnswer:
+        return .revealAnswer
     case .goToNextPhrase:
         return .preloadAudio
     case .preloadAudio:
@@ -88,7 +89,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToUpdateAudioPlayer
         }
-
+    case .updateAudioPlayer:
+        return .onUpdatedAudioPlayer
     case .onUpdatedAudioPlayer:
         state.audioPlayer?.enableRate = true
         state.audioPlayer?.rate = state.speechSpeed.rate
@@ -105,7 +107,6 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .failedToUpdatePhraseAudio,
             .failedToSegmentPhraseAudioAtIndex,
             .onSegmentedPhraseAudio,
-            .updateAudioPlayer,
             .failedToUpdateAudioPlayer,
             .updatePhraseToLearning,
             .removePhraseFromLearning:

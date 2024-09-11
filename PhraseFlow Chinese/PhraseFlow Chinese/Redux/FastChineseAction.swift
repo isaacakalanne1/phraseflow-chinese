@@ -21,6 +21,7 @@ enum FastChineseAction {
     case failedToFetchSavedPhrases
     case clearAllLearningPhrases
 
+    case submitAnswer(String)
     case goToNextPhrase
     case preloadAudio
     case failedToPreloadAudio

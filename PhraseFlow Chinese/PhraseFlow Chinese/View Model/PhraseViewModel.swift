@@ -223,24 +223,20 @@ class PhraseViewModel: ObservableObject {
         showCorrectText = true
     }
 
-    // Play audio for the current phrase (fetch from cache or Azure)
     func playTextToSpeech() {
         guard let currentPhrase = currentPhrase else { return }
 
-        // Check if audio is already cached
         if let cachedAudio = audioCache[currentPhrase.mandarin] {
             playAudio(from: cachedAudio)
         } else {
-            // Fetch audio from Azure if not cached
             fetchAzureTextToSpeech(phrase: currentPhrase.mandarin) { [weak self] audioData in
                 guard let self = self, let audioData = audioData else { return }
                 self.audioCache[currentPhrase.mandarin] = audioData
 
-                // Segment the audio to get timestamps for each character
                 segmentAudio(data: audioData, mandarinText: currentPhrase.mandarin) { timestamps in
                     if let timestamps = timestamps {
                         self.currentPhrase?.characterTimestamps = timestamps
-                        self.saveLearningPhrases() // Save to UserDefaults
+                        self.saveLearningPhrases()
                     }
                     self.playAudio(from: audioData)
                 }
@@ -248,7 +244,6 @@ class PhraseViewModel: ObservableObject {
         }
     }
 
-    // Function to play the audio directly from data
     private func playAudio(from data: Data) {
         do {
             self.player = try AVAudioPlayer(data: data)

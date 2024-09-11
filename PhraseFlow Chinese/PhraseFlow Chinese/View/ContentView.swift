@@ -8,20 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var viewModel = PhraseViewModel()
+    @EnvironmentObject var store: FastChineseStore
+
     @FocusState var isTextFieldFocused
-    @State private var showPinyinAndEnglish = false // Control when to show Pinyin and English
-    @State private var isCheckButtonVisible = true  // Control the visibility of the "Check" button
     @State private var selectedMode: Mode = .readingMode // Track the selected mode
     @State private var showSettings = false // Control for showing settings sheet
 
     var body: some View {
         VStack(spacing: 20) {
             // Display content or loading
-            if viewModel.phrases.isEmpty {
+            if store.state.allPhrases.isEmpty {
                 Text("Loading phrases...")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else if viewModel.allLearningPhrases.isEmpty {
+            } else if store.state.allLearningPhrases.isEmpty {
                 Button("Get Started") {
                     showSettings = true
                 }
@@ -29,21 +28,22 @@ struct ContentView: View {
                 .background(Color.accentColor)
                 .foregroundColor(.white)
                 .cornerRadius(10)
-            } else if let currentPhrase = viewModel.currentPhrase {
+            } else if let currentPhrase = store.state.currentPhrase {
                 // Display Mandarin text and user interaction buttons
                 Spacer()
                 VStack(spacing: 10) {
                     Text(currentPhrase.pinyin)
                         .font(.title2)
-                        .opacity(showPinyinAndEnglish ? 1 : 0)
+                        .opacity(store.state.viewState == .revealAnswer ? 1 : 0)
 
                     HStack {
                         ForEach(Array(currentPhrase.mandarin.indices), id: \.self) { index in
                             let character = currentPhrase.mandarin[index]
                             Text(String(character))
                                 .font(.largeTitle)
-                                .opacity(selectedMode != .listeningMode ? 1 : viewModel.showCorrectText ? 1 : 0)
+                                .opacity(selectedMode != .listeningMode ? 1 : store.state.viewState == .revealAnswer ? 1 : 0)
                                 .onTapGesture {
+
                                     let characterIndex = currentPhrase.mandarin.distance(from: currentPhrase.mandarin.startIndex, to: index)
                                     viewModel.playAudio(from: characterIndex)  // Send the index of the selected character
                                     viewModel.fetchAzureCharacterDefinition(character: String(character), phrase: currentPhrase.mandarin) { data in
@@ -56,47 +56,43 @@ struct ContentView: View {
                     Text(currentPhrase.english)
                         .font(.title3)
                         .foregroundColor(.gray)
-                        .opacity(showPinyinAndEnglish ? 1 : 0)
+                        .opacity(store.state.viewState == .revealAnswer ? 1 : 0)
                 }
                 .padding(.horizontal)
 
-                Text(viewModel.isCorrect ? "✅ Correct!" : "❌ Incorrect, try again")
-                    .foregroundColor(viewModel.isCorrect ? .green : .red)
+                Text(store.state.answerState == .correct ? "✅ Correct!" : "❌ Incorrect, try again")
+                    .foregroundColor(store.state.answerState == .correct ? .green : .red)
                     .padding(.vertical, 10)
-                    .opacity(viewModel.showCorrectText && selectedMode == .writingMode ? 1 : 0)
+                    .opacity(store.state.viewState == .revealAnswer && selectedMode == .writingMode ? 1 : 0)
 
                 Spacer()
 
                 // User input and interaction buttons (Check, Next)
                 VStack(spacing: 20) {
                     if selectedMode == .writingMode {
-                        TextField("Enter the Chinese text", text: $viewModel.userInput)
+                        TextField("Enter the Chinese text", text: store.state.userInput)
                             .focused($isTextFieldFocused)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .onSubmit {
-                                showPinyinAndEnglish = true
-                                isCheckButtonVisible = false
-                                viewModel.validateInput()
-                                viewModel.playTextToSpeech()
+                                store.dispatch(.submitAnswer)
+                                store.dispatch(.playAudio)
                             }
                     }
 
                     // Check and Next buttons
                     HStack {
                         Button(action: {
-                            viewModel.playTextToSpeech()
+                            store.dispatch(.playAudio)
                         }) {
                             Image(systemName: "play.circle")
                                 .font(.system(size: 50))
                         }
-                        if viewModel.showCorrectText {
+                        if store.state.viewState == .revealAnswer {
                             Button(action: {
                                 isTextFieldFocused = selectedMode == .writingMode
-                                showPinyinAndEnglish = false
-                                isCheckButtonVisible = true
-                                viewModel.loadNextPhrase()
+                                store.dispatch(.goToNextPhrase)
                                 if selectedMode == .listeningMode {
-                                    viewModel.playTextToSpeech()
+                                    store.dispatch(.playAudio)
                                 }
                             }) {
                                 Text("Next")
@@ -109,10 +105,8 @@ struct ContentView: View {
                             }
                         } else {
                             Button(action: {
-                                showPinyinAndEnglish = true
-                                isCheckButtonVisible = false
-                                viewModel.validateInput()
-                                viewModel.playTextToSpeech()
+                                store.dispatch(.revealAnswer)
+                                store.dispatch(.playAudio)
                             }) {
                                 Text("Reveal")
                                     .font(.title2)
@@ -122,7 +116,7 @@ struct ContentView: View {
                                     .foregroundColor(.white)
                                     .cornerRadius(10)
                             }
-                            .opacity(isCheckButtonVisible ? 1 : 0)
+                            .opacity(store.state.viewState == .revealAnswer ? 1 : 0)
                         }
                     }
 
@@ -143,114 +137,7 @@ struct ContentView: View {
         }
         .padding(10)
         .sheet(isPresented: $showSettings) {
-            settingsView()
-        }
-    }
-
-    // Settings view
-    @ViewBuilder
-    private func settingsView() -> some View {
-        NavigationView {
-            VStack(spacing: 20) {
-                Spacer()
-
-                Text("Choose Phrases to Learn")
-                    .font(.title2)
-
-                NavigationLink(destination: PhraseListView(viewModel: viewModel, category: .short)) {
-                    Text("Short")
-                        .font(.body)
-                        .foregroundColor(.primary)
-                        .frame(width: 100)
-                        .padding()
-                        .background(Color.gray.opacity(0.3))
-                        .cornerRadius(10)
-                }
-
-                NavigationLink(destination: PhraseListView(viewModel: viewModel, category: .medium)) {
-                    Text("Medium")
-                        .font(.body)
-                        .foregroundColor(.primary)
-                        .frame(width: 100)
-                        .padding()
-                        .background(Color.gray.opacity(0.3))
-                        .cornerRadius(10)
-                }
-
-                NavigationLink(destination: PhraseListView(viewModel: viewModel, category: .long)) {
-                    Text("Long")
-                        .font(.body)
-                        .foregroundColor(.primary)
-                        .frame(width: 100)
-                        .padding()
-                        .background(Color.gray.opacity(0.3))
-                        .cornerRadius(10)
-                }
-                .padding(.bottom)
-
-                Text("Choose Speech Speed")
-                    .font(.title2)
-
-                HStack {
-                    
-                    Button(action: {
-                        withAnimation(.easeInOut) {
-                            viewModel.speechSpeed = .slow
-                        }
-                    }) {
-                        Text("Slow")
-                            .font(.body)
-                            .foregroundColor(viewModel.speechSpeed == .slow ? .white : .primary)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(viewModel.speechSpeed == .slow ? Color.accentColor : Color.gray.opacity(0.3))
-                            .cornerRadius(10)
-                    }
-                    
-                    Button(action: {
-                        withAnimation(.easeInOut) {
-                            viewModel.speechSpeed = .normal
-                        }
-                    }) {
-                        Text("Normal")
-                            .font(.body)
-                            .foregroundColor(viewModel.speechSpeed == .normal ? .white : .primary)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(viewModel.speechSpeed == .normal ? Color.accentColor : Color.gray.opacity(0.3))
-                            .cornerRadius(10)
-                    }
-                    
-                    Button(action: {
-                        withAnimation(.easeInOut) {
-                            viewModel.speechSpeed = .fast
-                        }
-                    }) {
-                        Text("Fast")
-                            .font(.body)
-                            .foregroundColor(viewModel.speechSpeed == .fast ? .white : .primary)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(viewModel.speechSpeed == .fast ? Color.accentColor : Color.gray.opacity(0.3))
-                            .cornerRadius(10)
-                    }
-                }
-
-                Text("Choose Mode")
-                    .font(.title2)
-
-                HStack(spacing: 10) {
-                    modeButton("Reading", mode: .readingMode)
-                    modeButton("Writing", mode: .writingMode)
-                    modeButton("Listening", mode: .listeningMode)
-                }
-
-                Text("Settings")
-                    .font(.title2.bold())
-                    .padding(.vertical)
-            }
-            .toolbar(.hidden)
-            .padding(.horizontal)
+            SettingsView()
         }
     }
 

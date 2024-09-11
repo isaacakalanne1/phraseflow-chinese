@@ -32,6 +32,8 @@
 		BB4EDB1D2C90DFDD00699E7D /* FastChineseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB1C2C90DFDD00699E7D /* FastChineseRepository.swift */; };
 		BB4EDB1F2C90F3A800699E7D /* String+Normalize.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB1E2C90F3A800699E7D /* String+Normalize.swift */; };
 		BB4EDB222C90F81000699E7D /* DefineCharacterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB212C90F81000699E7D /* DefineCharacterRequest.swift */; };
+		BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB232C91902100699E7D /* SettingsView.swift */; };
+		BB4EDB262C91912000699E7D /* AnswerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB252C91912000699E7D /* AnswerState.swift */; };
 		BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -83,6 +85,8 @@
 		BB4EDB1C2C90DFDD00699E7D /* FastChineseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseRepository.swift; sourceTree = "<group>"; };
 		BB4EDB1E2C90F3A800699E7D /* String+Normalize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Normalize.swift"; sourceTree = "<group>"; };
 		BB4EDB212C90F81000699E7D /* DefineCharacterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefineCharacterRequest.swift; sourceTree = "<group>"; };
+		BB4EDB232C91902100699E7D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		BB4EDB252C91912000699E7D /* AnswerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerState.swift; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhraseFlow Chinese.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -236,6 +240,7 @@
 				BBB6EF512C8C86B10079D135 /* Phrase.swift */,
 				BB4EDB202C90F80400699E7D /* Request */,
 				BB4EDB182C90D55C00699E7D /* PracticeViewState.swift */,
+				BB4EDB252C91912000699E7D /* AnswerState.swift */,
 				BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */,
 				BB34B22F2C8DBC40003B95C4 /* Mode.swift */,
 				BB34B2332C8DBC65003B95C4 /* PhraseCategory.swift */,
@@ -257,6 +262,7 @@
 			children = (
 				BBB6EF282C8C86240079D135 /* ContentView.swift */,
 				BB34B22D2C8DBC2E003B95C4 /* PhraseListView.swift */,
+				BB4EDB232C91902100699E7D /* SettingsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -416,8 +422,10 @@
 				BB4EDB0E2C90CA0300699E7D /* FastChineseMiddleware.swift in Sources */,
 				BB34B2302C8DBC40003B95C4 /* Mode.swift in Sources */,
 				BB4EDB102C90CA4900699E7D /* FastChineseSubscriber.swift in Sources */,
+				BB4EDB262C91912000699E7D /* AnswerState.swift in Sources */,
 				BB4EDB192C90D55C00699E7D /* PracticeViewState.swift in Sources */,
 				BB4EDB132C90CBBD00699E7D /* String+Phrase.swift in Sources */,
+				BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */,
 				BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */,
 				BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */,
 				BBB6EF552C8C873D0079D135 /* PhraseViewModel.swift in Sources */,
