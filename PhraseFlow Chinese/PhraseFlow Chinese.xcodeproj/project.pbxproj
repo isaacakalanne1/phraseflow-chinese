@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */; };
+		BB341F412C91F8AC00A15CE4 /* ggml-tiny.bin in Resources */ = {isa = PBXBuildFile; fileRef = BB341F402C91F8AC00A15CE4 /* ggml-tiny.bin */; };
+		BB341F432C91F8AD00A15CE4 /* ggml-tiny-encoder.mlmodelc in Resources */ = {isa = PBXBuildFile; fileRef = BB341F422C91F8AD00A15CE4 /* ggml-tiny-encoder.mlmodelc */; };
 		BB34B22E2C8DBC2E003B95C4 /* PhraseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34B22D2C8DBC2E003B95C4 /* PhraseListView.swift */; };
 		BB34B2302C8DBC40003B95C4 /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34B22F2C8DBC40003B95C4 /* Mode.swift */; };
 		BB34B2322C8DBC4E003B95C4 /* PhraseListMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34B2312C8DBC4E003B95C4 /* PhraseListMode.swift */; };
@@ -64,6 +66,8 @@
 
 /* Begin PBXFileReference section */
 		BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpeed.swift; sourceTree = "<group>"; };
+		BB341F402C91F8AC00A15CE4 /* ggml-tiny.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = "ggml-tiny.bin"; sourceTree = "<group>"; };
+		BB341F422C91F8AD00A15CE4 /* ggml-tiny-encoder.mlmodelc */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "ggml-tiny-encoder.mlmodelc"; sourceTree = "<group>"; };
 		BB34B22D2C8DBC2E003B95C4 /* PhraseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseListView.swift; sourceTree = "<group>"; };
 		BB34B22F2C8DBC40003B95C4 /* Mode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mode.swift; sourceTree = "<group>"; };
 		BB34B2312C8DBC4E003B95C4 /* PhraseListMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseListMode.swift; sourceTree = "<group>"; };
@@ -182,6 +186,8 @@
 		BBB6EF1A2C8C86240079D135 = {
 			isa = PBXGroup;
 			children = (
+				BB341F402C91F8AC00A15CE4 /* ggml-tiny.bin */,
+				BB341F422C91F8AD00A15CE4 /* ggml-tiny-encoder.mlmodelc */,
 				BBB6EF252C8C86240079D135 /* PhraseFlow Chinese */,
 				BBB6EF362C8C862A0079D135 /* PhraseFlow ChineseTests */,
 				BBB6EF402C8C862A0079D135 /* PhraseFlow ChineseUITests */,
@@ -390,6 +396,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBB6EF2E2C8C86290079D135 /* Preview Assets.xcassets in Resources */,
+				BB341F412C91F8AC00A15CE4 /* ggml-tiny.bin in Resources */,
+				BB341F432C91F8AD00A15CE4 /* ggml-tiny-encoder.mlmodelc in Resources */,
 				BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
