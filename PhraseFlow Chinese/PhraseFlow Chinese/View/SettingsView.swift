@@ -66,7 +66,7 @@ struct SettingsView: View {
                                 store.dispatch(.updatePracticeMode(mode))
                             }
                         }) {
-                            Text("Reading")
+                            Text(mode.title)
                                 .font(.body)
                                 .foregroundColor(store.state.practiceMode == mode ? .white : .primary)
                                 .frame(maxWidth: .infinity)

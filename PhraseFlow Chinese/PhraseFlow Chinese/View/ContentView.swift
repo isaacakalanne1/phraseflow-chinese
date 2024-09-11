@@ -105,7 +105,7 @@ struct ContentView: View {
                             }
                         } else {
                             Button(action: {
-                                store.dispatch(.revealAnswer)
+                                store.dispatch(.submitAnswer)
                                 store.dispatch(.playAudio)
                             }) {
                                 Text("Reveal")

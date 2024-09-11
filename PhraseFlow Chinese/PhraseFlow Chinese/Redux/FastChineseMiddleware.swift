@@ -45,7 +45,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             guard state.allPhrases.count > 0 else {
                 return nil
             }
-            for i in 0..<1 {
+            for i in 0..<2 {
                 if state.allPhrases.count < i {
                     return nil
                 }

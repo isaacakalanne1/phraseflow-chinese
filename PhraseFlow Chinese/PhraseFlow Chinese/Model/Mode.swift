@@ -11,4 +11,15 @@ enum PracticeMode: CaseIterable, Equatable {
     case writing
     case reading
     case listening
+
+    var title: String {
+        switch self {
+        case .writing:
+            "Writing"
+        case .reading:
+            "Reading"
+        case .listening:
+            "Listening"
+        }
+    }
 }

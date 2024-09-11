@@ -25,6 +25,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .goToNextPhrase:
         newState.phraseIndex = (newState.phraseIndex + 1) % newState.allPhrases.count
         newState.viewState = .normal
+        newState.userInput = ""
 
     case .updatePhraseAudio(let phrase, let audioData):
         if let index = newState.allPhrases.firstIndex(where: { $0.mandarin == phrase.mandarin }) {
