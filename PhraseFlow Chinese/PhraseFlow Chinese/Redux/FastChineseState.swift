@@ -10,15 +10,12 @@ import AVKit
 
 struct FastChineseState {
     var allPhrases: [Phrase] = []
-    var allLearningPhrases: [Phrase] {
-        allPhrases.filter({ $0.isLearning })
-    }
     var phraseIndex: Int = 0
 
     var currentPhrase: Phrase? {
-        if !allLearningPhrases.isEmpty,
-           allLearningPhrases.count > phraseIndex {
-            return allLearningPhrases[phraseIndex]
+        if !allPhrases.isEmpty,
+           allPhrases.count > phraseIndex {
+            return allPhrases[phraseIndex]
         }
         return nil
     }

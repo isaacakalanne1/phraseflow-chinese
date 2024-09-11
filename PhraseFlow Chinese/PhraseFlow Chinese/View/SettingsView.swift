@@ -19,7 +19,11 @@ struct SettingsView: View {
                     .font(.title2)
 
                 ForEach(PhraseCategory.allCases, id: \.self) { category in
-                    NavigationLink(destination: PhraseListView(category: .short)) {
+                    Button(action: {
+                        withAnimation(.easeInOut) {
+                            store.dispatch(.fetchNewPhrases(category))
+                        }
+                    }) {
                         Text(category.title)
                             .font(.body)
                             .foregroundColor(.primary)

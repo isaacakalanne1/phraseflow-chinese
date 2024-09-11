@@ -17,10 +17,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             do {
                 newPhrases = try await environment.fetchPhrases(category: category)
             } catch {
-                return .failedToFetchAllPhrases
+                return .failedToFetchNewPhrases
             }
-        return .onFetchedNewPhrases(newPhrases)
-    case .onFetchedNewPhrases:
         return .saveAllPhrases
     case .fetchSavedPhrases:
         do {
@@ -35,25 +33,21 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToSaveAllPhrases
         }
-        return nil
-    case .clearAllLearningPhrases:
-        return .saveAllPhrases
+        return .preloadAudio
     case .submitAnswer:
         return .revealAnswer
     case .goToNextPhrase:
         return .preloadAudio
     case .preloadAudio:
         do {
+            guard state.allPhrases.count > 0 else {
+                return nil
+            }
             for i in 0..<1 {
-                let index = (state.phraseIndex + i) % state.allLearningPhrases.count
-                let phrase = state.allLearningPhrases[index]
+                let index = (state.phraseIndex + i) % state.allPhrases.count
+                let phrase = state.allPhrases[index]
                 if phrase.audioData == nil {
                     let audioData = try await environment.fetchSpeech(for: phrase)
-                    let audioURL = try environment.saveAudioToTempFile(fileName: phrase.mandarin, data: audioData)
-                    let audioFrames = try await audioURL.convertAudioFileToPCMArray()
-                    let segments = try await environment.transcribe(audioFrames: audioFrames)
-                    let startTimes: [Double] = segments.map { Double($0.startTime + 50)/1000 }
-                    let segmentTimes = startTimes.map { TimeInterval($0) }
                     return .updatePhraseAudio(phrase, audioData: audioData)
                 }
             }
@@ -128,7 +122,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         state.audioPlayer?.play()
         return nil
 
-    case .failedToFetchAllPhrases,
+    case .onFetchedNewPhrases,
+            .failedToFetchNewPhrases,
             .failedToSaveAllPhrases,
             .onFetchedSavedPhrases,
             .failedToFetchSavedPhrases,
@@ -138,8 +133,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .failedToSegmentPhraseAudioAtIndex,
             .onSegmentedPhraseAudio,
             .failedToUpdateAudioPlayer,
-            .updatePhraseToLearning,
-            .removePhraseFromLearning,
+            .removePhrase,
             .updateSpeechSpeed,
             .failedToPlayAudioFromIndex,
             .onDefinedCharacter,

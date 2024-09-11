@@ -16,7 +16,6 @@ struct Phrase: Identifiable, Codable, Equatable {
     var audioData: Data? = nil
     var characterTimestamps: [TimeInterval] = []
     var category: PhraseCategory = .short
-    var isLearning = false
 
     // Custom decoder to assign default values
     init(from decoder: Decoder) throws {
@@ -28,14 +27,12 @@ struct Phrase: Identifiable, Codable, Equatable {
         self.audioData = nil
         self.characterTimestamps = []
         self.category = .short // Or provide a category based on context
-        self.isLearning = false
     }
 
     init(mandarin: String,
          pinyin: String,
          english: String,
-         category: PhraseCategory,
-         isLearning: Bool = false) {
+         category: PhraseCategory) {
         self.mandarin = mandarin
         self.pinyin = pinyin
         self.english = english

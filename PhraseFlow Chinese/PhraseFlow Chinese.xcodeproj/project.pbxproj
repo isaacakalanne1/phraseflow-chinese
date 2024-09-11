@@ -10,7 +10,6 @@
 		BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */; };
 		BB341F412C91F8AC00A15CE4 /* ggml-tiny.bin in Resources */ = {isa = PBXBuildFile; fileRef = BB341F402C91F8AC00A15CE4 /* ggml-tiny.bin */; };
 		BB341F432C91F8AD00A15CE4 /* ggml-tiny-encoder.mlmodelc in Resources */ = {isa = PBXBuildFile; fileRef = BB341F422C91F8AD00A15CE4 /* ggml-tiny-encoder.mlmodelc */; };
-		BB34B22E2C8DBC2E003B95C4 /* PhraseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34B22D2C8DBC2E003B95C4 /* PhraseListView.swift */; };
 		BB34B2302C8DBC40003B95C4 /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34B22F2C8DBC40003B95C4 /* Mode.swift */; };
 		BB34B2322C8DBC4E003B95C4 /* PhraseListMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34B2312C8DBC4E003B95C4 /* PhraseListMode.swift */; };
 		BB34B2342C8DBC65003B95C4 /* PhraseCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34B2332C8DBC65003B95C4 /* PhraseCategory.swift */; };
@@ -44,7 +43,6 @@
 		BBB6EF422C8C862A0079D135 /* PhraseFlow_ChineseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF412C8C862A0079D135 /* PhraseFlow_ChineseUITests.swift */; };
 		BBB6EF442C8C862A0079D135 /* PhraseFlow_ChineseUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF432C8C862A0079D135 /* PhraseFlow_ChineseUITestsLaunchTests.swift */; };
 		BBB6EF522C8C86B10079D135 /* Phrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF512C8C86B10079D135 /* Phrase.swift */; };
-		BBB6EF552C8C873D0079D135 /* PhraseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF542C8C873D0079D135 /* PhraseViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,7 +66,6 @@
 		BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpeed.swift; sourceTree = "<group>"; };
 		BB341F402C91F8AC00A15CE4 /* ggml-tiny.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = "ggml-tiny.bin"; sourceTree = "<group>"; };
 		BB341F422C91F8AD00A15CE4 /* ggml-tiny-encoder.mlmodelc */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "ggml-tiny-encoder.mlmodelc"; sourceTree = "<group>"; };
-		BB34B22D2C8DBC2E003B95C4 /* PhraseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseListView.swift; sourceTree = "<group>"; };
 		BB34B22F2C8DBC40003B95C4 /* Mode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mode.swift; sourceTree = "<group>"; };
 		BB34B2312C8DBC4E003B95C4 /* PhraseListMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseListMode.swift; sourceTree = "<group>"; };
 		BB34B2332C8DBC65003B95C4 /* PhraseCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseCategory.swift; sourceTree = "<group>"; };
@@ -102,7 +99,6 @@
 		BBB6EF412C8C862A0079D135 /* PhraseFlow_ChineseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseUITests.swift; sourceTree = "<group>"; };
 		BBB6EF432C8C862A0079D135 /* PhraseFlow_ChineseUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		BBB6EF512C8C86B10079D135 /* Phrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phrase.swift; sourceTree = "<group>"; };
-		BBB6EF542C8C873D0079D135 /* PhraseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,7 +209,6 @@
 				BB4EDB012C90C85000699E7D /* Redux */,
 				BB4EDB082C90C8E100699E7D /* Service */,
 				BBB6EF562C8C87540079D135 /* View */,
-				BBB6EF532C8C87310079D135 /* View Model */,
 				BBB6EF502C8C86A50079D135 /* Model */,
 				BBB6EF2A2C8C86290079D135 /* Assets.xcassets */,
 				BBB6EF2C2C8C86290079D135 /* Preview Content */,
@@ -263,19 +258,10 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		BBB6EF532C8C87310079D135 /* View Model */ = {
-			isa = PBXGroup;
-			children = (
-				BBB6EF542C8C873D0079D135 /* PhraseViewModel.swift */,
-			);
-			path = "View Model";
-			sourceTree = "<group>";
-		};
 		BBB6EF562C8C87540079D135 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				BBB6EF282C8C86240079D135 /* ContentView.swift */,
-				BB34B22D2C8DBC2E003B95C4 /* PhraseListView.swift */,
 				BB4EDB232C91902100699E7D /* SettingsView.swift */,
 			);
 			path = View;
@@ -444,8 +430,6 @@
 				BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */,
 				BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */,
 				BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */,
-				BBB6EF552C8C873D0079D135 /* PhraseViewModel.swift in Sources */,
-				BB34B22E2C8DBC2E003B95C4 /* PhraseListView.swift in Sources */,
 				BB4EDB0C2C90C9A100699E7D /* FastChineseReducer.swift in Sources */,
 				BB4EDB0A2C90C8F100699E7D /* FastChineseEnvironment.swift in Sources */,
 				BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */,

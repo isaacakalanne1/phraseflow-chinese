@@ -15,6 +15,7 @@ enum FastChineseDataStoreError: Error {
 protocol FastChineseDataStoreProtocol {
     func fetchSavedPhrases() throws -> [Phrase]
     func saveAllPhrases(_ phrases: [Phrase]) throws
+    func unsavePhrase(_ phrase: Phrase)
     func saveAudioToTempFile(fileName: String, data: Data) throws -> URL
 }
 
@@ -32,6 +33,17 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
         return []
     }
 
+    func saveAllPhrases(_ phrases: [Phrase]) throws {
+        for phrase in phrases {
+            let encodedData = try JSONEncoder().encode(phrases)
+            UserDefaults.standard.set(encodedData, forKey: phrase.mandarin)
+        }
+    }
+
+    func unsavePhrase(_ phrase: Phrase) {
+        UserDefaults.standard.removeObject(forKey: phrase.mandarin)
+    }
+
     func saveAudioToTempFile(fileName: String, data: Data) throws -> URL {
         let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(fileName).wav")
         do {
@@ -41,10 +53,4 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
         }
         return tempURL
     }
-
-    func saveAllPhrases(_ phrases: [Phrase]) throws {
-        let encodedData = try JSONEncoder().encode(phrases)
-        UserDefaults.standard.set(encodedData, forKey: "allPhrasesKey")
-    }
-
 }

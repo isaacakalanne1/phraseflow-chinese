@@ -22,13 +22,9 @@ struct ContentView: View {
         }
 
         VStack(spacing: 20) {
-            // Display content or loading
             if store.state.allPhrases.isEmpty {
-                Text("Loading phrases...")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else if store.state.allLearningPhrases.isEmpty {
-                Button("Get Started") {
-                    showSettings = true
+                Button("Add New Phrases") {
+                    store.dispatch(.fetchNewPhrases(.short))
                 }
                 .padding()
                 .background(Color.accentColor)
@@ -52,7 +48,7 @@ struct ContentView: View {
                                     store.dispatch(.defineCharacter(String(character)))
                                     let characterIndex = currentPhrase.mandarin.distance(from: currentPhrase.mandarin.startIndex,
                                                                                          to: index)
-//                                    store.dispatch(.playAudioFromIndex(characterIndex))
+                                    store.dispatch(.playAudioFromIndex(characterIndex))
                                 }
                         }
                     }
@@ -120,7 +116,6 @@ struct ContentView: View {
                                     .foregroundColor(.white)
                                     .cornerRadius(10)
                             }
-                            .opacity(store.state.viewState == .revealAnswer ? 1 : 0)
                         }
                     }
 

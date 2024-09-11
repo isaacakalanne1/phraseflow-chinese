@@ -14,14 +14,14 @@ enum FastChineseAction {
     
     case fetchNewPhrases(PhraseCategory)
     case onFetchedNewPhrases([Phrase])
-    case failedToFetchAllPhrases
+    case removePhrase(Phrase)
+    case failedToFetchNewPhrases
 
     case saveAllPhrases
     case failedToSaveAllPhrases
     case fetchSavedPhrases
     case onFetchedSavedPhrases([Phrase])
     case failedToFetchSavedPhrases
-    case clearAllLearningPhrases
 
     case submitAnswer
     case goToNextPhrase
@@ -46,9 +46,6 @@ enum FastChineseAction {
     case defineCharacter(String)
     case onDefinedCharacter(String)
     case failedToDefineCharacter
-
-    case updatePhraseToLearning(Phrase)
-    case removePhraseFromLearning(Phrase)
 
     case updateSpeechSpeed(SpeechSpeed)
     case updatePracticeMode(PracticeMode)
