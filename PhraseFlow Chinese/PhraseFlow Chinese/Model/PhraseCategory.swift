@@ -31,4 +31,14 @@ enum PhraseCategory: CaseIterable, Codable {
             "long"
         }
     }
+
+    var shouldSegment: Bool {
+        switch self {
+        case .short,
+                .medium:
+            false
+        case .long:
+            true
+        }
+    }
 }

@@ -19,7 +19,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             } catch {
                 return .failedToFetchNewPhrases
             }
-        return .saveAllPhrases
+        return .onFetchedNewPhrases(newPhrases)
+    case .onFetchedNewPhrases:
+        return .preloadAudio
     case .fetchSavedPhrases:
         do {
             let phrases = try environment.fetchSavedPhrases()
@@ -44,6 +46,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
                 return nil
             }
             for i in 0..<1 {
+                if state.allPhrases.count < i {
+                    return nil
+                }
                 let index = (state.phraseIndex + i) % state.allPhrases.count
                 let phrase = state.allPhrases[index]
                 if phrase.audioData == nil {
@@ -57,6 +62,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         return nil
 
     case .updatePhraseAudio(let phrase, let audioData):
+        guard phrase.category.shouldSegment else {
+            return nil
+        }
         do {
             let audioURL = try environment.saveAudioToTempFile(fileName: phrase.mandarin, data: audioData)
             return .segmentPhraseAudio(phrase, url: audioURL)
@@ -87,7 +95,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         do {
             guard let currentPhrase = state.currentPhrase,
                   index < currentPhrase.characterTimestamps.count else {
-                return nil
+                return .playAudio
             }
 
             let timestamp = currentPhrase.characterTimestamps[index]
@@ -122,8 +130,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         state.audioPlayer?.play()
         return nil
 
-    case .onFetchedNewPhrases,
-            .failedToFetchNewPhrases,
+    case .failedToFetchNewPhrases,
             .failedToSaveAllPhrases,
             .onFetchedSavedPhrases,
             .failedToFetchSavedPhrases,
