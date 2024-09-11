@@ -34,22 +34,30 @@ struct ContentView: View {
                 // Display Mandarin text and user interaction buttons
                 Spacer()
                 VStack(spacing: 10) {
-                    Text(currentPhrase.pinyin)
-                        .font(.title2)
+                    Text(store.state.currentDefinition.definition)
+                        .font(.body)
                         .opacity(store.state.viewState == .revealAnswer ? 1 : 0)
-
-                    HStack {
+                    
+                    let columnCount = 7
+                    let columns = Array(repeating: GridItem(.fixed(40), spacing: 0), count: columnCount)
+                    LazyVGrid(columns: columns, alignment: currentPhrase.mandarin.count > columnCount ? .leading : .center, spacing: 10) {
                         ForEach(Array(currentPhrase.mandarin.indices), id: \.self) { index in
                             let character = currentPhrase.mandarin[index]
-                            Text(String(character))
-                                .font(.largeTitle)
-                                .opacity(store.state.practiceMode != .listening ? 1 : store.state.viewState == .revealAnswer ? 1 : 0)
-                                .onTapGesture {
-                                    store.dispatch(.defineCharacter(String(character)))
-                                    let characterIndex = currentPhrase.mandarin.distance(from: currentPhrase.mandarin.startIndex,
-                                                                                         to: index)
-                                    store.dispatch(.playAudioFromIndex(characterIndex))
-                                }
+                            let pinyin = String(character).getPinyin()
+                            VStack {
+                                Text(pinyin)
+                                    .font(.footnote)
+                                    .opacity(store.state.viewState == .revealAnswer ? 1 : 0)
+                                Text(String(character))
+                                    .font(.largeTitle)
+                                    .opacity(store.state.practiceMode != .listening ? 1 : store.state.viewState == .revealAnswer ? 1 : 0)
+                                    .onTapGesture {
+                                        store.dispatch(.defineCharacter(String(character)))
+                                        let characterIndex = currentPhrase.mandarin.distance(from: currentPhrase.mandarin.startIndex,
+                                                                                             to: index)
+//                                        store.dispatch(.playAudioFromIndex(characterIndex))
+                                    }
+                            }
                         }
                     }
 

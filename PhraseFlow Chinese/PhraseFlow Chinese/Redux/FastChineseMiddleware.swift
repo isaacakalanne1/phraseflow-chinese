@@ -22,7 +22,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             }
         return .onFetchedNewPhrases(newPhrases)
     case .onFetchedNewPhrases:
-        return .preloadAudio
+        return .saveAllPhrases
     case .fetchSavedPhrases:
         do {
             let phrases = try environment.fetchSavedPhrases()
@@ -74,7 +74,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
                 let audioURL = try environment.saveAudioToTempFile(fileName: phrase.mandarin, data: audioData)
                 audioUrlList.append(audioURL)
             }
-            return .segmentPhrasesAudio(phrases, urlList: audioUrlList)
+            return nil
+//            return .segmentPhrasesAudio(phrases, urlList: audioUrlList)
         } catch {
             return .failedToUpdatePhraseAudio
         }
@@ -85,10 +86,10 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             for (phrase, audioUrl) in zip(phrases, audioUrlList) {
                 let audioFrames = try await audioUrl.convertAudioFileToPCMArray()
                 var segments = try await environment.transcribe(audioFrames: audioFrames)
-                if let firstSegment = segments.first,
-                   firstSegment.text.isEmpty {
-                    segments.removeFirst()
-                }
+//                if let firstSegment = segments.first,
+//                   firstSegment.text.isEmpty {
+//                    segments.removeFirst()
+//                }
                 segmentsList.append(segments)
             }
             return .onSegmentedPhrasesAudio(phrases, segmentsList: segmentsList)
@@ -111,12 +112,12 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
                 return .playAudio
             }
 
-            let startTimeDouble = Double(segment.startTime + 50)/1000
+            let startTimeDouble = Double(segment.startTime)/1000
             let startTime = TimeInterval(startTimeDouble)
 
             if let audioData = state.currentPhrase?.audioData {
                 let player = try AVAudioPlayer(data: audioData)
-                player.currentTime = startTime
+                player.currentTime = startTimeDouble
                 return .updateAudioPlayer(player)
             }
             return nil

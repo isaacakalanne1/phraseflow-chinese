@@ -16,16 +16,17 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .updateUserInput(let string):
         newState.userInput = string
     case .onFetchedNewPhrases(let phrases):
+        newState.allPhrases = newState.allPhrases.shuffled()
         newState.allPhrases.insert(contentsOf: phrases, at: 0)
     case .onFetchedSavedPhrases(let phrases):
-        newState.allPhrases = phrases
-        newState.allPhrases = phrases
+        newState.allPhrases = phrases.shuffled()
     case .submitAnswer:
         newState.answerState = newState.currentPhrase?.mandarin.normalized == newState.userInput.normalized ? .correct : .wrong
     case .goToNextPhrase:
         newState.phraseIndex = (newState.phraseIndex + 1) % newState.allPhrases.count
         newState.viewState = .normal
         newState.userInput = ""
+        newState.currentDefinition = nil
 
     case .updatePhrasesAudio(let phrases, let audioDataList):
         for (phrase, audioData) in zip(phrases, audioDataList) {

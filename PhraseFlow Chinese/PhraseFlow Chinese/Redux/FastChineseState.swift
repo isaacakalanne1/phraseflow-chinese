@@ -26,10 +26,7 @@ struct FastChineseState {
     var speechSpeed: SpeechSpeed = .normal
     var practiceMode: PracticeMode = .reading
     var characterToDefine: String = ""
-    var currentDefinition: Definition = .init(character: "", phrase: .init(mandarin: "",
-                                                                           pinyin: "",
-                                                                           english: "",
-                                                                           category: .medium), definition: "")
+    var currentDefinition: Definition?
 
     var audioPlayer: AVAudioPlayer?
 }
