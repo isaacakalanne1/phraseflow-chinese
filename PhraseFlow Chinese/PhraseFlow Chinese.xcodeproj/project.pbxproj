@@ -14,8 +14,6 @@
 		BB34B2342C8DBC65003B95C4 /* PhraseCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34B2332C8DBC65003B95C4 /* PhraseCategory.swift */; };
 		BB4EDAEE2C9047E000699E7D /* SwiftWhisper in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAED2C9047E000699E7D /* SwiftWhisper */; };
 		BB4EDAF32C90499900699E7D /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAF22C90499900699E7D /* AudioKit */; };
-		BB4EDAF72C904D2500699E7D /* ggml-tiny-encoder.mlmodelc in Resources */ = {isa = PBXBuildFile; fileRef = BB4EDAF62C904D2500699E7D /* ggml-tiny-encoder.mlmodelc */; };
-		BB4EDAF92C904DD300699E7D /* ggml-tiny.bin in Resources */ = {isa = PBXBuildFile; fileRef = BB4EDAF82C904DD300699E7D /* ggml-tiny.bin */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
 		BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FastChineseStore.swift */; };
 		BB4EDB052C90C89C00699E7D /* FastChineseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB042C90C89C00699E7D /* FastChineseState.swift */; };
@@ -34,6 +32,8 @@
 		BB4EDB222C90F81000699E7D /* DefineCharacterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB212C90F81000699E7D /* DefineCharacterRequest.swift */; };
 		BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB232C91902100699E7D /* SettingsView.swift */; };
 		BB4EDB262C91912000699E7D /* AnswerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB252C91912000699E7D /* AnswerState.swift */; };
+		BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */; };
+		BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB2A2C91B35D00699E7D /* Definition.swift */; };
 		BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -68,8 +68,6 @@
 		BB34B22F2C8DBC40003B95C4 /* Mode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mode.swift; sourceTree = "<group>"; };
 		BB34B2312C8DBC4E003B95C4 /* PhraseListMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseListMode.swift; sourceTree = "<group>"; };
 		BB34B2332C8DBC65003B95C4 /* PhraseCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseCategory.swift; sourceTree = "<group>"; };
-		BB4EDAF62C904D2500699E7D /* ggml-tiny-encoder.mlmodelc */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "ggml-tiny-encoder.mlmodelc"; sourceTree = "<group>"; };
-		BB4EDAF82C904DD300699E7D /* ggml-tiny.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = "ggml-tiny.bin"; sourceTree = "<group>"; };
 		BB4EDB022C90C86300699E7D /* FastChineseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseStore.swift; sourceTree = "<group>"; };
 		BB4EDB042C90C89C00699E7D /* FastChineseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseState.swift; sourceTree = "<group>"; };
 		BB4EDB062C90C8CA00699E7D /* FastChineseAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseAction.swift; sourceTree = "<group>"; };
@@ -87,6 +85,8 @@
 		BB4EDB212C90F81000699E7D /* DefineCharacterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefineCharacterRequest.swift; sourceTree = "<group>"; };
 		BB4EDB232C91902100699E7D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		BB4EDB252C91912000699E7D /* AnswerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerState.swift; sourceTree = "<group>"; };
+		BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPhrasesResponse.swift; sourceTree = "<group>"; };
+		BB4EDB2A2C91B35D00699E7D /* Definition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Definition.swift; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhraseFlow Chinese.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -171,11 +171,17 @@
 			path = Request;
 			sourceTree = "<group>";
 		};
+		BB4EDB272C919A3300699E7D /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
 		BBB6EF1A2C8C86240079D135 = {
 			isa = PBXGroup;
 			children = (
-				BB4EDAF82C904DD300699E7D /* ggml-tiny.bin */,
-				BB4EDAF62C904D2500699E7D /* ggml-tiny-encoder.mlmodelc */,
 				BBB6EF252C8C86240079D135 /* PhraseFlow Chinese */,
 				BBB6EF362C8C862A0079D135 /* PhraseFlow ChineseTests */,
 				BBB6EF402C8C862A0079D135 /* PhraseFlow ChineseUITests */,
@@ -238,6 +244,8 @@
 			isa = PBXGroup;
 			children = (
 				BBB6EF512C8C86B10079D135 /* Phrase.swift */,
+				BB4EDB2A2C91B35D00699E7D /* Definition.swift */,
+				BB4EDB272C919A3300699E7D /* Response */,
 				BB4EDB202C90F80400699E7D /* Request */,
 				BB4EDB182C90D55C00699E7D /* PracticeViewState.swift */,
 				BB4EDB252C91912000699E7D /* AnswerState.swift */,
@@ -381,8 +389,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB4EDAF92C904DD300699E7D /* ggml-tiny.bin in Resources */,
-				BB4EDAF72C904D2500699E7D /* ggml-tiny-encoder.mlmodelc in Resources */,
 				BBB6EF2E2C8C86290079D135 /* Preview Assets.xcassets in Resources */,
 				BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */,
 			);
@@ -411,7 +417,9 @@
 			files = (
 				BB4EDB1B2C90DF8C00699E7D /* URL+ConvertPCM.swift in Sources */,
 				BB4EDB1F2C90F3A800699E7D /* String+Normalize.swift in Sources */,
+				BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */,
 				BB34B2342C8DBC65003B95C4 /* PhraseCategory.swift in Sources */,
+				BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */,
 				BB4EDB072C90C8CA00699E7D /* FastChineseAction.swift in Sources */,
 				BBB6EF522C8C86B10079D135 /* Phrase.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */,

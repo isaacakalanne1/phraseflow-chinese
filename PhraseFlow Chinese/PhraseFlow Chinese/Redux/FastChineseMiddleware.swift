@@ -89,6 +89,36 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToUpdateAudioPlayer
         }
+    case .playAudioFromIndex(let index):
+        do {
+            guard let currentPhrase = state.currentPhrase,
+                  index < currentPhrase.characterTimestamps.count else {
+                return nil
+            }
+
+            let timestamp = currentPhrase.characterTimestamps[index]
+            if let audioData = state.currentPhrase?.audioData {
+                let player = try AVAudioPlayer(data: audioData)
+                player.currentTime = timestamp
+                return .updateAudioPlayer(player)
+            }
+            return nil
+        } catch {
+            return .failedToPlayAudioFromIndex
+        }
+    case .defineCharacter(let string):
+        do {
+            guard let mandarinPhrase = state.currentPhrase?.mandarin else {
+                return nil
+            }
+            let response = try await environment.fetchDefinition(of: string, withinContextOf: mandarinPhrase)
+            guard let definition = response.choices.first?.message.content else {
+                return nil
+            }
+            return .onDefinedCharacter(definition)
+        } catch {
+            return .failedToDefineCharacter
+        }
     case .updateAudioPlayer:
         return .onUpdatedAudioPlayer
     case .onUpdatedAudioPlayer:
@@ -110,7 +140,12 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .failedToUpdateAudioPlayer,
             .updatePhraseToLearning,
             .removePhraseFromLearning,
-            .updateSpeechSpeed:
+            .updateSpeechSpeed,
+            .failedToPlayAudioFromIndex,
+            .onDefinedCharacter,
+            .failedToDefineCharacter,
+            .updatePracticeMode,
+            .updateUserInput:
         return nil
     }
 }

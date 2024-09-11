@@ -13,6 +13,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     var newState = state
 
     switch action {
+    case .updateUserInput(let string):
+        newState.userInput = string
     case .onFetchedNewPhrases(let phrases):
         newState.allPhrases.insert(contentsOf: phrases, at: 0)
     case .onFetchedSavedPhrases(let phrases):
@@ -24,9 +26,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
                                                                 category: $0.category,
                                                                 isLearning: false) })
         newState.allPhrases = phrases
-    case .submitAnswer(let answer):
-        newState.userInput = answer.normalized
-        newState.answerState = newState.currentPhrase?.mandarin.normalized == newState.userInput ? .correct : .wrong
+    case .submitAnswer:
+        newState.answerState = newState.currentPhrase?.mandarin.normalized == newState.userInput.normalized ? .correct : .wrong
     case .goToNextPhrase:
         newState.phraseIndex = (newState.phraseIndex + 1) % newState.allLearningPhrases.count
 
@@ -56,6 +57,14 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.speechSpeed = speed
     case .updatePracticeMode(let mode):
         newState.practiceMode = mode
+    case .defineCharacter(let character):
+        newState.characterToDefine = character
+    case .onDefinedCharacter(let definition):
+        if let phrase = newState.currentPhrase {
+            newState.currentDefinition = .init(character: newState.characterToDefine,
+                                               phrase: phrase,
+                                               definition: definition)
+        }
     case .fetchNewPhrases,
             .failedToFetchAllPhrases,
             .saveAllPhrases,
@@ -69,7 +78,10 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             .failedToUpdatePhraseAudio,
             .playAudio,
             .onUpdatedAudioPlayer,
-            .failedToUpdateAudioPlayer:
+            .failedToUpdateAudioPlayer,
+            .playAudioFromIndex,
+            .failedToPlayAudioFromIndex,
+            .failedToDefineCharacter:
         break
     }
 

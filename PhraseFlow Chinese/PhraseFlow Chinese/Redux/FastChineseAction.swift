@@ -10,6 +10,8 @@ import SwiftWhisper
 import AVKit
 
 enum FastChineseAction {
+    case updateUserInput(String)
+    
     case fetchNewPhrases(PhraseCategory)
     case onFetchedNewPhrases([Phrase])
     case failedToFetchAllPhrases
@@ -21,7 +23,7 @@ enum FastChineseAction {
     case failedToFetchSavedPhrases
     case clearAllLearningPhrases
 
-    case submitAnswer(String)
+    case submitAnswer
     case goToNextPhrase
     case preloadAudio
     case failedToPreloadAudio
@@ -35,9 +37,15 @@ enum FastChineseAction {
 
     case revealAnswer
     case playAudio
+    case playAudioFromIndex(Int)
+    case failedToPlayAudioFromIndex
     case updateAudioPlayer(AVAudioPlayer)
     case onUpdatedAudioPlayer
     case failedToUpdateAudioPlayer
+
+    case defineCharacter(String)
+    case onDefinedCharacter(String)
+    case failedToDefineCharacter
 
     case updatePhraseToLearning(Phrase)
     case removePhraseFromLearning(Phrase)

@@ -18,6 +18,8 @@ protocol FastChineseEnvironmentProtocol {
     func fetchSavedPhrases() throws -> [Phrase]
     func saveAudioToTempFile(fileName: String, data: Data) throws -> URL
     func transcribe(audioFrames: [Float]) async throws-> [Segment]
+
+    func fetchDefinition(of character: String, withinContextOf phrase: String) async throws -> GPTResponse
 }
 
 struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
@@ -54,5 +56,9 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
 
     func transcribe(audioFrames: [Float]) async throws -> [Segment] {
         try await repository.transcribe(audioFrames: audioFrames)
+    }
+
+    func fetchDefinition(of string: String, withinContextOf phrase: String) async throws -> GPTResponse {
+        try await service.fetchDefinition(of: string, withinContextOf: phrase)
     }
 }

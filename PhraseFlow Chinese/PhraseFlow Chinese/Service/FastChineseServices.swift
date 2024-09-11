@@ -11,11 +11,13 @@ enum FastChineseServicesError: Error {
     case failedToCreateSsmlData
     case failedToEncodeJson
     case failedToDecodeJson
+    case failedToDecodePhrases
 }
 
 protocol FastChineseServicesProtocol {
     func fetchPhrases(category: PhraseCategory) async throws -> [Phrase]
     func fetchAzureTextToSpeech(phrase: Phrase) async throws -> Data
+    func fetchDefinition(of character: String, withinContextOf phrase: String) async throws -> GPTResponse
 }
 
 final class FastChineseServices: FastChineseServicesProtocol {
@@ -42,8 +44,11 @@ final class FastChineseServices: FastChineseServicesProtocol {
         }
 
         let (data, response) = try await URLSession.shared.upload(for: request, from: jsonData)
-        guard let phrases = try? JSONDecoder().decode([Phrase].self, from: data) else {
+        guard let response = try? JSONDecoder().decode(GPTResponse.self, from: data) else {
             throw FastChineseServicesError.failedToDecodeJson
+        }
+        guard let phrases = response.decodedPhrases(category: category) else {
+            throw FastChineseServicesError.failedToDecodePhrases
         }
         return phrases
     }
@@ -76,7 +81,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         return data
     }
 
-    func fetchDefinition(of character: String, withinContextOf phrase: String) async throws -> Data {
+    func fetchDefinition(of character: String, withinContextOf phrase: String) async throws -> GPTResponse {
         let deploymentId = "gpt-4o-mini"
         let version = "2024-07-18"
 
@@ -97,6 +102,9 @@ final class FastChineseServices: FastChineseServicesProtocol {
         }
 
         let (data, response) = try await URLSession.shared.upload(for: request, from: jsonData)
-        return data
+        guard let response = try? JSONDecoder().decode(GPTResponse.self, from: data) else { // TODO: May need to update decode type to array, depending on API documentation
+            throw FastChineseServicesError.failedToDecodeJson
+        }
+        return response
     }
 }

@@ -14,6 +14,13 @@ struct ContentView: View {
     @State private var showSettings = false // Control for showing settings sheet
 
     var body: some View {
+
+        let userInput: Binding<String> = .init {
+            store.state.userInput
+        } set: { newValue in
+            store.dispatch(.updateUserInput(newValue))
+        }
+
         VStack(spacing: 20) {
             // Display content or loading
             if store.state.allPhrases.isEmpty {
@@ -42,12 +49,10 @@ struct ContentView: View {
                                 .font(.largeTitle)
                                 .opacity(store.state.practiceMode != .listening ? 1 : store.state.viewState == .revealAnswer ? 1 : 0)
                                 .onTapGesture {
-
-                                    let characterIndex = currentPhrase.mandarin.distance(from: currentPhrase.mandarin.startIndex, to: index)
-                                    viewModel.playAudio(from: characterIndex)  // Send the index of the selected character
-                                    viewModel.fetchAzureCharacterDefinition(character: String(character), phrase: currentPhrase.mandarin) { data in
-
-                                    }
+                                    store.dispatch(.defineCharacter(String(character)))
+                                    let characterIndex = currentPhrase.mandarin.distance(from: currentPhrase.mandarin.startIndex,
+                                                                                         to: index)
+//                                    store.dispatch(.playAudioFromIndex(characterIndex))
                                 }
                         }
                     }
@@ -69,7 +74,7 @@ struct ContentView: View {
                 // User input and interaction buttons (Check, Next)
                 VStack(spacing: 20) {
                     if store.state.practiceMode == .writing {
-                        TextField("Enter the Chinese text", text: store.state.userInput)
+                        TextField("Enter the Chinese text", text: userInput)
                             .focused($isTextFieldFocused)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .onSubmit {
