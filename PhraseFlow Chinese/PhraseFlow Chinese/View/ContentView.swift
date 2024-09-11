@@ -34,7 +34,7 @@ struct ContentView: View {
                 // Display Mandarin text and user interaction buttons
                 Spacer()
                 VStack(spacing: 10) {
-                    Text(store.state.currentDefinition.definition)
+                    Text(store.state.currentDefinition?.definition ?? "")
                         .font(.body)
                         .opacity(store.state.viewState == .revealAnswer ? 1 : 0)
                     
