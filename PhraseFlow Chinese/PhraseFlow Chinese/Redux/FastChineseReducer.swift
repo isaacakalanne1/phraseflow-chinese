@@ -27,15 +27,20 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.viewState = .normal
         newState.userInput = ""
 
-    case .updatePhraseAudio(let phrase, let audioData):
-        if let index = newState.allPhrases.firstIndex(where: { $0.mandarin == phrase.mandarin }) {
-            newState.allPhrases[index].audioData = audioData
+    case .updatePhrasesAudio(let phrases, let audioDataList):
+        for (phrase, audioData) in zip(phrases, audioDataList) {
+            if let index = newState.allPhrases.firstIndex(where: { $0.mandarin == phrase.mandarin }) {
+                newState.allPhrases[index].audioData = audioData
+            }
         }
-    case .onSegmentedPhraseAudio(let phrase, let segments):
-        if let index = newState.allPhrases.firstIndex(where: { $0.mandarin == phrase.mandarin }) {
-            let startTimes: [Double] = segments.map { Double($0.startTime + 50)/1000 }
-            let timestamps = startTimes.map { TimeInterval($0) }
-            newState.allPhrases[index].characterTimestamps = timestamps
+    case .onSegmentedPhrasesAudio(let phrases, let segmentsLists):
+        for (phrase, segments) in zip(phrases, segmentsLists) {
+            if let index = newState.allPhrases.firstIndex(where: { $0.mandarin == phrase.mandarin }) {
+                let newSegments: [CodableSegment] = segments.map { .init(startTime: $0.startTime,
+                                                                         endTime: $0.endTime,
+                                                                         text: $0.text) }
+                newState.allPhrases[index].characterSegments = newSegments
+            }
         }
     case .revealAnswer:
         newState.viewState = .revealAnswer
@@ -62,7 +67,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             .failedToFetchSavedPhrases,
             .preloadAudio,
             .failedToPreloadAudio,
-            .segmentPhraseAudio,
+            .segmentPhrasesAudio,
             .failedToSegmentPhraseAudioAtIndex,
             .failedToUpdatePhraseAudio,
             .playAudio,

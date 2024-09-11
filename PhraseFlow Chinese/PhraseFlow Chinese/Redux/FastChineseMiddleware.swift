@@ -8,6 +8,7 @@
 import Foundation
 import ReduxKit
 import AVKit
+import SwiftWhisper
 
 typealias FastChineseMiddlewareType = Middleware<FastChineseState, FastChineseAction, FastChineseEnvironmentProtocol>
 let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environment in
@@ -29,6 +30,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToFetchSavedPhrases
         }
+    case .onFetchedSavedPhrases:
+        return .preloadAudio
     case .saveAllPhrases:
         do {
             try environment.saveAllPhrases(state.allPhrases)
@@ -45,42 +48,53 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             guard state.allPhrases.count > 0 else {
                 return nil
             }
+            var phrases: [Phrase] = []
+            var audioDataList: [Data] = []
             for i in 0..<2 {
-                if state.allPhrases.count < i {
-                    return nil
-                }
                 let index = (state.phraseIndex + i) % state.allPhrases.count
                 let phrase = state.allPhrases[index]
                 if phrase.audioData == nil {
                     let audioData = try await environment.fetchSpeech(for: phrase)
-                    return .updatePhraseAudio(phrase, audioData: audioData)
+                    phrases.append(phrase)
+                    audioDataList.append(audioData)
                 }
             }
+            return .updatePhrasesAudio(phrases, audioDataList: audioDataList)
         } catch {
             return .failedToPreloadAudio
         }
-        return nil
 
-    case .updatePhraseAudio(let phrase, let audioData):
-        guard phrase.category.shouldSegment else {
-            return nil
-        }
+    case .updatePhrasesAudio(let phrases, let audioDataList):
+//        guard phrases.contains(where: { $0.category.shouldSegment }) else {
+//            return nil
+//        }
         do {
-            let audioURL = try environment.saveAudioToTempFile(fileName: phrase.mandarin, data: audioData)
-            return .segmentPhraseAudio(phrase, url: audioURL)
+            var audioUrlList: [URL] = []
+            for (phrase, audioData) in zip(phrases, audioDataList) {
+                let audioURL = try environment.saveAudioToTempFile(fileName: phrase.mandarin, data: audioData)
+                audioUrlList.append(audioURL)
+            }
+            return .segmentPhrasesAudio(phrases, urlList: audioUrlList)
         } catch {
             return .failedToUpdatePhraseAudio
         }
 
-    case .segmentPhraseAudio(let phrase, let audioURL):
+    case .segmentPhrasesAudio(let phrases, let audioUrlList):
+        var segmentsList: [[Segment]] = []
         do {
-            let audioFrames = try await audioURL.convertAudioFileToPCMArray()
-            let segments = try await environment.transcribe(audioFrames: audioFrames)
-            return .onSegmentedPhraseAudio(phrase, segments: segments)
+            for (phrase, audioUrl) in zip(phrases, audioUrlList) {
+                let audioFrames = try await audioUrl.convertAudioFileToPCMArray()
+                var segments = try await environment.transcribe(audioFrames: audioFrames)
+                if let firstSegment = segments.first,
+                   firstSegment.text.isEmpty {
+                    segments.removeFirst()
+                }
+                segmentsList.append(segments)
+            }
+            return .onSegmentedPhrasesAudio(phrases, segmentsList: segmentsList)
         } catch {
             return .failedToSegmentPhraseAudioAtIndex
         }
-
     case .playAudio:
         do {
             if let audioData = state.currentPhrase?.audioData {
@@ -93,15 +107,16 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
     case .playAudioFromIndex(let index):
         do {
-            guard let currentPhrase = state.currentPhrase,
-                  index < currentPhrase.characterTimestamps.count else {
+            guard let segment = state.currentPhrase?.segment(for: index) else {
                 return .playAudio
             }
 
-            let timestamp = currentPhrase.characterTimestamps[index]
+            let startTimeDouble = Double(segment.startTime + 50)/1000
+            let startTime = TimeInterval(startTimeDouble)
+
             if let audioData = state.currentPhrase?.audioData {
                 let player = try AVAudioPlayer(data: audioData)
-                player.currentTime = timestamp
+                player.currentTime = startTime
                 return .updateAudioPlayer(player)
             }
             return nil
@@ -132,13 +147,12 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
 
     case .failedToFetchNewPhrases,
             .failedToSaveAllPhrases,
-            .onFetchedSavedPhrases,
             .failedToFetchSavedPhrases,
             .revealAnswer,
             .failedToPreloadAudio,
             .failedToUpdatePhraseAudio,
             .failedToSegmentPhraseAudioAtIndex,
-            .onSegmentedPhraseAudio,
+            .onSegmentedPhrasesAudio,
             .failedToUpdateAudioPlayer,
             .removePhrase,
             .updateSpeechSpeed,

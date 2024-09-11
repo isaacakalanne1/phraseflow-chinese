@@ -24,6 +24,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
     init() {
         if let modelUrl = Bundle.main.url(forResource: "ggml-tiny", withExtension: "bin") {
             let params = WhisperParams()
+            params.language = .chinese
             params.max_len = 1
             params.token_timestamps = true
             self.whisper = Whisper(fromFileURL: modelUrl, withParams: params)

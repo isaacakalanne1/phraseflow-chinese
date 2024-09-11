@@ -28,11 +28,11 @@ enum FastChineseAction {
     case preloadAudio
     case failedToPreloadAudio
 
-    case updatePhraseAudio(Phrase, audioData: Data)
+    case updatePhrasesAudio([Phrase], audioDataList: [Data])
     case failedToUpdatePhraseAudio
 
-    case segmentPhraseAudio(Phrase, url: URL)
-    case onSegmentedPhraseAudio(Phrase, segments: [Segment])
+    case segmentPhrasesAudio([Phrase], urlList: [URL])
+    case onSegmentedPhrasesAudio([Phrase], segmentsList: [[Segment]])
     case failedToSegmentPhraseAudioAtIndex
 
     case revealAnswer

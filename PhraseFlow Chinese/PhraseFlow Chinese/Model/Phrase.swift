@@ -6,6 +6,13 @@
 //
 
 import Foundation
+import SwiftWhisper
+
+struct CodableSegment: Equatable, Codable {
+    public let startTime: Int
+    public let endTime: Int
+    public let text: String
+}
 
 struct Phrase: Identifiable, Codable, Equatable {
     var id = UUID() // Use a UUID for easy identification
@@ -14,7 +21,23 @@ struct Phrase: Identifiable, Codable, Equatable {
     let english: String
 
     var audioData: Data? = nil
-    var characterTimestamps: [TimeInterval] = []
+    var characterSegments: [CodableSegment] = []
+//    var segmentationCharacterCount: Int {
+//        characterSegments.reduce(0) { $0 + $1.text.count }
+//    }
+
+    func segment(for index: Int) -> CodableSegment? {
+        var currentCount = 0
+        for segment in characterSegments {
+            let segmentLength = segment.text.count
+            if currentCount <= index && index < currentCount + segmentLength {
+                return segment
+            }
+            currentCount += segmentLength
+        }
+        return nil
+    }
+
     var category: PhraseCategory = .short
 
     // Custom decoder to assign default values
@@ -25,7 +48,7 @@ struct Phrase: Identifiable, Codable, Equatable {
         self.english = try container.decode(String.self, forKey: .english)
 
         self.audioData = nil
-        self.characterTimestamps = []
+        self.characterSegments = []
         self.category = .short // Or provide a category based on context
     }
 
