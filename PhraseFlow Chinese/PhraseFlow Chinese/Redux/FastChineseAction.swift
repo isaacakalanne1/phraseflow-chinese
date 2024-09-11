@@ -41,4 +41,7 @@ enum FastChineseAction {
 
     case updatePhraseToLearning(Phrase)
     case removePhraseFromLearning(Phrase)
+
+    case updateSpeechSpeed(SpeechSpeed)
+    case updatePracticeMode(PracticeMode)
 }

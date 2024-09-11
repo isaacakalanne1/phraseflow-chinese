@@ -8,31 +8,17 @@
 import SwiftUI
 
 struct PhraseListView: View {
-    @ObservedObject var viewModel: PhraseViewModel
+    @EnvironmentObject var store: FastChineseStore
     let category: PhraseCategory
 
     @State private var selectedListMode: PhraseListMode = .toLearn // Default to "To Learn"
 
     var phrasesToDisplay: [Phrase] {
-        switch category {
-        case .short:
-            viewModel.shortPhrases
-        case .medium:
-            viewModel.mediumPhrases
-        case .long:
-            viewModel.longPhrases
-        }
+        store.state.allPhrases.filter({ $0.category == category && !$0.isLearning })
     }
 
     var learningPhrasesToDisplay: [Phrase] {
-        switch category {
-        case .short:
-            viewModel.learningShortPhrases
-        case .medium:
-            viewModel.learningMediumPhrases
-        case .long:
-            viewModel.learningLongPhrases
-        }
+        store.state.allPhrases.filter({ $0.category == category && $0.isLearning })
     }
 
     var body: some View {
@@ -40,12 +26,10 @@ struct PhraseListView: View {
             // List of phrases
             List {
                 if selectedListMode == .toLearn {
-
-
-                    ForEach(phrasesToDisplay.filter { !viewModel.allLearningPhrases.contains($0) }, id: \.mandarin) { phrase in
+                    ForEach(phrasesToDisplay, id: \.mandarin) { phrase in
                         Button(phrase.english) {
                             withAnimation {
-                                viewModel.moveToLearning(phrase: phrase, category: category)
+                                store.dispatch(.updatePhraseToLearning(phrase))
                             }
                         }
                     }
@@ -53,7 +37,7 @@ struct PhraseListView: View {
                     ForEach(learningPhrasesToDisplay, id: \.mandarin) { phrase in
                         Button(phrase.english) {
                             withAnimation {
-                                viewModel.removeFromLearning(phrase: phrase, category: category)
+                                store.dispatch(.removePhraseFromLearning(phrase))
                             }
                         }
                     }

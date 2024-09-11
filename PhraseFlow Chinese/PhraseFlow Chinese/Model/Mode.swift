@@ -7,8 +7,8 @@
 
 import Foundation
 
-enum Mode {
-    case writingMode
-    case readingMode
-    case listeningMode
+enum PracticeMode: CaseIterable, Equatable {
+    case writing
+    case reading
+    case listening
 }

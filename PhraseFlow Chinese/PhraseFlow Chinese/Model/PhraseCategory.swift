@@ -10,6 +10,17 @@ import Foundation
 enum PhraseCategory: CaseIterable, Codable {
     case short, medium, long
 
+    var title: String {
+        switch self {
+        case .short:
+            "Short"
+        case .medium:
+            "Medium"
+        case .long:
+            "Long"
+        }
+    }
+
     var quantifier: String {
         switch self {
         case .short:

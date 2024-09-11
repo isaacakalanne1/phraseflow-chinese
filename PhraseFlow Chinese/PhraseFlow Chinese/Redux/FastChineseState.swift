@@ -27,6 +27,7 @@ struct FastChineseState {
     var viewState: PracticeViewState = .normal
     var answerState: AnswerState = .correct
     var speechSpeed: SpeechSpeed = .normal
+    var practiceMode: PracticeMode = .readingMode
 
     var audioPlayer: AVAudioPlayer?
 }

@@ -11,7 +11,6 @@ struct ContentView: View {
     @EnvironmentObject var store: FastChineseStore
 
     @FocusState var isTextFieldFocused
-    @State private var selectedMode: Mode = .readingMode // Track the selected mode
     @State private var showSettings = false // Control for showing settings sheet
 
     var body: some View {
@@ -41,7 +40,7 @@ struct ContentView: View {
                             let character = currentPhrase.mandarin[index]
                             Text(String(character))
                                 .font(.largeTitle)
-                                .opacity(selectedMode != .listeningMode ? 1 : store.state.viewState == .revealAnswer ? 1 : 0)
+                                .opacity(store.state.practiceMode != .listening ? 1 : store.state.viewState == .revealAnswer ? 1 : 0)
                                 .onTapGesture {
 
                                     let characterIndex = currentPhrase.mandarin.distance(from: currentPhrase.mandarin.startIndex, to: index)
@@ -63,13 +62,13 @@ struct ContentView: View {
                 Text(store.state.answerState == .correct ? "✅ Correct!" : "❌ Incorrect, try again")
                     .foregroundColor(store.state.answerState == .correct ? .green : .red)
                     .padding(.vertical, 10)
-                    .opacity(store.state.viewState == .revealAnswer && selectedMode == .writingMode ? 1 : 0)
+                    .opacity(store.state.viewState == .revealAnswer && store.state.practiceMode == .writing ? 1 : 0)
 
                 Spacer()
 
                 // User input and interaction buttons (Check, Next)
                 VStack(spacing: 20) {
-                    if selectedMode == .writingMode {
+                    if store.state.practiceMode == .writing {
                         TextField("Enter the Chinese text", text: store.state.userInput)
                             .focused($isTextFieldFocused)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -89,9 +88,9 @@ struct ContentView: View {
                         }
                         if store.state.viewState == .revealAnswer {
                             Button(action: {
-                                isTextFieldFocused = selectedMode == .writingMode
+                                isTextFieldFocused = store.state.practiceMode == .writing
                                 store.dispatch(.goToNextPhrase)
-                                if selectedMode == .listeningMode {
+                                if store.state.practiceMode == .listening {
                                     store.dispatch(.playAudio)
                                 }
                             }) {
@@ -138,23 +137,6 @@ struct ContentView: View {
         .padding(10)
         .sheet(isPresented: $showSettings) {
             SettingsView()
-        }
-    }
-
-    // Mode selection buttons
-    func modeButton(_ text: String, mode: Mode) -> some View {
-        Button(action: {
-            withAnimation(.easeInOut) {
-                selectedMode = mode
-            }
-        }) {
-            Text(text)
-                .font(.body)
-                .foregroundColor(selectedMode == mode ? .white : .primary)
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(selectedMode == mode ? Color.accentColor : Color.gray.opacity(0.3))
-                .cornerRadius(10)
         }
     }
 }

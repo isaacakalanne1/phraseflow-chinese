@@ -109,7 +109,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .onSegmentedPhraseAudio,
             .failedToUpdateAudioPlayer,
             .updatePhraseToLearning,
-            .removePhraseFromLearning:
+            .removePhraseFromLearning,
+            .updateSpeechSpeed:
         return nil
     }
 }

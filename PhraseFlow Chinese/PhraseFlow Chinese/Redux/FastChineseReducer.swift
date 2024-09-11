@@ -52,6 +52,10 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         if let index = newState.allPhrases.firstIndex(where: { $0.mandarin == phrase.mandarin }) {
             newState.allPhrases[index].isLearning = false
         }
+    case .updateSpeechSpeed(let speed):
+        newState.speechSpeed = speed
+    case .updatePracticeMode(let mode):
+        newState.practiceMode = mode
     case .fetchNewPhrases,
             .failedToFetchAllPhrases,
             .saveAllPhrases,
