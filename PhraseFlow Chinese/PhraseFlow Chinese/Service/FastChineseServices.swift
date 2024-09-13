@@ -36,7 +36,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
                   You are a JSON generator, who takes great pleasure and enjoyment in generating Mandarin phrases. You output only the expected JSON data for the user's input, with no explaining text. You output data in the following format: [ { "mandarin": "你好", "pinyin": "nǐ hǎo", "english": "Hello" }, { "mandarin": "谢谢", "pinyin": "xièxiè", "english": "Thank you" }, { "mandarin": "再见", "pinyin": "zàijiàn", "english": "Goodbye" } ]
                   """),
             .init(role: "user",
-                  content: "Write JSON to produce 5 \(category.quantifier) Mandarin phrases")
+                  content: "Write JSON to produce 5 \(category.quantifier) Mandarin phrases. Ensure the correct tones are used, including neutral tones, and changing tones such as those for 不 and 一")
         ])
 
         guard let jsonData = try? JSONEncoder().encode(requestData) else {
@@ -92,7 +92,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
         let requestData = DefineCharacterRequest(messages: [
             .init(role: "system",
-                  content: "You are an AI assistant that provides English definitions for characters in Chinese sentences. Your explanations are brief, and simple to understand. You provide the pinyin for the Chinese character in brackets after the Chinese character. If the character is used as part of a larger word or context, you also provide the definition for this overall word or context. If the provided word has multiple characters, you also provide pinyin and definitions for each of the characters. You never repeat the Chinese sentence, and never translate the whole of the Chinese sentence into English."),
+                  content: "You are an AI assistant that provides English definitions for characters in Chinese sentences. Your explanations are brief, and simple to understand. You provide the pinyin for the Chinese character in brackets after the Chinese character. If the character is used as part of a larger word, you also provide the pinyin and definition for each character in this overall word. You never repeat the Chinese sentence, and never translate the whole of the Chinese sentence into English."),
             .init(role: "user",
                   content: "Provide a definition for \(character) in \(phrase)")
         ])

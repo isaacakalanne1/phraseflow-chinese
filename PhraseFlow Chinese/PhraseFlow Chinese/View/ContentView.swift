@@ -37,10 +37,10 @@ struct ContentView: View {
                     Text(store.state.currentDefinition?.definition ?? "")
                         .font(.body)
                         .opacity(store.state.viewState == .revealAnswer ? 1 : 0)
-                    
-                    let columnCount = 7
-                    let columns = Array(repeating: GridItem(.fixed(40), spacing: 0), count: columnCount)
-                    LazyVGrid(columns: columns, alignment: currentPhrase.mandarin.count > columnCount ? .leading : .center, spacing: 10) {
+
+                    let maxColumnCount = 7
+                    let columns = Array(repeating: GridItem(.fixed(40), spacing: 0), count: currentPhrase.mandarin.count < maxColumnCount ? currentPhrase.mandarin.count : maxColumnCount)
+                    LazyVGrid(columns: columns, spacing: 10) {
                         ForEach(Array(currentPhrase.mandarin.indices), id: \.self) { index in
                             let character = currentPhrase.mandarin[index]
                             let pinyin = String(character).getPinyin()
@@ -51,12 +51,12 @@ struct ContentView: View {
                                 Text(String(character))
                                     .font(.largeTitle)
                                     .opacity(store.state.practiceMode != .listening ? 1 : store.state.viewState == .revealAnswer ? 1 : 0)
-                                    .onTapGesture {
-                                        store.dispatch(.defineCharacter(String(character)))
-                                        let characterIndex = currentPhrase.mandarin.distance(from: currentPhrase.mandarin.startIndex,
-                                                                                             to: index)
+                            }
+                            .onTapGesture {
+                                store.dispatch(.defineCharacter(String(character)))
+//                                        let characterIndex = currentPhrase.mandarin.distance(from: currentPhrase.mandarin.startIndex,
+//                                                                                             to: index)
 //                                        store.dispatch(.playAudioFromIndex(characterIndex))
-                                    }
                             }
                         }
                     }

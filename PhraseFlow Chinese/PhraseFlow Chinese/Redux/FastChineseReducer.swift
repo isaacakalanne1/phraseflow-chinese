@@ -17,7 +17,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.userInput = string
     case .onFetchedNewPhrases(let phrases):
         newState.allPhrases = newState.allPhrases.shuffled()
-        newState.allPhrases.insert(contentsOf: phrases, at: 0)
+        newState.allPhrases.insert(contentsOf: phrases.shuffled(), at: 0)
+        newState.phraseIndex = 0
     case .onFetchedSavedPhrases(let phrases):
         newState.allPhrases = phrases.shuffled()
     case .submitAnswer:

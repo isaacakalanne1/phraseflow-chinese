@@ -34,10 +34,8 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
     }
 
     func saveAllPhrases(_ phrases: [Phrase]) throws {
-        for phrase in phrases {
-            let encodedData = try JSONEncoder().encode(phrases)
-            UserDefaults.standard.set(encodedData, forKey: phrase.mandarin)
-        }
+        let encodedData = try JSONEncoder().encode(phrases)
+        UserDefaults.standard.set(encodedData, forKey: "allPhrasesKey")
     }
 
     func unsavePhrase(_ phrase: Phrase) {
