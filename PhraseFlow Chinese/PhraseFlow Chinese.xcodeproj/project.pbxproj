@@ -8,8 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */; };
-		BB341F412C91F8AC00A15CE4 /* ggml-tiny.bin in Resources */ = {isa = PBXBuildFile; fileRef = BB341F402C91F8AC00A15CE4 /* ggml-tiny.bin */; };
-		BB341F432C91F8AD00A15CE4 /* ggml-tiny-encoder.mlmodelc in Resources */ = {isa = PBXBuildFile; fileRef = BB341F422C91F8AD00A15CE4 /* ggml-tiny-encoder.mlmodelc */; };
+		BB27D75B2C94C65A007BC428 /* cedict_ts.txt in Resources */ = {isa = PBXBuildFile; fileRef = BB27D75A2C94C65A007BC428 /* cedict_ts.txt */; };
 		BB341F492C9247B900A15CE4 /* String+Pinyin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB341F482C9247B900A15CE4 /* String+Pinyin.swift */; };
 		BB34B2302C8DBC40003B95C4 /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34B22F2C8DBC40003B95C4 /* Mode.swift */; };
 		BB34B2322C8DBC4E003B95C4 /* PhraseListMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34B2312C8DBC4E003B95C4 /* PhraseListMode.swift */; };
@@ -65,8 +64,7 @@
 
 /* Begin PBXFileReference section */
 		BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpeed.swift; sourceTree = "<group>"; };
-		BB341F402C91F8AC00A15CE4 /* ggml-tiny.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = "ggml-tiny.bin"; sourceTree = "<group>"; };
-		BB341F422C91F8AD00A15CE4 /* ggml-tiny-encoder.mlmodelc */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "ggml-tiny-encoder.mlmodelc"; sourceTree = "<group>"; };
+		BB27D75A2C94C65A007BC428 /* cedict_ts.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cedict_ts.txt; sourceTree = "<group>"; };
 		BB341F482C9247B900A15CE4 /* String+Pinyin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Pinyin.swift"; sourceTree = "<group>"; };
 		BB34B22F2C8DBC40003B95C4 /* Mode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mode.swift; sourceTree = "<group>"; };
 		BB34B2312C8DBC4E003B95C4 /* PhraseListMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseListMode.swift; sourceTree = "<group>"; };
@@ -185,8 +183,7 @@
 		BBB6EF1A2C8C86240079D135 = {
 			isa = PBXGroup;
 			children = (
-				BB341F402C91F8AC00A15CE4 /* ggml-tiny.bin */,
-				BB341F422C91F8AD00A15CE4 /* ggml-tiny-encoder.mlmodelc */,
+				BB27D75A2C94C65A007BC428 /* cedict_ts.txt */,
 				BBB6EF252C8C86240079D135 /* PhraseFlow Chinese */,
 				BBB6EF362C8C862A0079D135 /* PhraseFlow ChineseTests */,
 				BBB6EF402C8C862A0079D135 /* PhraseFlow ChineseUITests */,
@@ -247,16 +244,16 @@
 		BBB6EF502C8C86A50079D135 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				BBB6EF512C8C86B10079D135 /* Phrase.swift */,
-				BB4EDB2A2C91B35D00699E7D /* Definition.swift */,
-				BB4EDB272C919A3300699E7D /* Response */,
 				BB4EDB202C90F80400699E7D /* Request */,
-				BB4EDB182C90D55C00699E7D /* PracticeViewState.swift */,
+				BB4EDB272C919A3300699E7D /* Response */,
 				BB4EDB252C91912000699E7D /* AnswerState.swift */,
-				BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */,
+				BB4EDB2A2C91B35D00699E7D /* Definition.swift */,
 				BB34B22F2C8DBC40003B95C4 /* Mode.swift */,
+				BBB6EF512C8C86B10079D135 /* Phrase.swift */,
 				BB34B2332C8DBC65003B95C4 /* PhraseCategory.swift */,
 				BB34B2312C8DBC4E003B95C4 /* PhraseListMode.swift */,
+				BB4EDB182C90D55C00699E7D /* PracticeViewState.swift */,
+				BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -385,9 +382,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBB6EF2E2C8C86290079D135 /* Preview Assets.xcassets in Resources */,
-				BB341F412C91F8AC00A15CE4 /* ggml-tiny.bin in Resources */,
-				BB341F432C91F8AD00A15CE4 /* ggml-tiny-encoder.mlmodelc in Resources */,
 				BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */,
+				BB27D75B2C94C65A007BC428 /* cedict_ts.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
