@@ -49,4 +49,8 @@ enum FastChineseAction {
 
     case updateSpeechSpeed(SpeechSpeed)
     case updatePracticeMode(PracticeMode)
+
+    case fetchChineseDictionary
+    case onFetchedChineseDictionary([String: Phrase])
+    case failedToFetchChineseDictionary
 }

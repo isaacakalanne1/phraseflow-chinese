@@ -60,6 +60,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
                                                phrase: phrase,
                                                definition: definition)
         }
+    case .onFetchedChineseDictionary(let dictionary):
+        newState.dictionary = dictionary
     case .fetchNewPhrases,
             .failedToFetchNewPhrases,
             .removePhrase,
@@ -77,7 +79,9 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             .failedToUpdateAudioPlayer,
             .playAudioFromIndex,
             .failedToPlayAudioFromIndex,
-            .failedToDefineCharacter:
+            .failedToDefineCharacter,
+            .fetchChineseDictionary,
+            .failedToFetchChineseDictionary:
         break
     }
 

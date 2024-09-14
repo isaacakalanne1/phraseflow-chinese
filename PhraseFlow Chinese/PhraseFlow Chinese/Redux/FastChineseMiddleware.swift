@@ -146,6 +146,17 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         state.audioPlayer?.play()
         return nil
 
+    case .fetchChineseDictionary:
+        var dictionary: [String: Phrase]
+        do {
+            guard let fileURL = Bundle.main.url(forResource: "cedict_ts", withExtension: "txt") else { return nil }
+            let fileContents = try String(contentsOf: fileURL, encoding: .utf8)
+            dictionary = fileContents.convertDictionaryToPhrases()
+        } catch {
+            return .failedToFetchChineseDictionary
+        }
+        return .onFetchedChineseDictionary(dictionary)
+
     case .failedToFetchNewPhrases,
             .failedToSaveAllPhrases,
             .failedToFetchSavedPhrases,
@@ -161,7 +172,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .onDefinedCharacter,
             .failedToDefineCharacter,
             .updatePracticeMode,
-            .updateUserInput:
+            .updateUserInput,
+            .onFetchedChineseDictionary,
+            .failedToFetchChineseDictionary:
         return nil
     }
 }

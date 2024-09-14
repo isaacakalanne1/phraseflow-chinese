@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */; };
 		BB27D75B2C94C65A007BC428 /* cedict_ts.txt in Resources */ = {isa = PBXBuildFile; fileRef = BB27D75A2C94C65A007BC428 /* cedict_ts.txt */; };
+		BB27D75D2C94C715007BC428 /* String+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB27D75C2C94C715007BC428 /* String+Dictionary.swift */; };
+		BB27D75F2C94C767007BC428 /* String+Tone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB27D75E2C94C767007BC428 /* String+Tone.swift */; };
 		BB341F492C9247B900A15CE4 /* String+Pinyin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB341F482C9247B900A15CE4 /* String+Pinyin.swift */; };
 		BB34B2302C8DBC40003B95C4 /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34B22F2C8DBC40003B95C4 /* Mode.swift */; };
 		BB34B2322C8DBC4E003B95C4 /* PhraseListMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34B2312C8DBC4E003B95C4 /* PhraseListMode.swift */; };
@@ -65,6 +67,8 @@
 /* Begin PBXFileReference section */
 		BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpeed.swift; sourceTree = "<group>"; };
 		BB27D75A2C94C65A007BC428 /* cedict_ts.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cedict_ts.txt; sourceTree = "<group>"; };
+		BB27D75C2C94C715007BC428 /* String+Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Dictionary.swift"; sourceTree = "<group>"; };
+		BB27D75E2C94C767007BC428 /* String+Tone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Tone.swift"; sourceTree = "<group>"; };
 		BB341F482C9247B900A15CE4 /* String+Pinyin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Pinyin.swift"; sourceTree = "<group>"; };
 		BB34B22F2C8DBC40003B95C4 /* Mode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mode.swift; sourceTree = "<group>"; };
 		BB34B2312C8DBC4E003B95C4 /* PhraseListMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseListMode.swift; sourceTree = "<group>"; };
@@ -157,6 +161,8 @@
 			isa = PBXGroup;
 			children = (
 				BB4EDB122C90CBBD00699E7D /* String+Phrase.swift */,
+				BB27D75C2C94C715007BC428 /* String+Dictionary.swift */,
+				BB27D75E2C94C767007BC428 /* String+Tone.swift */,
 				BB341F482C9247B900A15CE4 /* String+Pinyin.swift */,
 				BB4EDB1E2C90F3A800699E7D /* String+Normalize.swift */,
 				BB4EDB1A2C90DF8C00699E7D /* URL+ConvertPCM.swift */,
@@ -432,8 +438,10 @@
 				BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */,
 				BB4EDB0C2C90C9A100699E7D /* FastChineseReducer.swift in Sources */,
 				BB4EDB0A2C90C8F100699E7D /* FastChineseEnvironment.swift in Sources */,
+				BB27D75F2C94C767007BC428 /* String+Tone.swift in Sources */,
 				BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */,
 				BB4EDB172C90D20300699E7D /* FastChineseServices.swift in Sources */,
+				BB27D75D2C94C715007BC428 /* String+Dictionary.swift in Sources */,
 				BB4EDB052C90C89C00699E7D /* FastChineseState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

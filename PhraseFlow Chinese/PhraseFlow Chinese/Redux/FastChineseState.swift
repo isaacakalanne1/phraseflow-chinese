@@ -29,4 +29,5 @@ struct FastChineseState {
     var currentDefinition: Definition?
 
     var audioPlayer: AVAudioPlayer?
+    var dictionary: [String: Phrase] = [:]
 }

@@ -22,6 +22,14 @@ struct Phrase: Identifiable, Codable, Equatable {
 
     var audioData: Data? = nil
     var characterSegments: [CodableSegment] = []
+
+    var splitMandarin: [String] {
+        mandarin.map { String($0) }
+    }
+    
+    var splitPinyin: [String] {
+        pinyin.split(separator: " ").map { String($0) }
+    }
 //    var segmentationCharacterCount: Int {
 //        characterSegments.reduce(0) { $0 + $1.text.count }
 //    }
