@@ -42,12 +42,17 @@ struct Phrase: Identifiable, Codable, Equatable {
         return nil
     }
 
-//    var splitPinyin: [String]? {
-//        guard let mandarinList = splitMandarin else { return nil }
-//        for mandarin in mandarinList {
-//            
-//        }
-//    }
+    func splitPinyin(dictionary: [String : Phrase]) -> [String] {
+        var pinyinList: [String] = []
+        guard let mandarinList = splitMandarin else { return pinyinList }
+        for mandarin in mandarinList {
+            let dictionaryDefinition = dictionary[mandarin]
+            if let pinyin = dictionaryDefinition?.pinyin {
+                pinyinList.append(pinyin)
+            }
+        }
+        return pinyinList
+    }
 //    var segmentationCharacterCount: Int {
 //        characterSegments.reduce(0) { $0 + $1.text.count }
 //    }

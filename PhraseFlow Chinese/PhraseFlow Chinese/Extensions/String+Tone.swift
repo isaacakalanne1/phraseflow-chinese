@@ -17,29 +17,20 @@ extension String {
             "u": ["ū", "ú", "ǔ", "ù"],
             "ü": ["ǖ", "ǘ", "ǚ", "ǜ"]
         ]
+        guard let toneMarker = self.last else { return self }
+        let toneMarkerString = String(toneMarker)
+        guard let toneMarkerIndex = Int(toneMarkerString) else { return self }
+        var characterIndex = 0
+        var updatedPinyin = self
 
-        var newPinyin = ""
-        var tone: Int? = nil
-
-        for char in self {
-            if let digit = char.wholeNumberValue, 1...5 ~= digit {
-                tone = digit - 1  // Set tone value, tone 5 (neutral) will not have a diacritic
-            } else {
-                newPinyin.append(char)
-            }
+        for character in self {
+            guard let toneList = tones[character],
+                  toneList.count > toneMarkerIndex else { continue }
+            let newTone = String(toneList[toneMarkerIndex])
+            updatedPinyin = updatedPinyin.prefix(characterIndex) + newTone + updatedPinyin.dropFirst(characterIndex)
+            break
         }
-
-        if let tone = tone, tone < 4 {  // Only apply diacritic if tone is 1 to 4
-            for (index, char) in newPinyin.enumerated() {
-                if let toneChars = tones[char] {
-                    var pinyinArray = Array(newPinyin)
-                    pinyinArray[index] = toneChars[tone]
-                    return String(pinyinArray)
-                }
-            }
-        }
-
-        return newPinyin
+        return updatedPinyin
     }
 
 }

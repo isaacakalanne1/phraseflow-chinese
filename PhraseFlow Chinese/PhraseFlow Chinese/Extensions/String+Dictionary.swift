@@ -27,7 +27,13 @@ extension String {
                 let pinyinAndEnglish = line.components(separatedBy: "/")
                 guard pinyinAndEnglish.count >= 2 else { continue }
 
-                let pinyin = pinyinAndEnglish[0].components(separatedBy: "]").last?.trimmingCharacters(in: .whitespaces) ?? ""
+                let pinyin = pinyinAndEnglish[0]
+                    .components(separatedBy: "[")
+                    .last?
+                    .components(separatedBy: "]")
+                    .first?
+                    .trimmingCharacters(in: .whitespaces) ?? ""
+                    .convertToneNumberToDiacritic()
                 let english = pinyinAndEnglish[1].trimmingCharacters(in: .whitespacesAndNewlines)
 
                 // Create Phrase instance

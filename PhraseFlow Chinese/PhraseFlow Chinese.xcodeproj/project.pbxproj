@@ -42,6 +42,7 @@
 		BB767F192CA0D43900C6BB55 /* iosjieba.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB767F152CA0D43900C6BB55 /* iosjieba.bundle */; };
 		BB767F1A2CA0D43900C6BB55 /* Segmentor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB767F162CA0D43900C6BB55 /* Segmentor.cpp */; };
 		BB767F1C2CA0DBE300C6BB55 /* String+Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB767F1B2CA0DBE300C6BB55 /* String+Index.swift */; };
+		BB767F1E2CA0DD2D00C6BB55 /* String+Diacritic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB767F1D2CA0DD2D00C6BB55 /* String+Diacritic.swift */; };
 		BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -140,6 +141,7 @@
 		BB767F162CA0D43900C6BB55 /* Segmentor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Segmentor.cpp; sourceTree = "<group>"; };
 		BB767F172CA0D43900C6BB55 /* Segmentor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Segmentor.h; sourceTree = "<group>"; };
 		BB767F1B2CA0DBE300C6BB55 /* String+Index.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Index.swift"; sourceTree = "<group>"; };
+		BB767F1D2CA0DD2D00C6BB55 /* String+Diacritic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Diacritic.swift"; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhraseFlow Chinese.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				BB4EDB122C90CBBD00699E7D /* String+Phrase.swift */,
+				BB767F1D2CA0DD2D00C6BB55 /* String+Diacritic.swift */,
 				BB27D75C2C94C715007BC428 /* String+Dictionary.swift */,
 				BB27D75E2C94C767007BC428 /* String+Tone.swift */,
 				BB341F482C9247B900A15CE4 /* String+Pinyin.swift */,
@@ -544,6 +547,7 @@
 				BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */,
 				BB34B2342C8DBC65003B95C4 /* PhraseCategory.swift in Sources */,
 				BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */,
+				BB767F1E2CA0DD2D00C6BB55 /* String+Diacritic.swift in Sources */,
 				BB4EDB072C90C8CA00699E7D /* FastChineseAction.swift in Sources */,
 				BBB6EF522C8C86B10079D135 /* Phrase.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */,

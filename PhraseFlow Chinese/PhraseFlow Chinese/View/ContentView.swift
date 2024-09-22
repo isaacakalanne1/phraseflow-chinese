@@ -30,7 +30,7 @@ struct ContentView: View {
                 .background(Color.accentColor)
                 .foregroundColor(.white)
                 .cornerRadius(10)
-            } else if let currentPhrase = store.state.currentPhrase {
+            } else if let currentPhrase = store.state.currentPhrase, !store.state.dictionary.isEmpty {
                 // Display Mandarin text and user interaction buttons
                 Spacer()
                 VStack(spacing: 10) {
@@ -44,7 +44,7 @@ struct ContentView: View {
                     LazyVGrid(columns: columns, spacing: 10) {
                         ForEach(Array(currentPhrase.mandarin.enumerated()), id: \.element) { index, element in
                             let character = currentPhrase.mandarin[index]
-                            let pinyin = String(character).getPinyin()
+                            let pinyin = currentPhrase.splitPinyin(dictionary: store.state.dictionary)[index]
                             VStack {
                                 Text(pinyin)
                                     .font(.footnote)
@@ -55,8 +55,10 @@ struct ContentView: View {
                             }
                             .onTapGesture {
 //                                store.dispatch(.defineCharacter(String(character)))
+                                let word = currentPhrase.word(atIndex: index)
                                 print(currentPhrase.splitMandarin)
-                                print(currentPhrase.word(atIndex: index))
+                                print(currentPhrase.splitPinyin(dictionary: store.state.dictionary))
+                                print(store.state.dictionary[word ?? ""])
 //                                        let characterIndex = currentPhrase.mandarin.distance(from: currentPhrase.mandarin.startIndex,
 //                                                                                             to: index)
 //                                        store.dispatch(.playAudioFromIndex(characterIndex))
