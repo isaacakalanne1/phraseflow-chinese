@@ -23,13 +23,31 @@ struct Phrase: Identifiable, Codable, Equatable {
     var audioData: Data? = nil
     var characterSegments: [CodableSegment] = []
 
-    var splitMandarin: [String] {
-        mandarin.map { String($0) }
+    var splitMandarin: [String]? {
+        let words = NSMutableArray()
+        JiebaWrapper()
+            .objcJiebaCut(mandarin, toWords: words)
+        return words as? [String]
     }
-    
-    var splitPinyin: [String] {
-        pinyin.split(separator: " ").map { String($0) }
+
+    func word(atIndex index: Int) -> String? {
+        var characterIndex = -1
+        guard let mandarinList = splitMandarin else { return nil }
+        for word in mandarinList {
+            characterIndex += word.count
+            if characterIndex >= index {
+                return word
+            }
+        }
+        return nil
     }
+
+//    var splitPinyin: [String]? {
+//        guard let mandarinList = splitMandarin else { return nil }
+//        for mandarin in mandarinList {
+//            
+//        }
+//    }
 //    var segmentationCharacterCount: Int {
 //        characterSegments.reduce(0) { $0 + $1.text.count }
 //    }

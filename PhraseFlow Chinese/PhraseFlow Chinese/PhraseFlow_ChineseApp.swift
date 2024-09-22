@@ -13,6 +13,7 @@ struct PhraseFlow_ChineseApp: App {
     private var store: FastChineseStore
 
     init() {
+
         let state = FastChineseState()
         let environment = FastChineseEnvironment()
 
@@ -23,6 +24,16 @@ struct PhraseFlow_ChineseApp: App {
             middleware: fastChineseMiddleware,
             subscriber: fastChineseSubscriber
         )
+
+        initialiseJieba()
+    }
+
+    private func initialiseJieba() {
+        let dictPath = Bundle.main.resourcePath!+"/iosjieba.bundle/dict/jieba.dict.small.utf8"
+        let hmmPath = Bundle.main.resourcePath!+"/iosjieba.bundle/dict/hmm_model.utf8"
+        let userDictPath = Bundle.main.resourcePath!+"/iosjieba.bundle/dict/user.dict.utf8"
+
+        JiebaWrapper().objcJiebaInit(dictPath, forPath: hmmPath, forDictPath: userDictPath);
     }
 
     var body: some Scene {

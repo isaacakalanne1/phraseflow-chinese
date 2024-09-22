@@ -40,8 +40,9 @@ struct ContentView: View {
 
                     let maxColumnCount = 7
                     let columns = Array(repeating: GridItem(.fixed(40), spacing: 0), count: currentPhrase.mandarin.count < maxColumnCount ? currentPhrase.mandarin.count : maxColumnCount)
+                    let mandarinCount = currentPhrase.mandarin.count
                     LazyVGrid(columns: columns, spacing: 10) {
-                        ForEach(Array(currentPhrase.mandarin.indices), id: \.self) { index in
+                        ForEach(Array(currentPhrase.mandarin.enumerated()), id: \.element) { index, element in
                             let character = currentPhrase.mandarin[index]
                             let pinyin = String(character).getPinyin()
                             VStack {
@@ -53,7 +54,9 @@ struct ContentView: View {
                                     .opacity(store.state.practiceMode != .listening ? 1 : store.state.viewState == .revealAnswer ? 1 : 0)
                             }
                             .onTapGesture {
-                                store.dispatch(.defineCharacter(String(character)))
+//                                store.dispatch(.defineCharacter(String(character)))
+                                print(currentPhrase.splitMandarin)
+                                print(currentPhrase.word(atIndex: index))
 //                                        let characterIndex = currentPhrase.mandarin.distance(from: currentPhrase.mandarin.startIndex,
 //                                                                                             to: index)
 //                                        store.dispatch(.playAudioFromIndex(characterIndex))
