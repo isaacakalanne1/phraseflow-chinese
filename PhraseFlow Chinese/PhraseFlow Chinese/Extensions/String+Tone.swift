@@ -11,40 +11,39 @@ extension String {
     func convertToneNumberToDiacritic() -> String {
         var allPinyin = ""
         let words = self.components(separatedBy: " ")
-        for word in words {
-            var newPinyin = ""
-            let tones: [Character: [Character]] = [
-                "a": ["ā", "á", "ǎ", "à"],
-                "e": ["ē", "é", "ě", "è"],
-                "i": ["ī", "í", "ǐ", "ì"],
-                "o": ["ō", "ó", "ǒ", "ò"],
-                "u": ["ū", "ú", "ǔ", "ù"],
-                "ü": ["ǖ", "ǘ", "ǚ", "ǜ"]
-            ]
-            guard let toneMarker = word.last else { return self }
-            let toneMarkerString = String(toneMarker)
-            guard let toneMarkerIndex = Int(toneMarkerString) else { return self }
-            var characterIndex = 0
 
-            for character in self {
-                guard let toneList = tones[character],
-                      toneList.count > toneMarkerIndex else {
-                    characterIndex += 1
-                    continue
-                }
-                let newTone = String(toneList[toneMarkerIndex])
-                newPinyin = word.prefix(characterIndex) + newTone + word.dropFirst(characterIndex)
-                break
+        let tones: [Character: [Character]] = [
+            "a": ["ā", "á", "ǎ", "à"],
+            "e": ["ē", "é", "ě", "è"],
+            "i": ["ī", "í", "ǐ", "ì"],
+            "o": ["ō", "ó", "ǒ", "ò"],
+            "u": ["ū", "ú", "ǔ", "ù"],
+            "ü": ["ǖ", "ǘ", "ǚ", "ǜ"]
+        ]
+
+        for word in words {
+            guard let toneMarker = word.last, let toneMarkerIndex = Int(String(toneMarker)), toneMarkerIndex > 0 && toneMarkerIndex <= 4 else {
+                // No valid tone number or neutral tone (5), append the word as-is without the tone marker
+                allPinyin += (allPinyin.isEmpty ? word : " " + word)
+                continue
             }
-            if newPinyin.isNotEmpty {
-                if allPinyin.isEmpty {
-                    allPinyin.append(newPinyin)
+
+            var foundTone = false
+            var newPinyin = ""
+
+            for character in word.dropLast() { // Drop the last character (tone number)
+                if let toneList = tones[character], !foundTone {
+                    // Apply the correct tone to the character and mark it as found
+                    newPinyin += String(toneList[toneMarkerIndex - 1])
+                    foundTone = true
                 } else {
-                    allPinyin.append(" \(newPinyin)")
+                    newPinyin += String(character)
                 }
             }
+
+            allPinyin += (allPinyin.isEmpty ? newPinyin : " " + newPinyin)
         }
+
         return allPinyin
     }
-
 }

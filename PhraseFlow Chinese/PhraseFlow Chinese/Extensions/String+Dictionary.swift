@@ -27,17 +27,12 @@ extension String {
                 let pinyinAndEnglish = line.components(separatedBy: "/")
                 guard pinyinAndEnglish.count >= 2 else { continue }
 
-                let pinyin = pinyinAndEnglish[0]
-                    .components(separatedBy: "[")
-                    .last?
-                    .components(separatedBy: "]")
-                    .first?
-                    .trimmingCharacters(in: .whitespaces) ?? ""
-                    .convertToneNumberToDiacritic()
+                let originalPinyin = pinyinAndEnglish[0].components(separatedBy: "[").last?.components(separatedBy: "]").first?.trimmingCharacters(in: .whitespaces)
+                let pinyin = originalPinyin?.convertToneNumberToDiacritic()
                 let english = pinyinAndEnglish[1].trimmingCharacters(in: .whitespacesAndNewlines)
 
                 // Create Phrase instance
-                let phrase = Phrase(mandarin: mandarin, pinyin: pinyin, english: english, category: .short)
+                let phrase = Phrase(mandarin: mandarin, pinyin: pinyin ?? "", english: english, category: .short)
 
                 // Add to dictionary with mandarin as key
                 phraseDictionary[mandarin] = phrase
