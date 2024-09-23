@@ -45,17 +45,13 @@ struct Phrase: Identifiable, Codable, Equatable {
     func splitPinyin(dictionary: [String : Phrase]) -> [String] {
         var pinyinList: [String] = []
         guard let mandarinList = splitMandarin else { return pinyinList }
-        for mandarin in mandarinList {
-            let dictionaryDefinition = dictionary[mandarin]
-            if let pinyin = dictionaryDefinition?.pinyin {
-                pinyinList.append(pinyin)
+        for word in mandarinList {
+            if let pinyin = dictionary[word]?.pinyin.components(separatedBy: " ") {
+                pinyinList.append(contentsOf: pinyin)
             }
         }
         return pinyinList
     }
-//    var segmentationCharacterCount: Int {
-//        characterSegments.reduce(0) { $0 + $1.text.count }
-//    }
 
     func segment(for index: Int) -> CodableSegment? {
         var currentCount = 0

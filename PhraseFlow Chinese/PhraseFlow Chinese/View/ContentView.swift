@@ -42,9 +42,12 @@ struct ContentView: View {
                     let columns = Array(repeating: GridItem(.fixed(40), spacing: 0), count: currentPhrase.mandarin.count < maxColumnCount ? currentPhrase.mandarin.count : maxColumnCount)
                     let mandarinCount = currentPhrase.mandarin.count
                     LazyVGrid(columns: columns, spacing: 10) {
-                        ForEach(Array(currentPhrase.mandarin.enumerated()), id: \.element) { index, element in
+                        ForEach(Array(currentPhrase.mandarin.enumerated()), id: \.offset) { index, element in
                             let character = currentPhrase.mandarin[index]
-                            let pinyin = currentPhrase.splitPinyin(dictionary: store.state.dictionary)[index]
+                            let word = currentPhrase.word(atIndex: index)
+                            let wordIndex = currentPhrase.splitMandarin?.firstIndex(where: { $0 == word }) ?? 0
+                            let splitPinyin = currentPhrase.splitPinyin(dictionary: store.state.dictionary)
+                            let pinyin = splitPinyin.count > index ? currentPhrase.splitPinyin(dictionary: store.state.dictionary)[index] : ""
                             VStack {
                                 Text(pinyin)
                                     .font(.footnote)
@@ -54,11 +57,13 @@ struct ContentView: View {
                                     .opacity(store.state.practiceMode != .listening ? 1 : store.state.viewState == .revealAnswer ? 1 : 0)
                             }
                             .onTapGesture {
-//                                store.dispatch(.defineCharacter(String(character)))
-                                let word = currentPhrase.word(atIndex: index)
-                                print(currentPhrase.splitMandarin)
-                                print(currentPhrase.splitPinyin(dictionary: store.state.dictionary))
-                                print(store.state.dictionary[word ?? ""])
+                                if let word = currentPhrase.word(atIndex: index) {
+                                    store.dispatch(.defineCharacter(word))
+                                    print(store.state.dictionary[word ?? ""])
+                                }
+                                let wordIndex = currentPhrase.splitMandarin?.firstIndex(where: { $0 == word })
+//                                print(currentPhrase.splitMandarin)
+//                                print(currentPhrase.splitPinyin(dictionary: store.state.dictionary))
 //                                        let characterIndex = currentPhrase.mandarin.distance(from: currentPhrase.mandarin.startIndex,
 //                                                                                             to: index)
 //                                        store.dispatch(.playAudioFromIndex(characterIndex))

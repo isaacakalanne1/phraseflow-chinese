@@ -22,9 +22,16 @@ extension String {
         ]
 
         for word in words {
-            guard let toneMarker = word.last, let toneMarkerIndex = Int(String(toneMarker)), toneMarkerIndex > 0 && toneMarkerIndex <= 4 else {
-                // No valid tone number or neutral tone (5), append the word as-is without the tone marker
+            guard let toneMarker = word.last,
+                  let toneMarkerIndex = Int(String(toneMarker)) else {
                 allPinyin += (allPinyin.isEmpty ? word : " " + word)
+                continue
+            }
+
+            // If tone marker is 5, just remove the tone marker and continue
+            if toneMarkerIndex == 5 {
+                let neutralToneWord = String(word.dropLast()) // Remove the 5 tone marker
+                allPinyin += (allPinyin.isEmpty ? neutralToneWord : " " + neutralToneWord)
                 continue
             }
 
