@@ -9,6 +9,6 @@ import Foundation
 
 struct Definition {
     var character: String
-    var phrase: Phrase
+    var phrase: Sentence
     var definition: String
 }

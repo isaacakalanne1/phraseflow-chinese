@@ -13,14 +13,14 @@ enum FastChineseAction {
     case updateUserInput(String)
     
     case fetchNewPhrases(PhraseCategory)
-    case onFetchedNewPhrases([Phrase])
-    case removePhrase(Phrase)
+    case onFetchedNewPhrases([Sentence])
+    case removePhrase(Sentence)
     case failedToFetchNewPhrases
 
-    case saveAllPhrases
-    case failedToSaveAllPhrases
+    case saveSentences
+    case failedToSaveSentences
     case fetchSavedPhrases
-    case onFetchedSavedPhrases([Phrase])
+    case onFetchedSavedPhrases([Sentence])
     case failedToFetchSavedPhrases
 
     case submitAnswer
@@ -28,17 +28,11 @@ enum FastChineseAction {
     case preloadAudio
     case failedToPreloadAudio
 
-    case updatePhrasesAudio([Phrase], audioDataList: [Data])
+    case updatePhrasesAudio([Sentence], audioDataList: [Data])
     case failedToUpdatePhraseAudio
-
-    case segmentPhrasesAudio([Phrase], urlList: [URL])
-    case onSegmentedPhrasesAudio([Phrase], segmentsList: [[Segment]])
-    case failedToSegmentPhraseAudioAtIndex
 
     case revealAnswer
     case playAudio
-    case playAudioFromIndex(Int)
-    case failedToPlayAudioFromIndex
     case updateAudioPlayer(AVAudioPlayer)
     case onUpdatedAudioPlayer
     case failedToUpdateAudioPlayer
@@ -49,8 +43,4 @@ enum FastChineseAction {
 
     case updateSpeechSpeed(SpeechSpeed)
     case updatePracticeMode(PracticeMode)
-
-    case fetchChineseDictionary
-    case onFetchedChineseDictionary([String: Phrase])
-    case failedToFetchChineseDictionary
 }

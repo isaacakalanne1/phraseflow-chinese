@@ -12,11 +12,11 @@ protocol FastChineseEnvironmentProtocol {
     var service: FastChineseServicesProtocol { get }
     var dataStore: FastChineseDataStoreProtocol { get }
 
-    func fetchSpeech(for phrase: Phrase) async throws -> Data
-    func fetchPhrases(category: PhraseCategory) async throws -> [Phrase]
-    func saveAllPhrases(_ phrases: [Phrase]) throws
-    func unsavePhrase(_ phrase: Phrase)
-    func fetchSavedPhrases() throws -> [Phrase]
+    func fetchSpeech(for phrase: Sentence) async throws -> Data
+    func fetchPhrases(category: PhraseCategory) async throws -> [Sentence]
+    func saveSentences(_ phrases: [Sentence]) throws
+    func unsavePhrase(_ phrase: Sentence)
+    func fetchSavedPhrases() throws -> [Sentence]
     func saveAudioToTempFile(fileName: String, data: Data) throws -> URL
     func transcribe(audioFrames: [Float]) async throws-> [Segment]
 
@@ -35,23 +35,23 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
         self.repository = FastChineseRepository()
     }
 
-    func fetchSpeech(for phrase: Phrase) async throws -> Data {
+    func fetchSpeech(for phrase: Sentence) async throws -> Data {
         try await service.fetchAzureTextToSpeech(phrase: phrase)
     }
 
-    func fetchPhrases(category: PhraseCategory) async throws -> [Phrase] {
+    func fetchPhrases(category: PhraseCategory) async throws -> [Sentence] {
         try await service.fetchPhrases(category: category)
     }
 
-    func saveAllPhrases(_ phrases: [Phrase]) throws {
-        try dataStore.saveAllPhrases(phrases)
+    func saveSentences(_ phrases: [Sentence]) throws {
+        try dataStore.saveSentences(phrases)
     }
 
-    func unsavePhrase(_ phrase: Phrase) {
+    func unsavePhrase(_ phrase: Sentence) {
         dataStore.unsavePhrase(phrase)
     }
 
-    func fetchSavedPhrases() throws -> [Phrase] {
+    func fetchSavedPhrases() throws -> [Sentence] {
         try dataStore.fetchSavedPhrases()
     }
 

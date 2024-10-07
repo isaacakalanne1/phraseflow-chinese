@@ -8,8 +8,8 @@
 import Foundation
 
 extension String {
-    func extractPhrases() -> [Phrase] {
-        var phrases: [Phrase] = []
+    func extractPhrases() -> [Sentence] {
+        var phrases: [Sentence] = []
 
         let lines = self.split(separator: "\n").filter { !$0.starts(with: "#") && !$0.starts(with: "%") && !$0.isEmpty }
 
@@ -33,7 +33,7 @@ extension String {
             let english = components[1].replacingOccurrences(of: "/", with: "").trimmingCharacters(in: .whitespaces)
 
             // Create a Phrase object
-            let phrase = Phrase(mandarin: mandarin, pinyin: pinyinWithDiacritic, english: english, category: .medium)
+            let phrase = Sentence(mandarin: mandarin, pinyin: pinyinWithDiacritic, english: english, category: .medium)
             phrases.append(phrase)
         }
 

@@ -18,7 +18,7 @@ struct GPTResponse: Codable { // TODO: Update this to match OpenAI API
         }
     }
 
-    func decodedPhrases(category: PhraseCategory) -> [Phrase]? {
+    func decodedPhrases(category: PhraseCategory) -> [Sentence]? {
         guard let content = choices.first?.message.content else { return nil }
 
         // Clean the string
@@ -33,9 +33,9 @@ struct GPTResponse: Codable { // TODO: Update this to match OpenAI API
 
         do {
             return try JSONDecoder()
-                .decode([Phrase].self, from: data)
+                .decode([Sentence].self, from: data)
                 .map {
-                    Phrase(mandarin: $0.mandarin, pinyin: $0.pinyin, english: $0.english, category: category)
+                    Sentence(mandarin: $0.mandarin, pinyin: $0.pinyin, english: $0.english, category: category)
                 }
         } catch {
             print("Failed to decode: \(error)")

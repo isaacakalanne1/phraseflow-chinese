@@ -50,7 +50,7 @@
 		BBB6EF382C8C862A0079D135 /* PhraseFlow_ChineseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF372C8C862A0079D135 /* PhraseFlow_ChineseTests.swift */; };
 		BBB6EF422C8C862A0079D135 /* PhraseFlow_ChineseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF412C8C862A0079D135 /* PhraseFlow_ChineseUITests.swift */; };
 		BBB6EF442C8C862A0079D135 /* PhraseFlow_ChineseUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF432C8C862A0079D135 /* PhraseFlow_ChineseUITestsLaunchTests.swift */; };
-		BBB6EF522C8C86B10079D135 /* Phrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF512C8C86B10079D135 /* Phrase.swift */; };
+		BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF512C8C86B10079D135 /* Sentence.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,7 +152,7 @@
 		BBB6EF3D2C8C862A0079D135 /* PhraseFlow ChineseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PhraseFlow ChineseUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF412C8C862A0079D135 /* PhraseFlow_ChineseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseUITests.swift; sourceTree = "<group>"; };
 		BBB6EF432C8C862A0079D135 /* PhraseFlow_ChineseUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		BBB6EF512C8C86B10079D135 /* Phrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phrase.swift; sourceTree = "<group>"; };
+		BBB6EF512C8C86B10079D135 /* Sentence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sentence.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -381,7 +381,7 @@
 				BB4EDB252C91912000699E7D /* AnswerState.swift */,
 				BB4EDB2A2C91B35D00699E7D /* Definition.swift */,
 				BB34B22F2C8DBC40003B95C4 /* Mode.swift */,
-				BBB6EF512C8C86B10079D135 /* Phrase.swift */,
+				BBB6EF512C8C86B10079D135 /* Sentence.swift */,
 				BB34B2332C8DBC65003B95C4 /* PhraseCategory.swift */,
 				BB34B2312C8DBC4E003B95C4 /* PhraseListMode.swift */,
 				BB4EDB182C90D55C00699E7D /* PracticeViewState.swift */,
@@ -549,7 +549,7 @@
 				BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */,
 				BB767F1E2CA0DD2D00C6BB55 /* String+Diacritic.swift in Sources */,
 				BB4EDB072C90C8CA00699E7D /* FastChineseAction.swift in Sources */,
-				BBB6EF522C8C86B10079D135 /* Phrase.swift in Sources */,
+				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */,
 				BB341F492C9247B900A15CE4 /* String+Pinyin.swift in Sources */,
 				BB4EDB1D2C90DFDD00699E7D /* FastChineseRepository.swift in Sources */,

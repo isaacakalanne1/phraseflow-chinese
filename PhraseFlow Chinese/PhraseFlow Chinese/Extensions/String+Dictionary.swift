@@ -8,8 +8,8 @@
 import Foundation
 
 extension String {
-    func convertDictionaryToPhrases() -> [String: Phrase] {
-        var phraseDictionary = [String: Phrase]()
+    func convertDictionaryToPhrases() -> [String: Sentence] {
+        var phraseDictionary = [String: Sentence]()
 
         let lines = self.components(separatedBy: .newlines)
 
@@ -32,7 +32,7 @@ extension String {
                 let english = pinyinAndEnglish[1].trimmingCharacters(in: .whitespacesAndNewlines)
 
                 // Create Phrase instance
-                let phrase = Phrase(mandarin: mandarin, pinyin: pinyin ?? "", english: english, category: .short)
+                let phrase = Sentence(mandarin: mandarin, pinyin: pinyin ?? "", english: english, category: .short)
 
                 // Add to dictionary with mandarin as key
                 phraseDictionary[mandarin] = phrase

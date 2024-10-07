@@ -25,6 +25,6 @@ void JiebaCut(const string& sentence, vector<string>& words)
 {
     assert(globalSegmentor);
     globalSegmentor->Cut(sentence, words);
-    cout << __FILE__ << __LINE__ << endl;
-    cout << words << endl;
+//    cout << __FILE__ << __LINE__ << endl;
+//    cout << words << endl;
 }

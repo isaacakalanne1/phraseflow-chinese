@@ -14,7 +14,7 @@ struct CodableSegment: Equatable, Codable {
     public let text: String
 }
 
-struct Phrase: Identifiable, Codable, Equatable {
+struct Sentence: Identifiable, Codable, Equatable {
     var id = UUID() // Use a UUID for easy identification
     let mandarin: String
     let pinyin: String
@@ -38,29 +38,6 @@ struct Phrase: Identifiable, Codable, Equatable {
             if characterIndex >= index {
                 return word
             }
-        }
-        return nil
-    }
-
-    func splitPinyin(dictionary: [String : Phrase]) -> [String] {
-        var pinyinList: [String] = []
-        guard let mandarinList = splitMandarin else { return pinyinList }
-        for word in mandarinList {
-            if let pinyin = dictionary[word]?.pinyin.components(separatedBy: " ") {
-                pinyinList.append(contentsOf: pinyin)
-            }
-        }
-        return pinyinList
-    }
-
-    func segment(for index: Int) -> CodableSegment? {
-        var currentCount = 0
-        for segment in characterSegments {
-            let segmentLength = segment.text.count
-            if currentCount <= index && index < currentCount + segmentLength {
-                return segment
-            }
-            currentCount += segmentLength
         }
         return nil
     }

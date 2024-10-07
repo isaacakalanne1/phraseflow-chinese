@@ -14,7 +14,7 @@ typealias FastChineseMiddlewareType = Middleware<FastChineseState, FastChineseAc
 let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environment in
     switch action {
     case .fetchNewPhrases(let category):
-        var newPhrases: [Phrase] = []
+        var newPhrases: [Sentence] = []
             do {
                 newPhrases = try await environment.fetchPhrases(category: category)
             } catch {
@@ -22,7 +22,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             }
         return .onFetchedNewPhrases(newPhrases)
     case .onFetchedNewPhrases:
-        return .saveAllPhrases
+        return .saveSentences
     case .fetchSavedPhrases:
         do {
             let phrases = try environment.fetchSavedPhrases()
@@ -32,11 +32,11 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
     case .onFetchedSavedPhrases:
         return .preloadAudio
-    case .saveAllPhrases:
+    case .saveSentences:
         do {
-            try environment.saveAllPhrases(state.allPhrases)
+            try environment.saveSentences(state.sentences)
         } catch {
-            return .failedToSaveAllPhrases
+            return .failedToSaveSentences
         }
         return .preloadAudio
     case .submitAnswer:
@@ -45,14 +45,14 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         return .preloadAudio
     case .preloadAudio:
         do {
-            guard state.allPhrases.count > 0 else {
+            guard state.sentences.count > 0 else {
                 return nil
             }
-            var phrases: [Phrase] = []
+            var phrases: [Sentence] = []
             var audioDataList: [Data] = []
             for i in 0..<2 {
-                let index = (state.phraseIndex + i) % state.allPhrases.count
-                let phrase = state.allPhrases[index]
+                let index = (state.sentenceIndex + i) % state.sentences.count
+                let phrase = state.sentences[index]
                 if phrase.audioData == nil {
                     let audioData = try await environment.fetchSpeech(for: phrase)
                     phrases.append(phrase)
@@ -65,9 +65,6 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
 
     case .updatePhrasesAudio(let phrases, let audioDataList):
-//        guard phrases.contains(where: { $0.category.shouldSegment }) else {
-//            return nil
-//        }
         do {
             var audioUrlList: [URL] = []
             for (phrase, audioData) in zip(phrases, audioDataList) {
@@ -75,30 +72,12 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
                 audioUrlList.append(audioURL)
             }
             return nil
-//            return .segmentPhrasesAudio(phrases, urlList: audioUrlList)
         } catch {
             return .failedToUpdatePhraseAudio
         }
-
-    case .segmentPhrasesAudio(let phrases, let audioUrlList):
-        var segmentsList: [[Segment]] = []
-        do {
-            for (phrase, audioUrl) in zip(phrases, audioUrlList) {
-                let audioFrames = try await audioUrl.convertAudioFileToPCMArray()
-                var segments = try await environment.transcribe(audioFrames: audioFrames)
-//                if let firstSegment = segments.first,
-//                   firstSegment.text.isEmpty {
-//                    segments.removeFirst()
-//                }
-                segmentsList.append(segments)
-            }
-            return .onSegmentedPhrasesAudio(phrases, segmentsList: segmentsList)
-        } catch {
-            return .failedToSegmentPhraseAudioAtIndex
-        }
     case .playAudio:
         do {
-            if let audioData = state.currentPhrase?.audioData {
+            if let audioData = state.currentSentence?.audioData {
                 let audioPlayer = try AVAudioPlayer(data: audioData)
                 return .updateAudioPlayer(audioPlayer)
             }
@@ -106,27 +85,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToUpdateAudioPlayer
         }
-    case .playAudioFromIndex(let index):
-        do {
-            guard let segment = state.currentPhrase?.segment(for: index) else {
-                return .playAudio
-            }
-
-            let startTimeDouble = Double(segment.startTime)/1000
-            let startTime = TimeInterval(startTimeDouble)
-
-            if let audioData = state.currentPhrase?.audioData {
-                let player = try AVAudioPlayer(data: audioData)
-                player.currentTime = startTimeDouble
-                return .updateAudioPlayer(player)
-            }
-            return nil
-        } catch {
-            return .failedToPlayAudioFromIndex
-        }
     case .defineCharacter(let string):
         do {
-            guard let mandarinPhrase = state.currentPhrase?.mandarin else {
+            guard let mandarinPhrase = state.currentSentence?.mandarin else {
                 return nil
             }
             let response = try await environment.fetchDefinition(of: string, withinContextOf: mandarinPhrase)
@@ -146,35 +107,19 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         state.audioPlayer?.play()
         return nil
 
-    case .fetchChineseDictionary:
-        var dictionary: [String: Phrase]
-        do {
-            guard let fileURL = Bundle.main.url(forResource: "cedict_ts", withExtension: "txt") else { return nil }
-            let fileContents = try String(contentsOf: fileURL, encoding: .utf8)
-            dictionary = fileContents.convertDictionaryToPhrases()
-        } catch {
-            return .failedToFetchChineseDictionary
-        }
-        return .onFetchedChineseDictionary(dictionary)
-
     case .failedToFetchNewPhrases,
-            .failedToSaveAllPhrases,
+            .failedToSaveSentences,
             .failedToFetchSavedPhrases,
             .revealAnswer,
             .failedToPreloadAudio,
             .failedToUpdatePhraseAudio,
-            .failedToSegmentPhraseAudioAtIndex,
-            .onSegmentedPhrasesAudio,
             .failedToUpdateAudioPlayer,
             .removePhrase,
             .updateSpeechSpeed,
-            .failedToPlayAudioFromIndex,
             .onDefinedCharacter,
             .failedToDefineCharacter,
             .updatePracticeMode,
-            .updateUserInput,
-            .onFetchedChineseDictionary,
-            .failedToFetchChineseDictionary:
+            .updateUserInput:
         return nil
     }
 }

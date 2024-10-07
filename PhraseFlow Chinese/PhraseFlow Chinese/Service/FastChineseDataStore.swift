@@ -13,18 +13,18 @@ enum FastChineseDataStoreError: Error {
 }
 
 protocol FastChineseDataStoreProtocol {
-    func fetchSavedPhrases() throws -> [Phrase]
-    func saveAllPhrases(_ phrases: [Phrase]) throws
-    func unsavePhrase(_ phrase: Phrase)
+    func fetchSavedPhrases() throws -> [Sentence]
+    func saveSentences(_ phrases: [Sentence]) throws
+    func unsavePhrase(_ phrase: Sentence)
     func saveAudioToTempFile(fileName: String, data: Data) throws -> URL
 }
 
 class FastChineseDataStore: FastChineseDataStoreProtocol {
 
-    func fetchSavedPhrases() throws -> [Phrase] {
+    func fetchSavedPhrases() throws -> [Sentence] {
         do {
-            if let savedData = UserDefaults.standard.data(forKey: "allPhrasesKey") {
-                let phrases = try JSONDecoder().decode([Phrase].self, from: savedData)
+            if let savedData = UserDefaults.standard.data(forKey: "sentencesKey") {
+                let phrases = try JSONDecoder().decode([Sentence].self, from: savedData)
                 return phrases.shuffled()
             }
         } catch {
@@ -33,12 +33,12 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
         return []
     }
 
-    func saveAllPhrases(_ phrases: [Phrase]) throws {
+    func saveSentences(_ phrases: [Sentence]) throws {
         let encodedData = try JSONEncoder().encode(phrases)
-        UserDefaults.standard.set(encodedData, forKey: "allPhrasesKey")
+        UserDefaults.standard.set(encodedData, forKey: "sentencesKey")
     }
 
-    func unsavePhrase(_ phrase: Phrase) {
+    func unsavePhrase(_ phrase: Sentence) {
         UserDefaults.standard.removeObject(forKey: phrase.mandarin)
     }
 

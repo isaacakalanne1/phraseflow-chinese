@@ -15,13 +15,13 @@ enum FastChineseServicesError: Error {
 }
 
 protocol FastChineseServicesProtocol {
-    func fetchPhrases(category: PhraseCategory) async throws -> [Phrase]
-    func fetchAzureTextToSpeech(phrase: Phrase) async throws -> Data
+    func fetchPhrases(category: PhraseCategory) async throws -> [Sentence]
+    func fetchAzureTextToSpeech(phrase: Sentence) async throws -> Data
     func fetchDefinition(of character: String, withinContextOf phrase: String) async throws -> GPTResponse
 }
 
 final class FastChineseServices: FastChineseServicesProtocol {
-    func fetchPhrases(category: PhraseCategory) async throws -> [Phrase] {
+    func fetchPhrases(category: PhraseCategory) async throws -> [Sentence] {
         let deploymentId = "gpt-4o-mini"
         let version = "2024-07-18"
 
@@ -54,7 +54,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
     }
 
 
-    func fetchAzureTextToSpeech(phrase: Phrase) async throws -> Data {
+    func fetchAzureTextToSpeech(phrase: Sentence) async throws -> Data {
         let subscriptionKey = "144bc0cdea4d44e499927e84e795b27a"
         let region = "eastus"
 

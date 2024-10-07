@@ -9,13 +9,13 @@ import Foundation
 import AVKit
 
 struct FastChineseState {
-    var allPhrases: [Phrase] = []
-    var phraseIndex: Int = 0
+    var sentences: [Sentence] = []
+    var sentenceIndex: Int = 0
 
-    var currentPhrase: Phrase? {
-        if !allPhrases.isEmpty,
-           allPhrases.count > phraseIndex {
-            return allPhrases[phraseIndex]
+    var currentSentence: Sentence? {
+        if !sentences.isEmpty,
+           sentences.count > sentenceIndex {
+            return sentences[sentenceIndex]
         }
         return nil
     }
@@ -29,5 +29,4 @@ struct FastChineseState {
     var currentDefinition: Definition?
 
     var audioPlayer: AVAudioPlayer?
-    var dictionary: [String: Phrase] = [:]
 }
