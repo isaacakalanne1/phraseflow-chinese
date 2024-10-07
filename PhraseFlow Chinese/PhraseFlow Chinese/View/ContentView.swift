@@ -24,7 +24,7 @@ struct ContentView: View {
         VStack(spacing: 20) {
             if store.state.sentences.isEmpty {
                 Button("Add New Phrases") {
-                    store.dispatch(.fetchNewPhrases(.short))
+                    store.dispatch(.fetchNewPhrases)
                 }
                 .padding()
                 .background(Color.accentColor)

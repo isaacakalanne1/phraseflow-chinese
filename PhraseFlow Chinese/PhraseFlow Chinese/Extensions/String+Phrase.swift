@@ -8,7 +8,7 @@
 import Foundation
 
 extension String {
-    func getPhrases(category: PhraseCategory) -> [Sentence] {
+    func getPhrases() -> [Sentence] {
         var phrases = [Sentence]()
 
         // Split the string into lines
@@ -43,7 +43,7 @@ extension String {
                     let mandarin = columns[0]
                     let pinyin = columns[1]
                     let english = columns[2].trimmingCharacters(in: .whitespacesAndNewlines)
-                    let phrase = Sentence(mandarin: mandarin, pinyin: pinyin, english: english, category: category)
+                    let phrase = Sentence(mandarin: mandarin, pinyin: pinyin, english: english)
                     phrases.append(phrase)
                 }
             }

@@ -33,7 +33,7 @@ extension String {
             let english = components[1].replacingOccurrences(of: "/", with: "").trimmingCharacters(in: .whitespaces)
 
             // Create a Phrase object
-            let phrase = Sentence(mandarin: mandarin, pinyin: pinyinWithDiacritic, english: english, category: .medium)
+            let phrase = Sentence(mandarin: mandarin, pinyin: pinyinWithDiacritic, english: english)
             phrases.append(phrase)
         }
 

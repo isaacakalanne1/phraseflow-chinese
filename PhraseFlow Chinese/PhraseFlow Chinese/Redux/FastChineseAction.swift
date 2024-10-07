@@ -12,10 +12,9 @@ import AVKit
 enum FastChineseAction {
     case updateUserInput(String)
     
-    case fetchNewPhrases(PhraseCategory)
-    case onFetchedNewPhrases([Sentence])
-    case removePhrase(Sentence)
-    case failedToFetchNewPhrases
+    case generateNewChapter
+    case onGeneratedNewChapter([Sentence])
+    case failedToGenerateNewChapter
 
     case saveSentences
     case failedToSaveSentences

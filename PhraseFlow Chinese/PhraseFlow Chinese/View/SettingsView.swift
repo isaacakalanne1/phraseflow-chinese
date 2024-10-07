@@ -15,26 +15,6 @@ struct SettingsView: View {
             VStack(spacing: 20) {
                 Spacer()
 
-                Text("Choose Phrases to Learn")
-                    .font(.title2)
-
-                ForEach(PhraseCategory.allCases, id: \.self) { category in
-                    Button(action: {
-                        withAnimation(.easeInOut) {
-                            store.dispatch(.fetchNewPhrases(category))
-                        }
-                    }) {
-                        Text(category.title)
-                            .font(.body)
-                            .foregroundColor(.primary)
-                            .frame(width: 100)
-                            .padding()
-                            .background(Color.gray.opacity(0.3))
-                            .cornerRadius(10)
-                    }
-                }
-                .padding(.bottom)
-
                 Text("Choose Speech Speed")
                     .font(.title2)
 

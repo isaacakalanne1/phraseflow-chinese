@@ -11,20 +11,17 @@ enum FastChineseServicesError: Error {
     case failedToCreateSsmlData
     case failedToEncodeJson
     case failedToDecodeJson
-    case failedToDecodePhrases
+    case failedToDecodeSentences
 }
 
 protocol FastChineseServicesProtocol {
-    func fetchPhrases(category: PhraseCategory) async throws -> [Sentence]
-    func fetchAzureTextToSpeech(phrase: Sentence) async throws -> Data
+    func generateChapter(using info: ChapterGenerationInfo) async throws -> [Sentence]
+    func fetchAzureTextToSpeech(sentence: Sentence) async throws -> Data
     func fetchDefinition(of character: String, withinContextOf phrase: String) async throws -> GPTResponse
 }
 
 final class FastChineseServices: FastChineseServicesProtocol {
-    func fetchPhrases(category: PhraseCategory) async throws -> [Sentence] {
-        let deploymentId = "gpt-4o-mini"
-        let version = "2024-07-18"
-
+    func generateChapter(using info: ChapterGenerationInfo) async throws -> [Sentence] {
         var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
         request.httpMethod = "POST"
         request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
@@ -36,7 +33,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
                   You are a JSON generator, who takes great pleasure and enjoyment in generating Mandarin phrases. You output only the expected JSON data for the user's input, with no explaining text. You output data in the following format: [ { "mandarin": "你好", "pinyin": "nǐ hǎo", "english": "Hello" }, { "mandarin": "谢谢", "pinyin": "xièxiè", "english": "Thank you" }, { "mandarin": "再见", "pinyin": "zàijiàn", "english": "Goodbye" } ]
                   """),
             .init(role: "user",
-                  content: "Write JSON to produce 5 \(category.quantifier) Mandarin phrases. Ensure the correct tones are used, including neutral tones, and changing tones such as those for 不 and 一")
+                  content: "Write JSON to produce 5 short Mandarin phrases. Ensure the correct tones are used, including neutral tones, and changing tones such as those for 不 and 一")
         ])
 
         guard let jsonData = try? JSONEncoder().encode(requestData) else {
@@ -47,14 +44,14 @@ final class FastChineseServices: FastChineseServicesProtocol {
         guard let response = try? JSONDecoder().decode(GPTResponse.self, from: data) else {
             throw FastChineseServicesError.failedToDecodeJson
         }
-        guard let phrases = response.decodedPhrases(category: category) else {
-            throw FastChineseServicesError.failedToDecodePhrases
+        guard let sentences = response.decodedPhrases() else {
+            throw FastChineseServicesError.failedToDecodeSentences
         }
-        return phrases
+        return sentences
     }
 
 
-    func fetchAzureTextToSpeech(phrase: Sentence) async throws -> Data {
+    func fetchAzureTextToSpeech(sentence: Sentence) async throws -> Data {
         let subscriptionKey = "144bc0cdea4d44e499927e84e795b27a"
         let region = "eastus"
 
@@ -67,7 +64,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         let ssml = """
         <speak version='1.0' xml:lang='zh-CN'>
             <voice name='zh-CN-XiaoxiaoNeural'>
-                \(phrase.mandarin)
+                \(sentence.mandarin)
             </voice>
         </speak>
         """

@@ -50,10 +50,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
                                                phrase: phrase,
                                                definition: definition)
         }
-    case .fetchNewPhrases,
-            .failedToFetchNewPhrases,
-            .removePhrase,
-            .saveSentences,
+    case .saveSentences,
             .failedToSaveSentences,
             .fetchSavedPhrases,
             .failedToFetchSavedPhrases,

@@ -13,10 +13,10 @@ import SwiftWhisper
 typealias FastChineseMiddlewareType = Middleware<FastChineseState, FastChineseAction, FastChineseEnvironmentProtocol>
 let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environment in
     switch action {
-    case .fetchNewPhrases(let category):
+    case .generateNewChapter:
         var newPhrases: [Sentence] = []
             do {
-                newPhrases = try await environment.fetchPhrases(category: category)
+                newPhrases = try await environment.generateChapter(using: <#T##ChapterGenerationInfo#>)
             } catch {
                 return .failedToFetchNewPhrases
             }
@@ -114,7 +114,6 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .failedToPreloadAudio,
             .failedToUpdatePhraseAudio,
             .failedToUpdateAudioPlayer,
-            .removePhrase,
             .updateSpeechSpeed,
             .onDefinedCharacter,
             .failedToDefineCharacter,

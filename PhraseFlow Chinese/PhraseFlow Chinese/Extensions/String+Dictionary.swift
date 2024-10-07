@@ -32,7 +32,7 @@ extension String {
                 let english = pinyinAndEnglish[1].trimmingCharacters(in: .whitespacesAndNewlines)
 
                 // Create Phrase instance
-                let phrase = Sentence(mandarin: mandarin, pinyin: pinyin ?? "", english: english, category: .short)
+                let phrase = Sentence(mandarin: mandarin, pinyin: pinyin ?? "", english: english)
 
                 // Add to dictionary with mandarin as key
                 phraseDictionary[mandarin] = phrase

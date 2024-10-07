@@ -13,7 +13,7 @@ protocol FastChineseEnvironmentProtocol {
     var dataStore: FastChineseDataStoreProtocol { get }
 
     func fetchSpeech(for phrase: Sentence) async throws -> Data
-    func fetchPhrases(category: PhraseCategory) async throws -> [Sentence]
+    func generateChapter(using info: ChapterGenerationInfo) async throws -> [Sentence]
     func saveSentences(_ phrases: [Sentence]) throws
     func unsavePhrase(_ phrase: Sentence)
     func fetchSavedPhrases() throws -> [Sentence]
@@ -35,12 +35,12 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
         self.repository = FastChineseRepository()
     }
 
-    func fetchSpeech(for phrase: Sentence) async throws -> Data {
-        try await service.fetchAzureTextToSpeech(phrase: phrase)
+    func fetchSpeech(for sentence: Sentence) async throws -> Data {
+        try await service.fetchAzureTextToSpeech(sentence: sentence)
     }
 
-    func fetchPhrases(category: PhraseCategory) async throws -> [Sentence] {
-        try await service.fetchPhrases(category: category)
+    func generateChapter(using info: ChapterGenerationInfo) async throws -> [Sentence] {
+        try await service.generateChapter(using: info)
     }
 
     func saveSentences(_ phrases: [Sentence]) throws {

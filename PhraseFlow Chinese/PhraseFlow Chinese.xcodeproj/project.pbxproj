@@ -7,14 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB0854832CB42C0200F1661B /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854822CB42C0200F1661B /* Chapter.swift */; };
+		BB0854852CB42C1400F1661B /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854842CB42C1400F1661B /* Story.swift */; };
+		BB0854882CB42D8700F1661B /* ChapterGenerationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854872CB42D8700F1661B /* ChapterGenerationInfo.swift */; };
 		BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */; };
-		BB27D75B2C94C65A007BC428 /* cedict_ts.txt in Resources */ = {isa = PBXBuildFile; fileRef = BB27D75A2C94C65A007BC428 /* cedict_ts.txt */; };
 		BB27D75D2C94C715007BC428 /* String+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB27D75C2C94C715007BC428 /* String+Dictionary.swift */; };
 		BB27D75F2C94C767007BC428 /* String+Tone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB27D75E2C94C767007BC428 /* String+Tone.swift */; };
 		BB341F492C9247B900A15CE4 /* String+Pinyin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB341F482C9247B900A15CE4 /* String+Pinyin.swift */; };
-		BB34B2302C8DBC40003B95C4 /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34B22F2C8DBC40003B95C4 /* Mode.swift */; };
+		BB34B2302C8DBC40003B95C4 /* PracticeMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34B22F2C8DBC40003B95C4 /* PracticeMode.swift */; };
 		BB34B2322C8DBC4E003B95C4 /* PhraseListMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34B2312C8DBC4E003B95C4 /* PhraseListMode.swift */; };
-		BB34B2342C8DBC65003B95C4 /* PhraseCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34B2332C8DBC65003B95C4 /* PhraseCategory.swift */; };
 		BB4EDAEE2C9047E000699E7D /* SwiftWhisper in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAED2C9047E000699E7D /* SwiftWhisper */; };
 		BB4EDAF32C90499900699E7D /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAF22C90499900699E7D /* AudioKit */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
@@ -71,14 +72,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BB0854822CB42C0200F1661B /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
+		BB0854842CB42C1400F1661B /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
+		BB0854872CB42D8700F1661B /* ChapterGenerationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterGenerationInfo.swift; sourceTree = "<group>"; };
 		BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpeed.swift; sourceTree = "<group>"; };
-		BB27D75A2C94C65A007BC428 /* cedict_ts.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cedict_ts.txt; sourceTree = "<group>"; };
 		BB27D75C2C94C715007BC428 /* String+Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Dictionary.swift"; sourceTree = "<group>"; };
 		BB27D75E2C94C767007BC428 /* String+Tone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Tone.swift"; sourceTree = "<group>"; };
 		BB341F482C9247B900A15CE4 /* String+Pinyin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Pinyin.swift"; sourceTree = "<group>"; };
-		BB34B22F2C8DBC40003B95C4 /* Mode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mode.swift; sourceTree = "<group>"; };
+		BB34B22F2C8DBC40003B95C4 /* PracticeMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeMode.swift; sourceTree = "<group>"; };
 		BB34B2312C8DBC4E003B95C4 /* PhraseListMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseListMode.swift; sourceTree = "<group>"; };
-		BB34B2332C8DBC65003B95C4 /* PhraseCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseCategory.swift; sourceTree = "<group>"; };
 		BB4EDB022C90C86300699E7D /* FastChineseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseStore.swift; sourceTree = "<group>"; };
 		BB4EDB042C90C89C00699E7D /* FastChineseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseState.swift; sourceTree = "<group>"; };
 		BB4EDB062C90C8CA00699E7D /* FastChineseAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseAction.swift; sourceTree = "<group>"; };
@@ -183,6 +185,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BB0854862CB42C7100F1661B /* Story */ = {
+			isa = PBXGroup;
+			children = (
+				BB0854822CB42C0200F1661B /* Chapter.swift */,
+				BBB6EF512C8C86B10079D135 /* Sentence.swift */,
+				BB0854842CB42C1400F1661B /* Story.swift */,
+			);
+			path = Story;
+			sourceTree = "<group>";
+		};
 		BB4EDB012C90C85000699E7D /* Redux */ = {
 			isa = PBXGroup;
 			children = (
@@ -314,7 +326,6 @@
 		BBB6EF1A2C8C86240079D135 = {
 			isa = PBXGroup;
 			children = (
-				BB27D75A2C94C65A007BC428 /* cedict_ts.txt */,
 				BBB6EF252C8C86240079D135 /* PhraseFlow Chinese */,
 				BBB6EF362C8C862A0079D135 /* PhraseFlow ChineseTests */,
 				BBB6EF402C8C862A0079D135 /* PhraseFlow ChineseUITests */,
@@ -378,11 +389,11 @@
 			children = (
 				BB4EDB202C90F80400699E7D /* Request */,
 				BB4EDB272C919A3300699E7D /* Response */,
+				BB0854862CB42C7100F1661B /* Story */,
 				BB4EDB252C91912000699E7D /* AnswerState.swift */,
 				BB4EDB2A2C91B35D00699E7D /* Definition.swift */,
-				BB34B22F2C8DBC40003B95C4 /* Mode.swift */,
-				BBB6EF512C8C86B10079D135 /* Sentence.swift */,
-				BB34B2332C8DBC65003B95C4 /* PhraseCategory.swift */,
+				BB0854872CB42D8700F1661B /* ChapterGenerationInfo.swift */,
+				BB34B22F2C8DBC40003B95C4 /* PracticeMode.swift */,
 				BB34B2312C8DBC4E003B95C4 /* PhraseListMode.swift */,
 				BB4EDB182C90D55C00699E7D /* PracticeViewState.swift */,
 				BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */,
@@ -517,7 +528,6 @@
 				BBB6EF2E2C8C86290079D135 /* Preview Assets.xcassets in Resources */,
 				BB767F192CA0D43900C6BB55 /* iosjieba.bundle in Resources */,
 				BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */,
-				BB27D75B2C94C65A007BC428 /* cedict_ts.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,9 +555,9 @@
 				BB4EDB1B2C90DF8C00699E7D /* URL+ConvertPCM.swift in Sources */,
 				BB4EDB1F2C90F3A800699E7D /* String+Normalize.swift in Sources */,
 				BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */,
-				BB34B2342C8DBC65003B95C4 /* PhraseCategory.swift in Sources */,
 				BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */,
 				BB767F1E2CA0DD2D00C6BB55 /* String+Diacritic.swift in Sources */,
+				BB0854832CB42C0200F1661B /* Chapter.swift in Sources */,
 				BB4EDB072C90C8CA00699E7D /* FastChineseAction.swift in Sources */,
 				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */,
@@ -558,11 +568,12 @@
 				BB4EDB222C90F81000699E7D /* DefineCharacterRequest.swift in Sources */,
 				BB34B2322C8DBC4E003B95C4 /* PhraseListMode.swift in Sources */,
 				BB4EDB0E2C90CA0300699E7D /* FastChineseMiddleware.swift in Sources */,
-				BB34B2302C8DBC40003B95C4 /* Mode.swift in Sources */,
+				BB34B2302C8DBC40003B95C4 /* PracticeMode.swift in Sources */,
 				BB4EDB102C90CA4900699E7D /* FastChineseSubscriber.swift in Sources */,
 				BB4EDB262C91912000699E7D /* AnswerState.swift in Sources */,
 				BB767F1A2CA0D43900C6BB55 /* Segmentor.cpp in Sources */,
 				BB4EDB192C90D55C00699E7D /* PracticeViewState.swift in Sources */,
+				BB0854882CB42D8700F1661B /* ChapterGenerationInfo.swift in Sources */,
 				BB4EDB132C90CBBD00699E7D /* String+Phrase.swift in Sources */,
 				BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */,
 				BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */,
@@ -576,6 +587,7 @@
 				BB4EDB172C90D20300699E7D /* FastChineseServices.swift in Sources */,
 				BB27D75D2C94C715007BC428 /* String+Dictionary.swift in Sources */,
 				BB4EDB052C90C89C00699E7D /* FastChineseState.swift in Sources */,
+				BB0854852CB42C1400F1661B /* Story.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
