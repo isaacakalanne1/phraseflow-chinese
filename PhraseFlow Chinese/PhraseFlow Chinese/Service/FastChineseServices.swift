@@ -17,7 +17,7 @@ enum FastChineseServicesError: Error {
 protocol FastChineseServicesProtocol {
     func generateChapter(using info: ChapterGenerationInfo) async throws -> [Sentence]
     func fetchAzureTextToSpeech(sentence: Sentence) async throws -> Data
-    func fetchDefinition(of character: String, withinContextOf phrase: String) async throws -> GPTResponse
+    func fetchDefinition(of character: String, withinContextOf sentence: String) async throws -> GPTResponse
 }
 
 final class FastChineseServices: FastChineseServicesProtocol {
@@ -44,7 +44,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         guard let response = try? JSONDecoder().decode(GPTResponse.self, from: data) else {
             throw FastChineseServicesError.failedToDecodeJson
         }
-        guard let sentences = response.decodedPhrases() else {
+        guard let sentences = response.decodedSentences() else {
             throw FastChineseServicesError.failedToDecodeSentences
         }
         return sentences
@@ -78,7 +78,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         return data
     }
 
-    func fetchDefinition(of character: String, withinContextOf phrase: String) async throws -> GPTResponse {
+    func fetchDefinition(of character: String, withinContextOf sentence: String) async throws -> GPTResponse {
         let deploymentId = "gpt-4o-mini"
         let version = "2024-07-18"
 
@@ -91,7 +91,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
             .init(role: "system",
                   content: "You are an AI assistant that provides English definitions for characters in Chinese sentences. Your explanations are brief, and simple to understand. You provide the pinyin for the Chinese character in brackets after the Chinese character. If the character is used as part of a larger word, you also provide the pinyin and definition for each character in this overall word. You never repeat the Chinese sentence, and never translate the whole of the Chinese sentence into English."),
             .init(role: "user",
-                  content: "Provide a definition for \(character) in \(phrase)")
+                  content: "Provide a definition for \(character) in \(sentence)")
         ])
 
         guard let jsonData = try? JSONEncoder().encode(requestData) else {

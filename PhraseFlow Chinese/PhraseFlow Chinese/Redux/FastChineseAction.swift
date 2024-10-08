@@ -20,16 +20,16 @@ enum FastChineseAction {
     case failedToSaveSentences
 
     case loadChapter(generationInfo: ChapterGenerationInfo, chapterIndex: Int)
-    case onLoadedChapter([Sentence])
+    case onLoadedChapter(Chapter)
     case failedToLoadChapter
 
     case submitAnswer
-    case goToNextPhrase
+    case goToNextSentence
     case preloadAudio
     case failedToPreloadAudio
 
-    case updatePhrasesAudio([Sentence], audioDataList: [Data])
-    case failedToUpdatePhraseAudio
+    case updateSentencesAudio([Sentence], audioDataList: [Data])
+    case failedToUpdateSentencesAudio
 
     case revealAnswer
     case playAudio

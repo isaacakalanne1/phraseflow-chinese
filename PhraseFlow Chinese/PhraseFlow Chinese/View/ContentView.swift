@@ -23,8 +23,8 @@ struct ContentView: View {
 
         VStack(spacing: 20) {
             if store.state.sentences.isEmpty {
-                Button("Add New Phrases") {
-                    store.dispatch(.fetchNewPhrases)
+                Button("Generate new chapter") {
+                    store.dispatch(.generateNewChapter)
                 }
                 .padding()
                 .background(Color.accentColor)
@@ -45,7 +45,7 @@ struct ContentView: View {
                         ForEach(Array(currentSentence.mandarin.enumerated()), id: \.offset) { index, element in
                             let character = currentSentence.mandarin[index]
                             VStack {
-                                Text(pinyin)
+                                Text("Pinyin here")
                                     .font(.footnote)
                                     .opacity(store.state.viewState == .revealAnswer ? 1 : 0)
                                 Text(String(character))
@@ -53,8 +53,8 @@ struct ContentView: View {
                                     .opacity(store.state.practiceMode != .listening ? 1 : store.state.viewState == .revealAnswer ? 1 : 0)
                             }
                             .onTapGesture {
-                                if let word = currentSentence.word(atIndex: index) {
-                                    store.dispatch(.defineCharacter(word))
+                                if let word = currentSentence.mandarin[index] {
+                                    store.dispatch(.defineCharacter(String(word)))
                                 }
                             }
                         }
@@ -97,7 +97,7 @@ struct ContentView: View {
                         if store.state.viewState == .revealAnswer {
                             Button(action: {
                                 isTextFieldFocused = store.state.practiceMode == .writing
-                                store.dispatch(.goToNextPhrase)
+                                store.dispatch(.goToNextSentence)
                                 if store.state.practiceMode == .listening {
                                     store.dispatch(.playAudio)
                                 }

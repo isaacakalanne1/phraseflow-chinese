@@ -9,37 +9,38 @@ import Foundation
 
 enum FastChineseDataStoreError: Error {
     case failedToSaveAudio
-    case failedToDecodePhrases
+    case failedToLoadChapter
+    case failedToDecodeSentences
 }
 
 protocol FastChineseDataStoreProtocol {
-    func fetchSavedPhrases() throws -> [Sentence]
-    func saveSentences(_ phrases: [Sentence]) throws
-    func unsavePhrase(_ phrase: Sentence)
+    func loadChapter(info: ChapterGenerationInfo, chapterIndex: Int) throws -> Chapter
+    func saveChapter(_ chapter: Chapter) throws
+    func unsaveChapter(_ chapter: Chapter)
     func saveAudioToTempFile(fileName: String, data: Data) throws -> URL
 }
 
 class FastChineseDataStore: FastChineseDataStoreProtocol {
 
-    func fetchSavedPhrases() throws -> [Sentence] {
+    func loadChapter(info: ChapterGenerationInfo, chapterIndex: Int) throws -> Chapter {
         do {
-            if let savedData = UserDefaults.standard.data(forKey: "sentencesKey") {
-                let phrases = try JSONDecoder().decode([Sentence].self, from: savedData)
-                return phrases.shuffled()
+            guard let savedData = UserDefaults.standard.data(forKey: "Chapter \(chapterIndex), \(info.storyOverview)") else {
+                throw FastChineseDataStoreError.failedToLoadChapter
             }
+            let sentences = try JSONDecoder().decode([Sentence].self, from: savedData)
+            return Chapter(sentences: sentences, index: chapterIndex, info: info)
         } catch {
-            throw FastChineseDataStoreError.failedToDecodePhrases
+            throw FastChineseDataStoreError.failedToDecodeSentences
         }
-        return []
     }
 
-    func saveSentences(_ phrases: [Sentence]) throws {
-        let encodedData = try JSONEncoder().encode(phrases)
-        UserDefaults.standard.set(encodedData, forKey: "sentencesKey")
+    func saveChapter(_ chapter: Chapter) throws {
+        let encodedData = try JSONEncoder().encode(chapter.sentences)
+        UserDefaults.standard.set(encodedData, forKey: "Chapter \(chapter.index), \(chapter.info.storyOverview)")
     }
 
-    func unsavePhrase(_ phrase: Sentence) {
-        UserDefaults.standard.removeObject(forKey: phrase.mandarin)
+    func unsaveChapter(_ chapter: Chapter) {
+        UserDefaults.standard.removeObject(forKey: "Chapter \(chapter.index), \(chapter.info.storyOverview)")
     }
 
     func saveAudioToTempFile(fileName: String, data: Data) throws -> URL {

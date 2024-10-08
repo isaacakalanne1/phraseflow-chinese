@@ -9,4 +9,6 @@ import Foundation
 
 struct Chapter {
     var sentences: [Sentence]
+    var index: Int
+    var info: ChapterGenerationInfo
 }

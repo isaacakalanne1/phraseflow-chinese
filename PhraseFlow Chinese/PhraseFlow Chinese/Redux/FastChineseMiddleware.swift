@@ -14,19 +14,19 @@ typealias FastChineseMiddlewareType = Middleware<FastChineseState, FastChineseAc
 let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environment in
     switch action {
     case .generateNewChapter:
-        var newPhrases: [Sentence] = []
+        var newSentences: [Sentence] = []
             do {
-                newPhrases = try await environment.generateChapter(using: .init(storyOverview: "", difficulty: ""))
+                newSentences = try await environment.generateChapter(using: .init(storyOverview: "", difficulty: ""))
             } catch {
                 return .failedToGenerateNewChapter
             }
-        return .onGeneratedNewChapter(newPhrases)
+        return .onGeneratedNewChapter(newSentences)
     case .onGeneratedNewChapter:
         return .saveSentences
     case .loadChapter(let info, let chapterIndex):
         do {
-            let sentences = try environment.fetchSavedPhrases()
-            return .onLoadedChapter(sentences)
+            let chapter = try environment.loadChapter(info: info, chapterIndex: chapterIndex)
+            return .onLoadedChapter(chapter)
         } catch {
             return .failedToLoadChapter
         }
@@ -34,46 +34,49 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         return .preloadAudio
     case .saveSentences:
         do {
-            try environment.saveSentences(state.sentences)
+            try environment.saveChapter(.init(sentences: state.sentences,
+                                              index: 0,
+                                              info: .init(storyOverview: "",
+                                                          difficulty: "")))
         } catch {
             return .failedToSaveSentences
         }
         return .preloadAudio
     case .submitAnswer:
         return .revealAnswer
-    case .goToNextPhrase:
+    case .goToNextSentence:
         return .preloadAudio
     case .preloadAudio:
         do {
             guard state.sentences.count > 0 else {
                 return nil
             }
-            var phrases: [Sentence] = []
+            var sentences: [Sentence] = []
             var audioDataList: [Data] = []
             for i in 0..<2 {
                 let index = (state.sentenceIndex + i) % state.sentences.count
-                let phrase = state.sentences[index]
-                if phrase.audioData == nil {
-                    let audioData = try await environment.fetchSpeech(for: phrase)
-                    phrases.append(phrase)
+                let sentence = state.sentences[index]
+                if sentence.audioData == nil {
+                    let audioData = try await environment.fetchSpeech(for: sentence)
+                    sentences.append(sentence)
                     audioDataList.append(audioData)
                 }
             }
-            return .updatePhrasesAudio(phrases, audioDataList: audioDataList)
+            return .updateSentencesAudio(sentences, audioDataList: audioDataList)
         } catch {
             return .failedToPreloadAudio
         }
 
-    case .updatePhrasesAudio(let phrases, let audioDataList):
+    case .updateSentencesAudio(let sentences, let audioDataList):
         do {
             var audioUrlList: [URL] = []
-            for (phrase, audioData) in zip(phrases, audioDataList) {
-                let audioURL = try environment.saveAudioToTempFile(fileName: phrase.mandarin, data: audioData)
+            for (sentence, audioData) in zip(sentences, audioDataList) {
+                let audioURL = try environment.saveAudioToTempFile(fileName: sentence.mandarin, data: audioData)
                 audioUrlList.append(audioURL)
             }
             return nil
         } catch {
-            return .failedToUpdatePhraseAudio
+            return .failedToUpdateSentencesAudio
         }
     case .playAudio:
         do {
@@ -87,10 +90,10 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
     case .defineCharacter(let string):
         do {
-            guard let mandarinPhrase = state.currentSentence?.mandarin else {
+            guard let mandarinSentence = state.currentSentence?.mandarin else {
                 return nil
             }
-            let response = try await environment.fetchDefinition(of: string, withinContextOf: mandarinPhrase)
+            let response = try await environment.fetchDefinition(of: string, withinContextOf: mandarinSentence)
             guard let definition = response.choices.first?.message.content else {
                 return nil
             }
@@ -112,7 +115,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .failedToSaveSentences,
             .revealAnswer,
             .failedToPreloadAudio,
-            .failedToUpdatePhraseAudio,
+            .failedToUpdateSentencesAudio,
             .failedToUpdateAudioPlayer,
             .updateSpeechSpeed,
             .onDefinedCharacter,

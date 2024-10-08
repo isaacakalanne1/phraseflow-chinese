@@ -16,22 +16,6 @@ struct Sentence: Identifiable, Codable, Equatable {
 
     var audioData: Data? = nil
 
-    var splitMandarin: [String]? {
-        []
-    }
-
-    func word(atIndex index: Int) -> String? {
-        var characterIndex = -1
-        guard let mandarinList = splitMandarin else { return nil }
-        for word in mandarinList {
-            characterIndex += word.count
-            if characterIndex >= index {
-                return word
-            }
-        }
-        return nil
-    }
-
     // Custom decoder to assign default values
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

@@ -14,13 +14,13 @@ protocol FastChineseEnvironmentProtocol {
 
     func fetchSpeech(for phrase: Sentence) async throws -> Data
     func generateChapter(using info: ChapterGenerationInfo) async throws -> [Sentence]
-    func saveSentences(_ phrases: [Sentence]) throws
-    func unsavePhrase(_ phrase: Sentence)
-    func fetchSavedPhrases() throws -> [Sentence]
+    func saveChapter(_ chapter: Chapter) throws
+    func unsaveChapter(_ chapter: Chapter)
+    func loadChapter(info: ChapterGenerationInfo, chapterIndex: Int) throws -> Chapter
     func saveAudioToTempFile(fileName: String, data: Data) throws -> URL
     func transcribe(audioFrames: [Float]) async throws-> [Segment]
 
-    func fetchDefinition(of character: String, withinContextOf phrase: String) async throws -> GPTResponse
+    func fetchDefinition(of character: String, withinContextOf sentence: String) async throws -> GPTResponse
 }
 
 struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
@@ -43,16 +43,16 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
         try await service.generateChapter(using: info)
     }
 
-    func saveSentences(_ phrases: [Sentence]) throws {
-        try dataStore.saveSentences(phrases)
+    func saveChapter(_ chapter: Chapter) throws {
+        try dataStore.saveChapter(chapter)
     }
 
-    func unsavePhrase(_ phrase: Sentence) {
-        dataStore.unsavePhrase(phrase)
+    func unsaveChapter(_ chapter: Chapter) {
+        dataStore.unsaveChapter(chapter)
     }
 
-    func fetchSavedPhrases() throws -> [Sentence] {
-        try dataStore.fetchSavedPhrases()
+    func loadChapter(info: ChapterGenerationInfo, chapterIndex: Int) throws -> Chapter {
+        try dataStore.loadChapter(info: info, chapterIndex: chapterIndex)
     }
 
     func saveAudioToTempFile(fileName: String, data: Data) throws -> URL {
@@ -63,7 +63,7 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
         try await repository.transcribe(audioFrames: audioFrames)
     }
 
-    func fetchDefinition(of string: String, withinContextOf phrase: String) async throws -> GPTResponse {
-        try await service.fetchDefinition(of: string, withinContextOf: phrase)
+    func fetchDefinition(of string: String, withinContextOf sentence: String) async throws -> GPTResponse {
+        try await service.fetchDefinition(of: string, withinContextOf: sentence)
     }
 }

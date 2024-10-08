@@ -14,11 +14,11 @@ struct GPTResponse: Codable { // TODO: Update this to match OpenAI API
         var message: MessageResponse
 
         struct MessageResponse: Codable {
-            var content: String // TODO: Update to be [Phrase] directly
+            var content: String // TODO: Update to be [Sentence] directly
         }
     }
 
-    func decodedPhrases() -> [Sentence]? {
+    func decodedSentences() -> [Sentence]? {
         guard let content = choices.first?.message.content else { return nil }
 
         // Clean the string

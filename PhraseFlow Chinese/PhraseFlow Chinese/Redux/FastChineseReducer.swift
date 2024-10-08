@@ -15,12 +15,12 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     switch action {
     case .updateUserInput(let string):
         newState.userInput = string
-    case .onFetchedNewPhrases(let phrases):
-        newState.sentences = newState.sentences.shuffled()
-        newState.sentences.insert(contentsOf: phrases.shuffled(), at: 0)
+    case .onGeneratedNewChapter(let sentences):
+        newState.sentences = sentences
         newState.sentenceIndex = 0
-    case .onFetchedSavedPhrases(let phrases):
-        newState.sentences = phrases.shuffled()
+    case .onLoadedChapter(let sentences):
+        newState.sentences = sentences
+        newState.sentenceIndex = 0
     case .submitAnswer:
         newState.answerState = newState.currentSentence?.mandarin.normalized == newState.userInput.normalized ? .correct : .wrong
     case .goToNextPhrase:
@@ -28,9 +28,9 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.viewState = .normal
         newState.userInput = ""
         newState.currentDefinition = nil
-    case .updatePhrasesAudio(let phrases, let audioDataList):
-        for (phrase, audioData) in zip(phrases, audioDataList) {
-            if let index = newState.sentences.firstIndex(where: { $0.mandarin == phrase.mandarin }) {
+    case .updateSentencesAudio(let sentences, let audioDataList):
+        for (sentence, audioData) in zip(sentences, audioDataList) {
+            if let index = newState.sentences.firstIndex(where: { $0.mandarin == sentence.mandarin }) {
                 newState.sentences[index].audioData = audioData
             }
         }
@@ -45,22 +45,24 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .defineCharacter(let character):
         newState.characterToDefine = character
     case .onDefinedCharacter(let definition):
-        if let phrase = newState.currentSentence {
+        if let sentence = newState.currentSentence {
             newState.currentDefinition = .init(character: newState.characterToDefine,
-                                               phrase: phrase,
+                                               sentence: sentence,
                                                definition: definition)
         }
     case .saveSentences,
             .failedToSaveSentences,
-            .fetchSavedPhrases,
-            .failedToFetchSavedPhrases,
+            .failedToLoadChapter,
             .preloadAudio,
             .failedToPreloadAudio,
-            .failedToUpdatePhraseAudio,
+            .failedToUpdateSentencesAudio,
             .playAudio,
             .onUpdatedAudioPlayer,
             .failedToUpdateAudioPlayer,
-            .failedToDefineCharacter:
+            .failedToDefineCharacter,
+            .generateNewChapter,
+            .failedToGenerateNewChapter,
+            .loadChapter:
         break
     }
 
