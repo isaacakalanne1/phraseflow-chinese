@@ -18,12 +18,12 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .onGeneratedNewChapter(let sentences):
         newState.sentences = sentences
         newState.sentenceIndex = 0
-    case .onLoadedChapter(let sentences):
-        newState.sentences = sentences
+    case .onLoadedChapter(let chapter):
+        newState.sentences = chapter.sentences
         newState.sentenceIndex = 0
     case .submitAnswer:
         newState.answerState = newState.currentSentence?.mandarin.normalized == newState.userInput.normalized ? .correct : .wrong
-    case .goToNextPhrase:
+    case .goToNextSentence:
         newState.sentenceIndex = (newState.sentenceIndex + 1) % newState.sentences.count
         newState.viewState = .normal
         newState.userInput = ""

@@ -12,7 +12,7 @@ protocol FastChineseEnvironmentProtocol {
     var service: FastChineseServicesProtocol { get }
     var dataStore: FastChineseDataStoreProtocol { get }
 
-    func fetchSpeech(for phrase: Sentence) async throws -> Data
+    func fetchSpeech(for sentence: Sentence) async throws -> Data
     func generateChapter(using info: ChapterGenerationInfo) async throws -> [Sentence]
     func saveChapter(_ chapter: Chapter) throws
     func unsaveChapter(_ chapter: Chapter)
