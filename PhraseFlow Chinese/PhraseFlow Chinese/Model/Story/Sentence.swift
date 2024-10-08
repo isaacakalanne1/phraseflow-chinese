@@ -1,5 +1,5 @@
 //
-//  Phrase.swift
+//  Sentence.swift
 //  PhraseFlow Chinese
 //
 //  Created by iakalann on 07/09/2024.
@@ -8,12 +8,6 @@
 import Foundation
 import SwiftWhisper
 
-struct CodableSegment: Equatable, Codable {
-    public let startTime: Int
-    public let endTime: Int
-    public let text: String
-}
-
 struct Sentence: Identifiable, Codable, Equatable {
     var id = UUID() // Use a UUID for easy identification
     let mandarin: String
@@ -21,13 +15,9 @@ struct Sentence: Identifiable, Codable, Equatable {
     let english: String
 
     var audioData: Data? = nil
-    var characterSegments: [CodableSegment] = []
 
     var splitMandarin: [String]? {
-        let words = NSMutableArray()
-        JiebaWrapper()
-            .objcJiebaCut(mandarin, toWords: words)
-        return words as? [String]
+        []
     }
 
     func word(atIndex index: Int) -> String? {
@@ -50,7 +40,6 @@ struct Sentence: Identifiable, Codable, Equatable {
         self.english = try container.decode(String.self, forKey: .english)
 
         self.audioData = nil
-        self.characterSegments = []
     }
 
     init(mandarin: String,

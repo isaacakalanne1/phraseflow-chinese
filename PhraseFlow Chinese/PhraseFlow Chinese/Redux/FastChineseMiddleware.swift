@@ -16,21 +16,21 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
     case .generateNewChapter:
         var newPhrases: [Sentence] = []
             do {
-                newPhrases = try await environment.generateChapter(using: <#T##ChapterGenerationInfo#>)
+                newPhrases = try await environment.generateChapter(using: .init(storyOverview: "", difficulty: ""))
             } catch {
-                return .failedToFetchNewPhrases
+                return .failedToGenerateNewChapter
             }
-        return .onFetchedNewPhrases(newPhrases)
-    case .onFetchedNewPhrases:
+        return .onGeneratedNewChapter(newPhrases)
+    case .onGeneratedNewChapter:
         return .saveSentences
-    case .fetchSavedPhrases:
+    case .loadChapter(let info, let chapterIndex):
         do {
-            let phrases = try environment.fetchSavedPhrases()
-            return .onFetchedSavedPhrases(phrases)
+            let sentences = try environment.fetchSavedPhrases()
+            return .onLoadedChapter(sentences)
         } catch {
-            return .failedToFetchSavedPhrases
+            return .failedToLoadChapter
         }
-    case .onFetchedSavedPhrases:
+    case .onLoadedChapter:
         return .preloadAudio
     case .saveSentences:
         do {
@@ -107,9 +107,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         state.audioPlayer?.play()
         return nil
 
-    case .failedToFetchNewPhrases,
+    case .failedToGenerateNewChapter,
+            .failedToLoadChapter,
             .failedToSaveSentences,
-            .failedToFetchSavedPhrases,
             .revealAnswer,
             .failedToPreloadAudio,
             .failedToUpdatePhraseAudio,

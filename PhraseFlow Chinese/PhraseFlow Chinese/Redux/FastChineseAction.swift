@@ -18,9 +18,10 @@ enum FastChineseAction {
 
     case saveSentences
     case failedToSaveSentences
-    case fetchSavedPhrases
-    case onFetchedSavedPhrases([Sentence])
-    case failedToFetchSavedPhrases
+
+    case loadChapter(generationInfo: ChapterGenerationInfo, chapterIndex: Int)
+    case onLoadedChapter([Sentence])
+    case failedToLoadChapter
 
     case submitAnswer
     case goToNextPhrase

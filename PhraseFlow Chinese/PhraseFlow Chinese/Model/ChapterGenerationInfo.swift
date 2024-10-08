@@ -8,6 +8,6 @@
 import Foundation
 
 struct ChapterGenerationInfo {
-    let categories: [String]
+    let storyOverview: String
     let difficulty: String
 }

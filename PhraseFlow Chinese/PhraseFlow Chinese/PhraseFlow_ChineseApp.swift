@@ -41,8 +41,7 @@ struct PhraseFlow_ChineseApp: App {
             ContentView()
                 .environmentObject(store)
                 .onAppear {
-                    store.dispatch(.fetchSavedPhrases)
-                    store.dispatch(.fetchChineseDictionary)
+//                    store.dispatch(.loadChapter(generationInfo: <#T##ChapterGenerationInfo#>, chapterIndex: <#T##Int#>))
                 }
         }
     }

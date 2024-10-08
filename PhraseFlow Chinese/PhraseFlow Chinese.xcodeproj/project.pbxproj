@@ -11,9 +11,6 @@
 		BB0854852CB42C1400F1661B /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854842CB42C1400F1661B /* Story.swift */; };
 		BB0854882CB42D8700F1661B /* ChapterGenerationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854872CB42D8700F1661B /* ChapterGenerationInfo.swift */; };
 		BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */; };
-		BB27D75D2C94C715007BC428 /* String+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB27D75C2C94C715007BC428 /* String+Dictionary.swift */; };
-		BB27D75F2C94C767007BC428 /* String+Tone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB27D75E2C94C767007BC428 /* String+Tone.swift */; };
-		BB341F492C9247B900A15CE4 /* String+Pinyin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB341F482C9247B900A15CE4 /* String+Pinyin.swift */; };
 		BB34B2302C8DBC40003B95C4 /* PracticeMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34B22F2C8DBC40003B95C4 /* PracticeMode.swift */; };
 		BB34B2322C8DBC4E003B95C4 /* PhraseListMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34B2312C8DBC4E003B95C4 /* PhraseListMode.swift */; };
 		BB4EDAEE2C9047E000699E7D /* SwiftWhisper in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAED2C9047E000699E7D /* SwiftWhisper */; };
@@ -26,7 +23,6 @@
 		BB4EDB0C2C90C9A100699E7D /* FastChineseReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0B2C90C9A100699E7D /* FastChineseReducer.swift */; };
 		BB4EDB0E2C90CA0300699E7D /* FastChineseMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0D2C90CA0300699E7D /* FastChineseMiddleware.swift */; };
 		BB4EDB102C90CA4900699E7D /* FastChineseSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0F2C90CA4900699E7D /* FastChineseSubscriber.swift */; };
-		BB4EDB132C90CBBD00699E7D /* String+Phrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB122C90CBBD00699E7D /* String+Phrase.swift */; };
 		BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB142C90CF7400699E7D /* FastChineseDataStore.swift */; };
 		BB4EDB172C90D20300699E7D /* FastChineseServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB162C90D20300699E7D /* FastChineseServices.swift */; };
 		BB4EDB192C90D55C00699E7D /* PracticeViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB182C90D55C00699E7D /* PracticeViewState.swift */; };
@@ -38,12 +34,6 @@
 		BB4EDB262C91912000699E7D /* AnswerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB252C91912000699E7D /* AnswerState.swift */; };
 		BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */; };
 		BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB2A2C91B35D00699E7D /* Definition.swift */; };
-		BB767EEA2CA0D42300C6BB55 /* Classifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB767EE92CA0D42300C6BB55 /* Classifier.swift */; };
-		BB767EEF2CA0D43400C6BB55 /* iosjiebaWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB767EEE2CA0D43400C6BB55 /* iosjiebaWrapper.mm */; };
-		BB767F192CA0D43900C6BB55 /* iosjieba.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB767F152CA0D43900C6BB55 /* iosjieba.bundle */; };
-		BB767F1A2CA0D43900C6BB55 /* Segmentor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB767F162CA0D43900C6BB55 /* Segmentor.cpp */; };
-		BB767F1C2CA0DBE300C6BB55 /* String+Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB767F1B2CA0DBE300C6BB55 /* String+Index.swift */; };
-		BB767F1E2CA0DD2D00C6BB55 /* String+Diacritic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB767F1D2CA0DD2D00C6BB55 /* String+Diacritic.swift */; };
 		BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -76,9 +66,6 @@
 		BB0854842CB42C1400F1661B /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		BB0854872CB42D8700F1661B /* ChapterGenerationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterGenerationInfo.swift; sourceTree = "<group>"; };
 		BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpeed.swift; sourceTree = "<group>"; };
-		BB27D75C2C94C715007BC428 /* String+Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Dictionary.swift"; sourceTree = "<group>"; };
-		BB27D75E2C94C767007BC428 /* String+Tone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Tone.swift"; sourceTree = "<group>"; };
-		BB341F482C9247B900A15CE4 /* String+Pinyin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Pinyin.swift"; sourceTree = "<group>"; };
 		BB34B22F2C8DBC40003B95C4 /* PracticeMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeMode.swift; sourceTree = "<group>"; };
 		BB34B2312C8DBC4E003B95C4 /* PhraseListMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseListMode.swift; sourceTree = "<group>"; };
 		BB4EDB022C90C86300699E7D /* FastChineseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseStore.swift; sourceTree = "<group>"; };
@@ -88,7 +75,6 @@
 		BB4EDB0B2C90C9A100699E7D /* FastChineseReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseReducer.swift; sourceTree = "<group>"; };
 		BB4EDB0D2C90CA0300699E7D /* FastChineseMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseMiddleware.swift; sourceTree = "<group>"; };
 		BB4EDB0F2C90CA4900699E7D /* FastChineseSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseSubscriber.swift; sourceTree = "<group>"; };
-		BB4EDB122C90CBBD00699E7D /* String+Phrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Phrase.swift"; sourceTree = "<group>"; };
 		BB4EDB142C90CF7400699E7D /* FastChineseDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseDataStore.swift; sourceTree = "<group>"; };
 		BB4EDB162C90D20300699E7D /* FastChineseServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseServices.swift; sourceTree = "<group>"; };
 		BB4EDB182C90D55C00699E7D /* PracticeViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeViewState.swift; sourceTree = "<group>"; };
@@ -100,50 +86,6 @@
 		BB4EDB252C91912000699E7D /* AnswerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerState.swift; sourceTree = "<group>"; };
 		BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPhrasesResponse.swift; sourceTree = "<group>"; };
 		BB4EDB2A2C91B35D00699E7D /* Definition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Definition.swift; sourceTree = "<group>"; };
-		BB767EE92CA0D42300C6BB55 /* Classifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Classifier.swift; sourceTree = "<group>"; };
-		BB767EEC2CA0D43300C6BB55 /* SwiftJiebaDemo-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SwiftJiebaDemo-Bridging-Header.h"; sourceTree = "<group>"; };
-		BB767EED2CA0D43400C6BB55 /* iosjiebaWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iosjiebaWrapper.h; sourceTree = "<group>"; };
-		BB767EEE2CA0D43400C6BB55 /* iosjiebaWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iosjiebaWrapper.mm; sourceTree = "<group>"; };
-		BB767EF02CA0D43900C6BB55 /* ArgvContext.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ArgvContext.hpp; sourceTree = "<group>"; };
-		BB767EF12CA0D43900C6BB55 /* BlockingQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BlockingQueue.hpp; sourceTree = "<group>"; };
-		BB767EF22CA0D43900C6BB55 /* BoundedBlockingQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BoundedBlockingQueue.hpp; sourceTree = "<group>"; };
-		BB767EF32CA0D43900C6BB55 /* BoundedQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BoundedQueue.hpp; sourceTree = "<group>"; };
-		BB767EF42CA0D43900C6BB55 /* Closure.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Closure.hpp; sourceTree = "<group>"; };
-		BB767EF52CA0D43900C6BB55 /* Colors.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Colors.hpp; sourceTree = "<group>"; };
-		BB767EF62CA0D43900C6BB55 /* Condition.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Condition.hpp; sourceTree = "<group>"; };
-		BB767EF72CA0D43900C6BB55 /* Config.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Config.hpp; sourceTree = "<group>"; };
-		BB767EF82CA0D43900C6BB55 /* FileLock.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FileLock.hpp; sourceTree = "<group>"; };
-		BB767EF92CA0D43900C6BB55 /* ForcePublic.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ForcePublic.hpp; sourceTree = "<group>"; };
-		BB767EFA2CA0D43900C6BB55 /* LocalVector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LocalVector.hpp; sourceTree = "<group>"; };
-		BB767EFB2CA0D43900C6BB55 /* Logging.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Logging.hpp; sourceTree = "<group>"; };
-		BB767EFC2CA0D43900C6BB55 /* Md5.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Md5.hpp; sourceTree = "<group>"; };
-		BB767EFD2CA0D43900C6BB55 /* MutexLock.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MutexLock.hpp; sourceTree = "<group>"; };
-		BB767EFE2CA0D43900C6BB55 /* NonCopyable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NonCopyable.hpp; sourceTree = "<group>"; };
-		BB767EFF2CA0D43900C6BB55 /* StdExtension.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StdExtension.hpp; sourceTree = "<group>"; };
-		BB767F002CA0D43900C6BB55 /* StringUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StringUtil.hpp; sourceTree = "<group>"; };
-		BB767F012CA0D43900C6BB55 /* Thread.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Thread.hpp; sourceTree = "<group>"; };
-		BB767F022CA0D43900C6BB55 /* ThreadPool.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ThreadPool.hpp; sourceTree = "<group>"; };
-		BB767F042CA0D43900C6BB55 /* DictTrie.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DictTrie.hpp; sourceTree = "<group>"; };
-		BB767F052CA0D43900C6BB55 /* FullSegment.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FullSegment.hpp; sourceTree = "<group>"; };
-		BB767F062CA0D43900C6BB55 /* HMMModel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HMMModel.hpp; sourceTree = "<group>"; };
-		BB767F072CA0D43900C6BB55 /* HMMSegment.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HMMSegment.hpp; sourceTree = "<group>"; };
-		BB767F082CA0D43900C6BB55 /* Jieba.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Jieba.hpp; sourceTree = "<group>"; };
-		BB767F092CA0D43900C6BB55 /* KeywordExtractor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = KeywordExtractor.hpp; sourceTree = "<group>"; };
-		BB767F0A2CA0D43900C6BB55 /* MixSegment.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MixSegment.hpp; sourceTree = "<group>"; };
-		BB767F0B2CA0D43900C6BB55 /* MPSegment.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MPSegment.hpp; sourceTree = "<group>"; };
-		BB767F0C2CA0D43900C6BB55 /* PosTagger.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PosTagger.hpp; sourceTree = "<group>"; };
-		BB767F0D2CA0D43900C6BB55 /* PreFilter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PreFilter.hpp; sourceTree = "<group>"; };
-		BB767F0E2CA0D43900C6BB55 /* QuerySegment.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = QuerySegment.hpp; sourceTree = "<group>"; };
-		BB767F0F2CA0D43900C6BB55 /* SegmentBase.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SegmentBase.hpp; sourceTree = "<group>"; };
-		BB767F102CA0D43900C6BB55 /* SegmentTagged.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SegmentTagged.hpp; sourceTree = "<group>"; };
-		BB767F112CA0D43900C6BB55 /* TextRankExtractor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TextRankExtractor.hpp; sourceTree = "<group>"; };
-		BB767F122CA0D43900C6BB55 /* Trie.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Trie.hpp; sourceTree = "<group>"; };
-		BB767F132CA0D43900C6BB55 /* Unicode.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Unicode.hpp; sourceTree = "<group>"; };
-		BB767F152CA0D43900C6BB55 /* iosjieba.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iosjieba.bundle; sourceTree = "<group>"; };
-		BB767F162CA0D43900C6BB55 /* Segmentor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Segmentor.cpp; sourceTree = "<group>"; };
-		BB767F172CA0D43900C6BB55 /* Segmentor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Segmentor.h; sourceTree = "<group>"; };
-		BB767F1B2CA0DBE300C6BB55 /* String+Index.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Index.swift"; sourceTree = "<group>"; };
-		BB767F1D2CA0DD2D00C6BB55 /* String+Diacritic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Diacritic.swift"; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhraseFlow Chinese.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -222,12 +164,6 @@
 		BB4EDB112C90CBAE00699E7D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				BB4EDB122C90CBBD00699E7D /* String+Phrase.swift */,
-				BB767F1D2CA0DD2D00C6BB55 /* String+Diacritic.swift */,
-				BB27D75C2C94C715007BC428 /* String+Dictionary.swift */,
-				BB27D75E2C94C767007BC428 /* String+Tone.swift */,
-				BB341F482C9247B900A15CE4 /* String+Pinyin.swift */,
-				BB767F1B2CA0DBE300C6BB55 /* String+Index.swift */,
 				BB4EDB1E2C90F3A800699E7D /* String+Normalize.swift */,
 				BB4EDB1A2C90DF8C00699E7D /* URL+ConvertPCM.swift */,
 			);
@@ -248,79 +184,6 @@
 				BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */,
 			);
 			path = Response;
-			sourceTree = "<group>";
-		};
-		BB767EE82CA0D41700C6BB55 /* Jieba */ = {
-			isa = PBXGroup;
-			children = (
-				BB767EED2CA0D43400C6BB55 /* iosjiebaWrapper.h */,
-				BB767EEE2CA0D43400C6BB55 /* iosjiebaWrapper.mm */,
-				BB767F182CA0D43900C6BB55 /* iosjieba */,
-				BB767EEC2CA0D43300C6BB55 /* SwiftJiebaDemo-Bridging-Header.h */,
-				BB767EE92CA0D42300C6BB55 /* Classifier.swift */,
-			);
-			path = Jieba;
-			sourceTree = "<group>";
-		};
-		BB767F032CA0D43900C6BB55 /* limonp */ = {
-			isa = PBXGroup;
-			children = (
-				BB767EF02CA0D43900C6BB55 /* ArgvContext.hpp */,
-				BB767EF12CA0D43900C6BB55 /* BlockingQueue.hpp */,
-				BB767EF22CA0D43900C6BB55 /* BoundedBlockingQueue.hpp */,
-				BB767EF32CA0D43900C6BB55 /* BoundedQueue.hpp */,
-				BB767EF42CA0D43900C6BB55 /* Closure.hpp */,
-				BB767EF52CA0D43900C6BB55 /* Colors.hpp */,
-				BB767EF62CA0D43900C6BB55 /* Condition.hpp */,
-				BB767EF72CA0D43900C6BB55 /* Config.hpp */,
-				BB767EF82CA0D43900C6BB55 /* FileLock.hpp */,
-				BB767EF92CA0D43900C6BB55 /* ForcePublic.hpp */,
-				BB767EFA2CA0D43900C6BB55 /* LocalVector.hpp */,
-				BB767EFB2CA0D43900C6BB55 /* Logging.hpp */,
-				BB767EFC2CA0D43900C6BB55 /* Md5.hpp */,
-				BB767EFD2CA0D43900C6BB55 /* MutexLock.hpp */,
-				BB767EFE2CA0D43900C6BB55 /* NonCopyable.hpp */,
-				BB767EFF2CA0D43900C6BB55 /* StdExtension.hpp */,
-				BB767F002CA0D43900C6BB55 /* StringUtil.hpp */,
-				BB767F012CA0D43900C6BB55 /* Thread.hpp */,
-				BB767F022CA0D43900C6BB55 /* ThreadPool.hpp */,
-			);
-			path = limonp;
-			sourceTree = "<group>";
-		};
-		BB767F142CA0D43900C6BB55 /* cppjieba */ = {
-			isa = PBXGroup;
-			children = (
-				BB767F032CA0D43900C6BB55 /* limonp */,
-				BB767F042CA0D43900C6BB55 /* DictTrie.hpp */,
-				BB767F052CA0D43900C6BB55 /* FullSegment.hpp */,
-				BB767F062CA0D43900C6BB55 /* HMMModel.hpp */,
-				BB767F072CA0D43900C6BB55 /* HMMSegment.hpp */,
-				BB767F082CA0D43900C6BB55 /* Jieba.hpp */,
-				BB767F092CA0D43900C6BB55 /* KeywordExtractor.hpp */,
-				BB767F0A2CA0D43900C6BB55 /* MixSegment.hpp */,
-				BB767F0B2CA0D43900C6BB55 /* MPSegment.hpp */,
-				BB767F0C2CA0D43900C6BB55 /* PosTagger.hpp */,
-				BB767F0D2CA0D43900C6BB55 /* PreFilter.hpp */,
-				BB767F0E2CA0D43900C6BB55 /* QuerySegment.hpp */,
-				BB767F0F2CA0D43900C6BB55 /* SegmentBase.hpp */,
-				BB767F102CA0D43900C6BB55 /* SegmentTagged.hpp */,
-				BB767F112CA0D43900C6BB55 /* TextRankExtractor.hpp */,
-				BB767F122CA0D43900C6BB55 /* Trie.hpp */,
-				BB767F132CA0D43900C6BB55 /* Unicode.hpp */,
-			);
-			path = cppjieba;
-			sourceTree = "<group>";
-		};
-		BB767F182CA0D43900C6BB55 /* iosjieba */ = {
-			isa = PBXGroup;
-			children = (
-				BB767F142CA0D43900C6BB55 /* cppjieba */,
-				BB767F152CA0D43900C6BB55 /* iosjieba.bundle */,
-				BB767F162CA0D43900C6BB55 /* Segmentor.cpp */,
-				BB767F172CA0D43900C6BB55 /* Segmentor.h */,
-			);
-			path = iosjieba;
 			sourceTree = "<group>";
 		};
 		BBB6EF1A2C8C86240079D135 = {
@@ -347,7 +210,6 @@
 			isa = PBXGroup;
 			children = (
 				BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */,
-				BB767EE82CA0D41700C6BB55 /* Jieba */,
 				BB4EDB112C90CBAE00699E7D /* Extensions */,
 				BB4EDB012C90C85000699E7D /* Redux */,
 				BB4EDB082C90C8E100699E7D /* Service */,
@@ -526,7 +388,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBB6EF2E2C8C86290079D135 /* Preview Assets.xcassets in Resources */,
-				BB767F192CA0D43900C6BB55 /* iosjieba.bundle in Resources */,
 				BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -556,14 +417,11 @@
 				BB4EDB1F2C90F3A800699E7D /* String+Normalize.swift in Sources */,
 				BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */,
 				BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */,
-				BB767F1E2CA0DD2D00C6BB55 /* String+Diacritic.swift in Sources */,
 				BB0854832CB42C0200F1661B /* Chapter.swift in Sources */,
 				BB4EDB072C90C8CA00699E7D /* FastChineseAction.swift in Sources */,
 				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */,
-				BB341F492C9247B900A15CE4 /* String+Pinyin.swift in Sources */,
 				BB4EDB1D2C90DFDD00699E7D /* FastChineseRepository.swift in Sources */,
-				BB767EEA2CA0D42300C6BB55 /* Classifier.swift in Sources */,
 				BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */,
 				BB4EDB222C90F81000699E7D /* DefineCharacterRequest.swift in Sources */,
 				BB34B2322C8DBC4E003B95C4 /* PhraseListMode.swift in Sources */,
@@ -571,21 +429,15 @@
 				BB34B2302C8DBC40003B95C4 /* PracticeMode.swift in Sources */,
 				BB4EDB102C90CA4900699E7D /* FastChineseSubscriber.swift in Sources */,
 				BB4EDB262C91912000699E7D /* AnswerState.swift in Sources */,
-				BB767F1A2CA0D43900C6BB55 /* Segmentor.cpp in Sources */,
 				BB4EDB192C90D55C00699E7D /* PracticeViewState.swift in Sources */,
 				BB0854882CB42D8700F1661B /* ChapterGenerationInfo.swift in Sources */,
-				BB4EDB132C90CBBD00699E7D /* String+Phrase.swift in Sources */,
 				BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */,
 				BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */,
 				BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */,
 				BB4EDB0C2C90C9A100699E7D /* FastChineseReducer.swift in Sources */,
 				BB4EDB0A2C90C8F100699E7D /* FastChineseEnvironment.swift in Sources */,
-				BB27D75F2C94C767007BC428 /* String+Tone.swift in Sources */,
 				BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */,
-				BB767EEF2CA0D43400C6BB55 /* iosjiebaWrapper.mm in Sources */,
-				BB767F1C2CA0DBE300C6BB55 /* String+Index.swift in Sources */,
 				BB4EDB172C90D20300699E7D /* FastChineseServices.swift in Sources */,
-				BB27D75D2C94C715007BC428 /* String+Dictionary.swift in Sources */,
 				BB4EDB052C90C89C00699E7D /* FastChineseState.swift in Sources */,
 				BB0854852CB42C1400F1661B /* Story.swift in Sources */,
 			);
@@ -769,7 +621,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.smileydudelimitedapps.PhraseFlow-Chinese";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "PhraseFlow Chinese/Jieba/SwiftJiebaDemo-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -802,7 +654,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.smileydudelimitedapps.PhraseFlow-Chinese";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "PhraseFlow Chinese/Jieba/SwiftJiebaDemo-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
