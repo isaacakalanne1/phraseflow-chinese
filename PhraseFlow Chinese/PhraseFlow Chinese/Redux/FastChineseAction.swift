@@ -10,8 +10,6 @@ import SwiftWhisper
 import AVKit
 
 enum FastChineseAction {
-    case updateUserInput(String)
-    
     case generateNewChapter
     case onGeneratedNewChapter([Sentence])
     case failedToGenerateNewChapter

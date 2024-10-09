@@ -36,27 +36,6 @@ struct SettingsView: View {
                     }
                 }
 
-                Text("Choose Mode")
-                    .font(.title2)
-
-                HStack(spacing: 10) {
-                    ForEach(PracticeMode.allCases, id: \.self) { mode in
-                        Button(action: {
-                            withAnimation(.easeInOut) {
-                                store.dispatch(.updatePracticeMode(mode))
-                            }
-                        }) {
-                            Text(mode.title)
-                                .font(.body)
-                                .foregroundColor(store.state.practiceMode == mode ? .white : .primary)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(store.state.practiceMode == mode ? Color.accentColor : Color.gray.opacity(0.3))
-                                .cornerRadius(10)
-                        }
-                    }
-                }
-
                 Text("Settings")
                     .font(.title2.bold())
                     .padding(.vertical)

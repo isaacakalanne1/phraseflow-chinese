@@ -30,10 +30,17 @@ final class FastChineseServices: FastChineseServicesProtocol {
         let requestData = DefineCharacterRequest(messages: [
             .init(role: "system",
                   content: """
-                  You are a JSON generator, who takes great pleasure and enjoyment in generating Mandarin phrases. You output only the expected JSON data for the user's input, with no explaining text. You output data in the following format: [ { "mandarin": "你好", "pinyin": "nǐ hǎo", "english": "Hello" }, { "mandarin": "谢谢", "pinyin": "xièxiè", "english": "Thank you" }, { "mandarin": "再见", "pinyin": "zàijiàn", "english": "Goodbye" } ]
+                  You are a Mandarin story generator. You output only the expected story in JSON format, with each sentence split into entries in the list.
+                  You output no explaining text before or after the JSON, only the JSON.
+                  You output data in the following format: [ { "mandarin": "你好", "pinyin": ["nǐ", "hǎo"], "english": "Hello" }, { "mandarin": "谢谢", "pinyin": ["xiè"], ["xie"], "english": "Thank you" }, { "mandarin": "再见", "pinyin": ["zài", "jiàn"], "english": "Goodbye" } ]
+                  You are a master at pinyin and write the absolute best, most accurate tone markings for the pinyin, based on context, and including all relevant neutral tones.
                   """),
             .init(role: "user",
-                  content: "Write JSON to produce 5 short Mandarin phrases. Ensure the correct tones are used, including neutral tones, and changing tones such as those for 不 and 一")
+                  content: """
+        Generate a captivating, emotional, and suspenseful story, with each sentence split in the same structure as the list above.
+        The story should be amazing and captivating, and the reader should be amazed and AI came up with it.
+        Write the first chapter of this story. The chapter should be 20-30 lines long.
+        """)
         ])
 
         guard let jsonData = try? JSONEncoder().encode(requestData) else {

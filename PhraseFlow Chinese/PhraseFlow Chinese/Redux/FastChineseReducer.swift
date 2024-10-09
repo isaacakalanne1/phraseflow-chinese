@@ -13,8 +13,6 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     var newState = state
 
     switch action {
-    case .updateUserInput(let string):
-        newState.userInput = string
     case .onGeneratedNewChapter(let sentences):
         newState.sentences = sentences
         newState.sentenceIndex = 0
@@ -23,7 +21,6 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.sentenceIndex = 0
     case .goToNextSentence:
         newState.sentenceIndex = (newState.sentenceIndex + 1) % newState.sentences.count
-        newState.userInput = ""
         newState.currentDefinition = nil
     case .updateSentencesAudio(let sentences, let audioDataList):
         for (sentence, audioData) in zip(sentences, audioDataList) {

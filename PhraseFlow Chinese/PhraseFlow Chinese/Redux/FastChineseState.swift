@@ -20,10 +20,13 @@ struct FastChineseState {
         return nil
     }
 
-    var userInput: String = ""
     var speechSpeed: SpeechSpeed = .normal
     var characterToDefine: String = ""
     var currentDefinition: Definition?
 
     var audioPlayer: AVAudioPlayer?
+
+    var isShowingPinyin = true
+    var isShowingEnglish = true
+    var isShowingMandarin = true
 }

@@ -29,14 +29,11 @@ struct GPTResponse: Codable { // TODO: Update this to match OpenAI API
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
         // Convert the cleaned string to data and decode
-        guard let data = cleanedContent.data(using: .utf8) else { return nil }
+        guard let data = content.data(using: .utf8) else { return nil }
 
         do {
             return try JSONDecoder()
                 .decode([Sentence].self, from: data)
-                .map {
-                    Sentence(mandarin: $0.mandarin, pinyin: $0.pinyin, english: $0.english)
-                }
         } catch {
             print("Failed to decode: \(error)")
             return nil
