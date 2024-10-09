@@ -1,6 +1,6 @@
 //
 //  FastChineseMiddleware.swift
-//  PhraseFlow Chinese
+//  FastChinese
 //
 //  Created by iakalann on 10/09/2024.
 //
@@ -42,8 +42,6 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .failedToSaveSentences
         }
         return .preloadAudio
-    case .submitAnswer:
-        return .revealAnswer
     case .goToNextSentence:
         return .preloadAudio
     case .preloadAudio:
@@ -113,14 +111,12 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
     case .failedToGenerateNewChapter,
             .failedToLoadChapter,
             .failedToSaveSentences,
-            .revealAnswer,
             .failedToPreloadAudio,
             .failedToUpdateSentencesAudio,
             .failedToUpdateAudioPlayer,
             .updateSpeechSpeed,
             .onDefinedCharacter,
             .failedToDefineCharacter,
-            .updatePracticeMode,
             .updateUserInput:
         return nil
     }

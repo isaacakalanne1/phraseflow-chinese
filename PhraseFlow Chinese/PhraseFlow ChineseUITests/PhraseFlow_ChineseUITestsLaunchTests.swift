@@ -1,6 +1,6 @@
 //
 //  PhraseFlow_ChineseUITestsLaunchTests.swift
-//  PhraseFlow ChineseUITests
+//  FastChineseUITests
 //
 //  Created by iakalann on 07/09/2024.
 //

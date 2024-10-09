@@ -1,6 +1,6 @@
 //
 //  FastChineseStore.swift
-//  PhraseFlow Chinese
+//  FastChinese
 //
 //  Created by iakalann on 10/09/2024.
 //

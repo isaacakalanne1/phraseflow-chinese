@@ -1,6 +1,6 @@
 //
 //  FastChineseReducer.swift
-//  PhraseFlow Chinese
+//  FastChinese
 //
 //  Created by iakalann on 10/09/2024.
 //
@@ -21,11 +21,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .onLoadedChapter(let chapter):
         newState.sentences = chapter.sentences
         newState.sentenceIndex = 0
-    case .submitAnswer:
-        newState.answerState = newState.currentSentence?.mandarin.normalized == newState.userInput.normalized ? .correct : .wrong
     case .goToNextSentence:
         newState.sentenceIndex = (newState.sentenceIndex + 1) % newState.sentences.count
-        newState.viewState = .normal
         newState.userInput = ""
         newState.currentDefinition = nil
     case .updateSentencesAudio(let sentences, let audioDataList):
@@ -34,14 +31,10 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
                 newState.sentences[index].audioData = audioData
             }
         }
-    case .revealAnswer:
-        newState.viewState = .revealAnswer
     case .updateAudioPlayer(let audioPlayer):
         newState.audioPlayer = audioPlayer
     case .updateSpeechSpeed(let speed):
         newState.speechSpeed = speed
-    case .updatePracticeMode(let mode):
-        newState.practiceMode = mode
     case .defineCharacter(let character):
         newState.characterToDefine = character
     case .onDefinedCharacter(let definition):

@@ -1,6 +1,6 @@
 //
 //  FastChineseAction.swift
-//  PhraseFlow Chinese
+//  FastChinese
 //
 //  Created by iakalann on 10/09/2024.
 //
@@ -23,7 +23,6 @@ enum FastChineseAction {
     case onLoadedChapter(Chapter)
     case failedToLoadChapter
 
-    case submitAnswer
     case goToNextSentence
     case preloadAudio
     case failedToPreloadAudio
@@ -31,7 +30,6 @@ enum FastChineseAction {
     case updateSentencesAudio([Sentence], audioDataList: [Data])
     case failedToUpdateSentencesAudio
 
-    case revealAnswer
     case playAudio
     case updateAudioPlayer(AVAudioPlayer)
     case onUpdatedAudioPlayer
@@ -42,5 +40,4 @@ enum FastChineseAction {
     case failedToDefineCharacter
 
     case updateSpeechSpeed(SpeechSpeed)
-    case updatePracticeMode(PracticeMode)
 }

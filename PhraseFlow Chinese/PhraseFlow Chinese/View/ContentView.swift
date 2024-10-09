@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  PhraseFlow Chinese
+//  FastChinese
 //
 //  Created by iakalann on 07/09/2024.
 //
@@ -30,7 +30,7 @@ struct ContentView: View {
                 .background(Color.accentColor)
                 .foregroundColor(.white)
                 .cornerRadius(10)
-            } else if let currentSentence = store.state.currentSentence, !store.state.dictionary.isEmpty {
+            } else if let currentSentence = store.state.currentSentence {
                 Spacer()
                 VStack(spacing: 10) {
                     Text(store.state.currentDefinition?.definition ?? "")
@@ -48,14 +48,12 @@ struct ContentView: View {
                                 Text("Pinyin here")
                                     .font(.footnote)
                                     .opacity(store.state.viewState == .revealAnswer ? 1 : 0)
-                                Text(String(character))
+                                Text(character)
                                     .font(.largeTitle)
                                     .opacity(store.state.practiceMode != .listening ? 1 : store.state.viewState == .revealAnswer ? 1 : 0)
                             }
                             .onTapGesture {
-                                if let word = currentSentence.mandarin[index] {
-                                    store.dispatch(.defineCharacter(String(word)))
-                                }
+                                store.dispatch(.defineCharacter(character))
                             }
                         }
                     }

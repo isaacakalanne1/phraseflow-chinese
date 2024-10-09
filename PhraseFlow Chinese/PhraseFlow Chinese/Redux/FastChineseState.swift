@@ -1,6 +1,6 @@
 //
 //  FastChineseState.swift
-//  PhraseFlow Chinese
+//  FastChinese
 //
 //  Created by iakalann on 10/09/2024.
 //
@@ -21,10 +21,7 @@ struct FastChineseState {
     }
 
     var userInput: String = ""
-    var viewState: PracticeViewState = .normal
-    var answerState: AnswerState = .correct
     var speechSpeed: SpeechSpeed = .normal
-    var practiceMode: PracticeMode = .reading
     var characterToDefine: String = ""
     var currentDefinition: Definition?
 
