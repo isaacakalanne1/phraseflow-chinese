@@ -1,0 +1,6 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'PhraseFlow Chinese' do
+  pod 'MicrosoftCognitiveServicesSpeech-iOS', '~> 1.40.0'
+end

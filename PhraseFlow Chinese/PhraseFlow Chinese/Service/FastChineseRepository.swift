@@ -6,35 +6,46 @@
 //
 
 import Foundation
-import SwiftWhisper
+import MicrosoftCognitiveServicesSpeech
 
 enum FastChineseRepositoryError: Error {
     case failedToSegment
+    case failedToCreateSPXSpeechConfiguration
 }
 
 protocol FastChineseRepositoryProtocol {
-    var whisper: Whisper? { get set }
-    func transcribe(audioFrames: [Float]) async throws-> [Segment]
+    func speakText(_ text: String) throws
 }
 
 class FastChineseRepository: FastChineseRepositoryProtocol {
 
-    var whisper: Whisper?
-
     init() {
-        if let modelUrl = Bundle.main.url(forResource: "ggml-tiny", withExtension: "bin") {
-            let params = WhisperParams()
-            params.language = .chinese
-            params.max_len = 1
-            params.token_timestamps = true
-            self.whisper = Whisper(fromFileURL: modelUrl, withParams: params)
-        }
+
     }
 
-    func transcribe(audioFrames: [Float]) async throws-> [Segment] {
-        guard let segments = try await whisper?.transcribe(audioFrames: audioFrames) else {
-            throw FastChineseRepositoryError.failedToSegment
+    func speakText(_ text: String) throws {
+        var speechConfig: SPXSpeechConfiguration?
+        do {
+            try speechConfig = SPXSpeechConfiguration(subscription: "144bc0cdea4d44e499927e84e795b27a", region: "eastus")
+        } catch {
+            print("error \(error) happened")
+            throw FastChineseRepositoryError.failedToCreateSPXSpeechConfiguration
         }
-        return segments
+
+        speechConfig?.speechSynthesisVoiceName = "zh-CN-XiaoxiaoNeural";
+
+        do {
+            let synthesizer = try SPXSpeechSynthesizer(speechConfig!)
+            let result = try synthesizer.speakText(text)
+            if result.reason == SPXResultReason.canceled
+            {
+                let cancellationDetails = try SPXSpeechSynthesisCancellationDetails(fromCanceledSynthesisResult: result)
+                print("cancelled, error code: \(cancellationDetails.errorCode) detail: \(cancellationDetails.errorDetails!) ")
+                print("Did you set the speech resource key and region values?");
+                return
+            }
+        } catch {
+            throw FastChineseRepositoryError.failedToCreateSPXSpeechConfiguration
+        }
     }
 }

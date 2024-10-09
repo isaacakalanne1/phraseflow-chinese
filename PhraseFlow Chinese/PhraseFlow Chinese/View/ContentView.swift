@@ -67,7 +67,9 @@ struct ContentView: View {
                     }
 
                     Button(action: {
-                        store.dispatch(.playAudio)
+                        if let sentence = store.state.currentSentence {
+                            store.dispatch(.playAudio(sentence))
+                        }
                     }) {
                         Image(systemName: "play.circle")
                     }

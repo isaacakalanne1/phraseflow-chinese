@@ -24,8 +24,6 @@ struct FastChineseState {
     var characterToDefine: String = ""
     var currentDefinition: Definition?
 
-    var audioPlayer: AVAudioPlayer?
-
     var isShowingPinyin = true
     var isShowingEnglish = true
     var isShowingMandarin = true

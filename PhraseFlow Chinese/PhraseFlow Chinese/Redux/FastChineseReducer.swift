@@ -22,14 +22,6 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .goToNextSentence:
         newState.sentenceIndex = (newState.sentenceIndex + 1) % newState.sentences.count
         newState.currentDefinition = nil
-    case .updateSentencesAudio(let sentences, let audioDataList):
-        for (sentence, audioData) in zip(sentences, audioDataList) {
-            if let index = newState.sentences.firstIndex(where: { $0.mandarin == sentence.mandarin }) {
-                newState.sentences[index].audioData = audioData
-            }
-        }
-    case .updateAudioPlayer(let audioPlayer):
-        newState.audioPlayer = audioPlayer
     case .updateSpeechSpeed(let speed):
         newState.speechSpeed = speed
     case .defineCharacter(let character):
@@ -43,12 +35,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .saveSentences,
             .failedToSaveSentences,
             .failedToLoadChapter,
-            .preloadAudio,
-            .failedToPreloadAudio,
-            .failedToUpdateSentencesAudio,
             .playAudio,
-            .onUpdatedAudioPlayer,
-            .failedToUpdateAudioPlayer,
+            .failedToPlayAudio,
             .failedToDefineCharacter,
             .generateNewChapter,
             .failedToGenerateNewChapter,

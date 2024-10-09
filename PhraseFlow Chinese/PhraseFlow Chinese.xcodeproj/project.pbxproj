@@ -7,13 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		477951978617EF1A543B0EC4 /* libPods-PhraseFlow Chinese.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 278A489BDBA476D2CC0AF9AC /* libPods-PhraseFlow Chinese.a */; };
 		BB0854832CB42C0200F1661B /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854822CB42C0200F1661B /* Chapter.swift */; };
 		BB0854852CB42C1400F1661B /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854842CB42C1400F1661B /* Story.swift */; };
 		BB0854882CB42D8700F1661B /* ChapterGenerationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854872CB42D8700F1661B /* ChapterGenerationInfo.swift */; };
 		BB08548A2CB68AA200F1661B /* String+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854892CB68AA200F1661B /* String+Subscript.swift */; };
 		BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */; };
-		BB4EDAEE2C9047E000699E7D /* SwiftWhisper in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAED2C9047E000699E7D /* SwiftWhisper */; };
-		BB4EDAF32C90499900699E7D /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAF22C90499900699E7D /* AudioKit */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
 		BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FastChineseStore.swift */; };
 		BB4EDB052C90C89C00699E7D /* FastChineseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB042C90C89C00699E7D /* FastChineseState.swift */; };
@@ -24,7 +23,6 @@
 		BB4EDB102C90CA4900699E7D /* FastChineseSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0F2C90CA4900699E7D /* FastChineseSubscriber.swift */; };
 		BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB142C90CF7400699E7D /* FastChineseDataStore.swift */; };
 		BB4EDB172C90D20300699E7D /* FastChineseServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB162C90D20300699E7D /* FastChineseServices.swift */; };
-		BB4EDB1B2C90DF8C00699E7D /* URL+ConvertPCM.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB1A2C90DF8C00699E7D /* URL+ConvertPCM.swift */; };
 		BB4EDB1D2C90DFDD00699E7D /* FastChineseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB1C2C90DFDD00699E7D /* FastChineseRepository.swift */; };
 		BB4EDB1F2C90F3A800699E7D /* String+Normalize.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB1E2C90F3A800699E7D /* String+Normalize.swift */; };
 		BB4EDB222C90F81000699E7D /* DefineCharacterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB212C90F81000699E7D /* DefineCharacterRequest.swift */; };
@@ -59,6 +57,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		03C5BB9FC82BE5D51BD916B3 /* Pods-PhraseFlow Chinese.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhraseFlow Chinese.debug.xcconfig"; path = "Target Support Files/Pods-PhraseFlow Chinese/Pods-PhraseFlow Chinese.debug.xcconfig"; sourceTree = "<group>"; };
+		278A489BDBA476D2CC0AF9AC /* libPods-PhraseFlow Chinese.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhraseFlow Chinese.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EDA23FCE91C5CB989C86534 /* Pods-PhraseFlow Chinese.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhraseFlow Chinese.release.xcconfig"; path = "Target Support Files/Pods-PhraseFlow Chinese/Pods-PhraseFlow Chinese.release.xcconfig"; sourceTree = "<group>"; };
 		BB0854822CB42C0200F1661B /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
 		BB0854842CB42C1400F1661B /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		BB0854872CB42D8700F1661B /* ChapterGenerationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterGenerationInfo.swift; sourceTree = "<group>"; };
@@ -73,7 +74,6 @@
 		BB4EDB0F2C90CA4900699E7D /* FastChineseSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseSubscriber.swift; sourceTree = "<group>"; };
 		BB4EDB142C90CF7400699E7D /* FastChineseDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseDataStore.swift; sourceTree = "<group>"; };
 		BB4EDB162C90D20300699E7D /* FastChineseServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseServices.swift; sourceTree = "<group>"; };
-		BB4EDB1A2C90DF8C00699E7D /* URL+ConvertPCM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+ConvertPCM.swift"; sourceTree = "<group>"; };
 		BB4EDB1C2C90DFDD00699E7D /* FastChineseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseRepository.swift; sourceTree = "<group>"; };
 		BB4EDB1E2C90F3A800699E7D /* String+Normalize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Normalize.swift"; sourceTree = "<group>"; };
 		BB4EDB212C90F81000699E7D /* DefineCharacterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefineCharacterRequest.swift; sourceTree = "<group>"; };
@@ -99,8 +99,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */,
-				BB4EDAF32C90499900699E7D /* AudioKit in Frameworks */,
-				BB4EDAEE2C9047E000699E7D /* SwiftWhisper in Frameworks */,
+				477951978617EF1A543B0EC4 /* libPods-PhraseFlow Chinese.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,6 +120,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F09325601693DB4E5512903 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				278A489BDBA476D2CC0AF9AC /* libPods-PhraseFlow Chinese.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BB0854862CB42C7100F1661B /* Story */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,7 +167,6 @@
 			children = (
 				BB4EDB1E2C90F3A800699E7D /* String+Normalize.swift */,
 				BB0854892CB68AA200F1661B /* String+Subscript.swift */,
-				BB4EDB1A2C90DF8C00699E7D /* URL+ConvertPCM.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -188,6 +194,8 @@
 				BBB6EF362C8C862A0079D135 /* PhraseFlow ChineseTests */,
 				BBB6EF402C8C862A0079D135 /* PhraseFlow ChineseUITests */,
 				BBB6EF242C8C86240079D135 /* Products */,
+				D2708F9BEB6EBF9B4147F685 /* Pods */,
+				8F09325601693DB4E5512903 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -263,6 +271,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		D2708F9BEB6EBF9B4147F685 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				03C5BB9FC82BE5D51BD916B3 /* Pods-PhraseFlow Chinese.debug.xcconfig */,
+				5EDA23FCE91C5CB989C86534 /* Pods-PhraseFlow Chinese.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -270,9 +287,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BBB6EF472C8C862A0079D135 /* Build configuration list for PBXNativeTarget "PhraseFlow Chinese" */;
 			buildPhases = (
+				0A1D975A1B4245905866B684 /* [CP] Check Pods Manifest.lock */,
 				BBB6EF1F2C8C86240079D135 /* Sources */,
 				BBB6EF202C8C86240079D135 /* Frameworks */,
 				BBB6EF212C8C86240079D135 /* Resources */,
+				994704F95C0B281E7CCEA589 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -280,8 +299,6 @@
 			);
 			name = "PhraseFlow Chinese";
 			packageProductDependencies = (
-				BB4EDAED2C9047E000699E7D /* SwiftWhisper */,
-				BB4EDAF22C90499900699E7D /* AudioKit */,
 				BB4EDAFF2C90C7E600699E7D /* ReduxKit */,
 			);
 			productName = "PhraseFlow Chinese";
@@ -358,8 +375,6 @@
 			);
 			mainGroup = BBB6EF1A2C8C86240079D135;
 			packageReferences = (
-				BB4EDAEC2C9047E000699E7D /* XCRemoteSwiftPackageReference "SwiftWhisper" */,
-				BB4EDAF12C90499900699E7D /* XCRemoteSwiftPackageReference "AudioKit" */,
 				BB4EDAFE2C90C7E600699E7D /* XCRemoteSwiftPackageReference "reduxkit" */,
 			);
 			productRefGroup = BBB6EF242C8C86240079D135 /* Products */;
@@ -399,12 +414,53 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0A1D975A1B4245905866B684 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PhraseFlow Chinese-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		994704F95C0B281E7CCEA589 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PhraseFlow Chinese/Pods-PhraseFlow Chinese-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PhraseFlow Chinese/Pods-PhraseFlow Chinese-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PhraseFlow Chinese/Pods-PhraseFlow Chinese-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		BBB6EF1F2C8C86240079D135 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB4EDB1B2C90DF8C00699E7D /* URL+ConvertPCM.swift in Sources */,
 				BB4EDB1F2C90F3A800699E7D /* String+Normalize.swift in Sources */,
 				BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */,
 				BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */,
@@ -501,7 +557,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -564,7 +620,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -585,6 +641,7 @@
 		};
 		BBB6EF482C8C862A0079D135 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 03C5BB9FC82BE5D51BD916B3 /* Pods-PhraseFlow Chinese.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -618,6 +675,7 @@
 		};
 		BBB6EF492C8C862A0079D135 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5EDA23FCE91C5CB989C86534 /* Pods-PhraseFlow Chinese.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -766,22 +824,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		BB4EDAEC2C9047E000699E7D /* XCRemoteSwiftPackageReference "SwiftWhisper" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/exPHAT/SwiftWhisper.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.0;
-			};
-		};
-		BB4EDAF12C90499900699E7D /* XCRemoteSwiftPackageReference "AudioKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AudioKit/AudioKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.6.4;
-			};
-		};
 		BB4EDAFE2C90C7E600699E7D /* XCRemoteSwiftPackageReference "reduxkit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "git@git-gdd.sdo.jlrmotor.com:OFFBOARD/mobile/libraries/ios/kits/reduxkit.git";
@@ -793,16 +835,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		BB4EDAED2C9047E000699E7D /* SwiftWhisper */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BB4EDAEC2C9047E000699E7D /* XCRemoteSwiftPackageReference "SwiftWhisper" */;
-			productName = SwiftWhisper;
-		};
-		BB4EDAF22C90499900699E7D /* AudioKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BB4EDAF12C90499900699E7D /* XCRemoteSwiftPackageReference "AudioKit" */;
-			productName = AudioKit;
-		};
 		BB4EDAFF2C90C7E600699E7D /* ReduxKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BB4EDAFE2C90C7E600699E7D /* XCRemoteSwiftPackageReference "reduxkit" */;

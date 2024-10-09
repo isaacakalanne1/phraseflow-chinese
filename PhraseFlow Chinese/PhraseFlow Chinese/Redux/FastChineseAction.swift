@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftWhisper
 import AVKit
 
 enum FastChineseAction {
@@ -22,16 +21,9 @@ enum FastChineseAction {
     case failedToLoadChapter
 
     case goToNextSentence
-    case preloadAudio
-    case failedToPreloadAudio
 
-    case updateSentencesAudio([Sentence], audioDataList: [Data])
-    case failedToUpdateSentencesAudio
-
-    case playAudio
-    case updateAudioPlayer(AVAudioPlayer)
-    case onUpdatedAudioPlayer
-    case failedToUpdateAudioPlayer
+    case playAudio(Sentence)
+    case failedToPlayAudio
 
     case defineCharacter(String)
     case onDefinedCharacter(String)

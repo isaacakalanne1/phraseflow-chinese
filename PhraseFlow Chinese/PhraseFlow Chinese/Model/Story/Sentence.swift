@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftWhisper
 
 struct Sentence: Identifiable, Codable, Equatable {
     var id = UUID() // Use a UUID for easy identification

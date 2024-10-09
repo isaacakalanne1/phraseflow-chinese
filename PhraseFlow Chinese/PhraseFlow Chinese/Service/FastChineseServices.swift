@@ -47,7 +47,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
             throw FastChineseServicesError.failedToEncodeJson
         }
 
-        let (data, response) = try await URLSession.shared.upload(for: request, from: jsonData)
+        let (data, _) = try await URLSession.shared.upload(for: request, from: jsonData)
         guard let response = try? JSONDecoder().decode(GPTResponse.self, from: data) else {
             throw FastChineseServicesError.failedToDecodeJson
         }
@@ -81,13 +81,11 @@ final class FastChineseServices: FastChineseServicesProtocol {
         }
 
 
-        let (data, response) = try await URLSession.shared.upload(for: request, from: ssmlData)
+        let (data, _) = try await URLSession.shared.upload(for: request, from: ssmlData)
         return data
     }
 
     func fetchDefinition(of character: String, withinContextOf sentence: String) async throws -> GPTResponse {
-        let deploymentId = "gpt-4o-mini"
-        let version = "2024-07-18"
 
         var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
         request.httpMethod = "POST"

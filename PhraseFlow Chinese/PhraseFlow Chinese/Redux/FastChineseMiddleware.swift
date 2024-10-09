@@ -8,7 +8,6 @@
 import Foundation
 import ReduxKit
 import AVKit
-import SwiftWhisper
 
 typealias FastChineseMiddlewareType = Middleware<FastChineseState, FastChineseAction, FastChineseEnvironmentProtocol>
 let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environment in
@@ -31,7 +30,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .failedToLoadChapter
         }
     case .onLoadedChapter:
-        return .preloadAudio
+        return nil
     case .saveSentences:
         do {
             try environment.saveChapter(.init(sentences: state.sentences,
@@ -41,51 +40,16 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToSaveSentences
         }
-        return .preloadAudio
+        return nil
     case .goToNextSentence:
-        return .preloadAudio
-    case .preloadAudio:
+        return nil
+    case .playAudio(let sentence):
         do {
-            guard state.sentences.count > 0 else {
-                return nil
-            }
-            var sentences: [Sentence] = []
-            var audioDataList: [Data] = []
-            for i in 0..<2 {
-                let index = (state.sentenceIndex + i) % state.sentences.count
-                let sentence = state.sentences[index]
-                if sentence.audioData == nil {
-                    let audioData = try await environment.fetchSpeech(for: sentence)
-                    sentences.append(sentence)
-                    audioDataList.append(audioData)
-                }
-            }
-            return .updateSentencesAudio(sentences, audioDataList: audioDataList)
+            try environment.speakText(for: sentence)
         } catch {
-            return .failedToPreloadAudio
+            return .failedToPlayAudio
         }
-
-    case .updateSentencesAudio(let sentences, let audioDataList):
-        do {
-            var audioUrlList: [URL] = []
-            for (sentence, audioData) in zip(sentences, audioDataList) {
-                let audioURL = try environment.saveAudioToTempFile(fileName: sentence.mandarin, data: audioData)
-                audioUrlList.append(audioURL)
-            }
-            return nil
-        } catch {
-            return .failedToUpdateSentencesAudio
-        }
-    case .playAudio:
-        do {
-            if let audioData = state.currentSentence?.audioData {
-                let audioPlayer = try AVAudioPlayer(data: audioData)
-                return .updateAudioPlayer(audioPlayer)
-            }
-            return nil
-        } catch {
-            return .failedToUpdateAudioPlayer
-        }
+        return nil
     case .defineCharacter(let string):
         do {
             guard let mandarinSentence = state.currentSentence?.mandarin else {
@@ -99,24 +63,13 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToDefineCharacter
         }
-    case .updateAudioPlayer:
-        return .onUpdatedAudioPlayer
-    case .onUpdatedAudioPlayer:
-        state.audioPlayer?.enableRate = true
-        state.audioPlayer?.rate = state.speechSpeed.rate
-        state.audioPlayer?.prepareToPlay()
-        state.audioPlayer?.play()
-        return nil
-
     case .failedToGenerateNewChapter,
             .failedToLoadChapter,
             .failedToSaveSentences,
-            .failedToPreloadAudio,
-            .failedToUpdateSentencesAudio,
-            .failedToUpdateAudioPlayer,
             .updateSpeechSpeed,
             .onDefinedCharacter,
-            .failedToDefineCharacter:
+            .failedToDefineCharacter,
+            .failedToPlayAudio:
         return nil
     }
 }
