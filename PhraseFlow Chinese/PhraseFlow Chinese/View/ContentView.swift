@@ -38,7 +38,7 @@ struct ContentView: View {
                         let character = currentSentence.mandarin[index]
                         let pinyin = currentSentence.pinyin.count > index ? currentSentence.pinyin[index] : ""
                         VStack {
-                            Text(pinyin)
+                            Text(character == pinyin ? "" : pinyin)
                                 .font(.footnote)
                                 .opacity(store.state.isShowingPinyin ? 1 : 0)
                             Text(character)
@@ -46,7 +46,7 @@ struct ContentView: View {
                                 .opacity(store.state.isShowingMandarin ? 1 : 0)
                         }
                         .onTapGesture {
-//                            store.dispatch(.defineCharacter(character))
+                            store.dispatch(.defineCharacter(character))
                             for entry in store.state.timestampData {
                                     let wordStart = entry.textOffset
                                     let wordEnd = entry.textOffset + entry.wordLength

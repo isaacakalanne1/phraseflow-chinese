@@ -19,17 +19,10 @@ struct GPTResponse: Codable { // TODO: Update this to match OpenAI API
     }
 
     func decodedSentences() -> [Sentence]? {
-        guard let content = choices.first?.message.content else { return nil }
-
-        // Clean the string
-        let cleanedContent = content
-            .replacingOccurrences(of: "\\'", with: "'")
-            .replacingOccurrences(of: "\n", with: "")
-            .replacingOccurrences(of: "\\", with: "")
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+//        guard let content = choices.first?.message.content else { return nil }
 
         // Convert the cleaned string to data and decode
-        guard let data = content.data(using: .utf8) else { return nil }
+        guard let data = choices.first?.message.content.data(using: .utf8) else { return nil }
 
         do {
             return try JSONDecoder()
