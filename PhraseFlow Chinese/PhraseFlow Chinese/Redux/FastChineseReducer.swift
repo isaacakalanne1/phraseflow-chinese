@@ -36,6 +36,12 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.timestampData = data.wordTimestamps
         newState.audioPlayer = try? AVAudioPlayer(data: data.audioData)
         newState.audioPlayer?.prepareToPlay()
+    case .updateShowPinyin(let isShowing):
+        newState.isShowingPinyin = isShowing
+    case .updateShowMandarin(let isShowing):
+        newState.isShowingMandarin = isShowing
+    case .updateShowEnglish(let isShowing):
+        newState.isShowingEnglish = isShowing
     case .saveSentences,
             .failedToSaveSentences,
             .failedToLoadChapter,

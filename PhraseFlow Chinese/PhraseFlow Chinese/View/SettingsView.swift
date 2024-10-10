@@ -11,9 +11,33 @@ struct SettingsView: View {
     @EnvironmentObject var store: FastChineseStore
 
     var body: some View {
+
+        let showPinyin: Binding<Bool> = .init {
+            store.state.isShowingPinyin
+        } set: { newValue in
+            store.dispatch(.updateShowPinyin(newValue))
+        }
+
+        let showMandarin: Binding<Bool> = .init {
+            store.state.isShowingMandarin
+        } set: { newValue in
+            store.dispatch(.updateShowMandarin(newValue))
+        }
+
+        let showEnglish: Binding<Bool> = .init {
+            store.state.isShowingEnglish
+        } set: { newValue in
+            store.dispatch(.updateShowEnglish(newValue))
+        }
+
+
         NavigationView {
             VStack(spacing: 20) {
                 Spacer()
+
+                Toggle("Show Pinyin", isOn: showPinyin)
+                Toggle("Show Mandarin", isOn: showMandarin)
+                Toggle("Show English", isOn: showEnglish)
 
                 Text("Choose Speech Speed")
                     .font(.title2)
