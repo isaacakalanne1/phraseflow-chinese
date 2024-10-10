@@ -27,4 +27,9 @@ struct FastChineseState {
     var isShowingPinyin = true
     var isShowingEnglish = true
     var isShowingMandarin = true
+    var audioPlayer = try? AVAudioPlayer(data: Data())
+    var timestampData: [(word: String,
+                         time: Double,
+                         textOffset: Int,
+                         wordLength: Int)] = []
 }

@@ -46,7 +46,16 @@ struct ContentView: View {
                                 .opacity(store.state.isShowingMandarin ? 1 : 0)
                         }
                         .onTapGesture {
-                            store.dispatch(.defineCharacter(character))
+//                            store.dispatch(.defineCharacter(character))
+                            for entry in store.state.timestampData {
+                                    let wordStart = entry.textOffset
+                                    let wordEnd = entry.textOffset + entry.wordLength
+                                    if index >= wordStart && index < wordEnd {
+                                        let resultEntry = (word: entry.word, time: entry.time)
+                                        print("Result entry is \(resultEntry)")
+                                        store.dispatch(.playAudio(time: entry.time))
+                                    }
+                                }
                         }
                     }
                 }
@@ -68,7 +77,7 @@ struct ContentView: View {
 
                     Button(action: {
                         if let sentence = store.state.currentSentence {
-                            store.dispatch(.playAudio(sentence))
+                            store.dispatch(.synthesizeAudio(sentence))
                         }
                     }) {
                         Image(systemName: "play.circle")

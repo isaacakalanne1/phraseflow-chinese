@@ -14,7 +14,11 @@ enum FastChineseRepositoryError: Error {
 }
 
 protocol FastChineseRepositoryProtocol {
-    func speakText(_ text: String) throws
+    func synthesizeSpeech(_ text: String) async throws -> (wordTimestamps: [(word: String,
+                                                                             time: Double,
+                                                                             textOffset: Int,
+                                                                             wordLength: Int)],
+                                                           audioData: Data)
 }
 
 class FastChineseRepository: FastChineseRepositoryProtocol {
@@ -23,29 +27,64 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
 
     }
 
-    func speakText(_ text: String) throws {
-        var speechConfig: SPXSpeechConfiguration?
-        do {
-            try speechConfig = SPXSpeechConfiguration(subscription: "144bc0cdea4d44e499927e84e795b27a", region: "eastus")
-        } catch {
-            print("error \(error) happened")
-            throw FastChineseRepositoryError.failedToCreateSPXSpeechConfiguration
-        }
-
-        speechConfig?.speechSynthesisVoiceName = "zh-CN-XiaoxiaoNeural";
+    func synthesizeSpeech(_ text: String) async throws -> (wordTimestamps: [(word: String, time: Double, textOffset: Int, wordLength: Int)], audioData: Data) {
+        // Replace with your subscription key and service region
+        let speechKey = "144bc0cdea4d44e499927e84e795b27a"
+        let serviceRegion = "eastus"
 
         do {
-            let synthesizer = try SPXSpeechSynthesizer(speechConfig!)
-            let result = try synthesizer.speakText(text)
-            if result.reason == SPXResultReason.canceled
-            {
-                let cancellationDetails = try SPXSpeechSynthesisCancellationDetails(fromCanceledSynthesisResult: result)
-                print("cancelled, error code: \(cancellationDetails.errorCode) detail: \(cancellationDetails.errorDetails!) ")
-                print("Did you set the speech resource key and region values?");
-                return
+            // Initialize speech configuration
+            let speechConfig = try SPXSpeechConfiguration(subscription: speechKey, region: serviceRegion)
+            speechConfig.requestWordLevelTimestamps()
+            speechConfig.setSpeechSynthesisOutputFormat(.riff16Khz16BitMonoPcm) // Use a format compatible with AVAudioPlayer
+
+            // Create an audio configuration to prevent audio from playing to the speaker
+            let audioConfig = SPXAudioConfiguration()
+
+            // Create a speech synthesizer
+            let synthesizer = try SPXSpeechSynthesizer(speechConfiguration: speechConfig, audioConfiguration: audioConfig)
+
+            // Create an array to hold words, timestamps, and offsets
+            var wordTimestamps: [(word: String, time: Double, textOffset: Int, wordLength: Int)] = []
+            let wordTimestampsQueue = DispatchQueue(label: "WordTimestampsQueue")
+
+            // Add a handler for the word boundary event
+            synthesizer.addSynthesisWordBoundaryEventHandler { (synthesizer, event) in
+                // Extract the audio offset (in ticks of 100 nanoseconds)
+                let audioTimeInSeconds = Double(event.audioOffset) / 10_000_000.0
+
+                // Extract the word from the text using textOffset and wordLength
+                let textOffset = Int(event.textOffset)
+                let wordLength = Int(event.wordLength)
+                let start = text.index(text.startIndex, offsetBy: textOffset)
+                let end = text.index(start, offsetBy: wordLength)
+                let word = String(text[start..<end])
+
+                // Append the word, its timestamp, and offsets to the array
+                wordTimestampsQueue.sync {
+                    wordTimestamps.append((word: word, time: audioTimeInSeconds, textOffset: textOffset, wordLength: wordLength))
+                }
             }
+
+            // Start speech synthesis synchronously
+            let result = try synthesizer.speakText(text)
+
+            // Check the result for cancellation
+            if result.reason == SPXResultReason.canceled {
+                let cancellationDetails = try SPXSpeechSynthesisCancellationDetails(fromCanceledSynthesisResult: result)
+                let errorDetails = cancellationDetails.errorDetails ?? "Unknown error"
+                throw NSError(domain: "SpeechSynthesis", code: -1, userInfo: [NSLocalizedDescriptionKey: errorDetails])
+            }
+
+            guard let audioData = result.audioData else {
+                throw NSError(domain: "SpeechSynthesis", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to get audioData"])
+            }
+
+            // Return the collected word timestamps and audio data
+            return (wordTimestamps, audioData)
+
         } catch {
-            throw FastChineseRepositoryError.failedToCreateSPXSpeechConfiguration
+            throw error
         }
     }
 }

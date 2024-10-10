@@ -32,6 +32,10 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
                                                sentence: sentence,
                                                definition: definition)
         }
+    case .onSynthesizedAudio(let data):
+        newState.timestampData = data.wordTimestamps
+        newState.audioPlayer = try? AVAudioPlayer(data: data.audioData)
+        newState.audioPlayer?.prepareToPlay()
     case .saveSentences,
             .failedToSaveSentences,
             .failedToLoadChapter,
@@ -40,7 +44,9 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             .failedToDefineCharacter,
             .generateNewChapter,
             .failedToGenerateNewChapter,
-            .loadChapter:
+            .loadChapter,
+            .synthesizeAudio,
+            .onPlayedAudio:
         break
     }
 

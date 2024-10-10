@@ -43,12 +43,20 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         return nil
     case .goToNextSentence:
         return nil
-    case .playAudio(let sentence):
+    case .synthesizeAudio(let sentence):
         do {
-            try environment.speakText(for: sentence)
+            let result = try await environment.synthesizeSpeech(for: sentence)
+            return .onSynthesizedAudio(result)
         } catch {
             return .failedToPlayAudio
         }
+    case .onSynthesizedAudio(let result):
+        return nil
+    case .playAudio(let timestamp):
+        if let timestamp {
+            state.audioPlayer?.currentTime = timestamp
+        }
+        state.audioPlayer?.play()
         return nil
     case .defineCharacter(let string):
         do {
@@ -69,6 +77,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .updateSpeechSpeed,
             .onDefinedCharacter,
             .failedToDefineCharacter,
+            .onPlayedAudio,
             .failedToPlayAudio:
         return nil
     }

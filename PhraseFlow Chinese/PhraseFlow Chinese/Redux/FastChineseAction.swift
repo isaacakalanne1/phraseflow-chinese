@@ -22,7 +22,14 @@ enum FastChineseAction {
 
     case goToNextSentence
 
-    case playAudio(Sentence)
+    case synthesizeAudio(Sentence)
+    case onSynthesizedAudio((wordTimestamps: [(word: String,
+                                               time: Double,
+                                               textOffset: Int,
+                                               wordLength: Int)],
+                             audioData: Data))
+    case playAudio(time: Double?)
+    case onPlayedAudio
     case failedToPlayAudio
 
     case defineCharacter(String)
