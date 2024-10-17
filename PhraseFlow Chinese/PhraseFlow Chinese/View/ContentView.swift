@@ -15,10 +15,17 @@ struct ContentView: View {
 
     var body: some View {
 
+        let isShowingCreateStoryScreen: Binding<Bool> = .init {
+            store.state.isShowingCreateStoryScreen
+        } set: { newValue in
+            store.dispatch(.updateShowingCreateStoryScreen(isShowing: newValue))
+        }
+
+
         VStack(spacing: 10) {
-            if store.state.sentences.isEmpty {
-                Button("Generate new story") {
-                    store.dispatch(.generateNewChapter)
+            if store.state.currentStory == nil {
+                Button("Create Story") {
+                    store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
                 }
                 .padding()
                 .background(Color.accentColor)
@@ -69,6 +76,12 @@ struct ContentView: View {
 
                 HStack {
                     Button {
+                        store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
+                    } label: {
+                        Image(systemName: "plus.circle")
+                    }
+
+                    Button {
                         isTextFieldFocused = false
                         showSettings = true
                     } label: {
@@ -95,6 +108,9 @@ struct ContentView: View {
         }
         .padding(10)
         .sheet(isPresented: $showSettings) {
+            SettingsView()
+        }
+        .sheet(isPresented: isShowingCreateStoryScreen) {
             SettingsView()
         }
     }

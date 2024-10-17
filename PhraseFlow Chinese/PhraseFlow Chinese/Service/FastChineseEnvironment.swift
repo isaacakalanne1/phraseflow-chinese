@@ -16,11 +16,11 @@ protocol FastChineseEnvironmentProtocol {
                                                                                      textOffset: Int,
                                                                                      wordLength: Int)],
                                                                    audioData: Data)
-    func generateChapter(using info: ChapterGenerationInfo) async throws -> [Sentence]
-    func saveChapter(_ chapter: Chapter) throws
-    func unsaveChapter(_ chapter: Chapter)
-    func loadChapter(info: ChapterGenerationInfo, chapterIndex: Int) throws -> Chapter
-    func saveAudioToTempFile(fileName: String, data: Data) throws -> URL
+    func generateStory(categories: [Category]) async throws -> Story
+    func generateChapter(using info: Story, chapterIndex: Int) async throws -> [Sentence]
+    func loadStory(info: StoryGenerationInfo) throws -> Story
+    func saveStory(_ story: Story) throws
+    func unsaveStory(_ story: Story)
 
     func fetchDefinition(of character: String, withinContextOf sentence: String) async throws -> GPTResponse
 }
@@ -45,24 +45,24 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
         try await repository.synthesizeSpeech(sentence.mandarin)
     }
 
-    func generateChapter(using info: ChapterGenerationInfo) async throws -> [Sentence] {
-        try await service.generateChapter(using: info)
+    func generateStory(categories: [Category]) async throws -> Story {
+        try await service.generateStory(categories: categories)
     }
 
-    func saveChapter(_ chapter: Chapter) throws {
-        try dataStore.saveChapter(chapter)
+    func generateChapter(using story: Story, chapterIndex: Int) async throws -> [Sentence] {
+        try await service.generateChapter(using: story, chapterIndex: chapterIndex)
     }
 
-    func unsaveChapter(_ chapter: Chapter) {
-        dataStore.unsaveChapter(chapter)
+    func saveStory(_ story: Story) throws {
+        try dataStore.saveStory(story)
     }
 
-    func loadChapter(info: ChapterGenerationInfo, chapterIndex: Int) throws -> Chapter {
-        try dataStore.loadChapter(info: info, chapterIndex: chapterIndex)
+    func unsaveStory(_ story: Story) {
+        dataStore.unsaveStory(story)
     }
 
-    func saveAudioToTempFile(fileName: String, data: Data) throws -> URL {
-        try dataStore.saveAudioToTempFile(fileName: fileName, data: data)
+    func loadStory(info: StoryGenerationInfo) throws -> Story {
+        try dataStore.loadStory(info: info)
     }
 
     func fetchDefinition(of string: String, withinContextOf sentence: String) async throws -> GPTResponse {

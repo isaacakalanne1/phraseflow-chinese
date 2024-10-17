@@ -13,15 +13,18 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     var newState = state
 
     switch action {
-    case .onGeneratedNewChapter(let sentences):
-        newState.sentences = sentences
+    case .onGeneratedNewChapter(let chapter):
+        newState.currentStory?.chapters.append(chapter)
         newState.sentenceIndex = 0
-    case .onLoadedChapter(let chapter):
-        newState.sentences = chapter.sentences
+    case .onLoadedStory(let story):
+        newState.currentStory = story
         newState.sentenceIndex = 0
     case .goToNextSentence:
-        newState.sentenceIndex = (newState.sentenceIndex + 1) % newState.sentences.count
-        newState.currentDefinition = nil
+        if let chapter = newState.currentChapter,
+           newState.sentenceIndex + 1 < chapter.sentences.count {
+            newState.sentenceIndex = newState.sentenceIndex + 1
+            newState.currentDefinition = nil
+        }
     case .updateSpeechSpeed(let speed):
         newState.speechSpeed = speed
     case .defineCharacter(let character):
@@ -42,15 +45,27 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.isShowingMandarin = isShowing
     case .updateShowEnglish(let isShowing):
         newState.isShowingEnglish = isShowing
-    case .saveSentences,
-            .failedToSaveSentences,
-            .failedToLoadChapter,
+    case .updateShowingCreateStoryScreen(let isShowing):
+        newState.isShowingCreateStoryScreen = isShowing
+    case .updateSelectCategory(let category, let isSelected):
+        if isSelected {
+            newState.selectedCategories.removeAll(where: { $0 == category })
+        } else {
+            if !newState.selectedCategories.contains(category) {
+                newState.selectedCategories.append(category)
+            }
+        }
+    case .saveStory,
+            .failedToSaveStory,
+            .failedToLoadStory,
             .playAudio,
             .failedToPlayAudio,
             .failedToDefineCharacter,
+            .generateNewStory,
+            .failedToGenerateNewStory,
             .generateNewChapter,
             .failedToGenerateNewChapter,
-            .loadChapter,
+            .loadStory,
             .synthesizeAudio,
             .onPlayedAudio:
         break

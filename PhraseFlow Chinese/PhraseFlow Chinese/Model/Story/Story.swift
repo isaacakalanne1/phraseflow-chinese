@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct Story {
+struct Story: Codable {
+    let info: StoryGenerationInfo
     let title: String
     let description: String
-    let chapters: [Chapter]
+    var chapters: [Chapter]
 }

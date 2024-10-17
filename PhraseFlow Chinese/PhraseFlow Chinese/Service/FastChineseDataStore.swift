@@ -14,42 +14,30 @@ enum FastChineseDataStoreError: Error {
 }
 
 protocol FastChineseDataStoreProtocol {
-    func loadChapter(info: ChapterGenerationInfo, chapterIndex: Int) throws -> Chapter
-    func saveChapter(_ chapter: Chapter) throws
-    func unsaveChapter(_ chapter: Chapter)
-    func saveAudioToTempFile(fileName: String, data: Data) throws -> URL
+    func loadStory(info: StoryGenerationInfo) throws -> Story
+    func saveStory(_ story: Story) throws
+    func unsaveStory(_ story: Story)
 }
 
 class FastChineseDataStore: FastChineseDataStoreProtocol {
 
-    func loadChapter(info: ChapterGenerationInfo, chapterIndex: Int) throws -> Chapter {
+    func loadStory(info: StoryGenerationInfo) throws -> Story {
         do {
-            guard let savedData = UserDefaults.standard.data(forKey: "Chapter \(chapterIndex), \(info.storyOverview)") else {
+            guard let savedData = UserDefaults.standard.data(forKey: info.id.uuidString) else {
                 throw FastChineseDataStoreError.failedToLoadChapter
             }
-            let sentences = try JSONDecoder().decode([Sentence].self, from: savedData)
-            return Chapter(sentences: sentences, index: chapterIndex, info: info)
+            return try JSONDecoder().decode(Story.self, from: savedData)
         } catch {
             throw FastChineseDataStoreError.failedToDecodeSentences
         }
     }
 
-    func saveChapter(_ chapter: Chapter) throws {
-        let encodedData = try JSONEncoder().encode(chapter.sentences)
-        UserDefaults.standard.set(encodedData, forKey: "Chapter \(chapter.index), \(chapter.info.storyOverview)")
+    func saveStory(_ story: Story) throws {
+        let encodedData = try JSONEncoder().encode(story)
+        UserDefaults.standard.set(encodedData, forKey: story.info.id.uuidString)
     }
 
-    func unsaveChapter(_ chapter: Chapter) {
-        UserDefaults.standard.removeObject(forKey: "Chapter \(chapter.index), \(chapter.info.storyOverview)")
-    }
-
-    func saveAudioToTempFile(fileName: String, data: Data) throws -> URL {
-        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(fileName).wav")
-        do {
-            try data.write(to: tempURL)
-        } catch {
-            throw FastChineseDataStoreError.failedToSaveAudio
-        }
-        return tempURL
+    func unsaveStory(_ story: Story) {
+        UserDefaults.standard.removeObject(forKey: story.info.id.uuidString)
     }
 }

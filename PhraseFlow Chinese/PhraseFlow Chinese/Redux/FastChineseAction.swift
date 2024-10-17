@@ -9,16 +9,21 @@ import Foundation
 import AVKit
 
 enum FastChineseAction {
-    case generateNewChapter
-    case onGeneratedNewChapter([Sentence])
+    case updateShowingCreateStoryScreen(isShowing: Bool)
+    case updateSelectCategory(Category, isSelected: Bool)
+
+    case generateNewStory(categories: [Category])
+    case failedToGenerateNewStory
+    case generateNewChapter(story: Story, index: Int)
+    case onGeneratedNewChapter(Chapter)
     case failedToGenerateNewChapter
 
-    case saveSentences
-    case failedToSaveSentences
+    case saveStory(Story?)
+    case failedToSaveStory
 
-    case loadChapter(generationInfo: ChapterGenerationInfo, chapterIndex: Int)
-    case onLoadedChapter(Chapter)
-    case failedToLoadChapter
+    case loadStory(generationInfo: StoryGenerationInfo)
+    case onLoadedStory(Story)
+    case failedToLoadStory
 
     case goToNextSentence
 

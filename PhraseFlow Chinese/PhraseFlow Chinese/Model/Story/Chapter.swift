@@ -7,8 +7,7 @@
 
 import Foundation
 
-struct Chapter {
+struct Chapter: Codable {
     var sentences: [Sentence]
     var index: Int
-    var info: ChapterGenerationInfo
 }

@@ -8,19 +8,23 @@
 import Foundation
 
 enum FastChineseServicesError: Error {
-    case failedToCreateSsmlData
+    case failedToGetResponseData
     case failedToEncodeJson
     case failedToDecodeJson
     case failedToDecodeSentences
 }
 
 protocol FastChineseServicesProtocol {
-    func generateChapter(using info: ChapterGenerationInfo) async throws -> [Sentence]
+    func generateStory(categories: [Category]) async throws -> Story
+    func generateChapter(using info: Story, chapterIndex: Int) async throws -> [Sentence]
     func fetchDefinition(of character: String, withinContextOf sentence: String) async throws -> GPTResponse
 }
 
 final class FastChineseServices: FastChineseServicesProtocol {
-    func generateChapter(using info: ChapterGenerationInfo) async throws -> [Sentence] {
+
+    func generateStory(categories: [Category]) async throws -> Story {
+        let subjects = Subject.allCases.map { $0.title }.shuffled()[0...2]
+        let categoryTitles = categories.map { $0.title }
         var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
         request.httpMethod = "POST"
         request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
@@ -29,17 +33,73 @@ final class FastChineseServices: FastChineseServicesProtocol {
         let requestData = DefineCharacterRequest(messages: [
             .init(role: "system",
                   content: """
-                  You are a Mandarin story generator. You output only the expected story in JSON format, with each sentence split into entries in the list.
+                  You are the greatest Mandarin Chinese storywriter alive, who takes great pleasure in creating Mandarin stories. You output only the expected story in JSON format, with each sentence split into entries in the list.
                   You output no explaining text before or after the JSON, only the JSON.
-                  You output data in the following format: [ { "mandarin": "你好", "pinyin": ["nǐ", "hǎo"], "english": "Hello" }, { "mandarin": "谢谢", "pinyin": ["xiè", "xie"], "english": "Thank you" }, { "mandarin": "再见", "pinyin": ["zài", "jiàn"], "english": "Goodbye" } ]
+                  You output data in the following format: { "info": { "storyOverview": "Story overview in English, written as Chapters 0 to 9", "difficulty": DifficultyIntFrom1To10 }, "title": "Story title in English", "description": "Story description in English" "chapters": [ { "mandarin": "你好", "pinyin": ["nǐ", "hǎo"], "english": "Hello" }, { "mandarin": "谢谢", "pinyin": ["xiè", "xie"], "english": "Thank you" }, { "mandarin": "再见", "pinyin": ["zài", "jiàn"], "english": "Goodbye" } ] }
                   You are a master at pinyin and write the absolute best, most accurate tone markings for the pinyin, based on context, and including all relevant neutral tones.
                   Include punctuation in the pinyin, to match the Mandarin, such as commas, and full stops. The punctuation should be its own item in the pinyin list, such as ["nǐ", "，"]. Use Mandarin punctuation.
                   """),
             .init(role: "user",
                   content: """
-        Generate a captivating, emotional, and engaging story, with each sentence split in the same structure as the list above.
+        Write a captivating, emotional, and dramatic story, with each sentence split in the same structure as the list above.
         The story should be amazing and captivating, and the reader should be amazed an AI came up with it.
-        Write the first chapter of this story. The chapter should be 20-30 lines long.
+        Stay away from subjects which are sensitive in Mainland China, such as Hong Kong, Taiwan, and any other potentially sensitive subjects.
+
+        These are the categories for the story:
+        \(categoryTitles)
+
+        These are the central subjects of the story:
+        \(subjects)
+
+        Write a summary of the story, then a summary of each of the 10 chapters.
+        """)
+        ])
+
+        guard let jsonData = try? JSONEncoder().encode(requestData) else {
+            throw FastChineseServicesError.failedToEncodeJson
+        }
+
+        let (data, _) = try await URLSession.shared.upload(for: request, from: jsonData)
+        guard let response = try? JSONDecoder().decode(GPTResponse.self, from: data) else {
+            throw FastChineseServicesError.failedToDecodeJson
+        }
+
+        guard let storyOverview = response.choices.first?.message.content else {
+            throw FastChineseServicesError.failedToGetResponseData
+        }
+
+        let story = Story(info: .init(storyOverview: storyOverview,
+                                      difficulty: 0),
+                          title: "",
+                          description: "",
+                          chapters: [])
+        return story
+    }
+
+    func generateChapter(using story: Story, chapterIndex: Int) async throws -> [Sentence] {
+        var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
+        request.httpMethod = "POST"
+        request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let requestData = DefineCharacterRequest(messages: [
+            .init(role: "system",
+                  content: """
+                                    You are the greatest Mandarin Chinese storywriter alive, who takes great pleasure in creating Mandarin stories. You output only the expected story in JSON format, with each sentence split into entries in the list.
+                                    You output no explaining text before or after the JSON, only the JSON.
+                                    You output data in the following format: { "info": { "storyOverview": "Story overview in English, written as Chapters 0 to 9", "difficulty": DifficultyIntFrom1To10 }, "title": "Story title in English", "description": "Story description in English" "chapters": [ { "mandarin": "你好", "pinyin": ["nǐ", "hǎo"], "english": "Hello" }, { "mandarin": "谢谢", "pinyin": ["xiè", "xie"], "english": "Thank you" }, { "mandarin": "再见", "pinyin": ["zài", "jiàn"], "english": "Goodbye" } ] }
+                                    You are a master at pinyin and write the absolute best, most accurate tone markings for the pinyin, based on context, and including all relevant neutral tones.
+                                    Include punctuation in the pinyin, to match the Mandarin, such as commas, and full stops. The punctuation should be its own item in the pinyin list, such as ["nǐ", "，"]. Use Mandarin punctuation.
+                                    """),
+            .init(role: "user",
+                  content: """
+        Generate a captivating, emotional, and extremely engaging story, with each sentence split in the same structure as the list above.
+        The story should be amazing and captivating, and the reader should be amazed an AI came up with it.
+        Stay away from subjects which are sensitive in Mainland China, such as Hong Kong, Taiwan, and any other potentially sensitive subjects.
+        This is the description of the story:
+        \(story.info.storyOverview)
+
+        Generate chapter \(chapterIndex) from the list. The chapter should be 20-30 lines long.
         """)
         ])
 
@@ -75,7 +135,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
             throw FastChineseServicesError.failedToEncodeJson
         }
 
-        let (data, response) = try await URLSession.shared.upload(for: request, from: jsonData)
+        let (data, _) = try await URLSession.shared.upload(for: request, from: jsonData)
         guard let response = try? JSONDecoder().decode(GPTResponse.self, from: data) else { // TODO: May need to update decode type to array, depending on API documentation
             throw FastChineseServicesError.failedToDecodeJson
         }

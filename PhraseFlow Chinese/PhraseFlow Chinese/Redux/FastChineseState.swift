@@ -9,13 +9,27 @@ import Foundation
 import AVKit
 
 struct FastChineseState {
-    var sentences: [Sentence] = []
-    var sentenceIndex: Int = 0
+    var currentStory: Story?
+    var chapterIndex = 0
+    var sentenceIndex = 0
+    var isShowingCreateStoryScreen = false
+    var isShowingSettingsScreen = false
+
+    var selectedCategories: [Category] = []
+    var selectedSubjects: [Subject] = []
+
+    var currentChapter: Chapter? {
+        guard let currentStory,
+           currentStory.chapters.count > chapterIndex else {
+            return nil
+        }
+        return currentStory.chapters[chapterIndex]
+    }
 
     var currentSentence: Sentence? {
-        if !sentences.isEmpty,
-           sentences.count > sentenceIndex {
-            return sentences[sentenceIndex]
+        if let currentChapter,
+           currentChapter.sentences.count > sentenceIndex {
+            return currentChapter.sentences[sentenceIndex]
         }
         return nil
     }

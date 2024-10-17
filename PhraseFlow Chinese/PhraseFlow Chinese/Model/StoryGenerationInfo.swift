@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ChapterGenerationInfo {
+struct StoryGenerationInfo: Codable {
     let storyOverview: String
-    let difficulty: String
+    let difficulty: Int
 }

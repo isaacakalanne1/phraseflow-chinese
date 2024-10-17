@@ -12,35 +12,42 @@ import AVKit
 typealias FastChineseMiddlewareType = Middleware<FastChineseState, FastChineseAction, FastChineseEnvironmentProtocol>
 let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environment in
     switch action {
-    case .generateNewChapter:
-        var newSentences: [Sentence] = []
+    case .generateNewStory(let categories):
             do {
-                newSentences = try await environment.generateChapter(using: .init(storyOverview: "", difficulty: ""))
+                let story = try await environment.generateStory(categories: categories)
+                return .generateNewChapter(story: story, index: 0)
+            } catch {
+                return .failedToGenerateNewStory
+            }
+    case .generateNewChapter(let story, let index):
+            do {
+                let newSentences = try await environment.generateChapter(using: story, chapterIndex: index)
+                let chapter = Chapter(sentences: newSentences, index: index)
+                return .onGeneratedNewChapter(chapter)
             } catch {
                 return .failedToGenerateNewChapter
             }
-        return .onGeneratedNewChapter(newSentences)
     case .onGeneratedNewChapter:
-        return .saveSentences
-    case .loadChapter(let info, let chapterIndex):
+        return .saveStory(state.currentStory)
+    case .loadStory(let info):
         do {
-            let chapter = try environment.loadChapter(info: info, chapterIndex: chapterIndex)
-            return .onLoadedChapter(chapter)
+            let story = try environment.loadStory(info: info)
+            return .onLoadedStory(story)
         } catch {
-            return .failedToLoadChapter
+            return .failedToLoadStory
         }
-    case .onLoadedChapter:
+    case .onLoadedStory:
         return nil
-    case .saveSentences:
+    case .saveStory(let story):
+        guard let story else {
+            return .failedToSaveStory
+        }
         do {
-            try environment.saveChapter(.init(sentences: state.sentences,
-                                              index: 0,
-                                              info: .init(storyOverview: "",
-                                                          difficulty: "")))
+            try environment.saveStory(story)
+            return nil
         } catch {
-            return .failedToSaveSentences
+            return .failedToSaveStory
         }
-        return nil
     case .goToNextSentence:
         return nil
     case .synthesizeAudio(let sentence):
@@ -71,9 +78,10 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToDefineCharacter
         }
-    case .failedToGenerateNewChapter,
-            .failedToLoadChapter,
-            .failedToSaveSentences,
+    case .failedToGenerateNewStory,
+            .failedToGenerateNewChapter,
+            .failedToLoadStory,
+            .failedToSaveStory,
             .updateSpeechSpeed,
             .onDefinedCharacter,
             .failedToDefineCharacter,
@@ -81,7 +89,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .failedToPlayAudio,
             .updateShowPinyin,
             .updateShowMandarin,
-            .updateShowEnglish:
+            .updateShowEnglish,
+            .updateShowingCreateStoryScreen,
+            .updateSelectCategory:
         return nil
     }
 }
