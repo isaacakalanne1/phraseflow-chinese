@@ -8,6 +8,7 @@
 import Foundation
 
 struct StoryGenerationInfo: Codable {
+    var id = UUID()
     let storyOverview: String
     let difficulty: Int
 }

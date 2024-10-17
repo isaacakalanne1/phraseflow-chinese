@@ -40,6 +40,7 @@
 		BBE16F1A2CC1314400A7EF1F /* CreateStoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F192CC1314400A7EF1F /* CreateStoryView.swift */; };
 		BBE16F1C2CC1317B00A7EF1F /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F1B2CC1317B00A7EF1F /* Category.swift */; };
 		BBE16F1E2CC131CB00A7EF1F /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F1D2CC131CB00A7EF1F /* Subject.swift */; };
+		BBE16F202CC152C400A7EF1F /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,7 @@
 		BBE16F192CC1314400A7EF1F /* CreateStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStoryView.swift; sourceTree = "<group>"; };
 		BBE16F1B2CC1317B00A7EF1F /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		BBE16F1D2CC131CB00A7EF1F /* Subject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
+		BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 				BB0854822CB42C0200F1661B /* Chapter.swift */,
 				BBB6EF512C8C86B10079D135 /* Sentence.swift */,
 				BB0854842CB42C1400F1661B /* Story.swift */,
+				BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */,
 			);
 			path = Story;
 			sourceTree = "<group>";
@@ -493,6 +496,7 @@
 				BB4EDB0C2C90C9A100699E7D /* FastChineseReducer.swift in Sources */,
 				BB4EDB0A2C90C8F100699E7D /* FastChineseEnvironment.swift in Sources */,
 				BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */,
+				BBE16F202CC152C400A7EF1F /* Difficulty.swift in Sources */,
 				BB4EDB172C90D20300699E7D /* FastChineseServices.swift in Sources */,
 				BB4EDB052C90C89C00699E7D /* FastChineseState.swift in Sources */,
 				BB0854852CB42C1400F1661B /* Story.swift in Sources */,

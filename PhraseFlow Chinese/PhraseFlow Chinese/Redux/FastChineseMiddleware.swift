@@ -21,7 +21,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             }
     case .generateNewChapter(let story, let index):
             do {
-                let newSentences = try await environment.generateChapter(using: story, chapterIndex: index)
+                let newSentences = try await environment.generateChapter(using: story, chapterIndex: index, difficulty: .HSK1)
                 let chapter = Chapter(sentences: newSentences, index: index)
                 return .onGeneratedNewChapter(chapter)
             } catch {

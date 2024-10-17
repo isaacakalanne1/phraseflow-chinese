@@ -111,7 +111,7 @@ struct ContentView: View {
             SettingsView()
         }
         .sheet(isPresented: isShowingCreateStoryScreen) {
-            SettingsView()
+            CreateStoryView()
         }
     }
 }

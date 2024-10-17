@@ -16,7 +16,7 @@ enum FastChineseServicesError: Error {
 
 protocol FastChineseServicesProtocol {
     func generateStory(categories: [Category]) async throws -> Story
-    func generateChapter(using info: Story, chapterIndex: Int) async throws -> [Sentence]
+    func generateChapter(using info: Story, chapterIndex: Int, difficulty: Difficulty) async throws -> [Sentence]
     func fetchDefinition(of character: String, withinContextOf sentence: String) async throws -> GPTResponse
 }
 
@@ -76,7 +76,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         return story
     }
 
-    func generateChapter(using story: Story, chapterIndex: Int) async throws -> [Sentence] {
+    func generateChapter(using story: Story, chapterIndex: Int, difficulty: Difficulty) async throws -> [Sentence] {
         var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
         request.httpMethod = "POST"
         request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
@@ -85,7 +85,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         let requestData = DefineCharacterRequest(messages: [
             .init(role: "system",
                   content: """
-                                    You are the greatest Mandarin Chinese storywriter alive, who takes great pleasure in creating Mandarin stories. You output only the expected story in JSON format, with each sentence split into entries in the list.
+                                    You are the greatest Mandarin Chinese storywriter alive, who takes great pleasure in creating Mandarin stories. You write stories to help people learn Mandarin Chinese. You output only the expected story in JSON format, with each sentence split into entries in the list.
                                     You output no explaining text before or after the JSON, only the JSON.
                                     You output data in the following format: { "info": { "storyOverview": "Story overview in English, written as Chapters 0 to 9", "difficulty": DifficultyIntFrom1To10 }, "title": "Story title in English", "description": "Story description in English" "chapters": [ { "mandarin": "你好", "pinyin": ["nǐ", "hǎo"], "english": "Hello" }, { "mandarin": "谢谢", "pinyin": ["xiè", "xie"], "english": "Thank you" }, { "mandarin": "再见", "pinyin": ["zài", "jiàn"], "english": "Goodbye" } ] }
                                     You are a master at pinyin and write the absolute best, most accurate tone markings for the pinyin, based on context, and including all relevant neutral tones.
@@ -100,6 +100,10 @@ final class FastChineseServices: FastChineseServicesProtocol {
         \(story.info.storyOverview)
 
         Generate chapter \(chapterIndex) from the list. The chapter should be 20-30 lines long.
+
+        Write the story using \(difficulty.title) vocabulary. Use only vocabulary for someone that is at this level, considering HSK1 is absolute beginner, like a 5 year old, and HSK5 is an absolute expert, like a PhD student.
+
+        Feel free to use the same words often, in order to help the user learn the Mandarin words better.
         """)
         ])
 
