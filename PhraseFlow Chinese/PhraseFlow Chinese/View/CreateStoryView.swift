@@ -12,46 +12,29 @@ struct CreateStoryView: View {
 
     var body: some View {
 
-        let showPinyin: Binding<Bool> = .init {
-            store.state.isShowingPinyin
-        } set: { newValue in
-            store.dispatch(.updateShowPinyin(newValue))
-        }
-
-        let showMandarin: Binding<Bool> = .init {
-            store.state.isShowingMandarin
-        } set: { newValue in
-            store.dispatch(.updateShowMandarin(newValue))
-        }
-
-        let showEnglish: Binding<Bool> = .init {
-            store.state.isShowingEnglish
-        } set: { newValue in
-            store.dispatch(.updateShowEnglish(newValue))
-        }
-
-
         NavigationView {
             VStack(spacing: 20) {
                 Spacer()
                 Text("Select Categories")
                     .font(.title2)
 
-                HStack {
-                    ForEach(Category.allCases, id: \.self) { category in
-                        Button(action: {
-                            withAnimation(.easeInOut) {
-                                store.dispatch(.updateSelectCategory(category,
-                                                                     isSelected: !store.state.selectedCategories.contains(category)))
+                ScrollView(.horizontal) {
+                    HStack {
+                        ForEach(Category.allCases, id: \.self) { category in
+                            Button(action: {
+                                withAnimation(.easeInOut) {
+                                    store.dispatch(.updateSelectCategory(category,
+                                                                         isSelected: !store.state.selectedCategories.contains(category)))
+                                }
+                            }) {
+                                Text(category.title)
+                                    .font(.body)
+                                    .foregroundColor(store.state.selectedCategories.contains(category) ? .white : .primary)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(store.state.selectedCategories.contains(category) ? Color.accentColor : Color.gray.opacity(0.3))
+                                    .cornerRadius(10)
                             }
-                        }) {
-                            Text(category.title)
-                                .font(.body)
-                                .foregroundColor(store.state.selectedCategories.contains(category) ? .white : .primary)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(store.state.selectedCategories.contains(category) ? Color.accentColor : Color.gray.opacity(0.3))
-                                .cornerRadius(10)
                         }
                     }
                 }

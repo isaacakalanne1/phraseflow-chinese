@@ -13,6 +13,7 @@ enum FastChineseAction {
     case updateSelectCategory(Category, isSelected: Bool)
 
     case generateNewStory(categories: [Category])
+    case onGeneratedStory(Story)
     case failedToGenerateNewStory
     case generateNewChapter(story: Story, index: Int)
     case onGeneratedNewChapter(Chapter)

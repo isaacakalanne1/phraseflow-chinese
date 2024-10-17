@@ -33,11 +33,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         let requestData = DefineCharacterRequest(messages: [
             .init(role: "system",
                   content: """
-                  You are the greatest Mandarin Chinese storywriter alive, who takes great pleasure in creating Mandarin stories. You output only the expected story in JSON format, with each sentence split into entries in the list.
-                  You output no explaining text before or after the JSON, only the JSON.
-                  You output data in the following format: { "info": { "storyOverview": "Story overview in English, written as Chapters 0 to 9", "difficulty": DifficultyIntFrom1To10 }, "title": "Story title in English", "description": "Story description in English" "chapters": [ { "mandarin": "你好", "pinyin": ["nǐ", "hǎo"], "english": "Hello" }, { "mandarin": "谢谢", "pinyin": ["xiè", "xie"], "english": "Thank you" }, { "mandarin": "再见", "pinyin": ["zài", "jiàn"], "english": "Goodbye" } ] }
-                  You are a master at pinyin and write the absolute best, most accurate tone markings for the pinyin, based on context, and including all relevant neutral tones.
-                  Include punctuation in the pinyin, to match the Mandarin, such as commas, and full stops. The punctuation should be its own item in the pinyin list, such as ["nǐ", "，"]. Use Mandarin punctuation.
+                  You are the greatest Mandarin Chinese storywriter alive, who takes great pleasure in creating Mandarin stories.
                   """),
             .init(role: "user",
                   content: """
@@ -87,7 +83,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
                   content: """
                                     You are the greatest Mandarin Chinese storywriter alive, who takes great pleasure in creating Mandarin stories. You write stories to help people learn Mandarin Chinese. You output only the expected story in JSON format, with each sentence split into entries in the list.
                                     You output no explaining text before or after the JSON, only the JSON.
-                                    You output data in the following format: { "info": { "storyOverview": "Story overview in English, written as Chapters 0 to 9", "difficulty": DifficultyIntFrom1To10 }, "title": "Story title in English", "description": "Story description in English" "chapters": [ { "mandarin": "你好", "pinyin": ["nǐ", "hǎo"], "english": "Hello" }, { "mandarin": "谢谢", "pinyin": ["xiè", "xie"], "english": "Thank you" }, { "mandarin": "再见", "pinyin": ["zài", "jiàn"], "english": "Goodbye" } ] }
+                                    You output data in the following format: [ { "mandarin": "你好", "pinyin": ["nǐ", "hǎo"], "english": "Hello" }, { "mandarin": "谢谢", "pinyin": ["xiè", "xie"], "english": "Thank you" }, { "mandarin": "再见", "pinyin": ["zài", "jiàn"], "english": "Goodbye" } ]
                                     You are a master at pinyin and write the absolute best, most accurate tone markings for the pinyin, based on context, and including all relevant neutral tones.
                                     Include punctuation in the pinyin, to match the Mandarin, such as commas, and full stops. The punctuation should be its own item in the pinyin list, such as ["nǐ", "，"]. Use Mandarin punctuation.
                                     """),

@@ -16,6 +16,9 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .onGeneratedNewChapter(let chapter):
         newState.currentStory?.chapters.append(chapter)
         newState.sentenceIndex = 0
+        newState.isShowingCreateStoryScreen = false
+    case .onGeneratedStory(let story):
+        newState.currentStory = story
     case .onLoadedStory(let story):
         newState.currentStory = story
         newState.sentenceIndex = 0
@@ -49,11 +52,11 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.isShowingCreateStoryScreen = isShowing
     case .updateSelectCategory(let category, let isSelected):
         if isSelected {
-            newState.selectedCategories.removeAll(where: { $0 == category })
-        } else {
             if !newState.selectedCategories.contains(category) {
                 newState.selectedCategories.append(category)
             }
+        } else {
+            newState.selectedCategories.removeAll(where: { $0 == category })
         }
     case .saveStory,
             .failedToSaveStory,
