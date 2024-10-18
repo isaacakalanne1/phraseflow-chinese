@@ -123,6 +123,7 @@ struct ContentView: View {
                 .padding(.horizontal)
             }
         }
+        .background(Color.white)
         .padding(10)
         .sheet(isPresented: isShowingSettingsScreen) {
             SettingsView()
@@ -133,6 +134,16 @@ struct ContentView: View {
         .sheet(isPresented: isShowingStoryListView) {
             StoryListView()
         }
+        .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global).onEnded { value in
+            let horizontalAmount = value.translation.width
+            let verticalAmount = value.translation.height
+
+            if horizontalAmount > 50 {
+                store.dispatch(.goToPreviousSentence)
+            } else if horizontalAmount < -50 {
+                store.dispatch(.goToNextSentence)
+            }
+        })
     }
 }
 

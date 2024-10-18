@@ -23,7 +23,7 @@ struct ChapterListView: View {
                     ForEach(Array(story.chapters.enumerated()), id: \.offset) { (index, chapter) in
                         Button(action: {
                             withAnimation(.easeInOut) {
-                                store.dispatch(.selectStory(story))
+                                store.dispatch(.selectChapter(index))
                             }
                         }) {
                             Text("Chapter \(index + 1)")
@@ -35,11 +35,21 @@ struct ChapterListView: View {
                         }
                     }
                 }
+                Button(action: {
+                    withAnimation(.easeInOut) {
+                        store.dispatch(.generateNewChapter(story: story))
+                    }
+                }) {
+                    Text("Create new chapter")
+                        .bold()
+                        .font(.body)
+                        .foregroundColor(.primary)
+                        .frame(maxWidth: .infinity)
+                        .cornerRadius(10)
+                }
             }
         }
-        .toolbar(.hidden)
         .padding(.horizontal)
     }
 
 }
-

@@ -50,7 +50,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
         Write a summary of the story, then a summary of each of the 10 chapters.
         Write the data in the following JSON format:
-        { "storyOverview": "Story summary and summary of 10 chapters", "difficulty": "HSK1", "title": "Story title", "description": "2 line story description, which does not spoil the overall plot" }
+        { "storyOverview": "Story summary and summary of 10 chapters", "chapterSummaryList": ["List of descriptions for each chapter"] "difficulty": "HSK1", "title": "Story title", "description": "2 line story description, which does not spoil the overall plot" }
         Keep "chapters" as an empty list, like []
         Do not include the ```json prefix tag or or ``` suffix tag in your response.
         """)

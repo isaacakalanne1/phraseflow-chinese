@@ -53,7 +53,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToSaveStory
         }
-    case .goToNextSentence:
+    case .goToNextSentence,
+            .goToPreviousSentence:
         if let sentence = state.currentSentence {
             return .synthesizeAudio(sentence)
         }

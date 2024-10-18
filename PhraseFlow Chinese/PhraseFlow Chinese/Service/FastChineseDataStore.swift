@@ -24,6 +24,7 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
     let allStoriesKey = "allStoriesKey"
 
     func loadStories() throws -> [Story] {
+//        UserDefaults.standard.removeObject(forKey: allStoriesKey)
         do {
             guard let savedData = UserDefaults.standard.data(forKey: allStoriesKey) else {
                 throw FastChineseDataStoreError.failedToLoadChapter
@@ -39,6 +40,7 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
         do {
             if let savedData = UserDefaults.standard.data(forKey: allStoriesKey) {
                 allStories = try JSONDecoder().decode([Story].self, from: savedData)
+                allStories.removeAll(where: { $0.storyOverview == story.storyOverview })
                 allStories.append(story)
             } else {
                 allStories = [story]

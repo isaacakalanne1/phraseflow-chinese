@@ -32,6 +32,7 @@ enum FastChineseAction {
     case failedToLoadStories
 
     case goToNextSentence
+    case goToPreviousSentence
 
     case synthesizeAudio(Sentence)
     case onSynthesizedAudio((wordTimestamps: [(word: String,

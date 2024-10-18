@@ -9,6 +9,7 @@ import Foundation
 
 struct Story: Codable, Equatable, Hashable {
     let storyOverview: String
+    let chapterSummaryList: [String]
     let difficulty: Difficulty
     let title: String
     let description: String
