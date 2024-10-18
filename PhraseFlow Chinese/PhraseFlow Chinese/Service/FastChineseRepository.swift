@@ -37,6 +37,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             let speechConfig = try SPXSpeechConfiguration(subscription: speechKey, region: serviceRegion)
             speechConfig.requestWordLevelTimestamps()
             speechConfig.setSpeechSynthesisOutputFormat(.riff16Khz16BitMonoPcm) // Use a format compatible with AVAudioPlayer
+            speechConfig.speechSynthesisVoiceName = "zh-CN-XiaoxiaoNeural"
 
             // Create an audio configuration to prevent audio from playing to the speaker
             let audioConfig = SPXAudioConfiguration()

@@ -26,19 +26,31 @@ struct StoryListView: View {
                                     store.dispatch(.selectStory(story))
                                 }
                             }) {
-                                VStack(alignment: .leading, content: {
-                                    Text(story.title)
-                                        .bold()
-                                        .font(.body)
-                                        .foregroundColor(.primary)
-                                        .frame(maxWidth: .infinity)
-                                        .cornerRadius(10)
-                                    Text(story.description)
-                                        .font(.body)
-                                        .foregroundColor(.primary)
-                                        .frame(maxWidth: .infinity)
-                                        .cornerRadius(10)
-                                })
+                                Button {
+                                    store.dispatch(.selectStory(story))
+                                } label: {
+                                    HStack {
+                                        VStack(alignment: .leading, content: {
+                                            Text(story.title)
+                                                .bold()
+                                                .font(.body)
+                                                .foregroundColor(.primary)
+                                                .frame(maxWidth: .infinity)
+                                                .cornerRadius(10)
+                                            Text(story.description)
+                                                .font(.body)
+                                                .foregroundColor(.primary)
+                                                .frame(maxWidth: .infinity)
+                                                .cornerRadius(10)
+                                        })
+                                        Image(systemName: "play.circle.fill")
+                                            .frame(width: 50, height: 50)
+                                        NavigationLink(destination: ChapterListView(story: story)) {
+                                            Image(systemName: "magnifyingglass.circle")
+                                                .frame(width: 50, height: 50)
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

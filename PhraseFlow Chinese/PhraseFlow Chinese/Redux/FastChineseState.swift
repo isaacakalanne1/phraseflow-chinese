@@ -15,6 +15,7 @@ struct FastChineseState {
     var sentenceIndex = 0
     var isShowingCreateStoryScreen = false
     var isShowingSettingsScreen = false
+    var isShowingStoryListView = false
 
     var selectedCategories: [Category] = []
     var selectedSubjects: [Subject] = []

@@ -10,6 +10,8 @@ import AVKit
 
 enum FastChineseAction {
     case updateShowingCreateStoryScreen(isShowing: Bool)
+    case updateShowingSettings(isShowing: Bool)
+    case updateShowingStoryListView(isShowing: Bool)
     case updateSelectCategory(Category, isSelected: Bool)
 
     case selectStory(Story)

@@ -54,6 +54,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .failedToSaveStory
         }
     case .goToNextSentence:
+        if let sentence = state.currentSentence {
+            return .synthesizeAudio(sentence)
+        }
         return nil
     case .synthesizeAudio(let sentence):
         do {
@@ -97,7 +100,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .updateShowEnglish,
             .updateShowingCreateStoryScreen,
             .updateSelectCategory,
-            .selectStory:
+            .selectStory,
+            .updateShowingSettings,
+            .updateShowingStoryListView:
         return nil
     }
 }

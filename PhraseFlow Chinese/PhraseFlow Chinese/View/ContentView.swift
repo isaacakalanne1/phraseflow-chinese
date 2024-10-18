@@ -22,6 +22,17 @@ struct ContentView: View {
             store.dispatch(.updateShowingCreateStoryScreen(isShowing: newValue))
         }
 
+        let isShowingSettingsScreen: Binding<Bool> = .init {
+            store.state.isShowingSettingsScreen
+        } set: { newValue in
+            store.dispatch(.updateShowingSettings(isShowing: newValue))
+        }
+
+        let isShowingStoryListView: Binding<Bool> = .init {
+            store.state.isShowingStoryListView
+        } set: { newValue in
+            store.dispatch(.updateShowingStoryListView(isShowing: newValue))
+        }
 
         VStack(spacing: 10) {
             if store.state.currentStory == nil {
@@ -83,7 +94,7 @@ struct ContentView: View {
                     }
 
                     Button {
-                        showStoryListView = true
+                        store.dispatch(.updateShowingStoryListView(isShowing: true))
                     } label: {
                         Image(systemName: "list.bullet.circle.fill")
                     }
@@ -103,8 +114,7 @@ struct ContentView: View {
                     }
 
                     Button(action: {
-                        isTextFieldFocused = false
-                        showSettings = true
+                        store.dispatch(.updateShowingSettings(isShowing: true))
                     }) {
                         Image(systemName: "gearshape.circle")
                     }
@@ -114,13 +124,13 @@ struct ContentView: View {
             }
         }
         .padding(10)
-        .sheet(isPresented: $showSettings) {
+        .sheet(isPresented: isShowingSettingsScreen) {
             SettingsView()
         }
         .sheet(isPresented: isShowingCreateStoryScreen) {
             CreateStoryView()
         }
-        .sheet(isPresented: $showStoryListView) {
+        .sheet(isPresented: isShowingStoryListView) {
             StoryListView()
         }
     }

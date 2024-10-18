@@ -53,6 +53,10 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.isShowingEnglish = isShowing
     case .updateShowingCreateStoryScreen(let isShowing):
         newState.isShowingCreateStoryScreen = isShowing
+    case .updateShowingSettings(let isShowing):
+        newState.isShowingSettingsScreen = isShowing
+    case .updateShowingStoryListView(let isShowing):
+        newState.isShowingStoryListView = isShowing
     case .updateSelectCategory(let category, let isSelected):
         if isSelected {
             if !newState.selectedCategories.contains(category) {
