@@ -24,6 +24,10 @@ struct Story: Codable, Equatable, Hashable {
         self.title = try container.decode(String.self, forKey: .title)
         self.description = try container.decode(String.self, forKey: .description)
 
-        self.chapters = []
+        if let chapters = try? container.decode([Chapter].self, forKey: .chapters) {
+            self.chapters = chapters
+        } else {
+            self.chapters = []
+        }
     }
 }

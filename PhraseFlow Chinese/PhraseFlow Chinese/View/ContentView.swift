@@ -118,6 +118,12 @@ struct ContentView: View {
                     }) {
                         Image(systemName: "gearshape.circle")
                     }
+
+                    Button(action: {
+                        store.dispatch(.updateShowPinyin(!store.state.isShowingPinyin))
+                    }) {
+                        Image(systemName: store.state.isShowingPinyin ? "strikethrough" : "s.circle")
+                    }
                 }
                 .font(.system(size: 50))
                 .padding(.horizontal)

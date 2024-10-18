@@ -8,7 +8,9 @@
 import Foundation
 
 enum FastChineseDataStoreError: Error {
+    case failedToCreateUrl
     case failedToSaveAudio
+    case failedToSaveData
     case failedToLoadChapter
     case failedToDecodeSentences
 }
@@ -22,17 +24,21 @@ protocol FastChineseDataStoreProtocol {
 class FastChineseDataStore: FastChineseDataStoreProtocol {
 
     let allStoriesKey = "allStoriesKey"
+    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
 
     init() {
         UserDefaults.standard.removeObject(forKey: allStoriesKey)
     }
 
     func loadStories() throws -> [Story] {
+        guard let fileURL = documentsDirectory?.appendingPathComponent("userData.json") else {
+            throw FastChineseDataStoreError.failedToCreateUrl
+        }
         do {
-            guard let savedData = UserDefaults.standard.data(forKey: allStoriesKey) else {
-                throw FastChineseDataStoreError.failedToLoadChapter
-            }
-            return try JSONDecoder().decode([Story].self, from: savedData)
+            let data = try Data(contentsOf: fileURL)
+            let decoder = JSONDecoder()
+            let stories = try decoder.decode([Story].self, from: data)
+            return stories
         } catch {
             throw FastChineseDataStoreError.failedToDecodeSentences
         }
@@ -40,40 +46,38 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
 
     func saveStory(_ story: Story) throws {
         var allStories: [Story]
-        do {
-            if let savedData = UserDefaults.standard.data(forKey: allStoriesKey) {
-                allStories = try JSONDecoder().decode([Story].self, from: savedData)
-                allStories.removeAll(where: { $0.storyOverview == story.storyOverview })
-                if allStories.isEmpty {
-                    allStories = [story]
-                } else {
-                    allStories.append(story)
-                }
-            } else {
+        if let stories = try? loadStories() {
+            allStories = stories
+            allStories.removeAll(where: { $0.storyOverview == story.storyOverview })
+            if allStories.isEmpty {
                 allStories = [story]
+            } else {
+                allStories.append(story)
             }
-        } catch {
-            throw FastChineseDataStoreError.failedToDecodeSentences
+        } else {
+            allStories = [story]
         }
-        do {
-            let encodedData = try JSONEncoder().encode(allStories)
-            UserDefaults.standard.set(encodedData, forKey: allStoriesKey)
-        } catch {
-            throw FastChineseDataStoreError.failedToDecodeSentences
-        }
+
+        try saveStories(allStories)
     }
 
     func unsaveStory(_ story: Story) throws {
-        guard let savedData = UserDefaults.standard.data(forKey: allStoriesKey) else {
-            throw FastChineseDataStoreError.failedToLoadChapter
+        if var stories = try? loadStories() {
+            stories.removeAll(where: { $0.storyOverview == story.storyOverview })
+            try saveStories(stories)
         }
+    }
+
+    private func saveStories(_ stories: [Story]) throws {
+        guard let fileURL = documentsDirectory?.appendingPathComponent("userData.json") else {
+            throw FastChineseDataStoreError.failedToCreateUrl
+        }
+        let encoder = JSONEncoder()
         do {
-            var allStories = try JSONDecoder().decode([Story].self, from: savedData)
-            allStories.removeAll(where: { $0 == story })
-            let encodedData = try JSONEncoder().encode(allStories)
-            UserDefaults.standard.set(encodedData, forKey: allStoriesKey)
+            let encodedData = try encoder.encode(stories)
+            try encodedData.write(to: fileURL)
         } catch {
-            throw FastChineseDataStoreError.failedToDecodeSentences
+            throw FastChineseDataStoreError.failedToSaveData
         }
     }
 }
