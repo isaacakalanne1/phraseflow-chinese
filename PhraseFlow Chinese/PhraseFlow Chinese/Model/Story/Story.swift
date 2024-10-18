@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Story: Codable {
+struct Story: Codable, Equatable, Hashable {
     let info: StoryGenerationInfo
     let title: String
     let description: String

@@ -10,6 +10,7 @@ import AVKit
 
 struct FastChineseState {
     var currentStory: Story?
+    var savedStories: [Story] = []
     var chapterIndex = 0
     var sentenceIndex = 0
     var isShowingCreateStoryScreen = false

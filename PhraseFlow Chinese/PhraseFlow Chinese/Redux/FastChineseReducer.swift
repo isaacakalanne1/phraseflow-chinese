@@ -13,15 +13,14 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     var newState = state
 
     switch action {
-    case .onGeneratedNewChapter(let chapter):
-        newState.currentStory?.chapters.append(chapter)
+    case .onGeneratedNewChapter(let story):
+        newState.currentStory = story
         newState.sentenceIndex = 0
         newState.isShowingCreateStoryScreen = false
     case .onGeneratedStory(let story):
         newState.currentStory = story
-    case .onLoadedStory(let story):
-        newState.currentStory = story
-        newState.sentenceIndex = 0
+    case .onLoadedStories(let stories):
+        newState.savedStories = stories
     case .goToNextSentence:
         if let chapter = newState.currentChapter,
            newState.sentenceIndex + 1 < chapter.sentences.count {
@@ -58,9 +57,12 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         } else {
             newState.selectedCategories.removeAll(where: { $0 == category })
         }
+    case .selectStory(let story):
+        newState.currentStory = story
+        newState.sentenceIndex = 0
     case .saveStory,
             .failedToSaveStory,
-            .failedToLoadStory,
+            .failedToLoadStories,
             .playAudio,
             .failedToPlayAudio,
             .failedToDefineCharacter,
@@ -68,7 +70,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             .failedToGenerateNewStory,
             .generateNewChapter,
             .failedToGenerateNewChapter,
-            .loadStory,
+            .loadStories,
             .synthesizeAudio,
             .onPlayedAudio:
         break

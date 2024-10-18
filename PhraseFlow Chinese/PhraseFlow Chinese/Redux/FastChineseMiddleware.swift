@@ -25,25 +25,28 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             do {
                 let newSentences = try await environment.generateChapter(using: story, chapterIndex: index, difficulty: .HSK1)
                 let chapter = Chapter(sentences: newSentences, index: index)
-                return .onGeneratedNewChapter(chapter)
+                var newStory = story
+                if newStory.chapters.isEmpty {
+                    newStory.chapters = [chapter]
+                } else {
+                    newStory.chapters.append(chapter)
+                }
+                return .onGeneratedNewChapter(story: newStory)
             } catch {
                 return .failedToGenerateNewChapter
             }
-    case .onGeneratedNewChapter:
-        return nil
-    case .loadStory(let info):
+    case .onGeneratedNewChapter(let story):
+        return .saveStory(story)
+    case .loadStories:
         do {
-            let story = try environment.loadStory(info: info)
-            return .onLoadedStory(story)
+            let stories = try environment.loadStories()
+            return .onLoadedStories(stories)
         } catch {
-            return .failedToLoadStory
+            return .failedToLoadStories
         }
-    case .onLoadedStory:
+    case .onLoadedStories:
         return nil
     case .saveStory(let story):
-        guard let story else {
-            return .failedToSaveStory
-        }
         do {
             try environment.saveStory(story)
             return nil
@@ -82,7 +85,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
     case .failedToGenerateNewStory,
             .failedToGenerateNewChapter,
-            .failedToLoadStory,
+            .failedToLoadStories,
             .failedToSaveStory,
             .updateSpeechSpeed,
             .onDefinedCharacter,
@@ -93,7 +96,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .updateShowMandarin,
             .updateShowEnglish,
             .updateShowingCreateStoryScreen,
-            .updateSelectCategory:
+            .updateSelectCategory,
+            .selectStory:
         return nil
     }
 }

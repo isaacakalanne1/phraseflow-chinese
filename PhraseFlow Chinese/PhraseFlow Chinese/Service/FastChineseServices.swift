@@ -39,6 +39,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
                   content: """
         Write a captivating, emotional, and dramatic story, with each sentence split in the same structure as the list above.
         The story should be amazing and captivating, and the reader should be amazed an AI came up with it.
+        The story should be full of calming, enjoyable highs and incredibly low lows, always keeping the reader absolutely hooked to find out what will happen next.
         Stay away from subjects which are sensitive in Mainland China, such as Hong Kong, Taiwan, and any other potentially sensitive subjects.
 
         These are the categories for the story:
@@ -66,8 +67,8 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
         let story = Story(info: .init(storyOverview: storyOverview,
                                       difficulty: 0),
-                          title: "",
-                          description: "",
+                          title: "Story Title here!",
+                          description: "Description here!",
                           chapters: [])
         return story
     }
@@ -86,11 +87,13 @@ final class FastChineseServices: FastChineseServicesProtocol {
                                     You output data in the following format: [ { "mandarin": "你好", "pinyin": ["nǐ", "hǎo"], "english": "Hello" }, { "mandarin": "谢谢", "pinyin": ["xiè", "xie"], "english": "Thank you" }, { "mandarin": "再见", "pinyin": ["zài", "jiàn"], "english": "Goodbye" } ]
                                     You are a master at pinyin and write the absolute best, most accurate tone markings for the pinyin, based on context, and including all relevant neutral tones.
                                     Include punctuation in the pinyin, to match the Mandarin, such as commas, and full stops. The punctuation should be its own item in the pinyin list, such as ["nǐ", "，"]. Use Mandarin punctuation.
+                                    Do not include the ```json prefix tag or or ``` suffix tag in your response.
                                     """),
             .init(role: "user",
                   content: """
         Generate a captivating, emotional, and extremely engaging story, with each sentence split in the same structure as the list above.
         The story should be amazing and captivating, and the reader should be amazed an AI came up with it.
+        The story should be full of calming, enjoyable highs and incredibly low lows, always keeping the reader absolutely hooked to find out what will happen next.
         Stay away from subjects which are sensitive in Mainland China, such as Hong Kong, Taiwan, and any other potentially sensitive subjects.
         This is the description of the story:
         \(story.info.storyOverview)

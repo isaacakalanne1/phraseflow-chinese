@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Chapter: Codable {
+struct Chapter: Codable, Equatable, Hashable {
     var sentences: [Sentence]
     var index: Int
 }

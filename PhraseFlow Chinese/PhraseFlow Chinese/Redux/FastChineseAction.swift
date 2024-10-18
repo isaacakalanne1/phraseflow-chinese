@@ -12,19 +12,20 @@ enum FastChineseAction {
     case updateShowingCreateStoryScreen(isShowing: Bool)
     case updateSelectCategory(Category, isSelected: Bool)
 
+    case selectStory(Story)
     case generateNewStory(categories: [Category])
     case onGeneratedStory(Story)
     case failedToGenerateNewStory
     case generateNewChapter(story: Story, index: Int)
-    case onGeneratedNewChapter(Chapter)
+    case onGeneratedNewChapter(story: Story)
     case failedToGenerateNewChapter
 
-    case saveStory(Story?)
+    case saveStory(Story)
     case failedToSaveStory
 
-    case loadStory(generationInfo: StoryGenerationInfo)
-    case onLoadedStory(Story)
-    case failedToLoadStory
+    case loadStories
+    case onLoadedStories([Story])
+    case failedToLoadStories
 
     case goToNextSentence
 

@@ -12,6 +12,7 @@ struct ContentView: View {
 
     @FocusState var isTextFieldFocused
     @State private var showSettings = false
+    @State private var showStoryListView = false
 
     var body: some View {
 
@@ -82,8 +83,7 @@ struct ContentView: View {
                     }
 
                     Button {
-                        isTextFieldFocused = false
-                        showSettings = true
+                        showStoryListView = true
                     } label: {
                         Image(systemName: "list.bullet.circle.fill")
                     }
@@ -101,6 +101,13 @@ struct ContentView: View {
                     }) {
                         Image(systemName: "arrow.right.circle.fill")
                     }
+
+                    Button(action: {
+                        isTextFieldFocused = false
+                        showSettings = true
+                    }) {
+                        Image(systemName: "gearshape.circle")
+                    }
                 }
                 .font(.system(size: 50))
                 .padding(.horizontal)
@@ -112,6 +119,9 @@ struct ContentView: View {
         }
         .sheet(isPresented: isShowingCreateStoryScreen) {
             CreateStoryView()
+        }
+        .sheet(isPresented: $showStoryListView) {
+            StoryListView()
         }
     }
 }
