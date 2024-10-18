@@ -21,6 +21,10 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.currentStory = story
     case .onLoadedStories(let stories):
         newState.savedStories = stories
+        if newState.currentStory == nil,
+           !stories.isEmpty {
+            newState.currentStory = stories.first
+        }
     case .goToNextSentence:
         if let chapter = newState.currentChapter,
            newState.sentenceIndex + 1 < chapter.sentences.count {
