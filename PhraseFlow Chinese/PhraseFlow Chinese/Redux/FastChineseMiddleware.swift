@@ -86,6 +86,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToDefineCharacter
         }
+    case .selectStory,
+            .selectChapter:
+        return .updateShowingStoryListView(isShowing: false)
     case .failedToGenerateNewStory,
             .failedToGenerateNewChapter,
             .failedToLoadStories,
@@ -100,7 +103,6 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .updateShowEnglish,
             .updateShowingCreateStoryScreen,
             .updateSelectCategory,
-            .selectStory,
             .updateShowingSettings,
             .updateShowingStoryListView:
         return nil

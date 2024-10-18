@@ -68,6 +68,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .selectStory(let story):
         newState.currentStory = story
         newState.sentenceIndex = 0
+    case .selectChapter(let index):
+        newState.chapterIndex = index
     case .saveStory,
             .failedToSaveStory,
             .failedToLoadStories,

@@ -21,35 +21,33 @@ struct StoryListView: View {
                 ScrollView {
                     VStack {
                         ForEach(store.state.savedStories, id: \.self) { story in
-                            Button(action: {
-                                withAnimation(.easeInOut) {
-                                    store.dispatch(.selectStory(story))
-                                }
-                            }) {
+                            HStack {
                                 Button {
                                     store.dispatch(.selectStory(story))
                                 } label: {
-                                    HStack {
-                                        VStack(alignment: .leading, content: {
-                                            Text(story.title)
-                                                .bold()
-                                                .font(.body)
-                                                .foregroundColor(.primary)
-                                                .frame(maxWidth: .infinity)
-                                                .cornerRadius(10)
-                                            Text(story.description)
-                                                .font(.body)
-                                                .foregroundColor(.primary)
-                                                .frame(maxWidth: .infinity)
-                                                .cornerRadius(10)
-                                        })
-                                        Image(systemName: "play.circle.fill")
-                                            .frame(width: 50, height: 50)
-                                        NavigationLink(destination: ChapterListView(story: story)) {
-                                            Image(systemName: "magnifyingglass.circle")
-                                                .frame(width: 50, height: 50)
-                                        }
-                                    }
+                                    VStack(alignment: .leading, content: {
+                                        Text(story.title)
+                                            .bold()
+                                            .font(.body)
+                                            .foregroundColor(.primary)
+                                            .frame(maxWidth: .infinity)
+                                            .cornerRadius(10)
+                                        Text(story.description)
+                                            .font(.body)
+                                            .foregroundColor(.primary)
+                                            .frame(maxWidth: .infinity)
+                                            .cornerRadius(10)
+                                    })
+                                    Image(systemName: "play.circle.fill")
+                                        .resizable()
+                                        .frame(width: 50, height: 50)
+                                        .foregroundStyle(Color.accentColor)
+                                }
+                                NavigationLink(destination: ChapterListView(story: story)) {
+                                    Image(systemName: "magnifyingglass.circle")
+                                        .resizable()
+                                        .frame(width: 50, height: 50)
+                                        .foregroundStyle(Color.accentColor)
                                 }
                             }
                         }
