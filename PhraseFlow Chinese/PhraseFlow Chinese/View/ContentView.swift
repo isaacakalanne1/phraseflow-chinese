@@ -86,43 +86,52 @@ struct ContentView: View {
 
                 Spacer()
 
-                HStack {
-                    Button {
-                        store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
-                    } label: {
-                        Image(systemName: "plus.circle")
-                    }
-
-                    Button {
-                        store.dispatch(.updateShowingStoryListView(isShowing: true))
-                    } label: {
-                        Image(systemName: "list.bullet.circle.fill")
-                    }
-
-                    Button(action: {
-                        if let sentence = store.state.currentSentence {
-                            store.dispatch(.synthesizeAudio(sentence))
+                ScrollView(.horizontal) {
+                    HStack {
+                        Button(action: {
+                            store.dispatch(.goToNextSentence)
+                        }) {
+                            Image(systemName: "arrow.left.circle")
                         }
-                    }) {
-                        Image(systemName: "play.circle")
-                    }
 
-                    Button(action: {
-                        store.dispatch(.goToNextSentence)
-                    }) {
-                        Image(systemName: "arrow.right.circle.fill")
-                    }
+                        Button(action: {
+                            if let sentence = store.state.currentSentence {
+                                store.dispatch(.synthesizeAudio(sentence))
+                            }
+                        }) {
+                            Image(systemName: "play.circle.fill")
+                        }
 
-                    Button(action: {
-                        store.dispatch(.updateShowingSettings(isShowing: true))
-                    }) {
-                        Image(systemName: "gearshape.circle")
-                    }
+                        Button(action: {
+                            store.dispatch(.goToNextSentence)
+                        }) {
+                            Image(systemName: "arrow.right.circle")
+                        }
 
-                    Button(action: {
-                        store.dispatch(.updateShowPinyin(!store.state.isShowingPinyin))
-                    }) {
-                        Image(systemName: store.state.isShowingPinyin ? "strikethrough" : "s.circle")
+                        Button(action: {
+                            store.dispatch(.updateShowPinyin(!store.state.isShowingPinyin))
+                        }) {
+                            Image(systemName: store.state.isShowingPinyin ? "s.circle.fill" : "strikethrough")
+                                .frame(width: 50, height: 50)
+                        }
+
+                        Button {
+                            store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
+                        } label: {
+                            Image(systemName: "plus.circle")
+                        }
+
+                        Button {
+                            store.dispatch(.updateShowingStoryListView(isShowing: true))
+                        } label: {
+                            Image(systemName: "list.bullet.circle.fill")
+                        }
+
+                        Button(action: {
+                            store.dispatch(.updateShowingSettings(isShowing: true))
+                        }) {
+                            Image(systemName: "gearshape.circle")
+                        }
                     }
                 }
                 .font(.system(size: 50))
