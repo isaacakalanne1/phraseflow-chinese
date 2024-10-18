@@ -36,11 +36,15 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
 
     func saveStory(_ story: Story) throws {
         var allStories: [Story]
-        if let savedData = UserDefaults.standard.data(forKey: allStoriesKey) {
-            allStories = try JSONDecoder().decode([Story].self, from: savedData)
-            allStories.append(story)
-        } else {
-            allStories = [story]
+        do {
+            if let savedData = UserDefaults.standard.data(forKey: allStoriesKey) {
+                allStories = try JSONDecoder().decode([Story].self, from: savedData)
+                allStories.append(story)
+            } else {
+                allStories = [story]
+            }
+        } catch {
+            throw FastChineseDataStoreError.failedToDecodeSentences
         }
         do {
             let encodedData = try JSONEncoder().encode(allStories)

@@ -16,7 +16,7 @@ enum FastChineseAction {
     case generateNewStory(categories: [Category])
     case onGeneratedStory(Story)
     case failedToGenerateNewStory
-    case generateNewChapter(story: Story, index: Int)
+    case generateNewChapter(story: Story)
     case onGeneratedNewChapter(story: Story)
     case failedToGenerateNewChapter
 

@@ -19,9 +19,6 @@ struct GPTResponse: Codable { // TODO: Update this to match OpenAI API
     }
 
     func decodedSentences() -> [Sentence]? {
-//        guard let content = choices.first?.message.content else { return nil }
-
-        // Convert the cleaned string to data and decode
         guard let data = choices.first?.message.content.data(using: .utf8) else { return nil }
 
         do {

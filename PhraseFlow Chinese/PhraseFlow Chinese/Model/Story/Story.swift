@@ -8,8 +8,9 @@
 import Foundation
 
 struct Story: Codable, Equatable, Hashable {
-    let info: StoryGenerationInfo
+    let storyOverview: String
+    let difficulty: Difficulty
     let title: String
     let description: String
-    var chapters: [Chapter]
+    var chapters: [Chapter] = []
 }

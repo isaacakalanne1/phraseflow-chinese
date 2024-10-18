@@ -20,11 +20,11 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
                 return .failedToGenerateNewStory
             }
     case .onGeneratedStory(let story):
-        return .generateNewChapter(story: story, index: 0)
-    case .generateNewChapter(let story, let index):
+        return .generateNewChapter(story: story)
+    case .generateNewChapter(let story):
             do {
-                let newSentences = try await environment.generateChapter(using: story, chapterIndex: index, difficulty: .HSK1)
-                let chapter = Chapter(sentences: newSentences, index: index)
+                let newSentences = try await environment.generateChapter(using: story)
+                let chapter = Chapter(sentences: newSentences)
                 var newStory = story
                 if newStory.chapters.isEmpty {
                     newStory.chapters = [chapter]
@@ -49,7 +49,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
     case .saveStory(let story):
         do {
             try environment.saveStory(story)
-            return nil
+            return .loadStories
         } catch {
             return .failedToSaveStory
         }

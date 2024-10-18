@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Difficulty: String {
+enum Difficulty: String, Codable, Hashable {
     case HSK1, HSK2, HSK3, HSK4, HSK5
 
     var title: String {

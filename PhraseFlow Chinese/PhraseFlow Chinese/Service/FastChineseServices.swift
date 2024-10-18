@@ -16,7 +16,7 @@ enum FastChineseServicesError: Error {
 
 protocol FastChineseServicesProtocol {
     func generateStory(categories: [Category]) async throws -> Story
-    func generateChapter(using info: Story, chapterIndex: Int, difficulty: Difficulty) async throws -> [Sentence]
+    func generateChapter(using info: Story) async throws -> [Sentence]
     func fetchDefinition(of character: String, withinContextOf sentence: String) async throws -> GPTResponse
 }
 
@@ -49,6 +49,10 @@ final class FastChineseServices: FastChineseServicesProtocol {
         \(subjects)
 
         Write a summary of the story, then a summary of each of the 10 chapters.
+        Write the data in the following JSON format:
+        { "storyOverview": "Story summary and summary of 10 chapters", "difficulty": "HSK1", "title": "Story title", "description": "2 line story description, which does not spoil the overall plot" }
+        Keep "chapters" as an empty list, like []
+        Do not include the ```json prefix tag or or ``` suffix tag in your response.
         """)
         ])
 
@@ -61,19 +65,17 @@ final class FastChineseServices: FastChineseServicesProtocol {
             throw FastChineseServicesError.failedToDecodeJson
         }
 
-        guard let storyOverview = response.choices.first?.message.content else {
+        guard let storyData = response.choices.first?.message.content.data(using: .utf8) else {
             throw FastChineseServicesError.failedToGetResponseData
         }
 
-        let story = Story(info: .init(storyOverview: storyOverview,
-                                      difficulty: 0),
-                          title: "Story Title here!",
-                          description: "Description here!",
-                          chapters: [])
+        guard let story = try? JSONDecoder().decode(Story.self, from: storyData) else {
+            throw FastChineseServicesError.failedToDecodeJson
+        }
         return story
     }
 
-    func generateChapter(using story: Story, chapterIndex: Int, difficulty: Difficulty) async throws -> [Sentence] {
+    func generateChapter(using story: Story) async throws -> [Sentence] {
         var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
         request.httpMethod = "POST"
         request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
@@ -97,11 +99,11 @@ final class FastChineseServices: FastChineseServicesProtocol {
         The story should be full of calming, enjoyable highs and incredibly low lows, always keeping the reader absolutely hooked to find out what will happen next.
         Stay away from subjects which are sensitive in Mainland China, such as Hong Kong, Taiwan, and any other potentially sensitive subjects.
         This is the description of the story:
-        \(story.info.storyOverview)
+        \(story.storyOverview)
 
-        Generate chapter \(chapterIndex) from the list. The chapter should be 20-30 lines long.
+        Generate chapter \(story.chapters.count + 1) from the list. The chapter should be 20-30 lines long.
 
-        Write the story using \(difficulty.title) vocabulary. Use only vocabulary for someone that is at this level, considering HSK1 is absolute beginner, like a 5 year old, and HSK5 is an absolute expert, like a PhD student.
+        Write the story using \(story.difficulty.title) vocabulary. Use only vocabulary for someone that is at this level, considering HSK1 is absolute beginner, like a 5 year old, and HSK5 is an absolute expert, like a PhD student.
 
         Feel free to use the same words often, in order to help the user learn the Mandarin words better.
         """)
