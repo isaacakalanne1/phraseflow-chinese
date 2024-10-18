@@ -25,18 +25,16 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             do {
                 let newSentences = try await environment.generateChapter(using: story)
                 let chapter = Chapter(sentences: newSentences)
-                var newStory = story
-                if newStory.chapters.isEmpty {
-                    newStory.chapters = [chapter]
-                } else {
-                    newStory.chapters.append(chapter)
-                }
-                return .onGeneratedNewChapter(story: newStory)
+                return .onGeneratedNewChapter(chapter: chapter)
             } catch {
                 return .failedToGenerateNewChapter
             }
-    case .onGeneratedNewChapter(let story):
-        return .saveStory(story)
+    case .onGeneratedNewChapter:
+        if let story = state.currentStory {
+            return .saveStory(story)
+        } else {
+            return nil
+        }
     case .loadStories:
         do {
             let stories = try environment.loadStories()

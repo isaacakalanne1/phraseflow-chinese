@@ -13,5 +13,17 @@ struct Story: Codable, Equatable, Hashable {
     let difficulty: Difficulty
     let title: String
     let description: String
-    var chapters: [Chapter] = []
+    var chapters: [Chapter]
+
+    // Custom decoder to assign default values
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.storyOverview = try container.decode(String.self, forKey: .storyOverview)
+        self.chapterSummaryList = try container.decode([String].self, forKey: .chapterSummaryList)
+        self.difficulty = try container.decode(Difficulty.self, forKey: .difficulty)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.description = try container.decode(String.self, forKey: .description)
+
+        self.chapters = []
+    }
 }

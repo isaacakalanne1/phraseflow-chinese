@@ -69,10 +69,12 @@ final class FastChineseServices: FastChineseServicesProtocol {
             throw FastChineseServicesError.failedToGetResponseData
         }
 
-        guard let story = try? JSONDecoder().decode(Story.self, from: storyData) else {
+        do {
+            let story = try JSONDecoder().decode(Story.self, from: storyData)
+            return story
+        } catch {
             throw FastChineseServicesError.failedToDecodeJson
         }
-        return story
     }
 
     func generateChapter(using story: Story) async throws -> [Sentence] {

@@ -13,8 +13,14 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     var newState = state
 
     switch action {
-    case .onGeneratedNewChapter(let story):
-        newState.currentStory = story
+    case .onGeneratedNewChapter(let chapter):
+        var newStory = newState.currentStory
+        if newStory?.chapters.isEmpty == true {
+            newStory?.chapters = [chapter]
+        } else {
+            newStory?.chapters.append(chapter)
+        }
+        newState.currentStory = newStory
         newState.sentenceIndex = 0
         newState.isShowingCreateStoryScreen = false
     case .onGeneratedStory(let story):
