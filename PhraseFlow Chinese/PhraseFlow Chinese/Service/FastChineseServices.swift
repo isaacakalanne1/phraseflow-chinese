@@ -38,21 +38,20 @@ final class FastChineseServices: FastChineseServicesProtocol {
                   """),
             .init(role: "user",
                   content: """
-        Write a captivating, emotional, and dramatic story, with each sentence split in the same structure as the list above.
-        The story should be amazing and captivating, and the reader should be amazed an AI came up with it.
-        The story should be full of calming, enjoyable highs and incredibly low lows, always keeping the reader absolutely hooked to find out what will happen next.
-        Stay away from subjects which are sensitive in Mainland China, such as Hong Kong, Taiwan, and any other potentially sensitive subjects.
+        I would like you to create a story overview and summaries of 10 chapters for a deep and thought-provoking Mandarin Chinese novel. The story should begin with an ordinary setting and gradually lead into a complex plot that introduces profound conflicts and challenges. The protagonists should be multi-dimensional, with their own strengths, weaknesses, and secrets. The story should include:
 
-        These are the categories for the story:
-        \(categoryTitles)
+            •    Negative Events: Such as betrayal, failure, or sacrifice that span several chapters.
+            •    Emotional Depth: Show the characters’ inner struggles and growth.
+            •    Engaging Plot: Include unexpected twists and suspenseful developments.
+            •    Thematic Exploration: Explore themes like the complexity of human nature, moral dilemmas, personal growth, etc.
 
-        These are the central subjects of the story:
-        \(subjects)
+        Please avoid overly idealized plots and characters. Provide an overall summary of the story, followed by detailed summaries for each chapter, highlighting key plot points and character development.
 
-        Write a summary of the story, then a summary of each of the 10 chapters.
+        Include these in the story:
+        \(categoryTitles) \(subjects)
+
         Write the data in the following JSON format:
-        { "storyOverview": "Story summary and summary of 10 chapters", "chapterSummaryList": ["List of descriptions for each chapter"] "difficulty": "HSK1", "title": "Story title", "description": "2 line story description, which does not spoil the overall plot" }
-        Keep "chapters" as an empty list, like []
+        { "storyOverview": "Story summary", "chapterSummaryList": ["List of descriptions for each chapter"] "difficulty": "HSK1", "title": "Story title in English", "description": "2 line story description, in English, which leaves the reader curious about where the plot will go" }
         Do not include the ```json prefix tag or or ``` suffix tag in your response.
         """)
         ])
@@ -85,10 +84,14 @@ final class FastChineseServices: FastChineseServicesProtocol {
         """
 
         let mainPrompt = """
-        Generate a captivating, emotional, and extremely engaging story, with each sentence split in the same structure as the list above.
-        The story should be amazing and captivating, and the reader should be amazed an AI came up with it.
-        The story should be incredibly emotional and deep, always keeping the reader absolutely hooked to find out what will happen next. The story is not be overly positive, and engages the reader in the drama of the story.
-        Don't write about politics, Hong Kong, or Taiwan.
+        I would like you to create a story overview and summaries of 10 chapters for a deep and thought-provoking Mandarin Chinese novel. The story should begin with an ordinary setting and gradually lead into a complex plot that introduces profound conflicts and challenges. The protagonists should be multi-dimensional, with their own strengths, weaknesses, and secrets. The story should include:
+
+            •    Negative Events: Such as betrayal, failure, or sacrifice that span several chapters.
+            •    Emotional Depth: Show the characters’ inner struggles and growth.
+            •    Engaging Plot: Include unexpected twists and suspenseful developments.
+            •    Thematic Exploration: Explore themes like the complexity of human nature, moral dilemmas, personal growth, etc.
+
+        Please avoid overly idealized plots and characters. Provide an overall summary of the story, followed by detailed summaries for each chapter, highlighting key plot points and character development.
 
         This is the description of the story:
         \(story.storyOverview)
@@ -96,10 +99,10 @@ final class FastChineseServices: FastChineseServicesProtocol {
         This is the story so far:
         \(story.chapters.reduce("") { $0 + "\n\n" + $1.passage })
 
-        This is the description of the new chapter:
-        \(story.chapterSummaryList.count > story.chapters.count ? story.chapterSummaryList[story.chapters.count] : "No description")
+        This is the description of each of the chapters:
+        \(story.chapterSummaryList)
 
-        Write this chapter. The chapter should be 20-30 lines long.
+        Write chapter \(story.chapters.count + 1). The chapter should be 15-20 lines long.
 
         Write the story using \(story.difficulty.title) vocabulary. Use only vocabulary for someone that is at this level, considering HSK1 is absolute beginner, like a 5 year old, and HSK5 is an absolute expert, like a PhD student.
 
