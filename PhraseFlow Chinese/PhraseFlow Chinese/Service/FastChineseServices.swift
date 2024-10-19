@@ -93,7 +93,10 @@ final class FastChineseServices: FastChineseServicesProtocol {
         This is the description of the story:
         \(story.storyOverview)
 
-        This is the chapter description:
+        This is the story so far:
+        \(story.chapters.reduce("") { $0 + "\n\n" + $1.passage })
+
+        This is the description of the new chapter:
         \(story.chapterSummaryList.count > story.chapters.count ? story.chapterSummaryList[story.chapters.count] : "No description")
 
         Write this chapter. The chapter should be 20-30 lines long.

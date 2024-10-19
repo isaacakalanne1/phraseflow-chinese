@@ -35,7 +35,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             let chapter = try await environment.generateChapter(from: passage)
             return .onGeneratedChapter(chapter: chapter)
         } catch {
-            return .failedToGenerateNewPassage
+            return .failedToGenerateChapter
         }
     case .onGeneratedChapter(let chapter):
         if let story = state.currentStory {

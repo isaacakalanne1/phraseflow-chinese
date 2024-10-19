@@ -22,6 +22,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         }
         newState.currentStory = newStory
         newState.sentenceIndex = 0
+        newState.chapterIndex = (newState.currentStory?.chapters.count ?? 1) - 1
         newState.isShowingCreateStoryScreen = false
     case .onGeneratedStory(let story):
         newState.currentStory = story

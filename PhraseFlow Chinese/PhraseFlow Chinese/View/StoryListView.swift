@@ -38,6 +38,7 @@ struct StoryListView: View {
                                             .frame(maxWidth: .infinity)
                                             .cornerRadius(10)
                                     })
+                                    .multilineTextAlignment(.leading)
                                     Image(systemName: "play.circle.fill")
                                         .resizable()
                                         .frame(width: 50, height: 50)
