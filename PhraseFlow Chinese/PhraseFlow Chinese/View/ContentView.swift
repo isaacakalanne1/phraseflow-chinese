@@ -52,6 +52,14 @@ struct ContentView: View {
                 }
                 .frame(height: 200)
 
+                ScrollView(.vertical) {
+                    Text(currentSentence.english)
+                        .font(.title3)
+                        .foregroundColor(.gray)
+                        .opacity(store.state.isShowingEnglish ? 1 : 0)
+                }
+                .frame(height: 100)
+
                 let columns = Array(repeating: GridItem(.fixed(40), spacing: 0), count: 7)
                 LazyVGrid(columns: columns, spacing: 10) {
                     ForEach(Array(currentSentence.mandarin.enumerated()), id: \.offset) { index, element in
@@ -83,11 +91,6 @@ struct ContentView: View {
                         }
                     }
                 }
-
-                Text(currentSentence.english)
-                    .font(.title3)
-                    .foregroundColor(.gray)
-                    .opacity(store.state.isShowingEnglish ? 1 : 0)
 
                 Spacer()
 
