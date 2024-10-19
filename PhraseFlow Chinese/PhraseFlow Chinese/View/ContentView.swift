@@ -43,7 +43,8 @@ struct ContentView: View {
                 .background(Color.accentColor)
                 .foregroundColor(.white)
                 .cornerRadius(10)
-            } else if let currentSentence = store.state.currentSentence {
+            } else if let story = store.state.currentStory,
+                      let currentSentence = store.state.currentSentence {
                 ScrollView(.vertical) {
                     Text(store.state.currentDefinition?.definition ?? "")
                         .font(.body)
@@ -100,16 +101,21 @@ struct ContentView: View {
 
                         Button(action: {
                             if let sentence = store.state.currentSentence {
-                                store.dispatch(.synthesizeAudio(sentence))
+                                if sentence.audioData != nil {
+                                    store.dispatch(.playAudio(time: nil))
+                                } else {
+                                    store.dispatch(.synthesizeAudio(sentence))
+                                }
                             }
                         }) {
                             Image(systemName: "play.circle.fill")
                         }
 
+
                         Button(action: {
-                            store.dispatch(.goToNextSentence)
+                            store.dispatch(store.state.isLastSentence ? .generateNewPassage(story: story) : .goToNextSentence)
                         }) {
-                            Image(systemName: "arrow.right.circle")
+                            Image(systemName: store.state.isLastSentence ? "plus.circle" : "arrow.right.circle")
                         }
 
                         Button(action: {
@@ -122,7 +128,7 @@ struct ContentView: View {
                         Button {
                             store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
                         } label: {
-                            Image(systemName: "plus.circle")
+                            Image(systemName: "note.text.badge.plus")
                         }
 
                         Button {

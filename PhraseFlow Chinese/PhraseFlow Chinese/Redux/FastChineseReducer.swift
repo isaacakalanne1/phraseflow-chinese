@@ -57,6 +57,10 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
                                                definition: definition)
         }
     case .onSynthesizedAudio(let data):
+        var newStory = newState.currentStory
+        newStory?.chapters[newState.chapterIndex].sentences[newState.sentenceIndex].audioData = data.audioData
+        newState.currentStory = newStory
+
         newState.timestampData = data.wordTimestamps
         newState.audioPlayer = try? AVAudioPlayer(data: data.audioData)
         newState.audioPlayer?.prepareToPlay()
@@ -86,7 +90,11 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.currentStory = story
     case .selectChapter(let index):
         newState.sentenceIndex = 0
-        newState.chapterIndex = index
+        if let chaptersCount = newState.currentStory?.chapters.count,
+           index > -1,
+           index < chaptersCount {
+            newState.chapterIndex = index
+        }
     case .updateSelectedWordIndices(let startIndex, let endIndex):
         newState.selectedWordStartIndex = startIndex
         newState.selectedWordEndIndex = endIndex

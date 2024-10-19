@@ -36,6 +36,14 @@ struct FastChineseState {
         return nil
     }
 
+    var isLastSentence: Bool {
+        if let currentChapter,
+           currentChapter.sentences.count - 1 <= sentenceIndex {
+            return true
+        }
+        return false
+    }
+
     var selectedWordStartIndex = 0
     var selectedWordEndIndex = 0
 
