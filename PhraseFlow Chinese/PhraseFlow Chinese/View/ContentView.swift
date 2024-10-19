@@ -94,58 +94,65 @@ struct ContentView: View {
 
                 Spacer()
 
-                ScrollView(.horizontal) {
-                    HStack {
-                        Button(action: {
-                            store.dispatch(.goToPreviousSentence)
-                        }) {
-                            Image(systemName: "arrow.left.circle")
-                        }
-
-                        Button(action: {
-                            if let sentence = store.state.currentSentence {
-                                if sentence.audioData != nil {
-                                    store.dispatch(.playAudio(time: nil))
-                                } else {
-                                    store.dispatch(.synthesizeAudio(sentence))
-                                }
-                            }
-                        }) {
-                            Image(systemName: "play.circle.fill")
-                        }
-
-
-                        Button(action: {
-                            store.dispatch(store.state.isLastSentence ? .generateNewPassage(story: story) : .goToNextSentence)
-                        }) {
-                            Image(systemName: store.state.isLastSentence ? "plus.circle" : "arrow.right.circle")
-                        }
-
-                        Button(action: {
-                            store.dispatch(.updateShowPinyin(!store.state.isShowingPinyin))
-                        }) {
-                            Image(systemName: store.state.isShowingPinyin ? "s.circle.fill" : "strikethrough")
-                                .frame(width: 50, height: 50)
-                        }
-
-                        Button {
-                            store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
-                        } label: {
-                            Image(systemName: "note.text.badge.plus")
-                        }
-
-                        Button {
-                            store.dispatch(.updateShowingStoryListView(isShowing: true))
-                        } label: {
-                            Image(systemName: "list.bullet.circle.fill")
-                        }
-
-                        Button(action: {
-                            store.dispatch(.updateShowingSettings(isShowing: true))
-                        }) {
-                            Image(systemName: "gearshape.circle")
-                        }
+                HStack {
+                    Button(action: {
+                        store.dispatch(.goToPreviousSentence)
+                    }) {
+                        Image(systemName: "arrow.left.circle.fill")
                     }
+
+                    Spacer()
+
+                    Button(action: {
+                        if let sentence = store.state.currentSentence {
+                            if sentence.audioData != nil {
+                                store.dispatch(.playAudio(time: nil))
+                            } else {
+                                store.dispatch(.synthesizeAudio(sentence))
+                            }
+                        }
+                    }) {
+                        Image(systemName: "play.circle.fill")
+                    }
+
+                    Spacer()
+
+                    Button(action: {
+                        store.dispatch(store.state.isLastSentence ? .generateNewPassage(story: story) : .goToNextSentence)
+                    }) {
+                        Image(systemName: store.state.isLastSentence ? "plus.circle.fill" : "arrow.right.circle.fill")
+                    }
+                }
+                .font(.system(size: 50))
+                .padding(.horizontal)
+
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        store.dispatch(.updateShowPinyin(!store.state.isShowingPinyin))
+                    }) {
+                        Image(systemName: store.state.isShowingPinyin ? "s.circle.fill" : "strikethrough")
+                            .frame(width: 50, height: 50)
+                    }
+
+                    Button {
+                        store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
+                    } label: {
+                        Image(systemName: "plus.rectangle.fill.on.rectangle.fill")
+                    }
+
+                    Button {
+                        store.dispatch(.updateShowingStoryListView(isShowing: true))
+                    } label: {
+                        Image(systemName: "list.bullet.rectangle.portrait.fill")
+                    }
+
+                    Button(action: {
+                        store.dispatch(.updateShowingSettings(isShowing: true))
+                    }) {
+                        Image(systemName: "gearshape.fill")
+                    }
+                    Spacer()
                 }
                 .font(.system(size: 50))
                 .padding(.horizontal)
