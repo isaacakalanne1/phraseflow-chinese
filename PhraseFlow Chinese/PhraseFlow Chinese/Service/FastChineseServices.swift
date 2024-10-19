@@ -45,6 +45,13 @@ final class FastChineseServices: FastChineseServicesProtocol {
             •    Engaging Plot: Include unexpected twists and suspenseful developments.
             •    Thematic Exploration: Explore themes like the complexity of human nature, moral dilemmas, personal growth, etc.
 
+        The story should start with two central characters in a specific location or environment. Over the course of the ten chapters:
+
+            •    Three new characters are gradually introduced, one at a time, in different chapters. The introduction of each new character should massively change the story in some way, such as altering the main characters’ goals, introducing significant conflicts, or revealing important secrets.
+            •    The story should also transition through three distinct locations or environments (including the initial one). Each change in setting should have a large impact on the overall narrative, influencing the characters’ development and the direction of the plot.
+
+        The plot should become deep and intense, featuring engaging storylines and complex character relationships. Include significant challenges and conflicts, including negative events that span several chapters and are ultimately resolved in a satisfying way. Incorporate unexpected twists and developments to make the story more engaging.
+
         Please avoid overly idealized plots and characters. Provide an overall summary of the story, followed by detailed summaries for each chapter, highlighting key plot points and character development.
 
         Include these in the story:
@@ -90,6 +97,13 @@ final class FastChineseServices: FastChineseServicesProtocol {
             •    Emotional Depth: Show the characters’ inner struggles and growth.
             •    Engaging Plot: Include unexpected twists and suspenseful developments.
             •    Thematic Exploration: Explore themes like the complexity of human nature, moral dilemmas, personal growth, etc.
+
+        The story should start with two central characters in a specific location or environment. Over the course of the ten chapters:
+
+            •    Three new characters are gradually introduced, one at a time, in different chapters. The introduction of each new character should massively change the story in some way, such as altering the main characters’ goals, introducing significant conflicts, or revealing important secrets.
+            •    The story should also transition through three distinct locations or environments (including the initial one). Each change in setting should have a large impact on the overall narrative, influencing the characters’ development and the direction of the plot.
+
+        The plot should become deep and intense, featuring engaging storylines and complex character relationships. Include significant challenges and conflicts, including negative events that span several chapters and are ultimately resolved in a satisfying way. Incorporate unexpected twists and developments to make the story more engaging.
 
         Please avoid overly idealized plots and characters. Provide an overall summary of the story, followed by detailed summaries for each chapter, highlighting key plot points and character development.
 
