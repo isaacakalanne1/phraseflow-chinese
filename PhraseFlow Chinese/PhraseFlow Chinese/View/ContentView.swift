@@ -35,7 +35,10 @@ struct ContentView: View {
         }
 
         VStack(spacing: 10) {
-            if store.state.currentStory == nil {
+            if store.state.isLoading {
+                Text("Writing new chapter...")
+                    .font(.body)
+            } else if store.state.currentStory == nil {
                 Button("Create Story") {
                     store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
                 }
@@ -61,7 +64,7 @@ struct ContentView: View {
                 .frame(height: 100)
 
                 let columns = Array(repeating: GridItem(.fixed(40), spacing: 0), count: 7)
-                LazyVGrid(columns: columns, spacing: 10) {
+                LazyVGrid(columns: columns, spacing: 0) {
                     ForEach(Array(currentSentence.mandarin.enumerated()), id: \.offset) { index, element in
                         let character = currentSentence.mandarin[index]
                         let pinyin = currentSentence.pinyin.count > index ? currentSentence.pinyin[index] : ""

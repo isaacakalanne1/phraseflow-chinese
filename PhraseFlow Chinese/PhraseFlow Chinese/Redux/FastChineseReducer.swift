@@ -21,11 +21,14 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             newStory?.chapters.append(chapter)
         }
         newState.currentStory = newStory
+
+        newState.isLoading = false
         newState.sentenceIndex = 0
         newState.chapterIndex = (newState.currentStory?.chapters.count ?? 1) - 1
         newState.isShowingCreateStoryScreen = false
     case .onGeneratedStory(let story):
         newState.currentStory = story
+        newState.isLoading = false
     case .onLoadedStories(let stories):
         newState.savedStories = stories
         if newState.currentStory == nil,
@@ -102,22 +105,26 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .clearSelectedWord:
         newState.selectedWordStartIndex = -1
         newState.selectedWordEndIndex = -1
+    case .generateNewStory,
+            .generateNewPassage:
+        newState.isLoading = true
+        newState.isShowingStoryListView = false
+        newState.isShowingCreateStoryScreen = false
+    case .failedToGenerateNewStory,
+            .failedToGenerateChapter,
+            .failedToGenerateNewPassage:
+        newState.isLoading = false
     case .saveStory,
             .failedToSaveStory,
             .failedToLoadStories,
             .playAudio,
             .failedToPlayAudio,
             .failedToDefineCharacter,
-            .generateNewStory,
-            .failedToGenerateNewStory,
-            .generateNewPassage,
-            .failedToGenerateNewPassage,
             .loadStories,
             .synthesizeAudio,
             .onPlayedAudio,
             .onGeneratedNewPassage,
-            .generateChapter,
-            .failedToGenerateChapter:
+            .generateChapter:
         break
     }
 
