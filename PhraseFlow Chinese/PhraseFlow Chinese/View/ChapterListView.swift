@@ -32,7 +32,7 @@ struct ChapterListView: View {
                 }
             }
             Button("Create new chapter") {
-                store.dispatch(.generateNewChapter(story: story))
+                store.dispatch(.generateNewPassage(story: story))
             }
             .padding()
             .background(Color.accentColor)

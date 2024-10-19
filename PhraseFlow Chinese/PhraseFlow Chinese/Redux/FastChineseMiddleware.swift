@@ -20,16 +20,24 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
                 return .failedToGenerateNewStory
             }
     case .onGeneratedStory(let story):
-        return .generateNewChapter(story: story)
-    case .generateNewChapter(let story):
+        return .generateNewPassage(story: story)
+    case .generateNewPassage(let story):
             do {
-                let newSentences = try await environment.generateChapter(using: story)
-                let chapter = Chapter(sentences: newSentences)
-                return .onGeneratedNewChapter(chapter: chapter)
+                let passage = try await environment.generatePassage(using: story)
+                return .onGeneratedNewPassage(passage: passage)
             } catch {
-                return .failedToGenerateNewChapter
+                return .failedToGenerateNewPassage
             }
-    case .onGeneratedNewChapter:
+    case .onGeneratedNewPassage(let passage):
+        return .generateChapter(passage: passage)
+    case .generateChapter(let passage):
+        do {
+            let chapter = try await environment.generateChapter(from: passage)
+            return .onGeneratedChapter(chapter: chapter)
+        } catch {
+            return .failedToGenerateNewPassage
+        }
+    case .onGeneratedChapter(let chapter):
         if let story = state.currentStory {
             return .saveStory(story)
         } else {
@@ -89,7 +97,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .selectChapter:
         return .updateShowingStoryListView(isShowing: false)
     case .failedToGenerateNewStory,
-            .failedToGenerateNewChapter,
+            .failedToGenerateNewPassage,
             .failedToLoadStories,
             .failedToSaveStory,
             .updateSpeechSpeed,
@@ -105,7 +113,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .updateShowingSettings,
             .updateShowingStoryListView,
             .updateSelectedWordIndices,
-            .clearSelectedWord:
+            .clearSelectedWord,
+            .failedToGenerateChapter:
         return nil
     }
 }

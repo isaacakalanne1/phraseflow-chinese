@@ -44,17 +44,15 @@ struct ContentView: View {
                 .foregroundColor(.white)
                 .cornerRadius(10)
             } else if let currentSentence = store.state.currentSentence {
-                Text(store.state.currentDefinition?.definition ?? "")
-                    .font(.body)
-                    .padding(.top)
+                ScrollView(.vertical) {
+                    Text(store.state.currentDefinition?.definition ?? "")
+                        .font(.body)
+                        .padding(.top)
+                }
+                .frame(height: 200)
 
-                Spacer()
-
-                let columns = Array(repeating: GridItem(.fixed(40),
-                                                        spacing: 0),
-                                    count: 7)
-                LazyVGrid(columns: columns,
-                          spacing: 10) {
+                let columns = Array(repeating: GridItem(.fixed(40), spacing: 0), count: 7)
+                LazyVGrid(columns: columns, spacing: 10) {
                     ForEach(Array(currentSentence.mandarin.enumerated()), id: \.offset) { index, element in
                         let character = currentSentence.mandarin[index]
                         let pinyin = currentSentence.pinyin.count > index ? currentSentence.pinyin[index] : ""

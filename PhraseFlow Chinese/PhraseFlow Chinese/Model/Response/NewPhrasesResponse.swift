@@ -17,16 +17,4 @@ struct GPTResponse: Codable { // TODO: Update this to match OpenAI API
             var content: String // TODO: Update to be [Sentence] directly
         }
     }
-
-    func decodedSentences() -> [Sentence]? {
-        guard let data = choices.first?.message.content.data(using: .utf8) else { return nil }
-
-        do {
-            return try JSONDecoder()
-                .decode([Sentence].self, from: data)
-        } catch {
-            print("Failed to decode: \(error)")
-            return nil
-        }
-    }
 }

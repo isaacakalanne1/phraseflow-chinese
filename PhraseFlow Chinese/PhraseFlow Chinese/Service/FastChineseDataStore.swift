@@ -23,11 +23,29 @@ protocol FastChineseDataStoreProtocol {
 
 class FastChineseDataStore: FastChineseDataStoreProtocol {
 
-    let allStoriesKey = "allStoriesKey"
     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
 
     init() {
-        UserDefaults.standard.removeObject(forKey: allStoriesKey)
+//        clearData()
+    }
+
+    func clearData() {
+        let fileManager = FileManager.default
+        let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileURL = documentsDirectory.appendingPathComponent("userData.json")
+
+        // Check if the file exists
+        if fileManager.fileExists(atPath: fileURL.path) {
+            do {
+                // Remove the file
+                try fileManager.removeItem(at: fileURL)
+                print("User data cleared successfully.")
+            } catch {
+                print("Failed to clear user data: \(error.localizedDescription)")
+            }
+        } else {
+            print("No user data found to clear.")
+        }
     }
 
     func loadStories() throws -> [Story] {

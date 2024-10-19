@@ -8,5 +8,6 @@
 import Foundation
 
 struct Chapter: Codable, Equatable, Hashable {
+    var passage: String
     var sentences: [Sentence]
 }
