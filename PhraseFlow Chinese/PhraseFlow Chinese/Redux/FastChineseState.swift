@@ -16,7 +16,7 @@ struct FastChineseState {
     var isShowingCreateStoryScreen = false
     var isShowingSettingsScreen = false
     var isShowingStoryListView = false
-    var isLoading = false
+    var viewState: ViewState = .normal
 
     var selectedCategories: [Category] = []
     var selectedSubjects: [Subject] = []

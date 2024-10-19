@@ -35,130 +35,147 @@ struct ContentView: View {
         }
 
         VStack(spacing: 10) {
-            if store.state.isLoading {
+            switch store.state.viewState {
+            case .loading:
                 Text("Writing new chapter...")
                     .font(.body)
-            } else if store.state.currentStory == nil {
-                Button("Create Story") {
+            case .failedToGenerateStory:
+                Text("Failed to generate story")
+                    .font(.body)
+                Button("Retry") {
                     store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
                 }
                 .padding()
                 .background(Color.accentColor)
                 .foregroundColor(.white)
                 .cornerRadius(10)
-            } else if let story = store.state.currentStory,
-                      let currentSentence = store.state.currentSentence {
-                ScrollView(.vertical) {
-                    Text(store.state.currentDefinition?.definition ?? "")
-                        .font(.body)
-                        .padding(.top)
+            case .failedToGenerateChapter:
+                Text("Failed to generate story")
+                    .font(.body)
+                Button("Retry") {
+                    if let story = store.state.currentStory {
+                        store.dispatch(.generateNewPassage(story: story))
+                    }
                 }
-                .frame(height: 200)
+                .padding()
+                .background(Color.accentColor)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+            case .normal:
+                if let story = store.state.currentStory,
+                          let currentSentence = store.state.currentSentence {
+                    ScrollView(.vertical) {
+                        Text(store.state.currentDefinition?.definition ?? "")
+                            .font(.body)
+                            .padding(.top)
+                    }
+                    .frame(height: 200)
 
-                ScrollView(.vertical) {
-                    Text(currentSentence.english)
-                        .font(.title3)
-                        .foregroundColor(.gray)
-                        .opacity(store.state.isShowingEnglish ? 1 : 0)
-                }
-                .frame(height: 100)
+                    ScrollView(.vertical) {
+                        Text(currentSentence.english)
+                            .font(.title3)
+                            .foregroundColor(.gray)
+                            .opacity(store.state.isShowingEnglish ? 1 : 0)
+                    }
+                    .frame(height: 100)
 
-                let columns = Array(repeating: GridItem(.fixed(40), spacing: 0), count: 7)
-                LazyVGrid(columns: columns, spacing: 0) {
-                    ForEach(Array(currentSentence.mandarin.enumerated()), id: \.offset) { index, element in
-                        let character = currentSentence.mandarin[index]
-                        let pinyin = currentSentence.pinyin.count > index ? currentSentence.pinyin[index] : ""
-                        let isSelectedWord = index >= store.state.selectedWordStartIndex && index < store.state.selectedWordEndIndex
-                        VStack {
-                            Text(character == pinyin ? "" : pinyin)
-                                .font(.footnote)
-                                .foregroundStyle(isSelectedWord ? Color.green : Color.primary)
-                                .opacity(store.state.isShowingPinyin ? 1 : 0)
-                            Text(character)
-                                .font(.largeTitle)
-                                .foregroundStyle(isSelectedWord ? Color.green : Color.primary)
-                                .opacity(store.state.isShowingMandarin ? 1 : 0)
-                        }
-                        .onTapGesture {
-                            for entry in store.state.timestampData {
-                                    let wordStart = entry.textOffset
-                                    let wordEnd = entry.textOffset + entry.wordLength
-                                    if index >= wordStart && index < wordEnd {
-                                        store.dispatch(.updateSelectedWordIndices(startIndex: wordStart, endIndex: wordEnd))
-                                        store.dispatch(.defineCharacter(entry.word))
-                                        let resultEntry = (word: entry.word, time: entry.time)
-                                        print("Result entry is \(resultEntry)")
-                                        store.dispatch(.playAudio(time: entry.time))
+                    let columns = Array(repeating: GridItem(.fixed(40), spacing: 0), count: 7)
+                    LazyVGrid(columns: columns, spacing: 0) {
+                        ForEach(Array(currentSentence.mandarin.enumerated()), id: \.offset) { index, element in
+                            let character = currentSentence.mandarin[index]
+                            let pinyin = currentSentence.pinyin.count > index ? currentSentence.pinyin[index] : ""
+                            let isSelectedWord = index >= store.state.selectedWordStartIndex && index < store.state.selectedWordEndIndex
+                            VStack {
+                                Text(character == pinyin ? "" : pinyin)
+                                    .font(.footnote)
+                                    .foregroundStyle(isSelectedWord ? Color.green : Color.primary)
+                                    .opacity(store.state.isShowingPinyin ? 1 : 0)
+                                Text(character)
+                                    .font(.largeTitle)
+                                    .foregroundStyle(isSelectedWord ? Color.green : Color.primary)
+                                    .opacity(store.state.isShowingMandarin ? 1 : 0)
+                            }
+                            .onTapGesture {
+                                for entry in store.state.timestampData {
+                                        let wordStart = entry.textOffset
+                                        let wordEnd = entry.textOffset + entry.wordLength
+                                        if index >= wordStart && index < wordEnd {
+                                            store.dispatch(.updateSelectedWordIndices(startIndex: wordStart, endIndex: wordEnd))
+                                            store.dispatch(.defineCharacter(entry.word))
+                                            let resultEntry = (word: entry.word, time: entry.time)
+                                            print("Result entry is \(resultEntry)")
+                                            store.dispatch(.playAudio(time: entry.time))
+                                        }
                                     }
-                                }
-                        }
-                    }
-                }
-
-                Spacer()
-
-                HStack {
-                    Button(action: {
-                        store.dispatch(.goToPreviousSentence)
-                    }) {
-                        Image(systemName: "arrow.left.circle.fill")
-                    }
-
-                    Spacer()
-
-                    Button(action: {
-                        if let sentence = store.state.currentSentence {
-                            if sentence.audioData != nil {
-                                store.dispatch(.playAudio(time: nil))
-                            } else {
-                                store.dispatch(.synthesizeAudio(sentence))
                             }
                         }
-                    }) {
-                        Image(systemName: "play.circle.fill")
                     }
 
                     Spacer()
 
-                    Button(action: {
-                        store.dispatch(store.state.isLastSentence ? .generateNewPassage(story: story) : .goToNextSentence)
-                    }) {
-                        Image(systemName: store.state.isLastSentence ? "plus.circle.fill" : "arrow.right.circle.fill")
+                    HStack {
+                        Button(action: {
+                            store.dispatch(.goToPreviousSentence)
+                        }) {
+                            Image(systemName: "arrow.left.circle.fill")
+                        }
+
+                        Spacer()
+
+                        Button(action: {
+                            if let sentence = store.state.currentSentence {
+                                if sentence.audioData != nil {
+                                    store.dispatch(.playAudio(time: nil))
+                                } else {
+                                    store.dispatch(.synthesizeAudio(sentence))
+                                }
+                            }
+                        }) {
+                            Image(systemName: "play.circle.fill")
+                        }
+
+                        Spacer()
+
+                        Button(action: {
+                            store.dispatch(store.state.isLastSentence ? .generateNewPassage(story: story) : .goToNextSentence)
+                        }) {
+                            Image(systemName: store.state.isLastSentence ? "plus.circle.fill" : "arrow.right.circle.fill")
+                        }
                     }
+                    .font(.system(size: 50))
+                    .padding(.horizontal)
+
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            store.dispatch(.updateShowPinyin(!store.state.isShowingPinyin))
+                        }) {
+                            Image(systemName: store.state.isShowingPinyin ? "s.circle.fill" : "strikethrough")
+                                .frame(width: 50, height: 50)
+                        }
+
+                        Button {
+                            store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
+                        } label: {
+                            Image(systemName: "plus.rectangle.fill.on.rectangle.fill")
+                        }
+
+                        Button {
+                            store.dispatch(.updateShowingStoryListView(isShowing: true))
+                        } label: {
+                            Image(systemName: "list.bullet.rectangle.portrait.fill")
+                        }
+
+                        Button(action: {
+                            store.dispatch(.updateShowingSettings(isShowing: true))
+                        }) {
+                            Image(systemName: "gearshape.fill")
+                        }
+                        Spacer()
+                    }
+                    .font(.system(size: 50))
+                    .padding(.horizontal)
                 }
-                .font(.system(size: 50))
-                .padding(.horizontal)
-
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        store.dispatch(.updateShowPinyin(!store.state.isShowingPinyin))
-                    }) {
-                        Image(systemName: store.state.isShowingPinyin ? "s.circle.fill" : "strikethrough")
-                            .frame(width: 50, height: 50)
-                    }
-
-                    Button {
-                        store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
-                    } label: {
-                        Image(systemName: "plus.rectangle.fill.on.rectangle.fill")
-                    }
-
-                    Button {
-                        store.dispatch(.updateShowingStoryListView(isShowing: true))
-                    } label: {
-                        Image(systemName: "list.bullet.rectangle.portrait.fill")
-                    }
-
-                    Button(action: {
-                        store.dispatch(.updateShowingSettings(isShowing: true))
-                    }) {
-                        Image(systemName: "gearshape.fill")
-                    }
-                    Spacer()
-                }
-                .font(.system(size: 50))
-                .padding(.horizontal)
             }
         }
         .background(Color.white)

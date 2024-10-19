@@ -22,13 +22,13 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         }
         newState.currentStory = newStory
 
-        newState.isLoading = false
+        newState.viewState = .normal
         newState.sentenceIndex = 0
         newState.chapterIndex = (newState.currentStory?.chapters.count ?? 1) - 1
         newState.isShowingCreateStoryScreen = false
     case .onGeneratedStory(let story):
         newState.currentStory = story
-        newState.isLoading = false
+        newState.viewState = .normal
     case .onLoadedStories(let stories):
         newState.savedStories = stories
         if newState.currentStory == nil,
@@ -107,13 +107,14 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.selectedWordEndIndex = -1
     case .generateNewStory,
             .generateNewPassage:
-        newState.isLoading = true
+        newState.viewState = .loading
         newState.isShowingStoryListView = false
         newState.isShowingCreateStoryScreen = false
-    case .failedToGenerateNewStory,
-            .failedToGenerateChapter,
+    case .failedToGenerateNewStory:
+        newState.viewState = .failedToGenerateStory
+    case .failedToGenerateChapter,
             .failedToGenerateNewPassage:
-        newState.isLoading = false
+        newState.viewState = .failedToGenerateChapter
     case .saveStory,
             .failedToSaveStory,
             .failedToLoadStories,
