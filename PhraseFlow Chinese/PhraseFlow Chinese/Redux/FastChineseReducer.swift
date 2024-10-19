@@ -36,11 +36,15 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
            newState.sentenceIndex + 1 < chapter.sentences.count {
             newState.sentenceIndex = newState.sentenceIndex + 1
             newState.currentDefinition = nil
+            newState.selectedWordStartIndex = -1
+            newState.selectedWordEndIndex = -1
         }
     case .goToPreviousSentence:
         if newState.sentenceIndex > 0 {
             newState.sentenceIndex = newState.sentenceIndex - 1
             newState.currentDefinition = nil
+            newState.selectedWordStartIndex = -1
+            newState.selectedWordEndIndex = -1
         }
     case .updateSpeechSpeed(let speed):
         newState.speechSpeed = speed
@@ -83,6 +87,12 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .selectChapter(let index):
         newState.sentenceIndex = 0
         newState.chapterIndex = index
+    case .updateSelectedWordIndices(let startIndex, let endIndex):
+        newState.selectedWordStartIndex = startIndex
+        newState.selectedWordEndIndex = endIndex
+    case .clearSelectedWord:
+        newState.selectedWordStartIndex = -1
+        newState.selectedWordEndIndex = -1
     case .saveStory,
             .failedToSaveStory,
             .failedToLoadStories,

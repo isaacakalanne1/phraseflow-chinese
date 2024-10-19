@@ -52,5 +52,8 @@ enum FastChineseAction {
     case updateShowMandarin(Bool)
     case updateShowEnglish(Bool)
 
+    case updateSelectedWordIndices(startIndex: Int, endIndex: Int)
+    case clearSelectedWord
+
     case updateSpeechSpeed(SpeechSpeed)
 }

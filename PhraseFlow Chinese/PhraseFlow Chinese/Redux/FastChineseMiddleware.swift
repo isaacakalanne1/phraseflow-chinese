@@ -103,7 +103,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .updateShowingCreateStoryScreen,
             .updateSelectCategory,
             .updateShowingSettings,
-            .updateShowingStoryListView:
+            .updateShowingStoryListView,
+            .updateSelectedWordIndices,
+            .clearSelectedWord:
         return nil
     }
 }

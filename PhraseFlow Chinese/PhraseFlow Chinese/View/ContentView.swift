@@ -44,9 +44,11 @@ struct ContentView: View {
                 .foregroundColor(.white)
                 .cornerRadius(10)
             } else if let currentSentence = store.state.currentSentence {
-                Spacer()
                 Text(store.state.currentDefinition?.definition ?? "")
                     .font(.body)
+                    .padding(.top)
+
+                Spacer()
 
                 let columns = Array(repeating: GridItem(.fixed(40),
                                                         spacing: 0),
@@ -56,20 +58,24 @@ struct ContentView: View {
                     ForEach(Array(currentSentence.mandarin.enumerated()), id: \.offset) { index, element in
                         let character = currentSentence.mandarin[index]
                         let pinyin = currentSentence.pinyin.count > index ? currentSentence.pinyin[index] : ""
+                        let isSelectedWord = index >= store.state.selectedWordStartIndex && index < store.state.selectedWordEndIndex
                         VStack {
                             Text(character == pinyin ? "" : pinyin)
                                 .font(.footnote)
+                                .foregroundStyle(isSelectedWord ? Color.green : Color.primary)
                                 .opacity(store.state.isShowingPinyin ? 1 : 0)
                             Text(character)
                                 .font(.largeTitle)
+                                .foregroundStyle(isSelectedWord ? Color.green : Color.primary)
                                 .opacity(store.state.isShowingMandarin ? 1 : 0)
                         }
                         .onTapGesture {
-                            store.dispatch(.defineCharacter(character))
                             for entry in store.state.timestampData {
                                     let wordStart = entry.textOffset
                                     let wordEnd = entry.textOffset + entry.wordLength
                                     if index >= wordStart && index < wordEnd {
+                                        store.dispatch(.updateSelectedWordIndices(startIndex: wordStart, endIndex: wordEnd))
+                                        store.dispatch(.defineCharacter(entry.word))
                                         let resultEntry = (word: entry.word, time: entry.time)
                                         print("Result entry is \(resultEntry)")
                                         store.dispatch(.playAudio(time: entry.time))
@@ -89,7 +95,7 @@ struct ContentView: View {
                 ScrollView(.horizontal) {
                     HStack {
                         Button(action: {
-                            store.dispatch(.goToNextSentence)
+                            store.dispatch(.goToPreviousSentence)
                         }) {
                             Image(systemName: "arrow.left.circle")
                         }
