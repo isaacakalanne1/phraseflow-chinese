@@ -61,6 +61,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
     case .goToNextSentence,
             .goToPreviousSentence:
+        return nil
         if let sentence = state.currentSentence {
             return .synthesizeAudio(sentence)
         }

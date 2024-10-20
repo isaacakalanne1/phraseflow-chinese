@@ -14,7 +14,6 @@ struct StoryListView: View {
 
         NavigationView {
             VStack(spacing: 20) {
-                Spacer()
                 Text("Choose a Story")
                     .font(.title2)
 

@@ -29,7 +29,7 @@ enum FastChineseAction {
     case saveStory(Story)
     case failedToSaveStory
 
-    case selectChapter(Int)
+    case selectChapter(Story, chapterIndex: Int)
 
     case loadStories
     case onLoadedStories([Story])

@@ -62,7 +62,15 @@ struct ContentView: View {
                 .foregroundColor(.white)
                 .cornerRadius(10)
             case .normal:
-                if let story = store.state.currentStory,
+                if store.state.currentStory == nil {
+                    Button("Create Story") {
+                        store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
+                    }
+                    .padding()
+                    .background(Color.accentColor)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                } else if let story = store.state.currentStory,
                           let currentSentence = store.state.currentSentence {
                     ScrollView(.vertical) {
                         Text(store.state.currentDefinition?.definition ?? "")

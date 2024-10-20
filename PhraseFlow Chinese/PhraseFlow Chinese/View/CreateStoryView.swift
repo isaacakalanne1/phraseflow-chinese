@@ -14,6 +14,8 @@ struct CreateStoryView: View {
 
         NavigationView {
             VStack(spacing: 20) {
+                Text("Create a Story")
+                    .font(.title2)
                 Spacer()
                 Text("Select Categories")
                     .font(.title2)

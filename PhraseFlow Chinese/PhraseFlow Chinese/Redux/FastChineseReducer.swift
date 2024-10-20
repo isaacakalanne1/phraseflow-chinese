@@ -92,12 +92,13 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.sentenceIndex = 0
         newState.chapterIndex = 0
         newState.currentStory = story
-    case .selectChapter(let index):
+    case .selectChapter(let story, let chapterIndex):
+        newState.currentStory = story
         newState.sentenceIndex = 0
         if let chaptersCount = newState.currentStory?.chapters.count,
-           index > -1,
-           index < chaptersCount {
-            newState.chapterIndex = index
+           chapterIndex > -1,
+           chapterIndex < chaptersCount {
+            newState.chapterIndex = chapterIndex
         }
     case .updateSelectedWordIndices(let startIndex, let endIndex):
         newState.selectedWordStartIndex = startIndex
