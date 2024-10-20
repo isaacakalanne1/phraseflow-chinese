@@ -89,8 +89,9 @@ struct ContentView: View {
                     .frame(height: 100)
 
                     ScrollView(.vertical) {
-                        ForEach(Array(chapter.sentences.enumerated()), id: \.offset) { index, sentence in
-                            let columns = Array(repeating: GridItem(.flexible(minimum: 0, maximum: 40), spacing: 0), count: 7)
+                        ForEach(Array(chapter.sentences.enumerated()), id: \.offset) { sentenceIndex, sentence in
+                            let isSelectedSentence = store.state.sentenceIndex == sentenceIndex
+                            let columns = Array(repeating: GridItem(.flexible(minimum: 30, maximum: 50), spacing: 0), count: 10)
                             LazyVGrid(columns: columns, spacing: 0) {
                                 ForEach(Array(sentence.mandarin.enumerated()), id: \.offset) { index, element in
                                     let character = sentence.mandarin[index]
@@ -99,14 +100,15 @@ struct ContentView: View {
                                     VStack {
                                         Text(character == pinyin ? "" : pinyin)
                                             .font(.footnote)
-                                            .foregroundStyle(isSelectedWord ? Color.green : Color.primary)
+                                            .foregroundStyle(isSelectedWord && isSelectedSentence ? Color.green : Color.primary)
                                             .opacity(store.state.isShowingPinyin ? 1 : 0)
                                         Text(character)
                                             .font(.title)
-                                            .foregroundStyle(isSelectedWord ? Color.green : Color.primary)
+                                            .foregroundStyle(isSelectedWord && isSelectedSentence ? Color.green : Color.primary)
                                             .opacity(store.state.isShowingMandarin ? 1 : 0)
                                     }
                                     .onTapGesture {
+                                        store.dispatch(.updateSentenceIndex(sentenceIndex))
                                         for entry in store.state.timestampData {
                                                 let wordStart = entry.textOffset
                                                 let wordEnd = entry.textOffset + entry.wordLength
@@ -120,9 +122,7 @@ struct ContentView: View {
                                             }
                                     }
                                 }
-                            }
-                            .onTapGesture {
-                                store.dispatch(.updateSentenceIndex(index))
+                                .background(isSelectedSentence ? Color.gray : Color.white)
                             }
                         }
                     }
