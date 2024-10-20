@@ -71,6 +71,7 @@ struct ContentView: View {
                     .foregroundColor(.white)
                     .cornerRadius(10)
                 } else if let story = store.state.currentStory,
+                          let chapter = store.state.currentChapter,
                           let currentSentence = store.state.currentSentence {
                     ScrollView(.vertical) {
                         Text(store.state.currentDefinition?.definition ?? "")
@@ -87,34 +88,41 @@ struct ContentView: View {
                     }
                     .frame(height: 100)
 
-                    let columns = Array(repeating: GridItem(.fixed(40), spacing: 0), count: 7)
-                    LazyVGrid(columns: columns, spacing: 0) {
-                        ForEach(Array(currentSentence.mandarin.enumerated()), id: \.offset) { index, element in
-                            let character = currentSentence.mandarin[index]
-                            let pinyin = currentSentence.pinyin.count > index ? currentSentence.pinyin[index] : ""
-                            let isSelectedWord = index >= store.state.selectedWordStartIndex && index < store.state.selectedWordEndIndex
-                            VStack {
-                                Text(character == pinyin ? "" : pinyin)
-                                    .font(.footnote)
-                                    .foregroundStyle(isSelectedWord ? Color.green : Color.primary)
-                                    .opacity(store.state.isShowingPinyin ? 1 : 0)
-                                Text(character)
-                                    .font(.largeTitle)
-                                    .foregroundStyle(isSelectedWord ? Color.green : Color.primary)
-                                    .opacity(store.state.isShowingMandarin ? 1 : 0)
+                    ScrollView(.vertical) {
+                        ForEach(Array(chapter.sentences.enumerated()), id: \.offset) { index, sentence in
+                            let columns = Array(repeating: GridItem(.flexible(minimum: 0, maximum: 40), spacing: 0), count: 7)
+                            LazyVGrid(columns: columns, spacing: 0) {
+                                ForEach(Array(sentence.mandarin.enumerated()), id: \.offset) { index, element in
+                                    let character = sentence.mandarin[index]
+                                    let pinyin = sentence.pinyin.count > index ? sentence.pinyin[index] : ""
+                                    let isSelectedWord = index >= store.state.selectedWordStartIndex && index < store.state.selectedWordEndIndex
+                                    VStack {
+                                        Text(character == pinyin ? "" : pinyin)
+                                            .font(.footnote)
+                                            .foregroundStyle(isSelectedWord ? Color.green : Color.primary)
+                                            .opacity(store.state.isShowingPinyin ? 1 : 0)
+                                        Text(character)
+                                            .font(.title)
+                                            .foregroundStyle(isSelectedWord ? Color.green : Color.primary)
+                                            .opacity(store.state.isShowingMandarin ? 1 : 0)
+                                    }
+                                    .onTapGesture {
+                                        for entry in store.state.timestampData {
+                                                let wordStart = entry.textOffset
+                                                let wordEnd = entry.textOffset + entry.wordLength
+                                                if index >= wordStart && index < wordEnd {
+                                                    store.dispatch(.updateSelectedWordIndices(startIndex: wordStart, endIndex: wordEnd))
+                                                    store.dispatch(.defineCharacter(entry.word))
+                                                    let resultEntry = (word: entry.word, time: entry.time)
+                                                    print("Result entry is \(resultEntry)")
+                                                    store.dispatch(.playAudio(time: entry.time))
+                                                }
+                                            }
+                                    }
+                                }
                             }
                             .onTapGesture {
-                                for entry in store.state.timestampData {
-                                        let wordStart = entry.textOffset
-                                        let wordEnd = entry.textOffset + entry.wordLength
-                                        if index >= wordStart && index < wordEnd {
-                                            store.dispatch(.updateSelectedWordIndices(startIndex: wordStart, endIndex: wordEnd))
-                                            store.dispatch(.defineCharacter(entry.word))
-                                            let resultEntry = (word: entry.word, time: entry.time)
-                                            print("Result entry is \(resultEntry)")
-                                            store.dispatch(.playAudio(time: entry.time))
-                                        }
-                                    }
+                                store.dispatch(.updateSentenceIndex(index))
                             }
                         }
                     }

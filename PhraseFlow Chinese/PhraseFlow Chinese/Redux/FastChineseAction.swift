@@ -13,6 +13,7 @@ enum FastChineseAction {
     case updateShowingSettings(isShowing: Bool)
     case updateShowingStoryListView(isShowing: Bool)
     case updateSelectCategory(Category, isSelected: Bool)
+    case updateSentenceIndex(Int)
 
     case selectStory(Story)
     case generateNewStory(categories: [Category])

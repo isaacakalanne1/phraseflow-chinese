@@ -116,6 +116,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .failedToGenerateChapter,
             .failedToGenerateNewPassage:
         newState.viewState = .failedToGenerateChapter
+    case .updateSentenceIndex(let index):
+        newState.sentenceIndex = index
     case .saveStory,
             .failedToSaveStory,
             .failedToLoadStories,
