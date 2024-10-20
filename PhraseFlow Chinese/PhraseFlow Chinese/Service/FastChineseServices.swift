@@ -38,21 +38,9 @@ final class FastChineseServices: FastChineseServicesProtocol {
                   """),
             .init(role: "user",
                   content: """
-        I would like you to create a story overview and summaries of 10 chapters for a deep and thought-provoking Mandarin Chinese novel. The story should begin with an ordinary setting and gradually lead into a complex plot that introduces profound conflicts and challenges. The protagonists should be multi-dimensional, with their own strengths, weaknesses, and secrets. The story should include:
+        I would like you to create a story overview and summaries of 10 chapters for a deep and thought-provoking Mandarin Chinese novel.
 
-            •    Negative Events: Such as betrayal, failure, or sacrifice that span several chapters.
-            •    Emotional Depth: Show the characters’ inner struggles and growth.
-            •    Engaging Plot: Include unexpected twists and suspenseful developments.
-            •    Thematic Exploration: Explore themes like the complexity of human nature, moral dilemmas, personal growth, etc.
-
-        The story should start with two central characters in a specific location or environment. Over the course of the ten chapters:
-
-            •    Three new characters are gradually introduced, one at a time, in different chapters. The introduction of each new character should massively change the story in some way, such as altering the main characters’ goals, introducing significant conflicts, or revealing important secrets.
-            •    The story should also transition through three distinct locations or environments (including the initial one). Each change in setting should have a large impact on the overall narrative, influencing the characters’ development and the direction of the plot.
-
-        The plot should become deep and intense, featuring engaging storylines and complex character relationships. Include significant challenges and conflicts, including negative events that span several chapters and are ultimately resolved in a satisfying way. Incorporate unexpected twists and developments to make the story more engaging.
-
-        Please avoid overly idealized plots and characters. Provide an overall summary of the story, followed by detailed summaries for each chapter, highlighting key plot points and character development.
+        The story should begin with an ordinary setting and gradually lead into a complex plot that introduces profound conflicts and challenges. The plot should become deep and intense.
 
         Include these in the story:
         \(categoryTitles) \(subjects)
@@ -90,38 +78,75 @@ final class FastChineseServices: FastChineseServicesProtocol {
         Do not include any explaining statements before or after the story. Simply write the most amazing, engaging, suspenseful story possible.
         """
 
-        let mainPrompt = """
-        I would like you to create a story overview and summaries of 10 chapters for a deep and thought-provoking Mandarin Chinese novel. The story should begin with an ordinary setting and gradually lead into a complex plot that introduces profound conflicts and challenges. The protagonists should be multi-dimensional, with their own strengths, weaknesses, and secrets. The story should include:
+        let choice = Int.random(in: 0...2)
+        var mainPrompt: String
 
-            •    Negative Events: Such as betrayal, failure, or sacrifice that span several chapters.
-            •    Emotional Depth: Show the characters’ inner struggles and growth.
-            •    Engaging Plot: Include unexpected twists and suspenseful developments.
-            •    Thematic Exploration: Explore themes like the complexity of human nature, moral dilemmas, personal growth, etc.
+        switch choice {
+        case 0:
+            mainPrompt = """
+            You are an experienced novelist skilled in creating engaging and high-quality Mandarin Chinese stories.
 
-        The story should start with two central characters in a specific location or environment. Over the course of the ten chapters:
+            \(story.chapters.count == 0 ? "" : "Below are the previous chapters of the story \"\(story.title)\":")
 
-            •    Three new characters are gradually introduced, one at a time, in different chapters. The introduction of each new character should massively change the story in some way, such as altering the main characters’ goals, introducing significant conflicts, or revealing important secrets.
-            •    The story should also transition through three distinct locations or environments (including the initial one). Each change in setting should have a large impact on the overall narrative, influencing the characters’ development and the direction of the plot.
+            \(story.chapters.reduce("") { $0 + "\n\n" + $1.passage })
 
-        The plot should become deep and intense, featuring engaging storylines and complex character relationships. Include significant challenges and conflicts, including negative events that span several chapters and are ultimately resolved in a satisfying way. Incorporate unexpected twists and developments to make the story more engaging.
+            Please generae the \(story.chapters.count == 0 ? "first" : "next") chapter, ensuring the following:
 
-        Please avoid overly idealized plots and characters. Provide an overall summary of the story, followed by detailed summaries for each chapter, highlighting key plot points and character development.
+            1. **Plot Progression:** Advance the main plot logically and introduce subtle subplots if appropriate.
+            2. **Character Development:** Deepen the characters' personalities, motivations, and relationships.
+            3. **Descriptive Language:** Use vivid descriptions to bring settings and actions to life.
+            4. **Dialogue:** Craft realistic and purposeful dialogue that reveals character traits and advances the story.
+            5. **Pacing:** Maintain a balanced pace, incorporating moments of tension and relief.
+            6. **Cliffhanger:** End the chapter with an intriguing event or question that compels the reader to continue.
 
-        This is the description of the story:
-        \(story.storyOverview)
+            Ensure the writing style is consistent with previous chapters and maintains a captivating narrative flow.
+        """
+        case 1:
+            mainPrompt = """
+        You are a master storyteller known for crafting compelling and high-quality Mandarin Chinese narratives that keep readers hooked.
 
-        This is the story so far:
+        \(story.chapters.count == 0 ? "" : "Given the previous chapters of the story \"\(story.title)\":")
+
         \(story.chapters.reduce("") { $0 + "\n\n" + $1.passage })
 
-        This is the description of each of the chapters:
-        \(story.chapterSummaryList)
+        Please write the \(story.chapters.count == 0 ? "first" : "next") chapter with the following objectives:
 
-        Write chapter \(story.chapters.count + 1). The chapter should be 15-20 lines long.
+        - **Maintain High Quality:** Ensure the prose is polished, with rich descriptions and well-structured sentences.
+        - **Enhance Engagement:** Introduce new developments that deepen the plot and characters.
+        - **Build Suspense:** Incorporate elements that heighten tension and create anticipation for future events.
+        - **Character Interaction:** Focus on meaningful interactions that reveal more about the characters and their dynamics.
+        - **Narrative Hooks:** Include hooks or unresolved issues that encourage the reader to continue to the next chapter.
 
-        Write the story using \(story.difficulty.title) vocabulary. Use only vocabulary for someone that is at this level, considering HSK1 is absolute beginner, like a 5 year old, and HSK5 is an absolute expert, like a PhD student.
-
-        Feel free to use the same words often, in order to help the user learn the Mandarin words better.
+        Make sure the chapter flows seamlessly from the previous ones and upholds the story's overall tone and style.
         """
+        case 2:
+            mainPrompt = """
+        As a seasoned author, you excel at creating high-quality and engaging Mandarin Chinese story chapters.
+
+        \(story.chapters.count == 0 ? "" : "Here are the previous chapters of \"\(story.title)\":")
+
+        \(story.chapters.reduce("") { $0 + "\n\n" + $1.passage })
+
+        For the \(story.chapters.count == 0 ? "first" : "next") chapter, please ensure the following:
+
+        1. **Conflict Introduction:** Introduce a new conflict or escalate an existing one to drive the story forward.
+        2. **Character Arcs:** Show significant development or a turning point for key characters.
+        3. **World-Building:** Expand on the story’s setting with detailed and immersive descriptions.
+        4. **Emotional Depth:** Convey the characters' emotions effectively to connect with the reader.
+        5. **Foreshadowing:** Plant subtle hints about future events or twists.
+        6. **Engaging Ending:** Conclude the chapter with a moment that leaves the reader eager to find out what happens next.
+
+        Maintain consistency in voice and style with the previous chapters to ensure a smooth narrative continuity.
+        """
+        default:
+            mainPrompt = ""
+        }
+
+        mainPrompt.append("""
+                Write the story using \(story.difficulty.title) vocabulary. Use only vocabulary for someone that is at this level, considering HSK1 is absolute beginner, like a 5 year old, and HSK5 is an absolute expert, like a PhD student.
+
+                Feel free to use the same words often, in order to help the user learn the Mandarin words better.
+        """)
 
         let response = try await makeRequest(initialPrompt: initialPrompt, mainPrompt: mainPrompt)
         guard let passage = response.choices.first?.message.content else {
@@ -133,9 +158,10 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
     func generateChapter(from passage: String) async throws -> Chapter {
         let initialPrompt = """
-        You are the greatest Mandarin Chinese storywriter alive, who takes great pleasure in creating Mandarin stories. You write stories to help people learn Mandarin Chinese. You output only the expected story in JSON format, with each sentence split into entries in the list.
+        You are a Mandarin Chinese translator. You output only the expected story in JSON format, with each sentence split into entries in the list.
         You output no explaining text before or after the JSON, only the JSON.
         You output data in the following format: [ { "mandarin": "你好", "pinyin": ["nǐ", "hǎo"], "english": "Hello" }, { "mandarin": "谢谢", "pinyin": ["xiè", "xie"], "english": "Thank you" }, { "mandarin": "再见", "pinyin": ["zài", "jiàn"], "english": "Goodbye" } ]
+        Do not nest JSON statements within each other. Ensure the list only has a depth of 1 JSON object.
         You are a master at pinyin and write the absolute best, most accurate tone markings for the pinyin, based on context, and including all relevant neutral tones.
         Separate each pinyin in the list into their individual sounds. For example, "níanqīng" would be separated into ["nían", "qīng"]
         Include punctuation in the pinyin, to match the Mandarin, such as commas, and full stops. The punctuation should be its own item in the pinyin list, such as ["nǐ", "，"]. Use Mandarin punctuation.

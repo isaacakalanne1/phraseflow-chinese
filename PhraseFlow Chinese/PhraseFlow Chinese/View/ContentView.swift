@@ -50,7 +50,7 @@ struct ContentView: View {
                 .foregroundColor(.white)
                 .cornerRadius(10)
             case .failedToGenerateChapter:
-                Text("Failed to generate story")
+                Text("Failed to generate chapter")
                     .font(.body)
                 Button("Retry") {
                     if let story = store.state.currentStory {
