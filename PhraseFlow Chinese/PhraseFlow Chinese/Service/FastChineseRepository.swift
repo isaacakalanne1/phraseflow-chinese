@@ -14,10 +14,7 @@ enum FastChineseRepositoryError: Error {
 }
 
 protocol FastChineseRepositoryProtocol {
-    func synthesizeSpeech(_ text: String) async throws -> (wordTimestamps: [(word: String,
-                                                                             time: Double,
-                                                                             textOffset: Int,
-                                                                             wordLength: Int)],
+    func synthesizeSpeech(_ text: String) async throws -> (wordTimestamps: [WordTimeStampData],
                                                            audioData: Data)
 }
 
@@ -27,7 +24,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
 
     }
 
-    func synthesizeSpeech(_ text: String) async throws -> (wordTimestamps: [(word: String, time: Double, textOffset: Int, wordLength: Int)], audioData: Data) {
+    func synthesizeSpeech(_ text: String) async throws -> (wordTimestamps: [WordTimeStampData], audioData: Data) {
         // Replace with your subscription key and service region
         let speechKey = "144bc0cdea4d44e499927e84e795b27a"
         let serviceRegion = "eastus"
@@ -46,7 +43,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             let synthesizer = try SPXSpeechSynthesizer(speechConfiguration: speechConfig, audioConfiguration: audioConfig)
 
             // Create an array to hold words, timestamps, and offsets
-            var wordTimestamps: [(word: String, time: Double, textOffset: Int, wordLength: Int)] = []
+            var wordTimestamps: [WordTimeStampData] = []
             let wordTimestampsQueue = DispatchQueue(label: "WordTimestampsQueue")
 
             // Add a handler for the word boundary event
@@ -63,12 +60,18 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
 
                 // Append the word, its timestamp, and offsets to the array
                 wordTimestampsQueue.sync {
-                    wordTimestamps.append((word: word, time: audioTimeInSeconds, textOffset: textOffset, wordLength: wordLength))
+                    wordTimestamps.append(.init(word: word,
+                                                time: audioTimeInSeconds,
+                                                duration: event.duration,
+                                                textOffset: textOffset,
+                                                wordLength: wordLength))
                 }
             }
 
             // Start speech synthesis synchronously
             let result = try synthesizer.speakText(text)
+            // TODO: get audioDuration, then use this to automatically go to next sentence, and play the sentence.
+            // TODO: Update syhtnesize speech to synthesize the current sentence, and the next sentence, at the same time, to allow for smooth playing through the story
 
             // Check the result for cancellation
             if result.reason == SPXResultReason.canceled {

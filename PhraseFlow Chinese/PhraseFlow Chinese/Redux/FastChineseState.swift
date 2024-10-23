@@ -21,6 +21,9 @@ struct FastChineseState {
     var selectedCategories: [Category] = []
     var selectedSubjects: [Subject] = []
 
+    var currentPlaybackTime: TimeInterval = 0
+    var currentPlaybackDuration: TimeInterval = 0
+
     var currentChapter: Chapter? {
         guard let currentStory,
            currentStory.chapters.count > chapterIndex else {
@@ -56,8 +59,5 @@ struct FastChineseState {
     var isShowingEnglish = true
     var isShowingMandarin = true
     var audioPlayer = try? AVAudioPlayer(data: Data())
-    var timestampData: [(word: String,
-                         time: Double,
-                         textOffset: Int,
-                         wordLength: Int)] = []
+    var timestampData: [WordTimeStampData] = []
 }

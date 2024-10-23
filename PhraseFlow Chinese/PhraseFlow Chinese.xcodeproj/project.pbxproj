@@ -43,6 +43,7 @@
 		BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F212CC2769C00A7EF1F /* StoryListView.swift */; };
 		BBE16F242CC2AFC800A7EF1F /* ChapterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */; };
 		BBE16F282CC420FD00A7EF1F /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F272CC420FD00A7EF1F /* ViewState.swift */; };
+		BBE636BF2CC98B2B00873E68 /* WordTimeStampData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +104,7 @@
 		BBE16F212CC2769C00A7EF1F /* StoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListView.swift; sourceTree = "<group>"; };
 		BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterListView.swift; sourceTree = "<group>"; };
 		BBE16F272CC420FD00A7EF1F /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
+		BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTimeStampData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -273,6 +275,7 @@
 				BBE16F1B2CC1317B00A7EF1F /* Category.swift */,
 				BBE16F1D2CC131CB00A7EF1F /* Subject.swift */,
 				BBE16F272CC420FD00A7EF1F /* ViewState.swift */,
+				BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */,
 				BB0854832CB42C0200F1661B /* Chapter.swift in Sources */,
 				BB4EDB072C90C8CA00699E7D /* FastChineseAction.swift in Sources */,
+				BBE636BF2CC98B2B00873E68 /* WordTimeStampData.swift in Sources */,
 				BB08548A2CB68AA200F1661B /* String+Subscript.swift in Sources */,
 				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */,

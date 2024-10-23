@@ -59,22 +59,18 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToSaveStory
         }
-    case .goToNextSentence,
-            .goToPreviousSentence:
-        return nil
-        if let sentence = state.currentSentence {
-            return .synthesizeAudio(sentence)
+    case .synthesizeAudio(let chapter):
+        guard chapter.audioData == nil else {
+            return .playAudio(time: nil)
         }
-        return nil
-    case .synthesizeAudio(let sentence):
         do {
-            let result = try await environment.synthesizeSpeech(for: sentence)
+            let result = try await environment.synthesizeSpeech(for: chapter)
             return .onSynthesizedAudio(result)
         } catch {
             return .failedToPlayAudio
         }
     case .onSynthesizedAudio(let result):
-        return nil
+        return .playAudio(time: nil)
     case .playAudio(let timestamp):
         if let timestamp {
             state.audioPlayer?.currentTime = timestamp

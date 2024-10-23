@@ -35,21 +35,6 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
            !stories.isEmpty {
             newState.currentStory = stories.first
         }
-    case .goToNextSentence:
-        if let chapter = newState.currentChapter,
-           newState.sentenceIndex + 1 < chapter.sentences.count {
-            newState.sentenceIndex = newState.sentenceIndex + 1
-            newState.currentDefinition = nil
-            newState.selectedWordStartIndex = -1
-            newState.selectedWordEndIndex = -1
-        }
-    case .goToPreviousSentence:
-        if newState.sentenceIndex > 0 {
-            newState.sentenceIndex = newState.sentenceIndex - 1
-            newState.currentDefinition = nil
-            newState.selectedWordStartIndex = -1
-            newState.selectedWordEndIndex = -1
-        }
     case .updateSpeechSpeed(let speed):
         newState.speechSpeed = speed
     case .defineCharacter(let character):
@@ -62,7 +47,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         }
     case .onSynthesizedAudio(let data):
         var newStory = newState.currentStory
-        newStory?.chapters[newState.chapterIndex].sentences[newState.sentenceIndex].audioData = data.audioData
+        newStory?.chapters[newState.chapterIndex].audioData = data.audioData
         newState.currentStory = newStory
 
         newState.timestampData = data.wordTimestamps

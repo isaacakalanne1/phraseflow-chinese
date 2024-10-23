@@ -97,6 +97,17 @@ struct ContentView: View {
                                     let character = sentence.mandarin[index]
                                     let pinyin = sentence.pinyin.count > index ? sentence.pinyin[index] : ""
                                     let isSelectedWord = index >= store.state.selectedWordStartIndex && index < store.state.selectedWordEndIndex
+
+                                    var isHighlightedWord = false
+                                    for entry in store.state.timestampData {
+                                        let wordStart = entry.textOffset
+                                        let wordEnd = entry.textOffset + entry.wordLength
+                                        if index >= wordStart && index < wordEnd,
+                                           store.state.currentPlaybackTime >= entry.time && store.state.currentPlaybackTime < entry.time + entry.duration {
+                                            isHighlightedWord = true
+                                        }
+                                    }
+
                                     VStack {
                                         Text(character == pinyin ? "" : pinyin)
                                             .font(.footnote)
@@ -110,19 +121,19 @@ struct ContentView: View {
                                     .onTapGesture {
                                         store.dispatch(.updateSentenceIndex(sentenceIndex))
                                         for entry in store.state.timestampData {
-                                                let wordStart = entry.textOffset
-                                                let wordEnd = entry.textOffset + entry.wordLength
-                                                if index >= wordStart && index < wordEnd {
-                                                    store.dispatch(.updateSelectedWordIndices(startIndex: wordStart, endIndex: wordEnd))
-                                                    store.dispatch(.defineCharacter(entry.word))
-                                                    let resultEntry = (word: entry.word, time: entry.time)
-                                                    print("Result entry is \(resultEntry)")
-                                                    store.dispatch(.playAudio(time: entry.time))
-                                                }
+                                            let wordStart = entry.textOffset
+                                            let wordEnd = entry.textOffset + entry.wordLength
+                                            if index >= wordStart && index < wordEnd {
+                                                store.dispatch(.updateSelectedWordIndices(startIndex: wordStart, endIndex: wordEnd))
+                                                store.dispatch(.defineCharacter(entry.word))
+                                                let resultEntry = (word: entry.word, time: entry.time)
+                                                print("Result entry is \(resultEntry)")
+                                                store.dispatch(.playAudio(time: entry.time))
                                             }
+                                        }
                                     }
+                                    .background(isHighlightedWord ? Color.gray : Color.white)
                                 }
-                                .background(isSelectedSentence ? Color.gray : Color.white)
                             }
                         }
                     }
@@ -143,7 +154,7 @@ struct ContentView: View {
                                 if sentence.audioData != nil {
                                     store.dispatch(.playAudio(time: nil))
                                 } else {
-                                    store.dispatch(.synthesizeAudio(sentence))
+                                    store.dispatch(.synthesizeAudio(chapter))
                                 }
                             }
                         }) {

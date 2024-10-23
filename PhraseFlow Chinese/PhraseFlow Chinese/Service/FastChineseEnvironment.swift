@@ -11,10 +11,7 @@ protocol FastChineseEnvironmentProtocol {
     var service: FastChineseServicesProtocol { get }
     var dataStore: FastChineseDataStoreProtocol { get }
 
-    func synthesizeSpeech(for sentence: Sentence) async throws -> (wordTimestamps: [(word: String,
-                                                                                     time: Double,
-                                                                                     textOffset: Int,
-                                                                                     wordLength: Int)],
+    func synthesizeSpeech(for chapter: Chapter) async throws -> (wordTimestamps: [WordTimeStampData],
                                                                    audioData: Data)
     func generateStory(categories: [Category]) async throws -> Story
     func generatePassage(using story: Story) async throws -> String
@@ -38,12 +35,9 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
         self.repository = FastChineseRepository()
     }
 
-    func synthesizeSpeech(for sentence: Sentence) async throws -> (wordTimestamps: [(word: String,
-                                                                                     time: Double,
-                                                                                     textOffset: Int,
-                                                                                     wordLength: Int)],
+    func synthesizeSpeech(for chapter: Chapter) async throws -> (wordTimestamps: [WordTimeStampData],
                                                                    audioData: Data) {
-        try await repository.synthesizeSpeech(sentence.mandarin)
+        try await repository.synthesizeSpeech(chapter.passage)
     }
 
     func generateStory(categories: [Category]) async throws -> Story {
