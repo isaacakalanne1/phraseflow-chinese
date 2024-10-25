@@ -40,27 +40,16 @@ struct ContentView: View {
                 Text("Writing new chapter...")
                     .font(.body)
             case .failedToGenerateStory:
-                Text("Failed to generate story")
-                    .font(.body)
-                Button("Retry") {
-                    store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
-                }
-                .padding()
-                .background(Color.accentColor)
-                .foregroundColor(.white)
-                .cornerRadius(10)
+                ErrorView(title: "Failed to generate story",
+                          buttonTitle: "Retry",
+                          buttonAction: store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
             case .failedToGenerateChapter:
-                Text("Failed to generate chapter")
-                    .font(.body)
-                Button("Retry") {
+                ErrorView(title: "Failed to generate chapter",
+                          buttonTitle: "Retry") {
                     if let story = store.state.currentStory {
                         store.dispatch(.generateNewPassage(story: story))
                     }
                 }
-                .padding()
-                .background(Color.accentColor)
-                .foregroundColor(.white)
-                .cornerRadius(10)
             case .normal:
                 if store.state.currentStory == nil {
                     Button("Create Story") {
@@ -70,132 +59,8 @@ struct ContentView: View {
                     .background(Color.accentColor)
                     .foregroundColor(.white)
                     .cornerRadius(10)
-                } else if let story = store.state.currentStory,
-                          let chapter = store.state.currentChapter,
-                          let currentSentence = store.state.currentSentence {
-                    ScrollView(.vertical) {
-                        Text(store.state.currentDefinition?.definition ?? "")
-                            .font(.body)
-                            .padding(.top)
-                    }
-                    .frame(height: 200)
-
-                    ScrollView(.vertical) {
-                        Text(currentSentence.english)
-                            .font(.title3)
-                            .foregroundColor(.gray)
-                            .opacity(store.state.isShowingEnglish ? 1 : 0)
-                    }
-                    .frame(height: 100)
-
-                    ScrollView(.vertical) {
-                        let currentSpokenWord = store.state.timestampData.first(where: { store.state.currentPlaybackTime >= $0.time })
-                        let wordStart = currentSpokenWord?.textOffset ?? -1
-                        let wordEnd = (currentSpokenWord?.textOffset ?? -1) + (currentSpokenWord?.wordLength ?? -1)
-
-                        ForEach(Array(chapter.sentences.enumerated()), id: \.element) { (sentenceIndex, sentence) in
-                            let isSelectedSentence = store.state.sentenceIndex == sentenceIndex
-                            let columns = Array(repeating: GridItem(.flexible(minimum: 30, maximum: 50), spacing: 0), count: 10)
-                            LazyVGrid(columns: columns, spacing: 0) {
-                                ForEach(Array(sentence.mandarin.enumerated()), id: \.offset) { index, element in
-                                    let character = sentence.mandarin[index]
-                                    let pinyin = sentence.pinyin.count > index ? sentence.pinyin[index] : ""
-                                    let isHighlightedWord = (index >= wordStart) && (index < wordEnd)
-
-                                    VStack {
-                                        Text(character == pinyin ? "" : pinyin)
-                                            .font(.footnote)
-//                                            .foregroundStyle(isSelectedWord && isSelectedSentence ? Color.green : Color.primary)
-                                            .opacity(store.state.isShowingPinyin ? 1 : 0)
-                                        Text(character)
-                                            .font(.title)
-//                                            .foregroundStyle(isSelectedWord && isSelectedSentence ? Color.green : Color.primary)
-                                            .opacity(store.state.isShowingMandarin ? 1 : 0)
-                                    }
-                                    .onTapGesture {
-                                        store.dispatch(.updateSentenceIndex(sentenceIndex))
-                                        for entry in store.state.timestampData {
-                                            let wordStart = entry.textOffset
-                                            let wordEnd = entry.textOffset + entry.wordLength
-                                            if index >= wordStart && index < wordEnd {
-                                                store.dispatch(.updateSelectedWordIndices(startIndex: wordStart, endIndex: wordEnd))
-                                                store.dispatch(.defineCharacter(entry.word))
-                                                let resultEntry = (word: entry.word, time: entry.time)
-                                                print("Result entry is \(resultEntry)")
-                                                store.dispatch(.playAudio(time: entry.time))
-                                            }
-                                        }
-                                    }
-                                    .background(isHighlightedWord ? Color.gray : Color.white)
-                                }
-                            }
-                        }
-                    }
-
-                    Spacer()
-
-                    HStack {
-                        Button(action: {
-                            store.dispatch(.goToPreviousSentence)
-                        }) {
-                            Image(systemName: "arrow.left.circle.fill")
-                        }
-
-                        Spacer()
-
-                        Button(action: {
-                            if let sentence = store.state.currentSentence {
-                                if sentence.audioData != nil {
-                                    store.dispatch(.playAudio(time: nil))
-                                } else {
-                                    store.dispatch(.synthesizeAudio(chapter))
-                                }
-                            }
-                        }) {
-                            Image(systemName: "play.circle.fill")
-                        }
-
-                        Spacer()
-
-                        Button(action: {
-                            store.dispatch(store.state.isLastSentence ? .generateNewPassage(story: story) : .goToNextSentence)
-                        }) {
-                            Image(systemName: store.state.isLastSentence ? "plus.circle.fill" : "arrow.right.circle.fill")
-                        }
-                    }
-                    .font(.system(size: 50))
-                    .padding(.horizontal)
-
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            store.dispatch(.updateShowPinyin(!store.state.isShowingPinyin))
-                        }) {
-                            Image(systemName: store.state.isShowingPinyin ? "s.circle.fill" : "strikethrough")
-                                .frame(width: 50, height: 50)
-                        }
-
-                        Button {
-                            store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
-                        } label: {
-                            Image(systemName: "plus.rectangle.fill.on.rectangle.fill")
-                        }
-
-                        Button {
-                            store.dispatch(.updateShowingStoryListView(isShowing: true))
-                        } label: {
-                            Image(systemName: "list.bullet.rectangle.portrait.fill")
-                        }
-
-                        Button(action: {
-                            store.dispatch(.updateShowingSettings(isShowing: true))
-                        }) {
-                            Image(systemName: "gearshape.fill")
-                        }
-                        Spacer()
-                    }
-                    .font(.system(size: 50))
-                    .padding(.horizontal)
+                } else if let chapter = store.state.currentChapter {
+                    ReaderView(chapter: chapter)
                 }
             }
         }

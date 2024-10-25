@@ -44,6 +44,13 @@
 		BBE16F242CC2AFC800A7EF1F /* ChapterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */; };
 		BBE16F282CC420FD00A7EF1F /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F272CC420FD00A7EF1F /* ViewState.swift */; };
 		BBE636BF2CC98B2B00873E68 /* WordTimeStampData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */; };
+		BBE636C12CCC0B5000873E68 /* ActionButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636C02CCC0B5000873E68 /* ActionButtonsView.swift */; };
+		BBE636C32CCC0BE900873E68 /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636C22CCC0BE900873E68 /* CharacterView.swift */; };
+		BBE636C52CCC0CDD00873E68 /* DefinitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636C42CCC0CDD00873E68 /* DefinitionView.swift */; };
+		BBE636C72CCC0E1200873E68 /* EnglishSentenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636C62CCC0E1200873E68 /* EnglishSentenceView.swift */; };
+		BBE636C92CCC0E8400873E68 /* ChapterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636C82CCC0E8400873E68 /* ChapterView.swift */; };
+		BBE636CB2CCC0EEF00873E68 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636CA2CCC0EEF00873E68 /* ErrorView.swift */; };
+		BBE636CD2CCC0F8500873E68 /* ReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636CC2CCC0F8500873E68 /* ReaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +112,13 @@
 		BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterListView.swift; sourceTree = "<group>"; };
 		BBE16F272CC420FD00A7EF1F /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTimeStampData.swift; sourceTree = "<group>"; };
+		BBE636C02CCC0B5000873E68 /* ActionButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonsView.swift; sourceTree = "<group>"; };
+		BBE636C22CCC0BE900873E68 /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterView.swift; sourceTree = "<group>"; };
+		BBE636C42CCC0CDD00873E68 /* DefinitionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionView.swift; sourceTree = "<group>"; };
+		BBE636C62CCC0E1200873E68 /* EnglishSentenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishSentenceView.swift; sourceTree = "<group>"; };
+		BBE636C82CCC0E8400873E68 /* ChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterView.swift; sourceTree = "<group>"; };
+		BBE636CA2CCC0EEF00873E68 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		BBE636CC2CCC0F8500873E68 /* ReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +298,13 @@
 			isa = PBXGroup;
 			children = (
 				BBB6EF282C8C86240079D135 /* ContentView.swift */,
+				BBE636CA2CCC0EEF00873E68 /* ErrorView.swift */,
+				BBE636C42CCC0CDD00873E68 /* DefinitionView.swift */,
+				BBE636C62CCC0E1200873E68 /* EnglishSentenceView.swift */,
+				BBE636C82CCC0E8400873E68 /* ChapterView.swift */,
+				BBE636CC2CCC0F8500873E68 /* ReaderView.swift */,
+				BBE636C02CCC0B5000873E68 /* ActionButtonsView.swift */,
+				BBE636C22CCC0BE900873E68 /* CharacterView.swift */,
 				BB4EDB232C91902100699E7D /* SettingsView.swift */,
 				BBE16F212CC2769C00A7EF1F /* StoryListView.swift */,
 				BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */,
@@ -482,11 +503,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBE636C52CCC0CDD00873E68 /* DefinitionView.swift in Sources */,
 				BBE16F1A2CC1314400A7EF1F /* CreateStoryView.swift in Sources */,
 				BB4EDB1F2C90F3A800699E7D /* String+Normalize.swift in Sources */,
 				BBE16F282CC420FD00A7EF1F /* ViewState.swift in Sources */,
 				BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */,
+				BBE636C12CCC0B5000873E68 /* ActionButtonsView.swift in Sources */,
 				BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */,
+				BBE636CB2CCC0EEF00873E68 /* ErrorView.swift in Sources */,
 				BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */,
 				BB0854832CB42C0200F1661B /* Chapter.swift in Sources */,
 				BB4EDB072C90C8CA00699E7D /* FastChineseAction.swift in Sources */,
@@ -494,15 +518,18 @@
 				BB08548A2CB68AA200F1661B /* String+Subscript.swift in Sources */,
 				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */,
+				BBE636C72CCC0E1200873E68 /* EnglishSentenceView.swift in Sources */,
 				BB4EDB1D2C90DFDD00699E7D /* FastChineseRepository.swift in Sources */,
 				BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */,
 				BB4EDB222C90F81000699E7D /* DefineCharacterRequest.swift in Sources */,
 				BB4EDB0E2C90CA0300699E7D /* FastChineseMiddleware.swift in Sources */,
 				BB4EDB102C90CA4900699E7D /* FastChineseSubscriber.swift in Sources */,
+				BBE636CD2CCC0F8500873E68 /* ReaderView.swift in Sources */,
 				BBE16F1E2CC131CB00A7EF1F /* Subject.swift in Sources */,
 				BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */,
 				BBE16F1C2CC1317B00A7EF1F /* Category.swift in Sources */,
 				BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */,
+				BBE636C32CCC0BE900873E68 /* CharacterView.swift in Sources */,
 				BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */,
 				BB4EDB0C2C90C9A100699E7D /* FastChineseReducer.swift in Sources */,
 				BB4EDB0A2C90C8F100699E7D /* FastChineseEnvironment.swift in Sources */,
@@ -512,6 +539,7 @@
 				BB4EDB172C90D20300699E7D /* FastChineseServices.swift in Sources */,
 				BB4EDB052C90C89C00699E7D /* FastChineseState.swift in Sources */,
 				BB0854852CB42C1400F1661B /* Story.swift in Sources */,
+				BBE636C92CCC0E8400873E68 /* ChapterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
