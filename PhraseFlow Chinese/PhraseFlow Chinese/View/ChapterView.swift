@@ -29,7 +29,7 @@ struct ChapterView: View {
                         let character = sentence.mandarin[characterIndex]
                         let pinyin = sentence.pinyin.count > characterIndex ? sentence.pinyin[characterIndex] : ""
                         CharacterView(currentSpokenWord: currentSpokenWord,
-                                      isHighlighted: sentenceIndex == selectedSentenceIndex && (characterIndex == selectedCharacterIndex || characterIndex == selectedCharacterIndex + (currentSpokenWord?.wordLength ?? 1) - 1),
+                                      isHighlighted: sentenceIndex == selectedSentenceIndex && (characterIndex >= selectedCharacterIndex && characterIndex < selectedCharacterIndex + (currentSpokenWord?.wordLength ?? 1)),
                                       character: character,
                                       pinyin: pinyin)
                     }
