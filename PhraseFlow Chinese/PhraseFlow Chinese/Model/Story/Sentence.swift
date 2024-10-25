@@ -7,8 +7,7 @@
 
 import Foundation
 
-struct Sentence: Identifiable, Codable, Equatable, Hashable {
-    var id = UUID() // Use a UUID for easy identification
+struct Sentence: Codable, Equatable, Hashable {
     let mandarin: String
     let pinyin: [String]
     let english: String

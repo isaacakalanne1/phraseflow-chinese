@@ -89,33 +89,27 @@ struct ContentView: View {
                     .frame(height: 100)
 
                     ScrollView(.vertical) {
-                        ForEach(Array(chapter.sentences.enumerated()), id: \.offset) { sentenceIndex, sentence in
+                        let currentSpokenWord = store.state.timestampData.first(where: { store.state.currentPlaybackTime >= $0.time })
+                        let wordStart = currentSpokenWord?.textOffset ?? -1
+                        let wordEnd = (currentSpokenWord?.textOffset ?? -1) + (currentSpokenWord?.wordLength ?? -1)
+
+                        ForEach(Array(chapter.sentences.enumerated()), id: \.element) { (sentenceIndex, sentence) in
                             let isSelectedSentence = store.state.sentenceIndex == sentenceIndex
                             let columns = Array(repeating: GridItem(.flexible(minimum: 30, maximum: 50), spacing: 0), count: 10)
                             LazyVGrid(columns: columns, spacing: 0) {
                                 ForEach(Array(sentence.mandarin.enumerated()), id: \.offset) { index, element in
                                     let character = sentence.mandarin[index]
                                     let pinyin = sentence.pinyin.count > index ? sentence.pinyin[index] : ""
-                                    let isSelectedWord = index >= store.state.selectedWordStartIndex && index < store.state.selectedWordEndIndex
-
-                                    var isHighlightedWord = false
-                                    for entry in store.state.timestampData {
-                                        let wordStart = entry.textOffset
-                                        let wordEnd = entry.textOffset + entry.wordLength
-                                        if index >= wordStart && index < wordEnd,
-                                           store.state.currentPlaybackTime >= entry.time && store.state.currentPlaybackTime < entry.time + entry.duration {
-                                            isHighlightedWord = true
-                                        }
-                                    }
+                                    let isHighlightedWord = (index >= wordStart) && (index < wordEnd)
 
                                     VStack {
                                         Text(character == pinyin ? "" : pinyin)
                                             .font(.footnote)
-                                            .foregroundStyle(isSelectedWord && isSelectedSentence ? Color.green : Color.primary)
+//                                            .foregroundStyle(isSelectedWord && isSelectedSentence ? Color.green : Color.primary)
                                             .opacity(store.state.isShowingPinyin ? 1 : 0)
                                         Text(character)
                                             .font(.title)
-                                            .foregroundStyle(isSelectedWord && isSelectedSentence ? Color.green : Color.primary)
+//                                            .foregroundStyle(isSelectedWord && isSelectedSentence ? Color.green : Color.primary)
                                             .opacity(store.state.isShowingMandarin ? 1 : 0)
                                     }
                                     .onTapGesture {
@@ -221,9 +215,9 @@ struct ContentView: View {
             let verticalAmount = value.translation.height
 
             if horizontalAmount > 50 {
-                store.dispatch(.goToPreviousSentence)
+//                store.dispatch(.goToPreviousSentence)
             } else if horizontalAmount < -50 {
-                store.dispatch(.goToNextSentence)
+//                store.dispatch(.goToNextSentence)
             }
         })
     }
