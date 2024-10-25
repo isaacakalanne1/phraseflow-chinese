@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ActionButtonsView: View {
     @EnvironmentObject var store: FastChineseStore
+    let chapter: Chapter
 
     var body: some View {
         HStack {
@@ -16,13 +17,13 @@ struct ActionButtonsView: View {
             Button(action: {
                 if let sentence = store.state.currentSentence {
                     if sentence.audioData != nil {
-                        store.dispatch(.playAudio(time: nil))
+                        store.dispatch(store.state.isPlaying ? .pauseAudio : .playAudio(time: nil))
                     } else {
                         store.dispatch(.synthesizeAudio(chapter))
                     }
                 }
             }) {
-                Image(systemName: "play.circle.fill")
+                Image(systemName: store.state.isPlaying ? "pause.circle.fill" : "play.circle.fill")
             }
 
             Spacer()

@@ -19,7 +19,12 @@ struct ChapterView: View {
                                          count: 10),
                           spacing: 0) {
                     ForEach(Array(sentence.mandarin.enumerated()), id: \.offset) { index, element in
-                        CharacterView(index: index)
+                        let character = sentence.mandarin[index]
+                        let pinyin = sentence.pinyin.count > index ? sentence.pinyin[index] : ""
+                        CharacterView(characterIndex: index,
+                                      sentenceIndex: sentenceIndex,
+                                      character: character,
+                                      pinyin: pinyin)
                     }
                 }
             }

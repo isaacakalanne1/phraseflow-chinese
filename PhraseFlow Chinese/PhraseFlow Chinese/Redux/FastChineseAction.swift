@@ -40,6 +40,7 @@ enum FastChineseAction {
     case onSynthesizedAudio((wordTimestamps: [WordTimeStampData],
                              audioData: Data))
     case playAudio(time: Double?)
+    case pauseAudio
     case onPlayedAudio
     case failedToPlayAudio
 

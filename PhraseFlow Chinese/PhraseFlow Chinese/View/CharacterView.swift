@@ -9,17 +9,17 @@ import SwiftUI
 
 struct CharacterView: View {
     @EnvironmentObject var store: FastChineseStore
-    let index: Int
+    let characterIndex: Int
+    let sentenceIndex: Int
+    let character: String
+    let pinyin: String
 
     var body: some View {
 
         let currentSpokenWord = store.state.timestampData.first(where: { store.state.currentPlaybackTime >= $0.time })
         let wordStart = currentSpokenWord?.textOffset ?? -1
         let wordEnd = (currentSpokenWord?.textOffset ?? -1) + (currentSpokenWord?.wordLength ?? -1)
-
-        let character = sentence.mandarin[index]
-        let pinyin = sentence.pinyin.count > index ? sentence.pinyin[index] : ""
-        let isHighlightedWord = (index >= wordStart) && (index < wordEnd)
+        let isHighlightedWord = (characterIndex >= wordStart) && (characterIndex < wordEnd)
 
         VStack {
             Text(character == pinyin ? "" : pinyin)
@@ -36,7 +36,7 @@ struct CharacterView: View {
             for entry in store.state.timestampData {
                 let wordStart = entry.textOffset
                 let wordEnd = entry.textOffset + entry.wordLength
-                if index >= wordStart && index < wordEnd {
+                if characterIndex >= wordStart && characterIndex < wordEnd {
                     store.dispatch(.updateSelectedWordIndices(startIndex: wordStart, endIndex: wordEnd))
                     store.dispatch(.defineCharacter(entry.word))
                     let resultEntry = (word: entry.word, time: entry.time)

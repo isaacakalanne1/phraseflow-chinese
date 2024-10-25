@@ -77,6 +77,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
         state.audioPlayer?.play()
         return nil
+    case .pauseAudio:
+        state.audioPlayer?.pause()
+        return nil
     case .defineCharacter(let string):
         do {
             guard let mandarinSentence = state.currentSentence?.mandarin else {

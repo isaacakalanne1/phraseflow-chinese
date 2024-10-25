@@ -41,8 +41,9 @@ struct ContentView: View {
                     .font(.body)
             case .failedToGenerateStory:
                 ErrorView(title: "Failed to generate story",
-                          buttonTitle: "Retry",
-                          buttonAction: store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
+                          buttonTitle: "Retry") {
+                    store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
+                }
             case .failedToGenerateChapter:
                 ErrorView(title: "Failed to generate chapter",
                           buttonTitle: "Retry") {

@@ -18,7 +18,7 @@ struct ReaderView: View {
                 .frame(height: 100)
             ChapterView(chapter: chapter)
             Spacer()
-            ActionButtonsView()
+            ActionButtonsView(chapter: chapter)
                 .padding(.horizontal)
         }
     }
