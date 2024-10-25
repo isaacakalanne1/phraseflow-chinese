@@ -9,14 +9,13 @@ import SwiftUI
 
 struct CharacterView: View {
     @EnvironmentObject var store: FastChineseStore
+    let currentSpokenWord: WordTimeStampData?
     let characterIndex: Int
     let sentenceIndex: Int
     let character: String
     let pinyin: String
 
     var body: some View {
-
-        let currentSpokenWord = store.state.timestampData.last(where: { store.state.currentPlaybackTime >= $0.time })
         let wordStart = currentSpokenWord?.textOffset ?? -1
         let wordEnd = (currentSpokenWord?.textOffset ?? -1) + (currentSpokenWord?.wordLength ?? -1)
         let isHighlightedWord = (characterIndex >= wordStart) && (characterIndex < wordEnd)
