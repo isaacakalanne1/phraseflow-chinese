@@ -43,6 +43,7 @@ enum FastChineseAction {
     case pauseAudio
     case onPlayedAudio
     case failedToPlayAudio
+    case incrementPlayTime(Double)
 
     case defineCharacter(String)
     case onDefinedCharacter(String)

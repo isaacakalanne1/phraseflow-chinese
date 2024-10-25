@@ -16,7 +16,7 @@ struct CharacterView: View {
 
     var body: some View {
 
-        let currentSpokenWord = store.state.timestampData.first(where: { store.state.currentPlaybackTime >= $0.time })
+        let currentSpokenWord = store.state.timestampData.last(where: { store.state.currentPlaybackTime >= $0.time })
         let wordStart = currentSpokenWord?.textOffset ?? -1
         let wordEnd = (currentSpokenWord?.textOffset ?? -1) + (currentSpokenWord?.wordLength ?? -1)
         let isHighlightedWord = (characterIndex >= wordStart) && (characterIndex < wordEnd)

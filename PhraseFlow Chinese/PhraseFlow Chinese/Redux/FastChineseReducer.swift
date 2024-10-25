@@ -107,6 +107,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.isPlayingAudio = true
     case .pauseAudio:
         newState.isPlayingAudio = false
+    case .incrementPlayTime(let increment):
+        newState.currentPlaybackTime += increment
     case .saveStory,
             .failedToSaveStory,
             .failedToLoadStories,

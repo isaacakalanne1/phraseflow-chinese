@@ -12,6 +12,9 @@ struct ActionButtonsView: View {
     let chapter: Chapter
 
     var body: some View {
+        let increment: Double = 0.1
+        var playbackTimer: Timer?
+
         HStack {
             Spacer()
 
@@ -19,17 +22,21 @@ struct ActionButtonsView: View {
                 Button(action: {
                     store.dispatch(.synthesizeAudio(chapter))
                 }) {
-                    Image(systemName: "play.circle.fill")
+                    Text("Load\nAudio")
                 }
             } else {
                 if store.state.isPlayingAudio {
                     Button(action: {
                         store.dispatch(.pauseAudio)
+                        playbackTimer?.invalidate()
                     }) {
                         Image(systemName: "pause.circle.fill")
                     }
                 } else {
                     Button(action: {
+                        playbackTimer = Timer.scheduledTimer(withTimeInterval: increment, repeats: true) { timer in
+                            store.dispatch(.incrementPlayTime(increment))
+                        }
                         store.dispatch(.playAudio(time: nil))
                     }) {
                         Image(systemName: "play.circle.fill")

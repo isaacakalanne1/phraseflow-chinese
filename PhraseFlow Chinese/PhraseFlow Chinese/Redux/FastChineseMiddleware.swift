@@ -70,7 +70,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .failedToPlayAudio
         }
     case .onSynthesizedAudio(let result):
-        return .playAudio(time: nil)
+        return nil
+//        return .playAudio(time: nil)
     case .playAudio(let timestamp):
         if let timestamp {
             state.audioPlayer?.currentTime = timestamp
@@ -115,7 +116,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .updateSelectedWordIndices,
             .clearSelectedWord,
             .failedToGenerateChapter,
-            .updateSentenceIndex:
+            .updateSentenceIndex,
+            .incrementPlayTime:
         return nil
     }
 }
