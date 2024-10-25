@@ -57,4 +57,5 @@ enum FastChineseAction {
     case clearSelectedWord
 
     case updateSpeechSpeed(SpeechSpeed)
+    case selectWord(WordTimeStampData)
 }

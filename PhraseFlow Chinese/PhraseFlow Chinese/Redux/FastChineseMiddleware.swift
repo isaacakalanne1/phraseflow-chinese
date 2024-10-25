@@ -97,6 +97,10 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
     case .selectStory,
             .selectChapter:
         return .updateShowingStoryListView(isShowing: false)
+    case .selectWord(let timestampData):
+        state.audioPlayer?.currentTime = timestampData.time
+        state.audioPlayer?.play()
+        return nil
     case .failedToGenerateNewStory,
             .failedToGenerateNewPassage,
             .failedToLoadStories,
