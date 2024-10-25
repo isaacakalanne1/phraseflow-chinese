@@ -40,7 +40,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             let audioConfig = SPXAudioConfiguration()
 
             // Create a speech synthesizer
-            let synthesizer = try SPXSpeechSynthesizer(speechConfiguration: speechConfig, audioConfiguration: audioConfig)
+            let synthesizer = try SPXSpeechSynthesizer(speechConfiguration: speechConfig, audioConfiguration: nil)
 
             // Create an array to hold words, timestamps, and offsets
             var wordTimestamps: [WordTimeStampData] = []

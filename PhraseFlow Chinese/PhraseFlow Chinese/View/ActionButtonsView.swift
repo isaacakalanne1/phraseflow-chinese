@@ -15,15 +15,15 @@ struct ActionButtonsView: View {
         HStack {
             Spacer()
             Button(action: {
-                if let sentence = store.state.currentSentence {
-                    if sentence.audioData != nil {
-                        store.dispatch(store.state.isPlaying ? .pauseAudio : .playAudio(time: nil))
+                if let chapter = store.state.currentChapter {
+                    if chapter.audioData != nil {
+                        store.dispatch(store.state.isPlayingAudio ? .pauseAudio : .playAudio(time: nil))
                     } else {
                         store.dispatch(.synthesizeAudio(chapter))
                     }
                 }
             }) {
-                Image(systemName: store.state.isPlaying ? "pause.circle.fill" : "play.circle.fill")
+                Image(systemName: store.state.isPlayingAudio ? "pause.circle.fill" : "play.circle.fill")
             }
 
             Spacer()

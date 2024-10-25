@@ -103,11 +103,13 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.viewState = .failedToGenerateChapter
     case .updateSentenceIndex(let index):
         newState.sentenceIndex = index
+    case .playAudio:
+        newState.isPlayingAudio = true
+    case .pauseAudio:
+        newState.isPlayingAudio = false
     case .saveStory,
             .failedToSaveStory,
             .failedToLoadStories,
-            .playAudio,
-            .pauseAudio,
             .failedToPlayAudio,
             .failedToDefineCharacter,
             .loadStories,

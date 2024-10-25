@@ -61,7 +61,5 @@ struct FastChineseState {
     var audioPlayer = try? AVAudioPlayer(data: Data())
     var timestampData: [WordTimeStampData] = []
 
-    var isPlaying: Bool {
-        audioPlayer?.isPlaying ?? false
-    }
+    var isPlayingAudio = false
 }

@@ -12,16 +12,12 @@ struct Sentence: Codable, Equatable, Hashable {
     let pinyin: [String]
     let english: String
 
-    var audioData: Data? = nil
-
     // Custom decoder to assign default values
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.mandarin = try container.decode(String.self, forKey: .mandarin)
         self.pinyin = try container.decode([String].self, forKey: .pinyin)
         self.english = try container.decode(String.self, forKey: .english)
-
-        self.audioData = nil
     }
 
     init(mandarin: String,
