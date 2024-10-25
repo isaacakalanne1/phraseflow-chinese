@@ -10,15 +10,13 @@ import SwiftUI
 struct CharacterView: View {
     @EnvironmentObject var store: FastChineseStore
     let currentSpokenWord: WordTimeStampData?
-    let characterIndex: Int
-    let sentenceIndex: Int
+    let isHighlighted: Bool
     let character: String
     let pinyin: String
 
     var body: some View {
         let wordStart = currentSpokenWord?.textOffset ?? -1
         let wordEnd = (currentSpokenWord?.textOffset ?? -1) + (currentSpokenWord?.wordLength ?? -1)
-        let isHighlightedWord = (characterIndex >= wordStart) && (characterIndex < wordEnd)
 
         VStack {
             Text(character == pinyin ? "" : pinyin)
@@ -31,19 +29,19 @@ struct CharacterView: View {
                 .opacity(store.state.isShowingMandarin ? 1 : 0)
         }
         .onTapGesture {
-            store.dispatch(.updateSentenceIndex(sentenceIndex))
-            for entry in store.state.timestampData {
-                let wordStart = entry.textOffset
-                let wordEnd = entry.textOffset + entry.wordLength
-                if characterIndex >= wordStart && characterIndex < wordEnd {
-                    store.dispatch(.updateSelectedWordIndices(startIndex: wordStart, endIndex: wordEnd))
-                    store.dispatch(.defineCharacter(entry.word))
-                    let resultEntry = (word: entry.word, time: entry.time)
-                    print("Result entry is \(resultEntry)")
-                    store.dispatch(.playAudio(time: entry.time))
-                }
-            }
+//            store.dispatch(.updateSentenceIndex(sentenceIndex))
+//            for entry in store.state.timestampData {
+//                let wordStart = entry.textOffset
+//                let wordEnd = entry.textOffset + entry.wordLength
+//                if characterIndex >= wordStart && characterIndex < wordEnd {
+//                    store.dispatch(.updateSelectedWordIndices(startIndex: wordStart, endIndex: wordEnd))
+//                    store.dispatch(.defineCharacter(entry.word))
+//                    let resultEntry = (word: entry.word, time: entry.time)
+//                    print("Result entry is \(resultEntry)")
+//                    store.dispatch(.playAudio(time: entry.time))
+//                }
+//            }
         }
-        .background(isHighlightedWord ? Color.gray : Color.white)
+        .background(isHighlighted ? Color.gray : Color.white)
     }
 }

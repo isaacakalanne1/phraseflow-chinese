@@ -27,8 +27,9 @@ struct ActionButtonsView: View {
             } else {
                 if store.state.isPlayingAudio {
                     Button(action: {
-                        store.dispatch(.pauseAudio)
                         playbackTimer?.invalidate()
+                        playbackTimer = nil
+                        store.dispatch(.pauseAudio)
                     }) {
                         Image(systemName: "pause.circle.fill")
                     }
