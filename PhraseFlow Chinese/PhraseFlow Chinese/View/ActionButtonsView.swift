@@ -14,19 +14,29 @@ struct ActionButtonsView: View {
     var body: some View {
         HStack {
             Spacer()
-            Button(action: {
-                if let chapter = store.state.currentChapter {
-                    if chapter.audioData != nil {
-                        store.dispatch(store.state.isPlayingAudio ? .pauseAudio : .playAudio(time: nil))
-                    } else {
-                        store.dispatch(.synthesizeAudio(chapter))
+
+            if chapter.audioData == nil {
+                Button(action: {
+                    store.dispatch(.synthesizeAudio(chapter))
+                }) {
+                    Image(systemName: "play.circle.fill")
+                }
+            } else {
+                if store.state.isPlayingAudio {
+                    Button(action: {
+                        store.dispatch(.pauseAudio)
+                    }) {
+                        Image(systemName: "pause.circle.fill")
+                    }
+                } else {
+                    Button(action: {
+                        store.dispatch(.playAudio(time: nil))
+                    }) {
+                        Image(systemName: "play.circle.fill")
                     }
                 }
-            }) {
-                Image(systemName: store.state.isPlayingAudio ? "pause.circle.fill" : "play.circle.fill")
             }
 
-            Spacer()
             Button(action: {
                 store.dispatch(.updateShowPinyin(!store.state.isShowingPinyin))
             }) {
