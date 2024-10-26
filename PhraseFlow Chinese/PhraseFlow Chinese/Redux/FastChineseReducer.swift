@@ -31,10 +31,16 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.viewState = .normal
     case .onLoadedStories(let stories):
         newState.savedStories = stories
+        let currentStory = stories.first
         if newState.currentStory == nil,
            !stories.isEmpty {
-            newState.currentStory = stories.first
+            newState.currentStory = currentStory
+            if let data = currentStory?.chapters.first?.audioData {
+                newState.audioPlayer = try? AVAudioPlayer(data: data)
+                newState.audioPlayer?.prepareToPlay()
+            }
         }
+
     case .updateSpeechSpeed(let speed):
         newState.speechSpeed = speed
         newState.audioPlayer?.rate = speed.rate
@@ -49,9 +55,9 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .onSynthesizedAudio(let data):
         var newStory = newState.currentStory
         newStory?.chapters[newState.chapterIndex].audioData = data.audioData
+        newStory?.chapters[newState.chapterIndex].timestampData = data.wordTimestamps
         newState.currentStory = newStory
 
-        newState.timestampData = data.wordTimestamps
         newState.audioPlayer = try? AVAudioPlayer(data: data.audioData)
         newState.audioPlayer?.prepareToPlay()
     case .updateShowPinyin(let isShowing):

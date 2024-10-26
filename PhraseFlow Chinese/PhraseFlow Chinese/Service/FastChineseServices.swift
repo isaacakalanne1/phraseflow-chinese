@@ -181,7 +181,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
         do {
             let sentences = try JSONDecoder().decode([Sentence].self, from: data)
-            let chapter = Chapter(passage: passage, sentences: sentences)
+            let chapter = Chapter(passage: passage, sentences: sentences, timestampData: [])
             return chapter
         } catch {
             throw FastChineseServicesError.failedToDecodeSentences

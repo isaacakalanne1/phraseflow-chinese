@@ -50,7 +50,9 @@ struct FastChineseState {
     var isShowingEnglish = true
     var isShowingMandarin = true
     var audioPlayer = try? AVAudioPlayer(data: Data())
-    var timestampData: [WordTimeStampData] = []
+    var timestampData: [WordTimeStampData]? {
+        currentChapter?.timestampData
+    }
 
     var isPlayingAudio = false
 
@@ -76,6 +78,6 @@ struct FastChineseState {
 
         // Now totalCharacterIndex is the overall index of the character
         // Find the SpokenWord in timestampData that includes this index
-        return timestampData.last(where: { totalCharacterIndex >= $0.textOffset})
+        return timestampData?.last(where: { totalCharacterIndex >= $0.textOffset})
     }
 }
