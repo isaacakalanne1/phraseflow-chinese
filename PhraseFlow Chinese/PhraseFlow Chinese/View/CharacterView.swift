@@ -19,11 +19,11 @@ struct CharacterView: View {
     var body: some View {
         VStack(spacing: 0) {
             Text(character == pinyin ? "" : pinyin)
-                .font(.footnote)
+                .font(.system(size: 12))
                 .opacity(store.state.isShowingPinyin ? 1 : 0)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             Text(character)
-                .font(.title)
+                .font(.system(size: 25))
                 .opacity(store.state.isShowingMandarin ? 1 : 0)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(isHighlighted ? Color.blue : sentenceIndex == store.state.sentenceIndex ? Color.gray : Color.white)

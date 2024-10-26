@@ -13,7 +13,7 @@ struct DefinitionView: View {
     var body: some View {
         ScrollView(.vertical) {
             Text(store.state.currentDefinition?.definition ?? "Tap a word to see the definition")
-                .foregroundStyle(store.state.currentDefinition == nil ? Color.gray : Color.black)
+                .foregroundColor(store.state.currentDefinition == nil ? .gray : .black)
                 .font(.body)
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)

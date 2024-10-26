@@ -13,9 +13,10 @@ struct EnglishSentenceView: View {
     var body: some View {
         ScrollView(.vertical) {
             Text(store.state.currentSentence?.english ?? "")
-                .frame(maxWidth: .infinity)
-                .font(.title3)
                 .foregroundColor(.gray)
+                .font(.body)
+                .padding()
+                .frame(maxWidth: .infinity)
                 .opacity(store.state.isShowingEnglish ? 1 : 0)
         }
     }
