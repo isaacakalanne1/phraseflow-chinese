@@ -51,6 +51,7 @@
 		BBE636C92CCC0E8400873E68 /* ChapterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636C82CCC0E8400873E68 /* ChapterView.swift */; };
 		BBE636CB2CCC0EEF00873E68 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636CA2CCC0EEF00873E68 /* ErrorView.swift */; };
 		BBE636CD2CCC0F8500873E68 /* ReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636CC2CCC0F8500873E68 /* ReaderView.swift */; };
+		BBE636D12CCD77BC00873E68 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636D02CCD77BB00873E68 /* FlowLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +120,7 @@
 		BBE636C82CCC0E8400873E68 /* ChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterView.swift; sourceTree = "<group>"; };
 		BBE636CA2CCC0EEF00873E68 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		BBE636CC2CCC0F8500873E68 /* ReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderView.swift; sourceTree = "<group>"; };
+		BBE636D02CCD77BB00873E68 /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -305,6 +307,7 @@
 				BBE636CC2CCC0F8500873E68 /* ReaderView.swift */,
 				BBE636C02CCC0B5000873E68 /* ActionButtonsView.swift */,
 				BBE636C22CCC0BE900873E68 /* CharacterView.swift */,
+				BBE636D02CCD77BB00873E68 /* FlowLayout.swift */,
 				BB4EDB232C91902100699E7D /* SettingsView.swift */,
 				BBE16F212CC2769C00A7EF1F /* StoryListView.swift */,
 				BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */,
@@ -506,6 +509,7 @@
 				BBE636C52CCC0CDD00873E68 /* DefinitionView.swift in Sources */,
 				BBE16F1A2CC1314400A7EF1F /* CreateStoryView.swift in Sources */,
 				BB4EDB1F2C90F3A800699E7D /* String+Normalize.swift in Sources */,
+				BBE636D12CCD77BC00873E68 /* FlowLayout.swift in Sources */,
 				BBE16F282CC420FD00A7EF1F /* ViewState.swift in Sources */,
 				BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */,
 				BBE636C12CCC0B5000873E68 /* ActionButtonsView.swift in Sources */,
