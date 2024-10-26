@@ -47,12 +47,12 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             let wordTimestampsQueue = DispatchQueue(label: "WordTimestampsQueue")
 
             // Add a handler for the word boundary event
+            var textOffset = 0
             synthesizer.addSynthesisWordBoundaryEventHandler { (synthesizer, event) in
                 // Extract the audio offset (in ticks of 100 nanoseconds)
                 let audioTimeInSeconds = Double(event.audioOffset) / 10_000_000.0
 
                 // Extract the word from the text using textOffset and wordLength
-                let textOffset = Int(event.textOffset)
                 let wordLength = Int(event.wordLength)
                 let start = text.index(text.startIndex, offsetBy: textOffset)
                 let end = text.index(start, offsetBy: wordLength)
@@ -60,11 +60,12 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
 
                 // Append the word, its timestamp, and offsets to the array
                 wordTimestampsQueue.sync {
-                    wordTimestamps.append(.init(word: word,
+                    wordTimestamps.append(.init(word: event.text,
                                                 time: audioTimeInSeconds,
                                                 duration: event.duration,
                                                 textOffset: textOffset,
                                                 wordLength: wordLength))
+                    textOffset += Int(event.wordLength)
                 }
             }
 

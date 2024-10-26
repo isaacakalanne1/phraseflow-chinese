@@ -99,7 +99,6 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         return .updateShowingStoryListView(isShowing: false)
     case .selectWord(let timestampData):
         state.audioPlayer?.currentTime = timestampData.time
-        state.audioPlayer?.play()
         return nil
     case .failedToGenerateNewStory,
             .failedToGenerateNewPassage,

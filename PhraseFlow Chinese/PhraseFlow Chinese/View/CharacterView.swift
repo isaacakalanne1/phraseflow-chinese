@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CharacterView: View {
     @EnvironmentObject var store: FastChineseStore
-    let currentSpokenWord: WordTimeStampData?
+    
     let sentences: [Sentence]
     let isHighlighted: Bool
     let character: String
@@ -18,35 +18,19 @@ struct CharacterView: View {
     let sentenceIndex: Int
 
     var body: some View {
-        let wordStart = currentSpokenWord?.textOffset ?? -1
-        let wordEnd = (currentSpokenWord?.textOffset ?? -1) + (currentSpokenWord?.wordLength ?? -1)
-
         VStack {
             Text(character == pinyin ? "" : pinyin)
                 .font(.footnote)
-//                                            .foregroundStyle(isSelectedWord && isSelectedSentence ? Color.green : Color.primary)
                 .opacity(store.state.isShowingPinyin ? 1 : 0)
             Text(character)
                 .font(.title)
-//                                            .foregroundStyle(isSelectedWord && isSelectedSentence ? Color.green : Color.primary)
                 .opacity(store.state.isShowingMandarin ? 1 : 0)
         }
         .onTapGesture {
             if let word = getSpokenWord(sentenceIndex: sentenceIndex, characterIndex: characterIndex) {
                 store.dispatch(.selectWord(word))
+                store.dispatch(.defineCharacter(word.word))
             }
-//            store.dispatch(.updateSentenceIndex(sentenceIndex))
-//            for entry in store.state.timestampData {
-//                let wordStart = entry.textOffset
-//                let wordEnd = entry.textOffset + entry.wordLength
-//                if characterIndex >= wordStart && characterIndex < wordEnd {
-//                    store.dispatch(.updateSelectedWordIndices(startIndex: wordStart, endIndex: wordEnd))
-//                    store.dispatch(.defineCharacter(entry.word))
-//                    let resultEntry = (word: entry.word, time: entry.time)
-//                    print("Result entry is \(resultEntry)")
-//                    store.dispatch(.playAudio(time: entry.time))
-//                }
-//            }
         }
         .background(isHighlighted ? Color.gray : Color.white)
     }
@@ -72,17 +56,6 @@ struct CharacterView: View {
 
         // Now totalCharacterIndex is the overall index of the character
         // Find the SpokenWord in timestampData that includes this index
-        for spokenWord in store.state.timestampData {
-            let wordStart = spokenWord.textOffset
-            let wordLength = spokenWord.wordLength
-            let wordEnd = wordStart + wordLength - 1
-
-            if totalCharacterIndex >= wordStart && totalCharacterIndex <= wordEnd {
-                return spokenWord
-            }
-        }
-
-        // If not found, return nil
-        return nil
+        return store.state.timestampData.last(where: { totalCharacterIndex >= $0.textOffset})
     }
 }

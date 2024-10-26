@@ -22,9 +22,9 @@ struct ChapterView: View {
                     ForEach(Array(sentence.mandarin.enumerated()), id: \.offset) { characterIndex, element in
                         let character = sentence.mandarin[characterIndex]
                         let pinyin = sentence.pinyin.count > characterIndex ? sentence.pinyin[characterIndex] : ""
-                        CharacterView(currentSpokenWord: currentSpokenWord,
-                                      sentences: chapter.sentences,
-                                      isHighlighted: sentenceIndex == selectedSentenceIndex && (characterIndex >= selectedCharacterIndex && characterIndex < selectedCharacterIndex + (currentSpokenWord?.wordLength ?? 1)),
+                        let isHighlighted = sentenceIndex == selectedSentenceIndex && characterIndex >= selectedCharacterIndex && characterIndex < selectedCharacterIndex + (currentSpokenWord?.wordLength ?? 1)
+                        CharacterView(sentences: chapter.sentences,
+                                      isHighlighted: isHighlighted,
                                       character: character,
                                       pinyin: pinyin,
                                       characterIndex: characterIndex,
@@ -33,22 +33,5 @@ struct ChapterView: View {
                 }
             }
         }
-    }
-
-    func getSentenceAndCharIndex(textOffset: Int) -> (sentenceIndex: Int, characterIndex: Int)? {
-        var totalCharacterIndex = 0
-
-        for (sentenceIndex, sentence) in chapter.sentences.enumerated() {
-            let mandarinCharacters = Array(sentence.mandarin)
-            let sentenceLength = mandarinCharacters.count
-
-            if totalCharacterIndex + sentenceLength > textOffset {
-                let characterIndex = textOffset - totalCharacterIndex
-                return (sentenceIndex, characterIndex)
-            } else {
-                totalCharacterIndex += sentenceLength
-            }
-        }
-        return nil
     }
 }

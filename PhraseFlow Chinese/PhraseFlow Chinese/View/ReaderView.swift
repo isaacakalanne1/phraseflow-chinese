@@ -15,16 +15,11 @@ struct ReaderView: View {
         let currentSpokenWord = store.state.timestampData.last(where: { store.state.currentPlaybackTime >= $0.time })
         let startCharacterIndex = currentSpokenWord?.textOffset ?? 0
         let (selectedSentenceIndex, selectedCharacterIndex) = getSentenceAndCharIndex(textOffset: startCharacterIndex) ?? (0,0)
-        var currentEnglishSentence = ""
-        if let sentences = store.state.currentChapter?.sentences,
-           sentences.count > selectedSentenceIndex {
-            currentEnglishSentence = sentences[selectedSentenceIndex].english
-        }
 
-        return VStack(spacing: 10) {
+        VStack(spacing: 10) {
             DefinitionView()
                 .frame(height: 200)
-            EnglishSentenceView(text: currentEnglishSentence)
+            EnglishSentenceView()
                 .frame(height: 100)
             ChapterView(chapter: chapter,
                         currentSpokenWord: currentSpokenWord,
@@ -45,6 +40,9 @@ struct ReaderView: View {
 
             if totalCharacterIndex + sentenceLength > textOffset {
                 let characterIndex = textOffset - totalCharacterIndex
+                if sentenceIndex != store.state.sentenceIndex {
+                    store.dispatch(.updateSentenceIndex(sentenceIndex))
+                }
                 return (sentenceIndex, characterIndex)
             } else {
                 totalCharacterIndex += sentenceLength
