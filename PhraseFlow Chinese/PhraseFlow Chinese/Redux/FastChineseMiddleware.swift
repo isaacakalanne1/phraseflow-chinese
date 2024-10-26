@@ -70,6 +70,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .failedToPlayAudio
         }
     case .onSynthesizedAudio(let result):
+        if let story = state.currentStory {
+            return .saveStory(story)
+        }
         return nil
 //        return .playAudio(time: nil)
     case .playAudio(let timestamp):
