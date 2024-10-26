@@ -17,7 +17,6 @@ struct ChapterView: View {
     var body: some View {
         ScrollView(.vertical) {
             ForEach(Array(chapter.sentences.enumerated()), id: \.element) { (sentenceIndex, sentence) in
-                let columns: [GridItem] = [.init(.adaptive(minimum: 40), spacing: 0)]
                 FlowLayout(spacing: 0) {
                     ForEach(Array(sentence.mandarin.enumerated()), id: \.offset) { characterIndex, element in
                         let character = sentence.mandarin[characterIndex]
@@ -30,6 +29,7 @@ struct ChapterView: View {
                                       sentenceIndex: sentenceIndex)
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
             Button("Next Chapter") {
                 if let story = store.state.currentStory {
