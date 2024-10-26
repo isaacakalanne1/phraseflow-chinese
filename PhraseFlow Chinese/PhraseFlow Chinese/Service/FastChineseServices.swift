@@ -189,7 +189,8 @@ final class FastChineseServices: FastChineseServicesProtocol {
     }
 
     func fetchDefinition(of character: String, withinContextOf sentence: String) async throws -> GPTResponse {
-        let initialPrompt = """
+        let initialPrompt =
+"""
         You are an AI assistant that provides English definitions for characters in Chinese sentences. Your explanations are brief, and simple to understand.
         You provide the pinyin for the Chinese character in brackets after the Chinese character.
         If the character is used as part of a larger word, you also provide the pinyin and definition for each character in this overall word.

@@ -17,13 +17,16 @@ struct CharacterView: View {
     let sentenceIndex: Int
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             Text(character == pinyin ? "" : pinyin)
                 .font(.footnote)
                 .opacity(store.state.isShowingPinyin ? 1 : 0)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             Text(character)
                 .font(.title)
                 .opacity(store.state.isShowingMandarin ? 1 : 0)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(isHighlighted ? Color.blue : sentenceIndex == store.state.sentenceIndex ? Color.gray : Color.white)
         }
         .onTapGesture {
             store.dispatch(.updateSentenceIndex(sentenceIndex))
@@ -32,6 +35,5 @@ struct CharacterView: View {
                 store.dispatch(.defineCharacter(word.word))
             }
         }
-        .background(isHighlighted ? Color.gray : Color.white)
     }
 }

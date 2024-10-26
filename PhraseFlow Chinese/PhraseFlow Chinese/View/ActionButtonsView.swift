@@ -20,7 +20,7 @@ struct ActionButtonsView: View {
                 Button(action: {
                     store.dispatch(.synthesizeAudio(chapter))
                 }) {
-                    Image(systemName: "tray.and.arrow.down.fill")
+                    Image(systemName: "arrow.down.to.line.circle.fill")
                 }
             } else {
                 if store.state.audioPlayer?.isPlaying == true {

@@ -18,7 +18,7 @@ struct ReaderView: View {
 
         VStack(spacing: 10) {
             DefinitionView()
-                .frame(height: 200)
+                .frame(height: 150)
             EnglishSentenceView()
                 .frame(height: 100)
             ChapterView(chapter: chapter,

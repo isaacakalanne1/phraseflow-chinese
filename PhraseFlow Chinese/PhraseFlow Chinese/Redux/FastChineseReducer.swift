@@ -37,6 +37,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         }
     case .updateSpeechSpeed(let speed):
         newState.speechSpeed = speed
+        newState.audioPlayer?.rate = speed.rate
     case .defineCharacter(let character):
         newState.characterToDefine = character
     case .onDefinedCharacter(let definition):
