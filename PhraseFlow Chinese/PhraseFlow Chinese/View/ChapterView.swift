@@ -23,8 +23,7 @@ struct ChapterView: View {
                         let character = sentence.mandarin[characterIndex]
                         let pinyin = sentence.pinyin.count > characterIndex ? sentence.pinyin[characterIndex] : ""
                         let isHighlighted = sentenceIndex == selectedSentenceIndex && characterIndex >= selectedCharacterIndex && characterIndex < selectedCharacterIndex + (currentSpokenWord?.wordLength ?? 1)
-                        CharacterView(sentences: chapter.sentences,
-                                      isHighlighted: isHighlighted,
+                        CharacterView(isHighlighted: isHighlighted,
                                       character: character,
                                       pinyin: pinyin,
                                       characterIndex: characterIndex,
@@ -32,6 +31,15 @@ struct ChapterView: View {
                     }
                 }
             }
+            Button("Next Chapter") {
+                if let story = store.state.currentStory {
+                    store.dispatch(.generateNewPassage(story: story))
+                }
+            }
+            .padding()
+            .background(Color.accentColor)
+            .foregroundColor(.white)
+            .cornerRadius(10)
         }
     }
 }

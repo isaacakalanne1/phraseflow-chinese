@@ -189,7 +189,13 @@ final class FastChineseServices: FastChineseServicesProtocol {
     }
 
     func fetchDefinition(of character: String, withinContextOf sentence: String) async throws -> GPTResponse {
-        let initialPrompt = "You are an AI assistant that provides English definitions for characters in Chinese sentences. Your explanations are brief, and simple to understand. You provide the pinyin for the Chinese character in brackets after the Chinese character. If the character is used as part of a larger word, you also provide the pinyin and definition for each character in this overall word. You never repeat the Chinese sentence, and never translate the whole of the Chinese sentence into English."
+        let initialPrompt = """
+        You are an AI assistant that provides English definitions for characters in Chinese sentences. Your explanations are brief, and simple to understand.
+        You provide the pinyin for the Chinese character in brackets after the Chinese character.
+        If the character is used as part of a larger word, you also provide the pinyin and definition for each character in this overall word.
+        You also provide the definition of the word in the context of the overall sentence.
+        You never repeat the Chinese sentence, and never translate the whole of the Chinese sentence into English.
+"""
         let mainPrompt = "Provide a definition for \(character) in \(sentence)"
         let response = try await makeRequest(initialPrompt: initialPrompt, mainPrompt: mainPrompt)
         return response
