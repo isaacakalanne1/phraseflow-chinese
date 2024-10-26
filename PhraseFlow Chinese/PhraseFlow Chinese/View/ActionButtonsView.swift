@@ -10,7 +10,6 @@ import SwiftUI
 struct ActionButtonsView: View {
     @EnvironmentObject var store: FastChineseStore
     let chapter: Chapter
-    @State var playbackTimer: Timer?
 
     var body: some View {
 
@@ -24,16 +23,14 @@ struct ActionButtonsView: View {
                     Text("Load\nAudio")
                 }
             } else {
-                if store.state.isPlayingAudio {
+                if store.state.audioPlayer?.isPlaying == true {
                     Button(action: {
-                        stopTimer()
                         store.dispatch(.pauseAudio)
                     }) {
                         Image(systemName: "pause.circle.fill")
                     }
                 } else {
                     Button(action: {
-                        startTimer()
                         store.dispatch(.playAudio(time: nil))
                     }) {
                         Image(systemName: "play.circle.fill")
@@ -68,17 +65,5 @@ struct ActionButtonsView: View {
             Spacer()
         }
         .font(.system(size: 50))
-    }
-
-    func startTimer() {
-        let increment: Double = 0.1
-        playbackTimer = Timer.scheduledTimer(withTimeInterval: increment, repeats: true) { timer in
-            store.dispatch(.incrementPlayTime(increment))
-        }
-    }
-
-    func stopTimer() {
-        playbackTimer?.invalidate()
-        playbackTimer = nil
     }
 }

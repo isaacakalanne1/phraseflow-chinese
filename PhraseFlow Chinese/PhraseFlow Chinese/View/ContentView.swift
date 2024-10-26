@@ -65,6 +65,9 @@ struct ContentView: View {
                 }
             }
         }
+        .onAppear {
+            startTimer()
+        }
         .background(Color.white)
         .padding(10)
         .sheet(isPresented: isShowingSettingsScreen) {
@@ -86,6 +89,16 @@ struct ContentView: View {
 //                store.dispatch(.goToNextSentence)
             }
         })
+    }
+
+    func startTimer() {
+        let increment: Double = 0.1
+        DispatchQueue.main.asyncAfter(deadline: .now() + increment) {
+            if store.state.audioPlayer?.isPlaying == true {
+                store.dispatch(.incrementPlayTime(increment))
+            }
+            startTimer()
+        }
     }
 }
 
