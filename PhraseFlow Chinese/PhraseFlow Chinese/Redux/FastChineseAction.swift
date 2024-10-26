@@ -36,7 +36,7 @@ enum FastChineseAction {
     case onLoadedStories([Story])
     case failedToLoadStories
 
-    case synthesizeAudio(Chapter)
+    case synthesizeAudio(Chapter, isForced: Bool)
     case onSynthesizedAudio((wordTimestamps: [WordTimeStampData],
                              audioData: Data))
     case playAudio(time: Double?)

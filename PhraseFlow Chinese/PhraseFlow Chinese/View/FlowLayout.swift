@@ -53,9 +53,6 @@ struct FlowLayout: Layout {
         // Variables to track current line height
         var currentLineHeight: CGFloat = 0
 
-        // Maximum width for wrapping
-        let maxWidth = bounds.width
-
         for subview in subviews {
             let subviewSize = subview.sizeThatFits(.unspecified)
             if x + subviewSize.width > bounds.maxX {

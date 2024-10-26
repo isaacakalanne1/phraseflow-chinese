@@ -59,8 +59,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToSaveStory
         }
-    case .synthesizeAudio(let chapter):
-        guard chapter.audioData == nil else {
+    case .synthesizeAudio(let chapter, let isForced):
+        if chapter.audioData == nil && !isForced {
             return .playAudio(time: nil)
         }
         do {
@@ -123,7 +123,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .clearSelectedWord,
             .failedToGenerateChapter,
             .updateSentenceIndex,
-            .incrementPlayTime:
+            .incrementPlayTime,
+            .goToNextChapter:
         return nil
     }
 }

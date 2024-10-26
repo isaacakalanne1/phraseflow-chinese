@@ -18,7 +18,7 @@ struct ActionButtonsView: View {
 
             if chapter.audioData == nil {
                 Button(action: {
-                    store.dispatch(.synthesizeAudio(chapter))
+                    store.dispatch(.synthesizeAudio(chapter, isForced: false))
                 }) {
                     Image(systemName: "arrow.down.to.line.circle.fill")
                 }
@@ -37,6 +37,14 @@ struct ActionButtonsView: View {
                     }
                 }
             }
+
+//            Button(action: {
+//                if let chapter = store.state.currentChapter {
+//                    store.dispatch(.synthesizeAudio(chapter, isForced: true))
+//                }
+//            }) {
+//                Image(systemName: "repeat.circle.fill")
+//            }
 
             Button(action: {
                 store.dispatch(.updateShowPinyin(!store.state.isShowingPinyin))

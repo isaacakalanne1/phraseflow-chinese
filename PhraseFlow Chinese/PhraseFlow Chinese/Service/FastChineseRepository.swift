@@ -53,10 +53,8 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                 let audioTimeInSeconds = Double(event.audioOffset) / 10_000_000.0
 
                 // Extract the word from the text using textOffset and wordLength
-                let wordLength = Int(event.wordLength)
-                let start = text.index(text.startIndex, offsetBy: textOffset)
-                let end = text.index(start, offsetBy: wordLength)
-                let word = String(text[start..<end])
+                let word = event.text.replacingOccurrences(of: "\n", with: "")
+                let wordLength = Int(word.count)
 
                 // Append the word, its timestamp, and offsets to the array
                 wordTimestampsQueue.sync {
@@ -65,7 +63,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                                                 duration: event.duration,
                                                 textOffset: textOffset,
                                                 wordLength: wordLength))
-                    textOffset += Int(event.wordLength)
+                    textOffset += Int(wordLength)
                 }
             }
 
