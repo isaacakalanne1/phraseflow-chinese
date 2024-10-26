@@ -11,7 +11,6 @@ import AVKit
 struct FastChineseState {
     var currentStory: Story?
     var savedStories: [Story] = []
-    var chapterIndex = 0
     var sentenceIndex = 0
     var isShowingCreateStoryScreen = false
     var isShowingSettingsScreen = false
@@ -25,16 +24,25 @@ struct FastChineseState {
 
     var currentChapter: Chapter? {
         guard let currentStory,
-           currentStory.chapters.count > chapterIndex else {
+              currentStory.chapters.count > currentStory.currentChapterIndex else {
             return nil
         }
-        return currentStory.chapters[chapterIndex]
+        return currentStory.chapters[currentStory.currentChapterIndex]
     }
 
     var currentSentence: Sentence? {
         if let currentChapter,
            currentChapter.sentences.count > sentenceIndex {
             return currentChapter.sentences[sentenceIndex]
+        }
+        return nil
+    }
+
+    var currentChapterAudioData: Data? {
+        if let currentStory,
+           currentStory.chapters.count > currentStory.currentChapterIndex,
+           let data = currentStory.chapters[currentStory.currentChapterIndex].audioData {
+            return data
         }
         return nil
     }

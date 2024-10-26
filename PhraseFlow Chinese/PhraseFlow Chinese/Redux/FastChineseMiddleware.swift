@@ -103,6 +103,11 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
     case .selectWord(let timestampData):
         state.audioPlayer?.currentTime = timestampData.time
         return nil
+    case .goToNextChapter:
+        if let story = state.currentStory {
+            return .saveStory(story)
+        }
+        return nil
     case .failedToGenerateNewStory,
             .failedToGenerateNewPassage,
             .failedToLoadStories,
@@ -123,8 +128,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .clearSelectedWord,
             .failedToGenerateChapter,
             .updateSentenceIndex,
-            .incrementPlayTime,
-            .goToNextChapter:
+            .incrementPlayTime:
         return nil
     }
 }

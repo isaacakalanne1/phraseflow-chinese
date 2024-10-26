@@ -14,6 +14,7 @@ struct Story: Codable, Equatable, Hashable {
     let title: String
     let description: String
     var chapters: [Chapter]
+    var currentChapterIndex = 0
 
     // Custom decoder to assign default values
     init(from decoder: Decoder) throws {
@@ -24,10 +25,8 @@ struct Story: Codable, Equatable, Hashable {
         self.title = try container.decode(String.self, forKey: .title)
         self.description = try container.decode(String.self, forKey: .description)
 
-        if let chapters = try? container.decode([Chapter].self, forKey: .chapters) {
-            self.chapters = chapters
-        } else {
-            self.chapters = []
-        }
+        self.chapters = (try? container.decode([Chapter].self, forKey: .chapters)) ?? []
+
+        self.currentChapterIndex = try container.decode(Int.self, forKey: .currentChapterIndex)
     }
 }
