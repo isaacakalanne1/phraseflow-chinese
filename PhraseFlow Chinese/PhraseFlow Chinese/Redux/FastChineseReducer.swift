@@ -118,6 +118,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.currentPlaybackTime += increment
     case .selectWord(let timestampData):
         newState.currentPlaybackTime = timestampData.time
+    case .goToNextChapter:
+        newState.chapterIndex += 1
     case .saveStory,
             .failedToSaveStory,
             .failedToLoadStories,

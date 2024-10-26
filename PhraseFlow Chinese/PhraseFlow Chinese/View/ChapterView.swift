@@ -33,7 +33,11 @@ struct ChapterView: View {
             }
             Button("Next Chapter") {
                 if let story = store.state.currentStory {
-                    store.dispatch(.generateNewPassage(story: story))
+                    if story.chapters.count > store.state.chapterIndex + 1 {
+                        store.dispatch(.goToNextChapter)
+                    } else {
+                        store.dispatch(.generateNewPassage(story: story))
+                    }
                 }
             }
             .padding()
