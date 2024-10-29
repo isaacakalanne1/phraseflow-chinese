@@ -44,6 +44,9 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
                 newState.audioPlayer = try? AVAudioPlayer(data: data)
                 newState.audioPlayer?.prepareToPlay()
             }
+            let firstWord = currentStory?.chapters[safe: currentStory?.currentChapterIndex ?? 0]?.timestampData.first
+            newState.selectedWordStartIndex = firstWord?.textOffset ?? 0
+            newState.selectedWordEndIndex = firstWord?.wordLength ?? 1
         }
 
     case .updateSpeechSpeed(let speed):
