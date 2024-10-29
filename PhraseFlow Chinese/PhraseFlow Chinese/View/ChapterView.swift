@@ -20,7 +20,7 @@ struct ChapterView: View {
                 FlowLayout(spacing: 0) {
                     ForEach(Array(sentence.mandarin.enumerated()), id: \.offset) { characterIndex, element in
                         let character = sentence.mandarin[characterIndex]
-                        let pinyin = sentence.pinyin[safe: characterIndex] : ""
+                        let pinyin = sentence.pinyin[safe: characterIndex] ?? ""
                         let isHighlighted = sentenceIndex == selectedSentenceIndex && characterIndex >= selectedCharacterIndex && characterIndex < selectedCharacterIndex + (currentSpokenWord?.wordLength ?? 1)
                         CharacterView(isHighlighted: isHighlighted,
                                       character: character,
