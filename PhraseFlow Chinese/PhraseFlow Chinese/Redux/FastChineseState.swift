@@ -43,9 +43,6 @@ struct FastChineseState {
         return currentStory.chapters[safe: currentStory.currentChapterIndex]?.audioData
     }
 
-    var selectedWordStartIndex = 0
-    var selectedWordEndIndex = 0
-
     var speechSpeed: SpeechSpeed = .normal
     var characterToDefine: String = ""
     var currentDefinition: Definition?

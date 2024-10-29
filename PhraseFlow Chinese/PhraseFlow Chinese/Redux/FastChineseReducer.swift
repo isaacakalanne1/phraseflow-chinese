@@ -44,9 +44,6 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
                 newState.audioPlayer = try? AVAudioPlayer(data: data)
                 newState.audioPlayer?.prepareToPlay()
             }
-            let firstWord = currentStory?.chapters[safe: currentStory?.currentChapterIndex ?? 0]?.timestampData.first
-            newState.selectedWordStartIndex = firstWord?.textOffset ?? 0
-            newState.selectedWordEndIndex = firstWord?.wordLength ?? 1
         }
 
     case .updateSpeechSpeed(let speed):
@@ -111,12 +108,6 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             newState.audioPlayer = try? AVAudioPlayer(data: data)
             newState.audioPlayer?.prepareToPlay()
         }
-    case .updateSelectedWordIndices(let startIndex, let endIndex):
-        newState.selectedWordStartIndex = startIndex
-        newState.selectedWordEndIndex = endIndex
-    case .clearSelectedWord:
-        newState.selectedWordStartIndex = -1
-        newState.selectedWordEndIndex = -1
     case .generateChapter:
         newState.viewState = .loading
     case .generateNewStory:

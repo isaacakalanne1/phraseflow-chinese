@@ -1,15 +1,6 @@
 {
-  "originHash" : "59dec0fadb2b7d8463379a1041644ed3ee3eb9ba85cbfb8b430d0aa8c851432b",
+  "originHash" : "f987e9d8527c55b7eb703c9e7569d9822e7bbbf6de709e0a4f15ffc141631cf2",
   "pins" : [
-    {
-      "identity" : "audiokit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/AudioKit/AudioKit.git",
-      "state" : {
-        "revision" : "2ebd422855e4645d3169f83d1765d1c8196b4f46",
-        "version" : "5.6.4"
-      }
-    },
     {
       "identity" : "combine-schedulers",
       "kind" : "remoteSourceControl",
@@ -35,15 +26,6 @@
       "state" : {
         "revision" : "a46265bb4f75808b0e15d971eebc408f557870a3",
         "version" : "0.1.2"
-      }
-    },
-    {
-      "identity" : "swiftwhisper",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/exPHAT/SwiftWhisper.git",
-      "state" : {
-        "revision" : "a192004db08de7c6eaa169eede77f1625e7d23fb",
-        "version" : "1.2.0"
       }
     },
     {

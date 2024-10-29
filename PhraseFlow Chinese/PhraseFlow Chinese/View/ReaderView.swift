@@ -12,7 +12,7 @@ struct ReaderView: View {
     let chapter: Chapter
 
     var body: some View {
-        let currentSpokenWord = store.state.timestampData?.last(where: { store.state.currentPlaybackTime >= $0.time })
+        let currentSpokenWord = store.state.timestampData?.last(where: { store.state.currentPlaybackTime >= $0.time }) ?? store.state.timestampData?.first
         let startCharacterIndex = currentSpokenWord?.textOffset ?? 0
         let (selectedSentenceIndex, selectedCharacterIndex) = getSentenceAndCharIndex(textOffset: startCharacterIndex) ?? (0,0)
 
