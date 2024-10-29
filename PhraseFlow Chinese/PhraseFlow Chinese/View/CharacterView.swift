@@ -26,7 +26,8 @@ struct CharacterView: View {
                 .font(.system(size: 25))
                 .opacity(store.state.isShowingMandarin ? 1 : 0)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(isHighlighted ? Color.blue : sentenceIndex == store.state.sentenceIndex ? Color.gray : Color.white)
+                .foregroundStyle(isHighlighted ? Color.blue : Color.black)
+                .background(sentenceIndex == store.state.sentenceIndex ? Color.gray.opacity(0.3) : Color.white)
         }
         .onTapGesture {
             store.dispatch(.updateSentenceIndex(sentenceIndex))

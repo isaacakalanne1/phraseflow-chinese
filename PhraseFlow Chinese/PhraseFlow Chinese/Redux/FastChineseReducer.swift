@@ -48,6 +48,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
 
     case .updateSpeechSpeed(let speed):
         newState.speechSpeed = speed
+        newState.audioPlayer?.enableRate = true
         newState.audioPlayer?.rate = speed.rate
     case .defineCharacter(let character):
         newState.characterToDefine = character
@@ -125,8 +126,11 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.viewState = .failedToGenerateChapter
     case .updateSentenceIndex(let index):
         newState.sentenceIndex = index
-    case .playAudio:
+    case .playAudio(let time):
         newState.isPlayingAudio = true
+        if let time {
+            newState.currentPlaybackTime = time
+        }
     case .pauseAudio:
         newState.isPlayingAudio = false
     case .incrementPlayTime(let increment):

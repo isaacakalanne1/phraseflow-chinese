@@ -31,7 +31,10 @@ struct ActionButtonsView: View {
                     }
                 } else {
                     Button(action: {
-                        store.dispatch(.playAudio(time: nil))
+                        let currentSpokenWord = store.state.timestampData?.last(where: { store.state.currentPlaybackTime >= $0.time }) ?? store.state.timestampData?.first
+                        if let time = currentSpokenWord?.time {
+                            store.dispatch(.playAudio(time: time))
+                        }
                     }) {
                         Image(systemName: "play.circle.fill")
                     }

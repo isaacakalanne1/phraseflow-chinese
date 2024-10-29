@@ -31,7 +31,7 @@ struct StoryListView: View {
                                             .foregroundColor(.primary)
                                             .frame(maxWidth: .infinity)
                                             .cornerRadius(10)
-                                        Text(story.description)
+                                        Text(story.latestStorySummary)
                                             .font(.body)
                                             .foregroundColor(.primary)
                                             .frame(maxWidth: .infinity)
