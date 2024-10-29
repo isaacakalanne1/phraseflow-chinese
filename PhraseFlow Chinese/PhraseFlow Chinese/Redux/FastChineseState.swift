@@ -23,28 +23,24 @@ struct FastChineseState {
     var currentPlaybackTime: TimeInterval = 0
 
     var currentChapter: Chapter? {
-        guard let currentStory,
-              currentStory.chapters.count > currentStory.currentChapterIndex else {
+        guard let currentStory else {
             return nil
         }
-        return currentStory.chapters[currentStory.currentChapterIndex]
+        return currentStory.chapters[safe: currentStory.currentChapterIndex]
     }
 
     var currentSentence: Sentence? {
-        if let currentChapter,
-           currentChapter.sentences.count > sentenceIndex {
-            return currentChapter.sentences[sentenceIndex]
+        guard let currentChapter else {
+            return nil
         }
-        return nil
+        return currentChapter.sentences[safe: sentenceIndex]
     }
 
     var currentChapterAudioData: Data? {
-        if let currentStory,
-           currentStory.chapters.count > currentStory.currentChapterIndex,
-           let data = currentStory.chapters[currentStory.currentChapterIndex].audioData {
-            return data
+        guard let currentStory else {
+            return nil
         }
-        return nil
+        return currentStory.chapters[safe: currentStory.currentChapterIndex]?.audioData
     }
 
     var selectedWordStartIndex = 0
