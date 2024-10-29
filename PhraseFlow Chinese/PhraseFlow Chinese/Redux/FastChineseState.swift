@@ -18,7 +18,6 @@ struct FastChineseState {
     var viewState: ViewState = .normal
 
     var selectedCategories: [Category] = []
-    var selectedSubjects: [Subject] = []
 
     var currentPlaybackTime: TimeInterval = 0
 

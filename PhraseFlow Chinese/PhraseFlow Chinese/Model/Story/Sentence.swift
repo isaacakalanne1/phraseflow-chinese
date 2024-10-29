@@ -19,12 +19,4 @@ struct Sentence: Codable, Equatable, Hashable {
         self.pinyin = try container.decode([String].self, forKey: .pinyin)
         self.english = try container.decode(String.self, forKey: .english)
     }
-
-    init(mandarin: String,
-         pinyin: [String],
-         english: String) {
-        self.mandarin = mandarin
-        self.pinyin = pinyin
-        self.english = english
-    }
 }

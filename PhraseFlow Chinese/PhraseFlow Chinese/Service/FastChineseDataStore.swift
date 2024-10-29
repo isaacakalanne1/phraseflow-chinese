@@ -9,7 +9,6 @@ import Foundation
 
 enum FastChineseDataStoreError: Error {
     case failedToCreateUrl
-    case failedToSaveAudio
     case failedToSaveData
     case failedToDecodeSentences
 }

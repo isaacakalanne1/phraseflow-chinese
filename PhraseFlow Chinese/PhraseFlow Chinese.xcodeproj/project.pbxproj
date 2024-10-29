@@ -10,7 +10,6 @@
 		477951978617EF1A543B0EC4 /* libPods-PhraseFlow Chinese.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 278A489BDBA476D2CC0AF9AC /* libPods-PhraseFlow Chinese.a */; };
 		BB0854832CB42C0200F1661B /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854822CB42C0200F1661B /* Chapter.swift */; };
 		BB0854852CB42C1400F1661B /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854842CB42C1400F1661B /* Story.swift */; };
-		BB08548A2CB68AA200F1661B /* String+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854892CB68AA200F1661B /* String+Subscript.swift */; };
 		BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
 		BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FastChineseStore.swift */; };
@@ -23,7 +22,6 @@
 		BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB142C90CF7400699E7D /* FastChineseDataStore.swift */; };
 		BB4EDB172C90D20300699E7D /* FastChineseServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB162C90D20300699E7D /* FastChineseServices.swift */; };
 		BB4EDB1D2C90DFDD00699E7D /* FastChineseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB1C2C90DFDD00699E7D /* FastChineseRepository.swift */; };
-		BB4EDB1F2C90F3A800699E7D /* String+Normalize.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB1E2C90F3A800699E7D /* String+Normalize.swift */; };
 		BB4EDB222C90F81000699E7D /* DefineCharacterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB212C90F81000699E7D /* DefineCharacterRequest.swift */; };
 		BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB232C91902100699E7D /* SettingsView.swift */; };
 		BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */; };
@@ -80,7 +78,6 @@
 		5EDA23FCE91C5CB989C86534 /* Pods-PhraseFlow Chinese.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhraseFlow Chinese.release.xcconfig"; path = "Target Support Files/Pods-PhraseFlow Chinese/Pods-PhraseFlow Chinese.release.xcconfig"; sourceTree = "<group>"; };
 		BB0854822CB42C0200F1661B /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
 		BB0854842CB42C1400F1661B /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
-		BB0854892CB68AA200F1661B /* String+Subscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Subscript.swift"; sourceTree = "<group>"; };
 		BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpeed.swift; sourceTree = "<group>"; };
 		BB4EDB022C90C86300699E7D /* FastChineseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseStore.swift; sourceTree = "<group>"; };
 		BB4EDB042C90C89C00699E7D /* FastChineseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseState.swift; sourceTree = "<group>"; };
@@ -92,7 +89,6 @@
 		BB4EDB142C90CF7400699E7D /* FastChineseDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseDataStore.swift; sourceTree = "<group>"; };
 		BB4EDB162C90D20300699E7D /* FastChineseServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseServices.swift; sourceTree = "<group>"; };
 		BB4EDB1C2C90DFDD00699E7D /* FastChineseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseRepository.swift; sourceTree = "<group>"; };
-		BB4EDB1E2C90F3A800699E7D /* String+Normalize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Normalize.swift"; sourceTree = "<group>"; };
 		BB4EDB212C90F81000699E7D /* DefineCharacterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefineCharacterRequest.swift; sourceTree = "<group>"; };
 		BB4EDB232C91902100699E7D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPhrasesResponse.swift; sourceTree = "<group>"; };
@@ -203,8 +199,6 @@
 		BB4EDB112C90CBAE00699E7D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				BB4EDB1E2C90F3A800699E7D /* String+Normalize.swift */,
-				BB0854892CB68AA200F1661B /* String+Subscript.swift */,
 				BB6572D12CD165F200AC5981 /* Collection+Safe.swift */,
 			);
 			path = Extensions;
@@ -517,7 +511,6 @@
 			files = (
 				BBE636C52CCC0CDD00873E68 /* DefinitionView.swift in Sources */,
 				BBE16F1A2CC1314400A7EF1F /* CreateStoryView.swift in Sources */,
-				BB4EDB1F2C90F3A800699E7D /* String+Normalize.swift in Sources */,
 				BBE636D12CCD77BC00873E68 /* FlowLayout.swift in Sources */,
 				BBE16F282CC420FD00A7EF1F /* ViewState.swift in Sources */,
 				BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */,
@@ -530,7 +523,6 @@
 				BB4EDB072C90C8CA00699E7D /* FastChineseAction.swift in Sources */,
 				BB6572D02CD13C6400AC5981 /* ChapterType.swift in Sources */,
 				BBE636BF2CC98B2B00873E68 /* WordTimeStampData.swift in Sources */,
-				BB08548A2CB68AA200F1661B /* String+Subscript.swift in Sources */,
 				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */,
 				BBE636C72CCC0E1200873E68 /* EnglishSentenceView.swift in Sources */,

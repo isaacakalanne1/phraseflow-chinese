@@ -10,10 +10,6 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var store: FastChineseStore
 
-    @FocusState var isTextFieldFocused
-    @State private var showSettings = false
-    @State private var showStoryListView = false
-
     var body: some View {
 
         let isShowingCreateStoryScreen: Binding<Bool> = .init {

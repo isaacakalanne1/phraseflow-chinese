@@ -8,11 +8,6 @@
 import Foundation
 import MicrosoftCognitiveServicesSpeech
 
-enum FastChineseRepositoryError: Error {
-    case failedToSegment
-    case failedToCreateSPXSpeechConfiguration
-}
-
 protocol FastChineseRepositoryProtocol {
     func synthesizeSpeech(_ text: String) async throws -> (wordTimestamps: [WordTimeStampData],
                                                            audioData: Data)
