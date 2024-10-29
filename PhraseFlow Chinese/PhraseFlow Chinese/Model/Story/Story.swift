@@ -27,6 +27,6 @@ struct Story: Codable, Equatable, Hashable {
 
         self.chapters = (try? container.decode([Chapter].self, forKey: .chapters)) ?? []
 
-        self.currentChapterIndex = try container.decode(Int.self, forKey: .currentChapterIndex)
+        self.currentChapterIndex = (try? container.decode(Int.self, forKey: .currentChapterIndex)) ?? 0
     }
 }

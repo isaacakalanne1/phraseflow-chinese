@@ -24,6 +24,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newStory?.currentChapterIndex = (chapters?.count ?? 1) - 1
         newState.currentStory = newStory
 
+        newState.audioPlayer = nil
         newState.viewState = .normal
         newState.sentenceIndex = 0
         newState.isShowingCreateStoryScreen = false
@@ -85,6 +86,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .selectStory(let story):
         newState.sentenceIndex = 0
         newState.currentStory = story
+        newState.isShowingStoryListView = false
         if let data = newState.currentChapterAudioData {
             newState.audioPlayer = try? AVAudioPlayer(data: data)
             newState.audioPlayer?.prepareToPlay()
@@ -92,6 +94,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .selectChapter(let story, let chapterIndex):
         newState.currentStory = story
         newState.sentenceIndex = 0
+        newState.isShowingStoryListView = false
         if let chaptersCount = newState.currentStory?.chapters.count,
            chapterIndex > -1,
            chapterIndex < chaptersCount {
@@ -131,7 +134,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         var newStory = newState.currentStory
         newStory?.currentChapterIndex += 1
         newState.currentStory = newStory
-        if let data = newState.currentChapterAudioData {
+        if let data = newState.currentChapterAudioData { // TODO: Move this repeated logic in Reducer to a new action, called via middleware for each of these cases
             newState.audioPlayer = try? AVAudioPlayer(data: data)
             newState.audioPlayer?.prepareToPlay()
         }

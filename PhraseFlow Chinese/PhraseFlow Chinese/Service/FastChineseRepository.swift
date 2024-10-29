@@ -53,12 +53,13 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                 let audioTimeInSeconds = Double(event.audioOffset) / 10_000_000.0
 
                 // Extract the word from the text using textOffset and wordLength
-                let word = event.text.replacingOccurrences(of: "\n", with: "")
+                let word = event.text
+                    .replacingOccurrences(of: "\n", with: "")
                 let wordLength = Int(word.count)
 
                 // Append the word, its timestamp, and offsets to the array
                 wordTimestampsQueue.sync {
-                    wordTimestamps.append(.init(word: event.text,
+                    wordTimestamps.append(.init(word: word,
                                                 time: audioTimeInSeconds,
                                                 duration: event.duration,
                                                 textOffset: textOffset,

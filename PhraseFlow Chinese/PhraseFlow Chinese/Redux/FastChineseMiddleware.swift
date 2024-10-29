@@ -60,7 +60,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .failedToSaveStory
         }
     case .synthesizeAudio(let chapter, let isForced):
-        if chapter.audioData == nil && !isForced {
+        if chapter.audioData != nil && !isForced {
             return .playAudio(time: nil)
         }
         do {
@@ -99,7 +99,10 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
     case .selectStory,
             .selectChapter:
-        return .updateShowingStoryListView(isShowing: false)
+        if let story = state.currentStory {
+            return .saveStory(story)
+        }
+        return nil
     case .selectWord(let timestampData):
         state.audioPlayer?.currentTime = timestampData.time
         return nil
