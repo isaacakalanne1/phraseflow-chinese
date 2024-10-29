@@ -20,24 +20,15 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
                 return .failedToGenerateNewStory
             }
     case .onGeneratedStory(let story):
-        return .generateNewPassage(story: story)
-    case .generateNewPassage(let story):
-            do {
-                let passage = try await environment.generatePassage(using: story)
-                return .onGeneratedNewPassage(passage: passage)
-            } catch {
-                return .failedToGenerateNewPassage
-            }
-    case .onGeneratedNewPassage(let passage):
-        return .generateChapter(passage: passage)
-    case .generateChapter(let passage):
+        return .saveStory(story)
+    case .generateChapter(let previousChapter):
         do {
-            let chapter = try await environment.generateChapter(from: passage)
-            return .onGeneratedChapter(chapter: chapter)
+            let chapterResponse = try await environment.generateChapter(previousChapter: previousChapter)
+            return .onGeneratedChapter(chapterResponse)
         } catch {
             return .failedToGenerateChapter
         }
-    case .onGeneratedChapter(let chapter):
+    case .onGeneratedChapter:
         if let story = state.currentStory {
             return .saveStory(story)
         } else {
@@ -112,7 +103,6 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
         return nil
     case .failedToGenerateNewStory,
-            .failedToGenerateNewPassage,
             .failedToLoadStories,
             .failedToSaveStory,
             .updateSpeechSpeed,

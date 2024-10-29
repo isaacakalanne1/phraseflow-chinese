@@ -32,7 +32,7 @@ struct CharacterView: View {
             store.dispatch(.updateSentenceIndex(sentenceIndex))
             if let word = store.state.getSpokenWord(sentenceIndex: sentenceIndex, characterIndex: characterIndex) {
                 store.dispatch(.selectWord(word))
-                store.dispatch(.defineCharacter(word.word))
+//                store.dispatch(.defineCharacter(word.word))
             }
         }
     }

@@ -28,6 +28,8 @@
 		BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB232C91902100699E7D /* SettingsView.swift */; };
 		BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */; };
 		BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB2A2C91B35D00699E7D /* Definition.swift */; };
+		BB6572CE2CD12A9200AC5981 /* ChapterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572CD2CD12A9200AC5981 /* ChapterResponse.swift */; };
+		BB6572D02CD13C6400AC5981 /* ChapterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572CF2CD13C6400AC5981 /* ChapterType.swift */; };
 		BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -94,6 +96,8 @@
 		BB4EDB232C91902100699E7D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPhrasesResponse.swift; sourceTree = "<group>"; };
 		BB4EDB2A2C91B35D00699E7D /* Definition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Definition.swift; sourceTree = "<group>"; };
+		BB6572CD2CD12A9200AC5981 /* ChapterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterResponse.swift; sourceTree = "<group>"; };
+		BB6572CF2CD13C6400AC5981 /* ChapterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterType.swift; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhraseFlow Chinese.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -163,6 +167,7 @@
 			children = (
 				BB0854822CB42C0200F1661B /* Chapter.swift */,
 				BBB6EF512C8C86B10079D135 /* Sentence.swift */,
+				BB6572CD2CD12A9200AC5981 /* ChapterResponse.swift */,
 				BB0854842CB42C1400F1661B /* Story.swift */,
 				BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */,
 			);
@@ -287,6 +292,7 @@
 				BB4EDB272C919A3300699E7D /* Response */,
 				BB0854862CB42C7100F1661B /* Story */,
 				BB4EDB2A2C91B35D00699E7D /* Definition.swift */,
+				BB6572CF2CD13C6400AC5981 /* ChapterType.swift */,
 				BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */,
 				BBE16F1B2CC1317B00A7EF1F /* Category.swift */,
 				BBE16F1D2CC131CB00A7EF1F /* Subject.swift */,
@@ -512,12 +518,14 @@
 				BBE636D12CCD77BC00873E68 /* FlowLayout.swift in Sources */,
 				BBE16F282CC420FD00A7EF1F /* ViewState.swift in Sources */,
 				BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */,
+				BB6572CE2CD12A9200AC5981 /* ChapterResponse.swift in Sources */,
 				BBE636C12CCC0B5000873E68 /* ActionButtonsView.swift in Sources */,
 				BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */,
 				BBE636CB2CCC0EEF00873E68 /* ErrorView.swift in Sources */,
 				BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */,
 				BB0854832CB42C0200F1661B /* Chapter.swift in Sources */,
 				BB4EDB072C90C8CA00699E7D /* FastChineseAction.swift in Sources */,
+				BB6572D02CD13C6400AC5981 /* ChapterType.swift in Sources */,
 				BBE636BF2CC98B2B00873E68 /* WordTimeStampData.swift in Sources */,
 				BB08548A2CB68AA200F1661B /* String+Subscript.swift in Sources */,
 				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,

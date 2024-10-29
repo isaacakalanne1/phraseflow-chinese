@@ -9,18 +9,34 @@ import Foundation
 
 struct Story: Codable, Equatable, Hashable {
     let storyOverview: String
-    let chapterSummaryList: [String]
+    var latestStorySummary: String
     let difficulty: Difficulty
     let title: String
     let description: String
     var chapters: [Chapter]
     var currentChapterIndex = 0
 
+    init(storyOverview: String,
+         latestStorySummary: String,
+         difficulty: Difficulty,
+         title: String,
+         description: String,
+         chapters: [Chapter],
+         currentChapterIndex: Int = 0) {
+        self.storyOverview = storyOverview
+        self.latestStorySummary = latestStorySummary
+        self.difficulty = difficulty
+        self.title = title
+        self.description = description
+        self.chapters = chapters
+        self.currentChapterIndex = currentChapterIndex
+    }
+
     // Custom decoder to assign default values
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.storyOverview = try container.decode(String.self, forKey: .storyOverview)
-        self.chapterSummaryList = try container.decode([String].self, forKey: .chapterSummaryList)
+        self.latestStorySummary = try container.decode(String.self, forKey: .latestStorySummary)
         self.difficulty = try container.decode(Difficulty.self, forKey: .difficulty)
         self.title = try container.decode(String.self, forKey: .title)
         self.description = try container.decode(String.self, forKey: .description)

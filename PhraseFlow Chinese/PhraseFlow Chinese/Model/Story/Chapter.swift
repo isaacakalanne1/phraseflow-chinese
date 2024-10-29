@@ -9,8 +9,10 @@ import Foundation
 import AVKit
 
 struct Chapter: Codable, Equatable, Hashable {
-    var passage: String
+    var passage: String {
+        sentences.reduce("") { $0 + $1.mandarin }
+    }
     var sentences: [Sentence]
     var audioData: Data?
-    var timestampData: [WordTimeStampData]
+    var timestampData: [WordTimeStampData] = []
 }

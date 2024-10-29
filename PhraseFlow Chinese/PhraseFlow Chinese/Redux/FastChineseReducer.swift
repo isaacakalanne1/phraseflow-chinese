@@ -13,8 +13,11 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     var newState = state
 
     switch action {
-    case .onGeneratedChapter(let chapter):
+    case .onGeneratedChapter(let chapterResponse):
         var newStory = newState.currentStory
+        newStory?.latestStorySummary = chapterResponse.latestStorySummary
+
+        let chapter = Chapter(sentences: chapterResponse.sentences)
         if newStory?.chapters.isEmpty == true {
             newStory?.chapters = [chapter]
         } else {
@@ -110,15 +113,15 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .clearSelectedWord:
         newState.selectedWordStartIndex = -1
         newState.selectedWordEndIndex = -1
-    case .generateNewStory,
-            .generateNewPassage:
+    case .generateChapter:
+        newState.viewState = .loading
+    case .generateNewStory:
         newState.viewState = .loading
         newState.isShowingStoryListView = false
         newState.isShowingCreateStoryScreen = false
     case .failedToGenerateNewStory:
         newState.viewState = .failedToGenerateStory
-    case .failedToGenerateChapter,
-            .failedToGenerateNewPassage:
+    case .failedToGenerateChapter:
         newState.viewState = .failedToGenerateChapter
     case .updateSentenceIndex(let index):
         newState.sentenceIndex = index
@@ -145,9 +148,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             .failedToDefineCharacter,
             .loadStories,
             .synthesizeAudio,
-            .onPlayedAudio,
-            .onGeneratedNewPassage,
-            .generateChapter:
+            .onPlayedAudio:
         break
     }
 
