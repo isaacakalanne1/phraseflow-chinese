@@ -18,15 +18,15 @@ struct ChapterView: View {
         ScrollView(.vertical) {
             ForEach(Array(chapter.sentences.enumerated()), id: \.element) { (sentenceIndex, sentence) in
                 FlowLayout(spacing: 0) {
-                    ForEach(Array(sentence.mandarin.enumerated()), id: \.offset) { characterIndex, element in
-                        let character = sentence.mandarin[characterIndex]
+                    ForEach(Array(sentence.mandarin.enumerated()), id: \.offset) { characterIndex, character in
                         let pinyin = sentence.pinyin[safe: characterIndex] ?? ""
                         let isHighlighted = sentenceIndex == selectedSentenceIndex && characterIndex >= selectedCharacterIndex && characterIndex < selectedCharacterIndex + (currentSpokenWord?.wordLength ?? 1)
                         CharacterView(isHighlighted: isHighlighted,
-                                      character: character,
+                                      character: String(character),
                                       pinyin: pinyin,
                                       characterIndex: characterIndex,
-                                      sentenceIndex: sentenceIndex)
+                                      sentenceIndex: sentenceIndex,
+                                      isLastCharacter: characterIndex == sentence.mandarin.count - 1)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)

@@ -75,12 +75,12 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
     case .pauseAudio:
         state.audioPlayer?.pause()
         return nil
-    case .defineCharacter(let string):
+    case .defineCharacter(let timeStampData):
         do {
             guard let mandarinSentence = state.currentSentence?.mandarin else {
                 return nil
             }
-            let response = try await environment.fetchDefinition(of: string, withinContextOf: mandarinSentence)
+            let response = try await environment.fetchDefinition(of: timeStampData.word, withinContextOf: mandarinSentence)
             guard let definition = response.choices.first?.message.content else {
                 return nil
             }

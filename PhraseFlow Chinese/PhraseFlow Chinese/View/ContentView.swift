@@ -47,7 +47,8 @@ struct ContentView: View {
                         store.dispatch(.generateChapter(previousChapter: chapter))
                     }
                 }
-            case .normal:
+            case .normal,
+                    .defining:
                 if store.state.currentStory == nil {
                     Button("Create Story") {
                         store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
@@ -90,7 +91,7 @@ struct ContentView: View {
     func startTimer() {
         let increment: Double = 0.1
         DispatchQueue.main.asyncAfter(deadline: .now() + increment) {
-            if store.state.audioPlayer?.isPlaying == true {
+            if store.state.isPlayingAudio == true {
                 store.dispatch(.incrementPlayTime(increment))
             }
             startTimer()

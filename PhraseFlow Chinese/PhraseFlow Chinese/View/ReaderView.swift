@@ -12,17 +12,16 @@ struct ReaderView: View {
     let chapter: Chapter
 
     var body: some View {
-        let currentSpokenWord = store.state.timestampData?.last(where: { store.state.currentPlaybackTime >= $0.time }) ?? store.state.timestampData?.first
-        let startCharacterIndex = currentSpokenWord?.textOffset ?? 0
-        let (selectedSentenceIndex, selectedCharacterIndex) = getSentenceAndCharIndex(textOffset: startCharacterIndex) ?? (0,0)
+        let startCharacterIndex = store.state.currentSpokenWord?.textOffset ?? -1
+        let (selectedSentenceIndex, selectedCharacterIndex) = getSentenceAndCharIndex(textOffset: startCharacterIndex) ?? (-1,-1)
 
         VStack(spacing: 10) {
+            EnglishSentenceView()
+                .frame(height: 90)
             DefinitionView()
                 .frame(height: 150)
-            EnglishSentenceView()
-                .frame(height: 100)
             ChapterView(chapter: chapter,
-                        currentSpokenWord: currentSpokenWord,
+                        currentSpokenWord: store.state.currentSpokenWord,
                         selectedSentenceIndex: selectedSentenceIndex,
                         selectedCharacterIndex: selectedCharacterIndex)
             Spacer()

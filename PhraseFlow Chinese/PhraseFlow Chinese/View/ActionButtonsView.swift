@@ -23,7 +23,7 @@ struct ActionButtonsView: View {
                     Image(systemName: "arrow.down.to.line.circle.fill")
                 }
             } else {
-                if store.state.audioPlayer?.isPlaying == true {
+                if store.state.isPlayingAudio == true {
                     Button(action: {
                         store.dispatch(.pauseAudio)
                     }) {

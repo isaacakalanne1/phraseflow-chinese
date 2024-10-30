@@ -8,5 +8,5 @@
 import Foundation
 
 enum ViewState {
-    case normal, loading, failedToGenerateStory, failedToGenerateChapter
+    case normal, loading, failedToGenerateStory, failedToGenerateChapter, defining
 }

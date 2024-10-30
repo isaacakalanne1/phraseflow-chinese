@@ -15,10 +15,12 @@ struct CharacterView: View {
     let pinyin: String
     let characterIndex: Int
     let sentenceIndex: Int
+    let isLastCharacter: Bool
+    private let cornerRadius: CGFloat = 7.5
 
     var body: some View {
         VStack(spacing: 0) {
-            Text(character == pinyin ? "" : pinyin)
+            Text(character == pinyin ? " " : pinyin)
                 .font(.system(size: 10))
                 .opacity(store.state.isShowingPinyin ? 1 : 0)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -27,14 +29,30 @@ struct CharacterView: View {
                 .opacity(store.state.isShowingMandarin ? 1 : 0)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .foregroundStyle(isHighlighted ? Color.blue : Color.black)
-                .background(sentenceIndex == store.state.sentenceIndex ? Color.gray.opacity(0.3) : Color.white)
+                .background {
+                    Group  {
+                        if sentenceIndex == store.state.sentenceIndex {
+                            Color.gray.opacity(0.3)
+                                .clipShape(
+                                    .rect(
+                                        topLeadingRadius: characterIndex == 0 ? cornerRadius : 0,
+                                        bottomLeadingRadius: characterIndex == 0 ? cornerRadius : 0,
+                                        bottomTrailingRadius: isLastCharacter ? cornerRadius : 0,
+                                        topTrailingRadius: isLastCharacter ? cornerRadius : 0
+                                    )
+                                )
+                        }
+                    }
+                }
         }
         .onTapGesture {
             store.dispatch(.updateSentenceIndex(sentenceIndex))
-            if let word = store.state.getSpokenWord(sentenceIndex: sentenceIndex, characterIndex: characterIndex) {
+            if let word = store.state.getSpokenWord(sentenceIndex: sentenceIndex, characterIndex: characterIndex),
+               store.state.viewState != .defining {
                 store.dispatch(.selectWord(word))
-//                store.dispatch(.defineCharacter(word.word))
+                store.dispatch(.defineCharacter(word))
             }
         }
+
     }
 }

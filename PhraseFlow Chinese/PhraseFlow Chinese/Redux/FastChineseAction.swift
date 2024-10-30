@@ -42,7 +42,7 @@ enum FastChineseAction {
     case failedToPlayAudio
     case incrementPlayTime(Double)
 
-    case defineCharacter(String)
+    case defineCharacter(WordTimeStampData)
     case onDefinedCharacter(String)
     case failedToDefineCharacter
 

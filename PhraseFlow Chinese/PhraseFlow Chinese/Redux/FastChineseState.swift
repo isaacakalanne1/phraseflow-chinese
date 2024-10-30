@@ -43,7 +43,6 @@ struct FastChineseState {
     }
 
     var speechSpeed: SpeechSpeed = .normal
-    var characterToDefine: String = ""
     var currentDefinition: Definition?
 
     var isShowingPinyin = true
@@ -55,6 +54,12 @@ struct FastChineseState {
     }
 
     var isPlayingAudio = false
+
+    var currentSpokenWord: WordTimeStampData? {
+        timestampData?.last(where: { currentPlaybackTime >= $0.time })
+    }
+
+    var tappedWord: WordTimeStampData?
 
     func getSpokenWord(sentenceIndex: Int, characterIndex: Int) -> WordTimeStampData? {
         // Calculate the overall character index
