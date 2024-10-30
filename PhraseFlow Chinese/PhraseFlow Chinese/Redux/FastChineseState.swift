@@ -53,6 +53,9 @@ struct FastChineseState {
         currentChapter?.timestampData
     }
 
+    var definitionViewId = UUID()
+    var chapterViewId = UUID()
+
     var isPlayingAudio = false
 
     var currentSpokenWord: WordTimeStampData? {

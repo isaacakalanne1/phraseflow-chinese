@@ -23,7 +23,7 @@ struct CharacterView: View {
             Text(character == pinyin ? " " : pinyin)
                 .font(.system(size: 10))
                 .opacity(store.state.isShowingPinyin ? 1 : 0)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(maxWidth: .infinity)
             Text(character)
                 .font(.system(size: 25, weight: .light))
                 .opacity(store.state.isShowingMandarin ? 1 : 0)

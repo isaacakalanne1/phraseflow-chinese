@@ -13,12 +13,12 @@ typealias FastChineseMiddlewareType = Middleware<FastChineseState, FastChineseAc
 let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environment in
     switch action {
     case .generateNewStory(let categories):
-            do {
-                let story = try await environment.generateStory(categories: categories)
-                return .onGeneratedStory(story)
-            } catch {
-                return .failedToGenerateNewStory
-            }
+        do {
+            let story = try await environment.generateStory(categories: categories)
+            return .onGeneratedStory(story)
+        } catch {
+            return .failedToGenerateNewStory
+        }
     case .onGeneratedStory(let story):
         return .saveStory(story)
     case .generateChapter(let previousChapter):
@@ -42,7 +42,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .failedToLoadStories
         }
     case .onLoadedStories:
-        return nil
+        return .refreshChapterView
     case .saveStory(let story):
         do {
             try environment.saveStory(story)
@@ -65,7 +65,6 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .saveStory(story)
         }
         return nil
-//        return .playAudio(time: nil)
     case .playAudio(let timestamp):
         if let timestamp {
             state.audioPlayer?.currentTime = timestamp
@@ -88,6 +87,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToDefineCharacter
         }
+    case .onDefinedCharacter:
+        return .refreshDefinitionView
     case .selectStory,
             .selectChapter:
         if let story = state.currentStory {
@@ -114,7 +115,6 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .failedToLoadStories,
             .failedToSaveStory,
             .updateSpeechSpeed,
-            .onDefinedCharacter,
             .failedToDefineCharacter,
             .onPlayedAudio,
             .failedToPlayAudio,
@@ -126,7 +126,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .updateShowingSettings,
             .updateShowingStoryListView,
             .failedToGenerateChapter,
-            .updateSentenceIndex:
+            .updateSentenceIndex,
+            .refreshChapterView,
+            .refreshDefinitionView:
         return nil
     }
 }

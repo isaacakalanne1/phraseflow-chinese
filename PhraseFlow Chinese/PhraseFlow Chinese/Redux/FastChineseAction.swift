@@ -55,4 +55,6 @@ enum FastChineseAction {
     case selectWord(WordTimeStampData)
 
     case goToNextChapter
+    case refreshChapterView
+    case refreshDefinitionView
 }

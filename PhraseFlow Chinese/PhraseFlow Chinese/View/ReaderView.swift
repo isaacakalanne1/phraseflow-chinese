@@ -41,9 +41,7 @@ struct ReaderView: View {
                         currentSpokenWord: store.state.currentSpokenWord,
                         selectedSentenceIndex: selectedSentenceIndex,
                         selectedCharacterIndex: selectedCharacterIndex)
-            Spacer()
             ActionButtonsView(chapter: chapter)
-                .padding(.horizontal)
         }
     }
 

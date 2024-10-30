@@ -44,5 +44,6 @@ struct DefinitionView: View {
             }
         }
         .fontWeight(.light)
+        .id(store.state.definitionViewId)
     }
 }
