@@ -17,7 +17,7 @@ enum FastChineseServicesError: Error {
 protocol FastChineseServicesProtocol {
     func generateStory(categories: [Category]) async throws -> Story
     func generateChapter(previousChapter: Chapter) async throws -> ChapterResponse
-    func fetchDefinition(of character: String, withinContextOf sentence: String) async throws -> GPTResponse
+    func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> GPTResponse
 }
 
 final class FastChineseServices: FastChineseServicesProtocol {
@@ -83,7 +83,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         }
     }
 
-    func fetchDefinition(of character: String, withinContextOf sentence: String) async throws -> GPTResponse {
+    func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> GPTResponse {
         let initialPrompt =
 """
         You are an AI assistant that provides English definitions for characters in Chinese sentences. Your explanations are brief, and simple to understand.
@@ -92,7 +92,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         You also provide the definition of the word in the context of the overall sentence.
         You never repeat the Chinese sentence, and never translate the whole of the Chinese sentence into English.
 """
-        let mainPrompt = "Provide a definition for \(character) in \(sentence)"
+        let mainPrompt = "Provide a definition for \(character) in \(sentence.mandarin)"
         let response = try await makeRequest(initialPrompt: initialPrompt, mainPrompt: mainPrompt)
         return response
     }

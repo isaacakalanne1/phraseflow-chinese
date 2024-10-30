@@ -10,12 +10,16 @@ import Foundation
 enum FastChineseDataStoreError: Error {
     case failedToCreateUrl
     case failedToSaveData
-    case failedToDecodeSentences
+    case failedToDecodeData
+    case failedToGetDefinition
 }
 
 protocol FastChineseDataStoreProtocol {
     func loadStories() throws -> [Story]
     func saveStory(_ story: Story) throws
+    func loadDefinitions() throws -> [Definition]
+    func loadDefinition(character: String, sentence: Sentence) throws -> Definition
+    func saveDefinition(_ definition: Definition) throws
     func unsaveStory(_ story: Story) throws
 }
 
@@ -56,7 +60,7 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
             let stories = try decoder.decode([Story].self, from: data)
             return stories
         } catch {
-            throw FastChineseDataStoreError.failedToDecodeSentences
+            throw FastChineseDataStoreError.failedToDecodeData
         }
     }
 
@@ -77,6 +81,54 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
         try saveStories(allStories)
     }
 
+    func loadDefinitions() throws -> [Definition] {
+        guard let fileURL = documentsDirectory?.appendingPathComponent("definitions.json") else {
+            throw FastChineseDataStoreError.failedToCreateUrl
+        }
+        do {
+            let data = try Data(contentsOf: fileURL)
+            let decoder = JSONDecoder()
+            let definitions = try decoder.decode([Definition].self, from: data)
+            return definitions
+        } catch {
+            throw FastChineseDataStoreError.failedToDecodeData
+        }
+    }
+
+    func loadDefinition(character: String, sentence: Sentence) throws -> Definition {
+        guard let fileURL = documentsDirectory?.appendingPathComponent("definitions.json") else {
+            throw FastChineseDataStoreError.failedToCreateUrl
+        }
+        do {
+            let data = try Data(contentsOf: fileURL)
+            let decoder = JSONDecoder()
+            let definitions = try decoder.decode([Definition].self, from: data)
+            guard let definition = definitions.first(where: { $0.character == character && $0.sentence == sentence }) else {
+                throw FastChineseDataStoreError.failedToGetDefinition
+            }
+            return definition
+        } catch {
+            throw FastChineseDataStoreError.failedToDecodeData
+        }
+    }
+
+    func saveDefinition(_ definition: Definition) throws {
+        var allDefinitions: [Definition]
+        if let definitions = try? loadDefinitions() {
+            allDefinitions = definitions
+            allDefinitions.removeAll(where: { $0.character == definition.character && $0.sentence == definition.sentence })
+            if allDefinitions.isEmpty {
+                allDefinitions = [definition]
+            } else {
+                allDefinitions.append(definition)
+            }
+        } else {
+            allDefinitions = [definition]
+        }
+
+        try saveDefinitions(allDefinitions)
+    }
+
     func unsaveStory(_ story: Story) throws {
         if var stories = try? loadStories() {
             stories.removeAll(where: { $0.storyOverview == story.storyOverview })
@@ -91,6 +143,19 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
         let encoder = JSONEncoder()
         do {
             let encodedData = try encoder.encode(stories)
+            try encodedData.write(to: fileURL)
+        } catch {
+            throw FastChineseDataStoreError.failedToSaveData
+        }
+    }
+
+    private func saveDefinitions(_ definitions: [Definition]) throws {
+        guard let fileURL = documentsDirectory?.appendingPathComponent("definitions.json") else {
+            throw FastChineseDataStoreError.failedToCreateUrl
+        }
+        let encoder = JSONEncoder()
+        do {
+            let encodedData = try encoder.encode(definitions)
             try encodedData.write(to: fileURL)
         } catch {
             throw FastChineseDataStoreError.failedToSaveData

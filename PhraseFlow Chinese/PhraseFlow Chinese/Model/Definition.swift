@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Definition {
+struct Definition: Codable, Equatable {
     var character: String
     var sentence: Sentence
     var definition: String

@@ -43,7 +43,7 @@ enum FastChineseAction {
     case incrementPlayTime(Double)
 
     case defineCharacter(WordTimeStampData)
-    case onDefinedCharacter(String)
+    case onDefinedCharacter(Definition)
     case failedToDefineCharacter
 
     case updateShowPinyin(Bool)

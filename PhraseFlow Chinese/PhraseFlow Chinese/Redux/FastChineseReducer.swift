@@ -54,11 +54,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.tappedWord = wordTimeStampData
         newState.viewState = .defining
     case .onDefinedCharacter(let definition):
-        if let sentence = newState.currentSentence {
-            newState.currentDefinition = .init(character: newState.tappedWord?.word ?? "",
-                                               sentence: sentence,
-                                               definition: definition)
-        }
+        newState.currentDefinition = definition
         newState.viewState = .normal
     case .onSynthesizedAudio(let data):
         var newStory = newState.currentStory

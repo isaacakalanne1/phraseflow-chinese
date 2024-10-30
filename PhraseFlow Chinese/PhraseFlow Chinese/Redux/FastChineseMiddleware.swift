@@ -77,13 +77,10 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         return nil
     case .defineCharacter(let timeStampData):
         do {
-            guard let mandarinSentence = state.currentSentence?.mandarin else {
+            guard let sentence = state.currentSentence else {
                 return nil
             }
-            let response = try await environment.fetchDefinition(of: timeStampData.word, withinContextOf: mandarinSentence)
-            guard let definition = response.choices.first?.message.content else {
-                return nil
-            }
+            let definition = try await environment.fetchDefinition(of: timeStampData.word, withinContextOf: sentence)
             return .onDefinedCharacter(definition)
         } catch {
             return .failedToDefineCharacter
