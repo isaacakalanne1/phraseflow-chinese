@@ -38,9 +38,10 @@ enum FastChineseAction {
                              audioData: Data))
     case playAudio(time: Double?)
     case pauseAudio
+    case stopAudio
     case onPlayedAudio
     case failedToPlayAudio
-    case incrementPlayTime(Double)
+    case updatePlayTime
 
     case defineCharacter(WordTimeStampData, shouldForce: Bool)
     case onDefinedCharacter(Definition)

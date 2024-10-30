@@ -75,6 +75,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
     case .pauseAudio:
         state.audioPlayer?.pause()
         return nil
+    case .stopAudio:
+        state.audioPlayer?.stop()
+        return nil
     case .defineCharacter(let timeStampData, let shouldForce):
         do {
             guard let sentence = state.currentSentence else {
@@ -99,6 +102,14 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .saveStory(story)
         }
         return nil
+    case .updatePlayTime:
+        if let time = state.audioPlayer?.currentTime,
+           let lastWordTime = state.currentChapter?.timestampData.last?.time,
+           time > lastWordTime {
+            return .stopAudio
+        } else {
+            return nil
+        }
     case .failedToGenerateNewStory,
             .failedToLoadStories,
             .failedToSaveStory,
@@ -115,8 +126,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .updateShowingSettings,
             .updateShowingStoryListView,
             .failedToGenerateChapter,
-            .updateSentenceIndex,
-            .incrementPlayTime:
+            .updateSentenceIndex:
         return nil
     }
 }

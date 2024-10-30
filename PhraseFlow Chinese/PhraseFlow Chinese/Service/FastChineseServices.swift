@@ -43,7 +43,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         Do not include any explaining statements before or after the story. Simply write the most amazing, engaging, suspenseful story possible.
         You output only the expected story in JSON format, with each sentence split into entries in the list.
         You output no explaining text before or after the JSON, only the JSON.
-        You output data in the following format: { "sentences": [ { "mandarin": "你好", "pinyin": ["nǐ", "hǎo"], "english": "Hello" }, { "mandarin": "谢谢", "pinyin": ["xiè", "xie"], "english": "Thank you" }, { "mandarin": "再见", "pinyin": ["zài", "jiàn"], "english": "Goodbye" } ], "storyTitle": "Short story title in English. Create a short title if no title is provided below", "latestStorySummary": "Non-spoiler English summary of the story so far" }
+        You output data in the following format: { "sentences": [ { "mandarin": "你好", "pinyin": ["nǐ", "hǎo"], "english": "Hello" }, { "mandarin": "谢谢", "pinyin": ["xiè", "xie"], "english": "Thank you" }, { "mandarin": "再见", "pinyin": ["zài", "jiàn"], "english": "Goodbye" } ], "storyTitle": "Short story title in English. Create a short title if no title is provided below", "latestStorySummary": "Suspenseful short teaser description of the story so far, which makes the reader want to read the above chapter." }
         Do not nest JSON statements within each other. Ensure the list only has a depth of 1 JSON object.
         You are a master at pinyin and write the absolute best, most accurate tone markings for the pinyin, based on context, and including all relevant neutral tones.
         Separate each pinyin in the list into their individual sounds. For example, "níanqīng" would be separated into ["nían", "qīng"]

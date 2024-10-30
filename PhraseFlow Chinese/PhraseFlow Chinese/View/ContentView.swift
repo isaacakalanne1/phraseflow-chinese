@@ -76,23 +76,13 @@ struct ContentView: View {
         .sheet(isPresented: isShowingStoryListView) {
             StoryListView()
         }
-        .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global).onEnded { value in
-            let horizontalAmount = value.translation.width
-            let verticalAmount = value.translation.height
-
-            if horizontalAmount > 50 {
-//                store.dispatch(.goToPreviousSentence)
-            } else if horizontalAmount < -50 {
-//                store.dispatch(.goToNextSentence)
-            }
-        })
     }
 
     func startTimer() {
         let increment: Double = 0.1
         DispatchQueue.main.asyncAfter(deadline: .now() + increment) {
             if store.state.isPlayingAudio == true {
-                store.dispatch(.incrementPlayTime(increment))
+                store.dispatch(.updatePlayTime)
             }
             startTimer()
         }
