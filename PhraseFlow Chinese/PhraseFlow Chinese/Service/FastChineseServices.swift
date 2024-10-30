@@ -24,11 +24,11 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
     func generateStory(categories: [Category]) async throws -> Story {
         let chapterResponse = try await generateChapter(type: .first(categories: categories))
-        let chapter = Chapter(sentences: chapterResponse.sentences)
+        let chapter = Chapter(storyTitle: chapterResponse.storyTitle, sentences: chapterResponse.sentences)
         return Story(storyOverview: "Story overview here",
                      latestStorySummary: chapterResponse.latestStorySummary,
                      difficulty: .HSK1,
-                     title: "Title here",
+                     title: chapterResponse.storyTitle,
                      description: "Description here",
                      chapters: [chapter])
     }
@@ -43,7 +43,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         Do not include any explaining statements before or after the story. Simply write the most amazing, engaging, suspenseful story possible.
         You output only the expected story in JSON format, with each sentence split into entries in the list.
         You output no explaining text before or after the JSON, only the JSON.
-        You output data in the following format: { "sentences": [ { "mandarin": "你好", "pinyin": ["nǐ", "hǎo"], "english": "Hello" }, { "mandarin": "谢谢", "pinyin": ["xiè", "xie"], "english": "Thank you" }, { "mandarin": "再见", "pinyin": ["zài", "jiàn"], "english": "Goodbye" } ], "latestStorySummary": "Non-spoiler English summary of the story so far" }
+        You output data in the following format: { "sentences": [ { "mandarin": "你好", "pinyin": ["nǐ", "hǎo"], "english": "Hello" }, { "mandarin": "谢谢", "pinyin": ["xiè", "xie"], "english": "Thank you" }, { "mandarin": "再见", "pinyin": ["zài", "jiàn"], "english": "Goodbye" } ], "storyTitle": "Short story title in English. Create a short title if no title is provided below", "latestStorySummary": "Non-spoiler English summary of the story so far" }
         Do not nest JSON statements within each other. Ensure the list only has a depth of 1 JSON object.
         You are a master at pinyin and write the absolute best, most accurate tone markings for the pinyin, based on context, and including all relevant neutral tones.
         Separate each pinyin in the list into their individual sounds. For example, "níanqīng" would be separated into ["nían", "qīng"]
@@ -58,6 +58,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         Generate an incredible first chapter of a Mandarin story.
         It should be incredibly emotional and dramatic.
         The reader should be amazed an AI came up with it.
+        Write a story using vocabulary a 2 year old could understand.
         "These are the categories the story should be in:
         \(categories.map({ $0.rawValue }))
         """
@@ -66,6 +67,10 @@ final class FastChineseServices: FastChineseServicesProtocol {
         Generate an incredible chapter of a Mandarin story.
         It should be incredibly emotional and dramatic.
         The reader should be amazed an AI came up with it.
+        Write the story using vocabulary a 2 year old could understand.
+        This is the story title:
+        \(previousChapter.storyTitle)
+
         "This is the previous chapter:
         \(previousChapter.passage)
         """

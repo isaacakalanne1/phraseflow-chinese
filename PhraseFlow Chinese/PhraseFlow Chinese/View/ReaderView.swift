@@ -14,16 +14,20 @@ struct ReaderView: View {
     var body: some View {
         let startCharacterIndex = store.state.currentSpokenWord?.textOffset ?? -1
         let (selectedSentenceIndex, selectedCharacterIndex) = getSentenceAndCharIndex(textOffset: startCharacterIndex) ?? (-1,-1)
+        let chapterNumber = (store.state.currentStory?.currentChapterIndex ?? 0) + 1
 
         VStack(spacing: 10) {
             DefinitionView()
                 .frame(height: 150)
             EnglishSentenceView()
                 .frame(height: 90)
-            HStack {
+            HStack(spacing: 0) {
                 Text(store.state.currentStory?.title ?? "")
                     .bold()
-                Text("Chapter \(store.state.currentStory?.currentChapterIndex ?? 1)")
+                Text(" ")
+                    .fontWeight(.light)
+                Text("Chapter \(chapterNumber)")
+                    .fontWeight(.light)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(4)

@@ -12,6 +12,7 @@ struct Chapter: Codable, Equatable, Hashable {
     var passage: String {
         sentences.reduce("") { $0 + $1.mandarin }
     }
+    var storyTitle: String
     var sentences: [Sentence]
     var audioData: Data?
     var timestampData: [WordTimeStampData] = []

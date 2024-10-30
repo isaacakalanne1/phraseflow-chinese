@@ -29,7 +29,6 @@ struct DefinitionView: View {
                 ScrollView(.vertical) {
                     Text(store.state.viewState == .defining ? "Defining..." : (store.state.currentDefinition?.definition ?? ""))
                         .foregroundColor(store.state.currentDefinition == nil ? .gray : .black)
-                        .font(.body)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                 }
                 if let word = store.state.tappedWord {
@@ -44,5 +43,6 @@ struct DefinitionView: View {
 
             }
         }
+        .fontWeight(.light)
     }
 }

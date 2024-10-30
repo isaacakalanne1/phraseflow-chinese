@@ -9,5 +9,6 @@ import Foundation
 
 struct ChapterResponse: Codable {
     let latestStorySummary: String
+    let storyTitle: String
     let sentences: [Sentence]
 }
