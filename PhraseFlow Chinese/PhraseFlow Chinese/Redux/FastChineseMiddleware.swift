@@ -71,6 +71,15 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
         state.audioPlayer?.play()
         return nil
+    case .playWord(let word):
+        state.audioPlayer?.prepareToPlay()
+        state.audioPlayer?.currentTime = word.time
+        state.audioPlayer?.play()
+        let duration = word.duration
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration + 0.05) {
+            state.audioPlayer?.stop()
+        }
+        return nil
     case .pauseAudio:
         state.audioPlayer?.pause()
         return nil

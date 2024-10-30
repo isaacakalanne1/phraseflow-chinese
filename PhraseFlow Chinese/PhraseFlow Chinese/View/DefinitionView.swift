@@ -32,13 +32,22 @@ struct DefinitionView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                 }
                 if let word = store.state.tappedWord {
-                    Button {
-                        store.dispatch(.defineCharacter(word, shouldForce: true))
-                    } label: {
-                        Image(systemName: "repeat.circle.fill")
-                            .resizable()
+                    VStack {
+                        Button {
+                            store.dispatch(.playWord(word))
+                        } label: {
+                            Image(systemName: "speaker.circle.fill")
+                                .resizable()
+                        }
+                        .frame(width: 40, height: 40)
+                        Button {
+                            store.dispatch(.defineCharacter(word, shouldForce: true))
+                        } label: {
+                            Image(systemName: "repeat.circle.fill")
+                                .resizable()
+                        }
+                        .frame(width: 40, height: 40)
                     }
-                    .frame(width: 40, height: 40)
                 }
 
             }

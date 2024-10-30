@@ -44,6 +44,7 @@ enum FastChineseAction {
     case updatePlayTime
 
     case defineCharacter(WordTimeStampData, shouldForce: Bool)
+    case playWord(WordTimeStampData)
     case onDefinedCharacter(Definition)
     case failedToDefineCharacter
 

@@ -157,7 +157,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             .failedToDefineCharacter,
             .loadStories,
             .synthesizeAudio,
-            .onPlayedAudio:
+            .onPlayedAudio,
+            .playWord:
         break
     }
 
