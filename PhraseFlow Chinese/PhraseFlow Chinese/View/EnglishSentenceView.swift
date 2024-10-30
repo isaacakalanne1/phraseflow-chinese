@@ -11,13 +11,23 @@ struct EnglishSentenceView: View {
     @EnvironmentObject var store: FastChineseStore
 
     var body: some View {
-        ScrollView(.vertical) {
-            Text(store.state.currentSentence?.english ?? "")
-                .foregroundColor(.gray)
-                .font(.body)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .opacity(store.state.isShowingEnglish ? 1 : 0)
+        VStack {
+            Text("Translation")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(4)
+                .background {
+                    if store.state.isShowingEnglish {
+                        Color.gray.opacity(0.3)
+                            .clipShape(.rect(cornerRadius: 5))
+                    }
+                }
+            ScrollView(.vertical) {
+                Text(store.state.currentSentence?.english ?? "")
+                    .foregroundColor(.gray)
+                    .font(.body)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .opacity(store.state.isShowingEnglish ? 1 : 0)
+            }
         }
     }
 }

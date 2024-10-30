@@ -50,7 +50,7 @@ struct CharacterView: View {
             if let word = store.state.getSpokenWord(sentenceIndex: sentenceIndex, characterIndex: characterIndex),
                store.state.viewState != .defining {
                 store.dispatch(.selectWord(word))
-                store.dispatch(.defineCharacter(word))
+                store.dispatch(.defineCharacter(word, shouldForce: false))
             }
         }
 

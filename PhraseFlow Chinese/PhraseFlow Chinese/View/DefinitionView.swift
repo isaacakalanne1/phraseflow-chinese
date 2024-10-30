@@ -18,13 +18,31 @@ struct DefinitionView: View {
                     .fontWeight(store.state.tappedWord?.word == nil ? .regular : .bold)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            ScrollView(.vertical) {
-                Text(store.state.viewState == .defining ? "Defining..." : (store.state.currentDefinition?.definition ?? ""))
-                    .foregroundColor(store.state.currentDefinition == nil ? .gray : .black)
-                    .font(.body)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+            .padding(4)
+            .background {
+                Color.gray.opacity(0.3)
+                    .clipShape(
+                        .rect(cornerRadius: 5)
+                    )
+            }
+            HStack {
+                ScrollView(.vertical) {
+                    Text(store.state.viewState == .defining ? "Defining..." : (store.state.currentDefinition?.definition ?? ""))
+                        .foregroundColor(store.state.currentDefinition == nil ? .gray : .black)
+                        .font(.body)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                }
+                if let word = store.state.tappedWord {
+                    Button {
+                        store.dispatch(.defineCharacter(word, shouldForce: true))
+                    } label: {
+                        Image(systemName: "repeat.circle.fill")
+                            .resizable()
+                    }
+                    .frame(width: 40, height: 40)
+                }
+
             }
         }
-        .padding()
     }
 }

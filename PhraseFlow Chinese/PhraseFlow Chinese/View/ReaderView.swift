@@ -16,10 +16,16 @@ struct ReaderView: View {
         let (selectedSentenceIndex, selectedCharacterIndex) = getSentenceAndCharIndex(textOffset: startCharacterIndex) ?? (-1,-1)
 
         VStack(spacing: 10) {
-            EnglishSentenceView()
-                .frame(height: 90)
+            HStack {
+                Text(store.state.currentStory?.title ?? "")
+                    .bold()
+                Text("Chapter \(store.state.currentStory?.currentChapterIndex ?? 1)")
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
             DefinitionView()
                 .frame(height: 150)
+            EnglishSentenceView()
+                .frame(height: 90)
             ChapterView(chapter: chapter,
                         currentSpokenWord: store.state.currentSpokenWord,
                         selectedSentenceIndex: selectedSentenceIndex,

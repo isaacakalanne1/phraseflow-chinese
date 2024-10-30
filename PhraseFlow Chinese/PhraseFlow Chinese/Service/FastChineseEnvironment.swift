@@ -19,7 +19,7 @@ protocol FastChineseEnvironmentProtocol {
     func saveStory(_ story: Story) throws
     func unsaveStory(_ story: Story) throws
 
-    func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> Definition
+    func fetchDefinition(of character: String, withinContextOf sentence: Sentence, shouldForce: Bool) async throws -> Definition
 }
 
 struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
@@ -59,8 +59,12 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
         try dataStore.loadStories()
     }
 
-    func fetchDefinition(of string: String, withinContextOf sentence: Sentence) async throws -> Definition {
-        if let definition = try? dataStore.loadDefinition(character: string, sentence: sentence) {
+    func fetchDefinition(of string: String, withinContextOf sentence: Sentence, shouldForce: Bool) async throws -> Definition {
+        if shouldForce {
+            let response = try await service.fetchDefinition(of: string, withinContextOf: sentence)
+            let definitionString = response.choices.first?.message.content ?? ""
+            return Definition(character: string, sentence: sentence, definition: definitionString)
+        } else if let definition = try? dataStore.loadDefinition(character: string, sentence: sentence) {
             return definition
         } else {
             let response = try await service.fetchDefinition(of: string, withinContextOf: sentence)

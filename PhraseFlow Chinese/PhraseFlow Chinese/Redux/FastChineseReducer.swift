@@ -50,7 +50,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.speechSpeed = speed
         newState.audioPlayer?.enableRate = true
         newState.audioPlayer?.rate = speed.rate
-    case .defineCharacter(let wordTimeStampData):
+    case .defineCharacter(let wordTimeStampData, let shouldForce):
         newState.tappedWord = wordTimeStampData
         newState.viewState = .defining
     case .onDefinedCharacter(let definition):
