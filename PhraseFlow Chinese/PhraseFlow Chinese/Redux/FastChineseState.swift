@@ -47,7 +47,7 @@ struct FastChineseState {
 
     var isShowingPinyin = true
     var isShowingEnglish = true
-    var isShowingMandarin = true
+    var isShowingDefinition = true
     var audioPlayer = try? AVAudioPlayer(data: Data())
     var timestampData: [WordTimeStampData]? {
         currentChapter?.timestampData

@@ -15,10 +15,10 @@ struct CreateStoryView: View {
         NavigationView {
             VStack(spacing: 20) {
                 Text("Create a Story")
-                    .font(.title2)
-                Spacer()
+                    .bold()
                 Text("Select Categories")
-                    .font(.title2)
+                    .fontWeight(.light)
+                    .greyBackground()
 
                 ScrollView(.horizontal) {
                     HStack {
@@ -40,6 +40,8 @@ struct CreateStoryView: View {
                         }
                     }
                 }
+
+                Spacer()
 
                 Button(action: {
                     withAnimation(.easeInOut) {

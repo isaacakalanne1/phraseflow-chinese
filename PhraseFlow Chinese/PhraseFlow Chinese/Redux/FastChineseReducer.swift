@@ -68,8 +68,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.audioPlayer?.prepareToPlay()
     case .updateShowPinyin(let isShowing):
         newState.isShowingPinyin = isShowing
-    case .updateShowMandarin(let isShowing):
-        newState.isShowingMandarin = isShowing
+    case .updateShowDefinition(let isShowing):
+        newState.isShowingDefinition = isShowing
     case .updateShowEnglish(let isShowing):
         newState.isShowingEnglish = isShowing
     case .updateShowingCreateStoryScreen(let isShowing):

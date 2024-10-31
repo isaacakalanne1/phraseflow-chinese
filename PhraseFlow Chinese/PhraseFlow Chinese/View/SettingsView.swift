@@ -18,10 +18,10 @@ struct SettingsView: View {
             store.dispatch(.updateShowPinyin(newValue))
         }
 
-        let showMandarin: Binding<Bool> = .init {
-            store.state.isShowingMandarin
+        let showDefinition: Binding<Bool> = .init {
+            store.state.isShowingDefinition
         } set: { newValue in
-            store.dispatch(.updateShowMandarin(newValue))
+            store.dispatch(.updateShowDefinition(newValue))
         }
 
         let showEnglish: Binding<Bool> = .init {
@@ -36,7 +36,7 @@ struct SettingsView: View {
                 Spacer()
 
                 Toggle("Show Pinyin", isOn: showPinyin)
-                Toggle("Show Mandarin", isOn: showMandarin)
+                Toggle("Show Definition", isOn: showDefinition)
                 Toggle("Show English", isOn: showEnglish)
 
                 Text("Choose Speech Speed")

@@ -17,14 +17,7 @@ struct DefinitionView: View {
                 Text(store.state.tappedWord?.word ?? "...")
                     .fontWeight(store.state.tappedWord?.word == nil ? .regular : .bold)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(4)
-            .background {
-                Color.gray.opacity(0.3)
-                    .clipShape(
-                        .rect(cornerRadius: 5)
-                    )
-            }
+            .greyBackground()
             HStack {
                 ScrollView(.vertical) {
                     Text(store.state.viewState == .defining ? "Defining..." : (store.state.currentDefinition?.definition ?? ""))

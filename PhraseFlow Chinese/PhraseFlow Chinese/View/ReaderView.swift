@@ -17,10 +17,14 @@ struct ReaderView: View {
         let chapterNumber = (store.state.currentStory?.currentChapterIndex ?? 0) + 1
 
         VStack(spacing: 10) {
-            DefinitionView()
-                .frame(height: 150)
-            EnglishSentenceView()
-                .frame(height: 90)
+            if store.state.isShowingDefinition {
+                DefinitionView()
+                    .frame(height: 150)
+            }
+            if store.state.isShowingEnglish {
+                EnglishSentenceView()
+                    .frame(height: 90)
+            }
             HStack(spacing: 0) {
                 Text(store.state.currentStory?.title ?? "")
                     .bold()
@@ -29,14 +33,7 @@ struct ReaderView: View {
                 Text("Chapter \(chapterNumber)")
                     .fontWeight(.light)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(4)
-            .background {
-                if store.state.isShowingEnglish {
-                    Color.gray.opacity(0.3)
-                        .clipShape(.rect(cornerRadius: 5))
-                }
-            }
+            .greyBackground()
             ChapterView(chapter: chapter,
                         currentSpokenWord: store.state.currentSpokenWord,
                         selectedSentenceIndex: selectedSentenceIndex,

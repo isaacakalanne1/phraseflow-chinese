@@ -26,7 +26,6 @@ struct CharacterView: View {
                 .frame(maxWidth: .infinity)
             Text(character)
                 .font(.system(size: 25, weight: .light))
-                .opacity(store.state.isShowingMandarin ? 1 : 0)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .foregroundStyle(isHighlighted ? Color.blue : Color.black)
                 .background {
@@ -50,7 +49,9 @@ struct CharacterView: View {
             if let word = store.state.getSpokenWord(sentenceIndex: sentenceIndex, characterIndex: characterIndex),
                store.state.viewState != .defining {
                 store.dispatch(.selectWord(word))
-                store.dispatch(.defineCharacter(word, shouldForce: false))
+                if store.state.isShowingDefinition {
+                    store.dispatch(.defineCharacter(word, shouldForce: false))
+                }
             }
         }
 

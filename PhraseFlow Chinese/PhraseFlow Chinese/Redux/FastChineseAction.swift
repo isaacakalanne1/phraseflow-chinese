@@ -49,7 +49,7 @@ enum FastChineseAction {
     case failedToDefineCharacter
 
     case updateShowPinyin(Bool)
-    case updateShowMandarin(Bool)
+    case updateShowDefinition(Bool)
     case updateShowEnglish(Bool)
 
     case updateSpeechSpeed(SpeechSpeed)

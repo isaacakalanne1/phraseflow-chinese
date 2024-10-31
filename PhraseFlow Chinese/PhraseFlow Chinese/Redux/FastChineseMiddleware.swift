@@ -128,7 +128,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .onPlayedAudio,
             .failedToPlayAudio,
             .updateShowPinyin,
-            .updateShowMandarin,
+            .updateShowDefinition,
             .updateShowEnglish,
             .updateShowingCreateStoryScreen,
             .updateSelectCategory,
