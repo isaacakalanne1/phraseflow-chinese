@@ -45,9 +45,9 @@ struct CharacterView: View {
                 }
         }
         .onTapGesture {
-            store.dispatch(.updateSentenceIndex(sentenceIndex))
             if let word = store.state.getSpokenWord(sentenceIndex: sentenceIndex, characterIndex: characterIndex),
                store.state.viewState != .defining {
+                store.dispatch(.updateSentenceIndex(sentenceIndex))
                 store.dispatch(.selectWord(word))
                 if store.state.isShowingDefinition {
                     store.dispatch(.defineCharacter(word, shouldForce: false))

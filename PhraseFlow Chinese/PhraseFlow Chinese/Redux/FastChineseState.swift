@@ -65,6 +65,9 @@ struct FastChineseState {
     var tappedWord: WordTimeStampData?
 
     func getSpokenWord(sentenceIndex: Int, characterIndex: Int) -> WordTimeStampData? {
+        guard let timestampData else {
+            return nil
+        }
         // Calculate the overall character index
         var totalCharacterIndex = 0
         guard let currentChapter else { return nil }
@@ -86,6 +89,6 @@ struct FastChineseState {
 
         // Now totalCharacterIndex is the overall index of the character
         // Find the SpokenWord in timestampData that includes this index
-        return timestampData?.last(where: { totalCharacterIndex >= $0.textOffset})
+        return timestampData.last(where: { totalCharacterIndex >= $0.textOffset})
     }
 }
