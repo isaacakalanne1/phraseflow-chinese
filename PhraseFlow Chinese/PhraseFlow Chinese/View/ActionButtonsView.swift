@@ -13,68 +13,49 @@ struct ActionButtonsView: View {
 
     var body: some View {
 
-        HStack {
-            Spacer()
-
+        HStack(spacing: 20) {
             if chapter.audioData == nil {
-                Button(action: {
+                ActionButton(title: "Load",
+                             imageName: "arrow.down.to.line.circle") {
                     store.dispatch(.synthesizeAudio(chapter, isForced: false))
-                }) {
-                    Image(systemName: "arrow.down.to.line.circle.fill")
                 }
             } else {
                 if store.state.isPlayingAudio == true {
-                    Button(action: {
+                    ActionButton(title: "Pause",
+                                 imageName: "pause.circle.fill") {
                         store.dispatch(.pauseAudio)
-                    }) {
-                        Image(systemName: "pause.circle.fill")
                     }
                 } else {
-                    Button(action: {
-                        let currentSpokenWord = store.state.timestampData?.last(where: { store.state.currentPlaybackTime >= $0.time }) ?? store.state.timestampData?.first
+                    ActionButton(title: "Play",
+                                 imageName: "play.circle") {
+                        let timestampData = store.state.timestampData
+                        let currentSpokenWord = store.state.currentSpokenWord ?? timestampData?.first
                         if let time = currentSpokenWord?.time {
                             store.dispatch(.playAudio(time: time))
                         }
-                    }) {
-                        Image(systemName: "play.circle.fill")
                     }
                 }
             }
 
-//            Button(action: {
-//                if let chapter = store.state.currentChapter {
-//                    store.dispatch(.synthesizeAudio(chapter, isForced: true))
-//                }
-//            }) {
-//                Image(systemName: "repeat.circle.fill")
-//            }
-
-            Button(action: {
+            ActionButton(title: store.state.isShowingPinyin ? "Hide\nPinyin" : "Show\nPinyin",
+                         imageName: store.state.isShowingPinyin ? "lightbulb.fill" : "lightbulb.slash") {
                 store.dispatch(.updateShowPinyin(!store.state.isShowingPinyin))
-            }) {
-                Image(systemName: store.state.isShowingPinyin ? "s.circle.fill" : "strikethrough")
-                    .frame(width: 50, height: 50)
             }
 
-            Button {
+            ActionButton(title: "Create\nStory",
+                         imageName: "paintbrush.pointed") {
                 store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
-            } label: {
-                Image(systemName: "plus.rectangle.fill.on.rectangle.fill")
             }
 
-            Button {
+            ActionButton(title: "Choose\nStory",
+                         imageName: "list.bullet") {
                 store.dispatch(.updateShowingStoryListView(isShowing: true))
-            } label: {
-                Image(systemName: "list.bullet.rectangle.portrait.fill")
             }
 
-            Button(action: {
+            ActionButton(title: "Settings",
+                         imageName: "gearshape.fill") {
                 store.dispatch(.updateShowingSettings(isShowing: true))
-            }) {
-                Image(systemName: "gearshape.fill")
             }
-            Spacer()
         }
-        .font(.system(size: 50))
     }
 }

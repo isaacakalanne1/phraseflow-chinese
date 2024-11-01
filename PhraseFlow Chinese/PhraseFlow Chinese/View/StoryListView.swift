@@ -14,9 +14,6 @@ struct StoryListView: View {
 
         NavigationView {
             VStack(spacing: 20) {
-                Text("Choose a Story")
-                    .font(.title2)
-
                 ScrollView {
                     VStack {
                         ForEach(store.state.savedStories, id: \.self) { story in
@@ -27,26 +24,16 @@ struct StoryListView: View {
                                     VStack(alignment: .leading, content: {
                                         Text(story.title)
                                             .bold()
-                                            .font(.body)
-                                            .foregroundColor(.primary)
-                                            .frame(maxWidth: .infinity)
-                                            .cornerRadius(10)
                                         Text(story.latestStorySummary)
-                                            .font(.body)
-                                            .foregroundColor(.primary)
-                                            .frame(maxWidth: .infinity)
-                                            .cornerRadius(10)
+                                            .fontWeight(.light)
                                     })
+                                    .foregroundStyle(Color.primary)
                                     .multilineTextAlignment(.leading)
-                                    Image(systemName: "play.circle.fill")
-                                        .resizable()
-                                        .frame(width: 50, height: 50)
-                                        .foregroundStyle(Color.accentColor)
+                                    .frame(maxWidth: .infinity)
                                 }
                                 NavigationLink(destination: ChapterListView(story: story)) {
-                                    Image(systemName: "magnifyingglass.circle")
-                                        .resizable()
-                                        .frame(width: 50, height: 50)
+                                    Image(systemName: "chevron.right")
+                                        .frame(width: 50, height: 100)
                                         .foregroundStyle(Color.accentColor)
                                 }
                             }
@@ -56,10 +43,12 @@ struct StoryListView: View {
             }
             .toolbar(.hidden)
             .padding(.horizontal)
+            .padding(.top, 20)
         }
         .onAppear {
             store.dispatch(.loadStories)
         }
+        .navigationTitle("Choose Story")
     }
 
 }

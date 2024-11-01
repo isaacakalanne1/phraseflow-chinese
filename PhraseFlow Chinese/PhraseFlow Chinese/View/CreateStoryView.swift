@@ -13,14 +13,16 @@ struct CreateStoryView: View {
     var body: some View {
 
         NavigationView {
-            VStack(spacing: 20) {
-                Text("Create a Story")
+            VStack {
+                Text("Create Story")
                     .bold()
+                    .greyBackground()
+                    .padding(.top, 20)
                 Text("Select Categories")
                     .fontWeight(.light)
-                    .greyBackground()
+                    .frame(maxWidth: .infinity, alignment: .leading)
 
-                ScrollView(.horizontal) {
+                ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(Category.allCases, id: \.self) { category in
                             Button(action: {

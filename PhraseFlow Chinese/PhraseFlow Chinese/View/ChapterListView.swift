@@ -42,7 +42,7 @@ struct ChapterListView: View {
             .cornerRadius(10)
         }
         .padding(.horizontal)
-        .navigationTitle("Choose a Chapter")
+        .navigationTitle("Choose Chapter")
     }
 
 }
