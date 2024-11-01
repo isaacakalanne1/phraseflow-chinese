@@ -68,8 +68,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
     case .playAudio(let timestamp):
         if let timestamp {
             state.audioPlayer?.currentTime = timestamp
-            state.audioPlayer?.prepareToPlay()
         }
+        state.audioPlayer?.prepareToPlay()
         state.audioPlayer?.play()
         return nil
     case .playWord(let word):
