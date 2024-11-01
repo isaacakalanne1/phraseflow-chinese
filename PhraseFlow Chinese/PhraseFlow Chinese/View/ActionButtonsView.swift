@@ -28,8 +28,10 @@ struct ActionButtonsView: View {
                 } else {
                     ActionButton(title: "Play",
                                  imageName: "play.circle") {
-                        if let time = store.state.currentSpokenWord?.time {
-                            store.dispatch(.playAudio(time: time))
+                        let timestampData = store.state.timestampData
+                        let currentSpokenWord = store.state.currentSpokenWord ?? timestampData?.first
+                        if let time = currentSpokenWord?.time {
+                            store.dispatch(.playAudio(time: currentSpokenWord?.time))
                         }
                     }
                 }
