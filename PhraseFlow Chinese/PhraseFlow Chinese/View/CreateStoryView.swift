@@ -16,11 +16,10 @@ struct CreateStoryView: View {
             VStack {
                 Text("Create Story")
                     .bold()
-                    .greyBackground()
                     .padding(.top, 20)
-                Text("Select Categories")
+                Text("Genre")
                     .fontWeight(.light)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .greyBackground()
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
@@ -38,6 +37,35 @@ struct CreateStoryView: View {
                                     .padding()
                                     .background(store.state.selectedCategories.contains(category) ? Color.accentColor : Color.gray.opacity(0.3))
                                     .cornerRadius(10)
+                            }
+                        }
+                    }
+                }
+
+                Text("Setting")
+                    .fontWeight(.light)
+                    .greyBackground()
+
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(StorySetting.allCases, id: \.self) { setting in
+                            Button(action: {
+                                withAnimation(.easeInOut) {
+//                                    store.dispatch(.updateSelectCategory(category,
+//                                                                         isSelected: !store.state.selectedCategories.contains(category)))
+                                }
+                            }) {
+                                AsyncImage(url: setting.imageUrl) { phase in
+                                    let image = phase.image?.resizable() ?? Image(systemName: "")
+                                    image
+                                        .frame(width: 100, height: 70)
+                                        .overlay {
+                                            Color.black.opacity(0.2)
+                                            Text(setting.name)
+                                                .foregroundStyle(Color.white)
+                                        }
+                                        .clipShape(.rect(cornerRadius: 10))
+                                }
                             }
                         }
                     }

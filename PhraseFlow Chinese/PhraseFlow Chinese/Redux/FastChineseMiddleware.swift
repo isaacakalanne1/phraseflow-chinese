@@ -68,6 +68,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
     case .playAudio(let timestamp):
         if let timestamp {
             state.audioPlayer?.currentTime = timestamp
+            state.audioPlayer?.prepareToPlay()
         }
         state.audioPlayer?.play()
         return nil
@@ -79,10 +80,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             state.audioPlayer?.stop()
         }
         return nil
-    case .pauseAudio:
-        state.audioPlayer?.pause()
-        return nil
-    case .stopAudio:
+    case .pauseAudio,
+            .stopAudio:
         state.audioPlayer?.stop()
         return nil
     case .defineCharacter(let timeStampData, let shouldForce):

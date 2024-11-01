@@ -60,6 +60,13 @@ struct FastChineseState {
 
     var currentSpokenWord: WordTimeStampData? {
         timestampData?.last(where: { currentPlaybackTime >= $0.time })
+//        guard let word = timestampData?.last(where: { currentPlaybackTime >= $0.time }) else { return nil }
+//        if word.time + word.duration < currentPlaybackTime,
+//           let index = timestampData?.firstIndex(of: word),
+//           let followingWord = timestampData?[safe: index + 1] {
+//            return followingWord
+//        }
+//        return word
     }
 
     var tappedWord: WordTimeStampData?

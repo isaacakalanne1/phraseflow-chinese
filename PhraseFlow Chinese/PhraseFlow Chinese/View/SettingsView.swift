@@ -33,6 +33,10 @@ struct SettingsView: View {
 
         NavigationView {
             VStack(spacing: 20) {
+                Text("Settings")
+                    .font(.title2.bold())
+                    .padding(.vertical)
+
                 Spacer()
 
                 Toggle("Show Pinyin", isOn: showPinyin)
@@ -59,10 +63,6 @@ struct SettingsView: View {
                         }
                     }
                 }
-
-                Text("Settings")
-                    .font(.title2.bold())
-                    .padding(.vertical)
             }
             .toolbar(.hidden)
             .padding(.horizontal)

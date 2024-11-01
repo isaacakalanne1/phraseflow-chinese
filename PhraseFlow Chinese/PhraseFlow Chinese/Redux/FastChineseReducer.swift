@@ -132,9 +132,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.isPlayingAudio = false
         newState.currentPlaybackTime = 0
     case .updatePlayTime:
-        if let time = newState.audioPlayer?.currentTime {
-            newState.currentPlaybackTime = time
-        }
+        newState.currentPlaybackTime = newState.audioPlayer?.currentTime ?? newState.currentPlaybackTime
     case .selectWord(let timestampData):
         newState.currentPlaybackTime = timestampData.time
     case .goToNextChapter:
