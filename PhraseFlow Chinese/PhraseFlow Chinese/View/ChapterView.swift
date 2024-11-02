@@ -15,12 +15,32 @@ struct ChapterView: View {
     let selectedCharacterIndex: Int
 
     var body: some View {
+        let cumulativeCharacterCounts: [Int] = {
+            var counts: [Int] = []
+            var cumulativeCount = 0
+            for sentence in chapter.sentences {
+                counts.append(cumulativeCount)
+                cumulativeCount += sentence.mandarin.count
+            }
+            return counts
+        }()
+
+        // Compute the global index of the selected character
+        let wordLength = currentSpokenWord?.wordLength ?? 1
+        let globalSelectedCharacterIndex = cumulativeCharacterCounts[selectedSentenceIndex] + selectedCharacterIndex
+
         ScrollView(.vertical) {
             ForEach(Array(chapter.sentences.enumerated()), id: \.element) { (sentenceIndex, sentence) in
+                let cumulativeSentenceStartIndex = cumulativeCharacterCounts[sentenceIndex]
+                
                 FlowLayout(spacing: 0) {
                     ForEach(Array(sentence.mandarin.enumerated()), id: \.offset) { characterIndex, character in
                         let pinyin = sentence.pinyin[safe: characterIndex] ?? ""
-                        let isHighlighted = sentenceIndex == selectedSentenceIndex && characterIndex >= selectedCharacterIndex && characterIndex < selectedCharacterIndex + (currentSpokenWord?.wordLength ?? 1)
+                        // Compute the global character index
+                        let globalCharacterIndex = cumulativeSentenceStartIndex + characterIndex
+
+                        // Adjust isHighlighted to use global indices
+                        let isHighlighted = globalCharacterIndex >= globalSelectedCharacterIndex && globalCharacterIndex < globalSelectedCharacterIndex + wordLength
                         CharacterView(isHighlighted: isHighlighted,
                                       character: String(character),
                                       pinyin: pinyin,
