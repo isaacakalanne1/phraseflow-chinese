@@ -15,15 +15,15 @@ enum FastChineseServicesError: Error {
 }
 
 protocol FastChineseServicesProtocol {
-    func generateStory(categories: [Category]) async throws -> Story
+    func generateStory(genres: [Genre]) async throws -> Story
     func generateChapter(previousChapter: Chapter) async throws -> ChapterResponse
     func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> GPTResponse
 }
 
 final class FastChineseServices: FastChineseServicesProtocol {
 
-    func generateStory(categories: [Category]) async throws -> Story {
-        let chapterResponse = try await generateChapter(type: .first(categories: categories))
+    func generateStory(genres: [Genre]) async throws -> Story {
+        let chapterResponse = try await generateChapter(type: .first(genres: genres))
         let chapter = Chapter(storyTitle: chapterResponse.storyTitle, sentences: chapterResponse.sentences)
         return Story(storyOverview: "Story overview here",
                      latestStorySummary: chapterResponse.latestStorySummary,
@@ -53,14 +53,14 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
         let mainPrompt: String
         switch type {
-        case .first(let categories):
+        case .first(let genres):
             mainPrompt = """
         Generate an incredible first chapter of a Mandarin story.
         It should be incredibly emotional and dramatic.
         The reader should be amazed an AI came up with it.
         Write a story using vocabulary a 2 year old could understand.
-        "These are the categories the story should be in:
-        \(categories.map({ $0.rawValue }))
+        "These are the genres the story should be in:
+        \(genres.map({ $0.rawValue }))
         """
         case .next(let previousChapter):
             mainPrompt = """

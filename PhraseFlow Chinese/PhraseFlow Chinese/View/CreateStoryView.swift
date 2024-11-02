@@ -23,19 +23,19 @@ struct CreateStoryView: View {
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(Category.allCases, id: \.self) { category in
+                        ForEach(Genre.allCases, id: \.self) { category in
                             Button(action: {
                                 withAnimation(.easeInOut) {
                                     store.dispatch(.updateSelectCategory(category,
-                                                                         isSelected: !store.state.selectedCategories.contains(category)))
+                                                                         isSelected: !store.state.selectedGenres.contains(category)))
                                 }
                             }) {
                                 Text(category.title)
                                     .font(.body)
-                                    .foregroundColor(store.state.selectedCategories.contains(category) ? .white : .primary)
+                                    .foregroundColor(store.state.selectedGenres.contains(category) ? .white : .primary)
                                     .frame(maxWidth: .infinity)
                                     .padding()
-                                    .background(store.state.selectedCategories.contains(category) ? Color.accentColor : Color.gray.opacity(0.3))
+                                    .background(store.state.selectedGenres.contains(category) ? Color.accentColor : Color.gray.opacity(0.3))
                                     .cornerRadius(10)
                             }
                         }
@@ -62,7 +62,7 @@ struct CreateStoryView: View {
 
                 Button(action: {
                     withAnimation(.easeInOut) {
-                        store.dispatch(.generateNewStory(categories: store.state.selectedCategories))
+                        store.dispatch(.generateNewStory(genres: store.state.selectedGenres))
                     }
                 }) {
                     Text("Create Story")

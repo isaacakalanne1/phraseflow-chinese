@@ -12,9 +12,9 @@ import AVKit
 typealias FastChineseMiddlewareType = Middleware<FastChineseState, FastChineseAction, FastChineseEnvironmentProtocol>
 let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environment in
     switch action {
-    case .generateNewStory(let categories):
+    case .generateNewStory(let genres):
         do {
-            let story = try await environment.generateStory(categories: categories)
+            let story = try await environment.generateStory(genres: genres)
             return .onGeneratedStory(story)
         } catch {
             return .failedToGenerateNewStory

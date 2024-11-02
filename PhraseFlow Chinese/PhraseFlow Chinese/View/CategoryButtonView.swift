@@ -30,14 +30,14 @@ struct CategoryButtonView: View {
                             Group {
                                 if isHighlighted {
                                     RoundedRectangle(cornerRadius: 10)
-                                        .stroke(.accent, lineWidth: 4)
+                                        .stroke(.accent, lineWidth: 5)
                                 }
                             }
                         )
                         .clipShape(.rect(cornerRadius: 10))
                 }
                 Text(title)
-                    .fontWeight(isHighlighted ? .bold : .light)
+                    .fontWeight(isHighlighted ? .medium : .light)
                     .foregroundStyle(isHighlighted ? Color.accent : Color.black)
                     .frame(maxHeight: .infinity, alignment: .top)
             }

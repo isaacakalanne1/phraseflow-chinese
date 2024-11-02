@@ -80,11 +80,11 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.isShowingStoryListView = isShowing
     case .updateSelectCategory(let category, let isSelected):
         if isSelected {
-            if !newState.selectedCategories.contains(category) {
-                newState.selectedCategories.append(category)
+            if !newState.selectedGenres.contains(category) {
+                newState.selectedGenres.append(category)
             }
         } else {
-            newState.selectedCategories.removeAll(where: { $0 == category })
+            newState.selectedGenres.removeAll(where: { $0 == category })
         }
     case .selectStory(let story):
         newState.sentenceIndex = 0

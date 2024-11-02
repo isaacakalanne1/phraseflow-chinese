@@ -8,6 +8,6 @@
 import Foundation
 
 enum ChapterType {
-    case first(categories: [Category])
+    case first(genres: [Genre])
     case next(previousChapter: Chapter)
 }
