@@ -24,6 +24,7 @@ struct CategoryButtonView: View {
                 AsyncImage(url: category.imageUrl) { phase in
                     let image = phase.image?.resizable() ?? Image(uiImage: UIImage())
                     image
+                        .aspectRatio(contentMode: .fill)
                         .frame(width: 100, height: 70)
                         .overlay(
                             Group {
