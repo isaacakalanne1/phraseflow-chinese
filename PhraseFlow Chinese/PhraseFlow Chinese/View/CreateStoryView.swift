@@ -24,9 +24,10 @@ struct CreateStoryView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(Genre.allCases, id: \.self) { genre in
-                            CategoryButtonView(imageUrl: genre.imageUrl, title: genre.title, isHighlighted: false) {
+                            CategoryButtonView(category: genre,
+                                               isHighlighted: store.state.selectedGenres.contains(genre)) {
                                 store.dispatch(.updateSelectGenre(genre,
-                                                                     isSelected: !store.state.selectedGenres.contains(genre)))
+                                                                  isSelected: !store.state.selectedGenres.contains(genre)))
                             }
                         }
                     }
@@ -37,10 +38,9 @@ struct CreateStoryView: View {
                     .greyBackground()
 
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
+                    HStack(alignment: .top) {
                         ForEach(StorySetting.allCases, id: \.self) { setting in
-                            CategoryButtonView(imageUrl: setting.imageUrl,
-                                               title: setting.title,
+                            CategoryButtonView(category: setting,
                                                isHighlighted: store.state.selectedStorySetting == setting) {
                                 store.dispatch(.selectStorySetting(store.state.selectedStorySetting == setting ? nil : setting))
                             }

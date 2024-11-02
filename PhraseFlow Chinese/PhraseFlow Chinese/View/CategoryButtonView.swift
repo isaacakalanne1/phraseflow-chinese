@@ -9,9 +9,8 @@ import SwiftUI
 
 struct CategoryButtonView: View {
     @EnvironmentObject var store: FastChineseStore
-    
-    let imageUrl: URL?
-    let title: String
+
+    let category: Categorisable
     let isHighlighted: Bool
     let action:  () -> Void
 
@@ -22,7 +21,7 @@ struct CategoryButtonView: View {
             }
         }) {
             VStack(spacing: 4) {
-                AsyncImage(url: imageUrl) { phase in
+                AsyncImage(url: category.imageUrl) { phase in
                     let image = phase.image?.resizable() ?? Image(uiImage: UIImage())
                     image
                         .frame(width: 100, height: 70)
@@ -36,10 +35,10 @@ struct CategoryButtonView: View {
                         )
                         .clipShape(.rect(cornerRadius: 10))
                 }
-                Text(title)
+                Text(category.title)
                     .fontWeight(isHighlighted ? .medium : .light)
                     .foregroundStyle(isHighlighted ? Color.accent : Color.black)
-                    .frame(maxHeight: .infinity, alignment: .top)
+                    .frame(alignment: .top)
             }
         }
     }
