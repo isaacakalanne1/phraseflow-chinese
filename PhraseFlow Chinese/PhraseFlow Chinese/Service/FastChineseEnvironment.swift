@@ -61,14 +61,12 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
 
     func fetchDefinition(of string: String, withinContextOf sentence: Sentence, shouldForce: Bool) async throws -> Definition {
         if shouldForce {
-            let response = try await service.fetchDefinition(of: string, withinContextOf: sentence)
-            let definitionString = response.choices.first?.message.content ?? ""
-            return Definition(character: string, sentence: sentence, definition: definitionString)
+            let definition = try await service.fetchDefinition(of: string, withinContextOf: sentence)
+            return Definition(character: string, sentence: sentence, definition: definition)
         } else if let definition = try? dataStore.loadDefinition(character: string, sentence: sentence) {
             return definition
         } else {
-            let response = try await service.fetchDefinition(of: string, withinContextOf: sentence)
-            let definitionString = response.choices.first?.message.content ?? ""
+            let definitionString = try await service.fetchDefinition(of: string, withinContextOf: sentence)
             let definition = Definition(character: string, sentence: sentence, definition: definitionString)
             try dataStore.saveDefinition(definition)
             return definition

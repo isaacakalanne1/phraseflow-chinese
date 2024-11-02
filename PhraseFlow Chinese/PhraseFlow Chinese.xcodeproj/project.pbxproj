@@ -34,6 +34,7 @@
 		BB6572D92CD529DE00AC5981 /* StorySetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D82CD529DE00AC5981 /* StorySetting.swift */; };
 		BB6572DB2CD6816700AC5981 /* CategoryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572DA2CD6816700AC5981 /* CategoryButtonView.swift */; };
 		BB6572DD2CD6847500AC5981 /* Categorisable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572DC2CD6847500AC5981 /* Categorisable.swift */; };
+		BB6572E32CD6C03900AC5981 /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = BB6572E22CD6C03900AC5981 /* GoogleGenerativeAI */; };
 		BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -140,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB6572E32CD6C03900AC5981 /* GoogleGenerativeAI in Frameworks */,
 				BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */,
 				477951978617EF1A543B0EC4 /* libPods-PhraseFlow Chinese.a in Frameworks */,
 			);
@@ -371,6 +373,7 @@
 			name = "PhraseFlow Chinese";
 			packageProductDependencies = (
 				BB4EDAFF2C90C7E600699E7D /* ReduxKit */,
+				BB6572E22CD6C03900AC5981 /* GoogleGenerativeAI */,
 			);
 			productName = "PhraseFlow Chinese";
 			productReference = BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */;
@@ -447,6 +450,7 @@
 			mainGroup = BBB6EF1A2C8C86240079D135;
 			packageReferences = (
 				BB4EDAFE2C90C7E600699E7D /* XCRemoteSwiftPackageReference "reduxkit" */,
+				BB6572E12CD6C03800AC5981 /* XCRemoteSwiftPackageReference "generative-ai-swift" */,
 			);
 			productRefGroup = BBB6EF242C8C86240079D135 /* Products */;
 			projectDirPath = "";
@@ -924,6 +928,14 @@
 				minimumVersion = 3.1.0;
 			};
 		};
+		BB6572E12CD6C03800AC5981 /* XCRemoteSwiftPackageReference "generative-ai-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/generative-ai-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.6;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -931,6 +943,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BB4EDAFE2C90C7E600699E7D /* XCRemoteSwiftPackageReference "reduxkit" */;
 			productName = ReduxKit;
+		};
+		BB6572E22CD6C03900AC5981 /* GoogleGenerativeAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BB6572E12CD6C03800AC5981 /* XCRemoteSwiftPackageReference "generative-ai-swift" */;
+			productName = GoogleGenerativeAI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

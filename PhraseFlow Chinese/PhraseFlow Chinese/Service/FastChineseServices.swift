@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GoogleGenerativeAI
 
 enum FastChineseServicesError: Error {
     case failedToGetResponseData
@@ -17,10 +18,16 @@ enum FastChineseServicesError: Error {
 protocol FastChineseServicesProtocol {
     func generateStory(genres: [Genre]) async throws -> Story
     func generateChapter(previousChapter: Chapter) async throws -> ChapterResponse
-    func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> GPTResponse
+    func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> String
 }
 
 final class FastChineseServices: FastChineseServicesProtocol {
+
+    let generativeModel =
+      GenerativeModel(
+        name: "gemini-1.5-flash-8b-latest",
+        apiKey: "AIzaSyBJz8qmCuAK5EO9AzQLl99ed6TlvHKRjCI"
+      )
 
     func generateStory(genres: [Genre]) async throws -> Story {
         let chapterResponse = try await generateChapter(type: .first(genres: genres))
@@ -55,19 +62,25 @@ final class FastChineseServices: FastChineseServicesProtocol {
         switch type {
         case .first(let genres):
             mainPrompt = """
-        Generate an incredible first chapter of a Mandarin story.
-        It should be incredibly emotional and dramatic.
+        Write the first chapter of a Mandarin story.
+        It should be emotional and dramatic.
         The reader should be amazed an AI came up with it.
-        Write a story using vocabulary a 2 year old could understand.
+        Use vocabulary a child could understand.
+        The chapter should be 20-30 sentences long.
+        The chapter should end in a way that makes the reader curious what happens in the next chapter.
+
         "These are the genres the story should be in:
         \(genres.map({ $0.rawValue }))
         """
         case .next(let previousChapter):
             mainPrompt = """
-        Generate an incredible chapter of a Mandarin story.
-        It should be incredibly emotional and dramatic.
+        Write the next chapter of this Mandarin story.
+        It should be emotional and dramatic.
         The reader should be amazed an AI came up with it.
-        Write the story using vocabulary a 2 year old could understand.
+        Use vocabulary a child could understand.
+        The chapter should be 20-30 sentences long.
+        The chapter should end in a way that makes the reader curious what happens in the next chapter.
+
         This is the story title:
         \(previousChapter.storyTitle)
 
@@ -76,55 +89,41 @@ final class FastChineseServices: FastChineseServicesProtocol {
         """
         }
 
-        let response = try await makeRequest(initialPrompt: initialPrompt, mainPrompt: mainPrompt)
-        guard let data = response.choices.first?.message.content.data(using: .utf8) else {
+        let response = try await makeRequest(initialPrompt: initialPrompt, mainPrompt: mainPrompt).data(using: .utf8)
+        guard let response else {
             throw FastChineseServicesError.failedToGetResponseData
         }
 
         do {
-            return try JSONDecoder().decode(ChapterResponse.self, from: data)
+            return try JSONDecoder().decode(ChapterResponse.self, from: response)
         } catch {
             throw FastChineseServicesError.failedToDecodeSentences
         }
     }
 
-    func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> GPTResponse {
+    func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> String {
         let initialPrompt =
 """
-        You are an AI assistant that provides English definitions for characters in Chinese sentences. Your explanations are brief, and simple to understand.
+        You are an AI assistant that provides English definitions for characters in Chinese sentences.
         You provide the pinyin for the Chinese character in brackets after the Chinese character.
-        If the character is used as part of a larger word, you also provide the pinyin and definition for each character in this overall word.
         You also provide the definition of the word in the context of the overall sentence.
         You never repeat the Chinese sentence, and never translate the whole of the Chinese sentence into English.
+        Your tranlations and explanations are useful for people learning Mandarin Chinese.
 """
-        let mainPrompt = "Provide a definition for \(character) in \(sentence.mandarin)"
-        let response = try await makeRequest(initialPrompt: initialPrompt, mainPrompt: mainPrompt)
-        return response
+        let mainPrompt = "Provide a definition for \(character) in \(sentence.mandarin)."
+        return try await makeRequest(initialPrompt: initialPrompt, mainPrompt: mainPrompt)
     }
 
-    private func makeRequest(initialPrompt: String, mainPrompt: String) async throws -> GPTResponse {
+    private func makeRequest(initialPrompt: String, mainPrompt: String) async throws -> String {
 
-        var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
-        request.httpMethod = "POST"
-        request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let requestData = DefineCharacterRequest(messages: [
-            .init(role: "system",
-                  content: initialPrompt),
-            .init(role: "user",
-                  content: mainPrompt)
-        ])
-
-        guard let jsonData = try? JSONEncoder().encode(requestData) else {
-            throw FastChineseServicesError.failedToEncodeJson
+        let prompt = initialPrompt + "\n\n" + mainPrompt
+        let response = try await generativeModel.generateContent(prompt)
+        guard let responseString = response.text else {
+            throw FastChineseServicesError.failedToGetResponseData
         }
-
-        let (data, _) = try await URLSession.shared.upload(for: request, from: jsonData)
-        guard let response = try? JSONDecoder().decode(GPTResponse.self, from: data) else {
-            throw FastChineseServicesError.failedToDecodeJson
-        }
-        return response
+        return responseString
+            .replacingOccurrences(of: "```json", with: "")
+            .replacingOccurrences(of: "```", with: "")
     }
 
 }
