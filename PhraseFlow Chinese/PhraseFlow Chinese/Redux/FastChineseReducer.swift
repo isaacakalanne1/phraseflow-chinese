@@ -78,13 +78,13 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.isShowingSettingsScreen = isShowing
     case .updateShowingStoryListView(let isShowing):
         newState.isShowingStoryListView = isShowing
-    case .updateSelectCategory(let category, let isSelected):
+    case .updateSelectGenre(let genre, let isSelected):
         if isSelected {
-            if !newState.selectedGenres.contains(category) {
-                newState.selectedGenres.append(category)
+            if !newState.selectedGenres.contains(genre) {
+                newState.selectedGenres.append(genre)
             }
         } else {
-            newState.selectedGenres.removeAll(where: { $0 == category })
+            newState.selectedGenres.removeAll(where: { $0 == genre })
         }
     case .selectStory(let story):
         newState.sentenceIndex = 0

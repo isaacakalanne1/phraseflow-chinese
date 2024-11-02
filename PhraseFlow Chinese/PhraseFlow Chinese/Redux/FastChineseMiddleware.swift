@@ -129,7 +129,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .updateShowDefinition,
             .updateShowEnglish,
             .updateShowingCreateStoryScreen,
-            .updateSelectCategory,
+            .updateSelectGenre,
             .updateShowingSettings,
             .updateShowingStoryListView,
             .failedToGenerateChapter,

@@ -23,20 +23,10 @@ struct CreateStoryView: View {
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(Genre.allCases, id: \.self) { category in
-                            Button(action: {
-                                withAnimation(.easeInOut) {
-                                    store.dispatch(.updateSelectCategory(category,
-                                                                         isSelected: !store.state.selectedGenres.contains(category)))
-                                }
-                            }) {
-                                Text(category.title)
-                                    .font(.body)
-                                    .foregroundColor(store.state.selectedGenres.contains(category) ? .white : .primary)
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .background(store.state.selectedGenres.contains(category) ? Color.accentColor : Color.gray.opacity(0.3))
-                                    .cornerRadius(10)
+                        ForEach(Genre.allCases, id: \.self) { genre in
+                            CategoryButtonView(imageUrl: genre.imageUrl, title: genre.title, isHighlighted: false) {
+                                store.dispatch(.updateSelectGenre(genre,
+                                                                     isSelected: !store.state.selectedGenres.contains(genre)))
                             }
                         }
                     }
@@ -50,7 +40,7 @@ struct CreateStoryView: View {
                     HStack {
                         ForEach(StorySetting.allCases, id: \.self) { setting in
                             CategoryButtonView(imageUrl: setting.imageUrl,
-                                               title: setting.name,
+                                               title: setting.title,
                                                isHighlighted: store.state.selectedStorySetting == setting) {
                                 store.dispatch(.selectStorySetting(store.state.selectedStorySetting == setting ? nil : setting))
                             }

@@ -33,6 +33,7 @@
 		BB6572D62CD4E09000AC5981 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D52CD4E08F00AC5981 /* ActionButton.swift */; };
 		BB6572D92CD529DE00AC5981 /* StorySetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D82CD529DE00AC5981 /* StorySetting.swift */; };
 		BB6572DB2CD6816700AC5981 /* CategoryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572DA2CD6816700AC5981 /* CategoryButtonView.swift */; };
+		BB6572DD2CD6847500AC5981 /* Categorisable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572DC2CD6847500AC5981 /* Categorisable.swift */; };
 		BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -104,6 +105,7 @@
 		BB6572D52CD4E08F00AC5981 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		BB6572D82CD529DE00AC5981 /* StorySetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorySetting.swift; sourceTree = "<group>"; };
 		BB6572DA2CD6816700AC5981 /* CategoryButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryButtonView.swift; sourceTree = "<group>"; };
+		BB6572DC2CD6847500AC5981 /* Categorisable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categorisable.swift; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhraseFlow Chinese.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 		BB6572D72CD529CD00AC5981 /* Create Story */ = {
 			isa = PBXGroup;
 			children = (
+				BB6572DC2CD6847500AC5981 /* Categorisable.swift */,
 				BBE16F1B2CC1317B00A7EF1F /* Genre.swift */,
 				BB6572D82CD529DE00AC5981 /* StorySetting.swift */,
 			);
@@ -560,6 +563,7 @@
 				BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */,
 				BBE16F1C2CC1317B00A7EF1F /* Genre.swift in Sources */,
 				BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */,
+				BB6572DD2CD6847500AC5981 /* Categorisable.swift in Sources */,
 				BBE636C32CCC0BE900873E68 /* CharacterView.swift in Sources */,
 				BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */,
 				BB4EDB0C2C90C9A100699E7D /* FastChineseReducer.swift in Sources */,
