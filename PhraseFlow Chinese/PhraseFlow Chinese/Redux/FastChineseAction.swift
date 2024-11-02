@@ -58,4 +58,6 @@ enum FastChineseAction {
     case goToNextChapter
     case refreshChapterView
     case refreshDefinitionView
+
+    case selectStorySetting(StorySetting?)
 }

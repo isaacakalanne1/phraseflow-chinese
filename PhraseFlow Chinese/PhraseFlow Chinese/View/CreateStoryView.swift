@@ -49,23 +49,10 @@ struct CreateStoryView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(StorySetting.allCases, id: \.self) { setting in
-                            Button(action: {
-                                withAnimation(.easeInOut) {
-//                                    store.dispatch(.updateSelectCategory(category,
-//                                                                         isSelected: !store.state.selectedCategories.contains(category)))
-                                }
-                            }) {
-                                AsyncImage(url: setting.imageUrl) { phase in
-                                    let image = phase.image?.resizable() ?? Image(systemName: "")
-                                    image
-                                        .frame(width: 100, height: 70)
-                                        .overlay {
-                                            Color.black.opacity(0.2)
-                                            Text(setting.name)
-                                                .foregroundStyle(Color.white)
-                                        }
-                                        .clipShape(.rect(cornerRadius: 10))
-                                }
+                            CategoryButtonView(imageUrl: setting.imageUrl,
+                                               title: setting.name,
+                                               isHighlighted: store.state.selectedStorySetting == setting) {
+                                store.dispatch(.selectStorySetting(store.state.selectedStorySetting == setting ? nil : setting))
                             }
                         }
                     }

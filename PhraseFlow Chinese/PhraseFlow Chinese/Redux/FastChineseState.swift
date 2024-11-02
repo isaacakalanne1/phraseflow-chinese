@@ -18,6 +18,7 @@ struct FastChineseState {
     var viewState: ViewState = .normal
 
     var selectedCategories: [Category] = []
+    var selectedStorySetting: StorySetting?
 
     var currentPlaybackTime: TimeInterval = 0
 

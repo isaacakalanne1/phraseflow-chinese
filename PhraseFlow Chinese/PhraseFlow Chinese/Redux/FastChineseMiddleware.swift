@@ -135,7 +135,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .failedToGenerateChapter,
             .updateSentenceIndex,
             .refreshChapterView,
-            .refreshDefinitionView:
+            .refreshDefinitionView,
+            .selectStorySetting:
         return nil
     }
 }

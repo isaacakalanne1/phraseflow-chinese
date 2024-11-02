@@ -32,6 +32,7 @@
 		BB6572D42CD3932300AC5981 /* View+GreyBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D32CD3932300AC5981 /* View+GreyBackground.swift */; };
 		BB6572D62CD4E09000AC5981 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D52CD4E08F00AC5981 /* ActionButton.swift */; };
 		BB6572D92CD529DE00AC5981 /* StorySetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D82CD529DE00AC5981 /* StorySetting.swift */; };
+		BB6572DB2CD6816700AC5981 /* CategoryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572DA2CD6816700AC5981 /* CategoryButtonView.swift */; };
 		BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -102,6 +103,7 @@
 		BB6572D32CD3932300AC5981 /* View+GreyBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+GreyBackground.swift"; sourceTree = "<group>"; };
 		BB6572D52CD4E08F00AC5981 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		BB6572D82CD529DE00AC5981 /* StorySetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorySetting.swift; sourceTree = "<group>"; };
+		BB6572DA2CD6816700AC5981 /* CategoryButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryButtonView.swift; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhraseFlow Chinese.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 				BBE636C02CCC0B5000873E68 /* ActionButtonsView.swift */,
 				BBE636C22CCC0BE900873E68 /* CharacterView.swift */,
 				BBE636D02CCD77BB00873E68 /* FlowLayout.swift */,
+				BB6572DA2CD6816700AC5981 /* CategoryButtonView.swift */,
 				BB4EDB232C91902100699E7D /* SettingsView.swift */,
 				BBE16F212CC2769C00A7EF1F /* StoryListView.swift */,
 				BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */,
@@ -534,6 +537,7 @@
 				BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */,
 				BB6572CE2CD12A9200AC5981 /* ChapterResponse.swift in Sources */,
 				BBE636C12CCC0B5000873E68 /* ActionButtonsView.swift in Sources */,
+				BB6572DB2CD6816700AC5981 /* CategoryButtonView.swift in Sources */,
 				BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */,
 				BBE636CB2CCC0EEF00873E68 /* ErrorView.swift in Sources */,
 				BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */,

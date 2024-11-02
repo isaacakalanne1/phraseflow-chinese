@@ -148,6 +148,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.chapterViewId = UUID()
     case .refreshDefinitionView:
         newState.definitionViewId = UUID()
+    case .selectStorySetting(let setting):
+        newState.selectedStorySetting = setting
     case .saveStory,
             .failedToSaveStory,
             .failedToLoadStories,
