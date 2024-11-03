@@ -27,6 +27,9 @@ enum FastChineseAction {
     case saveStory(Story)
     case failedToSaveStory
 
+    case deleteStory(Story)
+    case failedToDeleteStory
+
     case selectChapter(Story, chapterIndex: Int)
 
     case loadStories

@@ -50,6 +50,13 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToSaveStory
         }
+    case .deleteStory(let story):
+        do {
+            try environment.unsaveStory(story)
+            return .loadStories
+        } catch {
+            return .failedToDeleteStory
+        }
     case .synthesizeAudio(let chapter, let isForced):
         if chapter.audioData != nil && !isForced {
             return .playAudio(time: nil)
@@ -136,7 +143,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .updateSentenceIndex,
             .refreshChapterView,
             .refreshDefinitionView,
-            .selectStorySetting:
+            .selectStorySetting,
+            .failedToDeleteStory:
         return nil
     }
 }

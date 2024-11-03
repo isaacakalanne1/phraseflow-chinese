@@ -13,34 +13,23 @@ struct StoryListView: View {
     var body: some View {
 
         NavigationView {
-            VStack(spacing: 20) {
-                ScrollView {
-                    VStack {
-                        ForEach(store.state.savedStories, id: \.self) { story in
-                            HStack {
-                                Button {
-                                    store.dispatch(.selectStory(story))
-                                } label: {
-                                    VStack(alignment: .leading, content: {
-                                        Text(story.title)
-                                            .bold()
-                                        Text(story.latestStorySummary)
-                                            .fontWeight(.light)
-                                    })
-                                    .multilineTextAlignment(.leading)
-                                    .frame(maxWidth: .infinity)
-                                }
-                                NavigationLink(destination: ChapterListView(story: story)) {
-                                    Image(systemName: "chevron.right")
-                                        .frame(width: 60, height: 100)
-                                }
-                            }
-                            .foregroundStyle(Color.primary)
+            List {
+                ForEach(store.state.savedStories, id: \.self) { story in
+                    HStack {
+                        NavigationLink(destination: ChapterListView(story: story)) {
+                            VStack(alignment: .leading, content: {
+                                Text(story.title)
+                                    .bold()
+                                Text(story.latestStorySummary)
+                                    .fontWeight(.light)
+                            })
+                            .padding(.trailing)
                         }
                     }
+                    .foregroundStyle(Color.primary)
                 }
+                .onDelete(perform: delete)
             }
-            .padding(.horizontal)
             .toolbar(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Choose Story")
@@ -48,6 +37,12 @@ struct StoryListView: View {
         .onAppear {
             store.dispatch(.loadStories)
         }
+    }
+
+    func delete(at offsets: IndexSet) {
+        guard let index = offsets.first,
+              let story = store.state.savedStories[safe: index] else { return }
+        store.dispatch(.deleteStory(story))
     }
 
 }

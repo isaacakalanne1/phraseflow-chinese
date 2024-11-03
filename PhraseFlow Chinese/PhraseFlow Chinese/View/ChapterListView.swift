@@ -14,7 +14,7 @@ struct ChapterListView: View {
     var body: some View {
 
         VStack(spacing: 20) {
-            ScrollView {
+            List {
                 ForEach(Array(story.chapters.enumerated()), id: \.offset) { (index, chapter) in
                     Button(action: {
                         withAnimation(.easeInOut) {
@@ -41,7 +41,6 @@ struct ChapterListView: View {
             .foregroundColor(.white)
             .cornerRadius(10)
         }
-        .padding(.horizontal)
         .navigationTitle("Choose Chapter")
     }
 
