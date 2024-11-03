@@ -66,7 +66,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         Write the first chapter of an emotional and dramatic Mandarin story.
         The reader should be amazed an AI came up with it.
         Use vocabulary a 5 year old child could understand.
-        The chapter should be 20-30 sentences long.
+        The chapter should be very long.
 
         These are the genres the story should be in:
         \(genres.map({ $0.rawValue }))
@@ -76,10 +76,10 @@ final class FastChineseServices: FastChineseServicesProtocol {
         """
         case .next(let previousChapter):
             mainPrompt = """
-        Write the first chapter of an emotional and dramatic Mandarin story.
+        Write the next chapter of an emotional and dramatic Mandarin story.
         The reader should be amazed an AI came up with it.
         Use vocabulary a 5 year old child could understand.
-        The chapter should be 20-30 sentences long.
+        The chapter should be very long.
 
         This is the story title:
         \(previousChapter.storyTitle)
