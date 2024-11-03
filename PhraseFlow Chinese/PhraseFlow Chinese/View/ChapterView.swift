@@ -35,7 +35,7 @@ struct ChapterView: View {
                 
                 FlowLayout(spacing: 0) {
                     ForEach(Array(sentence.mandarin.enumerated()), id: \.offset) { characterIndex, character in
-                        let pinyin = sentence.pinyin[safe: characterIndex] ?? ""
+                        let pinyin = sentence.pinyin[safe: characterIndex] ?? " "
                         // Compute the global character index
                         let globalCharacterIndex = cumulativeSentenceStartIndex + characterIndex
 

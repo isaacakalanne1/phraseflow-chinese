@@ -27,28 +27,27 @@ struct StoryListView: View {
                                         Text(story.latestStorySummary)
                                             .fontWeight(.light)
                                     })
-                                    .foregroundStyle(Color.primary)
                                     .multilineTextAlignment(.leading)
                                     .frame(maxWidth: .infinity)
                                 }
                                 NavigationLink(destination: ChapterListView(story: story)) {
                                     Image(systemName: "chevron.right")
-                                        .frame(width: 50, height: 100)
-                                        .foregroundStyle(Color.accentColor)
+                                        .frame(width: 60, height: 100)
                                 }
                             }
+                            .foregroundStyle(Color.primary)
                         }
                     }
                 }
             }
-            .toolbar(.hidden)
             .padding(.horizontal)
-            .padding(.top, 20)
+            .toolbar(.visible, for: .navigationBar)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Choose Story")
         }
         .onAppear {
             store.dispatch(.loadStories)
         }
-        .navigationTitle("Choose Story")
     }
 
 }
