@@ -8,6 +8,6 @@
 import Foundation
 
 enum ChapterType {
-    case first(genres: [Genre])
+    case first(genres: [Genre], setting: StorySetting)
     case next(previousChapter: Chapter)
 }

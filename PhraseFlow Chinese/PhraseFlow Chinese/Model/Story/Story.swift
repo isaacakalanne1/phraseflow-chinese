@@ -8,6 +8,7 @@
 import Foundation
 
 struct Story: Codable, Equatable, Hashable {
+    let id: UUID
     let storyOverview: String
     var latestStorySummary: String
     let difficulty: Difficulty
@@ -23,6 +24,7 @@ struct Story: Codable, Equatable, Hashable {
          description: String,
          chapters: [Chapter],
          currentChapterIndex: Int = 0) {
+        self.id = UUID()
         self.storyOverview = storyOverview
         self.latestStorySummary = latestStorySummary
         self.difficulty = difficulty
@@ -35,6 +37,7 @@ struct Story: Codable, Equatable, Hashable {
     // Custom decoder to assign default values
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(UUID.self, forKey: .id)
         self.storyOverview = try container.decode(String.self, forKey: .storyOverview)
         self.latestStorySummary = try container.decode(String.self, forKey: .latestStorySummary)
         self.difficulty = try container.decode(Difficulty.self, forKey: .difficulty)

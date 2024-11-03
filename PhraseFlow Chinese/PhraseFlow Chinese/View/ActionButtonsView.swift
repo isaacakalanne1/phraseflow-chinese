@@ -30,9 +30,7 @@ struct ActionButtonsView: View {
                                  imageName: "play.circle") {
                         let timestampData = store.state.timestampData
                         let currentSpokenWord = store.state.currentSpokenWord ?? timestampData?.first
-                        if let time = currentSpokenWord?.time {
-                            store.dispatch(.playAudio(time: currentSpokenWord?.time))
-                        }
+                        store.dispatch(.playAudio(time: currentSpokenWord?.time))
                     }
                 }
             }
@@ -44,7 +42,8 @@ struct ActionButtonsView: View {
 
             ActionButton(title: "Create\nStory",
                          imageName: "paintbrush.pointed") {
-                store.dispatch(.updateShowingCreateStoryScreen(isShowing: true))
+                let genres = Array(Genre.allCases.shuffled().prefix(3))
+                store.dispatch(.generateNewStory(genres: genres))
             }
 
             ActionButton(title: "Choose\nStory",

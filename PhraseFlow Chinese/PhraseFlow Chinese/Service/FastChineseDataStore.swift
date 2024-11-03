@@ -68,7 +68,7 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
         var allStories: [Story]
         if let stories = try? loadStories() {
             allStories = stories
-            allStories.removeAll(where: { $0.storyOverview == story.storyOverview })
+            allStories.removeAll(where: { $0.id == story.id })
             if allStories.isEmpty {
                 allStories = [story]
             } else {
@@ -131,7 +131,7 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
 
     func unsaveStory(_ story: Story) throws {
         if var stories = try? loadStories() {
-            stories.removeAll(where: { $0.storyOverview == story.storyOverview })
+            stories.removeAll(where: { $0.id == story.id })
             try saveStories(stories)
         }
     }
