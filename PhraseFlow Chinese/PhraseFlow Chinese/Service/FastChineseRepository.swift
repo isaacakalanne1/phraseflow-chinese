@@ -56,6 +56,12 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                                                 duration: event.duration,
                                                 textOffset: textOffset,
                                                 wordLength: wordLength))
+                    let previousIndex = wordTimestamps.count - 2
+                    if var newTimestamp = wordTimestamps[safe: previousIndex] {
+                        newTimestamp.duration = audioTimeInSeconds - newTimestamp.time - 0.0001
+                        wordTimestamps[previousIndex] = newTimestamp
+                    }
+
                     textOffset += Int(wordLength)
                 }
             }

@@ -88,14 +88,6 @@ struct ContentView: View {
                 store.dispatch(.updatePlayTime)
             }
 
-            if store.state.isPlayingDefinedWord,
-               let currentPlayTime = store.state.audioPlayer.currentItem?.currentTime().seconds,
-               let wordTime = store.state.tappedWord?.time,
-               let wordDuration = store.state.tappedWord?.duration,
-               currentPlayTime >= wordTime + (wordDuration/Double(store.state.speechSpeed.rate)) {
-                store.dispatch(.finishedPlayingWord)
-            }
-
             startTimer()
         }
     }
