@@ -27,7 +27,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newStory?.currentChapterIndex = (chapters?.count ?? 1) - 1
         newState.currentStory = newStory
 
-        newState.audioPlayer = nil
+        newState.audioPlayer = AVPlayer()
         newState.viewState = .normal
         newState.sentenceIndex = 0
         newState.isShowingCreateStoryScreen = false
@@ -40,16 +40,14 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         if newState.currentStory == nil,
            !stories.isEmpty {
             newState.currentStory = currentStory
-            if let data = newState.currentChapterAudioData {
-                newState.audioPlayer = try? AVAudioPlayer(data: data)
-                newState.audioPlayer?.enableRate = true
-                newState.audioPlayer?.prepareToPlay()
+            if let data = newState.currentChapterAudioData,
+               let player = newState.createAVPlayer(from: data) {
+                newState.audioPlayer = player
             }
         }
 
     case .updateSpeechSpeed(let speed):
         newState.speechSpeed = speed
-        newState.audioPlayer?.rate = speed.rate
     case .defineCharacter(let wordTimeStampData, let shouldForce):
         newState.tappedWord = wordTimeStampData
         newState.viewState = .defining
@@ -66,9 +64,9 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newStory?.chapters[chapterIndex].timestampData = data.wordTimestamps
         newState.currentStory = newStory
 
-        newState.audioPlayer = try? AVAudioPlayer(data: data.audioData)
-        newState.audioPlayer?.enableRate = true
-        newState.audioPlayer?.prepareToPlay()
+        if let player = newState.createAVPlayer(from: data.audioData) {
+            newState.audioPlayer = player
+        }
     case .updateShowPinyin(let isShowing):
         newState.isShowingPinyin = isShowing
     case .updateShowDefinition(let isShowing):
@@ -93,10 +91,9 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.sentenceIndex = 0
         newState.currentStory = story
         newState.isShowingStoryListView = false
-        if let data = newState.currentChapterAudioData {
-            newState.audioPlayer = try? AVAudioPlayer(data: data)
-            newState.audioPlayer?.enableRate = true
-            newState.audioPlayer?.prepareToPlay()
+        if let data = newState.currentChapterAudioData,
+           let player = newState.createAVPlayer(from: data) {
+            newState.audioPlayer = player
         }
     case .selectChapter(let story, let chapterIndex):
         newState.currentStory = story
@@ -107,10 +104,9 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
            chapterIndex < chaptersCount {
             newState.currentStory?.currentChapterIndex = chapterIndex
         }
-        if let data = newState.currentChapterAudioData {
-            newState.audioPlayer = try? AVAudioPlayer(data: data)
-            newState.audioPlayer?.enableRate = true
-            newState.audioPlayer?.prepareToPlay()
+        if let data = newState.currentChapterAudioData,
+           let player = newState.createAVPlayer(from: data) {
+            newState.audioPlayer = player
         }
     case .generateChapter:
         newState.viewState = .loading
@@ -135,17 +131,16 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.isPlayingAudio = false
         newState.currentPlaybackTime = 0
     case .updatePlayTime:
-        newState.currentPlaybackTime = newState.audioPlayer?.currentTime ?? newState.currentPlaybackTime
+        newState.currentPlaybackTime = newState.audioPlayer.currentTime().seconds
     case .selectWord(let timestampData):
         newState.currentPlaybackTime = timestampData.time
     case .goToNextChapter:
         var newStory = newState.currentStory
         newStory?.currentChapterIndex += 1
         newState.currentStory = newStory
-        if let data = newState.currentChapterAudioData { // TODO: Move this repeated logic in Reducer to a new action, called via middleware for each of these cases
-            newState.audioPlayer = try? AVAudioPlayer(data: data)
-            newState.audioPlayer?.enableRate = true
-            newState.audioPlayer?.prepareToPlay()
+        if let data = newState.currentChapterAudioData,
+           let player = newState.createAVPlayer(from: data) { // TODO: Move this repeated logic in Reducer to a new action, called via middleware for each of these cases
+            newState.audioPlayer = player
         }
     case .refreshChapterView:
         newState.chapterViewId = UUID()

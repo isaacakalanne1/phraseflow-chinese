@@ -74,22 +74,24 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         return nil
     case .playAudio(let timestamp):
         if let timestamp {
-            state.audioPlayer?.currentTime = timestamp
+            let myTime = CMTime(seconds: timestamp, preferredTimescale: 60000)
+            await state.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .indefinite)
         }
-        state.audioPlayer?.prepareToPlay()
-        state.audioPlayer?.play()
+        state.audioPlayer.playImmediately(atRate: state.speechSpeed.rate)
         return nil
     case .playWord(let word):
-        state.audioPlayer?.currentTime = word.time + 0.05
-        state.audioPlayer?.play()
-        let duration = word.duration
+        let myTime = CMTime(seconds: word.time, preferredTimescale: 60000)
+        await state.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .indefinite)
+        state.audioPlayer.playImmediately(atRate: state.speechSpeed.rate)
+
+        let duration = word.duration / Double(state.speechSpeed.rate) // TODO: Update duration to be saved as being 0.0001 seconds before the start time of the next word in repository logic
         DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
-            state.audioPlayer?.stop()
+            state.audioPlayer.pause()
         }
         return nil
     case .pauseAudio,
             .stopAudio:
-        state.audioPlayer?.stop()
+        state.audioPlayer.pause()
         return nil
     case .defineCharacter(let timeStampData, let shouldForce):
         do {
@@ -110,7 +112,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
         return nil
     case .selectWord(let timestampData):
-        state.audioPlayer?.currentTime = timestampData.time
+        let myTime = CMTime(seconds: timestampData.time, preferredTimescale: 60000)
+        await state.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
         return nil
     case .goToNextChapter:
         if let story = state.currentStory {
@@ -118,8 +121,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
         return nil
     case .updatePlayTime:
-        if let time = state.audioPlayer?.currentTime,
-           let lastWordTime = state.currentChapter?.timestampData.last?.time,
+        let time = state.audioPlayer.currentTime().seconds
+        if let lastWordTime = state.currentChapter?.timestampData.last?.time,
            time > lastWordTime {
             return .stopAudio
         } else {

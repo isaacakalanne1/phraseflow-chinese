@@ -10,7 +10,7 @@ import Foundation
 struct WordTimeStampData: Codable, Equatable, Hashable {
     let word: String
     let time: Double
-    let duration: Double
+    var duration: Double
     let textOffset: Int
     let wordLength: Int
 }
