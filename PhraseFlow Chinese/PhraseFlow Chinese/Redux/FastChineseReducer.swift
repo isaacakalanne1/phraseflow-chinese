@@ -150,6 +150,9 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.definitionViewId = UUID()
     case .selectStorySetting(let setting):
         newState.selectedStorySetting = setting
+    case .selectVoice(let voice),
+            .onLoadedVoice(let voice):
+        newState.selectedVoice = voice
     case .saveStory,
             .failedToSaveStory,
             .failedToLoadStories,
@@ -160,7 +163,10 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             .onPlayedAudio,
             .playWord,
             .deleteStory,
-            .failedToDeleteStory:
+            .failedToDeleteStory,
+            .failedToSaveVoice,
+            .failedToLoadVoice,
+            .loadVoice:
         break
     }
 

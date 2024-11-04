@@ -19,7 +19,7 @@ struct StoryListView: View {
                         NavigationLink(destination: ChapterListView(story: story)) {
                             VStack(alignment: .leading, content: {
                                 Text(story.title)
-                                    .bold()
+                                    .fontWeight(.medium)
                                 Text(story.latestStorySummary)
                                     .fontWeight(.light)
                             })

@@ -9,7 +9,7 @@ import Foundation
 import MicrosoftCognitiveServicesSpeech
 
 protocol FastChineseRepositoryProtocol {
-    func synthesizeSpeech(_ text: String) async throws -> (wordTimestamps: [WordTimeStampData],
+    func synthesizeSpeech(_ text: String, voice: Voice) async throws -> (wordTimestamps: [WordTimeStampData],
                                                            audioData: Data)
 }
 
@@ -19,7 +19,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
 
     }
 
-    func synthesizeSpeech(_ text: String) async throws -> (wordTimestamps: [WordTimeStampData], audioData: Data) {
+    func synthesizeSpeech(_ text: String, voice: Voice) async throws -> (wordTimestamps: [WordTimeStampData], audioData: Data) {
         // Replace with your subscription key and service region
         let speechKey = "144bc0cdea4d44e499927e84e795b27a"
         let serviceRegion = "eastus"
@@ -29,10 +29,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             let speechConfig = try SPXSpeechConfiguration(subscription: speechKey, region: serviceRegion)
             speechConfig.requestWordLevelTimestamps()
             speechConfig.setSpeechSynthesisOutputFormat(.riff16Khz16BitMonoPcm) // Use a format compatible with AVAudioPlayer
-            speechConfig.speechSynthesisVoiceName = "zh-CN-XiaoxiaoNeural"
-
-            // Create an audio configuration to prevent audio from playing to the speaker
-            let audioConfig = SPXAudioConfiguration()
+            speechConfig.speechSynthesisVoiceName = voice.speechSynthesisVoiceName
 
             // Create a speech synthesizer
             let synthesizer = try SPXSpeechSynthesizer(speechConfiguration: speechConfig, audioConfiguration: nil)

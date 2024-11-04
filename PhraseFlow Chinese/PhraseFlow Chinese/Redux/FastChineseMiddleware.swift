@@ -57,12 +57,12 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToDeleteStory
         }
-    case .synthesizeAudio(let chapter, let isForced):
+    case .synthesizeAudio(let chapter, let voice, let isForced):
         if chapter.audioData != nil && !isForced {
             return .playAudio(time: nil)
         }
         do {
-            let result = try await environment.synthesizeSpeech(for: chapter)
+            let result = try await environment.synthesizeSpeech(for: chapter, voice: voice)
             return .onSynthesizedAudio(result)
         } catch {
             return .failedToPlayAudio
@@ -125,6 +125,20 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } else {
             return nil
         }
+    case .selectVoice(let voice):
+        do {
+            try environment.saveVoice(voice)
+            return nil
+        } catch {
+            return .failedToSaveVoice
+        }
+    case .loadVoice:
+        do {
+            let voice = try environment.loadVoice()
+            return .onLoadedVoice(voice)
+        } catch {
+            return .failedToLoadVoice
+        }
     case .failedToGenerateNewStory,
             .failedToLoadStories,
             .failedToSaveStory,
@@ -144,7 +158,10 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .refreshChapterView,
             .refreshDefinitionView,
             .selectStorySetting,
-            .failedToDeleteStory:
+            .failedToDeleteStory,
+            .failedToSaveVoice,
+            .onLoadedVoice,
+            .failedToLoadVoice:
         return nil
     }
 }

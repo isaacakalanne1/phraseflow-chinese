@@ -36,7 +36,7 @@ enum FastChineseAction {
     case onLoadedStories([Story])
     case failedToLoadStories
 
-    case synthesizeAudio(Chapter, isForced: Bool)
+    case synthesizeAudio(Chapter, voice: Voice, isForced: Bool)
     case onSynthesizedAudio((wordTimestamps: [WordTimeStampData],
                              audioData: Data))
     case playAudio(time: Double?)
@@ -63,4 +63,11 @@ enum FastChineseAction {
     case refreshDefinitionView
 
     case selectStorySetting(StorySetting?)
+    
+    case selectVoice(Voice)
+    case failedToSaveVoice
+    
+    case loadVoice
+    case onLoadedVoice(Voice)
+    case failedToLoadVoice
 }

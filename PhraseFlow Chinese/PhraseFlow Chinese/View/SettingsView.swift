@@ -33,39 +33,79 @@ struct SettingsView: View {
 
         NavigationView {
             VStack(spacing: 20) {
-                Text("Settings")
-                    .font(.title2.bold())
-                    .padding(.vertical)
 
                 Spacer()
 
-                Toggle("Show Pinyin", isOn: showPinyin)
-                Toggle("Show Definition", isOn: showDefinition)
-                Toggle("Show English", isOn: showEnglish)
+                Text("Toggle")
+                    .fontWeight(.light)
+                    .greyBackground()
 
-                Text("Choose Speech Speed")
-                    .font(.title2)
+                Toggle("Pinyin", isOn: showPinyin)
+                    .fontWeight(.light)
+                Toggle("Definition", isOn: showDefinition)
+                    .fontWeight(.light)
+                Toggle("English", isOn: showEnglish)
+                    .fontWeight(.light)
 
-                HStack {
-                    ForEach(SpeechSpeed.allCases, id: \.self) { speed in
-                        Button(action: {
-                            withAnimation(.easeInOut) {
-                                store.dispatch(.updateSpeechSpeed(speed))
-                            }
-                        }) {
-                            Text(speed.title)
-                                .font(.body)
-                                .foregroundColor(store.state.speechSpeed == speed ? .white : .primary)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(store.state.speechSpeed == speed ? Color.accentColor : Color.gray.opacity(0.3))
-                                .cornerRadius(10)
+                voicesView
+                speedView
+            }
+            .padding(.horizontal)
+        }
+        .navigationTitle("Settings")
+    }
+
+    @ViewBuilder
+    var voicesView: some View {
+        Text("Voice")
+            .fontWeight(.light)
+            .greyBackground()
+        ScrollView(.horizontal) {
+            HStack {
+                ForEach(Voice.allCases, id: \.self) { voice in
+                    Button(action: {
+                        withAnimation(.easeInOut) {
+                            store.dispatch(.selectVoice(voice))
                         }
+                    }) {
+                        VStack {
+                            Text(voice.title)
+                                .fontWeight(.medium)
+                            Text(voice.gender.title)
+                                .fontWeight(.light)
+                        }
+                        .foregroundColor(store.state.selectedVoice == voice ? .white : .primary)
+                        .padding()
+                        .background(store.state.selectedVoice == voice ? Color.accentColor : Color.gray.opacity(0.3))
+                        .cornerRadius(10)
                     }
                 }
             }
-            .toolbar(.hidden)
-            .padding(.horizontal)
+        }
+    }
+
+    @ViewBuilder
+    var speedView:  some View {
+        Text("Speech")
+            .fontWeight(.light)
+            .greyBackground()
+
+        HStack {
+            ForEach(SpeechSpeed.allCases, id: \.self) { speed in
+                Button(action: {
+                    withAnimation(.easeInOut) {
+                        store.dispatch(.updateSpeechSpeed(speed))
+                    }
+                }) {
+                    Text(speed.title)
+                        .font(.body)
+                        .foregroundColor(store.state.speechSpeed == speed ? .white : .primary)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(store.state.speechSpeed == speed ? Color.accentColor : Color.gray.opacity(0.3))
+                        .cornerRadius(10)
+                }
+            }
         }
     }
 

@@ -17,7 +17,9 @@ struct ActionButtonsView: View {
             if chapter.audioData == nil {
                 ActionButton(title: "Load",
                              imageName: "arrow.down.to.line.circle") {
-                    store.dispatch(.synthesizeAudio(chapter, isForced: false))
+                    store.dispatch(.synthesizeAudio(chapter,
+                                                    voice: store.state.selectedVoice,
+                                                    isForced: false))
                 }
             } else {
                 if store.state.isPlayingAudio == true {

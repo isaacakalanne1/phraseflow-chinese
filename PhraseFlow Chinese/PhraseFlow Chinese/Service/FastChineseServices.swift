@@ -30,8 +30,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
       )
 
     func generateStory(genres: [Genre]) async throws -> Story {
-        let chapterResponse = try await generateChapter(type: .first(genres: genres,
-                                                                     setting: StorySetting.allCases.randomElement() ?? .ancientChina))
+        let chapterResponse = try await generateChapter(type: .first(setting: StorySetting.allCases.randomElement() ?? .ancientChina))
         let chapter = Chapter(storyTitle: chapterResponse.storyTitle, sentences: chapterResponse.sentences)
         return Story(storyOverview: "Story overview here",
                      latestStorySummary: chapterResponse.latestStorySummary,
@@ -53,7 +52,6 @@ final class FastChineseServices: FastChineseServicesProtocol {
         You output no explaining text before or after the JSON, only the JSON.
         You output data in the following format: { "sentences": [ { "mandarin": "你好", "pinyin": ["nǐ", "hǎo"], "english": "Hello" }, { "mandarin": "谢谢", "pinyin": ["xiè", "xie"], "english": "Thank you" }, { "mandarin": "再见", "pinyin": ["zài", "jiàn"], "english": "Goodbye" } ], "storyTitle": "Short story title in English. Create a short title if no title is provided below", "latestStorySummary": "Suspenseful short teaser description of the story so far, which makes the reader want to read the above chapter." }
         Do not nest JSON statements within each other. Ensure the list only has a depth of 1 JSON object.
-        You are a master at pinyin and write the absolute best, most accurate tone markings for the pinyin, based on context, and including all relevant neutral tones.
         Separate each pinyin in the list into their individual sounds. For example, "níanqīng" would be separated into ["nían", "qīng"]
         Include punctuation in the pinyin, to match the Mandarin, such as commas, and full stops. The punctuation should be its own item in the pinyin list, such as ["nǐ", "，"]. Use Mandarin punctuation.
         Do not include the ```json prefix tag or or ``` suffix tag in your response.
@@ -61,15 +59,12 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
         let mainPrompt: String
         switch type {
-        case .first(let genres, let setting):
+        case .first(let setting):
             mainPrompt = """
         Write the first chapter of an emotional and dramatic Mandarin story.
         The reader should be amazed an AI came up with it.
         Use vocabulary a 5 year old child could understand.
         The chapter should be very long.
-
-        These are the genres the story should be in:
-        \(genres.map({ $0.rawValue }))
 
         This is the setting of the story:
         \(setting.title)

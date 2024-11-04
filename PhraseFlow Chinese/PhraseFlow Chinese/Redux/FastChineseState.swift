@@ -19,6 +19,7 @@ struct FastChineseState {
 
     var selectedGenres: [Genre] = []
     var selectedStorySetting: StorySetting?
+    var selectedVoice: Voice = .xiaochen
 
     var currentPlaybackTime: TimeInterval = 0
 

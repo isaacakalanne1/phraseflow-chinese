@@ -11,12 +11,14 @@ protocol FastChineseEnvironmentProtocol {
     var service: FastChineseServicesProtocol { get }
     var dataStore: FastChineseDataStoreProtocol { get }
 
-    func synthesizeSpeech(for chapter: Chapter) async throws -> (wordTimestamps: [WordTimeStampData],
-                                                                   audioData: Data)
+    func synthesizeSpeech(for chapter: Chapter, voice: Voice) async throws -> (wordTimestamps: [WordTimeStampData],
+                                                                               audioData: Data)
     func generateStory(genres: [Genre]) async throws -> Story
     func generateChapter(previousChapter: Chapter) async throws -> ChapterResponse
     func loadStories() throws -> [Story]
+    func loadVoice() throws -> Voice
     func saveStory(_ story: Story) throws
+    func saveVoice(_ voice: Voice) throws
     func unsaveStory(_ story: Story) throws
 
     func fetchDefinition(of character: String, withinContextOf sentence: Sentence, shouldForce: Bool) async throws -> Definition
@@ -34,9 +36,9 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
         self.repository = FastChineseRepository()
     }
 
-    func synthesizeSpeech(for chapter: Chapter) async throws -> (wordTimestamps: [WordTimeStampData],
-                                                                   audioData: Data) {
-        try await repository.synthesizeSpeech(chapter.passage)
+    func synthesizeSpeech(for chapter: Chapter, voice: Voice) async throws -> (wordTimestamps: [WordTimeStampData],
+                                                                               audioData: Data) {
+        try await repository.synthesizeSpeech(chapter.passage, voice: voice)
     }
 
     func generateStory(genres: [Genre]) async throws -> Story {
@@ -51,12 +53,20 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
         try dataStore.saveStory(story)
     }
 
+    func saveVoice(_ voice: Voice) throws {
+        try dataStore.saveVoice(voice)
+    }
+
     func unsaveStory(_ story: Story) throws {
         try dataStore.unsaveStory(story)
     }
 
     func loadStories() throws -> [Story] {
         try dataStore.loadStories()
+    }
+
+    func loadVoice() throws -> Voice {
+        try dataStore.loadVoice()
     }
 
     func fetchDefinition(of string: String, withinContextOf sentence: Sentence, shouldForce: Bool) async throws -> Definition {

@@ -11,12 +11,15 @@ enum FastChineseDataStoreError: Error {
     case failedToCreateUrl
     case failedToSaveData
     case failedToDecodeData
+    case failedToGetData
     case failedToGetDefinition
 }
 
 protocol FastChineseDataStoreProtocol {
     func loadStories() throws -> [Story]
+    func loadVoice() throws -> Voice
     func saveStory(_ story: Story) throws
+    func saveVoice(_ voice: Voice) throws
     func loadDefinitions() throws -> [Definition]
     func loadDefinition(character: String, sentence: Sentence) throws -> Definition
     func saveDefinition(_ definition: Definition) throws
@@ -50,6 +53,22 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
         }
     }
 
+    func loadVoice() throws -> Voice {
+        guard let fileURL = documentsDirectory?.appendingPathComponent("voice") else {
+            throw FastChineseDataStoreError.failedToCreateUrl
+        }
+        do {
+            let data = try Data(contentsOf: fileURL)
+            guard let voiceString = String(data: data, encoding: .utf8),
+                  let voice = Voice(rawValue: voiceString) else {
+                throw FastChineseDataStoreError.failedToGetData
+            }
+            return voice
+        } catch {
+            throw FastChineseDataStoreError.failedToDecodeData
+        }
+    }
+
     func loadStories() throws -> [Story] {
         guard let fileURL = documentsDirectory?.appendingPathComponent("userData.json") else {
             throw FastChineseDataStoreError.failedToCreateUrl
@@ -61,6 +80,20 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
             return stories
         } catch {
             throw FastChineseDataStoreError.failedToDecodeData
+        }
+    }
+
+    func saveVoice(_ voice: Voice) throws {
+        guard let fileURL = documentsDirectory?.appendingPathComponent("voice") else {
+            throw FastChineseDataStoreError.failedToCreateUrl
+        }
+        guard let data = voice.rawValue.data(using: .utf8) else {
+            throw FastChineseDataStoreError.failedToGetData
+        }
+        do {
+            try data.write(to: fileURL)
+        } catch {
+            throw FastChineseDataStoreError.failedToSaveData
         }
     }
 

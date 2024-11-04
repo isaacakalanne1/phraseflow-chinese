@@ -15,7 +15,7 @@ struct DefinitionView: View {
             HStack(spacing: 0) {
                 Text("Definition of ")
                 Text(store.state.tappedWord?.word ?? "...")
-                    .fontWeight(store.state.tappedWord?.word == nil ? .regular : .bold)
+                    .fontWeight(store.state.tappedWord?.word == nil ? .regular : .medium)
             }
             .greyBackground()
             HStack {

@@ -27,7 +27,7 @@ struct ReaderView: View {
             }
             HStack(spacing: 0) {
                 Text(store.state.currentStory?.title ?? "")
-                    .bold()
+                    .fontWeight(.medium)
                 Text(" ")
                     .fontWeight(.light)
                 Text("Chapter \(chapterNumber)")

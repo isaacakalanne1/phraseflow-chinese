@@ -14,9 +14,6 @@ struct CreateStoryView: View {
 
         NavigationView {
             VStack {
-                Text("Create Story")
-                    .bold()
-                    .padding(.top, 20)
                 Text("Genre")
                     .fontWeight(.light)
                     .greyBackground()
@@ -64,9 +61,9 @@ struct CreateStoryView: View {
                         .cornerRadius(10)
                 }
             }
-            .toolbar(.hidden)
             .padding(.horizontal)
         }
+        .navigationTitle("Create Story")
     }
 
 }
