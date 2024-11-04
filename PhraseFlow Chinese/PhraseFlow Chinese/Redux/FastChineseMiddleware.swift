@@ -75,22 +75,18 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
     case .playAudio(let timestamp):
         if let timestamp {
             let myTime = CMTime(seconds: timestamp, preferredTimescale: 60000)
-            await state.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .indefinite)
+            await state.audioPlayer.seek(to: myTime, toleranceBefore: .indefinite, toleranceAfter: .zero)
         }
         state.audioPlayer.playImmediately(atRate: state.speechSpeed.rate)
         return nil
     case .playWord(let word):
         let myTime = CMTime(seconds: word.time, preferredTimescale: 60000)
-        await state.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .indefinite)
+        await state.audioPlayer.seek(to: myTime, toleranceBefore: .indefinite, toleranceAfter: .zero)
         state.audioPlayer.playImmediately(atRate: state.speechSpeed.rate)
-
-        let duration = word.duration / Double(state.speechSpeed.rate) // TODO: Update duration to be saved as being 0.0001 seconds before the start time of the next word in repository logic
-        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
-            state.audioPlayer.pause()
-        }
         return nil
     case .pauseAudio,
-            .stopAudio:
+            .stopAudio,
+            .finishedPlayingWord:
         state.audioPlayer.pause()
         return nil
     case .defineCharacter(let timeStampData, let shouldForce):
