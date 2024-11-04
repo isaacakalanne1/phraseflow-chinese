@@ -57,6 +57,9 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.currentDefinition = definition
         newState.viewState = .normal
     case .onSynthesizedAudio(let data):
+        newState.currentPlaybackTime = 0
+        newState.currentDefinition = nil
+
         var newStory = newState.currentStory
         let chapterIndex = newStory?.currentChapterIndex ?? 0
         newStory?.chapters[chapterIndex].audioData = data.audioData
