@@ -40,6 +40,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
 
             // Add a handler for the word boundary event
             var textOffset = 0
+            var index = -1
             synthesizer.addSynthesisWordBoundaryEventHandler { (synthesizer, event) in
                 // Extract the audio offset (in ticks of 100 nanoseconds)
                 let audioTimeInSeconds = Double(event.audioOffset) / 10_000_000.0
@@ -56,11 +57,11 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                                                 duration: event.duration,
                                                 textOffset: textOffset,
                                                 wordLength: wordLength))
-                    let previousIndex = wordTimestamps.count - 2
-                    if var newTimestamp = wordTimestamps[safe: previousIndex] {
+                    if var newTimestamp = wordTimestamps[safe: index] {
                         newTimestamp.duration = audioTimeInSeconds - newTimestamp.time - 0.0001
-                        wordTimestamps[previousIndex] = newTimestamp
+                        wordTimestamps[index] = newTimestamp
                     }
+                    index += 1
 
                     textOffset += Int(wordLength)
                 }

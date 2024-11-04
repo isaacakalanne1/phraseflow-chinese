@@ -139,7 +139,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newStory?.currentChapterIndex += 1
         newState.currentStory = newStory
         if let data = newState.currentChapterAudioData,
-           let player = newState.createAVPlayer(from: data) { // TODO: Move this repeated logic in Reducer to a new action, called via middleware for each of these cases
+           let player = newState.createAVPlayer(from: data) {
             newState.audioPlayer = player
         }
     case .refreshChapterView:

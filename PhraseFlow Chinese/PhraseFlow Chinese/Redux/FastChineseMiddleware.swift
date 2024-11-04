@@ -110,8 +110,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
         return nil
     case .selectWord(let timestampData):
-        let myTime = CMTime(seconds: timestampData.time, preferredTimescale: 60000)
-        await state.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
+        if !state.isPlayingAudio {
+            return .playWord(timestampData)
+        }
         return nil
     case .goToNextChapter:
         if let story = state.currentStory {
@@ -140,10 +141,15 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToLoadVoice
         }
+    case .updateSpeechSpeed(let speed):
+        if state.isPlayingAudio {
+            state.audioPlayer.pause()
+            state.audioPlayer.playImmediately(atRate: speed.rate)
+        }
+        return nil
     case .failedToGenerateNewStory,
             .failedToLoadStories,
             .failedToSaveStory,
-            .updateSpeechSpeed,
             .failedToDefineCharacter,
             .onPlayedAudio,
             .failedToPlayAudio,

@@ -1,5 +1,5 @@
 {
-  "originHash" : "f987e9d8527c55b7eb703c9e7569d9822e7bbbf6de709e0a4f15ffc141631cf2",
+  "originHash" : "2673bc16e6660724ba1f646b30bac45e177f7106127ec753e35b2bd65e2124b5",
   "pins" : [
     {
       "identity" : "combine-schedulers",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "ec62f32d21584214a4b27c8cee2b2ad70ab2c38a",
         "version" : "0.11.0"
+      }
+    },
+    {
+      "identity" : "generative-ai-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/google/generative-ai-swift",
+      "state" : {
+        "revision" : "44b8ce120425f9cf53ca756f3434ca2c2696f8bd",
+        "version" : "0.5.6"
       }
     },
     {
