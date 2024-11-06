@@ -31,7 +31,7 @@ struct ChapterListView: View {
                     }
                 }
             }
-            Button("Create new chapter") {
+            Button("New chapter") {
                 if let chapter = store.state.currentChapter {
                     store.dispatch(.generateChapter(previousChapter: chapter))
                 }

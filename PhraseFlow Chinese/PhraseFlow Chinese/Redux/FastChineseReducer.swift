@@ -61,6 +61,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         var newStory = newState.currentStory
         let chapterIndex = newStory?.currentChapterIndex ?? 0
         newStory?.chapters[chapterIndex].audioData = data.audioData
+        newStory?.chapters[chapterIndex].audioVoice = newState.selectedVoice
         newStory?.chapters[chapterIndex].timestampData = data.wordTimestamps
         newState.currentStory = newStory
 

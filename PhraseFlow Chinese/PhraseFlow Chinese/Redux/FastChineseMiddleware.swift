@@ -58,7 +58,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .failedToDeleteStory
         }
     case .synthesizeAudio(let chapter, let voice, let isForced):
-        if chapter.audioData != nil && !isForced {
+        if chapter.audioData != nil && chapter.audioVoice == state.selectedVoice && !isForced {
             return .playAudio(time: nil)
         }
         do {
@@ -109,11 +109,16 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .saveStory(story)
         }
         return nil
-    case .selectWord(let timestampData):
-        if !state.isPlayingAudio {
-            return .playWord(timestampData)
+    case .selectWord(let word):
+        if state.isPlayingAudio {
+            let myTime = CMTime(seconds: word.time, preferredTimescale: 60000)
+            await state.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
+            state.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: .infinity, preferredTimescale: 60000)
+            state.audioPlayer.playImmediately(atRate: state.speechSpeed.rate)
+            return nil
+        } else {
+            return .playWord(word)
         }
-        return nil
     case .goToNextChapter:
         if let story = state.currentStory {
             return .saveStory(story)

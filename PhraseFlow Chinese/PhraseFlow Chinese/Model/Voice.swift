@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Voice: String, CaseIterable, Equatable {
+enum Voice: String, Codable, CaseIterable, Equatable {
     case xiaoxiao, xiaochen, yunxi, yunjian
 
     var title: String {

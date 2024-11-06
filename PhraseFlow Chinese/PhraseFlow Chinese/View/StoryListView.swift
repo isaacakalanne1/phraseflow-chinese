@@ -13,22 +13,32 @@ struct StoryListView: View {
     var body: some View {
 
         NavigationView {
-            List {
-                ForEach(store.state.savedStories, id: \.self) { story in
-                    HStack {
-                        NavigationLink(destination: ChapterListView(story: story)) {
-                            VStack(alignment: .leading, content: {
-                                Text(story.title)
-                                    .fontWeight(.medium)
-                                Text(story.latestStorySummary)
-                                    .fontWeight(.light)
-                            })
-                            .padding(.trailing)
+            VStack {
+                List {
+                    ForEach(store.state.savedStories, id: \.self) { story in
+                        HStack {
+                            NavigationLink(destination: ChapterListView(story: story)) {
+                                VStack(alignment: .leading, content: {
+                                    Text(story.title)
+                                        .fontWeight(.medium)
+                                    Text(story.latestStorySummary)
+                                        .fontWeight(.light)
+                                })
+                                .padding(.trailing)
+                            }
                         }
+                        .foregroundStyle(Color.primary)
                     }
-                    .foregroundStyle(Color.primary)
+                    .onDelete(perform: delete)
                 }
-                .onDelete(perform: delete)
+                Button("Create") {
+                    let genres = Array(Genre.allCases.shuffled().prefix(3))
+                    store.dispatch(.generateNewStory(genres: genres))
+                }
+                .padding()
+                .background(Color.accentColor)
+                .foregroundColor(.white)
+                .cornerRadius(10)
             }
             .toolbar(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
