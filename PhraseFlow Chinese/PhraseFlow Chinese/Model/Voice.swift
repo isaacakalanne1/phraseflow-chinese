@@ -8,7 +8,7 @@
 import Foundation
 
 enum Voice: String, Codable, CaseIterable, Equatable {
-    case xiaochen, xiaoxiao, yunxi, yunjian
+    case xiaoxiao, xiaochen, yunxi, yunjian
 
     var title: String {
         rawValue.capitalized
