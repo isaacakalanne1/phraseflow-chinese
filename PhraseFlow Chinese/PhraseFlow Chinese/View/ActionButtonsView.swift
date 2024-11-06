@@ -14,11 +14,13 @@ struct ActionButtonsView: View {
     var body: some View {
 
         HStack(spacing: 20) {
-            if chapter.audioData == nil || store.state.selectedVoice != chapter.audioVoice || store.state.speechSpeed != chapter.audioSpeed {
+            if chapter.audioData == nil ||
+                store.state.appSettings.voice != chapter.audioVoice ||
+                store.state.appSettings.speechSpeed != chapter.audioSpeed {
                 ActionButton(title: "Load",
                              imageName: "arrow.down.to.line.circle") {
                     store.dispatch(.synthesizeAudio(chapter,
-                                                    voice: store.state.selectedVoice,
+                                                    voice: store.state.appSettings.voice,
                                                     isForced: false))
                 }
             } else {
@@ -38,8 +40,8 @@ struct ActionButtonsView: View {
             }
 
             ActionButton(title: "Pinyin",
-                         imageName: store.state.isShowingPinyin ? "lightbulb.fill" : "lightbulb.slash") {
-                store.dispatch(.updateShowPinyin(!store.state.isShowingPinyin))
+                         imageName: store.state.appSettings.isShowingPinyin ? "lightbulb.fill" : "lightbulb.slash") {
+                store.dispatch(.updateShowPinyin(!store.state.appSettings.isShowingPinyin))
             }
 
             ActionButton(title: "Stories",

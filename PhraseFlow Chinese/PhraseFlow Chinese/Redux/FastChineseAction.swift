@@ -66,9 +66,11 @@ enum FastChineseAction {
     case selectStorySetting(StorySetting?)
     
     case selectVoice(Voice)
-    case failedToSaveVoice
-    
-    case loadVoice
-    case onLoadedVoice(Voice)
-    case failedToLoadVoice
+
+    case loadAppSettings
+    case onLoadedAppSettings(AppSettings)
+    case failedToLoadAppSettings
+
+    case saveAppSettings
+    case failedToSaveAppSettings
 }

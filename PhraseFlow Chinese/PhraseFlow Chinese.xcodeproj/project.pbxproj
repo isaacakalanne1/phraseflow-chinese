@@ -37,6 +37,7 @@
 		BB6572E32CD6C03900AC5981 /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = BB6572E22CD6C03900AC5981 /* GoogleGenerativeAI */; };
 		BB6572E52CD8D12400AC5981 /* Voice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572E42CD8D12400AC5981 /* Voice.swift */; };
 		BB6572E72CD8D1E300AC5981 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572E62CD8D1E300AC5981 /* Gender.swift */; };
+		BB6572F72CDB991B00AC5981 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572F62CDB991A00AC5981 /* AppSettings.swift */; };
 		BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -111,6 +112,7 @@
 		BB6572DC2CD6847500AC5981 /* Categorisable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categorisable.swift; sourceTree = "<group>"; };
 		BB6572E42CD8D12400AC5981 /* Voice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voice.swift; sourceTree = "<group>"; };
 		BB6572E62CD8D1E300AC5981 /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
+		BB6572F62CDB991A00AC5981 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhraseFlow Chinese.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 				BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */,
 				BB6572E42CD8D12400AC5981 /* Voice.swift */,
 				BB6572E62CD8D1E300AC5981 /* Gender.swift */,
+				BB6572F62CDB991A00AC5981 /* AppSettings.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -585,6 +588,7 @@
 				BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */,
 				BBE16F202CC152C400A7EF1F /* Difficulty.swift in Sources */,
 				BB4EDB172C90D20300699E7D /* FastChineseServices.swift in Sources */,
+				BB6572F72CDB991B00AC5981 /* AppSettings.swift in Sources */,
 				BB4EDB052C90C89C00699E7D /* FastChineseState.swift in Sources */,
 				BB0854852CB42C1400F1661B /* Story.swift in Sources */,
 				BBE636C92CCC0E8400873E68 /* ChapterView.swift in Sources */,

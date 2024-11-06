@@ -13,6 +13,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     var newState = state
 
     switch action {
+    case .onLoadedAppSettings(let settings):
+        newState.appSettings = settings
     case .onGeneratedChapter(let chapterResponse):
         var newStory = newState.currentStory
         newStory?.latestStorySummary = chapterResponse.latestStorySummary
@@ -47,7 +49,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         }
 
     case .updateSpeechSpeed(let speed):
-        newState.speechSpeed = speed
+        newState.appSettings.speechSpeed = speed
     case .defineCharacter(let wordTimeStampData, let shouldForce):
         newState.tappedWord = wordTimeStampData
         newState.viewState = .defining
@@ -61,8 +63,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         var newStory = newState.currentStory
         let chapterIndex = newStory?.currentChapterIndex ?? 0
         newStory?.chapters[chapterIndex].audioData = data.audioData
-        newStory?.chapters[chapterIndex].audioSpeed = newState.speechSpeed
-        newStory?.chapters[chapterIndex].audioVoice = newState.selectedVoice
+        newStory?.chapters[chapterIndex].audioSpeed = newState.appSettings.speechSpeed
+        newStory?.chapters[chapterIndex].audioVoice = newState.appSettings.voice
         newStory?.chapters[chapterIndex].timestampData = data.wordTimestamps
         newState.currentStory = newStory
 
@@ -70,11 +72,11 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             newState.audioPlayer = player
         }
     case .updateShowPinyin(let isShowing):
-        newState.isShowingPinyin = isShowing
+        newState.appSettings.isShowingPinyin = isShowing
     case .updateShowDefinition(let isShowing):
-        newState.isShowingDefinition = isShowing
+        newState.appSettings.isShowingDefinition = isShowing
     case .updateShowEnglish(let isShowing):
-        newState.isShowingEnglish = isShowing
+        newState.appSettings.isShowingEnglish = isShowing
     case .updateShowingCreateStoryScreen(let isShowing):
         newState.isShowingCreateStoryScreen = isShowing
     case .updateShowingSettings(let isShowing):
@@ -150,9 +152,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.definitionViewId = UUID()
     case .selectStorySetting(let setting):
         newState.selectedStorySetting = setting
-    case .selectVoice(let voice),
-            .onLoadedVoice(let voice):
-        newState.selectedVoice = voice
+    case .selectVoice(let voice):
+        newState.appSettings.voice = voice
     case .playWord:
         newState.isPlayingDefinedWord = true
     case .finishedPlayingWord:
@@ -167,9 +168,10 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             .onPlayedAudio,
             .deleteStory,
             .failedToDeleteStory,
-            .failedToSaveVoice,
-            .failedToLoadVoice,
-            .loadVoice:
+            .failedToSaveAppSettings,
+            .failedToLoadAppSettings,
+            .loadAppSettings,
+            .saveAppSettings:
         break
     }
 

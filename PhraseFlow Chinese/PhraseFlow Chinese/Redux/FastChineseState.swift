@@ -19,7 +19,6 @@ struct FastChineseState {
 
     var selectedGenres: [Genre] = []
     var selectedStorySetting: StorySetting?
-    var selectedVoice: Voice = .xiaochen
 
     var currentPlaybackTime: TimeInterval = 0
 
@@ -44,12 +43,8 @@ struct FastChineseState {
         return currentStory.chapters[safe: currentStory.currentChapterIndex]?.audioData
     }
 
-    var speechSpeed: SpeechSpeed = .normal
     var currentDefinition: Definition?
 
-    var isShowingPinyin = true
-    var isShowingEnglish = true
-    var isShowingDefinition = true
     var audioPlayer = AVPlayer()
     var timestampData: [WordTimeStampData]? {
         currentChapter?.timestampData
@@ -60,6 +55,11 @@ struct FastChineseState {
 
     var isPlayingAudio = false
     var isPlayingDefinedWord = false
+    var appSettings: AppSettings = .init(isShowingPinyin: true,
+                                      isShowingDefinition: true,
+                                      isShowingEnglish: true,
+                                      voice: .xiaoxiao,
+                                      speechSpeed: .normal)
 
     var currentSpokenWord: WordTimeStampData? {
         timestampData?.last(where: { currentPlaybackTime >= $0.time })

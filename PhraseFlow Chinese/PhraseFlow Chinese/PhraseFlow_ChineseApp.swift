@@ -32,7 +32,7 @@ struct PhraseFlow_ChineseApp: App {
                 .environmentObject(store)
                 .onAppear {
                     store.dispatch(.loadStories)
-                    store.dispatch(.loadVoice)
+                    store.dispatch(.loadAppSettings)
                 }
         }
     }

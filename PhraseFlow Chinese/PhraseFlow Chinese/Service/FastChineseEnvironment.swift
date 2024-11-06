@@ -16,9 +16,9 @@ protocol FastChineseEnvironmentProtocol {
     func generateStory(genres: [Genre]) async throws -> Story
     func generateChapter(previousChapter: Chapter) async throws -> ChapterResponse
     func loadStories() throws -> [Story]
-    func loadVoice() throws -> Voice
+    func loadAppSettings() throws -> AppSettings
     func saveStory(_ story: Story) throws
-    func saveVoice(_ voice: Voice) throws
+    func saveAppSettings(_ settings: AppSettings) throws
     func unsaveStory(_ story: Story) throws
 
     func fetchDefinition(of character: String, withinContextOf sentence: Sentence, shouldForce: Bool) async throws -> Definition
@@ -53,8 +53,8 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
         try dataStore.saveStory(story)
     }
 
-    func saveVoice(_ voice: Voice) throws {
-        try dataStore.saveVoice(voice)
+    func saveAppSettings(_ settings: AppSettings) throws {
+        try dataStore.saveAppSettings(settings)
     }
 
     func unsaveStory(_ story: Story) throws {
@@ -65,8 +65,8 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
         try dataStore.loadStories()
     }
 
-    func loadVoice() throws -> Voice {
-        try dataStore.loadVoice()
+    func loadAppSettings() throws -> AppSettings {
+        try dataStore.loadAppSettings()
     }
 
     func fetchDefinition(of string: String, withinContextOf sentence: Sentence, shouldForce: Bool) async throws -> Definition {

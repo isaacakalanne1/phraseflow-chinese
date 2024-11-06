@@ -22,7 +22,7 @@ struct CharacterView: View {
         VStack(spacing: 0) {
             Text(character == pinyin ? " " : pinyin)
                 .font(.system(size: 10))
-                .opacity(store.state.isShowingPinyin ? 1 : 0)
+                .opacity(store.state.appSettings.isShowingPinyin ? 1 : 0)
                 .frame(maxWidth: .infinity)
             Text(character)
                 .font(.system(size: 25, weight: .light))
@@ -49,7 +49,7 @@ struct CharacterView: View {
                store.state.viewState != .defining {
                 store.dispatch(.updateSentenceIndex(sentenceIndex))
                 store.dispatch(.selectWord(word))
-                if store.state.isShowingDefinition {
+                if store.state.appSettings.isShowingDefinition {
                     store.dispatch(.defineCharacter(word, shouldForce: false))
                 }
             }

@@ -58,13 +58,13 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .failedToDeleteStory
         }
     case .synthesizeAudio(let chapter, let voice, let isForced):
-        if chapter.audioData != nil && chapter.audioVoice == state.selectedVoice && chapter.audioSpeed == state.speechSpeed && !isForced {
+        if chapter.audioData != nil && chapter.audioVoice == state.appSettings.voice && chapter.audioSpeed == state.appSettings.speechSpeed && !isForced {
             return .playAudio(time: nil)
         }
         do {
             let result = try await environment.synthesizeSpeech(for: chapter,
                                                                 voice: voice,
-                                                                rate: state.speechSpeed.rate)
+                                                                rate: state.appSettings.speechSpeed.rate)
             return .onSynthesizedAudio(result)
         } catch {
             return .failedToPlayAudio
@@ -134,35 +134,32 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } else {
             return nil
         }
-    case .selectVoice(let voice):
+    case .selectVoice,
+            .updateSpeechSpeed,
+            .updateShowPinyin,
+            .updateShowDefinition,
+            .updateShowEnglish:
+        return .saveAppSettings
+    case .saveAppSettings:
         do {
-            try environment.saveVoice(voice)
+            try environment.saveAppSettings(state.appSettings)
             return nil
         } catch {
-            return .failedToSaveVoice
+            return .failedToSaveAppSettings
         }
-    case .loadVoice:
+    case .loadAppSettings:
         do {
-            let voice = try environment.loadVoice()
-            return .onLoadedVoice(voice)
+            let settings = try environment.loadAppSettings()
+            return .onLoadedAppSettings(settings)
         } catch {
-            return .failedToLoadVoice
+            return .failedToLoadAppSettings
         }
-    case .updateSpeechSpeed(let speed):
-        if state.isPlayingAudio {
-            state.audioPlayer.pause()
-            state.audioPlayer.play()
-        }
-        return nil
     case .failedToGenerateNewStory,
             .failedToLoadStories,
             .failedToSaveStory,
             .failedToDefineCharacter,
             .onPlayedAudio,
             .failedToPlayAudio,
-            .updateShowPinyin,
-            .updateShowDefinition,
-            .updateShowEnglish,
             .updateShowingCreateStoryScreen,
             .updateSelectGenre,
             .updateShowingSettings,
@@ -173,9 +170,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .refreshDefinitionView,
             .selectStorySetting,
             .failedToDeleteStory,
-            .failedToSaveVoice,
-            .onLoadedVoice,
-            .failedToLoadVoice:
+            .failedToSaveAppSettings,
+            .onLoadedAppSettings,
+            .failedToLoadAppSettings:
         return nil
     }
 }

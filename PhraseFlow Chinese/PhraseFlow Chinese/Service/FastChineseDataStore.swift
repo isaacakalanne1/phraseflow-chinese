@@ -17,9 +17,9 @@ enum FastChineseDataStoreError: Error {
 
 protocol FastChineseDataStoreProtocol {
     func loadStories() throws -> [Story]
-    func loadVoice() throws -> Voice
+    func loadAppSettings() throws -> AppSettings
     func saveStory(_ story: Story) throws
-    func saveVoice(_ voice: Voice) throws
+    func saveAppSettings(_ settings: AppSettings) throws
     func loadDefinitions() throws -> [Definition]
     func loadDefinition(character: String, sentence: Sentence) throws -> Definition
     func saveDefinition(_ definition: Definition) throws
@@ -53,17 +53,15 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
         }
     }
 
-    func loadVoice() throws -> Voice {
-        guard let fileURL = documentsDirectory?.appendingPathComponent("voice") else {
+    func loadAppSettings() throws -> AppSettings {
+        guard let fileURL = documentsDirectory?.appendingPathComponent("appSettings.json") else {
             throw FastChineseDataStoreError.failedToCreateUrl
         }
         do {
             let data = try Data(contentsOf: fileURL)
-            guard let voiceString = String(data: data, encoding: .utf8),
-                  let voice = Voice(rawValue: voiceString) else {
-                throw FastChineseDataStoreError.failedToGetData
-            }
-            return voice
+            let decoder = JSONDecoder()
+            let appSettings = try decoder.decode(AppSettings.self, from: data)
+            return appSettings
         } catch {
             throw FastChineseDataStoreError.failedToDecodeData
         }
@@ -83,15 +81,14 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
         }
     }
 
-    func saveVoice(_ voice: Voice) throws {
-        guard let fileURL = documentsDirectory?.appendingPathComponent("voice") else {
+    func saveAppSettings(_ settings: AppSettings) throws {
+        guard let fileURL = documentsDirectory?.appendingPathComponent("appSettings.json") else {
             throw FastChineseDataStoreError.failedToCreateUrl
         }
-        guard let data = voice.rawValue.data(using: .utf8) else {
-            throw FastChineseDataStoreError.failedToGetData
-        }
+        let encoder = JSONEncoder()
         do {
-            try data.write(to: fileURL)
+            let encodedData = try encoder.encode(settings)
+            try encodedData.write(to: fileURL)
         } catch {
             throw FastChineseDataStoreError.failedToSaveData
         }
