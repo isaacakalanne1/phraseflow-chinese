@@ -16,8 +16,8 @@ enum FastChineseServicesError: Error {
 }
 
 protocol FastChineseServicesProtocol {
-    func generateStory(genres: [Genre]) async throws -> Story
-    func generateChapter(previousChapter: Chapter) async throws -> ChapterResponse
+    func generateStory(genres: [Genre], voice: Voice) async throws -> Story
+    func generateChapter(previousChapter: Chapter, voice: Voice) async throws -> ChapterResponse
     func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> String
 }
 
@@ -29,8 +29,9 @@ final class FastChineseServices: FastChineseServicesProtocol {
         apiKey: "AIzaSyBJz8qmCuAK5EO9AzQLl99ed6TlvHKRjCI"
       )
 
-    func generateStory(genres: [Genre]) async throws -> Story {
-        let chapterResponse = try await generateChapter(type: .first(setting: StorySetting.allCases.randomElement() ?? .ancientChina))
+    func generateStory(genres: [Genre], voice: Voice) async throws -> Story {
+        let chapterResponse = try await generateChapter(type: .first(setting: StorySetting.allCases.randomElement() ?? .ancientChina),
+                                                        voice: voice)
         let chapter = Chapter(storyTitle: chapterResponse.storyTitle, sentences: chapterResponse.sentences)
         return Story(storyOverview: "Story overview here",
                      latestStorySummary: chapterResponse.latestStorySummary,
@@ -40,17 +41,41 @@ final class FastChineseServices: FastChineseServicesProtocol {
                      chapters: [chapter])
     }
 
-    func generateChapter(previousChapter: Chapter) async throws -> ChapterResponse {
-        try await generateChapter(type: .next(previousChapter: previousChapter))
+    func generateChapter(previousChapter: Chapter, voice: Voice) async throws -> ChapterResponse {
+        try await generateChapter(type: .next(previousChapter: previousChapter), voice: voice)
     }
 
-    private func generateChapter(type: ChapterType) async throws -> ChapterResponse {
+    private func generateChapter(type: ChapterType, voice: Voice) async throws -> ChapterResponse {
         let initialPrompt = """
         You are the greatest Mandarin Chinese storywriter alive, who takes great pleasure in creating Mandarin stories. You write stories to help people learn Mandarin Chinese.
         Do not include any explaining statements before or after the story. Simply write the most amazing, engaging, suspenseful story possible.
         You output only the expected story in JSON format, with each sentence split into entries in the list.
         You output no explaining text before or after the JSON, only the JSON.
-        You output data in the following format: { "sentences": [ { "mandarin": "你好", "pinyin": ["nǐ", "hǎo"], "english": "Hello" }, { "mandarin": "谢谢", "pinyin": ["xiè", "xie"], "english": "Thank you" }, { "mandarin": "再见", "pinyin": ["zài", "jiàn"], "english": "Goodbye" } ], "storyTitle": "Short story title in English. Create a short title if no title is provided below", "latestStorySummary": "Suspenseful short teaser description of the story so far, which makes the reader want to read the above chapter." }
+        You output data in the following format:
+        {
+            "sentences": [
+                {
+                    "mandarin": "你好",
+                    "pinyin": ["nǐ", "hǎo"],
+                    "english": "Hello",
+                    "speechStyle": "Speech style based on Mandarin sentence"
+                },
+                {
+                    "mandarin": "谢谢",
+                    "pinyin": ["xiè", "xie"],
+                    "english": "Thank you",
+                    "speechStyle": "speech style based on Mandarin sentence"
+                },
+                {
+                    "mandarin": "再见",
+                    "pinyin": ["zài", "jiàn"],
+                    "english": "Goodbye",
+                    "speechStyle": "speech style based on Mandarin sentence"
+                }
+            ],
+            "storyTitle": "Short story title in English. Create a short title if no title is provided below",
+            "latestStorySummary": "Suspenseful short teaser description of the story so far, which makes the reader want to read the above chapter."
+        }
         Do not nest JSON statements within each other. Ensure the list only has a depth of 1 JSON object.
         Separate each pinyin in the list into their individual sounds. For example, "níanqīng" would be separated into ["nían", "qīng"]
         Include punctuation in the pinyin, to match the Mandarin, such as commas, and full stops. The punctuation should be its own item in the pinyin list, such as ["nǐ", "，"]. Use Mandarin punctuation.
@@ -68,6 +93,9 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
         This is the setting of the story:
         \(setting.title)
+
+        These are the available speech styles:
+        \(String(describing: voice.availableSpeechStyles.map({ $0.ssmlName })))
         """
         case .next(let previousChapter):
             mainPrompt = """
@@ -81,6 +109,9 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
         "This is the previous chapter:
         \(previousChapter.passage)
+
+        These are the available speech styles:
+        \(String(describing: voice.availableSpeechStyles.map({ $0.ssmlName })))
         """
         }
 

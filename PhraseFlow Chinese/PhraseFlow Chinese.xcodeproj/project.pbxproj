@@ -38,6 +38,7 @@
 		BB6572E52CD8D12400AC5981 /* Voice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572E42CD8D12400AC5981 /* Voice.swift */; };
 		BB6572E72CD8D1E300AC5981 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572E62CD8D1E300AC5981 /* Gender.swift */; };
 		BB6572F72CDB991B00AC5981 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572F62CDB991A00AC5981 /* AppSettings.swift */; };
+		BB6572F92CDBB14C00AC5981 /* SpeechStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572F82CDBB14C00AC5981 /* SpeechStyle.swift */; };
 		BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -113,6 +114,7 @@
 		BB6572E42CD8D12400AC5981 /* Voice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voice.swift; sourceTree = "<group>"; };
 		BB6572E62CD8D1E300AC5981 /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
 		BB6572F62CDB991A00AC5981 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		BB6572F82CDBB14C00AC5981 /* SpeechStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechStyle.swift; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhraseFlow Chinese.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */,
 				BB6572E42CD8D12400AC5981 /* Voice.swift */,
 				BB6572E62CD8D1E300AC5981 /* Gender.swift */,
+				BB6572F82CDBB14C00AC5981 /* SpeechStyle.swift */,
 				BB6572F62CDB991A00AC5981 /* AppSettings.swift */,
 			);
 			path = Model;
@@ -582,6 +585,7 @@
 				BBE636C32CCC0BE900873E68 /* CharacterView.swift in Sources */,
 				BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */,
 				BB4EDB0C2C90C9A100699E7D /* FastChineseReducer.swift in Sources */,
+				BB6572F92CDBB14C00AC5981 /* SpeechStyle.swift in Sources */,
 				BB4EDB0A2C90C8F100699E7D /* FastChineseEnvironment.swift in Sources */,
 				BB6572D62CD4E09000AC5981 /* ActionButton.swift in Sources */,
 				BBE16F242CC2AFC800A7EF1F /* ChapterListView.swift in Sources */,
