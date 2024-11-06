@@ -14,7 +14,7 @@ struct ActionButtonsView: View {
     var body: some View {
 
         HStack(spacing: 20) {
-            if chapter.audioData == nil || store.state.selectedVoice != chapter.audioVoice {
+            if chapter.audioData == nil || store.state.selectedVoice != chapter.audioVoice || store.state.speechSpeed != chapter.audioSpeed {
                 ActionButton(title: "Load",
                              imageName: "arrow.down.to.line.circle") {
                     store.dispatch(.synthesizeAudio(chapter,

@@ -15,6 +15,7 @@ struct Chapter: Codable, Equatable, Hashable {
     var storyTitle: String
     var sentences: [Sentence]
     var audioVoice: Voice?
+    var audioSpeed: SpeechSpeed?
     var audioData: Data?
     var timestampData: [WordTimeStampData] = []
 }

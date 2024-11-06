@@ -58,11 +58,13 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .failedToDeleteStory
         }
     case .synthesizeAudio(let chapter, let voice, let isForced):
-        if chapter.audioData != nil && chapter.audioVoice == state.selectedVoice && !isForced {
+        if chapter.audioData != nil && chapter.audioVoice == state.selectedVoice && chapter.audioSpeed == state.speechSpeed && !isForced {
             return .playAudio(time: nil)
         }
         do {
-            let result = try await environment.synthesizeSpeech(for: chapter, voice: voice)
+            let result = try await environment.synthesizeSpeech(for: chapter,
+                                                                voice: voice,
+                                                                rate: state.speechSpeed.rate)
             return .onSynthesizedAudio(result)
         } catch {
             return .failedToPlayAudio
@@ -78,13 +80,13 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             await state.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
         }
         state.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: .infinity, preferredTimescale: 1)
-        state.audioPlayer.playImmediately(atRate: state.speechSpeed.rate)
+        state.audioPlayer.play()
         return nil
     case .playWord(let word):
         let myTime = CMTime(seconds: word.time, preferredTimescale: 60000)
         await state.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
         state.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: word.time + word.duration, preferredTimescale: 60000)
-        state.audioPlayer.playImmediately(atRate: state.speechSpeed.rate)
+        state.audioPlayer.play()
         return nil
     case .pauseAudio,
             .stopAudio,
@@ -114,7 +116,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             let myTime = CMTime(seconds: word.time, preferredTimescale: 60000)
             await state.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
             state.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: .infinity, preferredTimescale: 60000)
-            state.audioPlayer.playImmediately(atRate: state.speechSpeed.rate)
+            state.audioPlayer.play()
             return nil
         } else {
             return .playWord(word)
@@ -149,7 +151,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
     case .updateSpeechSpeed(let speed):
         if state.isPlayingAudio {
             state.audioPlayer.pause()
-            state.audioPlayer.playImmediately(atRate: speed.rate)
+            state.audioPlayer.play()
         }
         return nil
     case .failedToGenerateNewStory,

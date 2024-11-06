@@ -9,7 +9,7 @@ import Foundation
 import MicrosoftCognitiveServicesSpeech
 
 protocol FastChineseRepositoryProtocol {
-    func synthesizeSpeech(_ text: String, voice: Voice) async throws -> (wordTimestamps: [WordTimeStampData],
+    func synthesizeSpeech(_ text: String, voice: Voice, rate: String) async throws -> (wordTimestamps: [WordTimeStampData],
                                                            audioData: Data)
 }
 
@@ -19,7 +19,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
 
     }
 
-    func synthesizeSpeech(_ text: String, voice: Voice) async throws -> (wordTimestamps: [WordTimeStampData], audioData: Data) {
+    func synthesizeSpeech(_ text: String, voice: Voice, rate: String) async throws -> (wordTimestamps: [WordTimeStampData], audioData: Data) {
         // Replace with your subscription key and service region
         let speechKey = "144bc0cdea4d44e499927e84e795b27a"
         let serviceRegion = "eastus"
@@ -46,9 +46,8 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                 let audioTimeInSeconds = Double(event.audioOffset) / 10_000_000.0
 
                 // Extract the word from the text using textOffset and wordLength
-                let word = event.text
-                    .replacingOccurrences(of: "\n", with: "")
-                let wordLength = Int(word.count)
+                let word = event.text.replacingOccurrences(of: "\n", with: "")
+                let wordLength = word.count
 
                 // Append the word, its timestamp, and offsets to the array
                 wordTimestampsQueue.sync {
@@ -63,14 +62,23 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                     }
                     index += 1
 
-                    textOffset += Int(wordLength)
+                    textOffset += wordLength
                 }
             }
 
-            // Start speech synthesis synchronously
-            let result = try synthesizer.speakText(text)
-            // TODO: get audioDuration, then use this to automatically go to next sentence, and play the sentence.
-            // TODO: Update syhtnesize speech to synthesize the current sentence, and the next sentence, at the same time, to allow for smooth playing through the story
+            // Generate the SSML text with the specified rate
+            let ssml = """
+            <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">
+                <voice name="\(voice.speechSynthesisVoiceName)">
+                    <prosody rate="\(rate)">
+                        \(text)
+                    </prosody>
+                </voice>
+            </speak>
+            """
+
+            // Start speech synthesis synchronously using SSML
+            let result = try synthesizer.speakSsml(ssml)
 
             // Check the result for cancellation
             if result.reason == SPXResultReason.canceled {

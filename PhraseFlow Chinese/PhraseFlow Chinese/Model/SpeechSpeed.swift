@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum SpeechSpeed: CaseIterable {
+enum SpeechSpeed: CaseIterable, Codable, Equatable {
     case slow, normal, fast
 
     var title: String {
@@ -21,14 +21,14 @@ enum SpeechSpeed: CaseIterable {
         }
     }
 
-    var rate: Float {
+    var rate: String {
         switch self {
         case .slow:
-            0.5
+            "x-slow"
         case .normal:
-            1
+            "medium"
         case .fast:
-            1.5
+            "fast"
         }
     }
 }
