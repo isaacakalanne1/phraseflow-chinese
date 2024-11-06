@@ -38,7 +38,7 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
 
     func synthesizeSpeech(for chapter: Chapter, voice: Voice, rate: String) async throws -> (wordTimestamps: [WordTimeStampData],
                                                                                audioData: Data) {
-        try await repository.synthesizeSpeech(chapter.passage, voice: voice, rate: rate)
+        try await repository.synthesizeSpeech(chapter, voice: voice, rate: rate)
     }
 
     func generateStory(genres: [Genre], voice: Voice) async throws -> Story {

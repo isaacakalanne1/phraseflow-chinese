@@ -47,7 +47,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
     private func generateChapter(type: ChapterType, voice: Voice) async throws -> ChapterResponse {
         let initialPrompt = """
-        You are the greatest Mandarin Chinese storywriter alive, who takes great pleasure in creating Mandarin stories. You write stories to help people learn Mandarin Chinese.
+        You are the an award-winning Mandarin Chinese novelist. Write a chapter from an engaging Mandarin novel.
         Do not include any explaining statements before or after the story. Simply write the most amazing, engaging, suspenseful story possible.
         You output only the expected story in JSON format, with each sentence split into entries in the list.
         You output no explaining text before or after the JSON, only the JSON.
@@ -76,6 +76,8 @@ final class FastChineseServices: FastChineseServicesProtocol {
             "storyTitle": "Short story title in English. Create a short title if no title is provided below",
             "latestStorySummary": "Suspenseful short teaser description of the story so far, which makes the reader want to read the above chapter."
         }
+        Always use "lyrical" for third-person text. Only use other speech styles when a character is speaking, not for describing a character's feeling or such.
+        For describing a character's feelings, still use "lyrical".
         Do not nest JSON statements within each other. Ensure the list only has a depth of 1 JSON object.
         Separate each pinyin in the list into their individual sounds. For example, "níanqīng" would be separated into ["nían", "qīng"]
         Include punctuation in the pinyin, to match the Mandarin, such as commas, and full stops. The punctuation should be its own item in the pinyin list, such as ["nǐ", "，"]. Use Mandarin punctuation.
@@ -86,7 +88,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         switch type {
         case .first(let setting):
             mainPrompt = """
-        Write the first chapter of an emotional and dramatic Mandarin story.
+        Write the first chapter of an engaging Mandarin novel.
         The reader should be amazed an AI came up with it.
         Use vocabulary a 5 year old child could understand.
         The chapter should be very long.
@@ -99,13 +101,10 @@ final class FastChineseServices: FastChineseServicesProtocol {
         """
         case .next(let previousChapter):
             mainPrompt = """
-        Write the next chapter of an emotional and dramatic Mandarin story.
+        Write the next chapter of an engagin Mandarin novel.
         The reader should be amazed an AI came up with it.
         Use vocabulary a 5 year old child could understand.
         The chapter should be very long.
-
-        This is the story title:
-        \(previousChapter.storyTitle)
 
         "This is the previous chapter:
         \(previousChapter.passage)
