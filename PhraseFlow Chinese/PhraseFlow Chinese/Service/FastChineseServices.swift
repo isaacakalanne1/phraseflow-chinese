@@ -55,18 +55,21 @@ final class FastChineseServices: FastChineseServicesProtocol {
         {
             "sentences": [
                 {
+                    "sentenceIndex": 0,
                     "mandarin": "你好",
                     "pinyin": ["nǐ", "hǎo"],
                     "english": "Hello",
                     "speechStyle": "Speech style based on Mandarin sentence"
                 },
                 {
+                    "sentenceIndex": 1,
                     "mandarin": "谢谢",
                     "pinyin": ["xiè", "xie"],
                     "english": "Thank you",
                     "speechStyle": "speech style based on Mandarin sentence"
                 },
                 {
+                    "sentenceIndex": 2,
                     "mandarin": "再见",
                     "pinyin": ["zài", "jiàn"],
                     "english": "Goodbye",
@@ -91,7 +94,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         Write the first chapter of an engaging Mandarin novel.
         The reader should be amazed an AI came up with it.
         Use vocabulary a 5 year old child could understand.
-        The chapter should be very long.
+        The chapter should be 20 sentences long.
 
         This is the setting of the story:
         \(setting.title)
@@ -104,7 +107,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         Write the next chapter of an engagin Mandarin novel.
         The reader should be amazed an AI came up with it.
         Use vocabulary a 5 year old child could understand.
-        The chapter should be very long.
+        The chapter should be 20 sentences long.
 
         "This is the previous chapter:
         \(previousChapter.passage)
