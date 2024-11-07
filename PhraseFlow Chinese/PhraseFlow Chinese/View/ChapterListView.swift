@@ -32,8 +32,8 @@ struct ChapterListView: View {
                 }
             }
             Button("New chapter") {
-                if let chapter = store.state.currentChapter {
-                    store.dispatch(.generateChapter(previousChapter: chapter))
+                if let story = store.state.currentStory {
+                    store.dispatch(.generateChapter(story: story))
                 }
             }
             .padding()

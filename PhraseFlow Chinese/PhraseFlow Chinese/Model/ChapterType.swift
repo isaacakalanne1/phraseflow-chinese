@@ -9,5 +9,5 @@ import Foundation
 
 enum ChapterType {
     case first(setting: StorySetting)
-    case next(previousChapter: Chapter)
+    case next(story: Story)
 }

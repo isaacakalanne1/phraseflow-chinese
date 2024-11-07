@@ -22,9 +22,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
     case .onGeneratedStory(let story):
         return .saveStory(story)
-    case .generateChapter(let previousChapter):
+    case .generateChapter(let story):
         do {
-            let chapterResponse = try await environment.generateChapter(previousChapter: previousChapter,
+            let chapterResponse = try await environment.generateChapter(story: story,
                                                                         voice: state.appSettings.voice)
             return .onGeneratedChapter(chapterResponse)
         } catch {
@@ -43,8 +43,6 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToLoadStories
         }
-    case .onLoadedStories:
-        return .refreshChapterView
     case .saveStory(let story):
         do {
             try environment.saveStory(story)
@@ -156,6 +154,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToLoadAppSettings
         }
+    case .updateSentenceIndex:
+        return .refreshTranslationView
     case .failedToGenerateNewStory,
             .failedToLoadStories,
             .failedToSaveStory,
@@ -167,14 +167,15 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .updateShowingSettings,
             .updateShowingStoryListView,
             .failedToGenerateChapter,
-            .updateSentenceIndex,
             .refreshChapterView,
             .refreshDefinitionView,
             .selectStorySetting,
             .failedToDeleteStory,
             .failedToSaveAppSettings,
             .onLoadedAppSettings,
-            .failedToLoadAppSettings:
+            .failedToLoadAppSettings,
+            .refreshTranslationView,
+            .onLoadedStories:
         return nil
     }
 }

@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct SentenceResponse: Codable {
+    let sentences: [Sentence]
+}
+
 struct Sentence: Codable, Equatable, Hashable {
     let mandarin: String
     let pinyin: [String]
@@ -22,3 +26,32 @@ struct Sentence: Codable, Equatable, Hashable {
         self.speechStyle = try container.decode(SpeechStyle.self, forKey: .speechStyle)
     }
 }
+
+let sentenceSchema: [String: Any] = [
+    "type": "json_schema",
+    "json_schema": [
+        "name": "sentences",
+        "strict": true,
+        "schema": [
+            "type": "object",
+            "properties": [
+                "sentences": [
+                    "type": "array",
+                    "items": [
+                        "type": "object",
+                        "properties": [
+                            "mandarin": ["type": "string"],
+                            "pinyin": ["type": "array", "items": ["type": "string"]],
+                            "english": ["type": "string"],
+                            "speechStyle": ["type": "string"]
+                        ],
+                        "required": ["mandarin", "pinyin", "english", "speechStyle"],
+                        "additionalProperties": false
+                    ]
+                ]
+            ],
+            "required": ["sentences"],
+            "additionalProperties": false
+        ]
+    ]
+]

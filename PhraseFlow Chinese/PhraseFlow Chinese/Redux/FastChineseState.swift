@@ -52,6 +52,7 @@ struct FastChineseState {
 
     var definitionViewId = UUID()
     var chapterViewId = UUID()
+    var translationViewId = UUID()
 
     var isPlayingAudio = false
     var isPlayingDefinedWord = false

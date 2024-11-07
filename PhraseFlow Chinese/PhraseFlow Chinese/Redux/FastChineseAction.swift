@@ -20,7 +20,7 @@ enum FastChineseAction {
     case onGeneratedStory(Story)
     case failedToGenerateNewStory
 
-    case generateChapter(previousChapter: Chapter)
+    case generateChapter(story: Story)
     case onGeneratedChapter(ChapterResponse)
     case failedToGenerateChapter
 
@@ -62,6 +62,7 @@ enum FastChineseAction {
     case goToNextChapter
     case refreshChapterView
     case refreshDefinitionView
+    case refreshTranslationView
 
     case selectStorySetting(StorySetting?)
     

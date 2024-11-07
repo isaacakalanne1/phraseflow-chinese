@@ -17,9 +17,9 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.appSettings = settings
     case .onGeneratedChapter(let chapterResponse):
         var newStory = newState.currentStory
-        newStory?.latestStorySummary = chapterResponse.latestStorySummary
+        newStory?.latestStorySummary = "Latest story summary here"
 
-        let chapter = Chapter(storyTitle: chapterResponse.storyTitle, sentences: chapterResponse.sentences)
+        let chapter = Chapter(storyTitle: "Story title here", sentences: chapterResponse.sentences)
         if newStory?.chapters.isEmpty == true {
             newStory?.chapters = [chapter]
         } else {
@@ -150,6 +150,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.chapterViewId = UUID()
     case .refreshDefinitionView:
         newState.definitionViewId = UUID()
+    case .refreshTranslationView:
+        newState.translationViewId = UUID()
     case .selectStorySetting(let setting):
         newState.selectedStorySetting = setting
     case .selectVoice(let voice):

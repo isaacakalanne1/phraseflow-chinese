@@ -14,7 +14,7 @@ protocol FastChineseEnvironmentProtocol {
     func synthesizeSpeech(for chapter: Chapter, voice: Voice, rate: String) async throws -> (wordTimestamps: [WordTimeStampData],
                                                                                audioData: Data)
     func generateStory(genres: [Genre], voice: Voice) async throws -> Story
-    func generateChapter(previousChapter: Chapter, voice: Voice) async throws -> ChapterResponse
+    func generateChapter(story: Story, voice: Voice) async throws -> ChapterResponse
     func loadStories() throws -> [Story]
     func loadAppSettings() throws -> AppSettings
     func saveStory(_ story: Story) throws
@@ -45,8 +45,8 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
         try await service.generateStory(genres: genres, voice: voice)
     }
 
-    func generateChapter(previousChapter: Chapter, voice: Voice) async throws -> ChapterResponse {
-        try await service.generateChapter(previousChapter: previousChapter, voice: voice)
+    func generateChapter(story: Story, voice: Voice) async throws -> ChapterResponse {
+        try await service.generateChapter(story: story, voice: voice)
     }
 
     func saveStory(_ story: Story) throws {

@@ -44,8 +44,8 @@ struct ContentView: View {
             case .failedToGenerateChapter:
                 ErrorView(title: "Failed to generate chapter",
                           buttonTitle: "Retry") {
-                    if let chapter = store.state.currentChapter {
-                        store.dispatch(.generateChapter(previousChapter: chapter))
+                    if let story = store.state.currentStory {
+                        store.dispatch(.generateChapter(story: story))
                     }
                 }
             case .normal,
