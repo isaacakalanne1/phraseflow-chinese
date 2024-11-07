@@ -73,16 +73,21 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="zh-CN">
             <voice name="\(voice.speechSynthesisVoiceName)">
             """
+            // TODO: Update to be able to speak male characters as male voice, storyteller as female, and female characters as same female voice
             for sentence in chapter.sentences {
-                // TODO: Update styleDegree to also be generated with each sentence
-                let sentenceSsml = """
-            <mstts:express-as style="\(sentence.speechStyle.ssmlName)" styledegree="1">
-                <prosody rate="\(rate)">
-                    \(sentence.mandarin)
-                </prosody>
-            </mstts:express-as>
-            """
-                ssml.append(sentenceSsml)
+                let splitSentence = splitSpeechAndNonSpeech(from: sentence.mandarin)
+                for sentenceSection in splitSentence {
+                    // TODO: Update styleDegree to also be generated with each sentence
+                    let isSpeech = sentenceSection.contains("“") || sentenceSection.contains("”")
+                    let sentenceSsml = """
+                <mstts:express-as style="\(isSpeech ? sentence.speechStyle.ssmlName : SpeechStyle.lyrical.ssmlName)" styledegree="1">
+                    <prosody rate="\(rate)">
+                        \(sentenceSection)
+                    </prosody>
+                </mstts:express-as>
+                """
+                    ssml.append(sentenceSsml)
+                }
             }
             let ssmlSuffix = """
                         </voice>
@@ -111,4 +116,44 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             throw error
         }
     }
+
+    private func splitSpeechAndNonSpeech(from text: String) -> [String] {
+        var results: [String] = []
+        var currentText = ""
+        var isInSpeech = false
+
+        for character in text {
+            if character == "“" || character == "”" {
+                if isInSpeech {
+                    // End of speech part, include closing quotation mark
+                    currentText.append(character)
+                    results.append(currentText)
+                    currentText = ""
+                } else {
+                    // Non-speech part ends, start of speech part
+                    if !currentText.isEmpty {
+                        results.append(currentText)
+                        currentText = ""
+                    }
+                    currentText.append(character) // Start with the opening quotation mark
+                }
+                isInSpeech.toggle()
+            } else {
+                // Append character to current part
+                currentText.append(character)
+            }
+        }
+
+        // Add any remaining non-speech text after the last quotation mark
+        if !currentText.isEmpty {
+            results.append(currentText)
+        }
+
+        if results.count > 1 {
+            print("Results is \(results)")
+        }
+
+        return results
+    }
+
 }

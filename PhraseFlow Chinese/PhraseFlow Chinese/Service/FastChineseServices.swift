@@ -53,7 +53,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         - Mandarin: The story sentence in Mandarin Chinese.
         - Pinyin should be structured like ["a", "b", "c"] for each sound. The pinyin should use diacritic markers for the tones.
         - English: An English translation of the Mandarin sentence
-        - speechStyle: Use "lyrical" for third-person text, use any other speech style when a character is speaking, to match the emotions of the speaking character.
+        - speechStyle: This matches the emotions of the sentence.
         These are the available speechStyles which can be used in the JSON:
         \(String(describing: voice.availableSpeechStyles.map({ $0.ssmlName })))
 
@@ -228,7 +228,12 @@ final class FastChineseServices: FastChineseServicesProtocol {
             throw FastChineseServicesError.failedToEncodeJson
         }
 
-        let (data, _) = try await URLSession.shared.upload(for: request, from: jsonData)
+        let sessionConfig = URLSessionConfiguration.default
+        sessionConfig.timeoutIntervalForRequest = 1200
+        sessionConfig.timeoutIntervalForResource = 1200
+        let session = URLSession(configuration: sessionConfig)
+
+        let (data, _) = try await session.upload(for: request, from: jsonData)
         guard let response = try? JSONDecoder().decode(GPTResponse.self, from: data),
               let responseString = response.choices.first?.message.content else {
             throw FastChineseServicesError.failedToDecodeJson

@@ -39,6 +39,13 @@ struct ActionButtonsView: View {
                 }
             }
 
+            ActionButton(title: "Load",
+                         imageName: "arrow.down.to.line.circle") {
+                store.dispatch(.synthesizeAudio(chapter,
+                                                voice: store.state.appSettings.voice,
+                                                isForced: true))
+            }
+
             ActionButton(title: "Pinyin",
                          imageName: store.state.appSettings.isShowingPinyin ? "lightbulb.fill" : "lightbulb.slash") {
                 store.dispatch(.updateShowPinyin(!store.state.appSettings.isShowingPinyin))
