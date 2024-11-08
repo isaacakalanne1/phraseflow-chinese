@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		477951978617EF1A543B0EC4 /* libPods-PhraseFlow Chinese.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 278A489BDBA476D2CC0AF9AC /* libPods-PhraseFlow Chinese.a */; };
+		BB01D5E52CDE1E4B00AF7BB7 /* SpeechRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01D5E42CDE1E4B00AF7BB7 /* SpeechRole.swift */; };
 		BB0854832CB42C0200F1661B /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854822CB42C0200F1661B /* Chapter.swift */; };
 		BB0854852CB42C1400F1661B /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854842CB42C1400F1661B /* Story.swift */; };
 		BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */; };
@@ -86,6 +87,7 @@
 		03C5BB9FC82BE5D51BD916B3 /* Pods-PhraseFlow Chinese.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhraseFlow Chinese.debug.xcconfig"; path = "Target Support Files/Pods-PhraseFlow Chinese/Pods-PhraseFlow Chinese.debug.xcconfig"; sourceTree = "<group>"; };
 		278A489BDBA476D2CC0AF9AC /* libPods-PhraseFlow Chinese.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhraseFlow Chinese.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EDA23FCE91C5CB989C86534 /* Pods-PhraseFlow Chinese.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhraseFlow Chinese.release.xcconfig"; path = "Target Support Files/Pods-PhraseFlow Chinese/Pods-PhraseFlow Chinese.release.xcconfig"; sourceTree = "<group>"; };
+		BB01D5E42CDE1E4B00AF7BB7 /* SpeechRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRole.swift; sourceTree = "<group>"; };
 		BB0854822CB42C0200F1661B /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
 		BB0854842CB42C1400F1661B /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpeed.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 				BB6572E42CD8D12400AC5981 /* Voice.swift */,
 				BB6572E62CD8D1E300AC5981 /* Gender.swift */,
 				BB6572F82CDBB14C00AC5981 /* SpeechStyle.swift */,
+				BB01D5E42CDE1E4B00AF7BB7 /* SpeechRole.swift */,
 				BB6572F62CDB991A00AC5981 /* AppSettings.swift */,
 			);
 			path = Model;
@@ -590,6 +593,7 @@
 				BB6572D62CD4E09000AC5981 /* ActionButton.swift in Sources */,
 				BBE16F242CC2AFC800A7EF1F /* ChapterListView.swift in Sources */,
 				BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */,
+				BB01D5E52CDE1E4B00AF7BB7 /* SpeechRole.swift in Sources */,
 				BBE16F202CC152C400A7EF1F /* Difficulty.swift in Sources */,
 				BB4EDB172C90D20300699E7D /* FastChineseServices.swift in Sources */,
 				BB6572F72CDB991B00AC5981 /* AppSettings.swift in Sources */,

@@ -80,7 +80,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                     // TODO: Update styleDegree to also be generated with each sentence
                     let isSpeech = sentenceSection.contains("“") || sentenceSection.contains("”")
                     let sentenceSsml = """
-                <mstts:express-as style="\(isSpeech ? sentence.speechStyle.ssmlName : SpeechStyle.lyrical.ssmlName)" styledegree="1">
+                <mstts:express-as role="\(isSpeech ? sentence.speechRole.ssmlName : SpeechRole._default.ssmlName)" style="\(isSpeech ? sentence.speechStyle.ssmlName : SpeechStyle._default.ssmlName)" styledegree="1">
                     <prosody rate="\(rate)">
                         \(sentenceSection)
                     </prosody>

@@ -31,13 +31,14 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
 
     init() {
-//        clearData()
+//        clearData(path: "userData.json")
+//        clearData(path: "appSettings.json")
     }
 
-    func clearData() {
+    func clearData(path: String) {
         let fileManager = FileManager.default
         let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let fileURL = documentsDirectory.appendingPathComponent("userData.json")
+        let fileURL = documentsDirectory.appendingPathComponent(path)
 
         // Check if the file exists
         if fileManager.fileExists(atPath: fileURL.path) {

@@ -8,7 +8,7 @@
 import Foundation
 
 enum Voice: String, Codable, CaseIterable, Equatable {
-    case xiaoxiao, yunxi
+    case xiaomo
 
     var title: String {
         rawValue.capitalized
@@ -16,51 +16,40 @@ enum Voice: String, Codable, CaseIterable, Equatable {
 
     var speechSynthesisVoiceName: String {
         switch self {
-        case .xiaoxiao:
-            "zh-CN-XiaoxiaoNeural"
-        case .yunxi:
-            "zh-CN-YunxiNeural"
+        case .xiaomo:
+            "zh-CN-XiaomoNeural"
         }
     }
 
     var gender: Gender {
         switch self {
-        case .xiaoxiao:
+        case .xiaomo:
                 .female
-        case .yunxi:
-                .male
+        }
+    }
+
+    var availableSpeechRoles: [SpeechRole] {
+        switch self {
+        case .xiaomo:
+            [
+                .youngAdultFemale,
+                .youngAdultMale,
+                .olderAdultFemale,
+                .olderAdultMale,
+                .seniorFemale,
+                .seniorMale,
+                .girl,
+                .boy
+            ]
         }
     }
 
     var availableSpeechStyles: [SpeechStyle] {
         switch self {
-        case .xiaoxiao:
+        case .xiaomo:
             [
-                .assistant,
-                .chat,
-                .customerService,
-                .newscast,
-                .affectionate,
-                .angry,
-                .calm,
-                .cheerful,
-                .disgruntled,
-                .fearful,
-                .gentle,
-                .lyrical,
-                .sad,
-                .serious,
-                .poetryReading,
-                .friendly,
-                .whispering,
-                .sorry,
-                .excited
-            ]
-
-        case .yunxi:
-            [
-                .narrationRelaxed,
                 .embarrassed,
+                .calm,
                 .fearful,
                 .cheerful,
                 .disgruntled,
@@ -68,9 +57,9 @@ enum Voice: String, Codable, CaseIterable, Equatable {
                 .angry,
                 .sad,
                 .depressed,
-                .chat,
-                .assistant,
-                .newscast
+                .affectionate,
+                .gentle,
+                .envious
             ]
         }
     }

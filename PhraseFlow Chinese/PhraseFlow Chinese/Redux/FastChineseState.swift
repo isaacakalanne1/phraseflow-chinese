@@ -59,7 +59,7 @@ struct FastChineseState {
     var appSettings: AppSettings = .init(isShowingPinyin: true,
                                       isShowingDefinition: true,
                                       isShowingEnglish: true,
-                                      voice: .xiaoxiao,
+                                      voice: .xiaomo,
                                       speechSpeed: .normal)
 
     var currentSpokenWord: WordTimeStampData? {

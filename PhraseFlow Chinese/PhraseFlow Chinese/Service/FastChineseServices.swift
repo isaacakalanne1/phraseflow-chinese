@@ -163,11 +163,17 @@ final class FastChineseServices: FastChineseServicesProtocol {
         - storyTitle: The title of the story in English. If provided, use the existing story title, otherwise create a simple story title.
         - latestStorySummary: This is a brief summary of the story so far in English. This summary is of the story which happens before the new part of the story you write.
         - Mandarin: The story sentence in Mandarin Chinese.
-        - Pinyin should be structured like ["a", "b", "c"] for each sound. The pinyin should use diacritic markers for the tones.
-        - English: An English translation of the Mandarin sentence
+        - Pinyin should be structured like ["a", "b", "c"] with each sound separated. The pinyin should use diacritic markers for the tones.
+        - English: An English translation of the Mandarin sentence. Always write this English section of the JSON in English.
         - speechStyle: This matches the emotions of the sentence.
         These are the available speechStyles which can be used in the JSON:
         \(String(describing: voice.availableSpeechStyles.map({ $0.ssmlName })))
+        Only use the above speechStyles, never create your own.
+
+        - speechRole: This matches the gender and age of the speaker of the sentence. Use speechRole "girl" for the narrator.
+        These are the available speechRoles which can be used in the JSON:
+                \(String(describing: voice.availableSpeechRoles.map({ $0.ssmlName })))
+        Only use the above speechRoles, never create your own.
 
         Always follow these Story Writing Instructions:
 

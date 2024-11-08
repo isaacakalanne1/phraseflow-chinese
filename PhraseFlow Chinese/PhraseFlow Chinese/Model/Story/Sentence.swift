@@ -16,6 +16,7 @@ struct Sentence: Codable, Equatable, Hashable {
     let pinyin: [String]
     let english: String
     let speechStyle: SpeechStyle
+    let speechRole: SpeechRole
 
     // Custom decoder to assign default values
     init(from decoder: Decoder) throws {
@@ -24,6 +25,7 @@ struct Sentence: Codable, Equatable, Hashable {
         self.pinyin = try container.decode([String].self, forKey: .pinyin)
         self.english = try container.decode(String.self, forKey: .english)
         self.speechStyle = try container.decode(SpeechStyle.self, forKey: .speechStyle)
+        self.speechRole = try container.decode(SpeechRole.self, forKey: .speechRole)
     }
 }
 
@@ -45,9 +47,10 @@ let sentenceSchema: [String: Any] = [
                             "mandarin": ["type": "string"],
                             "pinyin": ["type": "array", "items": ["type": "string"]],
                             "english": ["type": "string"],
-                            "speechStyle": ["type": "string"]
+                            "speechStyle": ["type": "string"],
+                            "speechRole": ["type": "string"]
                         ],
-                        "required": ["mandarin", "pinyin", "english", "speechStyle"],
+                        "required": ["mandarin", "pinyin", "english", "speechStyle", "speechRole"],
                         "additionalProperties": false
                     ]
                 ]
