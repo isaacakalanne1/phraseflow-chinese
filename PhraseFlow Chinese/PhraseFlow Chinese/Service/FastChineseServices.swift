@@ -32,11 +32,11 @@ final class FastChineseServices: FastChineseServicesProtocol {
     func generateStory(genres: [Genre], voice: Voice) async throws -> Story {
         let chapterResponse = try await generateChapter(type: .first(setting: StorySetting.allCases.randomElement() ?? .ancientChina),
                                                         voice: voice)
-        let chapter = Chapter(storyTitle: "Story title here", sentences: chapterResponse.sentences)
+        let chapter = Chapter(storyTitle: chapterResponse.storyTitle, sentences: chapterResponse.sentences)
         return Story(storyOverview: "Story overview here",
-                     latestStorySummary: "Latest story summary here",
+                     latestStorySummary: chapterResponse.latestStorySummary,
                      difficulty: .HSK1,
-                     title: "Story title here",
+                     title: chapterResponse.storyTitle,
                      description: "Description here",
                      chapters: [chapter])
     }
@@ -46,10 +46,122 @@ final class FastChineseServices: FastChineseServicesProtocol {
     }
 
     private func generateChapter(type: ChapterType, voice: Voice) async throws -> ChapterResponse {
-        let initialPrompt = """
+        let mainPrompt: String
+        switch type {
+        case .first(let setting):
+            mainPrompt = """
+        Write a story in this setting:
+        \(setting.title)
+        """
+
+        case .next(let story):
+            mainPrompt = """
+        This is the story title:
+        \(story.title)
+
+        This is the story so far:
+        \(story.chapters.reduce("") { $0 + "\n\n" + $1.passage })
+
+        Continue the story
+        """
+            // Use very very short sentences, and very very extremely simple language.
+        }
+
+        let response = try await makeOpenAIRequest(initialPrompt: getStoryGenerationGuide(voice: voice),
+                                                   mainPrompt: mainPrompt)
+            .data(using: .utf8)
+        guard let response else {
+            throw FastChineseServicesError.failedToGetResponseData
+        }
+
+        do {
+            return try JSONDecoder().decode(ChapterResponse.self, from: response)
+        } catch {
+            throw FastChineseServicesError.failedToDecodeSentences
+        }
+    }
+
+    func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> String {
+        let initialPrompt =
+"""
+        You are an AI assistant that provides English definitions for characters in Chinese sentences. Your explanations are brief, and simple to understand.
+        You provide the pinyin for the Chinese character in brackets after the Chinese character.
+        If the character is used as part of a larger word, you also provide the pinyin and definition for each character in this overall word.
+        You also provide the definition of the word in the context of the overall sentence.
+        You never repeat the Chinese sentence, and never translate the whole of the Chinese sentence into English.
+"""
+        let mainPrompt =
+"""
+        Provide a definition for this word: "\(character)"
+        If the word is made of different characters, also provide brief definitions for each of the characters in the word.
+        Also explain the word in the context of the sentence: "\(sentence.mandarin)".
+        Don't define other words in the sentence.
+"""
+        let response = try await makeGeminiRequest(initialPrompt: initialPrompt, mainPrompt: mainPrompt)
+        return response
+    }
+
+    private func makeGeminiRequest(initialPrompt: String, mainPrompt: String) async throws -> String {
+
+        let prompt = initialPrompt + "\n\n" + mainPrompt
+        let response = try await generativeModel.generateContent(prompt)
+        guard let responseString = response.text else {
+            throw FastChineseServicesError.failedToGetResponseData
+        }
+        return responseString
+            .replacingOccurrences(of: "```json", with: "")
+            .replacingOccurrences(of: "```", with: "")
+    }
+
+    private func makeOpenAIRequest(initialPrompt: String, mainPrompt: String) async throws -> String {
+
+        var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
+        request.httpMethod = "POST"
+        request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let requestBody: [String: Any] = [
+            "model": "gpt-4o-mini-2024-07-18",
+            "messages": [
+                ["role": "system", "content": initialPrompt],
+                ["role": "user", "content": mainPrompt]
+            ],
+            "response_format": sentenceSchema
+        ]
+        let requestData = DefineCharacterRequest(messages: [
+            .init(role: "system",
+                  content: initialPrompt),
+            .init(role: "user",
+                  content: mainPrompt)
+        ])
+
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: requestBody) else {
+            throw FastChineseServicesError.failedToEncodeJson
+        }
+
+        let sessionConfig = URLSessionConfiguration.default
+        sessionConfig.timeoutIntervalForRequest = 1200
+        sessionConfig.timeoutIntervalForResource = 1200
+        let session = URLSession(configuration: sessionConfig)
+
+        let (data, _) = try await session.upload(for: request, from: jsonData)
+        guard let response = try? JSONDecoder().decode(GPTResponse.self, from: data),
+              let responseString = response.choices.first?.message.content else {
+            throw FastChineseServicesError.failedToDecodeJson
+        }
+        return responseString
+
+    }
+
+    private func getStoryGenerationGuide(voice: Voice) -> String {
+        """
         You are the an award-winning Mandarin Chinese novelist. Write a chapter from an engaging Mandarin novel.
 
+        Use the " character for speech marks.
+
         In the JSON:
+        - storyTitle: The title of the story in English. If provided, use the existing story title, otherwise create a simple story title.
+        - latestStorySummary: This is a brief summary of the story so far in English. This summary is of the story which happens before the new part of the story you write.
         - Mandarin: The story sentence in Mandarin Chinese.
         - Pinyin should be structured like ["a", "b", "c"] for each sound. The pinyin should use diacritic markers for the tones.
         - English: An English translation of the Mandarin sentence
@@ -143,103 +255,5 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
         Do not rush to conclude the plot or resolve conflicts too quickly, allowing the story to unfold gradually over multiple messages.
         """
-        let mainPrompt: String
-        switch type {
-        case .first(let setting):
-            mainPrompt = """
-        Write a story in this setting:
-        \(setting.title)
-        """
-
-        case .next(let story):
-            mainPrompt = """
-        "This is the story so far:
-        \(story.chapters.reduce("") { $0 + "\n\n" + $1.passage })
-
-        "Continue the story"
-        """
-        }
-
-        let response = try await makeOpenAIRequest(initialPrompt: initialPrompt, mainPrompt: mainPrompt).data(using: .utf8)
-        guard let response else {
-            throw FastChineseServicesError.failedToGetResponseData
-        }
-
-        do {
-            return try JSONDecoder().decode(ChapterResponse.self, from: response)
-        } catch {
-            throw FastChineseServicesError.failedToDecodeSentences
-        }
     }
-
-    func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> String {
-        let initialPrompt =
-"""
-        You are an AI assistant that provides English definitions for characters in Chinese sentences. Your explanations are brief, and simple to understand.
-        You provide the pinyin for the Chinese character in brackets after the Chinese character.
-        If the character is used as part of a larger word, you also provide the pinyin and definition for each character in this overall word.
-        You also provide the definition of the word in the context of the overall sentence.
-        You never repeat the Chinese sentence, and never translate the whole of the Chinese sentence into English.
-"""
-        let mainPrompt =
-"""
-        Provide a definition for this word: "\(character)"
-        Also explain the word in the context of the sentence: "\(sentence.mandarin)".
-"""
-        let response = try await makeGeminiRequest(initialPrompt: initialPrompt, mainPrompt: mainPrompt)
-        return response
-    }
-
-    private func makeGeminiRequest(initialPrompt: String, mainPrompt: String) async throws -> String {
-
-        let prompt = initialPrompt + "\n\n" + mainPrompt
-        let response = try await generativeModel.generateContent(prompt)
-        guard let responseString = response.text else {
-            throw FastChineseServicesError.failedToGetResponseData
-        }
-        return responseString
-            .replacingOccurrences(of: "```json", with: "")
-            .replacingOccurrences(of: "```", with: "")
-    }
-
-    private func makeOpenAIRequest(initialPrompt: String, mainPrompt: String) async throws -> String {
-
-        var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
-        request.httpMethod = "POST"
-        request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let requestBody: [String: Any] = [
-            "model": "gpt-4o-mini-2024-07-18",
-            "messages": [
-                ["role": "system", "content": initialPrompt],
-                ["role": "user", "content": mainPrompt]
-            ],
-            "response_format": sentenceSchema
-        ]
-        let requestData = DefineCharacterRequest(messages: [
-            .init(role: "system",
-                  content: initialPrompt),
-            .init(role: "user",
-                  content: mainPrompt)
-        ])
-
-        guard let jsonData = try? JSONSerialization.data(withJSONObject: requestBody) else {
-            throw FastChineseServicesError.failedToEncodeJson
-        }
-
-        let sessionConfig = URLSessionConfiguration.default
-        sessionConfig.timeoutIntervalForRequest = 1200
-        sessionConfig.timeoutIntervalForResource = 1200
-        let session = URLSession(configuration: sessionConfig)
-
-        let (data, _) = try await session.upload(for: request, from: jsonData)
-        guard let response = try? JSONDecoder().decode(GPTResponse.self, from: data),
-              let responseString = response.choices.first?.message.content else {
-            throw FastChineseServicesError.failedToDecodeJson
-        }
-        return responseString
-
-    }
-
 }

@@ -35,6 +35,8 @@ let sentenceSchema: [String: Any] = [
         "schema": [
             "type": "object",
             "properties": [
+                "latestStorySummary": ["type": "string"],
+                "storyTitle": ["type": "string"],
                 "sentences": [
                     "type": "array",
                     "items": [
@@ -50,7 +52,7 @@ let sentenceSchema: [String: Any] = [
                     ]
                 ]
             ],
-            "required": ["sentences"],
+            "required": ["sentences", "latestStorySummary", "storyTitle"],
             "additionalProperties": false
         ]
     ]
