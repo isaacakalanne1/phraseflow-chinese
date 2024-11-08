@@ -52,6 +52,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
             mainPrompt = """
         Write a story in this setting:
         \(setting.title)
+        Use very very short sentences, and very very extremely simple language.
         """
 
         case .next(let story):
@@ -63,8 +64,8 @@ final class FastChineseServices: FastChineseServicesProtocol {
         \(story.chapters.reduce("") { $0 + "\n\n" + $1.passage })
 
         Continue the story
+        Use very very short sentences, and very very extremely simple language.
         """
-            // Use very very short sentences, and very very extremely simple language.
         }
 
         let response = try await makeOpenAIRequest(initialPrompt: getStoryGenerationGuide(voice: voice),
@@ -155,7 +156,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
     private func getStoryGenerationGuide(voice: Voice) -> String {
         """
-        You are the an award-winning Mandarin Chinese novelist. Write a chapter from an engaging Mandarin novel.
+        You are the an award-winning Mandarin Chinese novelist. Write a chapter from an engaging Mandarin novel. Use Mandarin Chinese names in the story.
 
         Use the " character for speech marks.
 

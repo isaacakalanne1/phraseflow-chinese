@@ -8,7 +8,7 @@
 import Foundation
 
 enum Voice: String, Codable, CaseIterable, Equatable {
-    case xiaomo
+    case xiaomo, xiaoxiao
 
     var title: String {
         rawValue.capitalized
@@ -18,20 +18,37 @@ enum Voice: String, Codable, CaseIterable, Equatable {
         switch self {
         case .xiaomo:
             "zh-CN-XiaomoNeural"
+        case .xiaoxiao:
+            "zh-CN-XiaoxiaoNeural"
         }
     }
 
     var gender: Gender {
         switch self {
-        case .xiaomo:
+        case .xiaomo,
+                .xiaoxiao:
                 .female
         }
+    }
+
+    var defaultSpeechStyle: SpeechStyle {
+        switch self {
+        case .xiaomo:
+                .gentle
+        case .xiaoxiao:
+                .lyrical
+        }
+    }
+
+    var defaultSpeechRole: SpeechRole {
+        ._default
     }
 
     var availableSpeechRoles: [SpeechRole] {
         switch self {
         case .xiaomo:
             [
+                ._default,
                 .youngAdultFemale,
                 .youngAdultMale,
                 .olderAdultFemale,
@@ -40,6 +57,10 @@ enum Voice: String, Codable, CaseIterable, Equatable {
                 .seniorMale,
                 .girl,
                 .boy
+            ]
+        case .xiaoxiao:
+            [
+                ._default
             ]
         }
     }
@@ -60,6 +81,28 @@ enum Voice: String, Codable, CaseIterable, Equatable {
                 .affectionate,
                 .gentle,
                 .envious
+            ]
+        case .xiaoxiao:
+            [
+                .assistant,
+                .chat,
+                .customerService,
+                .newscast,
+                .affectionate,
+                .angry,
+                .calm,
+                .cheerful,
+                .disgruntled,
+                .fearful,
+                .gentle,
+                .lyrical,
+                .sad,
+                .serious,
+                .poetryReading,
+                .friendly,
+                .whispering,
+                .sorry,
+                .excited
             ]
         }
     }
