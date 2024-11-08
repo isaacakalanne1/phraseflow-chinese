@@ -19,7 +19,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         var newStory = newState.currentStory
         newStory?.latestStorySummary = chapterResponse.latestStorySummary
 
-        let chapter = Chapter(storyTitle: chapterResponse.storyTitle, sentences: chapterResponse.sentences)
+        let chapter = Chapter(storyTitle: "Story title here", sentences: chapterResponse.sentences)
         if newStory?.chapters.isEmpty == true {
             newStory?.chapters = [chapter]
         } else {

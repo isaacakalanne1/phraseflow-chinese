@@ -32,11 +32,11 @@ final class FastChineseServices: FastChineseServicesProtocol {
     func generateStory(genres: [Genre], voice: Voice) async throws -> Story {
         let chapterResponse = try await generateChapter(type: .first(setting: StorySetting.allCases.randomElement() ?? .ancientChina),
                                                         voice: voice)
-        let chapter = Chapter(storyTitle: chapterResponse.storyTitle, sentences: chapterResponse.sentences)
+        let chapter = Chapter(storyTitle: "Story title here", sentences: chapterResponse.sentences)
         return Story(storyOverview: "Story overview here",
                      latestStorySummary: chapterResponse.latestStorySummary,
                      difficulty: .HSK1,
-                     title: chapterResponse.storyTitle,
+                     title: "Story title here",
                      description: "Description here",
                      chapters: [chapter])
     }
@@ -57,9 +57,6 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
         case .next(let story):
             mainPrompt = """
-        This is the story title:
-        \(story.title)
-
         This is the story so far:
         \(story.chapters.reduce("") { $0 + "\n\n" + $1.passage })
 
@@ -161,7 +158,6 @@ final class FastChineseServices: FastChineseServicesProtocol {
         Use the " character for speech marks.
 
         In the JSON:
-        - storyTitle: The title of the story in English. If provided, use the existing story title, otherwise create a simple story title.
         - latestStorySummary: This is a brief summary of the story so far in English. This summary is of the story which happens before the new part of the story you write.
         - Mandarin: The story sentence in Mandarin Chinese.
         - Pinyin should be structured like ["a", "b", "c"] with each sound separated. The pinyin should use diacritic markers for the tones.

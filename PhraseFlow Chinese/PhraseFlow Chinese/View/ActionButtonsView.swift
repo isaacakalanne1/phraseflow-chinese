@@ -46,10 +46,10 @@ struct ActionButtonsView: View {
                                                 isForced: true))
             }
 
-            ActionButton(title: "Pinyin",
-                         imageName: store.state.appSettings.isShowingPinyin ? "lightbulb.fill" : "lightbulb.slash") {
-                store.dispatch(.updateShowPinyin(!store.state.appSettings.isShowingPinyin))
-            }
+//            ActionButton(title: "Pinyin",
+//                         imageName: store.state.appSettings.isShowingPinyin ? "lightbulb.fill" : "lightbulb.slash") {
+//                store.dispatch(.updateShowPinyin(!store.state.appSettings.isShowingPinyin))
+//            }
 
             ActionButton(title: "Stories",
                          imageName: "list.bullet") {

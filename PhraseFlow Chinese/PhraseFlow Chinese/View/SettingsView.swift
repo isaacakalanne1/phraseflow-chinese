@@ -40,8 +40,8 @@ struct SettingsView: View {
                     .fontWeight(.light)
                     .greyBackground()
 
-                Toggle("Pinyin", isOn: showPinyin)
-                    .fontWeight(.light)
+//                Toggle("Pinyin", isOn: showPinyin)
+//                    .fontWeight(.light)
                 Toggle("Definition", isOn: showDefinition)
                     .fontWeight(.light)
                 Toggle("English", isOn: showEnglish)
