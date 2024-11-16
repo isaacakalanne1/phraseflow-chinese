@@ -49,6 +49,7 @@ struct SettingsView: View {
 
                 voicesView
                 speedView
+                difficultyView
             }
             .padding(.horizontal)
         }
@@ -104,6 +105,33 @@ struct SettingsView: View {
                         .padding()
                         .background(store.state.settingsState.speechSpeed == speed ? Color.accentColor : Color.gray.opacity(0.3))
                         .cornerRadius(10)
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    var difficultyView:  some View {
+        Text("Difficulty")
+            .fontWeight(.light)
+            .greyBackground()
+
+        ScrollView(.horizontal) {
+            HStack {
+                ForEach(Difficulty.allCases, id: \.self) { difficulty in
+                    Button(action: {
+                        withAnimation(.easeInOut) {
+                            store.dispatch(.updateDifficulty(difficulty))
+                        }
+                    }) {
+                        Text(difficulty.title)
+                            .font(.body)
+                            .foregroundColor(store.state.settingsState.difficulty == difficulty ? .white : .primary)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(store.state.settingsState.difficulty == difficulty ? Color.accentColor : Color.gray.opacity(0.3))
+                            .cornerRadius(10)
+                    }
                 }
             }
         }

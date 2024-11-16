@@ -10,8 +10,8 @@ import Foundation
 protocol FastChineseEnvironmentProtocol {
     func synthesizeSpeech(for chapter: Chapter, voice: Voice, rate: String) async throws -> (wordTimestamps: [WordTimeStampData],
                                                                                audioData: Data)
-    func generateStory(voice: Voice) async throws -> Story
-    func generateChapter(story: Story, voice: Voice) async throws -> ChapterResponse
+    func generateStory(voice: Voice, difficulty: Difficulty) async throws -> Story
+    func generateChapter(story: Story, voice: Voice, difficulty: Difficulty) async throws -> ChapterResponse
     func loadStories() throws -> [Story]
     func loadAppSettings() throws -> SettingsState
     func saveStory(_ story: Story) throws
@@ -38,12 +38,12 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
         try await repository.synthesizeSpeech(chapter, voice: voice, rate: rate)
     }
 
-    func generateStory(voice: Voice) async throws -> Story {
-        try await service.generateStory(voice: voice)
+    func generateStory(voice: Voice, difficulty: Difficulty) async throws -> Story {
+        try await service.generateStory(voice: voice, difficulty: difficulty)
     }
 
-    func generateChapter(story: Story, voice: Voice) async throws -> ChapterResponse {
-        try await service.generateChapter(story: story, voice: voice)
+    func generateChapter(story: Story, voice: Voice, difficulty: Difficulty) async throws -> ChapterResponse {
+        try await service.generateChapter(story: story, voice: voice, difficulty: difficulty)
     }
 
     func saveStory(_ story: Story) throws {

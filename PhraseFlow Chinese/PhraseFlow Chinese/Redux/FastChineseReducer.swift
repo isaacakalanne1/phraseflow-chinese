@@ -156,6 +156,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.createStoryState.selectedStorySetting = setting
     case .selectVoice(let voice):
         newState.settingsState.voice = voice
+    case .updateDifficulty(let difficulty):
+        newState.settingsState.difficulty = difficulty
     case .saveStory,
             .failedToSaveStory,
             .failedToLoadStories,

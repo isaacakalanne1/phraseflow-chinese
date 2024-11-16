@@ -7,26 +7,24 @@
 
 import Foundation
 
-enum Difficulty: String, Codable, Hashable {
-    case beginner, intermediate, experienced, pro, expert
+enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
+    case beginner, intermediate, advenced, expert
 
     var maxIntValue: Int {
         10
     }
 
     var title: String {
-        rawValue.uppercased()
+        rawValue.capitalized
     }
 
     var intValue: Int {
         switch self {
         case .beginner:
-            2
+            1
         case .intermediate:
-            4
-        case .experienced:
-            6
-        case .pro:
+            5
+        case .advenced:
             8
         case .expert:
             maxIntValue

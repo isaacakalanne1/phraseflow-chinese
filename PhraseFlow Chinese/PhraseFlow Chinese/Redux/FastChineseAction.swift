@@ -57,6 +57,7 @@ enum FastChineseAction {
     case updateShowEnglish(Bool)
 
     case updateSpeechSpeed(SpeechSpeed)
+    case updateDifficulty(Difficulty)
     case selectWord(WordTimeStampData)
 
     case goToNextChapter

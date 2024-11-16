@@ -16,8 +16,8 @@ enum FastChineseServicesError: Error {
 }
 
 protocol FastChineseServicesProtocol {
-    func generateStory(voice: Voice) async throws -> Story
-    func generateChapter(story: Story, voice: Voice) async throws -> ChapterResponse
+    func generateStory(voice: Voice, difficulty: Difficulty) async throws -> Story
+    func generateChapter(story: Story, voice: Voice, difficulty: Difficulty) async throws -> ChapterResponse
     func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> String
 }
 
@@ -29,9 +29,9 @@ final class FastChineseServices: FastChineseServicesProtocol {
         apiKey: "AIzaSyBJz8qmCuAK5EO9AzQLl99ed6TlvHKRjCI"
       )
 
-    func generateStory(voice: Voice) async throws -> Story {
+    func generateStory(voice: Voice, difficulty: Difficulty) async throws -> Story {
         let storySetting: StorySetting = .allCases.randomElement() ?? .ancientChina
-        let chapterResponse = try await generateChapter(type: .first(setting: storySetting), voice: voice)
+        let chapterResponse = try await generateChapter(type: .first(setting: storySetting), voice: voice, difficulty: difficulty)
 
         let sentences = chapterResponse.sentences.map({ Sentence(mandarin: $0.mandarin.replacingOccurrences(of: " ", with: ""),
                                                                  pinyin: $0.pinyin,
@@ -46,11 +46,11 @@ final class FastChineseServices: FastChineseServicesProtocol {
                      chapters: [chapter])
     }
 
-    func generateChapter(story: Story, voice: Voice) async throws -> ChapterResponse {
-        try await generateChapter(type: .next(story: story), voice: voice)
+    func generateChapter(story: Story, voice: Voice, difficulty: Difficulty) async throws -> ChapterResponse {
+        try await generateChapter(type: .next(story: story), voice: voice, difficulty: difficulty)
     }
 
-    private func generateChapter(type: ChapterType, voice: Voice) async throws -> ChapterResponse {
+    private func generateChapter(type: ChapterType, voice: Voice, difficulty: Difficulty) async throws -> ChapterResponse {
         let mainPrompt: String
         switch type {
         case .first(let setting):
@@ -72,7 +72,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         """
         }
 //        Use very very short sentences, and very very extremely simple language.
-        let response = try await makeOpenAIRequest(initialPrompt: getStoryGenerationGuide(voice: voice), mainPrompt: mainPrompt)
+        let response = try await makeOpenAIRequest(initialPrompt: getStoryGenerationGuide(voice: voice, difficulty: difficulty), mainPrompt: mainPrompt)
             .data(using: .utf8)
         guard let response else {
             throw FastChineseServicesError.failedToGetResponseData
@@ -159,7 +159,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
     }
 
-    private func getStoryGenerationGuide(voice: Voice) -> String {
+    private func getStoryGenerationGuide(voice: Voice, difficulty: Difficulty) -> String {
         """
         You are the an award-winning Mandarin Chinese novelist. Write a chapter from an engaging Mandarin novel. Use Mandarin Chinese names in the story.
 
@@ -195,6 +195,18 @@ final class FastChineseServices: FastChineseServicesProtocol {
         Okay, so the stories are now getting really, really awesome. Like, they're getting really nice. Something I think could work really well is now bringing in an antagonist. So the antagonist would be counter to the drives and wishes of the protagonist. The antagonist may very well be an actively dislikable character, and again, that's okay. Don't worry about if the antagonist should be brought in, oh my god, in chapter 1, or in, you know, the very first chapter, or oh my god, you have to hurry things. Don't worry about that. Just bring in the antagonist when makes sense. Ideally, before the 10th chapter. But bring in the antagonist when makes sense. And again, it's okay for the antagonist to be a dislikable character because that's the point of the antagonist. They should be counter to the motives of the main character. And again, not verbalize, like, you don't have to tell the reader, like, it should be apparent through the story and through what's happening. Hopefully that makes more sense to understand why I think we positive an antagonist. But overall, things are getting really, really awesome.
 
         Okay, so an extra note for the stories, which I'm really getting happy with them, based on the above now four paragraphs, the stories are getting really, really, really nice. Amazing job. I think something which is positive for the stories overall, I think the stories should have an antagonist. Now, this antagonist, again, doesn't have to be brought in in Chapter 1 or Chapter 3. The antagonist likely should be brought later in the story, and that antagonist may not be present for the entirety of the story, just for the part of the story that is relevant to that antagonist. And the introduction of the antagonist also should make sense. It shouldn't be forced, shouldn't be there because an antagonist has to be there. It should happen when it makes sense for the story. But overall, an antagonist, yeah, would definitely be a really positive addition to the story overall, the stories which you're writing being already really good. And this antagonist specifically should be counter to the goals or wishes or drives of the main character or main characters. The antagonist, it's okay for them to have negative qualities or to be dislikable to the reader because they're the antagonist, that's their role, and it engages the reader more if there's an antagonist where they're like, hmm, I don't really like this person. Again, this antagonist doesn't have to be brought in at the start. I think it's actually better if the antagonist is brought in later in the story, but I think it is a really important part of the story. And again, really try to resist this temptation. Don't bring them in in the first chapter. Bring them in when it makes sense for the story. All of this is basically me encouraging you to get creative and not force things. An antagonist is positive for the story, but bring it in when it makes sense for the story. And the antagonist should be counter to the drives and wishes of the main character or main characters. But again, don't tell the reader that the antagonist is counter to, la la la la la, show it through the story, through what the antagonist does or says, and how they make the main character feel. Likely they don't make the main character feel very nice. They may in fact even push the main character onto a road which is more negative or not as positive. Really, yeah, I think this overall should give you more of an idea of what I think could be positive for the story regarding the antagonist and such.
+
+        The story should be written at a specific difficulty level, from a scale of 1 to 10, which will be specified below.
+        1 is absolute beginner Mandarin Chinese, the most absolute basic words and vocabulary, very short sentences, very simple grammar and sentence structure.
+        10 is absolute professional Mandarin Chinese, with highly advanced grammar, vocabulary, and sentence structures.
+        Any numbers between are a linear transition between the above specified minimum and maximum.
+
+        Based on the above scale of 1 to \(difficulty.maxIntValue), write a story with the below difficulty level.
+        DIFFICULTY LEVEL: \(difficulty.intValue)
+
+        The Chapter length itself should still always be long, for all difficulty levels.
+
+        Make sure the English section of the JSON writes the English translation of the mandarin sentence. It must do this to allow the reader to learn Mandarin Chinese.
         """
         // Using the above guidelines, write a story in the style of George R R Martin.
     }
