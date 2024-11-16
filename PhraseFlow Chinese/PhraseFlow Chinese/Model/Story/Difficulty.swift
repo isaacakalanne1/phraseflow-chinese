@@ -8,9 +8,28 @@
 import Foundation
 
 enum Difficulty: String, Codable, Hashable {
-    case HSK1, HSK2, HSK3, HSK4, HSK5
+    case beginner, intermediate, experienced, pro, expert
+
+    var maxIntValue: Int {
+        10
+    }
 
     var title: String {
         rawValue.uppercased()
+    }
+
+    var intValue: Int {
+        switch self {
+        case .beginner:
+            2
+        case .intermediate:
+            4
+        case .experienced:
+            6
+        case .pro:
+            8
+        case .expert:
+            maxIntValue
+        }
     }
 }

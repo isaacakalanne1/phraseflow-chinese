@@ -192,6 +192,18 @@
 			path = Story;
 			sourceTree = "<group>";
 		};
+		BB1994C62CE8DC2100D61E54 /* Speech */ = {
+			isa = PBXGroup;
+			children = (
+				BB6572E62CD8D1E300AC5981 /* Gender.swift */,
+				BB01D5E42CDE1E4B00AF7BB7 /* SpeechRole.swift */,
+				BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */,
+				BB6572F82CDBB14C00AC5981 /* SpeechStyle.swift */,
+				BB6572E42CD8D12400AC5981 /* Voice.swift */,
+			);
+			path = Speech;
+			sourceTree = "<group>";
+		};
 		BB4EDB012C90C85000699E7D /* Redux */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,19 +328,15 @@
 		BBB6EF502C8C86A50079D135 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BB6572D72CD529CD00AC5981 /* Create Story */,
 				BB4EDB202C90F80400699E7D /* Request */,
 				BB4EDB272C919A3300699E7D /* Response */,
+				BB1994C62CE8DC2100D61E54 /* Speech */,
 				BB0854862CB42C7100F1661B /* Story */,
 				BB4EDB2A2C91B35D00699E7D /* Definition.swift */,
 				BB6572CF2CD13C6400AC5981 /* ChapterType.swift */,
-				BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */,
-				BB6572D72CD529CD00AC5981 /* Create Story */,
 				BBE16F272CC420FD00A7EF1F /* ViewState.swift */,
 				BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */,
-				BB6572E42CD8D12400AC5981 /* Voice.swift */,
-				BB6572E62CD8D1E300AC5981 /* Gender.swift */,
-				BB6572F82CDBB14C00AC5981 /* SpeechStyle.swift */,
-				BB01D5E42CDE1E4B00AF7BB7 /* SpeechRole.swift */,
 				BB6572F62CDB991A00AC5981 /* AppSettings.swift */,
 			);
 			path = Model;
