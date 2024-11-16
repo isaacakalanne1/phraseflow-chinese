@@ -82,7 +82,7 @@ struct ContentView: View {
         let increment: Double = 0.1
         DispatchQueue.main.asyncAfter(deadline: .now() + increment) {
 
-            if store.state.isPlayingAudio {
+            if store.state.audioState.isPlayingAudio {
                 store.dispatch(.updatePlayTime)
             }
 

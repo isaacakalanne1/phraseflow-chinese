@@ -29,7 +29,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newStory?.currentChapterIndex = (chapters?.count ?? 1) - 1
         newState.storyState.currentStory = newStory
 
-        newState.audioPlayer = AVPlayer()
+        newState.audioState.audioPlayer = AVPlayer()
         newState.viewState = .normal
         newState.storyState.sentenceIndex = 0
         newState.isShowingCreateStoryScreen = false
@@ -44,7 +44,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             newState.storyState.currentStory = currentStory
             if let data = newState.storyState.currentChapterAudioData,
                let player = data.createAVPlayer() {
-                newState.audioPlayer = player
+                newState.audioState.audioPlayer = player
             }
         }
 
@@ -57,7 +57,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.currentDefinition = definition
         newState.viewState = .normal
     case .onSynthesizedAudio(let data):
-        newState.currentPlaybackTime = 0
+        newState.audioState.currentPlaybackTime = 0
         newState.currentDefinition = nil
 
         var newStory = newState.storyState.currentStory
@@ -69,7 +69,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.storyState.currentStory = newStory
 
         if let player = data.audioData.createAVPlayer() {
-            newState.audioPlayer = player
+            newState.audioState.audioPlayer = player
         }
     case .updateShowPinyin(let isShowing):
         newState.settingsState.isShowingPinyin = isShowing
@@ -97,7 +97,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.isShowingStoryListView = false
         if let data = newState.storyState.currentChapterAudioData,
            let player = data.createAVPlayer() {
-            newState.audioPlayer = player
+            newState.audioState.audioPlayer = player
         }
     case .selectChapter(let story, let chapterIndex):
         newState.storyState.currentStory = story
@@ -110,7 +110,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         }
         if let data = newState.storyState.currentChapterAudioData,
            let player = data.createAVPlayer() {
-            newState.audioPlayer = player
+            newState.audioState.audioPlayer = player
         }
     case .generateChapter:
         newState.viewState = .loading
@@ -125,26 +125,26 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .updateSentenceIndex(let index):
         newState.storyState.sentenceIndex = index
     case .playAudio(let time):
-        newState.isPlayingAudio = true
+        newState.audioState.isPlayingAudio = true
         if let time {
-            newState.currentPlaybackTime = time
+            newState.audioState.currentPlaybackTime = time
         }
     case .pauseAudio:
-        newState.isPlayingAudio = false
+        newState.audioState.isPlayingAudio = false
     case .stopAudio:
-        newState.isPlayingAudio = false
-        newState.currentPlaybackTime = 0
+        newState.audioState.isPlayingAudio = false
+        newState.audioState.currentPlaybackTime = 0
     case .updatePlayTime:
-        newState.currentPlaybackTime = newState.audioPlayer.currentTime().seconds
+        newState.audioState.currentPlaybackTime = newState.audioState.audioPlayer.currentTime().seconds
     case .selectWord(let timestampData):
-        newState.currentPlaybackTime = timestampData.time
+        newState.audioState.currentPlaybackTime = timestampData.time
     case .goToNextChapter:
         var newStory = newState.storyState.currentStory
         newStory?.currentChapterIndex += 1
         newState.storyState.currentStory = newStory
         if let data = newState.storyState.currentChapterAudioData,
            let player = data.createAVPlayer() {
-            newState.audioPlayer = player
+            newState.audioState.audioPlayer = player
         }
     case .refreshChapterView:
         newState.chapterViewId = UUID()

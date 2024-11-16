@@ -45,7 +45,8 @@ struct CharacterView: View {
                 }
         }
         .onTapGesture {
-            if let word = store.state.getTimestampData(sentenceIndex: sentenceIndex, characterIndex: characterIndex),
+            if let chapter = store.state.storyState.currentChapter,
+               let word = chapter.getWordTimeStampData(atSentenceIndex: sentenceIndex, characterIndex: characterIndex),
                store.state.viewState != .defining {
                 store.dispatch(.updateSentenceIndex(sentenceIndex))
                 store.dispatch(.selectWord(word))

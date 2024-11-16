@@ -13,6 +13,7 @@
 		BB0854852CB42C1400F1661B /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854842CB42C1400F1661B /* Story.swift */; };
 		BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */; };
 		BB1994C82CE8E0BE00D61E54 /* Data+AVPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994C72CE8E0BE00D61E54 /* Data+AVPlayer.swift */; };
+		BB1994CA2CE8FFF400D61E54 /* Chapter+WordTimeStampData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994C92CE8FFF400D61E54 /* Chapter+WordTimeStampData.swift */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
 		BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FastChineseStore.swift */; };
 		BB4EDB052C90C89C00699E7D /* FastChineseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB042C90C89C00699E7D /* FastChineseState.swift */; };
@@ -92,6 +93,7 @@
 		BB0854842CB42C1400F1661B /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpeed.swift; sourceTree = "<group>"; };
 		BB1994C72CE8E0BE00D61E54 /* Data+AVPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+AVPlayer.swift"; sourceTree = "<group>"; };
+		BB1994C92CE8FFF400D61E54 /* Chapter+WordTimeStampData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chapter+WordTimeStampData.swift"; sourceTree = "<group>"; };
 		BB4EDB022C90C86300699E7D /* FastChineseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseStore.swift; sourceTree = "<group>"; };
 		BB4EDB042C90C89C00699E7D /* FastChineseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseState.swift; sourceTree = "<group>"; };
 		BB4EDB062C90C8CA00699E7D /* FastChineseAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseAction.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				BB6572D12CD165F200AC5981 /* Collection+Safe.swift */,
 				BB6572D32CD3932300AC5981 /* View+GreyBackground.swift */,
 				BB1994C72CE8E0BE00D61E54 /* Data+AVPlayer.swift */,
+				BB1994C92CE8FFF400D61E54 /* Chapter+WordTimeStampData.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -595,6 +598,7 @@
 				BB6572DD2CD6847500AC5981 /* Categorisable.swift in Sources */,
 				BBE636C32CCC0BE900873E68 /* CharacterView.swift in Sources */,
 				BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */,
+				BB1994CA2CE8FFF400D61E54 /* Chapter+WordTimeStampData.swift in Sources */,
 				BB4EDB0C2C90C9A100699E7D /* FastChineseReducer.swift in Sources */,
 				BB6572F92CDBB14C00AC5981 /* SpeechStyle.swift in Sources */,
 				BB4EDB0A2C90C8F100699E7D /* FastChineseEnvironment.swift in Sources */,

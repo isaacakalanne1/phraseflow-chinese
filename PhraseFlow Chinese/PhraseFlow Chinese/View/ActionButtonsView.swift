@@ -24,7 +24,7 @@ struct ActionButtonsView: View {
                                                     isForced: false))
                 }
             } else {
-                if store.state.isPlayingAudio == true {
+                if store.state.audioState.isPlayingAudio == true {
                     ActionButton(title: "Pause",
                                  imageName: "pause.circle.fill") {
                         store.dispatch(.pauseAudio)
@@ -32,7 +32,7 @@ struct ActionButtonsView: View {
                 } else {
                     ActionButton(title: "Play",
                                  imageName: "play.circle") {
-                        let timestampData = store.state.chapterTimestampData
+                        let timestampData = store.state.storyState.currentChapter?.timestampData
                         let currentSpokenWord = store.state.currentSpokenWord ?? timestampData?.first
                         store.dispatch(.playAudio(time: currentSpokenWord?.time))
                     }

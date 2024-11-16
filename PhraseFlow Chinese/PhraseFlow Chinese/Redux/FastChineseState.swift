@@ -17,58 +17,20 @@ struct FastChineseState {
     var selectedGenres: [Genre] = []
     var selectedStorySetting: StorySetting?
 
-    var currentPlaybackTime: TimeInterval = 0
-
-    var currentDefinition: Definition?
-
-    var audioPlayer = AVPlayer()
-
+    var settingsState = SettingsState()
     var storyState = StoryState()
+    var audioState = AudioState()
 
     var definitionViewId = UUID()
     var chapterViewId = UUID()
     var translationViewId = UUID()
 
-    var isPlayingAudio = false
-    var settingsState = SettingsState()
-
     var currentSpokenWord: WordTimeStampData? {
-        storyState.chapterTimestampData?.last(where: { currentPlaybackTime >= $0.time })
-//        guard let word = chapterTimestampData?.last(where: { currentPlaybackTime >= $0.time }) else { return nil }
-//        if word.time + word.duration < currentPlaybackTime,
-//           let index = chapterTimestampData?.firstIndex(of: word),
-//           let followingWord = chapterTimestampData?[safe: index + 1] {
-//            return followingWord
-//        }
-//        return word
+        storyState.currentChapter?.timestampData.last(where: { audioState.currentPlaybackTime >= $0.time })
     }
 
     var tappedWord: WordTimeStampData?
-
-    func getTimestampData(sentenceIndex: Int, characterIndex: Int) -> WordTimeStampData? {
-        // Calculate the overall character index
-        var totalCharacterIndex = 0
-        guard let currentChapter = storyState.currentChapter else { return nil }
-
-        for (index, sentence) in currentChapter.sentences.enumerated() {
-            let sentenceLength = sentence.mandarin.count
-
-            if index < sentenceIndex {
-                // Sum up the lengths of previous sentences
-                totalCharacterIndex += sentenceLength
-            } else if index == sentenceIndex {
-                // Add the characterIndex within the current sentence
-                totalCharacterIndex += characterIndex
-                break
-            } else {
-                break
-            }
-        }
-
-        // Now totalCharacterIndex is the overall index of the character
-        // Find the SpokenWord in chapterTimestampData that includes this index
-        return storyState.chapterTimestampData?.last(where: { totalCharacterIndex >= $0.textOffset})
-    }
+    var currentDefinition: Definition?
 }
 
 struct StoryState {
@@ -104,12 +66,22 @@ struct StoryState {
         }
         return currentStory.chapters[safe: currentStory.currentChapterIndex]?.audioData
     }
+}
 
-    var chapterTimestampData: [WordTimeStampData]? {
-        currentChapter?.timestampData
-    }
+struct DefinitionState {
+
 }
 
 struct AudioState {
+    var audioPlayer = AVPlayer()
+    var currentPlaybackTime: TimeInterval = 0
+    var isPlayingAudio = false
 
+    init(audioPlayer: AVPlayer = AVPlayer(),
+         currentPlaybackTime: TimeInterval = 0,
+         isPlayingAudio: Bool = false) {
+        self.audioPlayer = audioPlayer
+        self.currentPlaybackTime = currentPlaybackTime
+        self.isPlayingAudio = isPlayingAudio
+    }
 }
