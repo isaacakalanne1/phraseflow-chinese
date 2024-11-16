@@ -14,6 +14,18 @@ struct Sentence: Codable, Equatable, Hashable {
     let speechStyle: SpeechStyle
     let speechRole: SpeechRole
 
+    init(mandarin: String,
+         pinyin: [String],
+         english: String,
+         speechStyle: SpeechStyle,
+         speechRole: SpeechRole) {
+        self.mandarin = mandarin
+        self.pinyin = pinyin
+        self.english = english
+        self.speechStyle = speechStyle
+        self.speechRole = speechRole
+    }
+
     // Custom decoder to assign default values
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

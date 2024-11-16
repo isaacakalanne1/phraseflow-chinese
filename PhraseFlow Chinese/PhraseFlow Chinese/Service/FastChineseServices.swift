@@ -33,7 +33,11 @@ final class FastChineseServices: FastChineseServicesProtocol {
         let storySetting: StorySetting = .allCases.randomElement() ?? .ancientChina
         let chapterResponse = try await generateChapter(type: .first(setting: storySetting), voice: voice)
 
-        let sentences = chapterResponse.sentences.map({ $0.mandarin.replacingOccurrences(of: " ", with: "") })
+        let sentences = chapterResponse.sentences.map({ Sentence(mandarin: $0.mandarin.replacingOccurrences(of: " ", with: ""),
+                                                                 pinyin: $0.pinyin,
+                                                                 english: $0.english,
+                                                                 speechStyle: $0.speechStyle,
+                                                                 speechRole: $0.speechRole) })
         let chapter = Chapter(storyTitle: "Story title here", sentences: sentences)
 
         return Story(latestStorySummary: chapterResponse.latestStorySummary,
