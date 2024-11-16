@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import AVKit
 
 struct FastChineseState {
     var settingsState = SettingsState()

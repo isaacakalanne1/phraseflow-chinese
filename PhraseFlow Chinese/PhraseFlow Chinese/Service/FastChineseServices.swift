@@ -30,14 +30,15 @@ final class FastChineseServices: FastChineseServicesProtocol {
       )
 
     func generateStory(voice: Voice) async throws -> Story {
-        let chapterResponse = try await generateChapter(type: .first(setting: StorySetting.allCases.randomElement() ?? .ancientChina),
-                                                        voice: voice)
-        let chapter = Chapter(storyTitle: "Story title here", sentences: chapterResponse.sentences)
-        return Story(storyOverview: "Story overview here",
-                     latestStorySummary: chapterResponse.latestStorySummary,
+        let storySetting: StorySetting = .allCases.randomElement() ?? .ancientChina
+        let chapterResponse = try await generateChapter(type: .first(setting: storySetting), voice: voice)
+
+        let sentences = chapterResponse.sentences.map({ $0.mandarin.replacingOccurrences(of: " ", with: "") })
+        let chapter = Chapter(storyTitle: "Story title here", sentences: sentences)
+
+        return Story(latestStorySummary: chapterResponse.latestStorySummary,
                      difficulty: .beginner,
                      title: "Story title here",
-                     description: "Description here",
                      chapters: [chapter])
     }
 
