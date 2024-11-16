@@ -43,7 +43,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
            !stories.isEmpty {
             newState.storyState.currentStory = currentStory
             if let data = newState.storyState.currentChapterAudioData,
-               let player = newState.createAVPlayer(from: data) {
+               let player = data.createAVPlayer() {
                 newState.audioPlayer = player
             }
         }
@@ -68,7 +68,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newStory?.chapters[chapterIndex].timestampData = data.wordTimestamps
         newState.storyState.currentStory = newStory
 
-        if let player = newState.createAVPlayer(from: data.audioData) {
+        if let player = data.audioData.createAVPlayer() {
             newState.audioPlayer = player
         }
     case .updateShowPinyin(let isShowing):
@@ -96,7 +96,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.storyState.currentStory = story
         newState.isShowingStoryListView = false
         if let data = newState.storyState.currentChapterAudioData,
-           let player = newState.createAVPlayer(from: data) {
+           let player = data.createAVPlayer() {
             newState.audioPlayer = player
         }
     case .selectChapter(let story, let chapterIndex):
@@ -109,7 +109,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             newState.storyState.currentStory?.currentChapterIndex = chapterIndex
         }
         if let data = newState.storyState.currentChapterAudioData,
-           let player = newState.createAVPlayer(from: data) {
+           let player = data.createAVPlayer() {
             newState.audioPlayer = player
         }
     case .generateChapter:
@@ -143,7 +143,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newStory?.currentChapterIndex += 1
         newState.storyState.currentStory = newStory
         if let data = newState.storyState.currentChapterAudioData,
-           let player = newState.createAVPlayer(from: data) {
+           let player = data.createAVPlayer() {
             newState.audioPlayer = player
         }
     case .refreshChapterView:

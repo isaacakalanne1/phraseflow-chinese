@@ -72,46 +72,6 @@ struct FastChineseState {
         // Find the SpokenWord in timestampData that includes this index
         return timestampData?.last(where: { totalCharacterIndex >= $0.textOffset})
     }
-
-    /// Function to create an AVPlayer with a specific time pitch algorithm from audio data
-    /// - Parameters:
-    ///   - audioData: The audio data in Data format
-    ///   - fileExtension: The file extension of the audio data (e.g., "mp3", "m4a")
-    /// - Returns: An optional AVPlayer instance
-    func createAVPlayer(from audioData: Data, fileExtension: String = "mp3") -> AVPlayer? {
-        // 1. Create a temporary file URL
-        let tempDirectory = FileManager.default.temporaryDirectory
-        let tempFileName = UUID().uuidString + "." + fileExtension
-        let tempFileURL = tempDirectory.appendingPathComponent(tempFileName)
-
-        do {
-            // 2. Write the audio data to the temporary file
-            try audioData.write(to: tempFileURL)
-
-            // 3. Create an AVAsset from the file URL
-            let asset = AVAsset(url: tempFileURL)
-
-            // 4. Create an AVPlayerItem from the asset
-            let playerItem = AVPlayerItem(asset: asset)
-
-            // 5. Set the audio time pitch algorithm to time domain
-            playerItem.audioTimePitchAlgorithm = .timeDomain
-
-            // 6. Initialize the AVPlayer with the player item
-            let player = AVPlayer(playerItem: playerItem)
-
-            // Optionally, remove the temporary file after a delay to ensure the player has loaded the asset
-            DispatchQueue.global().asyncAfter(deadline: .now() + 5) {
-                try? FileManager.default.removeItem(at: tempFileURL)
-            }
-
-            return player
-        } catch {
-            print("Error creating AVPlayer from audio data: \(error)")
-            return nil
-        }
-    }
-
 }
 
 struct StoryState {
