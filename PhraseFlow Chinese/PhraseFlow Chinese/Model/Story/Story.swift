@@ -32,14 +32,10 @@ struct Story: Codable, Equatable, Hashable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(UUID.self, forKey: .id)
-        self.storyOverview = try container.decode(String.self, forKey: .storyOverview)
         self.latestStorySummary = try container.decode(String.self, forKey: .latestStorySummary)
         self.difficulty = try container.decode(Difficulty.self, forKey: .difficulty)
         self.title = try container.decode(String.self, forKey: .title)
-        self.description = try container.decode(String.self, forKey: .description)
-
         self.chapters = (try? container.decode([Chapter].self, forKey: .chapters)) ?? []
-
         self.currentChapterIndex = (try? container.decode(Int.self, forKey: .currentChapterIndex)) ?? 0
     }
 }
