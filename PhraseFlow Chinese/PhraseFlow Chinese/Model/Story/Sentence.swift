@@ -9,19 +9,16 @@ import Foundation
 
 struct Sentence: Codable, Equatable, Hashable {
     let mandarin: String
-    let pinyin: [String]
-    let english: String
+    let englishTranslation: String
     let speechStyle: SpeechStyle
     let speechRole: SpeechRole
 
     init(mandarin: String,
-         pinyin: [String],
-         english: String,
+         englishTranslation: String,
          speechStyle: SpeechStyle,
          speechRole: SpeechRole) {
         self.mandarin = mandarin
-        self.pinyin = pinyin
-        self.english = english
+        self.englishTranslation = englishTranslation
         self.speechStyle = speechStyle
         self.speechRole = speechRole
     }
@@ -30,8 +27,7 @@ struct Sentence: Codable, Equatable, Hashable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.mandarin = try container.decode(String.self, forKey: .mandarin)
-        self.pinyin = try container.decode([String].self, forKey: .pinyin)
-        self.english = try container.decode(String.self, forKey: .english)
+        self.englishTranslation = try container.decode(String.self, forKey: .englishTranslation)
         self.speechStyle = try container.decode(SpeechStyle.self, forKey: .speechStyle)
         self.speechRole = try container.decode(SpeechRole.self, forKey: .speechRole)
     }
@@ -52,12 +48,11 @@ let sentenceSchema: [String: Any] = [
                         "type": "object",
                         "properties": [
                             "mandarin": ["type": "string"],
-                            "pinyin": ["type": "array", "items": ["type": "string"]],
-                            "english": ["type": "string"],
+                            "englishTranslation": ["type": "string"],
                             "speechStyle": ["type": "string"],
                             "speechRole": ["type": "string"]
                         ],
-                        "required": ["mandarin", "pinyin", "english", "speechStyle", "speechRole"],
+                        "required": ["mandarin", "englishTranslation", "speechStyle", "speechRole"],
                         "additionalProperties": false
                     ]
                 ]

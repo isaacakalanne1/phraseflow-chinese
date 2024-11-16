@@ -34,8 +34,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         let chapterResponse = try await generateChapter(type: .first(setting: storySetting), voice: voice, difficulty: difficulty)
 
         let sentences = chapterResponse.sentences.map({ Sentence(mandarin: $0.mandarin.replacingOccurrences(of: " ", with: ""),
-                                                                 pinyin: $0.pinyin,
-                                                                 english: $0.english,
+                                                                 englishTranslation: $0.englishTranslation,
                                                                  speechStyle: $0.speechStyle,
                                                                  speechRole: $0.speechRole) })
         let chapter = Chapter(storyTitle: "Story title here", sentences: sentences)
@@ -171,9 +170,8 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
         In the JSON:
         - latestStorySummary: This is a brief summary of the story so far in English. This summary is of the story which happens before the new part of the story you write.
-        - Mandarin: The story sentence in Mandarin Chinese.
-        - Pinyin: The pinyin structured like ["a", "b", "c"] with each sound separated. The pinyin should use diacritic markers for the tones.
-        - English: An English translation of the Mandarin sentence.
+        - mandarin: The story sentence written in Mandarin Chinese.
+        - englishTranslation: The story sentence written in English.
         - speechStyle: This matches the emotions of the sentence.
         These are the available speechStyles which can be used in the JSON:
         \(String(describing: voice.availableSpeechStyles.map({ $0.ssmlName })))
