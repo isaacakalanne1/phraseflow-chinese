@@ -15,12 +15,12 @@ struct ActionButtonsView: View {
 
         HStack(spacing: 20) {
             if chapter.audioData == nil ||
-                store.state.appSettings.voice != chapter.audioVoice ||
-                store.state.appSettings.speechSpeed != chapter.audioSpeed {
+                store.state.settingsState.voice != chapter.audioVoice ||
+                store.state.settingsState.speechSpeed != chapter.audioSpeed {
                 ActionButton(title: "Load",
                              imageName: "arrow.down.to.line.circle") {
                     store.dispatch(.synthesizeAudio(chapter,
-                                                    voice: store.state.appSettings.voice,
+                                                    voice: store.state.settingsState.voice,
                                                     isForced: false))
                 }
             } else {
@@ -42,13 +42,13 @@ struct ActionButtonsView: View {
             ActionButton(title: "Load",
                          imageName: "arrow.down.to.line.circle") {
                 store.dispatch(.synthesizeAudio(chapter,
-                                                voice: store.state.appSettings.voice,
+                                                voice: store.state.settingsState.voice,
                                                 isForced: true))
             }
 
 //            ActionButton(title: "Pinyin",
-//                         imageName: store.state.appSettings.isShowingPinyin ? "lightbulb.fill" : "lightbulb.slash") {
-//                store.dispatch(.updateShowPinyin(!store.state.appSettings.isShowingPinyin))
+//                         imageName: store.state.settingsState.isShowingPinyin ? "lightbulb.fill" : "lightbulb.slash") {
+//                store.dispatch(.updateShowPinyin(!store.state.settingsState.isShowingPinyin))
 //            }
 
             ActionButton(title: "Stories",

@@ -13,12 +13,12 @@ struct EnglishSentenceView: View {
     var body: some View {
         VStack {
             Text("Translation")
-                .greyBackground(isShowing: store.state.appSettings.isShowingEnglish)
+                .greyBackground(isShowing: store.state.settingsState.isShowingEnglish)
             ScrollView(.vertical) {
                 Text(store.state.currentSentence?.english ?? "")
                     .foregroundColor(.gray)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .opacity(store.state.appSettings.isShowingEnglish ? 1 : 0)
+                    .opacity(store.state.settingsState.isShowingEnglish ? 1 : 0)
             }
         }
         .fontWeight(.light)

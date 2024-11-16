@@ -14,7 +14,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
     switch action {
     case .generateNewStory:
         do {
-            let story = try await environment.generateStory(voice: state.appSettings.voice)
+            let story = try await environment.generateStory(voice: state.settingsState.voice)
             return .onGeneratedStory(story)
         } catch {
             return .failedToGenerateNewStory
@@ -24,7 +24,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
     case .generateChapter(let story):
         do {
             let chapterResponse = try await environment.generateChapter(story: story,
-                                                                        voice: state.appSettings.voice)
+                                                                        voice: state.settingsState.voice)
             return .onGeneratedChapter(chapterResponse)
         } catch {
             return .failedToGenerateChapter
@@ -57,13 +57,13 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .failedToDeleteStory
         }
     case .synthesizeAudio(let chapter, let voice, let isForced):
-        if chapter.audioData != nil && chapter.audioVoice == state.appSettings.voice && chapter.audioSpeed == state.appSettings.speechSpeed && !isForced {
+        if chapter.audioData != nil && chapter.audioVoice == state.settingsState.voice && chapter.audioSpeed == state.settingsState.speechSpeed && !isForced {
             return .playAudio(time: nil)
         }
         do {
             let result = try await environment.synthesizeSpeech(for: chapter,
                                                                 voice: voice,
-                                                                rate: state.appSettings.speechSpeed.rate)
+                                                                rate: state.settingsState.speechSpeed.rate)
             return .onSynthesizedAudio(result)
         } catch {
             return .failedToPlayAudio
@@ -141,7 +141,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         return .saveAppSettings
     case .saveAppSettings:
         do {
-            try environment.saveAppSettings(state.appSettings)
+            try environment.saveAppSettings(state.settingsState)
             return nil
         } catch {
             return .failedToSaveAppSettings

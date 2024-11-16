@@ -55,11 +55,11 @@ struct FastChineseState {
     var translationViewId = UUID()
 
     var isPlayingAudio = false
-    var appSettings: AppSettings = .init(isShowingPinyin: true,
-                                      isShowingDefinition: true,
-                                      isShowingEnglish: true,
-                                      voice: .xiaomo,
-                                      speechSpeed: .normal)
+    var settingsState: SettingsState = .init(isShowingPinyin: true,
+                                         isShowingDefinition: true,
+                                         isShowingEnglish: true,
+                                         voice: .xiaomo,
+                                         speechSpeed: .normal)
 
     var currentSpokenWord: WordTimeStampData? {
         timestampData?.last(where: { currentPlaybackTime >= $0.time })

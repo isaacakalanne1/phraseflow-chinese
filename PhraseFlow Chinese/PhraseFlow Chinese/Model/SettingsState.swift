@@ -1,5 +1,5 @@
 //
-//  AppSettings.swift
+//  SettingsState.swift
 //  PhraseFlow Chinese
 //
 //  Created by iakalann on 06/11/2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AppSettings: Codable {
+struct SettingsState: Codable {
     var isShowingPinyin: Bool
     var isShowingDefinition: Bool
     var isShowingEnglish: Bool

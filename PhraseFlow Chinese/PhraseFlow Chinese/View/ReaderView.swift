@@ -17,11 +17,11 @@ struct ReaderView: View {
         let chapterNumber = (store.state.currentStory?.currentChapterIndex ?? 0) + 1
 
         VStack(spacing: 10) {
-            if store.state.appSettings.isShowingDefinition {
+            if store.state.settingsState.isShowingDefinition {
                 DefinitionView()
                     .frame(height: 150)
             }
-            if store.state.appSettings.isShowingEnglish {
+            if store.state.settingsState.isShowingEnglish {
                 EnglishSentenceView()
                     .frame(height: 90)
             }

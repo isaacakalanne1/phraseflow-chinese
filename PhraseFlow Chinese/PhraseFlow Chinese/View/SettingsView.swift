@@ -13,19 +13,19 @@ struct SettingsView: View {
     var body: some View {
 
         let showPinyin: Binding<Bool> = .init {
-            store.state.appSettings.isShowingPinyin
+            store.state.settingsState.isShowingPinyin
         } set: { newValue in
             store.dispatch(.updateShowPinyin(newValue))
         }
 
         let showDefinition: Binding<Bool> = .init {
-            store.state.appSettings.isShowingDefinition
+            store.state.settingsState.isShowingDefinition
         } set: { newValue in
             store.dispatch(.updateShowDefinition(newValue))
         }
 
         let showEnglish: Binding<Bool> = .init {
-            store.state.appSettings.isShowingEnglish
+            store.state.settingsState.isShowingEnglish
         } set: { newValue in
             store.dispatch(.updateShowEnglish(newValue))
         }
@@ -74,9 +74,9 @@ struct SettingsView: View {
                             Text(voice.gender.title)
                                 .fontWeight(.light)
                         }
-                        .foregroundColor(store.state.appSettings.voice == voice ? .white : .primary)
+                        .foregroundColor(store.state.settingsState.voice == voice ? .white : .primary)
                         .padding()
-                        .background(store.state.appSettings.voice == voice ? Color.accentColor : Color.gray.opacity(0.3))
+                        .background(store.state.settingsState.voice == voice ? Color.accentColor : Color.gray.opacity(0.3))
                         .cornerRadius(10)
                     }
                 }
@@ -99,10 +99,10 @@ struct SettingsView: View {
                 }) {
                     Text(speed.title)
                         .font(.body)
-                        .foregroundColor(store.state.appSettings.speechSpeed == speed ? .white : .primary)
+                        .foregroundColor(store.state.settingsState.speechSpeed == speed ? .white : .primary)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(store.state.appSettings.speechSpeed == speed ? Color.accentColor : Color.gray.opacity(0.3))
+                        .background(store.state.settingsState.speechSpeed == speed ? Color.accentColor : Color.gray.opacity(0.3))
                         .cornerRadius(10)
                 }
             }

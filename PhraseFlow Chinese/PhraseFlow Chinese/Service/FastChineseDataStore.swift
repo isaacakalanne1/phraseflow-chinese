@@ -16,9 +16,9 @@ enum FastChineseDataStoreError: Error {
 
 protocol FastChineseDataStoreProtocol {
     func loadStories() throws -> [Story]
-    func loadAppSettings() throws -> AppSettings
+    func loadAppSettings() throws -> SettingsState
     func saveStory(_ story: Story) throws
-    func saveAppSettings(_ settings: AppSettings) throws
+    func saveAppSettings(_ settings: SettingsState) throws
     func loadDefinitions() throws -> [Definition]
     func loadDefinition(character: String, sentence: Sentence) throws -> Definition
     func saveDefinition(_ definition: Definition) throws
@@ -31,7 +31,7 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
 
     init() {
 //        clearData(path: "userData.json")
-//        clearData(path: "appSettings.json")
+//        clearData(path: "settingsState.json")
     }
 
     func clearData(path: String) {
@@ -53,14 +53,14 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
         }
     }
 
-    func loadAppSettings() throws -> AppSettings {
-        guard let fileURL = documentsDirectory?.appendingPathComponent("appSettings.json") else {
+    func loadAppSettings() throws -> SettingsState {
+        guard let fileURL = documentsDirectory?.appendingPathComponent("settingsState.json") else {
             throw FastChineseDataStoreError.failedToCreateUrl
         }
         do {
             let data = try Data(contentsOf: fileURL)
             let decoder = JSONDecoder()
-            let appSettings = try decoder.decode(AppSettings.self, from: data)
+            let appSettings = try decoder.decode(SettingsState.self, from: data)
             return appSettings
         } catch {
             throw FastChineseDataStoreError.failedToDecodeData
@@ -81,8 +81,8 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
         }
     }
 
-    func saveAppSettings(_ settings: AppSettings) throws {
-        guard let fileURL = documentsDirectory?.appendingPathComponent("appSettings.json") else {
+    func saveAppSettings(_ settings: SettingsState) throws {
+        guard let fileURL = documentsDirectory?.appendingPathComponent("settingsState.json") else {
             throw FastChineseDataStoreError.failedToCreateUrl
         }
         let encoder = JSONEncoder()
