@@ -22,9 +22,9 @@ struct CreateStoryView: View {
                     HStack {
                         ForEach(Genre.allCases, id: \.self) { genre in
                             CategoryButtonView(category: genre,
-                                               isHighlighted: store.state.selectedGenres.contains(genre)) {
+                                               isHighlighted: store.state.createStoryState.selectedGenres.contains(genre)) {
                                 store.dispatch(.updateSelectGenre(genre,
-                                                                  isSelected: !store.state.selectedGenres.contains(genre)))
+                                                                  isSelected: !store.state.createStoryState.selectedGenres.contains(genre)))
                             }
                         }
                     }
@@ -38,8 +38,8 @@ struct CreateStoryView: View {
                     HStack(alignment: .top) {
                         ForEach(StorySetting.allCases, id: \.self) { setting in
                             CategoryButtonView(category: setting,
-                                               isHighlighted: store.state.selectedStorySetting == setting) {
-                                store.dispatch(.selectStorySetting(store.state.selectedStorySetting == setting ? nil : setting))
+                                               isHighlighted: store.state.createStoryState.selectedStorySetting == setting) {
+                                store.dispatch(.selectStorySetting(store.state.createStoryState.selectedStorySetting == setting ? nil : setting))
                             }
                         }
                     }

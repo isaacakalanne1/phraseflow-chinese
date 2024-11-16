@@ -14,6 +14,11 @@
 		BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */; };
 		BB1994C82CE8E0BE00D61E54 /* Data+AVPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994C72CE8E0BE00D61E54 /* Data+AVPlayer.swift */; };
 		BB1994CA2CE8FFF400D61E54 /* Chapter+WordTimeStampData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994C92CE8FFF400D61E54 /* Chapter+WordTimeStampData.swift */; };
+		BB1994CD2CE904D900D61E54 /* StoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994CC2CE904D900D61E54 /* StoryState.swift */; };
+		BB1994CF2CE904F000D61E54 /* DefinitionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994CE2CE904F000D61E54 /* DefinitionState.swift */; };
+		BB1994D12CE9050000D61E54 /* AudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D02CE9050000D61E54 /* AudioState.swift */; };
+		BB1994D32CE9051700D61E54 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D22CE9051700D61E54 /* ViewState.swift */; };
+		BB1994D52CE9059E00D61E54 /* CreateStoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D42CE9059E00D61E54 /* CreateStoryState.swift */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
 		BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FastChineseStore.swift */; };
 		BB4EDB052C90C89C00699E7D /* FastChineseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB042C90C89C00699E7D /* FastChineseState.swift */; };
@@ -94,6 +99,11 @@
 		BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpeed.swift; sourceTree = "<group>"; };
 		BB1994C72CE8E0BE00D61E54 /* Data+AVPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+AVPlayer.swift"; sourceTree = "<group>"; };
 		BB1994C92CE8FFF400D61E54 /* Chapter+WordTimeStampData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chapter+WordTimeStampData.swift"; sourceTree = "<group>"; };
+		BB1994CC2CE904D900D61E54 /* StoryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryState.swift; sourceTree = "<group>"; };
+		BB1994CE2CE904F000D61E54 /* DefinitionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionState.swift; sourceTree = "<group>"; };
+		BB1994D02CE9050000D61E54 /* AudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioState.swift; sourceTree = "<group>"; };
+		BB1994D22CE9051700D61E54 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
+		BB1994D42CE9059E00D61E54 /* CreateStoryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStoryState.swift; sourceTree = "<group>"; };
 		BB4EDB022C90C86300699E7D /* FastChineseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseStore.swift; sourceTree = "<group>"; };
 		BB4EDB042C90C89C00699E7D /* FastChineseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseState.swift; sourceTree = "<group>"; };
 		BB4EDB062C90C8CA00699E7D /* FastChineseAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseAction.swift; sourceTree = "<group>"; };
@@ -208,13 +218,27 @@
 			path = Speech;
 			sourceTree = "<group>";
 		};
+		BB1994CB2CE904C600D61E54 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				BB1994D02CE9050000D61E54 /* AudioState.swift */,
+				BB1994D42CE9059E00D61E54 /* CreateStoryState.swift */,
+				BB1994CE2CE904F000D61E54 /* DefinitionState.swift */,
+				BB4EDB042C90C89C00699E7D /* FastChineseState.swift */,
+				BB6572F62CDB991A00AC5981 /* SettingsState.swift */,
+				BB1994CC2CE904D900D61E54 /* StoryState.swift */,
+				BB1994D22CE9051700D61E54 /* ViewState.swift */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
 		BB4EDB012C90C85000699E7D /* Redux */ = {
 			isa = PBXGroup;
 			children = (
 				BB4EDB062C90C8CA00699E7D /* FastChineseAction.swift */,
 				BB4EDB0B2C90C9A100699E7D /* FastChineseReducer.swift */,
 				BB4EDB0D2C90CA0300699E7D /* FastChineseMiddleware.swift */,
-				BB4EDB042C90C89C00699E7D /* FastChineseState.swift */,
+				BB1994CB2CE904C600D61E54 /* State */,
 				BB4EDB022C90C86300699E7D /* FastChineseStore.swift */,
 				BB4EDB0F2C90CA4900699E7D /* FastChineseSubscriber.swift */,
 			);
@@ -343,7 +367,6 @@
 				BB6572CF2CD13C6400AC5981 /* ChapterType.swift */,
 				BBE16F272CC420FD00A7EF1F /* ReaderDisplayType.swift */,
 				BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */,
-				BB6572F62CDB991A00AC5981 /* SettingsState.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -587,11 +610,15 @@
 				BB6572D92CD529DE00AC5981 /* StorySetting.swift in Sources */,
 				BB4EDB222C90F81000699E7D /* DefineCharacterRequest.swift in Sources */,
 				BB1994C82CE8E0BE00D61E54 /* Data+AVPlayer.swift in Sources */,
+				BB1994D12CE9050000D61E54 /* AudioState.swift in Sources */,
 				BB6572D22CD165F200AC5981 /* Collection+Safe.swift in Sources */,
+				BB1994CD2CE904D900D61E54 /* StoryState.swift in Sources */,
 				BB4EDB0E2C90CA0300699E7D /* FastChineseMiddleware.swift in Sources */,
 				BB6572E72CD8D1E300AC5981 /* Gender.swift in Sources */,
 				BB4EDB102C90CA4900699E7D /* FastChineseSubscriber.swift in Sources */,
 				BBE636CD2CCC0F8500873E68 /* ReaderView.swift in Sources */,
+				BB1994D32CE9051700D61E54 /* ViewState.swift in Sources */,
+				BB1994D52CE9059E00D61E54 /* CreateStoryState.swift in Sources */,
 				BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */,
 				BBE16F1C2CC1317B00A7EF1F /* Genre.swift in Sources */,
 				BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */,
@@ -599,6 +626,7 @@
 				BBE636C32CCC0BE900873E68 /* CharacterView.swift in Sources */,
 				BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */,
 				BB1994CA2CE8FFF400D61E54 /* Chapter+WordTimeStampData.swift in Sources */,
+				BB1994CF2CE904F000D61E54 /* DefinitionState.swift in Sources */,
 				BB4EDB0C2C90C9A100699E7D /* FastChineseReducer.swift in Sources */,
 				BB6572F92CDBB14C00AC5981 /* SpeechStyle.swift in Sources */,
 				BB4EDB0A2C90C8F100699E7D /* FastChineseEnvironment.swift in Sources */,

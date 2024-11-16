@@ -1,0 +1,36 @@
+//
+//  ViewState.swift
+//  PhraseFlow Chinese
+//
+//  Created by iakalann on 16/11/2024.
+//
+
+import Foundation
+
+struct ViewState {
+    var definitionViewId: UUID
+    var chapterViewId: UUID
+    var translationViewId: UUID
+
+    var isShowingCreateStoryScreen = false
+    var isShowingSettingsScreen = false
+    var isShowingStoryListView = false
+
+    var readerDisplayType: ReaderDisplayType
+
+    init(definitionViewId: UUID = UUID(),
+         chapterViewId: UUID = UUID(),
+         translationViewId: UUID = UUID(),
+         isShowingCreateStoryScreen: Bool = false,
+         isShowingSettingsScreen: Bool = false,
+         isShowingStoryListView: Bool = false,
+         readerDisplayType: ReaderDisplayType = .normal) {
+        self.definitionViewId = definitionViewId
+        self.chapterViewId = chapterViewId
+        self.translationViewId = translationViewId
+        self.isShowingCreateStoryScreen = isShowingCreateStoryScreen
+        self.isShowingSettingsScreen = isShowingSettingsScreen
+        self.isShowingStoryListView = isShowingStoryListView
+        self.readerDisplayType = readerDisplayType
+    }
+}
