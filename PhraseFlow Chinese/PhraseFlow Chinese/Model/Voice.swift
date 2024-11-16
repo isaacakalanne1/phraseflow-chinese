@@ -8,7 +8,7 @@
 import Foundation
 
 enum Voice: String, Codable, CaseIterable, Equatable {
-    case xiaomo, xiaoxiao
+    case xiaoChen, xiaomo, xiaoxiao
 
     var title: String {
         rawValue.capitalized
@@ -16,6 +16,8 @@ enum Voice: String, Codable, CaseIterable, Equatable {
 
     var speechSynthesisVoiceName: String {
         switch self {
+        case .xiaoChen:
+            "zh-CN-Xiaochen:DragonHDLatestNeural"
         case .xiaomo:
             "zh-CN-XiaomoNeural"
         case .xiaoxiao:
@@ -25,7 +27,8 @@ enum Voice: String, Codable, CaseIterable, Equatable {
 
     var gender: Gender {
         switch self {
-        case .xiaomo,
+        case .xiaoChen,
+                .xiaomo,
                 .xiaoxiao:
                 .female
         }
@@ -33,6 +36,8 @@ enum Voice: String, Codable, CaseIterable, Equatable {
 
     var defaultSpeechStyle: SpeechStyle {
         switch self {
+        case .xiaoChen:
+                ._default
         case .xiaomo:
                 .gentle
         case .xiaoxiao:
@@ -46,6 +51,10 @@ enum Voice: String, Codable, CaseIterable, Equatable {
 
     var availableSpeechRoles: [SpeechRole] {
         switch self {
+        case .xiaoChen:
+            [
+                ._default
+            ]
         case .xiaomo:
             [
                 ._default,
@@ -67,6 +76,10 @@ enum Voice: String, Codable, CaseIterable, Equatable {
 
     var availableSpeechStyles: [SpeechStyle] {
         switch self {
+        case .xiaoChen:
+            [
+                ._default
+            ]
         case .xiaomo:
             [
                 .embarrassed,

@@ -32,8 +32,7 @@ struct StoryListView: View {
                     .onDelete(perform: delete)
                 }
                 Button("Create") {
-                    let genres = Array(Genre.allCases.shuffled().prefix(3))
-                    store.dispatch(.generateNewStory(genres: genres))
+                    store.dispatch(.generateNewStory)
                 }
                 .padding()
                 .background(Color.accentColor)

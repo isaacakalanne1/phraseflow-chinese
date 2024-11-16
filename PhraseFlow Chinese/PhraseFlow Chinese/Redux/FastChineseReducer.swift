@@ -156,10 +156,6 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.selectedStorySetting = setting
     case .selectVoice(let voice):
         newState.appSettings.voice = voice
-    case .playWord:
-        newState.isPlayingDefinedWord = true
-    case .finishedPlayingWord:
-        newState.isPlayingDefinedWord = false
     case .saveStory,
             .failedToSaveStory,
             .failedToLoadStories,
@@ -173,7 +169,9 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             .failedToSaveAppSettings,
             .failedToLoadAppSettings,
             .loadAppSettings,
-            .saveAppSettings:
+            .saveAppSettings,
+            .playWord,
+            .finishedPlayingWord:
         break
     }
 

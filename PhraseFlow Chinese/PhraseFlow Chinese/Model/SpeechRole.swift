@@ -11,8 +11,13 @@ enum SpeechRole: String, Codable, CaseIterable {
     case girl, boy, _default, youngAdultFemale, youngAdultMale, olderAdultFemale, olderAdultMale, seniorFemale, seniorMale
 
     init?(rawValue: String) {
-        if let value = SpeechRole.allCases.first(where: { $0.ssmlName == rawValue }) {
-            self = value
+        switch rawValue.lowercased() {
+        case "male":
+            self = .youngAdultMale
+        case "female":
+            self = .youngAdultFemale
+        default:
+            self = ._default
         }
         self = .girl
     }

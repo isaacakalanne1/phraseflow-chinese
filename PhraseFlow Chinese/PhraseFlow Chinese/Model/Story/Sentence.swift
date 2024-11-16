@@ -7,10 +7,6 @@
 
 import Foundation
 
-struct SentenceResponse: Codable {
-    let sentences: [Sentence]
-}
-
 struct Sentence: Codable, Equatable, Hashable {
     let mandarin: String
     let pinyin: [String]

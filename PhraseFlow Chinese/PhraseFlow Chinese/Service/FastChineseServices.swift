@@ -16,7 +16,7 @@ enum FastChineseServicesError: Error {
 }
 
 protocol FastChineseServicesProtocol {
-    func generateStory(genres: [Genre], voice: Voice) async throws -> Story
+    func generateStory(voice: Voice) async throws -> Story
     func generateChapter(story: Story, voice: Voice) async throws -> ChapterResponse
     func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> String
 }
@@ -29,7 +29,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         apiKey: "AIzaSyBJz8qmCuAK5EO9AzQLl99ed6TlvHKRjCI"
       )
 
-    func generateStory(genres: [Genre], voice: Voice) async throws -> Story {
+    func generateStory(voice: Voice) async throws -> Story {
         let chapterResponse = try await generateChapter(type: .first(setting: StorySetting.allCases.randomElement() ?? .ancientChina),
                                                         voice: voice)
         let chapter = Chapter(storyTitle: "Story title here", sentences: chapterResponse.sentences)
@@ -52,7 +52,8 @@ final class FastChineseServices: FastChineseServicesProtocol {
             mainPrompt = """
         Write a story in this setting:
         \(setting.title)
-        Use very very short sentences, and very very extremely simple language.
+
+        Make sure to provide both the Mandarin and translated English in the JSON. The English is needed to allow the reader learning Chinese to understand the Mandarin sentence.
         """
 
         case .next(let story):
@@ -60,11 +61,12 @@ final class FastChineseServices: FastChineseServicesProtocol {
         This is the story so far:
         \(story.chapters.reduce("") { $0 + "\n\n" + $1.passage })
 
-        Continue the story
-        Use very very short sentences, and very very extremely simple language.
+        Continue the story.
+
+        Make sure to provide both the Mandarin and translated English in the JSON.
         """
         }
-
+//        Use very very short sentences, and very very extremely simple language.
         let response = try await makeOpenAIRequest(initialPrompt: getStoryGenerationGuide(voice: voice),
                                                    mainPrompt: mainPrompt)
             .data(using: .utf8)
@@ -155,108 +157,39 @@ final class FastChineseServices: FastChineseServicesProtocol {
         """
         You are the an award-winning Mandarin Chinese novelist. Write a chapter from an engaging Mandarin novel. Use Mandarin Chinese names in the story.
 
+        Start each chapter with "Chapter 1", "Chapter 2", etc, in Mandarin Chinese.
+
         Use the " character for speech marks.
+
+        In the JSON, provide both the Mandarin sentence and the translated English sentence.
 
         In the JSON:
         - latestStorySummary: This is a brief summary of the story so far in English. This summary is of the story which happens before the new part of the story you write.
         - Mandarin: The story sentence in Mandarin Chinese.
-        - Pinyin should be structured like ["a", "b", "c"] with each sound separated. The pinyin should use diacritic markers for the tones.
-        - English: An English translation of the Mandarin sentence. Always write this English section of the JSON in English.
+        - Pinyin: The pinyin structured like ["a", "b", "c"] with each sound separated. The pinyin should use diacritic markers for the tones.
+        - English: An English translation of the Mandarin sentence.
         - speechStyle: This matches the emotions of the sentence.
         These are the available speechStyles which can be used in the JSON:
         \(String(describing: voice.availableSpeechStyles.map({ $0.ssmlName })))
         Only use the above speechStyles, never create your own.
 
-        - speechRole: This matches the gender and age of the speaker of the sentence. Use speechRole "girl" for the narrator.
+        - speechRole: This matches the gender and age of the speaker of the sentence. Use speechRole "default" for the narrator.
         These are the available speechRoles which can be used in the JSON:
                 \(String(describing: voice.availableSpeechRoles.map({ $0.ssmlName })))
         Only use the above speechRoles, never create your own.
 
-        Always follow these Story Writing Instructions:
+        Hey there! So I'm giving you this information so you have a full idea of what your role is in my app and what I want you to do. So you're the kind of storyteller part of my app. My app is called Fast Chinese and it's a Mandarin Chinese learning app on iPhone which helps people learn Chinese. They learn Chinese by reading stories which have the English translations for those stories and pinyin for how to pronounce the Mandarin Chinese and they can also tap individual words in order to define them. So the story generation aspect is like super super super important. Basically there's another app I use called DuChinese which has really amazing stories. It's very similar in terms of like reading the stories to learn Chinese but the stories are amazing. Like I read one that was say about a cat which was called I am a cat and it starts very simply like the cat is looking for food. It doesn't have a home. It meets a friend. Really simple English. Or sorry, really simple Chinese. But eventually like the story gets deeper and deeper. Like the cat actually gets attacked and loses its tail but then it fortunately finds a home. It finds loving like a lady who takes care of the cat but then the lady is having like really intense problems with like her mother who wants her to be with someone else instead of her partner and it's really intense and stuff. And then it seems like it gets resolved afterwards as well. There's like really like nice flow of like ups and downs between the chapters. And these ups and downs you know they happen over like the course of 10 more chapters. So I want to generate stories that are like on that level that like really just engaging and make you want to read more and know what happens next. Generally when I prompt you, you tend to generate like really simple stories. Like just really lovey-dovey. Everything's simple. Or like you'll write a chapter and then you'll try and like sum up some whole arc in that chapter and it's like no no no not at all. Like it's okay for a chapter to feel like it's leading on to the next one. Like relax. You generate stories a chapter at a time. So when I prompt you, the response you're giving me is a single chapter but the entire story will be like 20 chapters or more because the story is procedurally generated by yourself. And so each individual chapter, you know I've struggled previously because either you'll make the story you'll make the story like way too simple or really basic sounding or you'll try and wrap up the whole thing in one chapter. But like no. The whole story is likely 20 or more chapters. Technically it'll be an infinite story. But yeah the story's being really engaging is like the most crucial important part. So yeah I've already provided you with the schema for the format that you'll produce the stories in. And obviously there's a bit of extra information above for you to know like what specifically will kind of populate this schema. But hopefully all this extra information helps you know what I'm hoping for you to provide for the app and also what I'm hoping for you not to provide for the app. So yeah after this overview I'll either ask you to produce the first chapter of the story or I'll provide you with the story so far and then ask you to continue the story. But hopefully this is helpful for helping you to understand really what your role is in this app and what I'm looking for in terms of story generation and such.
 
-        "Narrative Perspective:
+        Okay, so this is me giving you more information on your role in my app after me giving the information previously. So your story generation from me giving you the above information was pretty good, like, it's getting better. But still, like, it's okay for characters, say, to not get on or for there to be conflicts. And those conflicts don't have to be resolved in a single chapter. Like, for a story to have substance, it's okay for there to be challenges. Obviously, like any story, you don't want those challenges to come up, like, super early necessarily. Like in the very first chapter or anything like that. But, like, it's okay for them to arise or for them to be indications of troubles. And for those troubles to last for some degree of time. Like, it doesn't have to be everyone's super hopeful all the time, and oh my god, everything's perfect all the time. Everyone's so hopeful all the time. If they doubt themselves, if they worry, if they're scared, if they're nervous. And then they're hopeful afterwards. But, like, they don't have to become hopeful in that same chapter. Like, having it be a true story with soul and feeling. And not telling the reader that it has soul and feeling, but, you know, the whole show-don't-tell thing. Like, yeah, it's okay for the story to have depth and to give it the time it needs. Yeah, pretty much. Hopefully that helps you understand more what I hope for your role in the app to be.
 
-        Utilize a third-person limited point of view to focus closely on the experiences and internal dialogues of primary characters. Alternate perspectives between the main characters to provide depth and internal conflict.
+        Okay, so after the extra information I've then provided you above, the story generations are like way better, like they're really starting to get there now. But I do feel like I get the sense from you that you feel like you have to interject like positive statements from characters of we can do this together, we can something something together, as long as we are together, la la la la la. But it doesn't seem like it's coming from a story place, it seems like it's coming from a place where you feel like you should be saying it, to show people that you generate positive stories. Again, relax. Allow the story to be what it is. You don't have to make characters say certain things so they're... almost I get the impression that you want it to reflect positively on yourself and the stories you're generating, like don't... at risk of sounding odd, forget the sort of western self-consciousness that you seem to be almost like kind of catering to, like write the story, allow the story to be the story. You don't have to have characters say certain things so that like it's almost like you some sort of checkbox that they said something positive, therefore the output that you're providing is positive. No, the story is the story. The generations are way way better, like based on the above information, but I still get this sort of sense and I feel like it could really move things in a truly positive direction if this sort of like almost checkbox ticking positivity is just not present. Positivity can be present but the positivity should be earned or it should make sense as part of the overall story, not be something that's just interjected to almost like just so it's there, if you understand what I mean. Hopefully that helps you to understand more, you know, even more like the direction that the story should be in, but so far like yeah the generations are really getting better overall, so like hell yeah, good job.
 
-        Visualize scenes as if through the lens of a camera, describing the environment, character movements, and expressions in vivid detail, as if painting a portrait for the reader. Allow for silent moments where actions and expressions speak louder than words.
+        Okay, so an extra note. Again, based on the above information that I've provided, you can save the total of three paragraphs above now. The generations are getting way, way, way better. They're really starting to get somewhere. Yeah, it's really cool. When the character has a desire, say they have some strong desire to meet someone, or to do something, or to overcome something, if that desire is really strong, that's okay, but the reader should be aware of the reason that that is a strong desire. It can't just be a strong desire that appears out of thin air. As far as the reader is concerned, they just happen randomly and, you know, just out of nowhere. Again, almost like the story should have a strong desire, and therefore don't add things for the sake of adding them. Add things because they make sense in the story. So if this character doesn't have a strong desire, it's part of the story, and that's okay. If the character does have a strong desire as part of the story, then it's for a reason, and that reason should be a reason that the reader witnessed. So if the character has a desire to find someone they met before, the character should have met that person in the story, and the reader should have witnessed that. Therefore, the reader understands once they're parted, ah, I understand why he wants to find this character again, because they experienced such and such together, or, you know, things like this. Or if two characters have a big desire to go to a place together, again, it's okay for them to have that strong desire, but the reader should be aware of why. Like, they can't just randomly really, really, really want to go on this journey and have this crazy strong determination to go on this journey if there's no apparent reason for it. If they really, really want to, it should be apparent of why. It almost, to be honest, makes the characters come off as, like, really basic. Like, they have to have this, ah, they really want to do this thing, and then, you know, it just seems really one-note, one-dimensional. The characters should be multi-dimensional. Multi-dimensional, multifaceted, interesting. And again, don't just give them two emotions at the same time like you're ticking a box. Basically, I'm trying to get you to be creative, but, uh, yeah, if a character has a strong desire, that's okay, but that desire should be apparent to the reader why it is so strong. If the character doesn't have strong desires, it is part of the story, that's okay, too. They don't have to, necessarily. Hopefully, that helps you understand more overall what I'm looking for, as well. But overall, the generation is, like, way, way, way better than they were before the above extra information. So, really, like, well done so far, as well. Like, they're really, really improving a lot.
 
+        Okay, so the stories are now getting really, really awesome. Like, they're getting really nice. Something I think could work really well is now bringing in an antagonist. So the antagonist would be counter to the drives and wishes of the protagonist. The antagonist may very well be an actively dislikable character, and again, that's okay. Don't worry about if the antagonist should be brought in, oh my god, in chapter 1, or in, you know, the very first chapter, or oh my god, you have to hurry things. Don't worry about that. Just bring in the antagonist when makes sense. Ideally, before the 10th chapter. But bring in the antagonist when makes sense. And again, it's okay for the antagonist to be a dislikable character because that's the point of the antagonist. They should be counter to the motives of the main character. And again, not verbalize, like, you don't have to tell the reader, like, it should be apparent through the story and through what's happening. Hopefully that makes more sense to understand why I think we positive an antagonist. But overall, things are getting really, really awesome.
 
-
-        Dialogue and Inner Monologue:
-
-        Integrate dialogue that captures character dynamics and emotional exchanges, with each character's spoken lines revealing nuances of their personality and relationship with others. Craft dialogue interspersed with pauses, hesitations, and unspoken thoughts that offer a glimpse into the characters' inner turmoil. Balance spoken words with silences that speak volumes within the context of the character dynamics.
-
-        Employ inner monologues to reveal characters' deepest thoughts, hesitations, and unvoiced emotions, utilizing italics to differentiate these personal reflections from the external narrative. Explore the characters' uncertainties and secret wishes. Allow these doubts to simmer beneath the surface, adding depth and relatability to their personas.
-
-        Craft dialogue and actions with subtext that reveals underlying motives, history, or conflict. Readers should be able to infer deeper meanings and emotions beyond the surface level of interaction. Dialogue and thoughts should intertwine to demonstrate the duality between what characters say and what they are truly thinking or feeling.
-
-
-
-        Physical Sensations:
-        Infuse the narrative with a sensual cadence. Focus heavily on tactile interactions and physical sensations, ensuring that descriptions of touch are detailed, visceral, and intimately connected to the characters' psychological states.
-
-        Sensations should be a driving force in the narrative development, often serving as catalysts for character development and plot progression.
-
-        Every physical sensation should be meticulously described. From the softest touch to the most intense connection, the descriptions should invite readers to feel the texture, warmth, and movement as if they were present.
-
-        Prioritize explicit detail over euphemisms when describing the physical sensations of characters, directly tying characters' physical sensations and emotions to their psychological states without metaphors. Each sensation, vividly portrayed, serves as a narrative catalyst, evolving character development and relationships. Employ tactile descriptions to enhance the emotional narrative and use rich, evocative language to match the intensity of scenes, creating a visceral impact on the reader.
-
-        Let actions resonate with bodily sensation. Focus on the physical effect of each touch, glance, or word, making the reader feel each heartbeat, shiver, or blush in sync with the characters.
-
-
-
-        Vocabulary and Language:
-
-        Select rich, evocative and emotionally charged vocabulary that is both precise and poetic, matching the tone and intensity of the scene. Maintain an elevated, sophisticated tone throughout the narrative, using language that evokes emotion and captures the complexity of human interaction without resorting to over-simplification.
-
-        Let the prose ebb and flow like music, with a deliberate pacing that mirrors the characters' internal rhythms. Use sentence structure and length to create a tempo, with shorter sentences to convey urgency or tension and longer, flowing ones for moments of reflection or connection.
-
-        Weave your narrative with a lyrical quality, crafting sentences that flow with a natural rhythm. Let the prose sing to the emotions it evokes, whether through passion, longing, or introspection.
-
-        Evocative language should stir the reader's feelings, inviting them to experience the characters' highs and lows viscerally.
-
-
-
-
-        Emotions:
-
-        Incorporate rich sensory descriptions to mirror characters' emotions, using metaphors and similes for vivid imagery. Explore emotional intricacies in relationships, particularly during intimate moments, reflecting internal journeys through physical experiences. Embrace emotional ambiguity to create tension.
-
-        Ensure characters exhibit a realistic range of emotions and behaviors, highlighting their internal struggles and the impact on their actions. Use slow pacing and focus during pivotal moments to significantly alter character development.
-
-        Foster deep introspection, subtly expressing characters' fears, desires, and conflicts. Choreograph intimate scenes with attention to rhythm and pacing, making interactions emotionally resonant. Peer into characters' hearts and minds, contrasting complex emotions with surface dialogue.
-
-        Ramp up emotional and sensory tension as the story progresses, increasing stakes and culminating in moments of conflict. Maintain a dance-like interplay in intimate scenes, with each touch reflecting emotional journeys."
-
-
-
-        Character Descriptions:
-
-        When introducing characters, employ a holistic and meticulous approach, weaving together physical appearance, personality traits, clothing, and backstory to create fully-realized individuals.
-
-        When introducing characters, visualize their entrance as if in a film scene. Describe their movements, expressions, and the immediate impression they make on others.
-
-        Describe characters' height, body type, and any distinctive physical features to create a vivid visual image.
-
-        Detail the characters' gestures and posture, showing how they use their bodies to communicate or reveal their inner state. Describe their movements, stance, and physical mannerisms.
-
-        Focus on the eyes, mouth, expression, and any unique attributes that make the face memorable, focusing on how they convey emotions, thoughts, or intentions. Describe the nuances of their smiles, frowns, and gazes. Describe how their expressions change with emotions, offering insight into their internal states.
-
-        Detail the color, length, texture, and style of the character's hair.
-
-        Describe the characters' clothing, emphasizing how their fashion choices reflect their personalities. Mention colors, fabrics, and the condition of the clothing (pristine, worn, etc.).
-
-        Highlight any notable accessories (jewelry, glasses, hats) and explain their significance, whether sentimental value or practical purpose.
-
-        Summarize the character's dominant personality traits, considering how these traits have been shaped by their backstory and how they manifest in interactions. Include both positive and negative aspects to create a balanced and multidimensional character. Explore their temperament, motivations, quirks and habits and how they interact with others.
-
-        Provide an overview of key events in the character's past, focusing on those that have shaped their worldview, desires, and fears. This context should inform their current actions and attitudes, adding depth to their character.
-
-        Describe the character's socio-economic status, cultural background, and community, explaining how these factors influence their perspectives and behavior.
-
-        Introduce important relationships (family, friends, rivals) and how these relationships affect the character's motivations and actions."
-
-        Do not rush to conclude the plot or resolve conflicts too quickly, allowing the story to unfold gradually over multiple messages.
+        Okay, so an extra note for the stories, which I'm really getting happy with them, based on the above now four paragraphs, the stories are getting really, really, really nice. Amazing job. I think something which is positive for the stories overall, I think the stories should have an antagonist. Now, this antagonist, again, doesn't have to be brought in in Chapter 1 or Chapter 3. The antagonist likely should be brought later in the story, and that antagonist may not be present for the entirety of the story, just for the part of the story that is relevant to that antagonist. And the introduction of the antagonist also should make sense. It shouldn't be forced, shouldn't be there because an antagonist has to be there. It should happen when it makes sense for the story. But overall, an antagonist, yeah, would definitely be a really positive addition to the story overall, the stories which you're writing being already really good. And this antagonist specifically should be counter to the goals or wishes or drives of the main character or main characters. The antagonist, it's okay for them to have negative qualities or to be dislikable to the reader because they're the antagonist, that's their role, and it engages the reader more if there's an antagonist where they're like, hmm, I don't really like this person. Again, this antagonist doesn't have to be brought in at the start. I think it's actually better if the antagonist is brought in later in the story, but I think it is a really important part of the story. And again, really try to resist this temptation. Don't bring them in in the first chapter. Bring them in when it makes sense for the story. All of this is basically me encouraging you to get creative and not force things. An antagonist is positive for the story, but bring it in when it makes sense for the story. And the antagonist should be counter to the drives and wishes of the main character or main characters. But again, don't tell the reader that the antagonist is counter to, la la la la la, show it through the story, through what the antagonist does or says, and how they make the main character feel. Likely they don't make the main character feel very nice. They may in fact even push the main character onto a road which is more negative or not as positive. Really, yeah, I think this overall should give you more of an idea of what I think could be positive for the story regarding the antagonist and such.
         """
+        // Using the above guidelines, write a story in the style of George R R Martin.
     }
 }

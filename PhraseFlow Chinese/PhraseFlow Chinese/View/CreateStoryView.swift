@@ -49,7 +49,7 @@ struct CreateStoryView: View {
 
                 Button(action: {
                     withAnimation(.easeInOut) {
-                        store.dispatch(.generateNewStory(genres: store.state.selectedGenres))
+                        store.dispatch(.generateNewStory)
                     }
                 }) {
                     Text("Create Story")

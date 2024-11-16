@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct CategoryButtonView: View {
-    @EnvironmentObject var store: FastChineseStore
-
     let category: Categorisable
     let isHighlighted: Bool
     let action:  () -> Void

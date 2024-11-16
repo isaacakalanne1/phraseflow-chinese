@@ -55,7 +55,6 @@ struct FastChineseState {
     var translationViewId = UUID()
 
     var isPlayingAudio = false
-    var isPlayingDefinedWord = false
     var appSettings: AppSettings = .init(isShowingPinyin: true,
                                       isShowingDefinition: true,
                                       isShowingEnglish: true,

@@ -15,13 +15,20 @@ protocol FastChineseRepositoryProtocol {
 
 class FastChineseRepository: FastChineseRepositoryProtocol {
 
+    private let speechCharacters = [
+        "“",
+        "”",
+        "\"",
+        "''"
+    ]
+
     init() {
 
     }
 
     func synthesizeSpeech(_ chapter: Chapter, voice: Voice, rate: String) async throws -> (wordTimestamps: [WordTimeStampData], audioData: Data) {
         // Replace with your subscription key and service region
-        let speechKey = "144bc0cdea4d44e499927e84e795b27a"
+        let speechKey = "Fp11D0CAMjjAcf03VNqe2IsKfqycenIKcrAm4uGV8RSiaqMX15NWJQQJ99AKACYeBjFXJ3w3AAAYACOG6Orb"
         let serviceRegion = "eastus"
 
         do {
@@ -78,9 +85,12 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                 let splitSentence = splitSpeechAndNonSpeech(from: sentence.mandarin)
                 for sentenceSection in splitSentence {
                     // TODO: Update styleDegree to also be generated with each sentence
-                    let isSpeech = sentenceSection.contains("“") || sentenceSection.contains("”")
+                    let isSpeech = speechCharacters.firstIndex(where: { sentenceSection.contains($0)} ) != nil
+                    let speechRole = isSpeech ? sentence.speechRole : voice.defaultSpeechRole
+                    let speechStyle = isSpeech ? SpeechStyle.gentle : voice.defaultSpeechStyle
+
                     let sentenceSsml = """
-                <mstts:express-as role="\(isSpeech ? sentence.speechRole.ssmlName : voice.defaultSpeechRole.ssmlName)" style="\(isSpeech ? sentence.speechStyle.ssmlName : voice.defaultSpeechStyle.ssmlName)" styledegree="1">
+                <mstts:express-as role="\(speechRole.ssmlName)" style="\(speechStyle.ssmlName)" styledegree="1">
                     <prosody rate="\(rate)">
                         \(sentenceSection)
                     </prosody>
@@ -123,7 +133,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
         var isInSpeech = false
 
         for character in text {
-            if character == "“" || character == "”" {
+            if speechCharacters.contains(String(character)) {
                 if isInSpeech {
                     // End of speech part, include closing quotation mark
                     currentText.append(character)
@@ -147,10 +157,6 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
         // Add any remaining non-speech text after the last quotation mark
         if !currentText.isEmpty {
             results.append(currentText)
-        }
-
-        if results.count > 1 {
-            print("Results is \(results)")
         }
 
         return results

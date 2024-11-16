@@ -11,7 +11,6 @@ enum FastChineseDataStoreError: Error {
     case failedToCreateUrl
     case failedToSaveData
     case failedToDecodeData
-    case failedToGetData
     case failedToGetDefinition
 }
 

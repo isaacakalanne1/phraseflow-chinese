@@ -38,8 +38,7 @@ struct ContentView: View {
             case .failedToGenerateStory:
                 ErrorView(title: "Failed to generate story",
                           buttonTitle: "Retry") {
-                    let genres = Array(Genre.allCases.shuffled().prefix(3))
-                    store.dispatch(.generateNewStory(genres: genres))
+                    store.dispatch(.generateNewStory)
                 }
             case .failedToGenerateChapter:
                 ErrorView(title: "Failed to generate chapter",
@@ -52,8 +51,7 @@ struct ContentView: View {
                     .defining:
                 if store.state.currentStory == nil {
                     Button("Create Story") {
-                        let genres = Array(Genre.allCases.shuffled().prefix(3))
-                        store.dispatch(.generateNewStory(genres: genres))
+                        store.dispatch(.generateNewStory)
                     }
                     .padding()
                     .background(Color.accentColor)

@@ -50,7 +50,6 @@
 		BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF512C8C86B10079D135 /* Sentence.swift */; };
 		BBE16F1A2CC1314400A7EF1F /* CreateStoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F192CC1314400A7EF1F /* CreateStoryView.swift */; };
 		BBE16F1C2CC1317B00A7EF1F /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F1B2CC1317B00A7EF1F /* Genre.swift */; };
-		BBE16F1E2CC131CB00A7EF1F /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F1D2CC131CB00A7EF1F /* Subject.swift */; };
 		BBE16F202CC152C400A7EF1F /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */; };
 		BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F212CC2769C00A7EF1F /* StoryListView.swift */; };
 		BBE16F242CC2AFC800A7EF1F /* ChapterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */; };
@@ -130,7 +129,6 @@
 		BBB6EF512C8C86B10079D135 /* Sentence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sentence.swift; sourceTree = "<group>"; };
 		BBE16F192CC1314400A7EF1F /* CreateStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStoryView.swift; sourceTree = "<group>"; };
 		BBE16F1B2CC1317B00A7EF1F /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
-		BBE16F1D2CC131CB00A7EF1F /* Subject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
 		BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
 		BBE16F212CC2769C00A7EF1F /* StoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListView.swift; sourceTree = "<group>"; };
 		BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterListView.swift; sourceTree = "<group>"; };
@@ -325,7 +323,6 @@
 				BB6572CF2CD13C6400AC5981 /* ChapterType.swift */,
 				BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */,
 				BB6572D72CD529CD00AC5981 /* Create Story */,
-				BBE16F1D2CC131CB00A7EF1F /* Subject.swift */,
 				BBE16F272CC420FD00A7EF1F /* ViewState.swift */,
 				BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */,
 				BB6572E42CD8D12400AC5981 /* Voice.swift */,
@@ -580,7 +577,6 @@
 				BB6572E72CD8D1E300AC5981 /* Gender.swift in Sources */,
 				BB4EDB102C90CA4900699E7D /* FastChineseSubscriber.swift in Sources */,
 				BBE636CD2CCC0F8500873E68 /* ReaderView.swift in Sources */,
-				BBE16F1E2CC131CB00A7EF1F /* Subject.swift in Sources */,
 				BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */,
 				BBE16F1C2CC1317B00A7EF1F /* Genre.swift in Sources */,
 				BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */,
