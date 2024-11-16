@@ -30,7 +30,7 @@ struct CharacterView: View {
                 .foregroundStyle(isHighlighted ? Color.blue : Color.black)
                 .background {
                     Group  {
-                        if sentenceIndex == store.state.sentenceIndex {
+                        if sentenceIndex == store.state.storyState.sentenceIndex {
                             Color.gray.opacity(0.3)
                                 .clipShape(
                                     .rect(

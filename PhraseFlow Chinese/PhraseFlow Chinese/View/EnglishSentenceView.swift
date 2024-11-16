@@ -15,7 +15,7 @@ struct EnglishSentenceView: View {
             Text("Translation")
                 .greyBackground(isShowing: store.state.settingsState.isShowingEnglish)
             ScrollView(.vertical) {
-                Text(store.state.currentSentence?.english ?? "")
+                Text(store.state.storyState.currentSentence?.english ?? "")
                     .foregroundColor(.gray)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .opacity(store.state.settingsState.isShowingEnglish ? 1 : 0)

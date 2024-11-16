@@ -43,13 +43,13 @@ struct ContentView: View {
             case .failedToGenerateChapter:
                 ErrorView(title: "Failed to generate chapter",
                           buttonTitle: "Retry") {
-                    if let story = store.state.currentStory {
+                    if let story = store.state.storyState.currentStory {
                         store.dispatch(.generateChapter(story: story))
                     }
                 }
             case .normal,
                     .defining:
-                if store.state.currentStory == nil {
+                if store.state.storyState.currentStory == nil {
                     Button("Create Story") {
                         store.dispatch(.generateNewStory)
                     }
@@ -57,7 +57,7 @@ struct ContentView: View {
                     .background(Color.accentColor)
                     .foregroundColor(.white)
                     .cornerRadius(10)
-                } else if let chapter = store.state.currentChapter {
+                } else if let chapter = store.state.storyState.currentChapter {
                     ReaderView(chapter: chapter)
                 }
             }

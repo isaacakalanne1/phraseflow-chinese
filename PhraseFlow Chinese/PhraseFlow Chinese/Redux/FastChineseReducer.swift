@@ -16,7 +16,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .onLoadedAppSettings(let settings):
         newState.settingsState = settings
     case .onGeneratedChapter(let chapterResponse):
-        var newStory = newState.currentStory
+        var newStory = newState.storyState.currentStory
         newStory?.latestStorySummary = chapterResponse.latestStorySummary
 
         let chapter = Chapter(storyTitle: "Story title here", sentences: chapterResponse.sentences)
@@ -27,22 +27,22 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         }
         let chapters = newStory?.chapters
         newStory?.currentChapterIndex = (chapters?.count ?? 1) - 1
-        newState.currentStory = newStory
+        newState.storyState.currentStory = newStory
 
         newState.audioPlayer = AVPlayer()
         newState.viewState = .normal
-        newState.sentenceIndex = 0
+        newState.storyState.sentenceIndex = 0
         newState.isShowingCreateStoryScreen = false
     case .onGeneratedStory(let story):
-        newState.currentStory = story
+        newState.storyState.currentStory = story
         newState.viewState = .normal
     case .onLoadedStories(let stories):
-        newState.savedStories = stories
+        newState.storyState.savedStories = stories
         let currentStory = stories.first
-        if newState.currentStory == nil,
+        if newState.storyState.currentStory == nil,
            !stories.isEmpty {
-            newState.currentStory = currentStory
-            if let data = newState.currentChapterAudioData,
+            newState.storyState.currentStory = currentStory
+            if let data = newState.storyState.currentChapterAudioData,
                let player = newState.createAVPlayer(from: data) {
                 newState.audioPlayer = player
             }
@@ -60,13 +60,13 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.currentPlaybackTime = 0
         newState.currentDefinition = nil
 
-        var newStory = newState.currentStory
+        var newStory = newState.storyState.currentStory
         let chapterIndex = newStory?.currentChapterIndex ?? 0
         newStory?.chapters[chapterIndex].audioData = data.audioData
         newStory?.chapters[chapterIndex].audioSpeed = newState.settingsState.speechSpeed
         newStory?.chapters[chapterIndex].audioVoice = newState.settingsState.voice
         newStory?.chapters[chapterIndex].timestampData = data.wordTimestamps
-        newState.currentStory = newStory
+        newState.storyState.currentStory = newStory
 
         if let player = newState.createAVPlayer(from: data.audioData) {
             newState.audioPlayer = player
@@ -92,23 +92,23 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             newState.selectedGenres.removeAll(where: { $0 == genre })
         }
     case .selectStory(let story):
-        newState.sentenceIndex = 0
-        newState.currentStory = story
+        newState.storyState.sentenceIndex = 0
+        newState.storyState.currentStory = story
         newState.isShowingStoryListView = false
-        if let data = newState.currentChapterAudioData,
+        if let data = newState.storyState.currentChapterAudioData,
            let player = newState.createAVPlayer(from: data) {
             newState.audioPlayer = player
         }
     case .selectChapter(let story, let chapterIndex):
-        newState.currentStory = story
-        newState.sentenceIndex = 0
+        newState.storyState.currentStory = story
+        newState.storyState.sentenceIndex = 0
         newState.isShowingStoryListView = false
-        if let chaptersCount = newState.currentStory?.chapters.count,
+        if let chaptersCount = newState.storyState.currentStory?.chapters.count,
            chapterIndex > -1,
            chapterIndex < chaptersCount {
-            newState.currentStory?.currentChapterIndex = chapterIndex
+            newState.storyState.currentStory?.currentChapterIndex = chapterIndex
         }
-        if let data = newState.currentChapterAudioData,
+        if let data = newState.storyState.currentChapterAudioData,
            let player = newState.createAVPlayer(from: data) {
             newState.audioPlayer = player
         }
@@ -123,7 +123,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .failedToGenerateChapter:
         newState.viewState = .failedToGenerateChapter
     case .updateSentenceIndex(let index):
-        newState.sentenceIndex = index
+        newState.storyState.sentenceIndex = index
     case .playAudio(let time):
         newState.isPlayingAudio = true
         if let time {
@@ -139,10 +139,10 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .selectWord(let timestampData):
         newState.currentPlaybackTime = timestampData.time
     case .goToNextChapter:
-        var newStory = newState.currentStory
+        var newStory = newState.storyState.currentStory
         newStory?.currentChapterIndex += 1
-        newState.currentStory = newStory
-        if let data = newState.currentChapterAudioData,
+        newState.storyState.currentStory = newStory
+        if let data = newState.storyState.currentChapterAudioData,
            let player = newState.createAVPlayer(from: data) {
             newState.audioPlayer = player
         }

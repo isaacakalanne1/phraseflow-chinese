@@ -35,7 +35,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         let chapter = Chapter(storyTitle: "Story title here", sentences: chapterResponse.sentences)
         return Story(storyOverview: "Story overview here",
                      latestStorySummary: chapterResponse.latestStorySummary,
-                     difficulty: .HSK1,
+                     difficulty: .beginner,
                      title: "Story title here",
                      description: "Description here",
                      chapters: [chapter])

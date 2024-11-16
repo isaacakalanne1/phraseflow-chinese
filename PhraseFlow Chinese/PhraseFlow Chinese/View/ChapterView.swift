@@ -53,10 +53,10 @@ struct ChapterView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             Button("Next Chapter") {
-                if let story = store.state.currentStory {
+                if let story = store.state.storyState.currentStory {
                     if story.chapters.count > story.currentChapterIndex + 1 {
                         store.dispatch(.goToNextChapter)
-                    } else if let story = store.state.currentStory {
+                    } else if let story = store.state.storyState.currentStory {
                         store.dispatch(.generateChapter(story: story))
                     }
                 }

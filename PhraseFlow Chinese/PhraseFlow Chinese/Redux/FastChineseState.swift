@@ -9,9 +9,6 @@ import Foundation
 import AVKit
 
 struct FastChineseState {
-    var currentStory: Story?
-    var savedStories: [Story] = []
-    var sentenceIndex = 0
     var isShowingCreateStoryScreen = false
     var isShowingSettingsScreen = false
     var isShowingStoryListView = false
@@ -22,44 +19,21 @@ struct FastChineseState {
 
     var currentPlaybackTime: TimeInterval = 0
 
-    var currentChapter: Chapter? {
-        guard let currentStory else {
-            return nil
-        }
-        return currentStory.chapters[safe: currentStory.currentChapterIndex]
-    }
-
-    var currentSentence: Sentence? {
-        guard let currentChapter else {
-            return nil
-        }
-        return currentChapter.sentences[safe: sentenceIndex]
-    }
-
-    var currentChapterAudioData: Data? {
-        guard let currentStory else {
-            return nil
-        }
-        return currentStory.chapters[safe: currentStory.currentChapterIndex]?.audioData
-    }
-
     var currentDefinition: Definition?
 
     var audioPlayer = AVPlayer()
     var timestampData: [WordTimeStampData]? {
-        currentChapter?.timestampData
+        storyState.currentChapter?.timestampData
     }
+
+    var storyState = StoryState()
 
     var definitionViewId = UUID()
     var chapterViewId = UUID()
     var translationViewId = UUID()
 
     var isPlayingAudio = false
-    var settingsState: SettingsState = .init(isShowingPinyin: true,
-                                         isShowingDefinition: true,
-                                         isShowingEnglish: true,
-                                         voice: .xiaomo,
-                                         speechSpeed: .normal)
+    var settingsState = SettingsState()
 
     var currentSpokenWord: WordTimeStampData? {
         timestampData?.last(where: { currentPlaybackTime >= $0.time })
@@ -77,7 +51,7 @@ struct FastChineseState {
     func getSpokenWord(sentenceIndex: Int, characterIndex: Int) -> WordTimeStampData? {
         // Calculate the overall character index
         var totalCharacterIndex = 0
-        guard let currentChapter else { return nil }
+        guard let currentChapter = storyState.currentChapter else { return nil }
 
         for (index, sentence) in currentChapter.sentences.enumerated() {
             let sentenceLength = sentence.mandarin.count
@@ -137,5 +111,44 @@ struct FastChineseState {
             return nil
         }
     }
+
+}
+
+struct StoryState {
+    var currentStory: Story?
+    var savedStories: [Story] = []
+    var sentenceIndex = 0
+
+    init(currentStory: Story? = nil,
+         savedStories: [Story] = [],
+         sentenceIndex: Int = 0) {
+        self.currentStory = currentStory
+        self.savedStories = savedStories
+        self.sentenceIndex = sentenceIndex
+    }
+
+    var currentChapter: Chapter? {
+        guard let currentStory else {
+            return nil
+        }
+        return currentStory.chapters[safe: currentStory.currentChapterIndex]
+    }
+
+    var currentSentence: Sentence? {
+        guard let currentChapter else {
+            return nil
+        }
+        return currentChapter.sentences[safe: sentenceIndex]
+    }
+
+    var currentChapterAudioData: Data? {
+        guard let currentStory else {
+            return nil
+        }
+        return currentStory.chapters[safe: currentStory.currentChapterIndex]?.audioData
+    }
+}
+
+struct AudioState {
 
 }

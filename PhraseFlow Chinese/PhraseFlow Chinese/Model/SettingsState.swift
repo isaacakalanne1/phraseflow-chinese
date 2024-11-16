@@ -13,4 +13,16 @@ struct SettingsState: Codable {
     var isShowingEnglish: Bool
     var voice: Voice
     var speechSpeed: SpeechSpeed
+
+    init(isShowingPinyin: Bool = true,
+         isShowingDefinition: Bool = true,
+         isShowingEnglish: Bool = true,
+         voice: Voice = .xiaoxiao,
+         speechSpeed: SpeechSpeed = .normal) {
+        self.isShowingPinyin = isShowingPinyin
+        self.isShowingDefinition = isShowingDefinition
+        self.isShowingEnglish = isShowingEnglish
+        self.voice = voice
+        self.speechSpeed = speechSpeed
+    }
 }

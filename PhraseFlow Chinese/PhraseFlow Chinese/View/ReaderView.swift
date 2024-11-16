@@ -14,7 +14,7 @@ struct ReaderView: View {
     var body: some View {
         let startCharacterIndex = store.state.currentSpokenWord?.textOffset ?? -1
         let (selectedSentenceIndex, selectedCharacterIndex) = getSentenceAndCharIndex(textOffset: startCharacterIndex) ?? (-1,-1)
-        let chapterNumber = (store.state.currentStory?.currentChapterIndex ?? 0) + 1
+        let chapterNumber = (store.state.storyState.currentStory?.currentChapterIndex ?? 0) + 1
 
         VStack(spacing: 10) {
             if store.state.settingsState.isShowingDefinition {
@@ -26,7 +26,7 @@ struct ReaderView: View {
                     .frame(height: 90)
             }
             HStack(spacing: 0) {
-                Text(store.state.currentStory?.title ?? "")
+                Text(store.state.storyState.currentStory?.title ?? "")
                     .fontWeight(.medium)
                 Text(" ")
                     .fontWeight(.light)
@@ -51,7 +51,7 @@ struct ReaderView: View {
 
             if totalCharacterIndex + sentenceLength > textOffset {
                 let characterIndex = textOffset - totalCharacterIndex
-                if sentenceIndex != store.state.sentenceIndex {
+                if sentenceIndex != store.state.storyState.sentenceIndex {
                     store.dispatch(.updateSentenceIndex(sentenceIndex))
                 }
                 return (sentenceIndex, characterIndex)

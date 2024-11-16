@@ -15,7 +15,7 @@ struct StoryListView: View {
         NavigationView {
             VStack {
                 List {
-                    ForEach(store.state.savedStories, id: \.self) { story in
+                    ForEach(store.state.storyState.savedStories, id: \.self) { story in
                         HStack {
                             NavigationLink(destination: ChapterListView(story: story)) {
                                 VStack(alignment: .leading, content: {
@@ -50,7 +50,7 @@ struct StoryListView: View {
 
     func delete(at offsets: IndexSet) {
         guard let index = offsets.first,
-              let story = store.state.savedStories[safe: index] else { return }
+              let story = store.state.storyState.savedStories[safe: index] else { return }
         store.dispatch(.deleteStory(story))
     }
 

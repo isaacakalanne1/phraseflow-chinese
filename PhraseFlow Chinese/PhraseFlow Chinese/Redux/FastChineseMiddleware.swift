@@ -30,7 +30,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .failedToGenerateChapter
         }
     case .onGeneratedChapter:
-        if let story = state.currentStory {
+        if let story = state.storyState.currentStory {
             return .saveStory(story)
         } else {
             return nil
@@ -69,7 +69,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .failedToPlayAudio
         }
     case .onSynthesizedAudio(let result):
-        if let story = state.currentStory {
+        if let story = state.storyState.currentStory {
             return .saveStory(story)
         }
         return nil
@@ -94,7 +94,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         return nil
     case .defineCharacter(let timeStampData, let shouldForce):
         do {
-            guard let sentence = state.currentSentence else {
+            guard let sentence = state.storyState.currentSentence else {
                 return nil
             }
             let definition = try await environment.fetchDefinition(of: timeStampData.word, withinContextOf: sentence, shouldForce: shouldForce)
@@ -106,7 +106,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         return .refreshDefinitionView
     case .selectStory,
             .selectChapter:
-        if let story = state.currentStory {
+        if let story = state.storyState.currentStory {
             return .saveStory(story)
         }
         return nil
@@ -121,13 +121,13 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .playWord(word)
         }
     case .goToNextChapter:
-        if let story = state.currentStory {
+        if let story = state.storyState.currentStory {
             return .saveStory(story)
         }
         return nil
     case .updatePlayTime:
         let time = state.audioPlayer.currentTime().seconds
-        if let lastWordTime = state.currentChapter?.timestampData.last?.time,
+        if let lastWordTime = state.storyState.currentChapter?.timestampData.last?.time,
            time > lastWordTime {
             return .stopAudio
         } else {

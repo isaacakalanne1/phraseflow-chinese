@@ -32,7 +32,7 @@ struct ChapterListView: View {
                 }
             }
             Button("New chapter") {
-                if let story = store.state.currentStory {
+                if let story = store.state.storyState.currentStory {
                     store.dispatch(.generateChapter(story: story))
                 }
             }
