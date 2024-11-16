@@ -72,8 +72,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         """
         }
 //        Use very very short sentences, and very very extremely simple language.
-        let response = try await makeOpenAIRequest(initialPrompt: getStoryGenerationGuide(voice: voice),
-                                                   mainPrompt: mainPrompt)
+        let response = try await makeOpenAIRequest(initialPrompt: getStoryGenerationGuide(voice: voice), mainPrompt: mainPrompt)
             .data(using: .utf8)
         guard let response else {
             throw FastChineseServicesError.failedToGetResponseData
@@ -102,7 +101,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         Also explain the word in the context of the sentence: "\(sentence.mandarin)".
         Don't define other words in the sentence.
 """
-        let response = try await makeGeminiRequest(initialPrompt: initialPrompt, mainPrompt: mainPrompt)
+        let response = try await makeOpenAIRequest(initialPrompt: initialPrompt, mainPrompt: mainPrompt, shouldUseSchema: false)
         return response
     }
 
@@ -118,21 +117,23 @@ final class FastChineseServices: FastChineseServicesProtocol {
             .replacingOccurrences(of: "```", with: "")
     }
 
-    private func makeOpenAIRequest(initialPrompt: String, mainPrompt: String) async throws -> String {
+    private func makeOpenAIRequest(initialPrompt: String, mainPrompt: String, shouldUseSchema: Bool = true) async throws -> String {
 
         var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
         request.httpMethod = "POST"
         request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let requestBody: [String: Any] = [
+        var requestBody: [String: Any] = [
             "model": "gpt-4o-mini-2024-07-18",
             "messages": [
                 ["role": "system", "content": initialPrompt],
                 ["role": "user", "content": mainPrompt]
             ],
-            "response_format": sentenceSchema
         ]
+        if shouldUseSchema {
+            requestBody["response_format"] = sentenceSchema
+        }
         let requestData = DefineCharacterRequest(messages: [
             .init(role: "system",
                   content: initialPrompt),
