@@ -66,6 +66,6 @@ struct ChapterView: View {
             .foregroundColor(.white)
             .cornerRadius(10)
         }
-        .id(store.state.chapterViewId)
+        .id(store.state.viewState.chapterViewId)
     }
 }

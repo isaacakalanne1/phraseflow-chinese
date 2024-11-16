@@ -9,28 +9,18 @@ import Foundation
 import AVKit
 
 struct FastChineseState {
-    var isShowingCreateStoryScreen = false
-    var isShowingSettingsScreen = false
-    var isShowingStoryListView = false
-    var viewState: ViewState = .normal
-
     var selectedGenres: [Genre] = []
     var selectedStorySetting: StorySetting?
 
     var settingsState = SettingsState()
     var storyState = StoryState()
     var audioState = AudioState()
-
-    var definitionViewId = UUID()
-    var chapterViewId = UUID()
-    var translationViewId = UUID()
+    var definitionState = DefinitionState()
+    var viewState = ViewState()
 
     var currentSpokenWord: WordTimeStampData? {
         storyState.currentChapter?.timestampData.last(where: { audioState.currentPlaybackTime >= $0.time })
     }
-
-    var tappedWord: WordTimeStampData?
-    var currentDefinition: Definition?
 }
 
 struct StoryState {
@@ -69,7 +59,14 @@ struct StoryState {
 }
 
 struct DefinitionState {
+    var tappedWord: WordTimeStampData?
+    var currentDefinition: Definition?
 
+    init(tappedWord: WordTimeStampData? = nil,
+         currentDefinition: Definition? = nil) {
+        self.tappedWord = tappedWord
+        self.currentDefinition = currentDefinition
+    }
 }
 
 struct AudioState {
@@ -83,5 +80,33 @@ struct AudioState {
         self.audioPlayer = audioPlayer
         self.currentPlaybackTime = currentPlaybackTime
         self.isPlayingAudio = isPlayingAudio
+    }
+}
+
+struct ViewState {
+    var definitionViewId: UUID
+    var chapterViewId: UUID
+    var translationViewId: UUID
+
+    var isShowingCreateStoryScreen = false
+    var isShowingSettingsScreen = false
+    var isShowingStoryListView = false
+
+    var readerDisplayType: ReaderDisplayType
+
+    init(definitionViewId: UUID = UUID(),
+         chapterViewId: UUID = UUID(),
+         translationViewId: UUID = UUID(),
+         isShowingCreateStoryScreen: Bool = false,
+         isShowingSettingsScreen: Bool = false,
+         isShowingStoryListView: Bool = false,
+         readerDisplayType: ReaderDisplayType = .normal) {
+        self.definitionViewId = definitionViewId
+        self.chapterViewId = chapterViewId
+        self.translationViewId = translationViewId
+        self.isShowingCreateStoryScreen = isShowingCreateStoryScreen
+        self.isShowingSettingsScreen = isShowingSettingsScreen
+        self.isShowingStoryListView = isShowingStoryListView
+        self.readerDisplayType = readerDisplayType
     }
 }

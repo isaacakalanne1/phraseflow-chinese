@@ -30,12 +30,12 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.storyState.currentStory = newStory
 
         newState.audioState.audioPlayer = AVPlayer()
-        newState.viewState = .normal
+        newState.viewState.readerDisplayType = .normal
         newState.storyState.sentenceIndex = 0
-        newState.isShowingCreateStoryScreen = false
+        newState.viewState.isShowingCreateStoryScreen = false
     case .onGeneratedStory(let story):
         newState.storyState.currentStory = story
-        newState.viewState = .normal
+        newState.viewState.readerDisplayType = .normal
     case .onLoadedStories(let stories):
         newState.storyState.savedStories = stories
         let currentStory = stories.first
@@ -51,14 +51,14 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .updateSpeechSpeed(let speed):
         newState.settingsState.speechSpeed = speed
     case .defineCharacter(let wordTimeStampData, let shouldForce):
-        newState.tappedWord = wordTimeStampData
-        newState.viewState = .defining
+        newState.definitionState.tappedWord = wordTimeStampData
+        newState.viewState.readerDisplayType = .defining
     case .onDefinedCharacter(let definition):
-        newState.currentDefinition = definition
-        newState.viewState = .normal
+        newState.definitionState.currentDefinition = definition
+        newState.viewState.readerDisplayType = .normal
     case .onSynthesizedAudio(let data):
         newState.audioState.currentPlaybackTime = 0
-        newState.currentDefinition = nil
+        newState.definitionState.currentDefinition = nil
 
         var newStory = newState.storyState.currentStory
         let chapterIndex = newStory?.currentChapterIndex ?? 0
@@ -78,11 +78,11 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .updateShowEnglish(let isShowing):
         newState.settingsState.isShowingEnglish = isShowing
     case .updateShowingCreateStoryScreen(let isShowing):
-        newState.isShowingCreateStoryScreen = isShowing
+        newState.viewState.isShowingCreateStoryScreen = isShowing
     case .updateShowingSettings(let isShowing):
-        newState.isShowingSettingsScreen = isShowing
+        newState.viewState.isShowingSettingsScreen = isShowing
     case .updateShowingStoryListView(let isShowing):
-        newState.isShowingStoryListView = isShowing
+        newState.viewState.isShowingStoryListView = isShowing
     case .updateSelectGenre(let genre, let isSelected):
         if isSelected {
             if !newState.selectedGenres.contains(genre) {
@@ -94,7 +94,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .selectStory(let story):
         newState.storyState.sentenceIndex = 0
         newState.storyState.currentStory = story
-        newState.isShowingStoryListView = false
+        newState.viewState.isShowingStoryListView = false
         if let data = newState.storyState.currentChapterAudioData,
            let player = data.createAVPlayer() {
             newState.audioState.audioPlayer = player
@@ -102,7 +102,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .selectChapter(let story, let chapterIndex):
         newState.storyState.currentStory = story
         newState.storyState.sentenceIndex = 0
-        newState.isShowingStoryListView = false
+        newState.viewState.isShowingStoryListView = false
         if let chaptersCount = newState.storyState.currentStory?.chapters.count,
            chapterIndex > -1,
            chapterIndex < chaptersCount {
@@ -113,15 +113,15 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             newState.audioState.audioPlayer = player
         }
     case .generateChapter:
-        newState.viewState = .loading
+        newState.viewState.readerDisplayType = .loading
     case .generateNewStory:
-        newState.viewState = .loading
-        newState.isShowingStoryListView = false
-        newState.isShowingCreateStoryScreen = false
+        newState.viewState.readerDisplayType = .loading
+        newState.viewState.isShowingStoryListView = false
+        newState.viewState.isShowingCreateStoryScreen = false
     case .failedToGenerateNewStory:
-        newState.viewState = .failedToGenerateStory
+        newState.viewState.readerDisplayType = .failedToGenerateStory
     case .failedToGenerateChapter:
-        newState.viewState = .failedToGenerateChapter
+        newState.viewState.readerDisplayType = .failedToGenerateChapter
     case .updateSentenceIndex(let index):
         newState.storyState.sentenceIndex = index
     case .playAudio(let time):
@@ -147,11 +147,11 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             newState.audioState.audioPlayer = player
         }
     case .refreshChapterView:
-        newState.chapterViewId = UUID()
+        newState.viewState.chapterViewId = UUID()
     case .refreshDefinitionView:
-        newState.definitionViewId = UUID()
+        newState.viewState.definitionViewId = UUID()
     case .refreshTranslationView:
-        newState.translationViewId = UUID()
+        newState.viewState.translationViewId = UUID()
     case .selectStorySetting(let setting):
         newState.selectedStorySetting = setting
     case .selectVoice(let voice):

@@ -55,7 +55,7 @@
 		BBE16F202CC152C400A7EF1F /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */; };
 		BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F212CC2769C00A7EF1F /* StoryListView.swift */; };
 		BBE16F242CC2AFC800A7EF1F /* ChapterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */; };
-		BBE16F282CC420FD00A7EF1F /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F272CC420FD00A7EF1F /* ViewState.swift */; };
+		BBE16F282CC420FD00A7EF1F /* ReaderDisplayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F272CC420FD00A7EF1F /* ReaderDisplayType.swift */; };
 		BBE636BF2CC98B2B00873E68 /* WordTimeStampData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */; };
 		BBE636C12CCC0B5000873E68 /* ActionButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636C02CCC0B5000873E68 /* ActionButtonsView.swift */; };
 		BBE636C32CCC0BE900873E68 /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636C22CCC0BE900873E68 /* CharacterView.swift */; };
@@ -136,7 +136,7 @@
 		BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
 		BBE16F212CC2769C00A7EF1F /* StoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListView.swift; sourceTree = "<group>"; };
 		BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterListView.swift; sourceTree = "<group>"; };
-		BBE16F272CC420FD00A7EF1F /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
+		BBE16F272CC420FD00A7EF1F /* ReaderDisplayType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderDisplayType.swift; sourceTree = "<group>"; };
 		BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTimeStampData.swift; sourceTree = "<group>"; };
 		BBE636C02CCC0B5000873E68 /* ActionButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonsView.swift; sourceTree = "<group>"; };
 		BBE636C22CCC0BE900873E68 /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterView.swift; sourceTree = "<group>"; };
@@ -341,7 +341,7 @@
 				BB0854862CB42C7100F1661B /* Story */,
 				BB4EDB2A2C91B35D00699E7D /* Definition.swift */,
 				BB6572CF2CD13C6400AC5981 /* ChapterType.swift */,
-				BBE16F272CC420FD00A7EF1F /* ViewState.swift */,
+				BBE16F272CC420FD00A7EF1F /* ReaderDisplayType.swift */,
 				BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */,
 				BB6572F62CDB991A00AC5981 /* SettingsState.swift */,
 			);
@@ -566,7 +566,7 @@
 				BB6572D42CD3932300AC5981 /* View+GreyBackground.swift in Sources */,
 				BBE16F1A2CC1314400A7EF1F /* CreateStoryView.swift in Sources */,
 				BBE636D12CCD77BC00873E68 /* FlowLayout.swift in Sources */,
-				BBE16F282CC420FD00A7EF1F /* ViewState.swift in Sources */,
+				BBE16F282CC420FD00A7EF1F /* ReaderDisplayType.swift in Sources */,
 				BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */,
 				BB6572CE2CD12A9200AC5981 /* ChapterResponse.swift in Sources */,
 				BBE636C12CCC0B5000873E68 /* ActionButtonsView.swift in Sources */,

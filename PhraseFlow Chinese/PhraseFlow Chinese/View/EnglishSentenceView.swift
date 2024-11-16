@@ -22,6 +22,6 @@ struct EnglishSentenceView: View {
             }
         }
         .fontWeight(.light)
-        .id(store.state.translationViewId)
+        .id(store.state.viewState.translationViewId)
     }
 }

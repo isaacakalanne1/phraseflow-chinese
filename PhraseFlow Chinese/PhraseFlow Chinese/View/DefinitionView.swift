@@ -14,17 +14,17 @@ struct DefinitionView: View {
         VStack(spacing: 5) {
             HStack(spacing: 0) {
                 Text("Definition of ")
-                Text(store.state.tappedWord?.word ?? "...")
-                    .fontWeight(store.state.tappedWord?.word == nil ? .regular : .medium)
+                Text(store.state.definitionState.tappedWord?.word ?? "...")
+                    .fontWeight(store.state.definitionState.tappedWord?.word == nil ? .regular : .medium)
             }
             .greyBackground()
             HStack {
                 ScrollView(.vertical) {
-                    Text(store.state.viewState == .defining ? "Defining..." : (store.state.currentDefinition?.definition ?? ""))
-                        .foregroundColor(store.state.currentDefinition == nil ? .gray : .black)
+                    Text(store.state.viewState.readerDisplayType == .defining ? "Defining..." : (store.state.definitionState.currentDefinition?.definition ?? ""))
+                        .foregroundColor(store.state.definitionState.currentDefinition == nil ? .gray : .black)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                 }
-                if let word = store.state.tappedWord {
+                if let word = store.state.definitionState.tappedWord {
                     VStack {
                         Button {
                             store.dispatch(.playWord(word))
@@ -46,6 +46,6 @@ struct DefinitionView: View {
             }
         }
         .fontWeight(.light)
-        .id(store.state.definitionViewId)
+        .id(store.state.viewState.definitionViewId)
     }
 }

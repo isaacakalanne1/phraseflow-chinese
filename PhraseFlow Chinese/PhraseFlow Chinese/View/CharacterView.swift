@@ -47,7 +47,7 @@ struct CharacterView: View {
         .onTapGesture {
             if let chapter = store.state.storyState.currentChapter,
                let word = chapter.getWordTimeStampData(atSentenceIndex: sentenceIndex, characterIndex: characterIndex),
-               store.state.viewState != .defining {
+               store.state.viewState.readerDisplayType != .defining {
                 store.dispatch(.updateSentenceIndex(sentenceIndex))
                 store.dispatch(.selectWord(word))
                 if store.state.settingsState.isShowingDefinition {

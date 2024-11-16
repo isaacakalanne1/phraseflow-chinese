@@ -13,25 +13,25 @@ struct ContentView: View {
     var body: some View {
 
         let isShowingCreateStoryScreen: Binding<Bool> = .init {
-            store.state.isShowingCreateStoryScreen
+            store.state.viewState.isShowingCreateStoryScreen
         } set: { newValue in
             store.dispatch(.updateShowingCreateStoryScreen(isShowing: newValue))
         }
 
         let isShowingSettingsScreen: Binding<Bool> = .init {
-            store.state.isShowingSettingsScreen
+            store.state.viewState.isShowingSettingsScreen
         } set: { newValue in
             store.dispatch(.updateShowingSettings(isShowing: newValue))
         }
 
         let isShowingStoryListView: Binding<Bool> = .init {
-            store.state.isShowingStoryListView
+            store.state.viewState.isShowingStoryListView
         } set: { newValue in
             store.dispatch(.updateShowingStoryListView(isShowing: newValue))
         }
 
         VStack(spacing: 10) {
-            switch store.state.viewState {
+            switch store.state.viewState.readerDisplayType {
             case .loading:
                 Text("Writing new chapter...")
                     .font(.body)
