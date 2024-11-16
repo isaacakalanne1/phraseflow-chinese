@@ -22,9 +22,6 @@ struct FastChineseState {
     var currentDefinition: Definition?
 
     var audioPlayer = AVPlayer()
-    var timestampData: [WordTimeStampData]? {
-        storyState.currentChapter?.timestampData
-    }
 
     var storyState = StoryState()
 
@@ -36,11 +33,11 @@ struct FastChineseState {
     var settingsState = SettingsState()
 
     var currentSpokenWord: WordTimeStampData? {
-        timestampData?.last(where: { currentPlaybackTime >= $0.time })
-//        guard let word = timestampData?.last(where: { currentPlaybackTime >= $0.time }) else { return nil }
+        storyState.chapterTimestampData?.last(where: { currentPlaybackTime >= $0.time })
+//        guard let word = chapterTimestampData?.last(where: { currentPlaybackTime >= $0.time }) else { return nil }
 //        if word.time + word.duration < currentPlaybackTime,
-//           let index = timestampData?.firstIndex(of: word),
-//           let followingWord = timestampData?[safe: index + 1] {
+//           let index = chapterTimestampData?.firstIndex(of: word),
+//           let followingWord = chapterTimestampData?[safe: index + 1] {
 //            return followingWord
 //        }
 //        return word
@@ -48,7 +45,7 @@ struct FastChineseState {
 
     var tappedWord: WordTimeStampData?
 
-    func getSpokenWord(sentenceIndex: Int, characterIndex: Int) -> WordTimeStampData? {
+    func getTimestampData(sentenceIndex: Int, characterIndex: Int) -> WordTimeStampData? {
         // Calculate the overall character index
         var totalCharacterIndex = 0
         guard let currentChapter = storyState.currentChapter else { return nil }
@@ -69,8 +66,8 @@ struct FastChineseState {
         }
 
         // Now totalCharacterIndex is the overall index of the character
-        // Find the SpokenWord in timestampData that includes this index
-        return timestampData?.last(where: { totalCharacterIndex >= $0.textOffset})
+        // Find the SpokenWord in chapterTimestampData that includes this index
+        return storyState.chapterTimestampData?.last(where: { totalCharacterIndex >= $0.textOffset})
     }
 }
 
@@ -106,6 +103,10 @@ struct StoryState {
             return nil
         }
         return currentStory.chapters[safe: currentStory.currentChapterIndex]?.audioData
+    }
+
+    var chapterTimestampData: [WordTimeStampData]? {
+        currentChapter?.timestampData
     }
 }
 

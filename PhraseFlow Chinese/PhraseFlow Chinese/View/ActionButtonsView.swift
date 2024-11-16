@@ -32,7 +32,7 @@ struct ActionButtonsView: View {
                 } else {
                     ActionButton(title: "Play",
                                  imageName: "play.circle") {
-                        let timestampData = store.state.timestampData
+                        let timestampData = store.state.chapterTimestampData
                         let currentSpokenWord = store.state.currentSpokenWord ?? timestampData?.first
                         store.dispatch(.playAudio(time: currentSpokenWord?.time))
                     }
