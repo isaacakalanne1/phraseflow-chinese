@@ -39,7 +39,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
     case .loadStories:
         do {
-            let stories = try environment.loadStories()
+            let stories = try environment.loadStories().sorted(by: { $0.lastUpdated > $1.lastUpdated })
             return .onLoadedStories(stories)
         } catch {
             return .failedToLoadStories

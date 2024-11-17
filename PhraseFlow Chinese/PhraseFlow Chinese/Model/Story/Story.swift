@@ -14,18 +14,21 @@ struct Story: Codable, Equatable, Hashable {
     let title: String
     var chapters: [Chapter]
     var currentChapterIndex = 0
+    var lastUpdated: Date
 
     init(latestStorySummary: String,
          difficulty: Difficulty,
          title: String,
          chapters: [Chapter],
-         currentChapterIndex: Int = 0) {
+         currentChapterIndex: Int = 0,
+         lastUpdated: Date = .now) {
         self.id = UUID()
         self.latestStorySummary = latestStorySummary
         self.difficulty = difficulty
         self.title = title
         self.chapters = chapters
         self.currentChapterIndex = currentChapterIndex
+        self.lastUpdated = lastUpdated
     }
 
     // Custom decoder to assign default values
@@ -37,5 +40,6 @@ struct Story: Codable, Equatable, Hashable {
         self.title = try container.decode(String.self, forKey: .title)
         self.chapters = (try? container.decode([Chapter].self, forKey: .chapters)) ?? []
         self.currentChapterIndex = (try? container.decode(Int.self, forKey: .currentChapterIndex)) ?? 0
+        self.lastUpdated = (try? container.decode(Date.self, forKey: .lastUpdated)) ?? .now
     }
 }

@@ -27,6 +27,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         }
         let chapters = newStory?.chapters
         newStory?.currentChapterIndex = (chapters?.count ?? 1) - 1
+        newStory?.lastUpdated = .now
         newState.storyState.currentStory = newStory
 
         newState.audioState.audioPlayer = AVPlayer()
