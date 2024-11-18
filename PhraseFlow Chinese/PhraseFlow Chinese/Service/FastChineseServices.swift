@@ -16,8 +16,8 @@ enum FastChineseServicesError: Error {
 }
 
 protocol FastChineseServicesProtocol {
-    func generateStory() async throws -> Story
-    func generateChapter(story: Story?) async throws -> ChapterResponse
+    func generateStory(settings: SettingsState) async throws -> Story
+    func generateChapter(story: Story?, settings: SettingsState) async throws -> ChapterResponse
     func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> String
 }
 
@@ -29,9 +29,9 @@ final class FastChineseServices: FastChineseServicesProtocol {
         apiKey: "AIzaSyBJz8qmCuAK5EO9AzQLl99ed6TlvHKRjCI"
       )
 
-    func generateStory() async throws -> Story {
+    func generateStory(settings: SettingsState) async throws -> Story {
         let storySetting: StorySetting = .allCases.randomElement() ?? .ancientChina
-        let chapterResponse = try await generateChapter(story: nil)
+        let chapterResponse = try await generateChapter(story: nil, settings: settings)
 
         let sentences = chapterResponse.sentences.map({ Sentence(mandarin: $0.mandarin.replacingOccurrences(of: " ", with: ""),
                                                                  englishTranslation: $0.englishTranslation,
@@ -44,9 +44,9 @@ final class FastChineseServices: FastChineseServicesProtocol {
                      chapters: [chapter])
     }
 
-    func generateChapter(story: Story?) async throws -> ChapterResponse {
+    func generateChapter(story: Story?, settings: SettingsState) async throws -> ChapterResponse {
 //        Use very very short sentences, and very very extremely simple language.
-        let response = try await generateStory(story: story)
+        let response = try await generateStory(story: story, settings: settings)
             .data(using: .utf8)
         guard let response else {
             throw FastChineseServicesError.failedToGetResponseData
@@ -101,14 +101,25 @@ final class FastChineseServices: FastChineseServicesProtocol {
             .replacingOccurrences(of: "```", with: "")
     }
 
-    private func generateStory(story: Story?) async throws -> String {
+    private func generateStory(story: Story?, settings: SettingsState) async throws -> String {
 
         var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
         request.httpMethod = "POST"
         request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let initialPrompt = "Write an incredible first chapter of a story set in a forest."
+        let setting = StorySetting.allCases.randomElement()
+        var initialPrompt = "Write an incredible first chapter of a story set in \(setting?.settingName ?? "a forest"). "
+        switch settings.difficulty {
+        case .beginner:
+            initialPrompt.append("Use very simple, elementary-level vocabulary.")
+        case .intermediate:
+            initialPrompt.append("Use simple vocabulary.")
+        case .advanced:
+            break
+        case .expert:
+            break
+        }
         var requestBody: [String: Any] = [
             "model": "gpt-4o-mini-2024-07-18",
         ]

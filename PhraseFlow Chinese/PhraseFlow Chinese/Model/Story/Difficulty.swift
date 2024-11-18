@@ -8,7 +8,7 @@
 import Foundation
 
 enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
-    case beginner, intermediate, advenced, expert
+    case beginner, intermediate, advanced, expert
 
     var maxIntValue: Int {
         10
@@ -24,7 +24,7 @@ enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
             1
         case .intermediate:
             5
-        case .advenced:
+        case .advanced:
             8
         case .expert:
             maxIntValue
