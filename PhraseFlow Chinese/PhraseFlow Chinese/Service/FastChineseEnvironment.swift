@@ -9,9 +9,10 @@ import Foundation
 
 protocol FastChineseEnvironmentProtocol {
     func synthesizeSpeech(for chapter: Chapter, voice: Voice, rate: String) async throws -> (wordTimestamps: [WordTimeStampData],
-                                                                               audioData: Data)
-    func generateStory(voice: Voice, difficulty: Difficulty) async throws -> Story
-    func generateChapter(story: Story, voice: Voice, difficulty: Difficulty) async throws -> ChapterResponse
+                                                                                             audioData: Data)
+    func getCreateStoryRequestData(story: Story?, voice: Voice, difficulty: Difficulty) -> CreateStoryRequestData
+    func generateStory(data: CreateStoryRequestData) async throws -> Story
+    func generateChapter(data: CreateStoryRequestData) async throws -> ChapterResponse
     func loadStories() throws -> [Story]
     func loadAppSettings() throws -> SettingsState
     func saveStory(_ story: Story) throws
@@ -34,16 +35,20 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
     }
 
     func synthesizeSpeech(for chapter: Chapter, voice: Voice, rate: String) async throws -> (wordTimestamps: [WordTimeStampData],
-                                                                               audioData: Data) {
+                                                                                             audioData: Data) {
         try await repository.synthesizeSpeech(chapter, voice: voice, rate: rate)
     }
 
-    func generateStory(voice: Voice, difficulty: Difficulty) async throws -> Story {
-        try await service.generateStory(voice: voice, difficulty: difficulty)
+    func getCreateStoryRequestData(story: Story?, voice: Voice, difficulty: Difficulty) -> CreateStoryRequestData {
+        repository.getCreateStoryRequestData(story: story, voice: voice, difficulty: difficulty)
     }
 
-    func generateChapter(story: Story, voice: Voice, difficulty: Difficulty) async throws -> ChapterResponse {
-        try await service.generateChapter(story: story, voice: voice, difficulty: difficulty)
+    func generateStory(data: CreateStoryRequestData) async throws -> Story {
+        try await service.generateStory(data: data)
+    }
+
+    func generateChapter(data: CreateStoryRequestData) async throws -> ChapterResponse {
+        try await service.generateChapter(data: data)
     }
 
     func saveStory(_ story: Story) throws {

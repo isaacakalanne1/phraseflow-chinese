@@ -16,8 +16,8 @@ enum FastChineseServicesError: Error {
 }
 
 protocol FastChineseServicesProtocol {
-    func generateStory(voice: Voice, difficulty: Difficulty) async throws -> Story
-    func generateChapter(story: Story, voice: Voice, difficulty: Difficulty) async throws -> ChapterResponse
+    func generateStory(data: CreateStoryRequestData) async throws -> Story
+    func generateChapter(data: CreateStoryRequestData) async throws -> ChapterResponse
     func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> String
 }
 
@@ -29,9 +29,9 @@ final class FastChineseServices: FastChineseServicesProtocol {
         apiKey: "AIzaSyBJz8qmCuAK5EO9AzQLl99ed6TlvHKRjCI"
       )
 
-    func generateStory(voice: Voice, difficulty: Difficulty) async throws -> Story {
+    func generateStory(data: CreateStoryRequestData) async throws -> Story {
         let storySetting: StorySetting = .allCases.randomElement() ?? .ancientChina
-        let chapterResponse = try await generateChapter(type: .first(setting: storySetting), voice: voice, difficulty: difficulty)
+        let chapterResponse = try await generateChapter(data: data)
 
         let sentences = chapterResponse.sentences.map({ Sentence(mandarin: $0.mandarin.replacingOccurrences(of: " ", with: ""),
                                                                  englishTranslation: $0.englishTranslation,
@@ -44,33 +44,9 @@ final class FastChineseServices: FastChineseServicesProtocol {
                      chapters: [chapter])
     }
 
-    func generateChapter(story: Story, voice: Voice, difficulty: Difficulty) async throws -> ChapterResponse {
-        try await generateChapter(type: .next(story: story), voice: voice, difficulty: difficulty)
-    }
-
-    private func generateChapter(type: ChapterType, voice: Voice, difficulty: Difficulty) async throws -> ChapterResponse {
-        let mainPrompt: String
-        switch type {
-        case .first(let setting):
-            mainPrompt = """
-        Write an engaging, compelling first chapter of a story in this setting:
-        \(setting.title)
-
-        Make sure to provide both the Mandarin and translated English in the JSON. The English is needed to allow the reader learning Chinese to understand the Mandarin sentence.
-        """
-
-        case .next(let story):
-            mainPrompt = """
-        This is the story so far:
-        \(story.chapters.reduce("") { $0 + "\n\n" + $1.passage })
-
-        Write an engaging, compelling next chapter of this story.
-
-        Make sure to provide both the Mandarin and translated English in the JSON.
-        """
-        }
+    func generateChapter(data: CreateStoryRequestData) async throws -> ChapterResponse {
 //        Use very very short sentences, and very very extremely simple language.
-        let response = try await makeOpenAIRequest(initialPrompt: getStoryGenerationGuide(voice: voice, difficulty: difficulty), mainPrompt: mainPrompt)
+        let response = try await makeOpenAIRequest(initialPrompt: data.initialPrompt, mainPrompt: data.mainPrompt)
             .data(using: .utf8)
         guard let response else {
             throw FastChineseServicesError.failedToGetResponseData
@@ -155,46 +131,5 @@ final class FastChineseServices: FastChineseServicesProtocol {
         }
         return responseString
 
-    }
-
-    private func getStoryGenerationGuide(voice: Voice, difficulty: Difficulty) -> String {
-        """
-        You are the an award-winning Mandarin Chinese novelist. Write a chapter from an engaging Mandarin novel. Use Mandarin Chinese names in the story.
-
-        Start each chapter with "Chapter 1", "Chapter 2", etc, in Mandarin Chinese.
-
-        Use the " character for speech marks.
-
-        In the JSON, provide both the Mandarin sentence and the translated English sentence.
-
-        In the JSON:
-        - latestStorySummary: This is a brief summary of the story so far in English. This summary is of the story which happens before the new part of the story you write.
-        - mandarin: The story sentence written in Mandarin Chinese.
-        - englishTranslation: The story sentence written in English.
-
-        - speechRole: This matches the speaker of the speaker of the sentence.
-        The speechRole should be either "male", "female", or "narrator".
-        Only use the above speechRoles, never create your own.
-
-        Write a Mandarin chinese story with controversial characters. That is, each character in the story will have some positive aspects, and some aspects which the reader is unsure whether they should side or not. Do not explicitly mention "ah, is this right? la di dah", simply have this be a core element of the story.
-        Everything emotional in the story should be insinuated. Lean heavily on "show, not tell" for how characters are feeling, and how events are unfolding.
-        Don't have the story be overly positive, and don't have characters randomly, tritely affirm "with x's help, they knew they could succeed!", "with x, they felt stronger from their support" etc, please stop doing this. You are an author, not a moralist lecturer. Write a compelling, engaging, turbulent story.
-        Only use Mandarin Chinese characters in the Mandarin section of the JSON. Never include English characters or words in the Mandarin section of the JSON.
-
-        Below are some extra details:
-
-        The story should be written at a specific difficulty level, from a scale of 1 to 10, which will be specified below.
-        1 is absolute beginner Mandarin Chinese, the most absolute basic words and vocabulary, very short sentences, very simple grammar and sentence structure.
-        10 is absolute professional Mandarin Chinese, with highly advanced grammar, vocabulary, and sentence structures.
-        Any numbers between are a linear transition between the above specified minimum and maximum.
-
-        Based on the above scale of 1 to \(difficulty.maxIntValue), write a story with the below difficulty level.
-        DIFFICULTY LEVEL: \(difficulty.intValue)
-
-        The Chapter length itself should still always be long, for all difficulty levels.
-
-        Make sure the English section of the JSON writes the English translation of the mandarin sentence. It must do this to allow the reader to learn Mandarin Chinese.
-        """
-        // Using the above guidelines, write a story in the style of George R R Martin.
     }
 }

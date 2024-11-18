@@ -19,6 +19,7 @@
 		BB1994D12CE9050000D61E54 /* AudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D02CE9050000D61E54 /* AudioState.swift */; };
 		BB1994D32CE9051700D61E54 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D22CE9051700D61E54 /* ViewState.swift */; };
 		BB1994D52CE9059E00D61E54 /* CreateStoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D42CE9059E00D61E54 /* CreateStoryState.swift */; };
+		BB1994D72CEB9E3700D61E54 /* CreateStoryRequestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D62CEB9E3700D61E54 /* CreateStoryRequestData.swift */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
 		BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FastChineseStore.swift */; };
 		BB4EDB052C90C89C00699E7D /* FastChineseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB042C90C89C00699E7D /* FastChineseState.swift */; };
@@ -104,6 +105,7 @@
 		BB1994D02CE9050000D61E54 /* AudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioState.swift; sourceTree = "<group>"; };
 		BB1994D22CE9051700D61E54 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		BB1994D42CE9059E00D61E54 /* CreateStoryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStoryState.swift; sourceTree = "<group>"; };
+		BB1994D62CEB9E3700D61E54 /* CreateStoryRequestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStoryRequestData.swift; sourceTree = "<group>"; };
 		BB4EDB022C90C86300699E7D /* FastChineseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseStore.swift; sourceTree = "<group>"; };
 		BB4EDB042C90C89C00699E7D /* FastChineseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseState.swift; sourceTree = "<group>"; };
 		BB4EDB062C90C8CA00699E7D /* FastChineseAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseAction.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				BB6572DC2CD6847500AC5981 /* Categorisable.swift */,
+				BB1994D62CEB9E3700D61E54 /* CreateStoryRequestData.swift */,
 				BBE16F1B2CC1317B00A7EF1F /* Genre.swift */,
 				BB6572D82CD529DE00AC5981 /* StorySetting.swift */,
 			);
@@ -616,6 +619,7 @@
 				BB4EDB0E2C90CA0300699E7D /* FastChineseMiddleware.swift in Sources */,
 				BB6572E72CD8D1E300AC5981 /* Gender.swift in Sources */,
 				BB4EDB102C90CA4900699E7D /* FastChineseSubscriber.swift in Sources */,
+				BB1994D72CEB9E3700D61E54 /* CreateStoryRequestData.swift in Sources */,
 				BBE636CD2CCC0F8500873E68 /* ReaderView.swift in Sources */,
 				BB1994D32CE9051700D61E54 /* ViewState.swift in Sources */,
 				BB1994D52CE9059E00D61E54 /* CreateStoryState.swift in Sources */,

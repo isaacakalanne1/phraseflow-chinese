@@ -14,8 +14,10 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
     switch action {
     case .generateNewStory:
         do {
-            let story = try await environment.generateStory(voice: state.settingsState.voice,
-                                                            difficulty: state.settingsState.difficulty)
+            let requestData = environment.getCreateStoryRequestData(story: nil,
+                                                                    voice: state.settingsState.voice,
+                                                                    difficulty: state.settingsState.difficulty)
+            let story = try await environment.generateStory(data: requestData)
             return .onGeneratedStory(story)
         } catch {
             return .failedToGenerateNewStory
@@ -24,9 +26,10 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         return .saveStory(story)
     case .generateChapter(let story):
         do {
-            let chapterResponse = try await environment.generateChapter(story: story,
-                                                                        voice: state.settingsState.voice,
-                                                                        difficulty: state.settingsState.difficulty)
+            let requestData = environment.getCreateStoryRequestData(story: story,
+                                                                    voice: state.settingsState.voice,
+                                                                    difficulty: state.settingsState.difficulty)
+            let chapterResponse = try await environment.generateChapter(data: requestData)
             return .onGeneratedChapter(chapterResponse)
         } catch {
             return .failedToGenerateChapter
