@@ -53,7 +53,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         switch type {
         case .first(let setting):
             mainPrompt = """
-        Write a story in this setting:
+        Write an engaging, compelling first chapter of a story in this setting:
         \(setting.title)
 
         Make sure to provide both the Mandarin and translated English in the JSON. The English is needed to allow the reader learning Chinese to understand the Mandarin sentence.
@@ -64,7 +64,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         This is the story so far:
         \(story.chapters.reduce("") { $0 + "\n\n" + $1.passage })
 
-        Continue the story.
+        Write an engaging, compelling next chapter of this story.
 
         Make sure to provide both the Mandarin and translated English in the JSON.
         """
