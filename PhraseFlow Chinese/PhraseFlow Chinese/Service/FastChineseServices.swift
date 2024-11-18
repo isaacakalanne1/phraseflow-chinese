@@ -16,8 +16,8 @@ enum FastChineseServicesError: Error {
 }
 
 protocol FastChineseServicesProtocol {
-    func generateStory(data: CreateStoryRequestData) async throws -> Story
-    func generateChapter(data: CreateStoryRequestData) async throws -> ChapterResponse
+    func generateStory() async throws -> Story
+    func generateChapter(story: Story?) async throws -> ChapterResponse
     func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> String
 }
 
@@ -29,9 +29,9 @@ final class FastChineseServices: FastChineseServicesProtocol {
         apiKey: "AIzaSyBJz8qmCuAK5EO9AzQLl99ed6TlvHKRjCI"
       )
 
-    func generateStory(data: CreateStoryRequestData) async throws -> Story {
+    func generateStory() async throws -> Story {
         let storySetting: StorySetting = .allCases.randomElement() ?? .ancientChina
-        let chapterResponse = try await generateChapter(data: data)
+        let chapterResponse = try await generateChapter(story: nil)
 
         let sentences = chapterResponse.sentences.map({ Sentence(mandarin: $0.mandarin.replacingOccurrences(of: " ", with: ""),
                                                                  englishTranslation: $0.englishTranslation,
@@ -44,9 +44,9 @@ final class FastChineseServices: FastChineseServicesProtocol {
                      chapters: [chapter])
     }
 
-    func generateChapter(data: CreateStoryRequestData) async throws -> ChapterResponse {
+    func generateChapter(story: Story?) async throws -> ChapterResponse {
 //        Use very very short sentences, and very very extremely simple language.
-        let response = try await makeOpenAIRequest(initialPrompt: data.initialPrompt, mainPrompt: data.mainPrompt)
+        let response = try await generateStory(story: story)
             .data(using: .utf8)
         guard let response else {
             throw FastChineseServicesError.failedToGetResponseData
@@ -75,7 +75,17 @@ final class FastChineseServices: FastChineseServicesProtocol {
         Also explain the word in the context of the sentence: "\(sentence.mandarin)".
         Don't define other words in the sentence.
 """
-        let response = try await makeOpenAIRequest(initialPrompt: initialPrompt, mainPrompt: mainPrompt, shouldUseSchema: false)
+        var messages: [[String: String]] = [
+            ["role": "user", "content": initialPrompt],
+            ["role": "user", "content": mainPrompt]
+        ]
+
+        var requestBody: [String: Any] = [
+            "model": "gpt-4o-mini-2024-07-18",
+            "messages": messages
+        ]
+
+        let response = try await makeOpenAIRequest(requestBody: requestBody)
         return response
     }
 
@@ -91,29 +101,37 @@ final class FastChineseServices: FastChineseServicesProtocol {
             .replacingOccurrences(of: "```", with: "")
     }
 
-    private func makeOpenAIRequest(initialPrompt: String, mainPrompt: String, shouldUseSchema: Bool = true) async throws -> String {
+    private func generateStory(story: Story?) async throws -> String {
 
         var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
         request.httpMethod = "POST"
         request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
+        let initialPrompt = "Write an incredible first chapter of a story set in a forest."
         var requestBody: [String: Any] = [
             "model": "gpt-4o-mini-2024-07-18",
-            "messages": [
-                ["role": "system", "content": initialPrompt],
-                ["role": "user", "content": mainPrompt]
-            ],
         ]
-        if shouldUseSchema {
-            requestBody["response_format"] = sentenceSchema
+
+        var messages: [[String: String]] = [["role": "user", "content": initialPrompt]]
+        if let chapters = story?.chapters {
+            for chapter in chapters {
+                messages.append(["role": "system", "content": chapter.passage])
+                messages.append(["role": "user", "content": "Continue the story"])
+            }
         }
-        let requestData = DefineCharacterRequest(messages: [
-            .init(role: "system",
-                  content: initialPrompt),
-            .init(role: "user",
-                  content: mainPrompt)
-        ])
+        requestBody["messages"] = messages
+        requestBody["response_format"] = sentenceSchema
+
+        return try await makeOpenAIRequest(requestBody: requestBody)
+    }
+
+    private func makeOpenAIRequest(requestBody: [String: Any]) async throws -> String {
+
+        var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
+        request.httpMethod = "POST"
+        request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
         guard let jsonData = try? JSONSerialization.data(withJSONObject: requestBody) else {
             throw FastChineseServicesError.failedToEncodeJson

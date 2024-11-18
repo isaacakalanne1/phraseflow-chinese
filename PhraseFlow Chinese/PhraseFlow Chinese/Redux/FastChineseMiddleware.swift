@@ -14,10 +14,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
     switch action {
     case .generateNewStory:
         do {
-            let requestData = environment.getCreateStoryRequestData(story: nil,
-                                                                    voice: state.settingsState.voice,
-                                                                    difficulty: state.settingsState.difficulty)
-            let story = try await environment.generateStory(data: requestData)
+            let story = try await environment.generateStory()
             return .onGeneratedStory(story)
         } catch {
             return .failedToGenerateNewStory
@@ -26,10 +23,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         return .saveStory(story)
     case .generateChapter(let story):
         do {
-            let requestData = environment.getCreateStoryRequestData(story: story,
-                                                                    voice: state.settingsState.voice,
-                                                                    difficulty: state.settingsState.difficulty)
-            let chapterResponse = try await environment.generateChapter(data: requestData)
+            let chapterResponse = try await environment.generateChapter(story: story)
             return .onGeneratedChapter(chapterResponse)
         } catch {
             return .failedToGenerateChapter
@@ -134,7 +128,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         let time = state.audioState.audioPlayer.currentTime().seconds
         if let lastWordTime = state.storyState.currentChapter?.timestampData.last?.time,
            time > lastWordTime {
-            return .stopAudio
+            return .pauseAudio
         } else {
             return nil
         }

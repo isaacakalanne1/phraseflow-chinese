@@ -8,7 +8,6 @@
 import Foundation
 
 struct CreateStoryRequestData {
-    let initialPrompt: String
     let mainPrompt: String
     let story: Story?
 }
