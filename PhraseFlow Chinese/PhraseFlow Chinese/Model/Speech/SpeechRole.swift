@@ -19,7 +19,7 @@ enum SpeechRole: String, Codable, CaseIterable {
         default:
             self = ._default
         }
-        self = .girl
+        self = ._default
     }
 
     var ssmlName: String {
