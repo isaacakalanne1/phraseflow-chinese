@@ -15,21 +15,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     switch action {
     case .onLoadedAppSettings(let settings):
         newState.settingsState = settings
-    case .onGeneratedChapter(let chapterResponse):
-        var newStory = newState.storyState.currentStory
-        newStory?.latestStorySummary = chapterResponse.latestStorySummary
-
-        let chapter = Chapter(storyTitle: "Story title here", sentences: chapterResponse.sentences)
-        if newStory?.chapters.isEmpty == true {
-            newStory?.chapters = [chapter]
-        } else {
-            newStory?.chapters.append(chapter)
-        }
-        let chapters = newStory?.chapters
-        newStory?.currentChapterIndex = (chapters?.count ?? 1) - 1
-        newStory?.lastUpdated = .now
-        newState.storyState.currentStory = newStory
-
+    case .onGeneratedChapter(let story):
+        newState.storyState.currentStory = story
         newState.audioState.audioPlayer = AVPlayer()
         newState.viewState.readerDisplayType = .normal
         newState.storyState.sentenceIndex = 0

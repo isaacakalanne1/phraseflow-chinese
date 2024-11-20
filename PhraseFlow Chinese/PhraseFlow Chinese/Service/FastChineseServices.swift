@@ -16,8 +16,7 @@ enum FastChineseServicesError: Error {
 }
 
 protocol FastChineseServicesProtocol {
-    func generateStory(settings: SettingsState) async throws -> Story
-    func generateChapter(story: Story?, settings: SettingsState) async throws -> ChapterResponse
+    func generateStory(story: Story?, settings: SettingsState) async throws -> Story
     func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> String
 }
 
@@ -29,31 +28,38 @@ final class FastChineseServices: FastChineseServicesProtocol {
         apiKey: "AIzaSyBJz8qmCuAK5EO9AzQLl99ed6TlvHKRjCI"
       )
 
-    func generateStory(settings: SettingsState) async throws -> Story {
-        let storySetting: StorySetting = .allCases.randomElement() ?? .ancientChina
-        let chapterResponse = try await generateChapter(story: nil, settings: settings)
-
-        let sentences = chapterResponse.sentences.map({ Sentence(mandarin: $0.mandarin.replacingOccurrences(of: " ", with: ""),
-                                                                 englishTranslation: $0.englishTranslation,
-                                                                 speechRole: $0.speechRole) })
-        let chapter = Chapter(storyTitle: "Story title here", sentences: sentences)
-
-        return Story(latestStorySummary: chapterResponse.latestStorySummary,
-                     difficulty: .beginner,
-                     title: "Story title here",
-                     chapters: [chapter])
-    }
-
-    func generateChapter(story: Story?, settings: SettingsState) async throws -> ChapterResponse {
+    func generateStory(story: Story?, settings: SettingsState) async throws -> Story {
 //        Use very very short sentences, and very very extremely simple language.
-        let response = try await generateStory(story: story, settings: settings)
-            .data(using: .utf8)
-        guard let response else {
+        let (response, setting) = try await continueStory(story: story, settings: settings)
+        let responseString = response.data(using: .utf8)
+        guard let responseString else {
             throw FastChineseServicesError.failedToGetResponseData
         }
 
         do {
-            return try JSONDecoder().decode(ChapterResponse.self, from: response)
+            let (chapterResponse, storySetting) = (try JSONDecoder().decode(ChapterResponse.self, from: responseString), setting)
+            let sentences = chapterResponse.sentences.map({ Sentence(mandarin: $0.mandarin.replacingOccurrences(of: " ", with: ""),
+                                                                     englishTranslation: $0.englishTranslation,
+                                                                     speechRole: $0.speechRole) })
+            let chapter = Chapter(storyTitle: "Story title here", sentences: sentences)
+
+            if var story {
+                if story.chapters.isEmpty {
+                    story.chapters = [chapter]
+                } else {
+                    story.chapters.append(chapter)
+                }
+                story.latestStorySummary = chapterResponse.latestStorySummary
+                story.currentChapterIndex = story.chapters.count - 1
+                story.lastUpdated = .now
+                return story
+            } else {
+                return Story(latestStorySummary: chapterResponse.latestStorySummary,
+                             difficulty: .beginner,
+                             title: "Story title here",
+                             chapters: [chapter],
+                             setting: storySetting)
+            }
         } catch {
             throw FastChineseServicesError.failedToDecodeSentences
         }
@@ -101,15 +107,15 @@ final class FastChineseServices: FastChineseServicesProtocol {
             .replacingOccurrences(of: "```", with: "")
     }
 
-    private func generateStory(story: Story?, settings: SettingsState) async throws -> String {
+    private func continueStory(story: Story?, settings: SettingsState) async throws -> (String, StorySetting) {
 
         var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
         request.httpMethod = "POST"
         request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let setting = StorySetting.allCases.randomElement()
-        var initialPrompt = "Write an incredible first chapter of a story set in \(setting?.settingName ?? "a forest"). "
+        let setting = (story?.setting ?? StorySetting.allCases.randomElement()) ?? StorySetting.medieval
+        var initialPrompt = "Write an incredible first chapter of a story set in \(setting.settingName). "
         switch settings.difficulty {
         case .beginner:
             initialPrompt.append("Use very simple, elementary-level vocabulary.")
@@ -144,7 +150,7 @@ The chapter should also be long, around 20 sentences, to really allow plot to ha
         requestBody["messages"] = messages
         requestBody["response_format"] = sentenceSchema
 
-        return try await makeOpenAIRequest(requestBody: requestBody)
+        return (try await makeOpenAIRequest(requestBody: requestBody), setting)
     }
 
     private func makeOpenAIRequest(requestBody: [String: Any]) async throws -> String {

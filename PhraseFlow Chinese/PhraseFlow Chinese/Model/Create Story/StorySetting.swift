@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum StorySetting: String, CaseIterable, Categorisable {
+enum StorySetting: String, CaseIterable, Categorisable, Codable {
     case ancientChina, modernCity, futuristic, cyberpunk, medieval
 
     var title: String {
