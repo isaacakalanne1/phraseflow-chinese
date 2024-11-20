@@ -120,6 +120,14 @@ final class FastChineseServices: FastChineseServicesProtocol {
         case .expert:
             break
         }
+
+        let qualityPrompt = """
+
+The chapter should be incredible, and make the reader absolutely curious to read what happens in the next chapter.
+The chapter should have a really engaging plot with complex, three-dimensional characters.
+The chapter should also be long, around 20 sentences, to really allow plot to happen in each chapter.
+"""
+        initialPrompt.append(qualityPrompt)
         var requestBody: [String: Any] = [
             "model": "gpt-4o-mini-2024-07-18",
         ]
@@ -127,8 +135,10 @@ final class FastChineseServices: FastChineseServicesProtocol {
         var messages: [[String: String]] = [["role": "user", "content": initialPrompt]]
         if let chapters = story?.chapters {
             for chapter in chapters {
+                var continueStoryPrompt = "Continue the story."
+                continueStoryPrompt.append(qualityPrompt)
                 messages.append(["role": "system", "content": chapter.passage])
-                messages.append(["role": "user", "content": "Continue the story"])
+                messages.append(["role": "user", "content": continueStoryPrompt])
             }
         }
         requestBody["messages"] = messages
