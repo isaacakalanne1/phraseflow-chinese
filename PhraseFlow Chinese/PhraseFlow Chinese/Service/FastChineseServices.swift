@@ -114,7 +114,9 @@ final class FastChineseServices: FastChineseServicesProtocol {
         request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let setting = (story?.setting ?? StorySetting.allCases.randomElement()) ?? StorySetting.medieval
+        var allSettings = StorySetting.allCases
+        allSettings.removeAll(where: { $0 == story?.setting })
+        let setting = (allSettings.randomElement()) ?? StorySetting.medieval
         var initialPrompt = "Write an incredible first chapter of a story set in \(setting.settingName). "
         switch settings.difficulty {
         case .beginner:

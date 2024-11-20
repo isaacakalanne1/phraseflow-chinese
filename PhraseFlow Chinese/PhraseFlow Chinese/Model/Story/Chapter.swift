@@ -10,7 +10,11 @@ import AVKit
 
 struct Chapter: Codable, Equatable, Hashable {
     var passage: String {
-        sentences.reduce("") { $0 + $1.mandarin }
+        let newLine = """
+
+
+"""
+        return sentences.reduce("") { $0 + newLine + $1.mandarin }
     }
     var storyTitle: String
     var sentences: [Sentence]
