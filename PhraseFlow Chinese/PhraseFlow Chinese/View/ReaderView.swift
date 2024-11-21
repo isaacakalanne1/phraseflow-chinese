@@ -46,7 +46,7 @@ struct ReaderView: View {
         var totalCharacterIndex = 0
 
         for (sentenceIndex, sentence) in chapter.sentences.enumerated() {
-            let mandarinCharacters = Array(sentence.mandarinTranslation)
+            let mandarinCharacters = Array(sentence.translation)
             let sentenceLength = mandarinCharacters.count
 
             if totalCharacterIndex + sentenceLength > textOffset {

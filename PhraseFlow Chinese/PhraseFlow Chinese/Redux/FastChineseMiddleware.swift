@@ -92,7 +92,10 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             guard let sentence = state.storyState.currentSentence else {
                 return nil
             }
-            let definition = try await environment.fetchDefinition(of: timeStampData.word, withinContextOf: sentence, shouldForce: shouldForce)
+            let definition = try await environment.fetchDefinition(of: timeStampData.word,
+                                                                   withinContextOf: sentence,
+                                                                   shouldForce: shouldForce,
+                                                                   settings: state.settingsState)
             return .onDefinedCharacter(definition)
         } catch {
             return .failedToDefineCharacter
@@ -170,7 +173,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .failedToLoadAppSettings,
             .refreshTranslationView,
             .onLoadedStories,
-            .updateDifficulty:
+            .updateDifficulty,
+            .updateLanguage:
         return nil
     }
 }

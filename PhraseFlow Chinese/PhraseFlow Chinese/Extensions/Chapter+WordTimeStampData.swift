@@ -13,7 +13,7 @@ extension Chapter {
         var totalCharacterIndex = 0
 
         for (index, sentence) in self.sentences.enumerated() {
-            let sentenceLength = sentence.mandarinTranslation.count
+            let sentenceLength = sentence.translation.count
 
             if index < sentenceIndex {
                 // Sum up the lengths of previous sentences

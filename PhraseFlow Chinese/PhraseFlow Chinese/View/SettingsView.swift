@@ -50,6 +50,7 @@ struct SettingsView: View {
                 voicesView
                 speedView
                 difficultyView
+                languageView
             }
             .padding(.horizontal)
         }
@@ -63,7 +64,7 @@ struct SettingsView: View {
             .greyBackground()
         ScrollView(.horizontal) {
             HStack {
-                ForEach(Voice.allCases, id: \.self) { voice in
+                ForEach(Voice.allCases.filter({ $0.language == store.state.settingsState.language }), id: \.self) { voice in
                     Button(action: {
                         withAnimation(.easeInOut) {
                             store.dispatch(.selectVoice(voice))
@@ -130,6 +131,33 @@ struct SettingsView: View {
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(store.state.settingsState.difficulty == difficulty ? Color.accentColor : Color.gray.opacity(0.3))
+                            .cornerRadius(10)
+                    }
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    var languageView:  some View {
+        Text("Language")
+            .fontWeight(.light)
+            .greyBackground()
+
+        ScrollView(.horizontal) {
+            HStack {
+                ForEach(Language.allCases, id: \.self) { language in
+                    Button(action: {
+                        withAnimation(.easeInOut) {
+                            store.dispatch(.updateLanguage(language))
+                        }
+                    }) {
+                        Text(language.name)
+                            .font(.body)
+                            .foregroundColor(store.state.settingsState.language == language ? .white : .primary)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(store.state.settingsState.language == language ? Color.accentColor : Color.gray.opacity(0.3))
                             .cornerRadius(10)
                     }
                 }

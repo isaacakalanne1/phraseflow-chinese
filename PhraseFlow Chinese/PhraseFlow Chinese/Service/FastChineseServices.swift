@@ -17,7 +17,7 @@ enum FastChineseServicesError: Error {
 
 protocol FastChineseServicesProtocol {
     func generateStory(story: Story?, settings: SettingsState) async throws -> Story
-    func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> String
+    func fetchDefinition(of character: String, withinContextOf sentence: Sentence, settings: SettingsState) async throws -> String
 }
 
 final class FastChineseServices: FastChineseServicesProtocol {
@@ -33,12 +33,21 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
         do {
             let (response, setting) = try await continueStory(story: story, settings: settings)
-            let jsonString = try await convertToJson(mandarin: response)
+            let jsonString = try await convertToJson(mandarin: response, settings: settings)
             guard let jsonData = jsonString.data(using: .utf8) else {
                 throw FastChineseServicesError.failedToGetResponseData
             }
-            let chapterResponse = try JSONDecoder().decode(ChapterResponse.self, from: jsonData)
-            let sentences = chapterResponse.sentences.map({ Sentence(mandarinTranslation: $0.mandarinTranslation.replacingOccurrences(of: " ", with: ""),
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .custom({ (keys) -> CodingKey in
+                let lastKey = keys.last!
+                guard lastKey.intValue == nil else { return lastKey }
+                if lastKey.stringValue == settings.language.schemaKey {
+                    return AnyKey(stringValue: "translation")!
+                }
+                return AnyKey(stringValue: lastKey.stringValue)!
+            })
+            let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
+            let sentences = chapterResponse.sentences.map({ Sentence(translation: $0.translation.replacingOccurrences(of: " ", with: ""),
                                                                      english: $0.english) })
             let chapter = Chapter(storyTitle: "Story title here", sentences: sentences)
 
@@ -64,7 +73,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         }
     }
 
-    func fetchDefinition(of character: String, withinContextOf sentence: Sentence) async throws -> String {
+    func fetchDefinition(of character: String, withinContextOf sentence: Sentence, settings: SettingsState) async throws -> String {
         let initialPrompt =
 """
         You are an AI assistant that provides English definitions for characters in Chinese sentences. Your explanations are brief, and simple to understand.
@@ -77,7 +86,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
 """
         Provide a definition for this word: "\(character)"
         If the word is made of different characters, also provide brief definitions for each of the characters in the word.
-        Also explain the word in the context of the sentence: "\(sentence.mandarinTranslation)".
+        Also explain the word in the context of the sentence: "\(sentence.translation)".
         Don't define other words in the sentence.
 """
         let messages: [[String: String]] = [
@@ -90,7 +99,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
             "messages": messages
         ]
 
-        return try await makeOpenAIRequest(requestBody: requestBody)
+        return try await makeOpenAIRequest(requestBody: requestBody, settings: settings)
     }
 
     private func makeGeminiRequest(initialPrompt: String, mainPrompt: String) async throws -> String {
@@ -148,10 +157,10 @@ The chapter should also be long, around 30 sentences, to really allow plot to ha
         return (try await makeOpenrouterRequest(requestBody: requestBody), setting)
     }
 
-    private func convertToJson(mandarin: String) async throws -> String {
+    private func convertToJson(mandarin: String, settings: SettingsState) async throws -> String {
 
         let jsonPrompt = """
-Format the following story into JSON. Translate each English sentence into Mandarin Chinese.
+Format the following story into JSON. Translate each English sentence into \(settings.language.name).
 """
         var requestBody: [String: Any] = [
             "model": "gpt-4o-mini-2024-07-18",
@@ -162,9 +171,9 @@ Format the following story into JSON. Translate each English sentence into Manda
             ["role": "user", "content": mandarin]
         ]
         requestBody["messages"] = messages
-        requestBody["response_format"] = sentenceSchema
+        requestBody["response_format"] = sentenceSchema(languageKey: settings.language.schemaKey)
 
-        return try await makeOpenAIRequest(requestBody: requestBody)
+        return try await makeOpenAIRequest(requestBody: requestBody, settings: settings)
     }
 
     private func makeOpenrouterRequest(requestBody: [String: Any]) async throws -> String {
@@ -192,7 +201,7 @@ Format the following story into JSON. Translate each English sentence into Manda
 
     }
 
-    private func makeOpenAIRequest(requestBody: [String: Any]) async throws -> String {
+    private func makeOpenAIRequest(requestBody: [String: Any], settings: SettingsState) async throws -> String {
 
         var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
         request.httpMethod = "POST"
@@ -215,5 +224,19 @@ Format the following story into JSON. Translate each English sentence into Manda
         }
         return responseString
 
+    }
+}
+
+struct AnyKey: CodingKey {
+    var stringValue: String
+    var intValue: Int?
+
+    init?(stringValue: String) {
+        self.stringValue = stringValue
+    }
+
+    init?(intValue: Int) {
+        self.stringValue = String(intValue)
+        self.intValue = intValue
     }
 }
