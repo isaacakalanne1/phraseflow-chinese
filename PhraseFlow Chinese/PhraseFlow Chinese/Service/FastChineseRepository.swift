@@ -51,11 +51,12 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                 let audioTimeInSeconds = Double(event.audioOffset) / 10_000_000.0
 
                 // Extract the word from the text using textOffset and wordLength
-                let word = event.text
+                var word = event.text
                     .replacingOccurrences(of: "\n", with: "")
 
                 if settings.language == .mandarinChinese {
                     word = word.replacingOccurrences(of: " ", with: "")
+                }
                 let wordLength = word.count
 
                 // Append the word, its timestamp, and offsets to the array
