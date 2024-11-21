@@ -39,8 +39,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         do {
             let (chapterResponse, storySetting) = (try JSONDecoder().decode(ChapterResponse.self, from: responseString), setting)
             let sentences = chapterResponse.sentences.map({ Sentence(mandarin: $0.mandarin.replacingOccurrences(of: " ", with: ""),
-                                                                     englishTranslation: $0.englishTranslation,
-                                                                     speechRole: $0.speechRole) })
+                                                                     englishTranslation: $0.englishTranslation) })
             let chapter = Chapter(storyTitle: "Story title here", sentences: sentences)
 
             if var story {
@@ -81,18 +80,17 @@ final class FastChineseServices: FastChineseServicesProtocol {
         Also explain the word in the context of the sentence: "\(sentence.mandarin)".
         Don't define other words in the sentence.
 """
-        var messages: [[String: String]] = [
-            ["role": "user", "content": initialPrompt],
+        let messages: [[String: String]] = [
+            ["role": "system", "content": initialPrompt],
             ["role": "user", "content": mainPrompt]
         ]
 
-        var requestBody: [String: Any] = [
+        let requestBody: [String: Any] = [
             "model": "gpt-4o-mini-2024-07-18",
             "messages": messages
         ]
 
-        let response = try await makeOpenAIRequest(requestBody: requestBody)
-        return response
+        return try await makeOpenAIRequest(requestBody: requestBody)
     }
 
     private func makeGeminiRequest(initialPrompt: String, mainPrompt: String) async throws -> String {
@@ -114,10 +112,10 @@ final class FastChineseServices: FastChineseServicesProtocol {
         request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        var allSettings = StorySetting.allCases
-        allSettings.removeAll(where: { $0 == story?.setting })
-        let setting = (allSettings.randomElement()) ?? StorySetting.medieval
-        var initialPrompt = "Write an incredible first chapter of a story set in \(setting.settingName). "
+//        var allSettings = StorySetting.allCases
+//        allSettings.removeAll(where: { $0 == story?.setting })
+        let setting = (story?.setting ?? StorySetting.allCases.randomElement()) ?? StorySetting.medieval
+        var initialPrompt = "Write an incredible first chapter of a Mandarin Chinese novel set in \(setting.settingName). "
         switch settings.difficulty {
         case .beginner:
             initialPrompt.append("Use very simple, elementary-level vocabulary.")
@@ -131,9 +129,8 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
         let qualityPrompt = """
 
-The chapter should be incredible, and make the reader absolutely curious to read what happens in the next chapter.
-The chapter should have a really engaging plot with complex, three-dimensional characters.
-The chapter should also be long, around 20 sentences, to really allow plot to happen in each chapter.
+The chapter should have complex, three-dimensional, flawed characters.
+The chapter should also be long, around 30 sentences, to really allow plot to happen in each chapter.
 """
         initialPrompt.append(qualityPrompt)
         var requestBody: [String: Any] = [
@@ -143,7 +140,7 @@ The chapter should also be long, around 20 sentences, to really allow plot to ha
         var messages: [[String: String]] = [["role": "user", "content": initialPrompt]]
         if let chapters = story?.chapters {
             for chapter in chapters {
-                var continueStoryPrompt = "Continue the story."
+                var continueStoryPrompt = "Write a heartbreaking next chapter of the Mandarin Chinese novel."
                 continueStoryPrompt.append(qualityPrompt)
                 messages.append(["role": "system", "content": chapter.passage])
                 messages.append(["role": "user", "content": continueStoryPrompt])

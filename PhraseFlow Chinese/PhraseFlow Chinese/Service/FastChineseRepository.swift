@@ -84,7 +84,8 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                 for sentenceSection in splitSentence {
                     // TODO: Update styleDegree to also be generated with each sentence
                     let isSpeech = speechCharacters.firstIndex(where: { sentenceSection.contains($0)} ) != nil
-                    let speechRole = isSpeech ? sentence.speechRole : voice.defaultSpeechRole
+//                    let speechRole = isSpeech ? sentence.speechRole : voice.defaultSpeechRole
+                    let speechRole = voice.defaultSpeechRole
                     let speechStyle = isSpeech ? SpeechStyle.gentle : voice.defaultSpeechStyle
 
                     let sentenceSsml = """

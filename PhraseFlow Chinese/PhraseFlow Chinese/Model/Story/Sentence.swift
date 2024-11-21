@@ -10,14 +10,11 @@ import Foundation
 struct Sentence: Codable, Equatable, Hashable {
     let mandarin: String
     let englishTranslation: String
-    let speechRole: SpeechRole
 
     init(mandarin: String,
-         englishTranslation: String,
-         speechRole: SpeechRole) {
+         englishTranslation: String) {
         self.mandarin = mandarin
         self.englishTranslation = englishTranslation
-        self.speechRole = speechRole
     }
 
     // Custom decoder to assign default values
@@ -25,7 +22,6 @@ struct Sentence: Codable, Equatable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.mandarin = try container.decode(String.self, forKey: .mandarin)
         self.englishTranslation = try container.decode(String.self, forKey: .englishTranslation)
-        self.speechRole = try container.decode(SpeechRole.self, forKey: .speechRole)
     }
 }
 
@@ -44,10 +40,9 @@ let sentenceSchema: [String: Any] = [
                         "type": "object",
                         "properties": [
                             "mandarin": ["type": "string"],
-                            "englishTranslation": ["type": "string"],
-                            "speechRole": ["type": "string"]
+                            "englishTranslation": ["type": "string"]
                         ],
-                        "required": ["mandarin", "englishTranslation", "speechRole"],
+                        "required": ["mandarin", "englishTranslation"],
                         "additionalProperties": false
                     ]
                 ]
