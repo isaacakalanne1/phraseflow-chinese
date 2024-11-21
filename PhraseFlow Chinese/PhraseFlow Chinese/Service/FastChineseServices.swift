@@ -30,14 +30,14 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
     func generateStory(story: Story?, settings: SettingsState) async throws -> Story {
 //        Use very very short sentences, and very very extremely simple language.
-        let (response, setting) = try await continueStory(story: story, settings: settings)
-        let responseString = response.data(using: .utf8)
-        guard let responseString else {
-            throw FastChineseServicesError.failedToGetResponseData
-        }
 
         do {
-            let (chapterResponse, storySetting) = (try JSONDecoder().decode(ChapterResponse.self, from: responseString), setting)
+            let (response, setting) = try await continueStory(story: story, settings: settings)
+            let jsonString = try await convertToJson(mandarin: response)
+            guard let jsonData = jsonString.data(using: .utf8) else {
+                throw FastChineseServicesError.failedToGetResponseData
+            }
+            let chapterResponse = try JSONDecoder().decode(ChapterResponse.self, from: jsonData)
             let sentences = chapterResponse.sentences.map({ Sentence(mandarin: $0.mandarin.replacingOccurrences(of: " ", with: ""),
                                                                      englishTranslation: $0.englishTranslation) })
             let chapter = Chapter(storyTitle: "Story title here", sentences: sentences)
@@ -57,7 +57,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
                              difficulty: .beginner,
                              title: "Story title here",
                              chapters: [chapter],
-                             setting: storySetting)
+                             setting: setting)
             }
         } catch {
             throw FastChineseServicesError.failedToDecodeSentences
@@ -107,20 +107,17 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
     private func continueStory(story: Story?, settings: SettingsState) async throws -> (String, StorySetting) {
 
-        var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
-        request.httpMethod = "POST"
-        request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
 //        var allSettings = StorySetting.allCases
 //        allSettings.removeAll(where: { $0 == story?.setting })
         let setting = (story?.setting ?? StorySetting.allCases.randomElement()) ?? StorySetting.medieval
-        var initialPrompt = "Write an incredible first chapter of a Mandarin Chinese novel set in \(setting.settingName). "
+        var initialPrompt = "Write an incredible first chapter of a novel set in \(setting.settingName). Use Chinese names for characters and places."
         switch settings.difficulty {
         case .beginner:
-            initialPrompt.append("Use very simple, elementary-level vocabulary.")
+            break
+//            initialPrompt.append(" Use very simple, elementary-level vocabulary.")
         case .intermediate:
-            initialPrompt.append("Use simple vocabulary.")
+            break
+//            initialPrompt.append(" Use simple vocabulary.")
         case .advanced:
             break
         case .expert:
@@ -134,22 +131,65 @@ The chapter should also be long, around 30 sentences, to really allow plot to ha
 """
         initialPrompt.append(qualityPrompt)
         var requestBody: [String: Any] = [
-            "model": "gpt-4o-mini-2024-07-18",
+            "model": "meta-llama/llama-3.2-90b-vision-instruct",
         ]
 
         var messages: [[String: String]] = [["role": "user", "content": initialPrompt]]
         if let chapters = story?.chapters {
+            var continueStoryPrompt = "Write an incredible next chapter of the novel. Use Chinese names for characters and places."
+            continueStoryPrompt.append(qualityPrompt)
             for chapter in chapters {
-                var continueStoryPrompt = "Write a heartbreaking next chapter of the Mandarin Chinese novel."
-                continueStoryPrompt.append(qualityPrompt)
                 messages.append(["role": "system", "content": chapter.passage])
                 messages.append(["role": "user", "content": continueStoryPrompt])
             }
         }
         requestBody["messages"] = messages
+
+        return (try await makeOpenrouterRequest(requestBody: requestBody), setting)
+    }
+
+    private func convertToJson(mandarin: String) async throws -> String {
+
+        let jsonPrompt = """
+Format the following Mandarin into JSON.
+"""
+        var requestBody: [String: Any] = [
+            "model": "gpt-4o-mini-2024-07-18",
+        ]
+
+        let messages: [[String: String]] = [
+            ["role": "system", "content": jsonPrompt],
+            ["role": "user", "content": mandarin]
+        ]
+        requestBody["messages"] = messages
         requestBody["response_format"] = sentenceSchema
 
-        return (try await makeOpenAIRequest(requestBody: requestBody), setting)
+        return try await makeOpenAIRequest(requestBody: requestBody)
+    }
+
+    private func makeOpenrouterRequest(requestBody: [String: Any]) async throws -> String {
+
+        var request = URLRequest(url: URL(string: "https://openrouter.ai/api/v1/chat/completions")!)
+        request.httpMethod = "POST"
+        request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: requestBody) else {
+            throw FastChineseServicesError.failedToEncodeJson
+        }
+
+        let sessionConfig = URLSessionConfiguration.default
+        sessionConfig.timeoutIntervalForRequest = 1200
+        sessionConfig.timeoutIntervalForResource = 1200
+        let session = URLSession(configuration: sessionConfig)
+
+        let (data, _) = try await session.upload(for: request, from: jsonData)
+        guard let response = try? JSONDecoder().decode(GPTResponse.self, from: data),
+              let responseString = response.choices.first?.message.content else {
+            throw FastChineseServicesError.failedToDecodeJson
+        }
+        return responseString
+
     }
 
     private func makeOpenAIRequest(requestBody: [String: Any]) async throws -> String {
