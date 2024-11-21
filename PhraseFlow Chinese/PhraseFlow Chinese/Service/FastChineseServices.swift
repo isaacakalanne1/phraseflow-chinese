@@ -38,8 +38,8 @@ final class FastChineseServices: FastChineseServicesProtocol {
                 throw FastChineseServicesError.failedToGetResponseData
             }
             let chapterResponse = try JSONDecoder().decode(ChapterResponse.self, from: jsonData)
-            let sentences = chapterResponse.sentences.map({ Sentence(mandarin: $0.mandarin.replacingOccurrences(of: " ", with: ""),
-                                                                     englishTranslation: $0.englishTranslation) })
+            let sentences = chapterResponse.sentences.map({ Sentence(mandarinTranslation: $0.mandarinTranslation.replacingOccurrences(of: " ", with: ""),
+                                                                     english: $0.english) })
             let chapter = Chapter(storyTitle: "Story title here", sentences: sentences)
 
             if var story {
@@ -77,7 +77,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
 """
         Provide a definition for this word: "\(character)"
         If the word is made of different characters, also provide brief definitions for each of the characters in the word.
-        Also explain the word in the context of the sentence: "\(sentence.mandarin)".
+        Also explain the word in the context of the sentence: "\(sentence.mandarinTranslation)".
         Don't define other words in the sentence.
 """
         let messages: [[String: String]] = [

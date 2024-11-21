@@ -80,7 +80,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             """
             // TODO: Update to be able to speak male characters as male voice, storyteller as female, and female characters as same female voice
             for sentence in chapter.sentences {
-                let splitSentence = splitSpeechAndNonSpeech(from: sentence.mandarin)
+                let splitSentence = splitSpeechAndNonSpeech(from: sentence.mandarinTranslation)
                 for sentenceSection in splitSentence {
                     // TODO: Update styleDegree to also be generated with each sentence
                     let isSpeech = speechCharacters.firstIndex(where: { sentenceSection.contains($0)} ) != nil

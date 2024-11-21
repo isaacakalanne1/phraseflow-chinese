@@ -20,7 +20,7 @@ struct ChapterView: View {
             var cumulativeCount = 0
             for sentence in chapter.sentences {
                 counts.append(cumulativeCount)
-                cumulativeCount += sentence.mandarin.count
+                cumulativeCount += sentence.mandarinTranslation.count
             }
             return counts
         }()
@@ -34,7 +34,7 @@ struct ChapterView: View {
                 let cumulativeSentenceStartIndex = cumulativeCharacterCounts[sentenceIndex]
                 
                 FlowLayout(spacing: 0) {
-                    ForEach(Array(sentence.mandarin.enumerated()), id: \.offset) { characterIndex, character in
+                    ForEach(Array(sentence.mandarinTranslation.enumerated()), id: \.offset) { characterIndex, character in
 //                        let pinyin = sentence.pinyin[safe: characterIndex] ?? " "
                         let pinyin = " "
                         // Compute the global character index
@@ -47,7 +47,7 @@ struct ChapterView: View {
                                       pinyin: pinyin,
                                       characterIndex: characterIndex,
                                       sentenceIndex: sentenceIndex,
-                                      isLastCharacter: characterIndex == sentence.mandarin.count - 1)
+                                      isLastCharacter: characterIndex == sentence.mandarinTranslation.count - 1)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
