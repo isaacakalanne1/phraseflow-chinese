@@ -11,6 +11,6 @@ struct WordTimeStampData: Codable, Equatable, Hashable {
     let word: String
     let time: Double
     var duration: Double
-    let textOffset: Int
-    let wordLength: Int
+    var textOffset: Int
+    var wordLength: Int
 }

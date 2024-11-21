@@ -44,7 +44,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .onDefinedCharacter(let definition):
         newState.definitionState.currentDefinition = definition
         newState.viewState.readerDisplayType = .normal
-    case .onSynthesizedAudio(let data):
+    case .onSynthesizedAudio(var data):
         newState.audioState.currentPlaybackTime = 0
         newState.definitionState.currentDefinition = nil
 
@@ -53,6 +53,24 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newStory?.chapters[chapterIndex].audioData = data.audioData
         newStory?.chapters[chapterIndex].audioSpeed = newState.settingsState.speechSpeed
         newStory?.chapters[chapterIndex].audioVoice = newState.settingsState.voice
+
+        if let passage = newStory?.chapters[chapterIndex].passageWithoutNewLines {
+            var indices = [Range<String.Index>]()
+            var searchRange = passage.startIndex..<passage.endIndex
+
+            for (index, word) in data.wordTimestamps.enumerated() {
+                if let range = passage.range(of: word.word, options: [], range: searchRange) {
+                    data.wordTimestamps[index].textOffset = passage.distance(from: passage.startIndex, to: range.lowerBound)
+//                    indices.append(range)
+                    // Update searchRange to start after this word to avoid matching earlier occurrences
+                    searchRange = range.upperBound..<passage.endIndex
+                } else {
+                    // Handle the case where the word is not found
+                    print("Word '\(word)' not found in the sentence.")
+                    // You can choose to handle this situation differently, e.g., continue or throw an error
+                }
+            }
+        }
         newStory?.chapters[chapterIndex].timestampData = data.wordTimestamps
         newState.storyState.currentStory = newStory
 
@@ -171,4 +189,22 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     }
 
     return newState
+}
+
+func findWordIndices(in sentence: String, words: [WordTimeStampData]) -> [Range<String.Index>] {
+    var indices = [Range<String.Index>]()
+    var searchRange = sentence.startIndex..<sentence.endIndex
+
+    for word in words {
+        if let range = sentence.range(of: word.word, options: [], range: searchRange) {
+            indices.append(range)
+            // Update searchRange to start after this word to avoid matching earlier occurrences
+            searchRange = range.upperBound..<sentence.endIndex
+        } else {
+            // Handle the case where the word is not found
+            print("Word '\(word)' not found in the sentence.")
+            // You can choose to handle this situation differently, e.g., continue or throw an error
+        }
+    }
+    return indices
 }

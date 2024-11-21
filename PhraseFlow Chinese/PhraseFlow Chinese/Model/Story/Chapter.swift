@@ -9,13 +9,18 @@ import Foundation
 import AVKit
 
 struct Chapter: Codable, Equatable, Hashable {
+
+
+    var passageWithoutNewLines: String {
+        return sentences.reduce("") { $0 + $1.translation }
+    }
     var passage: String {
         let newLine = """
 
 
 """
 //        return sentences.reduce("") { $0 + newLine + $1.mandarin }
-        return sentences.reduce("") { $0 + newLine + $1.english }
+        return sentences.reduce("") { $0 + newLine + $1.translation }
     }
     var storyTitle: String
     var sentences: [Sentence]
