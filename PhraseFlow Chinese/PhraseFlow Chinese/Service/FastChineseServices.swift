@@ -47,8 +47,12 @@ final class FastChineseServices: FastChineseServicesProtocol {
                 return AnyKey(stringValue: lastKey.stringValue)!
             })
             let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
-            let sentences = chapterResponse.sentences.map({ Sentence(translation: $0.translation.replacingOccurrences(of: " ", with: ""),
-                                                                     english: $0.english) })
+            let sentences = chapterResponse.sentences.map({
+                var translation = $0.translation
+                if settings.language == .mandarinChinese {
+                    translation = translation.replacingOccurrences(of: " ", with: "")
+                }
+                return Sentence(translation: translation, english: $0.english) })
             let chapter = Chapter(storyTitle: "Story title here", sentences: sentences)
 
             if var story {
@@ -74,10 +78,11 @@ final class FastChineseServices: FastChineseServicesProtocol {
     }
 
     func fetchDefinition(of character: String, withinContextOf sentence: Sentence, settings: SettingsState) async throws -> String {
+        let languageName = settings.language.name
         let initialPrompt =
 """
-        You are an AI assistant that provides English definitions for characters in Chinese sentences. Your explanations are brief, and simple to understand.
-        You provide the pinyin for the Chinese character in brackets after the Chinese character.
+        You are an AI assistant that provides English definitions for characters in \(languageName) sentences. Your explanations are brief, and simple to understand.
+        You provide the pronounciation for the \(languageName) character in brackets after the Chinese character.
         If the character is used as part of a larger word, you also provide the pinyin and definition for each character in this overall word.
         You also provide the definition of the word in the context of the overall sentence.
         You never repeat the Chinese sentence, and never translate the whole of the Chinese sentence into English.
@@ -119,7 +124,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
 //        var allSettings = StorySetting.allCases
 //        allSettings.removeAll(where: { $0 == story?.setting })
         let setting = (story?.setting ?? StorySetting.allCases.randomElement()) ?? StorySetting.medieval
-        var initialPrompt = "Write an incredible first chapter of a novel set in \(setting.settingName). Use Chinese names for characters and places."
+        var initialPrompt = "Write an incredible first chapter of a novel set in \(setting.settingName). Use \(settings.language.name) names for characters and places."
         switch settings.difficulty {
         case .beginner:
             break

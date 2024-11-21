@@ -9,7 +9,7 @@ import Foundation
 import MicrosoftCognitiveServicesSpeech
 
 protocol FastChineseRepositoryProtocol {
-    func synthesizeSpeech(_ chapter: Chapter, voice: Voice, rate: String) async throws -> (wordTimestamps: [WordTimeStampData],
+    func synthesizeSpeech(_ chapter: Chapter, voice: Voice, rate: String, settings: SettingsState) async throws -> (wordTimestamps: [WordTimeStampData],
                                                                                            audioData: Data)
 }
 
@@ -24,7 +24,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
 
     init() { }
 
-    func synthesizeSpeech(_ chapter: Chapter, voice: Voice, rate: String) async throws -> (wordTimestamps: [WordTimeStampData], audioData: Data) {
+    func synthesizeSpeech(_ chapter: Chapter, voice: Voice, rate: String, settings: SettingsState) async throws -> (wordTimestamps: [WordTimeStampData], audioData: Data) {
         // Replace with your subscription key and service region
         let speechKey = "Fp11D0CAMjjAcf03VNqe2IsKfqycenIKcrAm4uGV8RSiaqMX15NWJQQJ99AKACYeBjFXJ3w3AAAYACOG6Orb"
         let serviceRegion = "eastus"
@@ -53,7 +53,9 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                 // Extract the word from the text using textOffset and wordLength
                 let word = event.text
                     .replacingOccurrences(of: "\n", with: "")
-                    .replacingOccurrences(of: " ", with: "")
+
+                if settings.language == .mandarinChinese {
+                    word = word.replacingOccurrences(of: " ", with: "")
                 let wordLength = word.count
 
                 // Append the word, its timestamp, and offsets to the array

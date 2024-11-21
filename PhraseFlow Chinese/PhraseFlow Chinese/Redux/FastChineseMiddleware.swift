@@ -58,7 +58,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         do {
             let result = try await environment.synthesizeSpeech(for: chapter,
                                                                 voice: voice,
-                                                                rate: state.settingsState.speechSpeed.rate)
+                                                                rate: state.settingsState.speechSpeed.rate,
+                                                                settings: state.settingsState)
             return .onSynthesizedAudio(result)
         } catch {
             return .failedToPlayAudio
@@ -135,7 +136,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .updateSpeechSpeed,
             .updateShowPinyin,
             .updateShowDefinition,
-            .updateShowEnglish:
+            .updateShowEnglish,
+            .updateLanguage:
         return .saveAppSettings
     case .saveAppSettings:
         do {
@@ -173,8 +175,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .failedToLoadAppSettings,
             .refreshTranslationView,
             .onLoadedStories,
-            .updateDifficulty,
-            .updateLanguage:
+            .updateDifficulty:
         return nil
     }
 }
