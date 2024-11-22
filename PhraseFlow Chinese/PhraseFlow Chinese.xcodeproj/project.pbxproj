@@ -18,7 +18,6 @@
 		BB1994D12CE9050000D61E54 /* AudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D02CE9050000D61E54 /* AudioState.swift */; };
 		BB1994D32CE9051700D61E54 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D22CE9051700D61E54 /* ViewState.swift */; };
 		BB1994D52CE9059E00D61E54 /* CreateStoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D42CE9059E00D61E54 /* CreateStoryState.swift */; };
-		BB1994D72CEB9E3700D61E54 /* CreateStoryRequestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D62CEB9E3700D61E54 /* CreateStoryRequestData.swift */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
 		BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FastChineseStore.swift */; };
 		BB4EDB052C90C89C00699E7D /* FastChineseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB042C90C89C00699E7D /* FastChineseState.swift */; };
@@ -30,19 +29,16 @@
 		BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB142C90CF7400699E7D /* FastChineseDataStore.swift */; };
 		BB4EDB172C90D20300699E7D /* FastChineseServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB162C90D20300699E7D /* FastChineseServices.swift */; };
 		BB4EDB1D2C90DFDD00699E7D /* FastChineseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB1C2C90DFDD00699E7D /* FastChineseRepository.swift */; };
-		BB4EDB222C90F81000699E7D /* DefineCharacterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB212C90F81000699E7D /* DefineCharacterRequest.swift */; };
 		BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB232C91902100699E7D /* SettingsView.swift */; };
 		BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */; };
 		BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB2A2C91B35D00699E7D /* Definition.swift */; };
 		BB6572CE2CD12A9200AC5981 /* ChapterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572CD2CD12A9200AC5981 /* ChapterResponse.swift */; };
-		BB6572D02CD13C6400AC5981 /* ChapterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572CF2CD13C6400AC5981 /* ChapterType.swift */; };
 		BB6572D22CD165F200AC5981 /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D12CD165F200AC5981 /* Collection+Safe.swift */; };
 		BB6572D42CD3932300AC5981 /* View+GreyBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D32CD3932300AC5981 /* View+GreyBackground.swift */; };
 		BB6572D62CD4E09000AC5981 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D52CD4E08F00AC5981 /* ActionButton.swift */; };
 		BB6572D92CD529DE00AC5981 /* StorySetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D82CD529DE00AC5981 /* StorySetting.swift */; };
 		BB6572DB2CD6816700AC5981 /* CategoryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572DA2CD6816700AC5981 /* CategoryButtonView.swift */; };
 		BB6572DD2CD6847500AC5981 /* Categorisable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572DC2CD6847500AC5981 /* Categorisable.swift */; };
-		BB6572E32CD6C03900AC5981 /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = BB6572E22CD6C03900AC5981 /* GoogleGenerativeAI */; };
 		BB6572E52CD8D12400AC5981 /* Voice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572E42CD8D12400AC5981 /* Voice.swift */; };
 		BB6572E72CD8D1E300AC5981 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572E62CD8D1E300AC5981 /* Gender.swift */; };
 		BB6572F72CDB991B00AC5981 /* SettingsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572F62CDB991A00AC5981 /* SettingsState.swift */; };
@@ -105,7 +101,6 @@
 		BB1994D02CE9050000D61E54 /* AudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioState.swift; sourceTree = "<group>"; };
 		BB1994D22CE9051700D61E54 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		BB1994D42CE9059E00D61E54 /* CreateStoryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStoryState.swift; sourceTree = "<group>"; };
-		BB1994D62CEB9E3700D61E54 /* CreateStoryRequestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStoryRequestData.swift; sourceTree = "<group>"; };
 		BB4EDB022C90C86300699E7D /* FastChineseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseStore.swift; sourceTree = "<group>"; };
 		BB4EDB042C90C89C00699E7D /* FastChineseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseState.swift; sourceTree = "<group>"; };
 		BB4EDB062C90C8CA00699E7D /* FastChineseAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseAction.swift; sourceTree = "<group>"; };
@@ -116,12 +111,10 @@
 		BB4EDB142C90CF7400699E7D /* FastChineseDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseDataStore.swift; sourceTree = "<group>"; };
 		BB4EDB162C90D20300699E7D /* FastChineseServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseServices.swift; sourceTree = "<group>"; };
 		BB4EDB1C2C90DFDD00699E7D /* FastChineseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseRepository.swift; sourceTree = "<group>"; };
-		BB4EDB212C90F81000699E7D /* DefineCharacterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefineCharacterRequest.swift; sourceTree = "<group>"; };
 		BB4EDB232C91902100699E7D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPhrasesResponse.swift; sourceTree = "<group>"; };
 		BB4EDB2A2C91B35D00699E7D /* Definition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Definition.swift; sourceTree = "<group>"; };
 		BB6572CD2CD12A9200AC5981 /* ChapterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterResponse.swift; sourceTree = "<group>"; };
-		BB6572CF2CD13C6400AC5981 /* ChapterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterType.swift; sourceTree = "<group>"; };
 		BB6572D12CD165F200AC5981 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
 		BB6572D32CD3932300AC5981 /* View+GreyBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+GreyBackground.swift"; sourceTree = "<group>"; };
 		BB6572D52CD4E08F00AC5981 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
@@ -167,7 +160,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB6572E32CD6C03900AC5981 /* GoogleGenerativeAI in Frameworks */,
 				BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */,
 				477951978617EF1A543B0EC4 /* libPods-PhraseFlow Chinese.a in Frameworks */,
 			);
@@ -270,14 +262,6 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		BB4EDB202C90F80400699E7D /* Request */ = {
-			isa = PBXGroup;
-			children = (
-				BB4EDB212C90F81000699E7D /* DefineCharacterRequest.swift */,
-			);
-			path = Request;
-			sourceTree = "<group>";
-		};
 		BB4EDB272C919A3300699E7D /* Response */ = {
 			isa = PBXGroup;
 			children = (
@@ -290,7 +274,6 @@
 			isa = PBXGroup;
 			children = (
 				BB6572DC2CD6847500AC5981 /* Categorisable.swift */,
-				BB1994D62CEB9E3700D61E54 /* CreateStoryRequestData.swift */,
 				BBE16F1B2CC1317B00A7EF1F /* Genre.swift */,
 				BB6572D82CD529DE00AC5981 /* StorySetting.swift */,
 			);
@@ -363,13 +346,11 @@
 			isa = PBXGroup;
 			children = (
 				BB6572D72CD529CD00AC5981 /* Create Story */,
-				BB4EDB202C90F80400699E7D /* Request */,
 				BB4EDB272C919A3300699E7D /* Response */,
 				BB1994C62CE8DC2100D61E54 /* Speech */,
 				BB0854862CB42C7100F1661B /* Story */,
 				BB4EDB2A2C91B35D00699E7D /* Definition.swift */,
 				BB84E09F2CEFA96200520F5E /* Language.swift */,
-				BB6572CF2CD13C6400AC5981 /* ChapterType.swift */,
 				BBE16F272CC420FD00A7EF1F /* ReaderDisplayType.swift */,
 				BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */,
 			);
@@ -428,7 +409,6 @@
 			name = "PhraseFlow Chinese";
 			packageProductDependencies = (
 				BB4EDAFF2C90C7E600699E7D /* ReduxKit */,
-				BB6572E22CD6C03900AC5981 /* GoogleGenerativeAI */,
 			);
 			productName = "PhraseFlow Chinese";
 			productReference = BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */;
@@ -505,7 +485,6 @@
 			mainGroup = BBB6EF1A2C8C86240079D135;
 			packageReferences = (
 				BB4EDAFE2C90C7E600699E7D /* XCRemoteSwiftPackageReference "reduxkit" */,
-				BB6572E12CD6C03800AC5981 /* XCRemoteSwiftPackageReference "generative-ai-swift" */,
 			);
 			productRefGroup = BBB6EF242C8C86240079D135 /* Products */;
 			projectDirPath = "";
@@ -606,7 +585,6 @@
 				BB0854832CB42C0200F1661B /* Chapter.swift in Sources */,
 				BB6572E52CD8D12400AC5981 /* Voice.swift in Sources */,
 				BB4EDB072C90C8CA00699E7D /* FastChineseAction.swift in Sources */,
-				BB6572D02CD13C6400AC5981 /* ChapterType.swift in Sources */,
 				BBE636BF2CC98B2B00873E68 /* WordTimeStampData.swift in Sources */,
 				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */,
@@ -614,7 +592,6 @@
 				BB4EDB1D2C90DFDD00699E7D /* FastChineseRepository.swift in Sources */,
 				BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */,
 				BB6572D92CD529DE00AC5981 /* StorySetting.swift in Sources */,
-				BB4EDB222C90F81000699E7D /* DefineCharacterRequest.swift in Sources */,
 				BB84E0A02CEFA96200520F5E /* Language.swift in Sources */,
 				BB1994C82CE8E0BE00D61E54 /* Data+AVPlayer.swift in Sources */,
 				BB1994D12CE9050000D61E54 /* AudioState.swift in Sources */,
@@ -623,7 +600,6 @@
 				BB4EDB0E2C90CA0300699E7D /* FastChineseMiddleware.swift in Sources */,
 				BB6572E72CD8D1E300AC5981 /* Gender.swift in Sources */,
 				BB4EDB102C90CA4900699E7D /* FastChineseSubscriber.swift in Sources */,
-				BB1994D72CEB9E3700D61E54 /* CreateStoryRequestData.swift in Sources */,
 				BBE636CD2CCC0F8500873E68 /* ReaderView.swift in Sources */,
 				BB1994D32CE9051700D61E54 /* ViewState.swift in Sources */,
 				BB1994D52CE9059E00D61E54 /* CreateStoryState.swift in Sources */,
@@ -996,14 +972,6 @@
 				minimumVersion = 3.1.0;
 			};
 		};
-		BB6572E12CD6C03800AC5981 /* XCRemoteSwiftPackageReference "generative-ai-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/google/generative-ai-swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.5.6;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1011,11 +979,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BB4EDAFE2C90C7E600699E7D /* XCRemoteSwiftPackageReference "reduxkit" */;
 			productName = ReduxKit;
-		};
-		BB6572E22CD6C03900AC5981 /* GoogleGenerativeAI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BB6572E12CD6C03800AC5981 /* XCRemoteSwiftPackageReference "generative-ai-swift" */;
-			productName = GoogleGenerativeAI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

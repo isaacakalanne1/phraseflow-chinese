@@ -37,6 +37,13 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToLoadStories
         }
+    case .loadDefinitions:
+        do {
+            let definitions = try environment.loadDefinitions()
+            return .onLoadedDefinitions(definitions)
+        } catch {
+            return .failedToLoadDefinitions
+        }
     case .saveStory(let story):
         do {
             try environment.saveStory(story)
@@ -59,8 +66,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             let result = try await environment.synthesizeSpeech(for: chapter,
                                                                 voice: voice,
                                                                 rate: state.settingsState.speechSpeed.rate,
-                                                                language: state.storyState.currentStory?.language,
-                                                                settings: state.settingsState)
+                                                                language: state.storyState.currentStory?.language)
             return .onSynthesizedAudio(result)
         } catch {
             return .failedToPlayAudio

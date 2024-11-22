@@ -9,7 +9,7 @@ import Foundation
 import MicrosoftCognitiveServicesSpeech
 
 protocol FastChineseRepositoryProtocol {
-    func synthesizeSpeech(_ chapter: Chapter, voice: Voice, rate: String, language: Language?, settings: SettingsState) async throws -> (wordTimestamps: [WordTimeStampData],
+    func synthesizeSpeech(_ chapter: Chapter, voice: Voice, rate: String, language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
                                                                                            audioData: Data)
 }
 
@@ -24,7 +24,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
 
     init() { }
 
-    func synthesizeSpeech(_ chapter: Chapter, voice: Voice, rate: String, language: Language?, settings: SettingsState) async throws -> (wordTimestamps: [WordTimeStampData], audioData: Data) {
+    func synthesizeSpeech(_ chapter: Chapter, voice: Voice, rate: String, language: Language?) async throws -> (wordTimestamps: [WordTimeStampData], audioData: Data) {
         // Replace with your subscription key and service region
         let speechKey = "Fp11D0CAMjjAcf03VNqe2IsKfqycenIKcrAm4uGV8RSiaqMX15NWJQQJ99AKACYeBjFXJ3w3AAAYACOG6Orb"
         let serviceRegion = "eastus"
@@ -56,7 +56,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                     .replacingOccurrences(of: "\n", with: "") // Most TTS often add \n
                     .replacingOccurrences(of: "                ", with: "") // Korean TTS often adds these spaces, which desyncs words
 
-                if settings.language == .mandarinChinese {
+                if language == .mandarinChinese {
                     word = word.replacingOccurrences(of: " ", with: "")
                 }
                 // Append the word, its timestamp, and offsets to the array

@@ -105,19 +105,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
             "messages": messages
         ]
 
-        return try await makeOpenAIRequest(requestBody: requestBody, settings: settings)
-    }
-
-    private func makeGeminiRequest(initialPrompt: String, mainPrompt: String) async throws -> String {
-
-        let prompt = initialPrompt + "\n\n" + mainPrompt
-        let response = try await generativeModel.generateContent(prompt)
-        guard let responseString = response.text else {
-            throw FastChineseServicesError.failedToGetResponseData
-        }
-        return responseString
-            .replacingOccurrences(of: "```json", with: "")
-            .replacingOccurrences(of: "```", with: "")
+        return try await makeOpenAIRequest(requestBody: requestBody)
     }
 
     private func continueStory(story: Story?, settings: SettingsState) async throws -> (String, StorySetting) {
@@ -207,7 +195,7 @@ Format the following story into JSON. Translate the entirety of each English sen
 
     }
 
-    private func makeOpenAIRequest(requestBody: [String: Any], settings: SettingsState) async throws -> String {
+    private func makeOpenAIRequest(requestBody: [String: Any]) async throws -> String {
 
         var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
         request.httpMethod = "POST"

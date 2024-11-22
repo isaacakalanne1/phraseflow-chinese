@@ -8,10 +8,11 @@
 import Foundation
 
 protocol FastChineseEnvironmentProtocol {
-    func synthesizeSpeech(for chapter: Chapter, voice: Voice, rate: String, language: Language?, settings: SettingsState) async throws -> (wordTimestamps: [WordTimeStampData],
+    func synthesizeSpeech(for chapter: Chapter, voice: Voice, rate: String, language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
                                                                                              audioData: Data)
     func generateStory(story: Story?, settings: SettingsState) async throws -> Story
     func loadStories() throws -> [Story]
+    func loadDefinitions() throws -> [Definition]
     func loadAppSettings() throws -> SettingsState
     func saveStory(_ story: Story) throws
     func saveAppSettings(_ settings: SettingsState) throws
@@ -32,9 +33,9 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
         self.repository = FastChineseRepository()
     }
 
-    func synthesizeSpeech(for chapter: Chapter, voice: Voice, rate: String, language: Language?, settings: SettingsState) async throws -> (wordTimestamps: [WordTimeStampData],
+    func synthesizeSpeech(for chapter: Chapter, voice: Voice, rate: String, language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
                                                                                              audioData: Data) {
-        try await repository.synthesizeSpeech(chapter, voice: voice, rate: rate, language: language, settings: settings)
+        try await repository.synthesizeSpeech(chapter, voice: voice, rate: rate, language: language)
     }
 
     func generateStory(story: Story?, settings: SettingsState) async throws -> Story {
@@ -55,6 +56,10 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
 
     func loadStories() throws -> [Story] {
         try dataStore.loadStories()
+    }
+
+    func loadDefinitions() throws -> [Definition] {
+        try dataStore.loadDefinitions()
     }
 
     func loadAppSettings() throws -> SettingsState {
