@@ -127,7 +127,6 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             // Return the collected word timestamps and audio data
 
             let passage = chapter.passageWithoutNewLines
-            var indices = [Range<String.Index>]()
             var searchRange = passage.startIndex..<passage.endIndex
             for (index, word) in wordTimestamps.enumerated() {
                 if let range = passage.range(of: word.word, options: [], range: searchRange) {
@@ -137,7 +136,6 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                     searchRange = range.upperBound..<passage.endIndex
                 } else {
                     // Handle the case where the word is not found
-                    print("Word '\(word)' not found in the sentence.")
                     // You can choose to handle this situation differently, e.g., continue or throw an error
                 }
             }

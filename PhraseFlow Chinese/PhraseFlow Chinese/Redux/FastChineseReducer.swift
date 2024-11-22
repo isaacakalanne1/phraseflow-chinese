@@ -172,21 +172,3 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
 
     return newState
 }
-
-func findWordIndices(in sentence: String, words: [WordTimeStampData]) -> [Range<String.Index>] {
-    var indices = [Range<String.Index>]()
-    var searchRange = sentence.startIndex..<sentence.endIndex
-
-    for word in words {
-        if let range = sentence.range(of: word.word, options: [], range: searchRange) {
-            indices.append(range)
-            // Update searchRange to start after this word to avoid matching earlier occurrences
-            searchRange = range.upperBound..<sentence.endIndex
-        } else {
-            // Handle the case where the word is not found
-            print("Word '\(word)' not found in the sentence.")
-            // You can choose to handle this situation differently, e.g., continue or throw an error
-        }
-    }
-    return indices
-}
