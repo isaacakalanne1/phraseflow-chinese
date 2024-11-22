@@ -127,18 +127,20 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
 
             // Return the collected word timestamps and audio data
 
-            let passage = chapter.passageWithoutNewLines
-            var searchRange = passage.startIndex..<passage.endIndex
-            for (index, word) in wordTimestamps.enumerated() {
-                if let range = passage.range(of: word.word, options: [], range: searchRange) {
-                    wordTimestamps[index].textOffset = passage.distance(from: passage.startIndex, to: range.lowerBound)
-//                    indices.append(range)
-                    // Update searchRange to start after this word to avoid matching earlier occurrences
-                    searchRange = range.upperBound..<passage.endIndex
-                } else {
-                    // Handle the case where the word is not found
-                    // You can choose to handle this situation differently, e.g., continue or throw an error
-                    print("Word not found: \(word)")
+            if language != .arabicGulf {
+                let passage = chapter.passageWithoutNewLines
+                var searchRange = passage.startIndex..<passage.endIndex
+                for (index, word) in wordTimestamps.enumerated() {
+                    if let range = passage.range(of: word.word, options: [], range: searchRange) {
+                        wordTimestamps[index].textOffset = passage.distance(from: passage.startIndex, to: range.lowerBound)
+                        //                    indices.append(range)
+                        // Update searchRange to start after this word to avoid matching earlier occurrences
+                        searchRange = range.upperBound..<passage.endIndex
+                    } else {
+                        // Handle the case where the word is not found
+                        // You can choose to handle this situation differently, e.g., continue or throw an error
+                        print("Word not found: \(word)")
+                    }
                 }
             }
             return (wordTimestamps, audioData)
