@@ -39,7 +39,7 @@ struct CharacterView: View {
         .onTapGesture {
             if let chapter = store.state.storyState.currentChapter,
                store.state.viewState.readerDisplayType != .defining {
-                store.dispatch(.updateSentenceIndex(store.state.storyState.sentenceIndex))
+                store.dispatch(.updateSentenceIndex(word.sentenceIndex))
                 store.dispatch(.selectWord(word))
                 if store.state.settingsState.isShowingDefinition {
                     store.dispatch(.defineCharacter(word, shouldForce: false))

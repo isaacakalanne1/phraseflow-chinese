@@ -61,32 +61,24 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                 }
                 // Append the word, its timestamp, and offsets to the array
                 wordTimestampsQueue.sync {
-                    if event.text.contains("\n") {
-                        sentenceIndex += 1
-                    }
+//                    if event.text.contains("\n") {
+//                        sentenceIndex += 1
+//                    }
 
                     let wordPosition: WordPosition
-                    if event.text.hasSuffix("。") || event.text == "。" {
-                        wordPosition = .last
-                    } else if event.text.hasPrefix("。") {
-                        wordPosition = .first
-                    } else {
-                        wordPosition = .middle
-                    }
 
                     wordTimestamps.append(.init(word: word,
                                                 time: audioTimeInSeconds,
                                                 duration: event.duration,
                                                 indexInList: index,
                                                 sentenceIndex: sentenceIndex,
-                                                wordPosition: wordPosition))
+                                                wordPosition: .middle))
                     if var newTimestamp = wordTimestamps[safe: index] {
                         newTimestamp.duration = audioTimeInSeconds - newTimestamp.time - 0.0001
                         wordTimestamps[index] = newTimestamp
 
-                        if event.text.contains("\n") {
+                        if word.hasSuffix("。") || word == "。" || word.hasSuffix(".") || word == "." {
                             sentenceIndex += 1
-                            wordTimestamps[index]
                         }
                     }
 

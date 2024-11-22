@@ -13,13 +13,22 @@ struct ChapterView: View {
 
     var body: some View {
 
+        let chapterIndex = store.state.storyState.currentStory?.currentChapterIndex ?? 0
+        let chapter = store.state.storyState.currentStory?.chapters[safe: chapterIndex]
+
         ScrollView(.vertical) {
-            FlowLayout(spacing: 0,
-                       language: store.state.storyState.currentStory?.language) {
-                ForEach(Array(chapter.timestampData.enumerated()), id: \.offset) { index, word in
-                    CharacterView(isHighlighted: word == store.state.currentSpokenWord, word: word)
+
+            ForEach(0...(chapter?.timestampData.last?.sentenceIndex ?? 1), id: \.self) { index in
+                FlowLayout(spacing: 0,
+                           language: store.state.storyState.currentStory?.language) {
+                    let sentenceWords = chapter?.timestampData.filter({ $0.sentenceIndex == index }) ?? []
+                    ForEach(Array(sentenceWords.enumerated()), id: \.offset) { index, word in
+                        CharacterView(isHighlighted: word == store.state.currentSpokenWord, word: word)
+                    }
                 }
+
             }
+
                        .frame(maxWidth: .infinity, alignment: store.state.storyState.currentStory?.language == .arabicGulf ? .trailing : .leading)
             Button("Next Chapter") {
                 if let story = store.state.storyState.currentStory {
