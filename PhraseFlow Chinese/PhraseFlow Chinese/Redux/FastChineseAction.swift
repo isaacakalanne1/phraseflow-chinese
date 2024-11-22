@@ -15,7 +15,6 @@ enum FastChineseAction {
     case updateSelectGenre(Genre, isSelected: Bool)
     case updateSentenceIndex(Int)
 
-    case selectStory(Story)
     case generateNewStory
     case onGeneratedStory(Story)
     case failedToGenerateNewStory
@@ -31,6 +30,7 @@ enum FastChineseAction {
     case failedToDeleteStory
 
     case selectChapter(Story, chapterIndex: Int)
+    case onSelectedChapter
 
     case loadStories
     case onLoadedStories([Story])

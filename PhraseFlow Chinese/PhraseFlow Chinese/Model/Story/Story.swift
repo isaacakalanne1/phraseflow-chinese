@@ -11,6 +11,7 @@ struct Story: Codable, Equatable, Hashable {
     let id: UUID
     var latestStorySummary: String
     let difficulty: Difficulty
+    let language: Language
     let title: String
     var chapters: [Chapter]
     var setting: StorySetting
@@ -19,6 +20,7 @@ struct Story: Codable, Equatable, Hashable {
 
     init(latestStorySummary: String,
          difficulty: Difficulty,
+         language: Language,
          title: String,
          chapters: [Chapter],
          setting: StorySetting,
@@ -27,6 +29,7 @@ struct Story: Codable, Equatable, Hashable {
         self.id = UUID()
         self.latestStorySummary = latestStorySummary
         self.difficulty = difficulty
+        self.language = language
         self.title = title
         self.chapters = chapters
         self.setting = setting
@@ -40,6 +43,7 @@ struct Story: Codable, Equatable, Hashable {
         self.id = try container.decode(UUID.self, forKey: .id)
         self.latestStorySummary = try container.decode(String.self, forKey: .latestStorySummary)
         self.difficulty = try container.decode(Difficulty.self, forKey: .difficulty)
+        self.language = try container.decode(Language.self, forKey: .language)
         self.title = try container.decode(String.self, forKey: .title)
         self.chapters = (try? container.decode([Chapter].self, forKey: .chapters)) ?? []
         self.setting = (try? container.decode(StorySetting.self, forKey: .setting)) ?? .futuristic

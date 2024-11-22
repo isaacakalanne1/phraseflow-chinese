@@ -103,8 +103,9 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
     case .onDefinedCharacter:
         return .refreshDefinitionView
-    case .selectStory,
-            .selectChapter:
+    case .selectChapter:
+        return .onSelectedChapter
+    case .onSelectedChapter:
         if let story = state.storyState.currentStory {
             return .saveStory(story)
         }

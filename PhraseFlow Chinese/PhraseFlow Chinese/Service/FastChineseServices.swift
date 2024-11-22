@@ -68,6 +68,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
             } else {
                 return Story(latestStorySummary: chapterResponse.latestStorySummary,
                              difficulty: .beginner,
+                             language: settings.language,
                              title: "Story title here",
                              chapters: [chapter],
                              setting: setting)
