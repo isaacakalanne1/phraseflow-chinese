@@ -83,7 +83,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
 """
         You are an AI assistant that provides English definitions for characters in \(languageName) sentences. Your explanations are brief, and simple to understand.
         You provide the pronounciation for the \(languageName) character in brackets after the Chinese character.
-        If the character is used as part of a larger word, you also provide the pinyin and definition for each character in this overall word.
+        If the character is used as part of a larger word, you also provide the pronounciation and definition for each character in this overall word.
         You also provide the definition of the word in the context of the overall sentence.
         You never repeat the Chinese sentence, and never translate the whole of the Chinese sentence into English.
 """

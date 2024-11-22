@@ -12,7 +12,6 @@ struct CharacterView: View {
 
     let isHighlighted: Bool
     let character: String
-    let pinyin: String
     let characterIndex: Int
     let sentenceIndex: Int
     let isLastCharacter: Bool
@@ -20,10 +19,6 @@ struct CharacterView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            Text(character == pinyin ? " " : pinyin)
-                .font(.system(size: 10))
-                .opacity(store.state.settingsState.isShowingPinyin ? 1 : 0)
-                .frame(maxWidth: .infinity)
             Text(character)
                 .font(.system(size: 25, weight: .light))
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

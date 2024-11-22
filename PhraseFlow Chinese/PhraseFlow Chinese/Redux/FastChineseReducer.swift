@@ -59,8 +59,6 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         if let player = data.audioData.createAVPlayer() {
             newState.audioState.audioPlayer = player
         }
-    case .updateShowPinyin(let isShowing):
-        newState.settingsState.isShowingPinyin = isShowing
     case .updateShowDefinition(let isShowing):
         newState.settingsState.isShowingDefinition = isShowing
     case .updateShowEnglish(let isShowing):

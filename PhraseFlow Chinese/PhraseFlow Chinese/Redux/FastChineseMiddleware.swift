@@ -134,7 +134,6 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
     case .selectVoice,
             .updateSpeechSpeed,
-            .updateShowPinyin,
             .updateShowDefinition,
             .updateShowEnglish,
             .updateLanguage:

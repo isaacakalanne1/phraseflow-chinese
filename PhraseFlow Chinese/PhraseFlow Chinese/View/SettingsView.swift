@@ -12,12 +12,6 @@ struct SettingsView: View {
 
     var body: some View {
 
-        let showPinyin: Binding<Bool> = .init {
-            store.state.settingsState.isShowingPinyin
-        } set: { newValue in
-            store.dispatch(.updateShowPinyin(newValue))
-        }
-
         let showDefinition: Binding<Bool> = .init {
             store.state.settingsState.isShowingDefinition
         } set: { newValue in
@@ -39,9 +33,6 @@ struct SettingsView: View {
                 Text("Toggle")
                     .fontWeight(.light)
                     .greyBackground()
-
-//                Toggle("Pinyin", isOn: showPinyin)
-//                    .fontWeight(.light)
                 Toggle("Definition", isOn: showDefinition)
                     .fontWeight(.light)
                 Toggle("English", isOn: showEnglish)

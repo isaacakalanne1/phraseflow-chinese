@@ -52,7 +52,6 @@ enum FastChineseAction {
     case onDefinedCharacter(Definition)
     case failedToDefineCharacter
 
-    case updateShowPinyin(Bool)
     case updateShowDefinition(Bool)
     case updateShowEnglish(Bool)
 

@@ -8,7 +8,6 @@
 import Foundation
 
 struct SettingsState: Codable {
-    var isShowingPinyin: Bool
     var isShowingDefinition: Bool
     var isShowingEnglish: Bool
     var voice: Voice
@@ -16,14 +15,12 @@ struct SettingsState: Codable {
     var difficulty: Difficulty
     var language: Language
 
-    init(isShowingPinyin: Bool = true,
-         isShowingDefinition: Bool = true,
+    init(isShowingDefinition: Bool = true,
          isShowingEnglish: Bool = true,
          voice: Voice = .xiaoxiao,
          speechSpeed: SpeechSpeed = .normal,
          difficulty: Difficulty = .beginner,
          language: Language = .mandarinChinese) {
-        self.isShowingPinyin = isShowingPinyin
         self.isShowingDefinition = isShowingDefinition
         self.isShowingEnglish = isShowingEnglish
         self.voice = voice

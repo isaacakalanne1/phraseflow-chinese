@@ -35,8 +35,6 @@ struct ChapterView: View {
                 
                 FlowLayout(spacing: 0) {
                     ForEach(Array(sentence.translation.enumerated()), id: \.offset) { characterIndex, character in
-//                        let pinyin = sentence.pinyin[safe: characterIndex] ?? " "
-                        let pinyin = " "
                         // Compute the global character index
                         let globalCharacterIndex = cumulativeSentenceStartIndex + characterIndex
 
@@ -44,7 +42,6 @@ struct ChapterView: View {
                         let isHighlighted = globalCharacterIndex >= globalSelectedCharacterIndex && globalCharacterIndex < globalSelectedCharacterIndex + wordLength
                         CharacterView(isHighlighted: isHighlighted,
                                       character: String(character),
-                                      pinyin: pinyin,
                                       characterIndex: characterIndex,
                                       sentenceIndex: sentenceIndex,
                                       isLastCharacter: characterIndex == sentence.translation.count - 1)
