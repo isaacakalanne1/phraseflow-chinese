@@ -57,4 +57,15 @@ enum Language: String, Codable, CaseIterable {
             [.elvira]
         }
     }
+
+    var flagEmoji: String {
+        let flagBase = UnicodeScalar("🇦").value - UnicodeScalar("A").value
+
+        let flag = code
+            .uppercased()
+            .unicodeScalars
+            .compactMap({ UnicodeScalar(flagBase + $0.value)?.description })
+            .joined()
+        return flag
+    }
 }

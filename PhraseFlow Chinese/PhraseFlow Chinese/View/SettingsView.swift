@@ -143,7 +143,7 @@ struct SettingsView: View {
                             store.dispatch(.updateLanguage(language))
                         }
                     }) {
-                        Text(countryFlag(language.code) + " " + language.name)
+                        Text(language.flagEmoji + " " + language.name)
                             .font(.body)
                             .foregroundColor(store.state.settingsState.language == language ? .white : .primary)
                             .frame(maxWidth: .infinity)
@@ -154,17 +154,6 @@ struct SettingsView: View {
                 }
             }
         }
-    }
-
-    func countryFlag(_ countryCode: String) -> String {
-        let flagBase = UnicodeScalar("🇦").value - UnicodeScalar("A").value
-
-        let flag = countryCode
-            .uppercased()
-            .unicodeScalars
-            .compactMap({ UnicodeScalar(flagBase + $0.value)?.description })
-            .joined()
-        return flag
     }
 
 }

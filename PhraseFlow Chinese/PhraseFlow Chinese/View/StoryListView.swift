@@ -31,13 +31,18 @@ struct StoryListView: View {
                     }
                     .onDelete(perform: delete)
                 }
-                Button("Create") {
+                Button("\(store.state.settingsState.language.flagEmoji) New Story") {
                     store.dispatch(.generateNewStory)
                 }
                 .padding()
                 .background(Color.accentColor)
                 .foregroundColor(.white)
                 .cornerRadius(10)
+                NavigationLink(destination: ChooseLanguageView()) {
+                    Text("Choose language")
+                        .frame(height: 40)
+                }
+                .foregroundColor(.accentColor)
             }
             .toolbar(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
