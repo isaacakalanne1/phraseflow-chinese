@@ -44,12 +44,12 @@ struct ActionButtonsView: View {
                 }
             }
 
-            ActionButton(title: "Load",
-                         imageName: "arrow.down.to.line.circle") {
-                store.dispatch(.synthesizeAudio(chapter,
-                                                voice: store.state.settingsState.voice,
-                                                isForced: true))
-            }
+//            ActionButton(title: "Load",
+//                         imageName: "arrow.down.to.line.circle") {
+//                store.dispatch(.synthesizeAudio(chapter,
+//                                                voice: store.state.settingsState.voice,
+//                                                isForced: true))
+//            }
 
             ActionButton(title: "Settings",
                          imageName: "gearshape.fill") {

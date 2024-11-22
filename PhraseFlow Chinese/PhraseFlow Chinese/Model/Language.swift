@@ -13,9 +13,26 @@ enum Language: String, Codable, CaseIterable {
     var name: String {
         switch self {
         case .mandarinChinese:
-            "Mandarin Chinese"
+            "Chinese (Mandarin)"
         default:
             rawValue.capitalized
+        }
+    }
+
+    var code: String {
+        switch self {
+        case .mandarinChinese:
+            "cn"
+        case .french:
+            "fr"
+        case .japanese:
+            "jp"
+        case .korean:
+            "kr"
+        case .russian:
+            "ru"
+        case .spanish:
+            "es"
         }
     }
 
