@@ -11,6 +11,7 @@ import SwiftUI
 
 struct FlowLayout: Layout {
     var spacing: CGFloat = 4
+    var language: Language?
 
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
         // Variables to track size
@@ -53,21 +54,41 @@ struct FlowLayout: Layout {
         // Variables to track current line height
         var currentLineHeight: CGFloat = 0
 
-        for subview in subviews {
-            let subviewSize = subview.sizeThatFits(.unspecified)
-            if x + subviewSize.width > bounds.maxX {
-                // Move to next line
-                x = bounds.minX
-                y += currentLineHeight + spacing
-                currentLineHeight = 0
-            }
+        if let lang = language,
+           lang == .arabicGulf {
+            for subview in subviews {
+                let subviewSize = subview.sizeThatFits(.unspecified)
+                if x - subviewSize.width < bounds.minX {
+                    // Move to next line
+                    x = bounds.maxX
+                    y += currentLineHeight + spacing
+                    currentLineHeight = 0
+                }
 
-            subview.place(
-                at: CGPoint(x: x, y: y),
-                proposal: ProposedViewSize(width: subviewSize.width, height: subviewSize.height)
-            )
-            x += subviewSize.width + spacing
-            currentLineHeight = max(currentLineHeight, subviewSize.height)
+                subview.place(
+                    at: CGPoint(x: x, y: y),
+                    proposal: ProposedViewSize(width: subviewSize.width, height: subviewSize.height)
+                )
+                x -= subviewSize.width + spacing
+                currentLineHeight = max(currentLineHeight, subviewSize.height)
+            }
+        } else {
+            for subview in subviews {
+                let subviewSize = subview.sizeThatFits(.unspecified)
+                if x + subviewSize.width > bounds.maxX {
+                    // Move to next line
+                    x = bounds.minX
+                    y += currentLineHeight + spacing
+                    currentLineHeight = 0
+                }
+
+                subview.place(
+                    at: CGPoint(x: x, y: y),
+                    proposal: ProposedViewSize(width: subviewSize.width, height: subviewSize.height)
+                )
+                x += subviewSize.width + spacing
+                currentLineHeight = max(currentLineHeight, subviewSize.height)
+            }
         }
     }
 }

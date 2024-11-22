@@ -33,7 +33,8 @@ struct ChapterView: View {
             ForEach(Array(chapter.sentences.enumerated()), id: \.element) { (sentenceIndex, sentence) in
                 let cumulativeSentenceStartIndex = cumulativeCharacterCounts[sentenceIndex]
                 
-                FlowLayout(spacing: 0) {
+                FlowLayout(spacing: 0,
+                           language: store.state.storyState.currentStory?.language) {
                     ForEach(Array(sentence.translation.enumerated()), id: \.offset) { characterIndex, character in
                         // Compute the global character index
                         let globalCharacterIndex = cumulativeSentenceStartIndex + characterIndex

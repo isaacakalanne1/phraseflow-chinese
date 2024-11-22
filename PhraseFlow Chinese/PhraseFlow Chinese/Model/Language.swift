@@ -8,12 +8,14 @@
 import Foundation
 
 enum Language: String, Codable, CaseIterable {
-    case mandarinChinese, french, japanese, korean, russian, spanish
+    case arabicGulf, mandarinChinese, french, japanese, korean, russian, spanish
 
     var name: String {
         switch self {
         case .mandarinChinese:
             "Chinese (Mandarin)"
+        case .arabicGulf:
+            "Arabic (Gulf Arabic)"
         default:
             rawValue.capitalized
         }
@@ -21,6 +23,8 @@ enum Language: String, Codable, CaseIterable {
 
     var code: String {
         switch self {
+        case .arabicGulf:
+            "ae"
         case .mandarinChinese:
             "cn"
         case .french:
@@ -55,6 +59,8 @@ enum Language: String, Codable, CaseIterable {
             [.dariya]
         case .spanish:
             [.elvira]
+        case .arabicGulf:
+            [.fatima]
         }
     }
 

@@ -8,7 +8,7 @@
 import Foundation
 
 enum Voice: String, Codable, CaseIterable, Equatable {
-    case xiaomo, xiaoxiao, vivienne, remy, mayu, sunHi, dariya, elvira
+    case xiaomo, xiaoxiao, vivienne, remy, mayu, sunHi, dariya, elvira, fatima
 
     var title: String {
         rawValue.capitalized
@@ -32,6 +32,8 @@ enum Voice: String, Codable, CaseIterable, Equatable {
             "ru-RU-DariyaNeural"
         case .elvira:
             "es-ES-ElviraNeural"
+        case .fatima:
+            "ar-AE-FatimaNeural"
         }
     }
 
@@ -43,7 +45,8 @@ enum Voice: String, Codable, CaseIterable, Equatable {
                 .mayu,
                 .sunHi,
                 .dariya,
-                .elvira:
+                .elvira,
+                .fatima:
                 .female
         case .remy:
                 .male
