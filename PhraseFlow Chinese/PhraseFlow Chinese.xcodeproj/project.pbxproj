@@ -13,7 +13,6 @@
 		BB0854852CB42C1400F1661B /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854842CB42C1400F1661B /* Story.swift */; };
 		BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */; };
 		BB1994C82CE8E0BE00D61E54 /* Data+AVPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994C72CE8E0BE00D61E54 /* Data+AVPlayer.swift */; };
-		BB1994CA2CE8FFF400D61E54 /* Chapter+WordTimeStampData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994C92CE8FFF400D61E54 /* Chapter+WordTimeStampData.swift */; };
 		BB1994CD2CE904D900D61E54 /* StoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994CC2CE904D900D61E54 /* StoryState.swift */; };
 		BB1994CF2CE904F000D61E54 /* DefinitionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994CE2CE904F000D61E54 /* DefinitionState.swift */; };
 		BB1994D12CE9050000D61E54 /* AudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D02CE9050000D61E54 /* AudioState.swift */; };
@@ -101,7 +100,6 @@
 		BB0854842CB42C1400F1661B /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpeed.swift; sourceTree = "<group>"; };
 		BB1994C72CE8E0BE00D61E54 /* Data+AVPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+AVPlayer.swift"; sourceTree = "<group>"; };
-		BB1994C92CE8FFF400D61E54 /* Chapter+WordTimeStampData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chapter+WordTimeStampData.swift"; sourceTree = "<group>"; };
 		BB1994CC2CE904D900D61E54 /* StoryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryState.swift; sourceTree = "<group>"; };
 		BB1994CE2CE904F000D61E54 /* DefinitionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionState.swift; sourceTree = "<group>"; };
 		BB1994D02CE9050000D61E54 /* AudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioState.swift; sourceTree = "<group>"; };
@@ -268,7 +266,6 @@
 				BB6572D12CD165F200AC5981 /* Collection+Safe.swift */,
 				BB6572D32CD3932300AC5981 /* View+GreyBackground.swift */,
 				BB1994C72CE8E0BE00D61E54 /* Data+AVPlayer.swift */,
-				BB1994C92CE8FFF400D61E54 /* Chapter+WordTimeStampData.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -637,7 +634,6 @@
 				BBE636C32CCC0BE900873E68 /* CharacterView.swift in Sources */,
 				BB84E0A22CF0AF4200520F5E /* ChooseLanguageView.swift in Sources */,
 				BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */,
-				BB1994CA2CE8FFF400D61E54 /* Chapter+WordTimeStampData.swift in Sources */,
 				BB1994CF2CE904F000D61E54 /* DefinitionState.swift in Sources */,
 				BB4EDB0C2C90C9A100699E7D /* FastChineseReducer.swift in Sources */,
 				BB6572F92CDBB14C00AC5981 /* SpeechStyle.swift in Sources */,

@@ -46,13 +46,11 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             let wordTimestampsQueue = DispatchQueue(label: "WordTimestampsQueue")
 
             // Add a handler for the word boundary event
-            var textOffset = 0
             var index = -1
+            var sentenceIndex = 0
             synthesizer.addSynthesisWordBoundaryEventHandler { (synthesizer, event) in
                 // Extract the audio offset (in ticks of 100 nanoseconds)
                 let audioTimeInSeconds = Double(event.audioOffset) / 10_000_000.0
-
-                // Extract the word from the text using textOffset and wordLength
 
                 var word = event.text
                     .replacingOccurrences(of: "\n", with: "") // Most TTS often add \n
@@ -61,22 +59,38 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                 if settings.language == .mandarinChinese {
                     word = word.replacingOccurrences(of: " ", with: "")
                 }
-                let wordLength = language == .arabicGulf ? 1 : word.count
-
                 // Append the word, its timestamp, and offsets to the array
                 wordTimestampsQueue.sync {
+                    if event.text.contains("\n") {
+                        sentenceIndex += 1
+                    }
+
+                    let wordPosition: WordPosition
+                    if event.text.hasSuffix("。") || event.text == "。" {
+                        wordPosition = .last
+                    } else if event.text.hasPrefix("。") {
+                        wordPosition = .first
+                    } else {
+                        wordPosition = .middle
+                    }
+
                     wordTimestamps.append(.init(word: word,
                                                 time: audioTimeInSeconds,
                                                 duration: event.duration,
-                                                textOffset: textOffset,
-                                                wordLength: wordLength))
+                                                indexInList: index,
+                                                sentenceIndex: sentenceIndex,
+                                                wordPosition: wordPosition))
                     if var newTimestamp = wordTimestamps[safe: index] {
                         newTimestamp.duration = audioTimeInSeconds - newTimestamp.time - 0.0001
                         wordTimestamps[index] = newTimestamp
-                    }
-                    index += 1
 
-                    textOffset += wordLength
+                        if event.text.contains("\n") {
+                            sentenceIndex += 1
+                            wordTimestamps[index]
+                        }
+                    }
+
+                    index += 1
                 }
             }
 
@@ -124,25 +138,6 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             guard let audioData = result.audioData else {
                 throw NSError(domain: "SpeechSynthesis", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to get audioData"])
             }
-
-            // Return the collected word timestamps and audio data
-
-            if language != .arabicGulf {
-                let passage = chapter.passageWithoutNewLines
-                var searchRange = passage.startIndex..<passage.endIndex
-                for (index, word) in wordTimestamps.enumerated() {
-                    if let range = passage.range(of: word.word, options: [], range: searchRange) {
-                        wordTimestamps[index].textOffset = passage.distance(from: passage.startIndex, to: range.lowerBound)
-                        //                    indices.append(range)
-                        // Update searchRange to start after this word to avoid matching earlier occurrences
-                        searchRange = range.upperBound..<passage.endIndex
-                    } else {
-                        // Handle the case where the word is not found
-                        // You can choose to handle this situation differently, e.g., continue or throw an error
-                        print("Word not found: \(word)")
-                    }
-                }
-            }
             return (wordTimestamps, audioData)
 
         } catch {
@@ -185,4 +180,8 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
         return results
     }
 
+}
+
+enum WordPosition: Codable {
+    case first, middle, last
 }

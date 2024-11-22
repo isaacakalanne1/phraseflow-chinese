@@ -12,8 +12,6 @@ struct ReaderView: View {
     let chapter: Chapter
 
     var body: some View {
-        let startCharacterIndex = store.state.currentSpokenWord?.textOffset ?? -1
-        let (selectedSentenceIndex, selectedCharacterIndex) = getSentenceAndCharIndex(textOffset: startCharacterIndex) ?? (-1,-1)
         let chapterNumber = (store.state.storyState.currentStory?.currentChapterIndex ?? 0) + 1
 
         VStack(spacing: 10) {
@@ -34,31 +32,8 @@ struct ReaderView: View {
                     .fontWeight(.light)
             }
             .greyBackground()
-            ChapterView(chapter: chapter,
-                        currentSpokenWord: store.state.currentSpokenWord,
-                        selectedSentenceIndex: selectedSentenceIndex,
-                        selectedCharacterIndex: selectedCharacterIndex)
+            ChapterView(chapter: chapter)
             ActionButtonsView(chapter: chapter)
         }
-    }
-
-    func getSentenceAndCharIndex(textOffset: Int) -> (sentenceIndex: Int, characterIndex: Int)? {
-        var totalCharacterIndex = 0
-
-        for (sentenceIndex, sentence) in chapter.sentences.enumerated() {
-            let mandarinCharacters = Array(sentence.translation)
-            let sentenceLength = mandarinCharacters.count
-
-            if totalCharacterIndex + sentenceLength > textOffset {
-                let characterIndex = textOffset - totalCharacterIndex
-                if sentenceIndex != store.state.storyState.sentenceIndex {
-                    store.dispatch(.updateSentenceIndex(sentenceIndex))
-                }
-                return (sentenceIndex, characterIndex)
-            } else {
-                totalCharacterIndex += sentenceLength
-            }
-        }
-        return nil
     }
 }

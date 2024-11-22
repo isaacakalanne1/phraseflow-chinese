@@ -11,28 +11,25 @@ struct CharacterView: View {
     @EnvironmentObject var store: FastChineseStore
 
     let isHighlighted: Bool
-    let character: String
-    let characterIndex: Int
-    let sentenceIndex: Int
-    let isLastCharacter: Bool
+    let word: WordTimeStampData
     private let cornerRadius: CGFloat = 7.5
 
     var body: some View {
         VStack(spacing: 0) {
-            Text(character)
+            Text(word.word)
                 .font(.system(size: 25, weight: .light))
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .foregroundStyle(isHighlighted ? Color.blue : Color.black)
                 .background {
                     Group  {
-                        if sentenceIndex == store.state.storyState.sentenceIndex {
+                        if store.state.storyState.sentenceIndex == word.sentenceIndex {
                             Color.gray.opacity(0.3)
                                 .clipShape(
                                     .rect(
-                                        topLeadingRadius: characterIndex == 0 ? cornerRadius : 0,
-                                        bottomLeadingRadius: characterIndex == 0 ? cornerRadius : 0,
-                                        bottomTrailingRadius: isLastCharacter ? cornerRadius : 0,
-                                        topTrailingRadius: isLastCharacter ? cornerRadius : 0
+                                        topLeadingRadius: word.wordPosition == .first ? cornerRadius : 0,
+                                        bottomLeadingRadius: word.wordPosition == .first ? cornerRadius : 0,
+                                        bottomTrailingRadius: word.wordPosition == .last ? cornerRadius : 0,
+                                        topTrailingRadius: word.wordPosition == .last ? cornerRadius : 0
                                     )
                                 )
                         }
@@ -41,9 +38,8 @@ struct CharacterView: View {
         }
         .onTapGesture {
             if let chapter = store.state.storyState.currentChapter,
-               let word = chapter.getWordTimeStampData(atSentenceIndex: sentenceIndex, characterIndex: characterIndex),
                store.state.viewState.readerDisplayType != .defining {
-                store.dispatch(.updateSentenceIndex(sentenceIndex))
+                store.dispatch(.updateSentenceIndex(store.state.storyState.sentenceIndex))
                 store.dispatch(.selectWord(word))
                 if store.state.settingsState.isShowingDefinition {
                     store.dispatch(.defineCharacter(word, shouldForce: false))
