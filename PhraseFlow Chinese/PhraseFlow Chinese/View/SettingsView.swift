@@ -64,7 +64,7 @@ struct SettingsView: View {
             .greyBackground()
         ScrollView(.horizontal) {
             HStack {
-                ForEach(Voice.allCases.filter({ $0.language == store.state.settingsState.language }), id: \.self) { voice in
+                ForEach(store.state.settingsState.language.voices, id: \.self) { voice in
                     Button(action: {
                         withAnimation(.easeInOut) {
                             store.dispatch(.selectVoice(voice))
