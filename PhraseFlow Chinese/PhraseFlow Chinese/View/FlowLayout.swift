@@ -54,6 +54,23 @@ struct FlowLayout: Layout {
         // Variables to track current line height
         var currentLineHeight: CGFloat = 0
 
+//        for subview in subviews {
+//            let subviewSize = subview.sizeThatFits(.unspecified)
+//            if x + subviewSize.width > bounds.maxX {
+//                // Move to next line
+//                x = bounds.minX
+//                y += currentLineHeight + spacing
+//                currentLineHeight = 0
+//            }
+//
+//            subview.place(
+//                at: CGPoint(x: x, y: y),
+//                proposal: ProposedViewSize(width: subviewSize.width, height: subviewSize.height)
+//            )
+//            x += subviewSize.width + spacing
+//            currentLineHeight = max(currentLineHeight, subviewSize.height)
+//        }
+
         if let lang = language,
            lang == .arabicGulf {
             for subview in subviews {
@@ -65,11 +82,11 @@ struct FlowLayout: Layout {
                     currentLineHeight = 0
                 }
 
+                x -= subviewSize.width - spacing
                 subview.place(
                     at: CGPoint(x: x, y: y),
                     proposal: ProposedViewSize(width: subviewSize.width, height: subviewSize.height)
                 )
-                x -= subviewSize.width + spacing
                 currentLineHeight = max(currentLineHeight, subviewSize.height)
             }
         } else {
