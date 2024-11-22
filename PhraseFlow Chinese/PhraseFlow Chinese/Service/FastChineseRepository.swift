@@ -55,7 +55,8 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                 // Extract the word from the text using textOffset and wordLength
 
                 var word = event.text
-                    .replacingOccurrences(of: "\n", with: "")
+                    .replacingOccurrences(of: "\n", with: "") // Most TTS often add \n
+                    .replacingOccurrences(of: "                ", with: "") // Korean TTS often adds these spaces, which desyncs words
 
                 if settings.language == .mandarinChinese {
                     word = word.replacingOccurrences(of: " ", with: "")
@@ -137,6 +138,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                 } else {
                     // Handle the case where the word is not found
                     // You can choose to handle this situation differently, e.g., continue or throw an error
+                    print("Word not found: \(word)")
                 }
             }
             return (wordTimestamps, audioData)
