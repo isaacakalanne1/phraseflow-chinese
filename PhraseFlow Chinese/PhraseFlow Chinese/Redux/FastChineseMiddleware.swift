@@ -59,6 +59,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             let result = try await environment.synthesizeSpeech(for: chapter,
                                                                 voice: voice,
                                                                 rate: state.settingsState.speechSpeed.rate,
+                                                                language: state.storyState.currentStory?.language,
                                                                 settings: state.settingsState)
             return .onSynthesizedAudio(result)
         } catch {
