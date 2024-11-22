@@ -166,7 +166,7 @@ The chapter should also be long, around 30 sentences, to really allow plot to ha
     private func convertToJson(mandarin: String, settings: SettingsState) async throws -> String {
 
         let jsonPrompt = """
-Format the following story into JSON. Translate each English sentence into \(settings.language.name).
+Format the following story into JSON. Translate the entirety of each English sentence into \(settings.language.name).
 """
         var requestBody: [String: Any] = [
             "model": "gpt-4o-mini-2024-07-18",

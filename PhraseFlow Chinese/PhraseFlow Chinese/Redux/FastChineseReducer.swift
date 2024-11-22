@@ -77,14 +77,20 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         } else {
             newState.createStoryState.selectedGenres.removeAll(where: { $0 == genre })
         }
-    case .selectChapter(let story, let chapterIndex):
+    case .selectChapter(var story, let chapterIndex):
         newState.viewState.isShowingStoryListView = false
-        newState.storyState.currentStory = story
-        newState.storyState.sentenceIndex = 0
-        newState.storyState.currentStory?.lastUpdated = .now
-        if newState.storyState.currentStory?.chapters[safe: chapterIndex] != nil {
-            newState.storyState.currentStory?.currentChapterIndex = chapterIndex
+        story.lastUpdated = .now
+        if let chapter = story.chapters[safe: chapterIndex] {
+            if let voice = chapter.audioVoice {
+                newState.settingsState.voice = voice
+            }
+            story.currentChapterIndex = chapterIndex
         }
+        newState.storyState.currentStory = story
+
+        newState.storyState.sentenceIndex = 0
+        newState.settingsState.language = story.language
+
         if let data = newState.storyState.currentChapterAudioData,
            let player = data.createAVPlayer() {
             newState.audioState.audioPlayer = player
