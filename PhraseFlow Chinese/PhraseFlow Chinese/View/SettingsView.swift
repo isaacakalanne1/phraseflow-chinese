@@ -41,7 +41,6 @@ struct SettingsView: View {
                 voicesView
                 speedView
                 difficultyView
-                languageView
             }
             .padding(.horizontal)
         }
@@ -55,22 +54,24 @@ struct SettingsView: View {
             .greyBackground()
         ScrollView(.horizontal) {
             HStack {
-                ForEach(store.state.settingsState.language.voices, id: \.self) { voice in
-                    Button(action: {
-                        withAnimation(.easeInOut) {
-                            store.dispatch(.selectVoice(voice))
+                if let voices = store.state.storyState.currentStory?.language.voices {
+                    ForEach(voices, id: \.self) { voice in
+                        Button(action: {
+                            withAnimation(.easeInOut) {
+                                store.dispatch(.selectVoice(voice))
+                            }
+                        }) {
+                            VStack {
+                                Text(voice.title)
+                                    .fontWeight(.medium)
+                                Text(voice.gender.title)
+                                    .fontWeight(.light)
+                            }
+                            .foregroundColor(store.state.settingsState.voice == voice ? .white : .primary)
+                            .padding()
+                            .background(store.state.settingsState.voice == voice ? Color.accentColor : Color.gray.opacity(0.3))
+                            .cornerRadius(10)
                         }
-                    }) {
-                        VStack {
-                            Text(voice.title)
-                                .fontWeight(.medium)
-                            Text(voice.gender.title)
-                                .fontWeight(.light)
-                        }
-                        .foregroundColor(store.state.settingsState.voice == voice ? .white : .primary)
-                        .padding()
-                        .background(store.state.settingsState.voice == voice ? Color.accentColor : Color.gray.opacity(0.3))
-                        .cornerRadius(10)
                     }
                 }
             }
@@ -128,32 +129,4 @@ struct SettingsView: View {
             }
         }
     }
-
-    @ViewBuilder
-    var languageView:  some View {
-        Text("Language")
-            .fontWeight(.light)
-            .greyBackground()
-
-        ScrollView(.horizontal) {
-            HStack {
-                ForEach(Language.allCases, id: \.self) { language in
-                    Button(action: {
-                        withAnimation(.easeInOut) {
-                            store.dispatch(.updateLanguage(language))
-                        }
-                    }) {
-                        Text(language.flagEmoji + " " + language.name)
-                            .font(.body)
-                            .foregroundColor(store.state.settingsState.language == language ? .white : .primary)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(store.state.settingsState.language == language ? Color.accentColor : Color.gray.opacity(0.3))
-                            .cornerRadius(10)
-                    }
-                }
-            }
-        }
-    }
-
 }
