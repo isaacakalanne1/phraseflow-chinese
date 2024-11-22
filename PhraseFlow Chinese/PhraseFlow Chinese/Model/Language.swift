@@ -8,7 +8,7 @@
 import Foundation
 
 enum Language: String, Codable, CaseIterable {
-    case mandarinChinese, french, japanese, korean, russian
+    case mandarinChinese, french, japanese, korean, russian, spanish
 
     var name: String {
         switch self {
@@ -36,6 +36,8 @@ enum Language: String, Codable, CaseIterable {
             [.sunHi]
         case .russian:
             [.dariya]
+        case .spanish:
+            [.elvira]
         }
     }
 }
