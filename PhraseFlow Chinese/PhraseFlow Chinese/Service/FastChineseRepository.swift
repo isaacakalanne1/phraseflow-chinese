@@ -51,6 +51,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             var index = -1
             var sentenceIndex = -1
             var isWithinSpeech = false
+            let sentenceMarker = "✓"
             synthesizer.addSynthesisWordBoundaryEventHandler { (synthesizer, event) in
                 // Extract the audio offset (in ticks of 100 nanoseconds)
                 let audioTimeInSeconds = Double(event.audioOffset) / 10_000_000.0
@@ -67,46 +68,33 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                 }
                 // Append the word, its timestamp, and offsets to the array
                 wordTimestampsQueue.sync {
-//                    if event.text.contains("\n") {
-//                        sentenceIndex += 1
-//                    }
 
-                    if word.contains("✓") {
+                    if word.contains(sentenceMarker) {
                         sentenceIndex += 1
-                        word = word.replacingOccurrences(of: "✓", with: "")
+                        word = word.replacingOccurrences(of: sentenceMarker, with: "")
                     }
 
+                    let quotation = "\""
                     if var newTimestamp = wordTimestamps[safe: index] {
                         newTimestamp.duration = audioTimeInSeconds - newTimestamp.time - 0.0001
                         let listOfPrefixes = [
                             "“",
                             "”",
-                            "\"",
                             "«",
                             "»",
                             "»"
                         ]
 
                         for prefix in listOfPrefixes {
-                            word = word.replacingOccurrences(of: prefix, with: "\"")
-//                            if word.contains(prefix) {
-//                                if isWithinSpeech {
-//                                    word = word.replacingOccurrences(of: prefix, with: "")
-//                                    newTimestamp.word = newTimestamp.word + prefix
-//                                }
-//                                isWithinSpeech.toggle()
-//                                break
-//                            }
+                            word = word.replacingOccurrences(of: prefix, with: quotation)
                         }
 
-                        if word.contains("\"") {
-                            let separator = "\""
-                            let listOfCharacters = word.components(separatedBy: separator).flatMap {
-                                $0 == "" ? [separator] : [$0, separator]
+                        if word.contains(quotation) {
+                            let listOfCharacters = word.components(separatedBy: quotation).flatMap {
+                                $0 == "" ? [quotation] : [$0, quotation]
                             }.dropLast()
-//                            let numberOfQuotations = listOfCharacters.filter{ $0 == "\"" }.count
                             for char in listOfCharacters {
-                                if char == "\"" {
+                                if char == quotation {
                                     if isWithinSpeech {
                                         newTimestamp.word.append(char)
                                         word = String(word.dropFirst())
@@ -146,7 +134,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                     let sentenceSsml = """
                 <mstts:express-as role="\(speechRole.ssmlName)" style="\(speechStyle.ssmlName)" styledegree="1">
                     <prosody rate="\(rate)">
-                        \(index == 0 ? "✓" : "")\(sentenceSection)
+                        \(index == 0 ? sentenceMarker : "")\(sentenceSection)
                     </prosody>
                 </mstts:express-as>
                 """
