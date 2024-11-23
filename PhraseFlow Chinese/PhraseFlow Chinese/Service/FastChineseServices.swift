@@ -107,21 +107,24 @@ final class FastChineseServices: FastChineseServicesProtocol {
 //        allSettings.removeAll(where: { $0 == story?.setting })
         let setting = (story?.setting ?? StorySetting.allCases.randomElement()) ?? StorySetting.medieval
         var initialPrompt = "Write an incredible first chapter of a novel set in \(setting.settingName). Use \(settings.language.name) names for characters and places."
+        var vocabularyPrompt = ""
         switch settings.difficulty {
         case .beginner:
-            initialPrompt.append(" Use very simple, elementary-level vocabulary.")
+            vocabularyPrompt = " Use very very simple words, and very short sentences."
         case .intermediate:
-            initialPrompt.append(" Use simple vocabulary.")
+            vocabularyPrompt = " Use very simple words."
         case .advanced:
-            break
+            vocabularyPrompt = " Use simple words."
         case .expert:
-            initialPrompt.append(" Use very advanced vocabulary.")
+            break
         }
+        initialPrompt.append(vocabularyPrompt)
 
         let qualityPrompt = """
 
 The chapter should have complex, three-dimensional, flawed characters.
 The chapter should also be long, around 30 sentences, to really allow plot to happen in each chapter.
+Use quotation marks for speech.
 """
         initialPrompt.append(qualityPrompt)
         var requestBody: [String: Any] = [
@@ -131,6 +134,7 @@ The chapter should also be long, around 30 sentences, to really allow plot to ha
         var messages: [[String: String]] = [["role": "user", "content": initialPrompt]]
         if let chapters = story?.chapters {
             var continueStoryPrompt = "Write an incredible next chapter of the novel. Use Chinese names for characters and places."
+            continueStoryPrompt.append(vocabularyPrompt)
             continueStoryPrompt.append(qualityPrompt)
             for chapter in chapters {
                 messages.append(["role": "system", "content": chapter.passage])
@@ -145,7 +149,7 @@ The chapter should also be long, around 30 sentences, to really allow plot to ha
     private func convertToJson(mandarin: String, settings: SettingsState) async throws -> String {
 
         let jsonPrompt = """
-Format the following story into JSON. Translate the entirety of each English sentence into \(settings.language.name).
+Format the following story into JSON. Translate each English sentence into \(settings.language.name).
 """
         var requestBody: [String: Any] = [
             "model": "gpt-4o-mini-2024-07-18",

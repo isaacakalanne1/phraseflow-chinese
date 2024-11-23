@@ -82,26 +82,12 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                             "”",
                             "«",
                             "»",
-                            "»"
+                            "»",
+                            "\""
                         ]
 
                         for prefix in listOfPrefixes {
-                            word = word.replacingOccurrences(of: prefix, with: quotation)
-                        }
-
-                        if word.contains(quotation) {
-                            let listOfCharacters = word.components(separatedBy: quotation).flatMap {
-                                $0 == "" ? [quotation] : [$0, quotation]
-                            }.dropLast()
-                            for char in listOfCharacters {
-                                if char == quotation {
-                                    if isWithinSpeech {
-                                        newTimestamp.word.append(char)
-                                        word = String(word.dropFirst())
-                                    }
-                                    isWithinSpeech.toggle()
-                                }
-                            }
+                            word = word.replacingOccurrences(of: prefix, with: "")
                         }
                         wordTimestamps[index] = newTimestamp
                     }
