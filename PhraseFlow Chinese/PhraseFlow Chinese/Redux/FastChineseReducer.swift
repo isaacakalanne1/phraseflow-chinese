@@ -21,9 +21,11 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.viewState.readerDisplayType = .normal
         newState.storyState.sentenceIndex = 0
         newState.viewState.isShowingCreateStoryScreen = false
+        newState.settingsState.language = story.language
     case .onGeneratedStory(let story):
         newState.storyState.currentStory = story
         newState.viewState.readerDisplayType = .normal
+        newState.settingsState.language = story.language
     case .onLoadedStories(let stories):
         newState.storyState.savedStories = stories
         let currentStory = stories.first

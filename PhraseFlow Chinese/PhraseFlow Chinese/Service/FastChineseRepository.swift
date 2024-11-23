@@ -62,12 +62,14 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                 if language == .mandarinChinese {
                     word = word.replacingOccurrences(of: " ", with: "")
                 }
+                if language != .mandarinChinese {
+                    word = word + " "
+                }
                 // Append the word, its timestamp, and offsets to the array
                 wordTimestampsQueue.sync {
 //                    if event.text.contains("\n") {
 //                        sentenceIndex += 1
 //                    }
-
 
                     if word.contains("✓") {
                         sentenceIndex += 1
@@ -80,17 +82,36 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                             "“",
                             "”",
                             "\"",
+                            "«",
+                            "»",
+                            "»"
                         ]
 
                         for prefix in listOfPrefixes {
-                            if listOfPrefixes.contains(String(word.prefix(1))) {
-                                if !listOfPrefixes.contains(String(word.suffix(1))) {
+                            word = word.replacingOccurrences(of: prefix, with: "\"")
+//                            if word.contains(prefix) {
+//                                if isWithinSpeech {
+//                                    word = word.replacingOccurrences(of: prefix, with: "")
+//                                    newTimestamp.word = newTimestamp.word + prefix
+//                                }
+//                                isWithinSpeech.toggle()
+//                                break
+//                            }
+                        }
+
+                        if word.contains("\"") {
+                            let separator = "\""
+                            let listOfCharacters = word.components(separatedBy: separator).flatMap {
+                                $0 == "" ? [separator] : [$0, separator]
+                            }.dropLast()
+//                            let numberOfQuotations = listOfCharacters.filter{ $0 == "\"" }.count
+                            for char in listOfCharacters {
+                                if char == "\"" {
                                     if isWithinSpeech {
-                                        word.remove(at: word.startIndex)
-                                        newTimestamp.word = newTimestamp.word + prefix
+                                        newTimestamp.word.append(char)
+                                        word = String(word.dropFirst())
                                     }
                                     isWithinSpeech.toggle()
-                                    break
                                 }
                             }
                         }

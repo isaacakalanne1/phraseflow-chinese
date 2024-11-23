@@ -109,15 +109,13 @@ final class FastChineseServices: FastChineseServicesProtocol {
         var initialPrompt = "Write an incredible first chapter of a novel set in \(setting.settingName). Use \(settings.language.name) names for characters and places."
         switch settings.difficulty {
         case .beginner:
-            break
-//            initialPrompt.append(" Use very simple, elementary-level vocabulary.")
+            initialPrompt.append(" Use very simple, elementary-level vocabulary.")
         case .intermediate:
-            break
-//            initialPrompt.append(" Use simple vocabulary.")
+            initialPrompt.append(" Use simple vocabulary.")
         case .advanced:
             break
         case .expert:
-            break
+            initialPrompt.append(" Use very advanced vocabulary.")
         }
 
         let qualityPrompt = """

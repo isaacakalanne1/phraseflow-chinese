@@ -20,7 +20,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .failedToGenerateNewStory
         }
     case .onGeneratedStory(let story):
-        return .saveStory(story)
+        return .saveStoryAndSettings(story)
     case .generateChapter(let story):
         do {
             let story = try await environment.generateStory(story: story, settings: state.settingsState)
@@ -29,7 +29,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .failedToGenerateChapter
         }
     case .onGeneratedChapter(let story):
-        return .saveStory(story)
+        return .saveStoryAndSettings(story)
     case .loadStories:
         do {
             let stories = try environment.loadStories().sorted(by: { $0.lastUpdated > $1.lastUpdated })
