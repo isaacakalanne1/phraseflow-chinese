@@ -19,7 +19,11 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToGenerateNewStory
         }
-    case .onGeneratedStory(let story):
+    case .onGeneratedStory(let story),
+            .onGeneratedChapter(let story):
+        if let chapter = story.chapters[safe: story.currentChapterIndex] {
+            return .synthesizeAudio(chapter, voice: state.settingsState.voice, isForced: true)
+        }
         return .saveStoryAndSettings(story)
     case .generateChapter(let story):
         do {
@@ -28,8 +32,6 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         } catch {
             return .failedToGenerateChapter
         }
-    case .onGeneratedChapter(let story):
-        return .saveStoryAndSettings(story)
     case .loadStories:
         do {
             let stories = try environment.loadStories().sorted(by: { $0.lastUpdated > $1.lastUpdated })

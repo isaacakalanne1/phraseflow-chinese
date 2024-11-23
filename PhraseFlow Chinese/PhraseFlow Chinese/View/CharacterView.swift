@@ -24,14 +24,6 @@ struct CharacterView: View {
                     Group  {
                         if store.state.storyState.sentenceIndex == word.sentenceIndex {
                             Color.gray.opacity(0.3)
-                                .clipShape(
-                                    .rect(
-                                        topLeadingRadius: word.wordPosition == .first ? cornerRadius : 0,
-                                        bottomLeadingRadius: word.wordPosition == .first ? cornerRadius : 0,
-                                        bottomTrailingRadius: word.wordPosition == .last ? cornerRadius : 0,
-                                        topTrailingRadius: word.wordPosition == .last ? cornerRadius : 0
-                                    )
-                                )
                         }
                     }
                 }

@@ -18,13 +18,11 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .onGeneratedChapter(let story):
         newState.storyState.currentStory = story
         newState.audioState.audioPlayer = AVPlayer()
-        newState.viewState.readerDisplayType = .normal
         newState.storyState.sentenceIndex = 0
         newState.viewState.isShowingCreateStoryScreen = false
         newState.settingsState.language = story.language
     case .onGeneratedStory(let story):
         newState.storyState.currentStory = story
-        newState.viewState.readerDisplayType = .normal
         newState.settingsState.language = story.language
     case .onLoadedStories(let stories):
         newState.storyState.savedStories = stories
@@ -63,6 +61,7 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         if let player = data.audioData.createAVPlayer() {
             newState.audioState.audioPlayer = player
         }
+        newState.viewState.readerDisplayType = .normal
     case .updateShowDefinition(let isShowing):
         newState.settingsState.isShowingDefinition = isShowing
     case .updateShowEnglish(let isShowing):
