@@ -8,7 +8,7 @@
 import Foundation
 
 struct WordTimeStampData: Codable, Equatable, Hashable {
-    let word: String
+    var word: String
     let time: Double
     var duration: Double
     var indexInList: Int

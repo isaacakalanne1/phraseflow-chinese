@@ -50,6 +50,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             // Add a handler for the word boundary event
             var index = -1
             var sentenceIndex = -1
+            var isWithinSpeech = false
             synthesizer.addSynthesisWordBoundaryEventHandler { (synthesizer, event) in
                 // Extract the audio offset (in ticks of 100 nanoseconds)
                 let audioTimeInSeconds = Double(event.audioOffset) / 10_000_000.0
@@ -72,17 +73,35 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                         sentenceIndex += 1
                         word = word.replacingOccurrences(of: "✓", with: "")
                     }
+
+                    if var newTimestamp = wordTimestamps[safe: index] {
+                        newTimestamp.duration = audioTimeInSeconds - newTimestamp.time - 0.0001
+                        let listOfPrefixes = [
+                            "“",
+                            "”",
+                            "\"",
+                        ]
+
+                        for prefix in listOfPrefixes {
+                            if listOfPrefixes.contains(String(word.prefix(1))) {
+                                if !listOfPrefixes.contains(String(word.suffix(1))) {
+                                    if isWithinSpeech {
+                                        word.remove(at: word.startIndex)
+                                        newTimestamp.word = newTimestamp.word + prefix
+                                    }
+                                    isWithinSpeech.toggle()
+                                    break
+                                }
+                            }
+                        }
+                        wordTimestamps[index] = newTimestamp
+                    }
                     wordTimestamps.append(.init(word: word,
                                                 time: audioTimeInSeconds,
                                                 duration: event.duration,
                                                 indexInList: index,
                                                 sentenceIndex: sentenceIndex,
                                                 wordPosition: .middle))
-                    if var newTimestamp = wordTimestamps[safe: index] {
-                        newTimestamp.duration = audioTimeInSeconds - newTimestamp.time - 0.0001
-                        wordTimestamps[index] = newTimestamp
-
-                    }
 
                     index += 1
                 }
