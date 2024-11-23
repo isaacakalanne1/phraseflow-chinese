@@ -19,10 +19,9 @@ struct Chapter: Codable, Equatable, Hashable {
 
 
 """
-//        return sentences.reduce("") { $0 + newLine + $1.mandarin }
         return sentences.reduce("") { $0 + newLine + $1.translation }
     }
-    var storyTitle: String
+    var title: String
     var sentences: [Sentence]
     var audioVoice: Voice?
     var audioSpeed: SpeechSpeed?

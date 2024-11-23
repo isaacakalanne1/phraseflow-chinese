@@ -48,7 +48,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
                     translation = translation.replacingOccurrences(of: " ", with: "")
                 }
                 return Sentence(translation: translation, english: $0.english) })
-            let chapter = Chapter(storyTitle: "Story title here", sentences: sentences)
+            let chapter = Chapter(title: chapterResponse.chapterNumberAndTitleInEnglish ?? "", sentences: sentences)
 
             if var story {
                 if story.chapters.isEmpty {

@@ -21,7 +21,7 @@ struct ChapterListView: View {
                             store.dispatch(.selectChapter(story, chapterIndex: index))
                         }
                     }) {
-                        Text("Chapter \(index + 1)")
+                        Text(chapter.title)
                             .font(.body)
                             .padding()
                             .frame(maxWidth: .infinity, alignment: .leading)
