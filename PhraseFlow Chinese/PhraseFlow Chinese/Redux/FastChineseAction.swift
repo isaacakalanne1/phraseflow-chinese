@@ -26,6 +26,10 @@ enum FastChineseAction {
     case saveStory(Story)
     case failedToSaveStory
 
+    case saveStoryAndSettings(Story)
+    case onSavedStoryAndSettings
+    case failedToSaveStoryAndSettings
+
     case deleteStory(Story)
     case failedToDeleteStory
 

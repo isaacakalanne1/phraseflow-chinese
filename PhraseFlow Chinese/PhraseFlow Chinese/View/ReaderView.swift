@@ -21,7 +21,7 @@ struct ReaderView: View {
             }
             if store.state.settingsState.isShowingEnglish {
                 EnglishSentenceView()
-                    .frame(height: 90)
+                    .frame(height: 120)
             }
             HStack(spacing: 0) {
                 Text(store.state.storyState.currentStory?.title ?? "")

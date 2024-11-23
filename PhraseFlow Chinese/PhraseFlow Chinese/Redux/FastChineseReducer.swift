@@ -177,7 +177,10 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             .failedToLoadDefinitions,
             .saveDefinitions,
             .onSavedDefinitions,
-            .failedToSaveDefinitions:
+            .failedToSaveDefinitions,
+            .saveStoryAndSettings,
+            .onSavedStoryAndSettings,
+            .failedToSaveStoryAndSettings:
         break
     }
 

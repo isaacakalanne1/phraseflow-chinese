@@ -127,9 +127,19 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         return .onSelectedChapter
     case .onSelectedChapter:
         if let story = state.storyState.currentStory {
-            return .saveStory(story)
+            return .saveStoryAndSettings(story)
         }
         return nil
+    case .saveStoryAndSettings(let story):
+        do {
+            try environment.saveStory(story)
+            try environment.saveAppSettings(state.settingsState)
+            return .onSavedStoryAndSettings
+        } catch {
+            return .failedToSaveStoryAndSettings
+        }
+    case .onSavedStoryAndSettings:
+        return .loadStories
     case .selectWord(let word):
         if state.audioState.isPlayingAudio {
             let myTime = CMTime(seconds: word.time, preferredTimescale: 60000)
@@ -198,7 +208,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .updateDifficulty,
             .onLoadedDefinitions,
             .failedToLoadDefinitions,
-            .failedToSaveDefinitions:
+            .failedToSaveDefinitions,
+            .failedToSaveStoryAndSettings:
         return nil
     }
 }
