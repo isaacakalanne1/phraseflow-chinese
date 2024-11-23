@@ -43,6 +43,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.viewState.readerDisplayType = .defining
     case .onDefinedCharacter(let definition):
         newState.definitionState.currentDefinition = definition
+        newState.definitionState.definitions.removeAll(where: { $0.character == definition.character && $0.sentence == definition.sentence })
+        newState.definitionState.definitions.append(definition)
         newState.viewState.readerDisplayType = .normal
     case .onSynthesizedAudio(var data):
         newState.audioState.currentPlaybackTime = 0
@@ -172,7 +174,10 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             .playWord,
             .finishedPlayingWord,
             .loadDefinitions,
-            .failedToLoadDefinitions:
+            .failedToLoadDefinitions,
+            .saveDefinitions,
+            .onSavedDefinitions,
+            .failedToSaveDefinitions:
         break
     }
 

@@ -22,6 +22,7 @@ protocol FastChineseDataStoreProtocol {
     func loadDefinitions() throws -> [Definition]
     func loadDefinition(character: String, sentence: Sentence) throws -> Definition
     func saveDefinition(_ definition: Definition) throws
+    func saveDefinitions(_ definitions: [Definition]) throws
     func unsaveStory(_ story: Story) throws
 }
 
@@ -179,7 +180,7 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
         }
     }
 
-    private func saveDefinitions(_ definitions: [Definition]) throws {
+    func saveDefinitions(_ definitions: [Definition]) throws {
         guard let fileURL = documentsDirectory?.appendingPathComponent("definitions.json") else {
             throw FastChineseDataStoreError.failedToCreateUrl
         }

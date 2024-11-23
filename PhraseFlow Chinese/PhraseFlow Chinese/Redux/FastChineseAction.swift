@@ -55,6 +55,9 @@ enum FastChineseAction {
     case finishedPlayingWord
     case onDefinedCharacter(Definition)
     case failedToDefineCharacter
+    case saveDefinitions
+    case onSavedDefinitions
+    case failedToSaveDefinitions
 
     case updateShowDefinition(Bool)
     case updateShowEnglish(Bool)

@@ -113,6 +113,15 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             return .failedToDefineCharacter
         }
     case .onDefinedCharacter:
+        return .saveDefinitions
+    case .saveDefinitions:
+        do {
+            try environment.saveDefinitions(state.definitionState.definitions)
+            return .onSavedDefinitions
+        } catch {
+            return .failedToSaveDefinitions
+        }
+    case .onSavedDefinitions:
         return .refreshDefinitionView
     case .selectChapter:
         return .onSelectedChapter
@@ -188,7 +197,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .onLoadedStories,
             .updateDifficulty,
             .onLoadedDefinitions,
-            .failedToLoadDefinitions:
+            .failedToLoadDefinitions,
+            .failedToSaveDefinitions:
         return nil
     }
 }

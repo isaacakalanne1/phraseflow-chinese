@@ -13,6 +13,7 @@ protocol FastChineseEnvironmentProtocol {
     func generateStory(story: Story?, settings: SettingsState) async throws -> Story
     func loadStories() throws -> [Story]
     func loadDefinitions() throws -> [Definition]
+    func saveDefinitions(_ definitions: [Definition]) throws
     func loadAppSettings() throws -> SettingsState
     func saveStory(_ story: Story) throws
     func saveAppSettings(_ settings: SettingsState) throws
@@ -60,6 +61,10 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
 
     func loadDefinitions() throws -> [Definition] {
         try dataStore.loadDefinitions()
+    }
+
+    func saveDefinitions(_ definitions: [Definition]) throws {
+        try dataStore.saveDefinitions(definitions)
     }
 
     func loadAppSettings() throws -> SettingsState {
