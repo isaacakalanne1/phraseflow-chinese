@@ -92,6 +92,10 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             if let voice = chapter.audioVoice {
                 newState.settingsState.voice = voice
             }
+            if let speed = chapter.audioSpeed {
+                newState.settingsState.speechSpeed = speed
+            }
+
             story.currentChapterIndex = chapterIndex
         }
         newState.storyState.currentStory = story
