@@ -56,12 +56,12 @@ final class FastChineseServices: FastChineseServicesProtocol {
                 } else {
                     story.chapters.append(chapter)
                 }
-                story.latestStorySummaryInEnglish = chapterResponse.latestStorySummaryInEnglish
+                story.latestChapterSummaryInEnglish = chapterResponse.latestChapterSummaryInEnglish
                 story.currentChapterIndex = story.chapters.count - 1
                 story.lastUpdated = .now
                 return story
             } else {
-                return Story(latestStorySummaryInEnglish: chapterResponse.latestStorySummaryInEnglish,
+                return Story(latestChapterSummaryInEnglish: chapterResponse.latestChapterSummaryInEnglish,
                              difficulty: .beginner,
                              language: settings.language,
                              title: chapterResponse.titleOfNovel ?? "",
@@ -135,11 +135,11 @@ Use quotation marks for speech.
 
         var messages: [[String: String]] = [["role": "user", "content": initialPrompt]]
         if let chapters = story?.chapters {
-            var continueStoryPrompt = "Write an incredible next chapter of the novel. Use Chinese names for characters and places."
+            var continueStoryPrompt = "Write an incredible next chapter of the novel. Use \(settings.language.name) names for characters and places."
             continueStoryPrompt.append(vocabularyPrompt)
             continueStoryPrompt.append(qualityPrompt)
             for chapter in chapters {
-                messages.append(["role": "system", "content": chapter.passage])
+                messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
                 messages.append(["role": "user", "content": continueStoryPrompt])
             }
         }

@@ -12,14 +12,14 @@ struct Chapter: Codable, Equatable, Hashable {
 
 
     var passageWithoutNewLines: String {
-        return sentences.reduce("") { $0 + $1.translation }
+        return sentences.reduce("") { $0 + $1.english }
     }
     var passage: String {
         let newLine = """
 
 
 """
-        return sentences.reduce("") { $0 + newLine + $1.translation }
+        return sentences.reduce("") { $0 + newLine + $1.english }
     }
     var title: String
     var sentences: [Sentence]

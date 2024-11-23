@@ -40,7 +40,6 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             speechConfig.speechSynthesisLanguage = "zh-CN"
 
             // Create a speech synthesizer
-            let audioConfig = SPXAudioConfiguration()
             let synthesizer = try SPXSpeechSynthesizer(speechConfiguration: speechConfig, audioConfiguration: nil)
 
             // Create an array to hold words, timestamps, and offsets
@@ -50,7 +49,6 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             // Add a handler for the word boundary event
             var index = -1
             var sentenceIndex = -1
-            var isWithinSpeech = false
             let sentenceMarker = "✓"
             synthesizer.addSynthesisWordBoundaryEventHandler { (synthesizer, event) in
                 // Extract the audio offset (in ticks of 100 nanoseconds)
@@ -62,11 +60,10 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
 
                 if language == .mandarinChinese {
                     word = word.replacingOccurrences(of: " ", with: "")
-                }
-                if language != .mandarinChinese {
+                } else {
                     word = word + " "
                 }
-                // Append the word, its timestamp, and offsets to the array
+                
                 wordTimestampsQueue.sync {
 
                     if word.contains(sentenceMarker) {
@@ -74,7 +71,6 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                         word = word.replacingOccurrences(of: sentenceMarker, with: "")
                     }
 
-                    let quotation = "\""
                     if var newTimestamp = wordTimestamps[safe: index] {
                         newTimestamp.duration = audioTimeInSeconds - newTimestamp.time - 0.0001
                         let listOfPrefixes = [
@@ -108,7 +104,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             <voice name="\(voice.speechSynthesisVoiceName)">
             """
             // TODO: Update to be able to speak male characters as male voice, storyteller as female, and female characters as same female voice
-            for (index, sentence) in chapter.sentences.enumerated() {
+            for (_, sentence) in chapter.sentences.enumerated() {
                 let splitSentence = splitSpeechAndNonSpeech(from: sentence.translation)
                 for (index, sentenceSection) in splitSentence.enumerated() {
                     // TODO: Update styleDegree to also be generated with each sentence

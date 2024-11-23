@@ -31,8 +31,8 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
 
     init() {
-//        clearData(path: "userData.json")
-//        clearData(path: "settingsState.json")
+        clearData(path: "userData.json")
+        clearData(path: "settingsState.json")
     }
 
     func clearData(path: String) {
