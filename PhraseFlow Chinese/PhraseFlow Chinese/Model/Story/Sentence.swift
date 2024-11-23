@@ -22,30 +22,43 @@ struct Sentence: Codable, Equatable, Hashable {
     }
 }
 
-func sentenceSchema(languageKey: String) -> [String: Any] {
-    [
+func sentenceSchema(languageKey: String, shouldCreateTitle: Bool) -> [String: Any] {
+    var properties: [String: Any] = [
+        "latestStorySummaryInEnglish": ["type": "string"],
+        "sentences": [
+            "type": "array",
+            "items": [
+                "type": "object",
+                "properties": [
+                    "english": ["type": "string"],
+                    languageKey: ["type": "string"]
+                ],
+                "required": ["english", languageKey],
+                "additionalProperties": false
+            ]
+        ]
+    ]
+
+    if shouldCreateTitle {
+        properties["titleOfNovel"] = ["type": "string"]
+    }
+    var required: [String] = [
+        "sentences",
+        "latestStorySummaryInEnglish"
+    ]
+    if shouldCreateTitle {
+        required.append("titleOfNovel")
+    }
+
+    return [
         "type": "json_schema",
         "json_schema": [
             "name": "sentences",
             "strict": true,
             "schema": [
                 "type": "object",
-                "properties": [
-                    "latestStorySummary": ["type": "string"],
-                    "sentences": [
-                        "type": "array",
-                        "items": [
-                            "type": "object",
-                            "properties": [
-                                "english": ["type": "string"],
-                                languageKey: ["type": "string"]
-                            ],
-                            "required": ["english", languageKey],
-                            "additionalProperties": false
-                        ]
-                    ]
-                ],
-                "required": ["sentences", "latestStorySummary"],
+                "properties": properties,
+                "required": required,
                 "additionalProperties": false
             ]
         ]

@@ -8,12 +8,10 @@
 import Foundation
 
 enum StorySetting: String, CaseIterable, Categorisable, Codable {
-    case ancientChina, modernCity, futuristic, cyberpunk, medieval
+    case modernCity, futuristic, cyberpunk, medieval
 
     var title: String {
         switch self {
-        case .ancientChina:
-            "Ancient\nChina"
         case .modernCity:
             "Modern\nCity"
         default:
@@ -23,8 +21,6 @@ enum StorySetting: String, CaseIterable, Categorisable, Codable {
 
     var settingName: String {
         switch self {
-        case .ancientChina:
-            "ancient China"
         case .modernCity:
             "a modern city"
         case .futuristic:
@@ -39,8 +35,6 @@ enum StorySetting: String, CaseIterable, Categorisable, Codable {
     var imageUrl: URL? {
         let urlString: String
         switch self {
-        case .ancientChina:
-            urlString = "https://www.thoughtco.com/thmb/vvHe7ZbuukBD4M2gwJlVhDCQIdA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/view-of-great-wall-china-93199461-59cc049a03f4020011c1608c.jpg"
         case .modernCity:
             urlString = "https://cdn-v2.theculturetrip.com/1200x630/wp-content/uploads/2021/12/dbxhkt_hong-kong-sar-china--sean-pavone-alamy-stock-photo.webp"
         case .futuristic:

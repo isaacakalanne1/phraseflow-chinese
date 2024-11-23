@@ -26,7 +26,9 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
         do {
             let (response, setting) = try await continueStory(story: story, settings: settings)
-            let jsonString = try await convertToJson(mandarin: response, settings: settings)
+            let jsonString = try await convertToJson(mandarin: response,
+                                                     settings: settings,
+                                                     shouldCreateTitle: story == nil)
             guard let jsonData = jsonString.data(using: .utf8) else {
                 throw FastChineseServicesError.failedToGetResponseData
             }
@@ -54,15 +56,15 @@ final class FastChineseServices: FastChineseServicesProtocol {
                 } else {
                     story.chapters.append(chapter)
                 }
-                story.latestStorySummary = chapterResponse.latestStorySummary
+                story.latestStorySummaryInEnglish = chapterResponse.latestStorySummaryInEnglish
                 story.currentChapterIndex = story.chapters.count - 1
                 story.lastUpdated = .now
                 return story
             } else {
-                return Story(latestStorySummary: chapterResponse.latestStorySummary,
+                return Story(latestStorySummaryInEnglish: chapterResponse.latestStorySummaryInEnglish,
                              difficulty: .beginner,
                              language: settings.language,
-                             title: "Story title here",
+                             title: chapterResponse.titleOfNovel ?? "",
                              chapters: [chapter],
                              setting: setting)
             }
@@ -146,7 +148,7 @@ Use quotation marks for speech.
         return (try await makeOpenrouterRequest(requestBody: requestBody), setting)
     }
 
-    private func convertToJson(mandarin: String, settings: SettingsState) async throws -> String {
+    private func convertToJson(mandarin: String, settings: SettingsState, shouldCreateTitle: Bool) async throws -> String {
 
         let jsonPrompt = """
 Format the following story into JSON. Translate each English sentence into \(settings.language.name).
@@ -160,7 +162,8 @@ Format the following story into JSON. Translate each English sentence into \(set
             ["role": "user", "content": mandarin]
         ]
         requestBody["messages"] = messages
-        requestBody["response_format"] = sentenceSchema(languageKey: settings.language.schemaKey)
+        requestBody["response_format"] = sentenceSchema(languageKey: settings.language.schemaKey,
+                                                        shouldCreateTitle: shouldCreateTitle)
 
         return try await makeOpenAIRequest(requestBody: requestBody)
     }
