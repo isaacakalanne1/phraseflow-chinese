@@ -33,12 +33,14 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             // Initialize speech configuration
             let speechConfig = try SPXSpeechConfiguration(subscription: speechKey, region: serviceRegion)
             speechConfig.requestWordLevelTimestamps()
+//            speechConfig.setServicePropertyTo("explicit", byName: "punctuation", using: .uriQueryParameter)
             speechConfig.outputFormat = .detailed
             speechConfig.setSpeechSynthesisOutputFormat(.riff16Khz16BitMonoPcm) // Use a format compatible with AVAudioPlayer
             speechConfig.speechSynthesisVoiceName = voice.speechSynthesisVoiceName
-            speechConfig.speechSynthesisLanguage = "fr-FR"
+            speechConfig.speechSynthesisLanguage = "zh-CN"
 
             // Create a speech synthesizer
+            let audioConfig = SPXAudioConfiguration()
             let synthesizer = try SPXSpeechSynthesizer(speechConfiguration: speechConfig, audioConfiguration: nil)
 
             // Create an array to hold words, timestamps, and offsets
@@ -47,7 +49,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
 
             // Add a handler for the word boundary event
             var index = -1
-            var sentenceIndex = 0
+            var sentenceIndex = -1
             synthesizer.addSynthesisWordBoundaryEventHandler { (synthesizer, event) in
                 // Extract the audio offset (in ticks of 100 nanoseconds)
                 let audioTimeInSeconds = Double(event.audioOffset) / 10_000_000.0
@@ -65,8 +67,11 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
 //                        sentenceIndex += 1
 //                    }
 
-                    let wordPosition: WordPosition
 
+                    if word.contains("✓") {
+                        sentenceIndex += 1
+                        word = word.replacingOccurrences(of: "✓", with: "")
+                    }
                     wordTimestamps.append(.init(word: word,
                                                 time: audioTimeInSeconds,
                                                 duration: event.duration,
@@ -77,9 +82,6 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                         newTimestamp.duration = audioTimeInSeconds - newTimestamp.time - 0.0001
                         wordTimestamps[index] = newTimestamp
 
-                        if word.hasSuffix("。") || word == "。" || word.hasSuffix(".") || word == "." {
-                            sentenceIndex += 1
-                        }
                     }
 
                     index += 1
@@ -92,9 +94,9 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             <voice name="\(voice.speechSynthesisVoiceName)">
             """
             // TODO: Update to be able to speak male characters as male voice, storyteller as female, and female characters as same female voice
-            for sentence in chapter.sentences {
+            for (index, sentence) in chapter.sentences.enumerated() {
                 let splitSentence = splitSpeechAndNonSpeech(from: sentence.translation)
-                for sentenceSection in splitSentence {
+                for (index, sentenceSection) in splitSentence.enumerated() {
                     // TODO: Update styleDegree to also be generated with each sentence
                     let isSpeech = speechCharacters.firstIndex(where: { sentenceSection.contains($0)} ) != nil
 //                    let speechRole = isSpeech ? sentence.speechRole : voice.defaultSpeechRole
@@ -104,7 +106,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                     let sentenceSsml = """
                 <mstts:express-as role="\(speechRole.ssmlName)" style="\(speechStyle.ssmlName)" styledegree="1">
                     <prosody rate="\(rate)">
-                        \(sentenceSection)
+                        \(index == 0 ? "✓" : "")\(sentenceSection)
                     </prosody>
                 </mstts:express-as>
                 """

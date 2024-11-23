@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import GoogleGenerativeAI
 
 enum FastChineseServicesError: Error {
     case failedToGetResponseData
@@ -21,12 +20,6 @@ protocol FastChineseServicesProtocol {
 }
 
 final class FastChineseServices: FastChineseServicesProtocol {
-
-    let generativeModel =
-      GenerativeModel(
-        name: "gemini-1.5-flash-8b-latest",
-        apiKey: "AIzaSyBJz8qmCuAK5EO9AzQLl99ed6TlvHKRjCI"
-      )
 
     func generateStory(story: Story?, settings: SettingsState) async throws -> Story {
 //        Use very very short sentences, and very very extremely simple language.
@@ -167,7 +160,7 @@ Format the following story into JSON. Translate the entirety of each English sen
         requestBody["messages"] = messages
         requestBody["response_format"] = sentenceSchema(languageKey: settings.language.schemaKey)
 
-        return try await makeOpenAIRequest(requestBody: requestBody, settings: settings)
+        return try await makeOpenAIRequest(requestBody: requestBody)
     }
 
     private func makeOpenrouterRequest(requestBody: [String: Any]) async throws -> String {

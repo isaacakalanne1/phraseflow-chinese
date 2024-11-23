@@ -153,6 +153,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         if let voice = language.voices.first {
             newState.settingsState.voice = voice
         }
+    case .onLoadedDefinitions(let definitions):
+        newState.definitionState.definitions = definitions
     case .saveStory,
             .failedToSaveStory,
             .failedToLoadStories,
@@ -168,7 +170,9 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             .loadAppSettings,
             .saveAppSettings,
             .playWord,
-            .finishedPlayingWord:
+            .finishedPlayingWord,
+            .loadDefinitions,
+            .failedToLoadDefinitions:
         break
     }
 
