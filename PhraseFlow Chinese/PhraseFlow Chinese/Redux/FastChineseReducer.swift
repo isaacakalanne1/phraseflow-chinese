@@ -46,9 +46,12 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.definitionState.definitions.removeAll(where: { $0.character == definition.character && $0.sentence == definition.sentence })
         newState.definitionState.definitions.append(definition)
         newState.viewState.readerDisplayType = .normal
+    case .synthesizeAudio:
+        newState.viewState.playButtonDisplayType = .loading
     case .onSynthesizedAudio(var data):
         newState.audioState.currentPlaybackTime = 0
         newState.definitionState.currentDefinition = nil
+        newState.viewState.playButtonDisplayType = .normal
 
         var newStory = newState.storyState.currentStory
         let chapterIndex = newStory?.currentChapterIndex ?? 0
@@ -62,6 +65,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             newState.audioState.audioPlayer = player
         }
         newState.viewState.readerDisplayType = .normal
+    case .failedToSynthesizeAudio:
+        newState.viewState.playButtonDisplayType = .normal
     case .updateShowDefinition(let isShowing):
         newState.settingsState.isShowingDefinition = isShowing
     case .updateShowEnglish(let isShowing):
@@ -161,10 +166,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .saveStory,
             .failedToSaveStory,
             .failedToLoadStories,
-            .failedToPlayAudio,
             .failedToDefineCharacter,
             .loadStories,
-            .synthesizeAudio,
             .onPlayedAudio,
             .deleteStory,
             .failedToDeleteStory,

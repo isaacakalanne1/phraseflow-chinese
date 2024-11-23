@@ -71,7 +71,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
                                                                 language: state.storyState.currentStory?.language)
             return .onSynthesizedAudio(result)
         } catch {
-            return .failedToPlayAudio
+            return .failedToSynthesizeAudio
         }
     case .onSynthesizedAudio(let result):
         if let story = state.storyState.currentStory {
@@ -192,7 +192,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .failedToSaveStory,
             .failedToDefineCharacter,
             .onPlayedAudio,
-            .failedToPlayAudio,
+            .failedToSynthesizeAudio,
             .updateShowingCreateStoryScreen,
             .updateSelectGenre,
             .updateShowingSettings,

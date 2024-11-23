@@ -19,9 +19,13 @@ struct ActionButtonsView: View {
                 store.dispatch(.updateShowingStoryListView(isShowing: true))
             }
             
-            if chapter.audioData == nil ||
-                store.state.settingsState.voice != chapter.audioVoice ||
-                store.state.settingsState.speechSpeed != chapter.audioSpeed {
+            if store.state.viewState.playButtonDisplayType == .loading {
+                ActionButton(title: "Loading...",
+                             imageName: "ellipsis.circle.fill") { }
+                             .disabled(true)
+            } else if chapter.audioData == nil ||
+                        store.state.settingsState.voice != chapter.audioVoice ||
+                        store.state.settingsState.speechSpeed != chapter.audioSpeed {
                 ActionButton(title: "Load",
                              imageName: "arrow.down.to.line.circle") {
                     store.dispatch(.synthesizeAudio(chapter,
@@ -42,13 +46,6 @@ struct ActionButtonsView: View {
                         store.dispatch(.playAudio(time: currentSpokenWord?.time))
                     }
                 }
-            }
-
-            ActionButton(title: "Load",
-                         imageName: "arrow.down.to.line.circle") {
-                store.dispatch(.synthesizeAudio(chapter,
-                                                voice: store.state.settingsState.voice,
-                                                isForced: true))
             }
 
             ActionButton(title: "Settings",
