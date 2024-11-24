@@ -39,7 +39,7 @@ struct StoryListView: View {
                 .foregroundColor(.white)
                 .cornerRadius(10)
                 NavigationLink(destination: ChooseLanguageView()) {
-                    Text("Choose language")
+                    Text("Settings")
                         .frame(height: 40)
                 }
                 .foregroundColor(.accentColor)

@@ -22,8 +22,6 @@ protocol FastChineseServicesProtocol {
 final class FastChineseServices: FastChineseServicesProtocol {
 
     func generateStory(story: Story?, settings: SettingsState) async throws -> Story {
-//        Use very very short sentences, and very very extremely simple language.
-
         do {
             let (response, setting) = try await continueStory(story: story, settings: settings)
             let jsonString = try await convertToJson(mandarin: response,
@@ -112,7 +110,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         var vocabularyPrompt = ""
         switch settings.difficulty {
         case .beginner:
-            vocabularyPrompt = " Use very very simple words, and very short sentences."
+            vocabularyPrompt = " Use very very simple words, and short sentences."
         case .intermediate:
             vocabularyPrompt = " Use very simple words."
         case .advanced:

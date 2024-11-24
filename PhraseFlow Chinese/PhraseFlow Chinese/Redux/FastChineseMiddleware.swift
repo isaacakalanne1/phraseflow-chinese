@@ -103,7 +103,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
                 return nil
             }
             
-            if let definition = state.definitionState.definitions.first(where: { $0.character == timeStampData.word && $0.sentence == sentence }) {
+            if let definition = state.definitionState.definitions.first(where: { $0.character == timeStampData.word && $0.sentence == sentence }),
+               !shouldForce {
                 return .onDefinedCharacter(definition)
             }
             let fetchedDefinition = try await environment.fetchDefinition(of: timeStampData.word,
