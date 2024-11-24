@@ -37,7 +37,7 @@ struct SettingsView: View {
                         Text("Toggle")
                     }
                     Section {
-                        ForEach(store.state.storyState.currentStory?.language.voices ?? [], id: \.self) { voice in
+                        ForEach(store.state.storyState.currentStory?.language.voices.sorted(by: { $0.gender.title < $1.gender.title }) ?? [], id: \.self) { voice in
                             Button(action: {
                                 withAnimation(.easeInOut) {
                                     store.dispatch(.selectVoice(voice))

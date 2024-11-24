@@ -29,7 +29,7 @@ struct ChooseLanguageView: View {
                     Text("Difficulty")
                 }
                 Section {
-                    ForEach(Language.allCases, id: \.self) { language in
+                    ForEach(Language.allCases.sorted(by: { $0.name < $1.name }), id: \.self) { language in
                         Button {
                             store.dispatch(.updateLanguage(language))
                         } label: {
