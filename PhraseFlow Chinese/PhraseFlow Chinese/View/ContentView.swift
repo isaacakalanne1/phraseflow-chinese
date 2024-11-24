@@ -36,12 +36,12 @@ struct ContentView: View {
                 Text("Writing new chapter...")
                     .font(.body)
             case .failedToGenerateStory:
-                ErrorView(title: "Failed to generate story",
+                ErrorView(title: "Failed to write story",
                           buttonTitle: "Retry") {
                     store.dispatch(.generateNewStory)
                 }
             case .failedToGenerateChapter:
-                ErrorView(title: "Failed to generate chapter",
+                ErrorView(title: "Failed to write chapter",
                           buttonTitle: "Retry") {
                     if let story = store.state.storyState.currentStory {
                         store.dispatch(.generateChapter(story: story))

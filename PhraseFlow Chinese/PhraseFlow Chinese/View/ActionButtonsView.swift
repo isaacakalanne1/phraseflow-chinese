@@ -21,7 +21,7 @@ struct ActionButtonsView: View {
             
             if store.state.viewState.playButtonDisplayType == .loading {
                 ActionButton(title: "Loading",
-                             imageName: "ellipsis.circle.fill") { }
+                             imageName: "ellipsis.circle") { }
                              .disabled(true)
             } else if chapter.audioData == nil ||
                         store.state.settingsState.voice != chapter.audioVoice ||

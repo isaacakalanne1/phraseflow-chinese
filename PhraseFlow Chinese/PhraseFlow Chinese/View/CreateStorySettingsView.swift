@@ -29,7 +29,7 @@ struct CreateStorySettingsView: View {
                         Text("Difficulty")
                     }
                     Section {
-                        ForEach(Language.allCases.sorted(by: { $0.displayName < $1.displayName }), id: \.self) { language in
+                        ForEach(Language.allCases, id: \.self) { language in
                             Button {
                                 store.dispatch(.updateLanguage(language))
                             } label: {
@@ -51,7 +51,7 @@ struct CreateStorySettingsView: View {
                 .background(Color.accentColor)
                 .foregroundColor(.white)
                 .cornerRadius(10)
-                .navigationTitle("Story Settings")
+                .navigationTitle(store.state.storyState.currentStory == nil ? "Create Story" : "Story Settings")
             }
         }
     }

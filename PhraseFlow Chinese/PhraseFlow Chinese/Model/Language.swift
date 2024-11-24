@@ -8,15 +8,15 @@
 import Foundation
 
 enum Language: String, Codable, CaseIterable {
-    case arabicGulf,
-         mandarinChinese,
+    case mandarinChinese,
+         spanish,
          french,
+         arabicGulf,
          japanese,
          korean,
          portugueseBrazil,
          portugueseEuropean,
-         russian,
-         spanish
+         russian
 
     var descriptiveName: String {
         switch self {

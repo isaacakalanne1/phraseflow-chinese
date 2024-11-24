@@ -29,8 +29,7 @@ struct CharacterView: View {
                 }
         }
         .onTapGesture {
-            if let chapter = store.state.storyState.currentChapter,
-               store.state.viewState.readerDisplayType != .defining {
+            if store.state.viewState.readerDisplayType != .defining {
                 store.dispatch(.updateSentenceIndex(word.sentenceIndex))
                 store.dispatch(.selectWord(word))
                 if store.state.settingsState.isShowingDefinition {
