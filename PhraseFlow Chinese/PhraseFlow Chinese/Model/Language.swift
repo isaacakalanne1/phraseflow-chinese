@@ -13,8 +13,8 @@ enum Language: String, Codable, CaseIterable {
          french,
          japanese,
          korean,
-         portuguesePortugal,
          portugueseBrazil,
+         portuguesePortugal,
          russian,
          spanish
 
