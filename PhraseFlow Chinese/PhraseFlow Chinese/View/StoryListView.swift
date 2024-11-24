@@ -15,21 +15,25 @@ struct StoryListView: View {
         NavigationView {
             VStack {
                 List {
-                    ForEach(store.state.storyState.savedStories, id: \.self) { story in
-                        HStack {
-                            NavigationLink(destination: ChapterListView(story: story)) {
-                                VStack(alignment: .leading, content: {
-                                    Text(story.title)
-                                        .fontWeight(.medium)
-                                    Text(story.latestChapterSummaryInEnglish)
-                                        .fontWeight(.light)
-                                })
-                                .padding(.trailing)
+                    Section {
+                        ForEach(store.state.storyState.savedStories, id: \.self) { story in
+                            HStack {
+                                NavigationLink(destination: ChapterListView(story: story)) {
+                                    VStack(alignment: .leading, content: {
+                                        Text(story.title)
+                                            .fontWeight(.medium)
+                                        Text(story.latestChapterSummaryInEnglish)
+                                            .fontWeight(.light)
+                                    })
+                                    .padding(.trailing)
+                                }
                             }
+                            .foregroundStyle(Color.primary)
                         }
-                        .foregroundStyle(Color.primary)
+                        .onDelete(perform: delete)
+                    } header: {
+                        Text("Stories")
                     }
-                    .onDelete(perform: delete)
                 }
                 Button("\(store.state.settingsState.language.flagEmoji) New Story") {
                     store.dispatch(.generateNewStory)
@@ -51,6 +55,7 @@ struct StoryListView: View {
         .onAppear {
             store.dispatch(.loadStories)
         }
+        .id(store.state.viewState.storyListViewId)
     }
 
     func delete(at offsets: IndexSet) {

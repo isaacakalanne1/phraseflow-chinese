@@ -11,6 +11,7 @@ struct ViewState {
     var definitionViewId: UUID
     var chapterViewId: UUID
     var translationViewId: UUID
+    var storyListViewId: UUID
 
     var isShowingCreateStoryScreen = false
     var isShowingSettingsScreen = false
@@ -22,6 +23,7 @@ struct ViewState {
     init(definitionViewId: UUID = UUID(),
          chapterViewId: UUID = UUID(),
          translationViewId: UUID = UUID(),
+         storyListViewId: UUID = UUID(),
          isShowingCreateStoryScreen: Bool = false,
          isShowingSettingsScreen: Bool = false,
          isShowingStoryListView: Bool = false,
@@ -30,6 +32,7 @@ struct ViewState {
         self.definitionViewId = definitionViewId
         self.chapterViewId = chapterViewId
         self.translationViewId = translationViewId
+        self.storyListViewId = storyListViewId
         self.isShowingCreateStoryScreen = isShowingCreateStoryScreen
         self.isShowingSettingsScreen = isShowingSettingsScreen
         self.isShowingStoryListView = isShowingStoryListView

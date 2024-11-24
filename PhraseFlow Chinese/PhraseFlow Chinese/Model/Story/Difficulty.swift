@@ -18,6 +18,19 @@ enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
         rawValue.capitalized
     }
 
+    var emoji: String {
+        switch self {
+        case .beginner:
+            "👼"
+        case .intermediate:
+            "😊"
+        case .advanced:
+            "😎"
+        case .expert:
+            "😈"
+        }
+    }
+
     var intValue: Int {
         switch self {
         case .beginner:

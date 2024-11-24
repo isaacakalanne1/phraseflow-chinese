@@ -15,20 +15,24 @@ struct ChapterListView: View {
 
         VStack(spacing: 20) {
             List {
-                ForEach(Array(story.chapters.enumerated()), id: \.offset) { (index, chapter) in
-                    Button(action: {
-                        withAnimation(.easeInOut) {
-                            store.dispatch(.selectChapter(story, chapterIndex: index))
+                Section {
+                    ForEach(Array(story.chapters.enumerated()), id: \.offset) { (index, chapter) in
+                        Button(action: {
+                            withAnimation(.easeInOut) {
+                                store.dispatch(.selectChapter(story, chapterIndex: index))
+                            }
+                        }) {
+                            Text(chapter.title)
+                                .font(.body)
+                                .padding()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .foregroundColor(.primary)
+                                .frame(maxWidth: .infinity)
+                                .cornerRadius(10)
                         }
-                    }) {
-                        Text(chapter.title)
-                            .font(.body)
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .foregroundColor(.primary)
-                            .frame(maxWidth: .infinity)
-                            .cornerRadius(10)
                     }
+                } header: {
+                    Text("Chapters")
                 }
             }
             Button("New chapter") {

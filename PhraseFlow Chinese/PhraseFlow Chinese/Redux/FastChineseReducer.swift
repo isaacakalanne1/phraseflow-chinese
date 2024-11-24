@@ -154,6 +154,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.viewState.definitionViewId = UUID()
     case .refreshTranslationView:
         newState.viewState.translationViewId = UUID()
+    case .refreshStoryListView:
+        newState.viewState.storyListViewId = UUID()
     case .selectStorySetting(let setting):
         newState.createStoryState.selectedStorySetting = setting
     case .selectVoice(let voice):
@@ -167,6 +169,8 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         }
     case .onLoadedDefinitions(let definitions):
         newState.definitionState.definitions = definitions
+    case .onDeletedStory:
+        newState.viewState.storyListViewId = UUID()
     case .saveStory,
             .failedToSaveStory,
             .failedToLoadStories,

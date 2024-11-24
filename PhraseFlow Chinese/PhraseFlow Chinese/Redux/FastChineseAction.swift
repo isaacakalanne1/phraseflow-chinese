@@ -31,6 +31,7 @@ enum FastChineseAction {
     case failedToSaveStoryAndSettings
 
     case deleteStory(Story)
+    case onDeletedStory
     case failedToDeleteStory
 
     case selectChapter(Story, chapterIndex: Int)
@@ -75,6 +76,7 @@ enum FastChineseAction {
     case refreshChapterView
     case refreshDefinitionView
     case refreshTranslationView
+    case refreshStoryListView
 
     case selectStorySetting(StorySetting?)
     
