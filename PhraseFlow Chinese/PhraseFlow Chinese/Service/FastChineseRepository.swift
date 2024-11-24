@@ -85,6 +85,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                         ]
 
                         for prefix in listOfPrefixes {
+                            word = word.replacingOccurrences(of: "\(prefix) ", with: "")
                             word = word.replacingOccurrences(of: prefix, with: "")
                         }
                         wordTimestamps[index] = newTimestamp

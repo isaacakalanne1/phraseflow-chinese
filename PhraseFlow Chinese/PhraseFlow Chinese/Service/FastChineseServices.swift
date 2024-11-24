@@ -104,7 +104,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
     private func continueStory(story: Story?, settings: SettingsState) async throws -> (String, StorySetting) {
         let setting = (story?.setting ?? StorySetting.allCases.randomElement()) ?? StorySetting.medieval
-        var initialPrompt = "Write an incredible first chapter of a novel set in \(setting.settingName). Use \(story?.language.descriptiveName ?? settings.language.descriptiveName) names for characters and places."
+        var initialPrompt = "Write an incredible first chapter of a novel set in \(setting.settingName). Use \(story?.language.descriptiveName ?? settings.language.descriptiveName) names for characters. Use fictional names for places."
         var vocabularyPrompt = ""
         switch story?.difficulty ?? settings.difficulty {
         case .beginner:
@@ -131,7 +131,7 @@ Use quotation marks for speech.
 
         var messages: [[String: String]] = [["role": "user", "content": initialPrompt]]
         if let chapters = story?.chapters {
-            var continueStoryPrompt = "Write an incredible next chapter of the novel. Use \(story?.language.descriptiveName ?? settings.language.descriptiveName) names for characters and places."
+            var continueStoryPrompt = "Write an incredible next chapter of the novel. Use \(story?.language.descriptiveName ?? settings.language.descriptiveName) names for characters. Use fictional names for places."
             continueStoryPrompt.append(vocabularyPrompt)
             continueStoryPrompt.append(qualityPrompt)
             for chapter in chapters {

@@ -35,6 +35,8 @@ struct ContentView: View {
             case .loading:
                 Text("Writing new chapter...")
                     .font(.body)
+            case .fetching:
+                EmptyView()
             case .failedToGenerateStory:
                 ErrorView(title: "Failed to write story",
                           buttonTitle: "Retry") {

@@ -8,7 +8,7 @@
 import Foundation
 
 enum ReaderDisplayType {
-    case normal, loading, failedToGenerateStory, failedToGenerateChapter, defining
+    case normal, loading, fetching, failedToGenerateStory, failedToGenerateChapter, defining
 }
 
 enum PlayButtonDisplayType {

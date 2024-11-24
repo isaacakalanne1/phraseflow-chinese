@@ -35,7 +35,9 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
                 newState.audioState.audioPlayer = player
             }
         }
-
+        newState.viewState.readerDisplayType = .normal
+    case .failedToLoadStories:
+        newState.viewState.readerDisplayType = .normal
     case .updateSpeechSpeed(let speed):
         newState.settingsState.speechSpeed = speed
     case .defineCharacter(let wordTimeStampData, let shouldForce):
@@ -173,7 +175,6 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.viewState.storyListViewId = UUID()
     case .saveStory,
             .failedToSaveStory,
-            .failedToLoadStories,
             .failedToDefineCharacter,
             .loadStories,
             .onPlayedAudio,
