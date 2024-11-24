@@ -1,5 +1,5 @@
 //
-//  ChooseLanguageView.swift
+//  CreateStorySettingsView.swift
 //  PhraseFlow Chinese
 //
 //  Created by iakalann on 22/11/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ChooseLanguageView: View {
+struct CreateStorySettingsView: View {
     @EnvironmentObject var store: FastChineseStore
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
@@ -44,8 +44,8 @@ struct ChooseLanguageView: View {
                 }
             }
             .frame(maxHeight: .infinity)
-            Button("Done") {
-                presentationMode.wrappedValue.dismiss()
+            Button("\(store.state.settingsState.language.flagEmoji) New Story (\(store.state.settingsState.difficulty.title))") {
+                store.dispatch(.generateNewStory)
             }
             .padding()
             .background(Color.accentColor)

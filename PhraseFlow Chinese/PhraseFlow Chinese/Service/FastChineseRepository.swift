@@ -58,7 +58,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                     .replacingOccurrences(of: "\n", with: "") // Most TTS often add \n
                     .replacingOccurrences(of: "                ", with: "") // Korean TTS often adds these spaces, which desyncs words
 
-                if language == .mandarinChinese {
+                if language == .mandarinChinese || language == .japanese {
                     word = word.replacingOccurrences(of: " ", with: "")
                 } else {
                     word = word + " "
@@ -79,6 +79,8 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                             "«",
                             "»",
                             "»",
+                            "「",
+                            "」",
                             "\""
                         ]
 
