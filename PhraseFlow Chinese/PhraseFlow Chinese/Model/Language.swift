@@ -21,6 +21,25 @@ enum Language: String, Codable, CaseIterable {
         }
     }
 
+    var speechCode: String {
+        switch self {
+        case .arabicGulf:
+            "ar-AE"
+        case .mandarinChinese:
+            "zh-CN"
+        case .french:
+            "fr-FR"
+        case .japanese:
+            "ja-JP"
+        case .korean:
+            "ko-KR"
+        case .russian:
+            "ru-RU"
+        case .spanish:
+            "es-ES"
+        }
+    }
+
     var code: String {
         switch self {
         case .arabicGulf:
@@ -50,7 +69,7 @@ enum Language: String, Codable, CaseIterable {
             [.xiaoxiao,
              .xiaomo]
         case .french:
-            [.vivienne]
+            [.denise]
         case .japanese:
             [.mayu]
         case .korean:

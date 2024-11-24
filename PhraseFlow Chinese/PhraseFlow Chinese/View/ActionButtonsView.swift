@@ -20,7 +20,7 @@ struct ActionButtonsView: View {
             }
             
             if store.state.viewState.playButtonDisplayType == .loading {
-                ActionButton(title: "Loading...",
+                ActionButton(title: "Loading",
                              imageName: "ellipsis.circle.fill") { }
                              .disabled(true)
             } else if chapter.audioData == nil ||

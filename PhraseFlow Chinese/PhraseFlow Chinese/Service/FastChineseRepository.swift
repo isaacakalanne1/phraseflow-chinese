@@ -37,7 +37,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             speechConfig.outputFormat = .detailed
             speechConfig.setSpeechSynthesisOutputFormat(.riff16Khz16BitMonoPcm) // Use a format compatible with AVAudioPlayer
             speechConfig.speechSynthesisVoiceName = voice.speechSynthesisVoiceName
-            speechConfig.speechSynthesisLanguage = "zh-CN"
+            speechConfig.speechSynthesisLanguage = language?.speechCode
 
             // Create a speech synthesizer
             let synthesizer = try SPXSpeechSynthesizer(speechConfiguration: speechConfig, audioConfiguration: nil)
