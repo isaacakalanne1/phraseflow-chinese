@@ -13,10 +13,10 @@ enum Language: String, Codable, CaseIterable {
          french,
          japanese,
          korean,
-         russian,
-         spanish,
          portuguesePortugal,
-         portugueseBrazil
+         portugueseBrazil,
+         russian,
+         spanish
 
     var name: String {
         switch self {
