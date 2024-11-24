@@ -24,7 +24,8 @@ final class FastChineseServices: FastChineseServicesProtocol {
     func generateStory(story: Story?, settings: SettingsState) async throws -> Story {
         do {
             let (response, setting) = try await continueStory(story: story, settings: settings)
-            let jsonString = try await convertToJson(mandarin: response,
+            let jsonString = try await convertToJson(story: story,
+                                                     translation: response,
                                                      settings: settings,
                                                      shouldCreateTitle: story == nil)
             guard let jsonData = jsonString.data(using: .utf8) else {
@@ -72,7 +73,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
     }
 
     func fetchDefinition(of character: String, withinContextOf sentence: Sentence, settings: SettingsState) async throws -> String {
-        let languageName = settings.language.name
+        let languageName = settings.language.descriptiveName
         let initialPrompt =
 """
         You are an AI assistant that provides English definitions for characters in \(languageName) sentences. Your explanations are brief, and simple to understand.
@@ -103,7 +104,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
     private func continueStory(story: Story?, settings: SettingsState) async throws -> (String, StorySetting) {
         let setting = (story?.setting ?? StorySetting.allCases.randomElement()) ?? StorySetting.medieval
-        var initialPrompt = "Write an incredible first chapter of a novel set in \(setting.settingName). Use \(settings.language.name) names for characters and places."
+        var initialPrompt = "Write an incredible first chapter of a novel set in \(setting.settingName). Use \(story?.language.descriptiveName ?? settings.language.descriptiveName) names for characters and places."
         var vocabularyPrompt = ""
         switch story?.difficulty ?? settings.difficulty {
         case .beginner:
@@ -130,7 +131,7 @@ Use quotation marks for speech.
 
         var messages: [[String: String]] = [["role": "user", "content": initialPrompt]]
         if let chapters = story?.chapters {
-            var continueStoryPrompt = "Write an incredible next chapter of the novel. Use \(settings.language.name) names for characters and places."
+            var continueStoryPrompt = "Write an incredible next chapter of the novel. Use \(story?.language.descriptiveName ?? settings.language.descriptiveName) names for characters and places."
             continueStoryPrompt.append(vocabularyPrompt)
             continueStoryPrompt.append(qualityPrompt)
             for chapter in chapters {
@@ -143,10 +144,10 @@ Use quotation marks for speech.
         return (try await makeOpenrouterRequest(requestBody: requestBody), setting)
     }
 
-    private func convertToJson(mandarin: String, settings: SettingsState, shouldCreateTitle: Bool) async throws -> String {
+    private func convertToJson(story: Story?, translation: String, settings: SettingsState, shouldCreateTitle: Bool) async throws -> String {
 
         let jsonPrompt = """
-Format the following story into JSON. Translate each English sentence into \(settings.language.name).
+Format the following story into JSON. Translate each English sentence into \(story?.language.descriptiveName ?? settings.language.descriptiveName).
 """
         var requestBody: [String: Any] = [
             "model": "gpt-4o-mini-2024-07-18",
@@ -154,7 +155,7 @@ Format the following story into JSON. Translate each English sentence into \(set
 
         let messages: [[String: String]] = [
             ["role": "system", "content": jsonPrompt],
-            ["role": "user", "content": mandarin]
+            ["role": "user", "content": translation]
         ]
         requestBody["messages"] = messages
         requestBody["response_format"] = sentenceSchema(languageKey: settings.language.schemaKey,

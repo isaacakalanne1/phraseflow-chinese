@@ -50,15 +50,10 @@ struct ContentView: View {
             case .normal,
                     .defining:
                 if store.state.storyState.currentStory == nil {
-                    Button("Create Story") {
-                        store.dispatch(.generateNewStory)
-                    }
-                    .padding()
-                    .background(Color.accentColor)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+                    CreateStorySettingsView()
                 } else if let chapter = store.state.storyState.currentChapter {
                     ReaderView(chapter: chapter)
+                        .padding(10)
                 }
             }
         }
@@ -66,7 +61,6 @@ struct ContentView: View {
             startTimer()
         }
         .background(Color.white)
-        .padding(10)
         .sheet(isPresented: isShowingSettingsScreen) {
             SettingsView()
         }

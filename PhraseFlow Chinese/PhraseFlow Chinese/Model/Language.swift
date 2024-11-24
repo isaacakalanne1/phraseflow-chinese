@@ -14,20 +14,31 @@ enum Language: String, Codable, CaseIterable {
          japanese,
          korean,
          portugueseBrazil,
-         portuguesePortugal,
+         portugueseEuropean,
          russian,
          spanish
 
-    var name: String {
+    var descriptiveName: String {
+        switch self {
+        case .portugueseBrazil:
+            "Brazilian Portuguese"
+        case .portugueseEuropean:
+            "European Portuguese"
+        default:
+            displayName
+        }
+    }
+
+    var displayName: String {
         switch self {
         case .mandarinChinese:
             "Chinese (Mandarin)"
         case .arabicGulf:
             "Arabic (Gulf Arabic)"
-        case .portuguesePortugal:
-            "Portuguese (Portugal)"
         case .portugueseBrazil:
             "Portuguese (Brazil)"
+        case .portugueseEuropean:
+            "Portuguese (European)"
         default:
             rawValue.capitalized
         }
@@ -49,7 +60,7 @@ enum Language: String, Codable, CaseIterable {
             "ru-RU"
         case .spanish:
             "es-ES"
-        case .portuguesePortugal:
+        case .portugueseEuropean:
             "pt-PT"
         case .portugueseBrazil:
             "pt-BR"
@@ -72,7 +83,7 @@ enum Language: String, Codable, CaseIterable {
             "ru"
         case .spanish:
             "es"
-        case .portuguesePortugal:
+        case .portugueseEuropean:
             "pt"
         case .portugueseBrazil:
             "br"
@@ -80,7 +91,14 @@ enum Language: String, Codable, CaseIterable {
     }
 
     var schemaKey: String {
-        rawValue + "Translation"
+        switch self {
+        case .portugueseBrazil:
+            "brazilianPortugueseTranslation"
+        case .portugueseEuropean:
+            "europeanPortugueseTranslation"
+        default:
+            rawValue + "Translation"
+        }
     }
 
     var voices: [Voice] {
@@ -101,7 +119,7 @@ enum Language: String, Codable, CaseIterable {
             [.elvira]
         case .arabicGulf:
             [.fatima]
-        case .portuguesePortugal:
+        case .portugueseEuropean:
             [.raquel,
              .duarte]
         case .portugueseBrazil:
