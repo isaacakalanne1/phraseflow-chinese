@@ -21,7 +21,11 @@ enum Voice: String, Codable, CaseIterable, Equatable {
          elvira, // Spanish
          alvaro,
          fatima, // Arabic
-         hamdan
+         hamdan,
+         raquel, // Portuguese (Portugal)
+         duarte,
+         thalita, // Portuguese (Brazil)
+         donato
 
     var title: String {
         rawValue.capitalized
@@ -57,6 +61,14 @@ enum Voice: String, Codable, CaseIterable, Equatable {
             "ar-AE-FatimaNeural"
         case .hamdan:
             "ar-AE-HamdanNeural"
+        case .raquel:
+            "pt-PT-RaquelNeural"
+        case .duarte:
+            "pt-PT-DuarteNeural"
+        case .thalita:
+            "pt-BR-ThalitaNeural"
+        case .donato:
+            "pt-BR-DonatoNeural"
         }
     }
 
@@ -68,7 +80,9 @@ enum Voice: String, Codable, CaseIterable, Equatable {
                 .sunHi,
                 .dariya,
                 .elvira,
-                .fatima:
+                .fatima,
+                .raquel,
+                .thalita:
                 .female
         case .yunjian,
                 .henri,
@@ -76,7 +90,9 @@ enum Voice: String, Codable, CaseIterable, Equatable {
                 .alvaro,
                 .hyunsu,
                 .dmitry,
-                .hamdan:
+                .hamdan,
+                .duarte,
+                .donato:
                 .male
         }
     }

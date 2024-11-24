@@ -14,7 +14,9 @@ enum Language: String, Codable, CaseIterable {
          japanese,
          korean,
          russian,
-         spanish
+         spanish,
+         portuguesePortugal,
+         portugueseBrazil
 
     var name: String {
         switch self {
@@ -22,6 +24,10 @@ enum Language: String, Codable, CaseIterable {
             "Chinese (Mandarin)"
         case .arabicGulf:
             "Arabic (Gulf Arabic)"
+        case .portuguesePortugal:
+            "Portuguese (Portugal)"
+        case .portugueseBrazil:
+            "Portuguese (Brazil)"
         default:
             rawValue.capitalized
         }
@@ -43,6 +49,10 @@ enum Language: String, Codable, CaseIterable {
             "ru-RU"
         case .spanish:
             "es-ES"
+        case .portuguesePortugal:
+            "pt-PT"
+        case .portugueseBrazil:
+            "pt-BR"
         }
     }
 
@@ -62,6 +72,10 @@ enum Language: String, Codable, CaseIterable {
             "ru"
         case .spanish:
             "es"
+        case .portuguesePortugal:
+            "pt"
+        case .portugueseBrazil:
+            "br"
         }
     }
 
@@ -72,8 +86,7 @@ enum Language: String, Codable, CaseIterable {
     var voices: [Voice] {
         switch self {
         case .mandarinChinese:
-            [.xiaoxiao,
-             .xiaomo]
+            [.xiaoxiao]
         case .french:
             [.denise,
              .henri]
@@ -88,6 +101,12 @@ enum Language: String, Codable, CaseIterable {
             [.elvira]
         case .arabicGulf:
             [.fatima]
+        case .portuguesePortugal:
+            [.raquel,
+             .duarte]
+        case .portugueseBrazil:
+            [.thalita,
+             .donato]
         }
     }
 
