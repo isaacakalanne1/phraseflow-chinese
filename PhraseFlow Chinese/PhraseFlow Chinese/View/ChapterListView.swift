@@ -23,12 +23,7 @@ struct ChapterListView: View {
                             }
                         }) {
                             Text(chapter.title)
-                                .font(.body)
-                                .padding()
-                                .frame(maxWidth: .infinity, alignment: .leading)
                                 .foregroundColor(.primary)
-                                .frame(maxWidth: .infinity)
-                                .cornerRadius(10)
                         }
                     }
                 } header: {

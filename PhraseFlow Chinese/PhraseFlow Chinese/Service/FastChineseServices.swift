@@ -54,12 +54,12 @@ final class FastChineseServices: FastChineseServicesProtocol {
                 } else {
                     story.chapters.append(chapter)
                 }
-                story.latestChapterSummaryInEnglish = chapterResponse.latestChapterSummaryInEnglish
+                story.briefLatestStorySummaryinEnglish = chapterResponse.briefLatestStorySummaryinEnglish
                 story.currentChapterIndex = story.chapters.count - 1
                 story.lastUpdated = .now
                 return story
             } else {
-                return Story(latestChapterSummaryInEnglish: chapterResponse.latestChapterSummaryInEnglish,
+                return Story(briefLatestStorySummaryinEnglish: chapterResponse.briefLatestStorySummaryinEnglish,
                              difficulty: .beginner,
                              language: settings.language,
                              title: chapterResponse.titleOfNovel ?? "",
@@ -102,17 +102,14 @@ final class FastChineseServices: FastChineseServicesProtocol {
     }
 
     private func continueStory(story: Story?, settings: SettingsState) async throws -> (String, StorySetting) {
-
-//        var allSettings = StorySetting.allCases
-//        allSettings.removeAll(where: { $0 == story?.setting })
         let setting = (story?.setting ?? StorySetting.allCases.randomElement()) ?? StorySetting.medieval
         var initialPrompt = "Write an incredible first chapter of a novel set in \(setting.settingName). Use \(settings.language.name) names for characters and places."
         var vocabularyPrompt = ""
-        switch settings.difficulty {
+        switch story?.difficulty ?? settings.difficulty {
         case .beginner:
-            vocabularyPrompt = " Use very very simple words, and short sentences."
+            vocabularyPrompt = " Use extremely simple sentence structures and words, and very short sentences."
         case .intermediate:
-            vocabularyPrompt = " Use very simple words."
+            vocabularyPrompt = " Use very simple sentence structures and words, and short sentences."
         case .advanced:
             vocabularyPrompt = " Use simple words."
         case .expert:
@@ -123,7 +120,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         let qualityPrompt = """
 
 The chapter should have complex, three-dimensional, flawed characters.
-The chapter should also be long, around 30 sentences, to really allow plot to happen in each chapter.
+The chapter should also be long, around 30 sentences.
 Use quotation marks for speech.
 """
         initialPrompt.append(qualityPrompt)

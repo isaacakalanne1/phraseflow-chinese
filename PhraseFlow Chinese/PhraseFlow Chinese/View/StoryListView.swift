@@ -22,7 +22,7 @@ struct StoryListView: View {
                                     VStack(alignment: .leading, content: {
                                         Text(story.title)
                                             .fontWeight(.medium)
-                                        Text(story.latestChapterSummaryInEnglish)
+                                        Text(story.briefLatestStorySummaryinEnglish)
                                             .fontWeight(.light)
                                     })
                                     .padding(.trailing)
@@ -35,7 +35,7 @@ struct StoryListView: View {
                         Text("Stories")
                     }
                 }
-                Button("\(store.state.settingsState.language.flagEmoji) New Story") {
+                Button("\(store.state.settingsState.language.flagEmoji) New Story (\(store.state.settingsState.difficulty.title))") {
                     store.dispatch(.generateNewStory)
                 }
                 .padding()

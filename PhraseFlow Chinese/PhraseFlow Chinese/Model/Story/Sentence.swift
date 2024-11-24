@@ -24,7 +24,7 @@ struct Sentence: Codable, Equatable, Hashable {
 
 func sentenceSchema(languageKey: String, shouldCreateTitle: Bool) -> [String: Any] {
     var properties: [String: Any] = [
-        "latestChapterSummaryInEnglish": ["type": "string"],
+        "briefLatestStorySummaryinEnglish": ["type": "string"],
         "chapterNumberAndTitleInEnglish": ["type": "string"],
         "sentences": [
             "type": "array",
@@ -46,7 +46,7 @@ func sentenceSchema(languageKey: String, shouldCreateTitle: Bool) -> [String: An
 
     var required: [String] = [
         "sentences",
-        "latestChapterSummaryInEnglish",
+        "briefLatestStorySummaryinEnglish",
         "chapterNumberAndTitleInEnglish"
     ]
     if shouldCreateTitle {

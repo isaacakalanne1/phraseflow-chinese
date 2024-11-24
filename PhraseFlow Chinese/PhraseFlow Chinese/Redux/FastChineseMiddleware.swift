@@ -172,7 +172,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .updateSpeechSpeed,
             .updateShowDefinition,
             .updateShowEnglish,
-            .updateLanguage:
+            .updateLanguage,
+            .updateDifficulty:
         return .saveAppSettings
     case .saveAppSettings:
         do {
@@ -210,7 +211,6 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .failedToLoadAppSettings,
             .refreshTranslationView,
             .onLoadedStories,
-            .updateDifficulty,
             .onLoadedDefinitions,
             .failedToLoadDefinitions,
             .failedToSaveDefinitions,
