@@ -109,12 +109,10 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                 for (index, sentenceSection) in splitSentence.enumerated() {
                     // TODO: Update styleDegree to also be generated with each sentence
                     let isSpeech = speechCharacters.firstIndex(where: { sentenceSection.contains($0)} ) != nil
-//                    let speechRole = isSpeech ? sentence.speechRole : voice.defaultSpeechRole
-                    let speechRole = voice.defaultSpeechRole
                     let speechStyle = isSpeech ? SpeechStyle.gentle : voice.defaultSpeechStyle
 
                     let sentenceSsml = """
-                <mstts:express-as role="\(speechRole.ssmlName)" style="\(speechStyle.ssmlName)" styledegree="1">
+                <mstts:express-as style="\(speechStyle.ssmlName)">
                     <prosody rate="\(rate)">
                         \(index == 0 ? sentenceMarker : "")\(sentenceSection)
                     </prosody>

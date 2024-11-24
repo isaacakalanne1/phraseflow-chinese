@@ -69,9 +69,11 @@ enum Language: String, Codable, CaseIterable {
             [.xiaoxiao,
              .xiaomo]
         case .french:
-            [.denise]
+            [.denise,
+             .henri]
         case .japanese:
-            [.mayu]
+            [.mayu,
+             .keita]
         case .korean:
             [.sunHi]
         case .russian:

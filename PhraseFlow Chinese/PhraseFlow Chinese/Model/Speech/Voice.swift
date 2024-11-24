@@ -8,7 +8,20 @@
 import Foundation
 
 enum Voice: String, Codable, CaseIterable, Equatable {
-    case xiaomo, xiaoxiao, denise, henri, mayu, sunHi, dariya, elvira, fatima
+    case xiaoxiao, // Chinese
+         yunjian,
+         denise, // French
+         henri,
+         mayu, // Japanese
+         keita,
+         sunHi, // Korean
+         hyunsu,
+         dariya, // Russian
+         dmitry,
+         elvira, // Spanish
+         alvaro,
+         fatima, // Arabic
+         hamdan
 
     var title: String {
         rawValue.capitalized
@@ -16,31 +29,40 @@ enum Voice: String, Codable, CaseIterable, Equatable {
 
     var speechSynthesisVoiceName: String {
         switch self {
-        case .xiaomo:
-            "zh-CN-XiaomoNeural"
         case .xiaoxiao:
             "zh-CN-XiaoxiaoNeural"
+        case .yunjian:
+            "zh-CN-YunjianNeural"
         case .denise:
             "fr-FR-DeniseNeural"
         case .henri:
             "fr-FR-HenriNeural"
         case .mayu:
             "ja-JP-MayuNeural"
+        case .keita:
+            "ja-JP-KeitaNeural"
         case .sunHi:
             "ko-KR-SunHiNeural"
+        case .hyunsu:
+            "ko-KR-HyunsuNeural"
         case .dariya:
             "ru-RU-DariyaNeural"
+        case .dmitry:
+            "ru-RU-DmitryNeural"
         case .elvira:
             "es-ES-ElviraNeural"
+        case .alvaro:
+            "es-ES-AlvaroNeural"
         case .fatima:
             "ar-AE-FatimaNeural"
+        case .hamdan:
+            "ar-AE-HamdanNeural"
         }
     }
 
     var gender: Gender {
         switch self {
-        case .xiaomo,
-                .xiaoxiao,
+        case .xiaoxiao,
                 .denise,
                 .mayu,
                 .sunHi,
@@ -48,23 +70,23 @@ enum Voice: String, Codable, CaseIterable, Equatable {
                 .elvira,
                 .fatima:
                 .female
-        case .henri:
+        case .yunjian,
+                .henri,
+                .keita,
+                .alvaro,
+                .hyunsu,
+                .dmitry,
+                .hamdan:
                 .male
         }
     }
 
     var defaultSpeechStyle: SpeechStyle {
         switch self {
-        case .xiaomo:
-                .gentle
         case .xiaoxiao:
                 .lyrical
         default:
-                ._default
+                .lyrical
         }
-    }
-
-    var defaultSpeechRole: SpeechRole {
-        ._default
     }
 }
