@@ -15,6 +15,11 @@ struct ReaderView: View {
         let chapterNumber = (store.state.storyState.currentStory?.currentChapterIndex ?? 0) + 1
 
         VStack(spacing: 10) {
+            Text("Stories and definitions are written by AI and may be inaccurate or inappropriate.")
+                .font(.system(size: 11))
+                .foregroundStyle(Color.black.opacity(0.3))
+                .frame(maxWidth: .infinity)
+                .multilineTextAlignment(.center)
             if store.state.settingsState.isShowingDefinition {
                 DefinitionView()
                     .frame(height: 150)
