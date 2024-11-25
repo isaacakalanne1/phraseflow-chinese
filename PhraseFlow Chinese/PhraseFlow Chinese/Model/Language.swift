@@ -18,29 +18,41 @@ enum Language: String, Codable, CaseIterable {
          portugueseEuropean,
          russian
 
-    var descriptiveName: String {
+    var descriptiveEnglishName: String {
         switch self {
         case .portugueseBrazil:
             "Brazilian Portuguese"
         case .portugueseEuropean:
             "European Portuguese"
+        case .mandarinChinese:
+            "Chinese (Mandarin)"
+        case .arabicGulf:
+            "Arabic (Gulf Arabic)"
         default:
-            displayName
+            rawValue.capitalized
         }
     }
 
     var displayName: String {
         switch self {
         case .mandarinChinese:
-            "Chinese (Mandarin)"
+            LocalizedString.chineseMandarin
         case .arabicGulf:
-            "Arabic (Gulf Arabic)"
+            LocalizedString.arabicGulf
         case .portugueseBrazil:
-            "Portuguese (Brazil)"
+            LocalizedString.portugueseBrazil
         case .portugueseEuropean:
-            "Portuguese (European)"
-        default:
-            rawValue.capitalized
+            LocalizedString.portugueseEuropean
+        case .japanese:
+            LocalizedString.japanese
+        case .korean:
+            LocalizedString.korean
+        case .russian:
+            LocalizedString.russian
+        case .spanish:
+            LocalizedString.spanish
+        case .french:
+            LocalizedString.french
         }
     }
 

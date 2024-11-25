@@ -1,0 +1,9 @@
+strings:
+  - inputs: en.lproj/Localizable.strings
+    outputs:
+      templatePath: strings-enum.stencil
+      output: Strings.swift
+      params:
+        enumName: "LocalizedString"
+        publicAccess: true
+        bundle: "packageBundle"

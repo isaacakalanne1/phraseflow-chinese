@@ -45,6 +45,10 @@
 		BB6572F92CDBB14C00AC5981 /* SpeechStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572F82CDBB14C00AC5981 /* SpeechStyle.swift */; };
 		BB84E0A02CEFA96200520F5E /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB84E09F2CEFA96200520F5E /* Language.swift */; };
 		BB84E0A22CF0AF4200520F5E /* CreateStorySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */; };
+		BB84E0A62CF3EC8600520F5E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BB84E0A42CF3EC8600520F5E /* Localizable.strings */; };
+		BB84E0AB2CF494D900520F5E /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = BB84E0AA2CF494D900520F5E /* swiftgen.yml */; };
+		BB84E0AD2CF4952700520F5E /* strings-enum.stencil in Sources */ = {isa = PBXBuildFile; fileRef = BB84E0AC2CF4952700520F5E /* strings-enum.stencil */; };
+		BB84E0AF2CF495CD00520F5E /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB84E0AE2CF495CD00520F5E /* Strings.swift */; };
 		BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -127,6 +131,10 @@
 		BB6572F82CDBB14C00AC5981 /* SpeechStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechStyle.swift; sourceTree = "<group>"; };
 		BB84E09F2CEFA96200520F5E /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStorySettingsView.swift; sourceTree = "<group>"; };
+		BB84E0A52CF3EC8600520F5E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BB84E0AA2CF494D900520F5E /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
+		BB84E0AC2CF4952700520F5E /* strings-enum.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = "strings-enum.stencil"; sourceTree = "<group>"; };
+		BB84E0AE2CF495CD00520F5E /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhraseFlow Chinese.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -280,6 +288,17 @@
 			path = "Create Story";
 			sourceTree = "<group>";
 		};
+		BB84E0A32CF3EC4200520F5E /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				BB84E0AE2CF495CD00520F5E /* Strings.swift */,
+				BB84E0AA2CF494D900520F5E /* swiftgen.yml */,
+				BB84E0A42CF3EC8600520F5E /* Localizable.strings */,
+				BB84E0AC2CF4952700520F5E /* strings-enum.stencil */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
 		BBB6EF1A2C8C86240079D135 = {
 			isa = PBXGroup;
 			children = (
@@ -306,6 +325,7 @@
 			isa = PBXGroup;
 			children = (
 				BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */,
+				BB84E0A32CF3EC4200520F5E /* Localization */,
 				BB4EDB112C90CBAE00699E7D /* Extensions */,
 				BB4EDB012C90C85000699E7D /* Redux */,
 				BB4EDB082C90C8E100699E7D /* Service */,
@@ -481,6 +501,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = BBB6EF1A2C8C86240079D135;
 			packageReferences = (
@@ -503,7 +524,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBB6EF2E2C8C86290079D135 /* Preview Assets.xcassets in Resources */,
+				BB84E0A62CF3EC8600520F5E /* Localizable.strings in Resources */,
 				BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */,
+				BB84E0AB2CF494D900520F5E /* swiftgen.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,6 +599,7 @@
 				BBE636D12CCD77BC00873E68 /* FlowLayout.swift in Sources */,
 				BBE16F282CC420FD00A7EF1F /* ReaderDisplayType.swift in Sources */,
 				BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */,
+				BB84E0AD2CF4952700520F5E /* strings-enum.stencil in Sources */,
 				BB6572CE2CD12A9200AC5981 /* ChapterResponse.swift in Sources */,
 				BBE636C12CCC0B5000873E68 /* ActionButtonsView.swift in Sources */,
 				BB6572DB2CD6816700AC5981 /* CategoryButtonView.swift in Sources */,
@@ -603,6 +627,7 @@
 				BBE636CD2CCC0F8500873E68 /* ReaderView.swift in Sources */,
 				BB1994D32CE9051700D61E54 /* ViewState.swift in Sources */,
 				BB1994D52CE9059E00D61E54 /* CreateStoryState.swift in Sources */,
+				BB84E0AF2CF495CD00520F5E /* Strings.swift in Sources */,
 				BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */,
 				BBE16F1C2CC1317B00A7EF1F /* Genre.swift in Sources */,
 				BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */,
@@ -659,12 +684,24 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		BB84E0A42CF3EC8600520F5E /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BB84E0A52CF3EC8600520F5E /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		BBB6EF452C8C862A0079D135 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -728,6 +765,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

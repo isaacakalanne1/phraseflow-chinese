@@ -73,7 +73,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
     }
 
     func fetchDefinition(of character: String, withinContextOf sentence: Sentence, settings: SettingsState) async throws -> String {
-        let languageName = settings.language.descriptiveName
+        let languageName = settings.language.descriptiveEnglishName
         let initialPrompt =
 """
         You are an AI assistant that provides English definitions for characters in \(languageName) sentences. Your explanations are brief, and simple to understand.
@@ -104,7 +104,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
     private func continueStory(story: Story?, settings: SettingsState) async throws -> (String, StorySetting) {
         let setting = (story?.setting ?? StorySetting.allCases.randomElement()) ?? StorySetting.medieval
-        var initialPrompt = "Write an incredible first chapter of a novel set in \(setting.settingName). Use \(story?.language.descriptiveName ?? settings.language.descriptiveName) names for characters. Use fictional names for places."
+        var initialPrompt = "Write an incredible first chapter of a novel set in \(setting.settingName). Use \(story?.language.descriptiveEnglishName ?? settings.language.descriptiveEnglishName) names for characters. Use fictional names for places."
         var vocabularyPrompt = ""
         switch story?.difficulty ?? settings.difficulty {
         case .beginner:
@@ -131,7 +131,7 @@ Use quotation marks for speech.
 
         var messages: [[String: String]] = [["role": "user", "content": initialPrompt]]
         if let chapters = story?.chapters {
-            var continueStoryPrompt = "Write an incredible next chapter of the novel. Use \(story?.language.descriptiveName ?? settings.language.descriptiveName) names for characters. Use fictional names for places."
+            var continueStoryPrompt = "Write an incredible next chapter of the novel. Use \(story?.language.descriptiveEnglishName ?? settings.language.descriptiveEnglishName) names for characters. Use fictional names for places."
             continueStoryPrompt.append(vocabularyPrompt)
             continueStoryPrompt.append(qualityPrompt)
             for chapter in chapters {
@@ -147,7 +147,7 @@ Use quotation marks for speech.
     private func convertToJson(story: Story?, translation: String, settings: SettingsState, shouldCreateTitle: Bool) async throws -> String {
 
         let jsonPrompt = """
-Format the following story into JSON. Translate each English sentence into \(story?.language.descriptiveName ?? settings.language.descriptiveName).
+Format the following story into JSON. Translate each English sentence into \(story?.language.descriptiveEnglishName ?? settings.language.descriptiveEnglishName).
 """
         var requestBody: [String: Any] = [
             "model": "gpt-4o-mini-2024-07-18",

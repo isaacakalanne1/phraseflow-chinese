@@ -1,0 +1,79 @@
+/* 
+  Localizable.strings
+  PhraseFlow Chinese
+
+  Created by iakalann on 24/11/2024.
+  
+*/
+
+// Translation view title
+"translation" = "Translation";
+
+// Definition View title
+"definition" = "Definition:";
+
+// Stories button title
+"stories" = "Stories";
+
+// Play button title
+"play" = "Play";
+
+// Settings View title
+"settings" = "Settings";
+
+// Choose Story Navigation Bar title
+"choose_story" = "Choose Story";
+
+// New Story button title
+"new_story" = "New Story";
+
+// Difficulty level title
+"difficulty" = "Difficulty";
+
+// Beginner difficulty level
+"beginner" = "Beginner";
+
+// Intermediate difficulty level
+"intermediate" = "Intermediate";
+
+// Advanced difficulty level
+"advanced" = "Advanced";
+
+// Expert difficulty level
+"Expect" = "Expert";
+
+// Language Section Title
+"language" = "Language";
+
+// Mandarin Chinese language name
+"chinese_mandarin" = "Chinese (Mandarin)";
+
+// Spanish language name
+"spanish" = "Spanish";
+
+// French language name
+"french" = "French";
+
+// Japanese language name
+"japanese" = "Japanese";
+
+// Korean language name
+"korean" = "Korean";
+
+// Russian language name
+"russian" = "Russian";
+
+// Arabic (Gulf Arabic) language name
+"arabicGulf" = "Arabic (Gulf Arabic)";
+
+// Portuguese (Brazil) language name
+"portuguese_brazil" = "Portuguese (Brazil)";
+
+// Portuguese (European) language name
+"portuguese_european" = "Portuguese (European)";
+
+// Brazilian Portuguese language name
+"brazilian_portuguese" = "Brazilian Portuguese";
+
+// European Portuguese language name
+"european_portuguese" = "European Portuguese";
