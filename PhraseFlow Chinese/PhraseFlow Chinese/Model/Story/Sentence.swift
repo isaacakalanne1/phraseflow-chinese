@@ -9,12 +9,12 @@ import Foundation
 
 struct Sentence: Codable, Equatable, Hashable {
     let translation: String
-    let english: String
+    let original: String
 
     init(translation: String,
          english: String) {
         self.translation = translation
-        self.english = english
+        self.original = english
     }
 
     var convertedTranslation: [String] {
@@ -22,7 +22,9 @@ struct Sentence: Codable, Equatable, Hashable {
     }
 }
 
-func sentenceSchema(languageKey: String, shouldCreateTitle: Bool) -> [String: Any] {
+func sentenceSchema(originalKey: String,
+                    languageKey: String,
+                    shouldCreateTitle: Bool) -> [String: Any] {
     var properties: [String: Any] = [
         "briefLatestStorySummaryinEnglish": ["type": "string"],
         "chapterNumberAndTitleInEnglish": ["type": "string"],
@@ -31,10 +33,10 @@ func sentenceSchema(languageKey: String, shouldCreateTitle: Bool) -> [String: An
             "items": [
                 "type": "object",
                 "properties": [
-                    "english": ["type": "string"],
+                    originalKey: ["type": "string"],
                     languageKey: ["type": "string"]
                 ],
-                "required": ["english", languageKey],
+                "required": [originalKey, languageKey],
                 "additionalProperties": false
             ]
         ]

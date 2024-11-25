@@ -22,6 +22,8 @@ protocol FastChineseServicesProtocol {
 final class FastChineseServices: FastChineseServicesProtocol {
 
     func generateStory(story: Story?, settings: SettingsState) async throws -> Story {
+        let translationLanguage = story?.language ?? settings.language
+        let originalLanguage = Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier })
         do {
             let (response, setting) = try await continueStory(story: story, settings: settings)
             let jsonString = try await convertToJson(story: story,
@@ -35,7 +37,10 @@ final class FastChineseServices: FastChineseServicesProtocol {
             decoder.keyDecodingStrategy = .custom({ (keys) -> CodingKey in
                 let lastKey = keys.last!
                 guard lastKey.intValue == nil else { return lastKey }
-                if lastKey.stringValue == settings.language.schemaKey {
+                if lastKey.stringValue == originalLanguage?.schemaKey {
+                    return AnyKey(stringValue: "original")!
+                }
+                if lastKey.stringValue == translationLanguage.schemaKey {
                     return AnyKey(stringValue: "translation")!
                 }
                 return AnyKey(stringValue: lastKey.stringValue)!
@@ -46,7 +51,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
                 if settings.language == .mandarinChinese {
                     translation = translation.replacingOccurrences(of: " ", with: "")
                 }
-                return Sentence(translation: translation, english: $0.english) })
+                return Sentence(translation: translation, english: $0.original) })
             let chapter = Chapter(title: chapterResponse.chapterNumberAndTitleInEnglish ?? "", sentences: sentences)
 
             if var story {
@@ -73,21 +78,23 @@ final class FastChineseServices: FastChineseServicesProtocol {
     }
 
     func fetchDefinition(of character: String, withinContextOf sentence: Sentence, settings: SettingsState) async throws -> String {
+        let originalLanguage = Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier })
         let languageName = settings.language.descriptiveEnglishName
         let initialPrompt =
 """
-        You are an AI assistant that provides English definitions for characters in \(languageName) sentences. Your explanations are brief, and simple to understand.
-        You provide the pronounciation for the \(languageName) character in brackets after the Chinese character.
+        You are an AI assistant that provides \(originalLanguage?.displayName ?? "English") definitions for characters in \(languageName) sentences. Your explanations are brief, and simple to understand.
+        You provide the pronounciation for the \(languageName) character in brackets after the \(languageName) word.
         If the character is used as part of a larger word, you also provide the pronounciation and definition for each character in this overall word.
         You also provide the definition of the word in the context of the overall sentence.
-        You never repeat the Chinese sentence, and never translate the whole of the Chinese sentence into English.
+        You never repeat the \(languageName) sentence, and never translate the whole of the \(languageName) sentence into English.
 """
         let mainPrompt =
 """
-        Provide a definition for this word: "\(character)"
-        If the word is made of different characters, also provide brief definitions for each of the characters in the word.
-        Also explain the word in the context of the sentence: "\(sentence.translation)".
-        Don't define other words in the sentence.
+Provide a definition for this word: "\(character)"
+If the word is made of different characters, also provide brief definitions for each of the characters in the word.
+Also explain the word in the context of the sentence: "\(sentence.translation)".
+Don't define other words in the sentence.
+Write the definition in \(originalLanguage?.displayName ?? "English").
 """
         let messages: [[String: String]] = [
             ["role": "system", "content": initialPrompt],
@@ -158,7 +165,8 @@ Format the following story into JSON. Translate each English sentence into \(sto
             ["role": "user", "content": translation]
         ]
         requestBody["messages"] = messages
-        requestBody["response_format"] = sentenceSchema(languageKey: settings.language.schemaKey,
+        requestBody["response_format"] = sentenceSchema(originalKey: Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier })?.schemaKey ?? "",
+                                                        languageKey: settings.language.schemaKey,
                                                         shouldCreateTitle: shouldCreateTitle)
 
         return try await makeOpenAIRequest(requestBody: requestBody)

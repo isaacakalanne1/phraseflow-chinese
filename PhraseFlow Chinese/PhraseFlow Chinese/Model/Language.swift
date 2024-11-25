@@ -79,7 +79,30 @@ enum Language: String, Codable, CaseIterable {
         }
     }
 
-    var code: String {
+    var identifier: String {
+        switch self {
+        case .arabicGulf:
+            "ar"
+        case .mandarinChinese:
+            "zh"
+        case .french:
+            "fr"
+        case .japanese:
+            "ja"
+        case .korean:
+            "ko"
+        case .russian:
+            "ru"
+        case .spanish:
+            "es"
+        case .portugueseEuropean:
+            "pt"
+        case .portugueseBrazil:
+            "pt"
+        }
+    }
+
+    var flagCode: String {
         switch self {
         case .arabicGulf:
             "ae"
@@ -143,7 +166,7 @@ enum Language: String, Codable, CaseIterable {
     var flagEmoji: String {
         let flagBase = UnicodeScalar("🇦").value - UnicodeScalar("A").value
 
-        let flag = code
+        let flag = flagCode
             .uppercased()
             .unicodeScalars
             .compactMap({ UnicodeScalar(flagBase + $0.value)?.description })
