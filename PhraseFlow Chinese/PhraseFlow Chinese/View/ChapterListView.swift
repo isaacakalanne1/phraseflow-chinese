@@ -27,10 +27,10 @@ struct ChapterListView: View {
                         }
                     }
                 } header: {
-                    Text("Chapters")
+                    Text(LocalizedString.chapters)
                 }
             }
-            Button("New chapter") {
+            Button(LocalizedString.newChapter) {
                 if let story = store.state.storyState.currentStory {
                     store.dispatch(.generateChapter(story: story))
                     store.dispatch(.updateShowingStoryListView(isShowing: false))
@@ -41,7 +41,7 @@ struct ChapterListView: View {
             .foregroundColor(.white)
             .cornerRadius(10)
         }
-        .navigationTitle("Choose Chapter")
+        .navigationTitle(LocalizedString.chooseChapter)
     }
 
 }

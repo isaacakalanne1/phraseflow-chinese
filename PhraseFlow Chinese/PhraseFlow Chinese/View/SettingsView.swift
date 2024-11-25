@@ -29,12 +29,12 @@ struct SettingsView: View {
             VStack(spacing: 0) {
                 List {
                     Section {
-                        Toggle("Definition", isOn: showDefinition)
+                        Toggle(LocalizedString.definitionToggle, isOn: showDefinition)
                             .fontWeight(.light)
-                        Toggle("English", isOn: showEnglish)
+                        Toggle(LocalizedString.englishToggle, isOn: showEnglish)
                             .fontWeight(.light)
                     } header: {
-                        Text("Toggle")
+                        Text(LocalizedString.toggle)
                     }
                     Section {
                         ForEach(store.state.storyState.currentStory?.language.voices.sorted(by: { $0.gender.title < $1.gender.title }) ?? [], id: \.self) { voice in
@@ -56,7 +56,7 @@ struct SettingsView: View {
                             .listRowBackground(store.state.settingsState.voice == voice ? Color.gray.opacity(0.3) : Color.white)
                         }
                     } header: {
-                        Text("Voice")
+                        Text(LocalizedString.voice)
                     }
                     Section {
                         ForEach(SpeechSpeed.allCases, id: \.self) { speed in
@@ -72,11 +72,11 @@ struct SettingsView: View {
                             .listRowBackground(store.state.settingsState.speechSpeed == speed ? Color.gray.opacity(0.3) : Color.white)
                         }
                     } header: {
-                        Text("Speed")
+                        Text(LocalizedString.speed)
                     }
                 }
             }
-            .navigationTitle("Settings")
+            .navigationTitle(LocalizedString.settings)
         }
     }
 }

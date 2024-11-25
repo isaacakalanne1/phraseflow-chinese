@@ -32,10 +32,10 @@ struct StoryListView: View {
                         }
                         .onDelete(perform: delete)
                     } header: {
-                        Text("Stories")
+                        Text(LocalizedString.stories)
                     }
                 }
-                Button("\(store.state.settingsState.language.flagEmoji) New Story (\(store.state.settingsState.difficulty.title))") {
+                Button("\(store.state.settingsState.language.flagEmoji) \(LocalizedString.newStory) (\(store.state.settingsState.difficulty.title))") {
                     store.dispatch(.generateNewStory)
                 }
                 .padding()
@@ -43,14 +43,14 @@ struct StoryListView: View {
                 .foregroundColor(.white)
                 .cornerRadius(10)
                 NavigationLink(destination: CreateStorySettingsView()) {
-                    Text("Settings")
+                    Text(LocalizedString.settings)
                         .frame(height: 40)
                 }
                 .foregroundColor(.accentColor)
             }
             .toolbar(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("Choose Story")
+            .navigationTitle(LocalizedString.chooseStory)
         }
         .onAppear {
             store.dispatch(.loadStories)

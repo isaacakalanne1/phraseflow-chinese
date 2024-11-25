@@ -10,7 +10,7 @@
 "translation" = "Translation";
 
 // Definition View title
-"definition" = "Definition:";
+"definition_of" = "Definition: %@";
 
 // Stories button title
 "stories" = "Stories";
@@ -116,3 +116,96 @@
 
 // Next Chapter button title
 "next_chapter" = "Next Chapter";
+
+// Definition toggle title
+"definition_toggle" = "Definition";
+
+// English toggle title
+"english_toggle" = "English";
+
+// Toggle section title
+"toggle" = "Toggle";
+
+// Voice section title
+"voice" = "Voice";
+
+// Speed section title
+"speed" = "Speed";
+
+// Slow speed button title
+"slow" = "Slow";
+
+// Normal speed button title
+"normal" = "Normal";
+
+// Fast speed button title
+"fast" = "Fast";
+
+// Xiaoxiao Chinese voice button title
+"voice_xiaoxiao" = "Xiaoxiao";
+
+// Yunjian Chinese voice button title
+"voice_yunjian" = "Yunjian";
+
+// Denise French voice button title
+"voice_denise" = "Denise";
+
+// Henri French voice button title
+"voice_henri" = "Henri";
+
+// Mayu Japanese voice button title
+"voice_mayu" = "Mayu";
+
+// Keita Japanese voice button title
+"voice_keita" = "Keita";
+
+// Sun-Hi Korean voice button title
+"voice_sun_hi" = "Sun-Hi";
+
+// Hyun-Su Korean voice button title
+"voice_hyun_su" = "Hyun-Su";
+
+// Dariya (Russian) voice button title
+"voice_dariya" = "Dariya";
+
+// Dmitry (Russian) voice button title
+"voice_dmitry" = "Dmitry";
+
+// Elvira (Spanish) voice button title
+"voice_elvira" = "Elvira";
+
+// Alvaro (Spanish) voice button title
+"voice_alvaro" = "Alvaro";
+
+// Fatima (Arabic, UAE) voice button title
+"voice_fatima" = "Fatima";
+
+// Hamdan (Arabic, UAE) voice button title
+"voice_hamdan" = "Hamdan";
+
+// Raquel (European Portuguese) voice button title
+"voice_raquel" = "Raquel";
+
+// Duarte (European Portuguese) voice button title
+"voice_duarte" = "Duarte";
+
+// Thalita (Brazilian Portuguese) voice button title
+"voice_thalita" = "Thalita";
+
+// Donato (Brazilian Portuguese) voice button title
+"voice_donato" = "Donato";
+
+// Male Gender Button title
+"male" = "Male";
+
+// Female Gender Button title
+"female" = "Female";
+
+// Chapters section title
+"chapters" = "Chapters";
+
+// New Chapter button title
+"new_chapter" = "New Chapter";
+
+// Choose Chapter navigation bat title
+"choose_chapter" = "Choose Chapter";

@@ -28,7 +28,44 @@ enum Voice: String, Codable, CaseIterable, Equatable {
          donato
 
     var title: String {
-        rawValue.capitalized
+        switch self {
+        case .xiaoxiao:
+            LocalizedString.voiceXiaoxiao
+        case .yunjian:
+            LocalizedString.voiceYunjian
+        case .denise:
+            LocalizedString.voiceDenise
+        case .henri:
+            LocalizedString.voiceHenri
+        case .mayu:
+            LocalizedString.voiceMayu
+        case .keita:
+            LocalizedString.voiceKeita
+        case .sunHi:
+            LocalizedString.voiceSunHi
+        case .hyunsu:
+            LocalizedString.voiceHyunSu
+        case .dariya:
+            LocalizedString.voiceDariya
+        case .dmitry:
+            LocalizedString.voiceDmitry
+        case .elvira:
+            LocalizedString.voiceElvira
+        case .alvaro:
+            LocalizedString.voiceAlvaro
+        case .fatima:
+            LocalizedString.voiceFatima
+        case .hamdan:
+            LocalizedString.voiceHamdan
+        case .raquel:
+            LocalizedString.voiceRaquel
+        case .duarte:
+            LocalizedString.voiceDuarte
+        case .thalita:
+            LocalizedString.voiceThalita
+        case .donato:
+            LocalizedString.voiceDonato
+        }
     }
 
     var speechSynthesisVoiceName: String {

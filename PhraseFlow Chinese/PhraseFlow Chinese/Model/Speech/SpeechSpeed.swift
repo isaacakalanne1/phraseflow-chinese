@@ -13,11 +13,11 @@ enum SpeechSpeed: CaseIterable, Codable, Equatable {
     var title: String {
         switch self {
         case .slow:
-            "Slow"
+            LocalizedString.slow
         case .normal:
-            "Normal"
+            LocalizedString.normal
         case .fast:
-            "Fast"
+            LocalizedString.fast
         }
     }
 

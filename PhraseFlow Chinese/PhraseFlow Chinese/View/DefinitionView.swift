@@ -12,12 +12,8 @@ struct DefinitionView: View {
 
     var body: some View {
         VStack(spacing: 5) {
-            HStack(spacing: 0) {
-                Text("Definition of ")
-                Text(store.state.definitionState.tappedWord?.word ?? "...")
-                    .fontWeight(store.state.definitionState.tappedWord?.word == nil ? .regular : .medium)
-            }
-            .greyBackground()
+            Text(LocalizedString.definitionOf(store.state.definitionState.tappedWord?.word ?? "..."))
+                .greyBackground()
             HStack {
                 ScrollView(.vertical) {
                     Text(store.state.viewState.readerDisplayType == .defining ? "Defining..." : (store.state.definitionState.currentDefinition?.definition ?? ""))

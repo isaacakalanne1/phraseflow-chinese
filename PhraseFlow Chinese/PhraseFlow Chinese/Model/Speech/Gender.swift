@@ -11,6 +11,11 @@ enum Gender: String {
     case male, female
 
     var title: String {
-        rawValue.capitalized
+        switch self {
+        case .male:
+            LocalizedString.male
+        case .female:
+            LocalizedString.female
+        }
     }
 }
