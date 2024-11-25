@@ -12,7 +12,7 @@ struct EnglishSentenceView: View {
 
     var body: some View {
         VStack {
-            Text("Translation")
+            Text(LocalizedString.translation)
                 .greyBackground(isShowing: store.state.settingsState.isShowingEnglish)
             ScrollView(.vertical) {
                 Text(store.state.storyState.currentSentence?.english ?? "")
