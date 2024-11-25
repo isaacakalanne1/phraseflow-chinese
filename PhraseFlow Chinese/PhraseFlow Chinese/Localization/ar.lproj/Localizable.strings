@@ -1,0 +1,213 @@
+/*
+  Localizable.strings
+  PhraseFlow Arabic (Gulf Arabic)
+
+  Created by iakalann on 24/11/2024.
+
+*/
+
+// Translation view title
+"translation" = "ترجمة";
+
+// Definition View title
+"definition_of" = "تعريف: %@";
+
+// Stories button title
+"stories" = "قصص";
+
+// Play button title
+"play" = "تشغيل";
+
+// Settings View title
+"settings" = "الإعدادات";
+
+// Choose Story Navigation Bar title
+"choose_story" = "اختر قصة";
+
+// Create Story Navigation Bar title
+"create_story" = "إنشاء قصة";
+
+// Story Settings Navigation Bar title
+"story_settings" = "إعدادات القصة";
+
+// New Story button title
+"new_story" = "قصة جديدة";
+
+// Difficulty level title
+"difficulty" = "الصعوبة";
+
+// Beginner difficulty level
+"beginner" = "مبتدئ";
+
+// Intermediate difficulty level
+"intermediate" = "متوسط";
+
+// Advanced difficulty level
+"advanced" = "متقدم";
+
+// Expert difficulty level
+"expert" = "خبير";
+
+// Language Section Title
+"language" = "اللغة";
+
+// Mandarin Chinese language name
+"chinese_mandarin" = "الصينية (الماندرين)";
+
+// Spanish language name
+"spanish" = "الإسبانية";
+
+// French language name
+"french" = "الفرنسية";
+
+// Japanese language name
+"japanese" = "اليابانية";
+
+// Korean language name
+"korean" = "الكورية";
+
+// Russian language name
+"russian" = "الروسية";
+
+// Arabic (Gulf Arabic) language name
+"arabicGulf" = "العربية (الخليجية)";
+
+// Portuguese (Brazil) language name
+"portuguese_brazil" = "البرتغالية (البرازيلية)";
+
+// Portuguese (European) language name
+"portuguese_european" = "البرتغالية (الأوروبية)";
+
+// Retry button title
+"retry" = "إعادة المحاولة";
+
+// Failed to write story title
+"failed_to_write_story" = "فشل في كتابة القصة";
+
+// Failed to write chapter title
+"failed_to_write_chapter" = "فشل في كتابة الفصل";
+
+// Writing new chapter title
+"writing_new_chapter" = "جاري كتابة فصل جديد...";
+
+// New Story button title
+"new_story" = "قصة جديدة";
+
+// Language section title
+"language" = "اللغة";
+
+$1"التطبيق يعتمد على الذكاء الاصطناعي لتوفير القصص والتعريفات، وقد تحتوي على معلومات غير دقيقة أو غير ملائمة.";
+
+// E.g, Chapter 1
+"chapter_number" = "الفصل %@";
+
+// Loading button title, shown when a button state is currently loading
+"loading" = "جاري التحميل";
+
+// Load button title, shown when content is ready to be loaded
+"load" = "تحميل";
+
+// Pause button title
+"pause" = "إيقاف مؤقت";
+
+// Play button title
+"play" = "تشغيل";
+
+// Next Chapter button title
+"next_chapter" = "الفصل التالي";
+
+// Definition toggle title
+"definition_toggle" = "التعريف";
+
+// English toggle title
+"english_toggle" = "الإنجليزية";
+
+// Toggle section title
+"toggle" = "تبديل";
+
+// Voice section title
+"voice" = "الصوت";
+
+// Speed section title
+"speed" = "السرعة";
+
+// Slow speed button title
+"slow" = "بطيء";
+
+// Normal speed button title
+"normal" = "عادي";
+
+// Fast speed button title
+"fast" = "سريع";
+
+// Xiaoxiao Chinese voice button title
+"voice_xiaoxiao" = "شياوشياو";
+
+// Yunjian Chinese voice button title
+"voice_yunjian" = "يونجيان";
+
+// Denise French voice button title
+"voice_denise" = "دينيز";
+
+// Henri French voice button title
+"voice_henri" = "هنري";
+
+// Mayu Japanese voice button title
+"voice_mayu" = "مايو";
+
+// Keita Japanese voice button title
+"voice_keita" = "كيتا";
+
+// Sun-Hi Korean voice button title
+"voice_sun_hi" = "سون-هي";
+
+// Hyun-Su Korean voice button title
+"voice_hyun_su" = "هيون-سو";
+
+// Dariya (Russian) voice button title
+"voice_dariya" = "داريا";
+
+// Dmitry (Russian) voice button title
+"voice_dmitry" = "ديمتري";
+
+// Elvira (Spanish) voice button title
+"voice_elvira" = "إلفيرا";
+
+// Alvaro (Spanish) voice button title
+"voice_alvaro" = "ألفارو";
+
+// Fatima (Arabic, UAE) voice button title
+"voice_fatima" = "فاطمة";
+
+// Hamdan (Arabic, UAE) voice button title
+"voice_hamdan" = "حمدان";
+
+// Raquel (European Portuguese) voice button title
+"voice_raquel" = "راكيل";
+
+// Duarte (European Portuguese) voice button title
+"voice_duarte" = "دوارتي";
+
+// Thalita (Brazilian Portuguese) voice button title
+"voice_thalita" = "تاليتا";
+
+// Donato (Brazilian Portuguese) voice button title
+"voice_donato" = "دوناتو";
+
+// Male Gender Button title
+"male" = "ذكر";
+
+// Female Gender Button title
+"female" = "أنثى";
+
+// Chapters section title
+"chapters" = "الفصول";
+
+// New Chapter button title
+"new_chapter" = "فصل جديد";
+
+// Choose Chapter navigation bat title
+"choose_chapter" = "اختر فصل";
+
+// Defining text while user is fetching the definition of a word
+"defining" = "جارٍ تحديد التعريف...";
