@@ -30,7 +30,7 @@ struct ChapterView: View {
             }
 
                        .frame(maxWidth: .infinity, alignment: store.state.storyState.currentStory?.language == .arabicGulf ? .trailing : .leading)
-            Button("Next Chapter") {
+            Button(LocalizedString.nextChapter) {
                 if let story = store.state.storyState.currentStory {
                     if story.chapters.count > story.currentChapterIndex + 1 {
                         store.dispatch(.goToNextChapter)

@@ -26,7 +26,7 @@ struct CreateStorySettingsView: View {
                             .listRowBackground(store.state.settingsState.difficulty == difficulty ? Color.gray.opacity(0.3) : Color.white)
                         }
                     } header: {
-                        Text("Difficulty")
+                        Text(LocalizedString.difficulty)
                     }
                     Section {
                         ForEach(Language.allCases, id: \.self) { language in
@@ -40,18 +40,18 @@ struct CreateStorySettingsView: View {
                             .listRowBackground(store.state.settingsState.language == language ? Color.gray.opacity(0.3) : Color.white)
                         }
                     } header: {
-                        Text("Language")
+                        Text(LocalizedString.language)
                     }
                 }
                 .frame(maxHeight: .infinity)
-                Button("\(store.state.settingsState.language.flagEmoji) New Story (\(store.state.settingsState.difficulty.title))") {
+                Button("\(store.state.settingsState.language.flagEmoji) \(LocalizedString.newStory) (\(store.state.settingsState.difficulty.title))") {
                     store.dispatch(.generateNewStory)
                 }
                 .padding()
                 .background(Color.accentColor)
                 .foregroundColor(.white)
                 .cornerRadius(10)
-                .navigationTitle(store.state.storyState.currentStory == nil ? "Create Story" : "Story Settings")
+                .navigationTitle(store.state.storyState.currentStory == nil ? LocalizedString.createStory : LocalizedString.storySettings)
             }
         }
     }

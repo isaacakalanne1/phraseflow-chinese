@@ -15,7 +15,16 @@ enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
     }
 
     var title: String {
-        rawValue.capitalized
+        switch self {
+        case .beginner:
+            LocalizedString.beginner
+        case .intermediate:
+            LocalizedString.intermediate
+        case .advanced:
+            LocalizedString.advanced
+        case .expert:
+            LocalizedString.expert
+        }
     }
 
     var emoji: String {

@@ -33,18 +33,18 @@ struct ContentView: View {
         VStack(spacing: 10) {
             switch store.state.viewState.readerDisplayType {
             case .loading:
-                Text("Writing new chapter...")
+                Text(LocalizedString.writingNewChapter)
                     .font(.body)
             case .fetching:
                 EmptyView()
             case .failedToGenerateStory:
-                ErrorView(title: "Failed to write story",
-                          buttonTitle: "Retry") {
+                ErrorView(title: LocalizedString.failedToWriteStory,
+                          buttonTitle: LocalizedString.retry) {
                     store.dispatch(.generateNewStory)
                 }
             case .failedToGenerateChapter:
-                ErrorView(title: "Failed to write chapter",
-                          buttonTitle: "Retry") {
+                ErrorView(title: LocalizedString.failedToWriteChapter,
+                          buttonTitle: LocalizedString.retry) {
                     if let story = store.state.storyState.currentStory {
                         store.dispatch(.generateChapter(story: story))
                     }

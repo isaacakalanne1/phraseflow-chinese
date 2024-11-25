@@ -24,6 +24,12 @@
 // Choose Story Navigation Bar title
 "choose_story" = "Choose Story";
 
+// Create Story Navigation Bar title
+"create_story" = "Create Story";
+
+// Story Settings Navigation Bar title
+"story_settings" = "Story Settings";
+
 // New Story button title
 "new_story" = "New Story";
 
@@ -40,7 +46,7 @@
 "advanced" = "Advanced";
 
 // Expert difficulty level
-"Expect" = "Expert";
+"expert" = "Expert";
 
 // Language Section Title
 "language" = "Language";
@@ -71,3 +77,42 @@
 
 // Portuguese (European) language name
 "portuguese_european" = "Portuguese (European)";
+
+// Retry button title
+"retry" = "Retry";
+
+// Failed to write story title
+"failed_to_write_story" = "Failed to write story";
+
+// Failed to write chapter title
+"failed_to_write_chapter" = "Failed to write chapter";
+
+// Writing new chapter title
+"writing_new_chapter" = "Writing new chapter...";
+
+// New Story button title
+"new_story" = "New Story";
+
+// Language section title
+"language" = "Language";
+
+// AI Statement displayed at top of app
+"ai_statement" = "Stories and definitions are written by AI and may be inaccurate or inappropriate.";
+
+// E.g, Chapter 1
+"chapter_number" = "Chapter %@";
+
+// Loading button title, shown when a button state is currently loading
+"loading" = "Loading";
+
+// Load button title, shown when content is ready to be loaded
+"load" = "Load";
+
+// Pause button title
+"pause" = "Pause";
+
+// Play button title
+"play" = "Play";
+
+// Next Chapter button title
+"next_chapter" = "Next Chapter";

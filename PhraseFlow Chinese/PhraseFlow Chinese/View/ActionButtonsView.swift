@@ -14,19 +14,19 @@ struct ActionButtonsView: View {
     var body: some View {
 
         HStack(spacing: 20) {
-            ActionButton(title: "Stories",
+            ActionButton(title: LocalizedString.stories,
                          imageName: "list.bullet") {
                 store.dispatch(.updateShowingStoryListView(isShowing: true))
             }
             
             if store.state.viewState.playButtonDisplayType == .loading {
-                ActionButton(title: "Loading",
+                ActionButton(title: LocalizedString.loading,
                              imageName: "ellipsis.circle") { }
                              .disabled(true)
             } else if chapter.audioData == nil ||
                         store.state.settingsState.voice != chapter.audioVoice ||
                         store.state.settingsState.speechSpeed != chapter.audioSpeed {
-                ActionButton(title: "Load",
+                ActionButton(title: LocalizedString.load,
                              imageName: "arrow.down.to.line.circle") {
                     store.dispatch(.synthesizeAudio(chapter,
                                                     voice: store.state.settingsState.voice,
@@ -34,12 +34,12 @@ struct ActionButtonsView: View {
                 }
             } else {
                 if store.state.audioState.isPlayingAudio == true {
-                    ActionButton(title: "Pause",
+                    ActionButton(title: LocalizedString.pause,
                                  imageName: "pause.circle.fill") {
                         store.dispatch(.pauseAudio)
                     }
                 } else {
-                    ActionButton(title: "Play",
+                    ActionButton(title: LocalizedString.play,
                                  imageName: "play.circle") {
                         let timestampData = store.state.storyState.currentChapter?.timestampData
                         let currentSpokenWord = store.state.currentSpokenWord ?? timestampData?.first
@@ -48,7 +48,7 @@ struct ActionButtonsView: View {
                 }
             }
 
-            ActionButton(title: "Settings",
+            ActionButton(title: LocalizedString.settings,
                          imageName: "gearshape.fill") {
                 store.dispatch(.updateShowingSettings(isShowing: true))
             }
