@@ -1,0 +1,211 @@
+/*
+  Localizable.strings
+  PhraseFlow Chinese
+
+  Created by iakalann on 24/11/2024.
+
+*/
+
+// Translation view title
+"translation" = "翻译";
+
+// Definition View title
+"definition_of" = "定义：%@";
+
+// Stories button title
+"stories" = "故事";
+
+// Play button title
+"play" = "播放";
+
+// Settings View title
+"settings" = "设置";
+
+// Choose Story Navigation Bar title
+"choose_story" = "选择故事";
+
+// Create Story Navigation Bar title
+"create_story" = "创建故事";
+
+// Story Settings Navigation Bar title
+"story_settings" = "故事设置";
+
+// New Story button title
+"new_story" = "新故事";
+
+// Difficulty level title
+"difficulty" = "难度";
+
+// Beginner difficulty level
+"beginner" = "初学者";
+
+// Intermediate difficulty level
+"intermediate" = "中级";
+
+// Advanced difficulty level
+"advanced" = "高级";
+
+// Expert difficulty level
+"expert" = "专家";
+
+// Language Section Title
+"language" = "语言";
+
+// Mandarin Chinese language name
+"chinese_mandarin" = "中文（普通话）";
+
+// Spanish language name
+"spanish" = "西班牙语";
+
+// French language name
+"french" = "法语";
+
+// Japanese language name
+"japanese" = "日语";
+
+// Korean language name
+"korean" = "韩语";
+
+// Russian language name
+"russian" = "俄语";
+
+// Arabic (Gulf Arabic) language name
+"arabicGulf" = "阿拉伯语（海湾阿拉伯语）";
+
+// Portuguese (Brazil) language name
+"portuguese_brazil" = "葡萄牙语（巴西）";
+
+// Portuguese (European) language name
+"portuguese_european" = "葡萄牙语（欧洲）";
+
+// Retry button title
+"retry" = "重试";
+
+// Failed to write story title
+"failed_to_write_story" = "未能写故事";
+
+// Failed to write chapter title
+"failed_to_write_chapter" = "未能写章节";
+
+// Writing new chapter title
+"writing_new_chapter" = "正在写新章节...";
+
+// New Story button title
+"new_story" = "新故事";
+
+// Language section title
+"language" = "语言";
+
+// AI Statement displayed at top of app
+"ai_statement" = "故事和定义由 AI 编写，可能不准确或不适当。";
+
+// E.g, Chapter 1
+"chapter_number" = "第 %@ 章";
+
+// Loading button title, shown when a button state is currently loading
+"loading" = "加载中";
+
+// Load button title, shown when content is ready to be loaded
+"load" = "加载";
+
+// Pause button title
+"pause" = "暂停";
+
+// Play button title
+"play" = "播放";
+
+// Next Chapter button title
+"next_chapter" = "下一章";
+
+// Definition toggle title
+"definition_toggle" = "定义";
+
+// English toggle title
+"english_toggle" = "英语";
+
+// Toggle section title
+"toggle" = "切换";
+
+// Voice section title
+"voice" = "声音";
+
+// Speed section title
+"speed" = "速度";
+
+// Slow speed button title
+"slow" = "慢";
+
+// Normal speed button title
+"normal" = "正常";
+
+// Fast speed button title
+"fast" = "快";
+
+// Xiaoxiao Chinese voice button title
+"voice_xiaoxiao" = "小晓";
+
+// Yunjian Chinese voice button title
+"voice_yunjian" = "云间";
+
+// Denise French voice button title
+"voice_denise" = "丹妮丝";
+
+// Henri French voice button title
+"voice_henri" = "亨利";
+
+// Mayu Japanese voice button title
+"voice_mayu" = "真由";
+
+// Keita Japanese voice button title
+"voice_keita" = "启太";
+
+// Sun-Hi Korean voice button title
+"voice_sun_hi" = "善熙";
+
+// Hyun-Su Korean voice button title
+"voice_hyun_su" = "贤秀";
+
+// Dariya (Russian) voice button title
+"voice_dariya" = "达莉娅";
+
+// Dmitry (Russian) voice button title
+"voice_dmitry" = "德米特里";
+
+// Elvira (Spanish) voice button title
+"voice_elvira" = "埃尔维拉";
+
+// Alvaro (Spanish) voice button title
+"voice_alvaro" = "阿尔瓦罗";
+
+// Fatima (Arabic, UAE) voice button title
+"voice_fatima" = "法蒂玛";
+
+// Hamdan (Arabic, UAE) voice button title
+"voice_hamdan" = "哈姆丹";
+
+// Raquel (European Portuguese) voice button title
+"voice_raquel" = "拉克尔";
+
+// Duarte (European Portuguese) voice button title
+"voice_duarte" = "杜阿尔特";
+
+// Thalita (Brazilian Portuguese) voice button title
+"voice_thalita" = "塔莉塔";
+
+// Donato (Brazilian Portuguese) voice button title
+"voice_donato" = "多纳托";
+
+// Male Gender Button title
+"male" = "男性";
+
+// Female Gender Button title
+"female" = "女性";
+
+// Chapters section title
+"chapters" = "章节";
+
+// New Chapter button title
+"new_chapter" = "新章节";
+
+// Choose Chapter navigation bar title
+"choose_chapter" = "选择章节";
