@@ -139,6 +139,7 @@
 		BB84E0B12CF4A38100520F5E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		BB84E0B22CF4A54700520F5E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BB84E0B32CF4E60300520F5E /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BB84E0B42CF4E6D800520F5E /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhraseFlow Chinese.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -509,6 +510,7 @@
 				"zh-Hans",
 				es,
 				ar,
+				hi,
 			);
 			mainGroup = BBB6EF1A2C8C86240079D135;
 			packageReferences = (
@@ -700,6 +702,7 @@
 				BB84E0B12CF4A38100520F5E /* zh-Hans */,
 				BB84E0B22CF4A54700520F5E /* es */,
 				BB84E0B32CF4E60300520F5E /* ar */,
+				BB84E0B42CF4E6D800520F5E /* hi */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

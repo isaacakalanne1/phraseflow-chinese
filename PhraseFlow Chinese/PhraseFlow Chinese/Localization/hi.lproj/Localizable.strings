@@ -1,0 +1,214 @@
+/*
+  Localizable.strings
+  PhraseFlow Chinese
+
+  Created by iakalann on 24/11/2024.
+
+*/
+
+// Translation view title
+"translation" = "अनुवाद";
+
+// Definition View title
+"definition_of" = "परिभाषा: %@";
+
+// Stories button title
+"stories" = "कहानियाँ";
+
+// Play button title
+"play" = "चलाएं";
+
+// Settings View title
+"settings" = "सेटिंग्स";
+
+// Choose Story Navigation Bar title
+"choose_story" = "कहानी चुनें";
+
+// Create Story Navigation Bar title
+"create_story" = "कहानी बनाएँ";
+
+// Story Settings Navigation Bar title
+"story_settings" = "कहानी सेटिंग्स";
+
+// New Story button title
+"new_story" = "नई कहानी";
+
+// Difficulty level title
+"difficulty" = "कठिनाई";
+
+// Beginner difficulty level
+"beginner" = "शुरुआती";
+
+// Intermediate difficulty level
+"intermediate" = "मध्यम";
+
+// Advanced difficulty level
+"advanced" = "उन्नत";
+
+// Expert difficulty level
+"expert" = "विशेषज्ञ";
+
+// Language Section Title
+"language" = "भाषा";
+
+// Mandarin Chinese language name
+"chinese_mandarin" = "चीनी (मंदारिन)";
+
+// Spanish language name
+"spanish" = "स्पेनिश";
+
+// French language name
+"french" = "फ्रेंच";
+
+// Japanese language name
+"japanese" = "जापानी";
+
+// Korean language name
+"korean" = "कोरियाई";
+
+// Russian language name
+"russian" = "रूसी";
+
+// Arabic (Gulf Arabic) language name
+"arabicGulf" = "अरबी (खाड़ी अरबी)";
+
+// Portuguese (Brazil) language name
+"portuguese_brazil" = "पुर्तगाली (ब्राज़ील)";
+
+// Portuguese (European) language name
+"portuguese_european" = "पुर्तगाली (यूरोपीय)";
+
+// Retry button title
+"retry" = "पुनः प्रयास करें";
+
+// Failed to write story title
+"failed_to_write_story" = "कहानी लिखने में विफल";
+
+// Failed to write chapter title
+"failed_to_write_chapter" = "अध्याय लिखने में विफल";
+
+// Writing new chapter title
+"writing_new_chapter" = "नया अध्याय लिख रहे हैं...";
+
+// New Story button title
+"new_story" = "नई कहानी";
+
+// Language section title
+"language" = "भाषा";
+
+// AI Statement displayed at top of app
+"ai_statement" = "कहानियाँ और परिभाषाएँ AI द्वारा लिखी गई हैं और गलत या अनुचित हो सकती हैं।";
+
+// E.g, Chapter 1
+"chapter_number" = "अध्याय %@";
+
+// Loading button title, shown when a button state is currently loading
+"loading" = "लोड हो रहा है";
+
+// Load button title, shown when content is ready to be loaded
+"load" = "लोड करें";
+
+// Pause button title
+"pause" = "रोकें";
+
+// Play button title
+"play" = "चलाएं";
+
+// Next Chapter button title
+"next_chapter" = "अगला अध्याय";
+
+// Definition toggle title
+"definition_toggle" = "परिभाषा";
+
+// English toggle title
+"english_toggle" = "अंग्रेज़ी";
+
+// Toggle section title
+"toggle" = "स्विच";
+
+// Voice section title
+"voice" = "आवाज़";
+
+// Speed section title
+"speed" = "गति";
+
+// Slow speed button title
+"slow" = "धीमी";
+
+// Normal speed button title
+"normal" = "सामान्य";
+
+// Fast speed button title
+"fast" = "तेज़";
+
+// Xiaoxiao Chinese voice button title
+"voice_xiaoxiao" = "श्याओश्याओ";
+
+// Yunjian Chinese voice button title
+"voice_yunjian" = "युनजियान";
+
+// Denise French voice button title
+"voice_denise" = "डेनिस";
+
+// Henri French voice button title
+"voice_henri" = "हेनरी";
+
+// Mayu Japanese voice button title
+"voice_mayu" = "मायु";
+
+// Keita Japanese voice button title
+"voice_keita" = "केइता";
+
+// Sun-Hi Korean voice button title
+"voice_sun_hi" = "सन-ही";
+
+// Hyun-Su Korean voice button title
+"voice_hyun_su" = "ह्यून-सु";
+
+// Dariya (Russian) voice button title
+"voice_dariya" = "दारिया";
+
+// Dmitry (Russian) voice button title
+"voice_dmitry" = "दिमित्री";
+
+// Elvira (Spanish) voice button title
+"voice_elvira" = "एलवीरा";
+
+// Alvaro (Spanish) voice button title
+"voice_alvaro" = "अलवारो";
+
+// Fatima (Arabic, UAE) voice button title
+"voice_fatima" = "फातिमा";
+
+// Hamdan (Arabic, UAE) voice button title
+"voice_hamdan" = "हमदान";
+
+// Raquel (European Portuguese) voice button title
+"voice_raquel" = "राकेल";
+
+// Duarte (European Portuguese) voice button title
+"voice_duarte" = "डुआर्टे";
+
+// Thalita (Brazilian Portuguese) voice button title
+"voice_thalita" = "थालीता";
+
+// Donato (Brazilian Portuguese) voice button title
+"voice_donato" = "डोनाटो";
+
+// Male Gender Button title
+"male" = "पुरुष";
+
+// Female Gender Button title
+"female" = "महिला";
+
+// Chapters section title
+"chapters" = "अध्याय";
+
+// New Chapter button title
+"new_chapter" = "नया अध्याय";
+
+// Choose Chapter navigation bat title
+"choose_chapter" = "अध्याय चुनें";
+
+// Defining text while user is fetching the definition of a word
+"defining" = "परिभाषा की जा रही है...";

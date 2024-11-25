@@ -1,6 +1,6 @@
 /*
   Localizable.strings
-  PhraseFlow Arabic (Gulf Arabic)
+  PhraseFlow Chinese
 
   Created by iakalann on 24/11/2024.
 
@@ -96,7 +96,8 @@
 // Language section title
 "language" = "اللغة";
 
-$1"التطبيق يعتمد على الذكاء الاصطناعي لتوفير القصص والتعريفات، وقد تحتوي على معلومات غير دقيقة أو غير ملائمة.";
+// AI Statement displayed at top of app
+"ai_statement" = "التطبيق يعتمد على الذكاء الاصطناعي لتوفير القصص والتعريفات، وقد تحتوي على معلومات غير دقيقة أو غير ملائمة.";
 
 // E.g, Chapter 1
 "chapter_number" = "الفصل %@";
