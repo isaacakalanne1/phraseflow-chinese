@@ -16,6 +16,7 @@ public enum LocalizedString {
   public static let chooseChapter = LocalizedString.tr("Localizable", "choose_chapter")
   public static let chooseStory = LocalizedString.tr("Localizable", "choose_story")
   public static let createStory = LocalizedString.tr("Localizable", "create_story")
+  public static let defining = LocalizedString.tr("Localizable", "defining")
   public static func definitionOf(_ p1: String) -> String {
     return LocalizedString.tr("Localizable", "definition_of", p1)
   }

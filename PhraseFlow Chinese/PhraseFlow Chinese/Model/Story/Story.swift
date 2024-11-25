@@ -9,7 +9,7 @@ import Foundation
 
 struct Story: Codable, Equatable, Hashable {
     let id: UUID
-    var briefLatestStorySummaryinEnglish: String
+    var briefLatestStorySummary: String
     let difficulty: Difficulty
     let language: Language
     let title: String
@@ -18,7 +18,7 @@ struct Story: Codable, Equatable, Hashable {
     var currentChapterIndex = 0
     var lastUpdated: Date
 
-    init(briefLatestStorySummaryinEnglish: String,
+    init(briefLatestStorySummary: String,
          difficulty: Difficulty,
          language: Language,
          title: String,
@@ -27,7 +27,7 @@ struct Story: Codable, Equatable, Hashable {
          currentChapterIndex: Int = 0,
          lastUpdated: Date = .now) {
         self.id = UUID()
-        self.briefLatestStorySummaryinEnglish = briefLatestStorySummaryinEnglish
+        self.briefLatestStorySummary = briefLatestStorySummary
         self.difficulty = difficulty
         self.language = language
         self.title = title
@@ -41,7 +41,7 @@ struct Story: Codable, Equatable, Hashable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(UUID.self, forKey: .id)
-        self.briefLatestStorySummaryinEnglish = try container.decode(String.self, forKey: .briefLatestStorySummaryinEnglish)
+        self.briefLatestStorySummary = try container.decode(String.self, forKey: .briefLatestStorySummary)
         self.difficulty = try container.decode(Difficulty.self, forKey: .difficulty)
         self.language = try container.decode(Language.self, forKey: .language)
         self.title = try container.decode(String.self, forKey: .title)

@@ -39,9 +39,14 @@ final class FastChineseServices: FastChineseServicesProtocol {
                 guard lastKey.intValue == nil else { return lastKey }
                 if lastKey.stringValue == originalLanguage?.schemaKey {
                     return AnyKey(stringValue: "original")!
-                }
-                if lastKey.stringValue == translationLanguage.schemaKey {
+                } else if lastKey.stringValue == translationLanguage.schemaKey {
                     return AnyKey(stringValue: "translation")!
+                } else if lastKey.stringValue == "briefLatestStorySummaryIn\(originalLanguage?.key ?? "English")" {
+                    return AnyKey(stringValue: "briefLatestStorySummary")!
+                } else if lastKey.stringValue == "chapterNumberAndTitleIn\(originalLanguage?.key ?? "English")" {
+                    return AnyKey(stringValue: "chapterNumberAndTitle")!
+                } else if lastKey.stringValue == "titleOfNovelIn\(originalLanguage?.key ?? "English")" {
+                    return AnyKey(stringValue: "titleOfNovel")!
                 }
                 return AnyKey(stringValue: lastKey.stringValue)!
             })
@@ -52,7 +57,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
                     translation = translation.replacingOccurrences(of: " ", with: "")
                 }
                 return Sentence(translation: translation, english: $0.original) })
-            let chapter = Chapter(title: chapterResponse.chapterNumberAndTitleInEnglish ?? "", sentences: sentences)
+            let chapter = Chapter(title: chapterResponse.chapterNumberAndTitle ?? "", sentences: sentences)
 
             if var story {
                 if story.chapters.isEmpty {
@@ -60,12 +65,12 @@ final class FastChineseServices: FastChineseServicesProtocol {
                 } else {
                     story.chapters.append(chapter)
                 }
-                story.briefLatestStorySummaryinEnglish = chapterResponse.briefLatestStorySummaryinEnglish
+                story.briefLatestStorySummary = chapterResponse.briefLatestStorySummary
                 story.currentChapterIndex = story.chapters.count - 1
                 story.lastUpdated = .now
                 return story
             } else {
-                return Story(briefLatestStorySummaryinEnglish: chapterResponse.briefLatestStorySummaryinEnglish,
+                return Story(briefLatestStorySummary: chapterResponse.briefLatestStorySummary,
                              difficulty: .beginner,
                              language: settings.language,
                              title: chapterResponse.titleOfNovel ?? "",
@@ -152,6 +157,8 @@ Use quotation marks for speech.
     }
 
     private func convertToJson(story: Story?, translation: String, settings: SettingsState, shouldCreateTitle: Bool) async throws -> String {
+        let originalLanguage = Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier })
+        let translationLanguage = story?.language ?? settings.language
 
         let jsonPrompt = """
 Format the following story into JSON. Translate each English sentence into \(story?.language.descriptiveEnglishName ?? settings.language.descriptiveEnglishName).
@@ -165,8 +172,10 @@ Format the following story into JSON. Translate each English sentence into \(sto
             ["role": "user", "content": translation]
         ]
         requestBody["messages"] = messages
-        requestBody["response_format"] = sentenceSchema(originalKey: Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier })?.schemaKey ?? "",
-                                                        languageKey: settings.language.schemaKey,
+        requestBody["response_format"] = sentenceSchema(originalKey: originalLanguage?.schemaKey ?? "",
+                                                        languageKey: translationLanguage.schemaKey,
+                                                        originalLanguageName: originalLanguage?.key ?? "English",
+                                                        languageName: translationLanguage.key,
                                                         shouldCreateTitle: shouldCreateTitle)
 
         return try await makeOpenAIRequest(requestBody: requestBody)

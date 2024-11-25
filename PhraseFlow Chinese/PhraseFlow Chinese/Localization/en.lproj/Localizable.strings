@@ -209,3 +209,6 @@
 
 // Choose Chapter navigation bat title
 "choose_chapter" = "Choose Chapter";
+
+// Defining text while user is fetching the definition of a word
+"defining" = "Defining...";

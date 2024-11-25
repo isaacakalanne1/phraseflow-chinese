@@ -209,3 +209,6 @@
 
 // Choose Chapter navigation bar title
 "choose_chapter" = "选择章节";
+
+// Defining text while user is fetching the definition of a word
+"defining" = "定义中...";

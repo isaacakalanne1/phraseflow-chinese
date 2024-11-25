@@ -16,7 +16,7 @@ struct DefinitionView: View {
                 .greyBackground()
             HStack {
                 ScrollView(.vertical) {
-                    Text(store.state.viewState.readerDisplayType == .defining ? "Defining..." : (store.state.definitionState.currentDefinition?.definition ?? ""))
+                    Text(store.state.viewState.readerDisplayType == .defining ? LocalizedString.defining : (store.state.definitionState.currentDefinition?.definition ?? ""))
                         .foregroundColor(store.state.definitionState.currentDefinition == nil ? .gray : .black)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                 }

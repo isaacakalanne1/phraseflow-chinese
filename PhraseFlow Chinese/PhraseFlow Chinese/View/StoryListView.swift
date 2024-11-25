@@ -22,7 +22,7 @@ struct StoryListView: View {
                                     VStack(alignment: .leading, content: {
                                         Text(story.title)
                                             .fontWeight(.medium)
-                                        Text(story.briefLatestStorySummaryinEnglish)
+                                        Text(story.briefLatestStorySummary)
                                             .fontWeight(.light)
                                     })
                                     .padding(.trailing)

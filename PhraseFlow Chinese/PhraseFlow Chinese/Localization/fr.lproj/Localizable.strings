@@ -209,3 +209,6 @@
 
 // Choose Chapter navigation bar title
 "choose_chapter" = "Choisir un chapitre";
+
+// Defining text while user is fetching the definition of a word
+"defining" = "Définition...";
