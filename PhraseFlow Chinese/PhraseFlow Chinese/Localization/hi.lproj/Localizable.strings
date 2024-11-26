@@ -212,3 +212,9 @@
 
 // Defining text while user is fetching the definition of a word
 "defining" = "परिभाषा की जा रही है...";
+
+// English language name
+"english" = "अंग्रेज़ी";
+
+// Ava voice button title
+"voice_ava" = "आवा";

@@ -8,7 +8,8 @@
 import Foundation
 
 enum Language: String, Codable, CaseIterable {
-    case mandarinChinese,
+    case english,
+         mandarinChinese,
          spanish,
          french,
          arabicGulf,
@@ -34,18 +35,9 @@ enum Language: String, Codable, CaseIterable {
     }
 
     var key: String {
-        switch self {
-        case .mandarinChinese:
-            "MandarinChinese"
-        case .arabicGulf:
-            "ArabicGulf"
-        case .brazilianPortuguese:
-            "BrazilianPortuguese"
-        case .europeanPortuguese:
-            "EuropeanPortuguese"
-        default:
-            rawValue.capitalized
-        }
+        let firstLetter = rawValue.prefix(1).capitalized
+        let remainingLetters = rawValue.dropFirst()
+        return firstLetter + remainingLetters
     }
 
     var displayName: String {
@@ -68,6 +60,8 @@ enum Language: String, Codable, CaseIterable {
             LocalizedString.spanish
         case .french:
             LocalizedString.french
+        case .english:
+            LocalizedString.english
         }
     }
 
@@ -91,6 +85,8 @@ enum Language: String, Codable, CaseIterable {
             "pt-PT"
         case .brazilianPortuguese:
             "pt-BR"
+        case .english:
+            "en-US"
         }
     }
 
@@ -114,34 +110,38 @@ enum Language: String, Codable, CaseIterable {
             "pt"
         case .brazilianPortuguese:
             "pt"
+        case .english:
+            "en"
         }
     }
 
-    var flagCode: String {
+    var flagCodes: [String] {
         switch self {
         case .arabicGulf:
-            "ae"
+            ["ae"]
         case .mandarinChinese:
-            "cn"
+            ["cn"]
         case .french:
-            "fr"
+            ["fr"]
         case .japanese:
-            "jp"
+            ["jp"]
         case .korean:
-            "kr"
+            ["kr"]
         case .russian:
-            "ru"
+            ["ru"]
         case .spanish:
-            "es"
+            ["es"]
         case .europeanPortuguese:
-            "pt"
+            ["pt"]
         case .brazilianPortuguese:
-            "br"
+            ["br"]
+        case .english:
+            ["us"]
         }
     }
 
     var schemaKey: String {
-        rawValue + "Translation"
+        self == .english ? rawValue : rawValue + "Translation"
     }
 
     var voices: [Voice] {
@@ -168,17 +168,23 @@ enum Language: String, Codable, CaseIterable {
         case .brazilianPortuguese:
             [.thalita,
              .donato]
+        case .english:
+            [.ava]
         }
     }
 
     var flagEmoji: String {
         let flagBase = UnicodeScalar("🇦").value - UnicodeScalar("A").value
+        var flags: [String] = []
 
-        let flag = flagCode
-            .uppercased()
-            .unicodeScalars
-            .compactMap({ UnicodeScalar(flagBase + $0.value)?.description })
-            .joined()
-        return flag
+        for code in flagCodes {
+            let flag = code
+                .uppercased()
+                .unicodeScalars
+                .compactMap({ UnicodeScalar(flagBase + $0.value)?.description })
+                .joined()
+            flags.append(flag)
+        }
+        return flags.reduce("") { $0 + $1 }
     }
 }

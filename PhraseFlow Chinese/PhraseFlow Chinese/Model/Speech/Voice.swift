@@ -25,7 +25,8 @@ enum Voice: String, Codable, CaseIterable, Equatable {
          raquel, // Portuguese (Portugal)
          duarte,
          thalita, // Portuguese (Brazil)
-         donato
+         donato,
+         ava // English (US)
 
     var title: String {
         switch self {
@@ -65,6 +66,8 @@ enum Voice: String, Codable, CaseIterable, Equatable {
             LocalizedString.voiceThalita
         case .donato:
             LocalizedString.voiceDonato
+        case .ava:
+            LocalizedString.voiceAva
         }
     }
 
@@ -106,6 +109,8 @@ enum Voice: String, Codable, CaseIterable, Equatable {
             "pt-BR-ThalitaNeural"
         case .donato:
             "pt-BR-DonatoNeural"
+        case .ava:
+            "en-US-AvaNeural"
         }
     }
 
@@ -119,7 +124,8 @@ enum Voice: String, Codable, CaseIterable, Equatable {
                 .elvira,
                 .fatima,
                 .raquel,
-                .thalita:
+                .thalita,
+                .ava:
                 .female
         case .yunjian,
                 .henri,

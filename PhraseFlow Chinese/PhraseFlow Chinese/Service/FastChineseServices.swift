@@ -157,11 +157,11 @@ Use quotation marks for speech.
     }
 
     private func convertToJson(story: Story?, translation: String, settings: SettingsState, shouldCreateTitle: Bool) async throws -> String {
-        let originalLanguage = Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier })
+        let originalLanguage = Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier }) ?? .english
         let translationLanguage = story?.language ?? settings.language
 
         let jsonPrompt = """
-Format the following story into JSON. Translate each English sentence into \(story?.language.descriptiveEnglishName ?? settings.language.descriptiveEnglishName).
+Format the following story into JSON. Translate each English sentence into \(originalLanguage == .english ? "" : "\(originalLanguage.descriptiveEnglishName) and ") \(translationLanguage.descriptiveEnglishName).
 """
         var requestBody: [String: Any] = [
             "model": "gpt-4o-mini-2024-07-18",
@@ -172,10 +172,8 @@ Format the following story into JSON. Translate each English sentence into \(sto
             ["role": "user", "content": translation]
         ]
         requestBody["messages"] = messages
-        requestBody["response_format"] = sentenceSchema(originalKey: originalLanguage?.schemaKey ?? "",
-                                                        languageKey: translationLanguage.schemaKey,
-                                                        originalLanguageName: originalLanguage?.key ?? "English",
-                                                        languageName: translationLanguage.key,
+        requestBody["response_format"] = sentenceSchema(originalLanguage: originalLanguage,
+                                                        translationLanguage: translationLanguage,
                                                         shouldCreateTitle: shouldCreateTitle)
 
         return try await makeOpenAIRequest(requestBody: requestBody)

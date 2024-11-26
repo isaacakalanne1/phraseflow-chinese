@@ -212,3 +212,9 @@
 
 // Defining text while user is fetching the definition of a word
 "defining" = "Définition...";
+
+// English language name
+"english" = "Anglais";
+
+// Ava voice button title
+"voice_ava" = "Ava";

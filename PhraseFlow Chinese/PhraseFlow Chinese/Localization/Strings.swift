@@ -22,6 +22,7 @@ public enum LocalizedString {
   }
   public static let definitionToggle = LocalizedString.tr("Localizable", "definition_toggle")
   public static let difficulty = LocalizedString.tr("Localizable", "difficulty")
+  public static let english = LocalizedString.tr("Localizable", "english")
   public static let englishToggle = LocalizedString.tr("Localizable", "english_toggle")
   public static let expert = LocalizedString.tr("Localizable", "expert")
   public static let failedToWriteChapter = LocalizedString.tr("Localizable", "failed_to_write_chapter")
@@ -56,6 +57,7 @@ public enum LocalizedString {
   public static let translation = LocalizedString.tr("Localizable", "translation")
   public static let voice = LocalizedString.tr("Localizable", "voice")
   public static let voiceAlvaro = LocalizedString.tr("Localizable", "voice_alvaro")
+  public static let voiceAva = LocalizedString.tr("Localizable", "voice_ava")
   public static let voiceDariya = LocalizedString.tr("Localizable", "voice_dariya")
   public static let voiceDenise = LocalizedString.tr("Localizable", "voice_denise")
   public static let voiceDmitry = LocalizedString.tr("Localizable", "voice_dmitry")
