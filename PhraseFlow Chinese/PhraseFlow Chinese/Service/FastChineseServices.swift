@@ -16,7 +16,7 @@ enum FastChineseServicesError: Error {
 
 protocol FastChineseServicesProtocol {
     func generateStory(story: Story?, settings: SettingsState) async throws -> Story
-    func fetchDefinition(of character: String, withinContextOf sentence: Sentence, settings: SettingsState) async throws -> String
+    func fetchDefinition(of character: String, withinContextOf sentence: Sentence, story: Story?, settings: SettingsState) async throws -> String
 }
 
 final class FastChineseServices: FastChineseServicesProtocol {
@@ -82,9 +82,9 @@ final class FastChineseServices: FastChineseServicesProtocol {
         }
     }
 
-    func fetchDefinition(of character: String, withinContextOf sentence: Sentence, settings: SettingsState) async throws -> String {
+    func fetchDefinition(of character: String, withinContextOf sentence: Sentence, story: Story?, settings: SettingsState) async throws -> String {
         let originalLanguage = Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier })
-        let languageName = settings.language.descriptiveEnglishName
+        let languageName = story?.language.descriptiveEnglishName ?? settings.language.descriptiveEnglishName
         let initialPrompt =
 """
         You are an AI assistant that provides \(originalLanguage?.displayName ?? "English") definitions for characters in \(languageName) sentences. Your explanations are brief, and simple to understand.
@@ -132,7 +132,7 @@ Write the definition in \(originalLanguage?.displayName ?? "English").
 
         let qualityPrompt = """
 
-The chapter should have complex, three-dimensional, flawed characters.
+The chapter should have complex, three-dimensional characters.
 The chapter should also be long, around 30 sentences.
 Use quotation marks for speech.
 """
