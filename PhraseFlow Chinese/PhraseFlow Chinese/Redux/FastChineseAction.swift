@@ -9,10 +9,8 @@ import Foundation
 import AVKit
 
 enum FastChineseAction {
-    case updateShowingCreateStoryScreen(isShowing: Bool)
     case updateShowingSettings(isShowing: Bool)
     case updateShowingStoryListView(isShowing: Bool)
-    case updateSelectGenre(Genre, isSelected: Bool)
     case updateSentenceIndex(Int)
 
     case generateNewStory
@@ -77,8 +75,6 @@ enum FastChineseAction {
     case refreshDefinitionView
     case refreshTranslationView
     case refreshStoryListView
-
-    case selectStorySetting(StorySetting?)
     
     case selectVoice(Voice)
 

@@ -19,7 +19,6 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.storyState.currentStory = story
         newState.audioState.audioPlayer = AVPlayer()
         newState.storyState.sentenceIndex = 0
-        newState.viewState.isShowingCreateStoryScreen = false
         newState.settingsState.language = story.language
     case .onGeneratedStory(let story):
         newState.storyState.currentStory = story
@@ -73,20 +72,10 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.settingsState.isShowingDefinition = isShowing
     case .updateShowEnglish(let isShowing):
         newState.settingsState.isShowingEnglish = isShowing
-    case .updateShowingCreateStoryScreen(let isShowing):
-        newState.viewState.isShowingCreateStoryScreen = isShowing
     case .updateShowingSettings(let isShowing):
         newState.viewState.isShowingSettingsScreen = isShowing
     case .updateShowingStoryListView(let isShowing):
         newState.viewState.isShowingStoryListView = isShowing
-    case .updateSelectGenre(let genre, let isSelected):
-        if isSelected {
-            if !newState.createStoryState.selectedGenres.contains(genre) {
-                newState.createStoryState.selectedGenres.append(genre)
-            }
-        } else {
-            newState.createStoryState.selectedGenres.removeAll(where: { $0 == genre })
-        }
     case .selectChapter(var story, let chapterIndex):
         newState.viewState.isShowingStoryListView = false
         story.lastUpdated = .now
@@ -118,7 +107,6 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     case .generateNewStory:
         newState.viewState.readerDisplayType = .loading
         newState.viewState.isShowingStoryListView = false
-        newState.viewState.isShowingCreateStoryScreen = false
     case .failedToGenerateNewStory:
         newState.viewState.readerDisplayType = .failedToGenerateStory
     case .failedToGenerateChapter:
@@ -158,8 +146,6 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.viewState.translationViewId = UUID()
     case .refreshStoryListView:
         newState.viewState.storyListViewId = UUID()
-    case .selectStorySetting(let setting):
-        newState.createStoryState.selectedStorySetting = setting
     case .selectVoice(let voice):
         newState.settingsState.voice = voice
     case .updateDifficulty(let difficulty):

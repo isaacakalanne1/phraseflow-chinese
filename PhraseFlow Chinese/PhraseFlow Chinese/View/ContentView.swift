@@ -12,12 +12,6 @@ struct ContentView: View {
 
     var body: some View {
 
-        let isShowingCreateStoryScreen: Binding<Bool> = .init {
-            store.state.viewState.isShowingCreateStoryScreen
-        } set: { newValue in
-            store.dispatch(.updateShowingCreateStoryScreen(isShowing: newValue))
-        }
-
         let isShowingSettingsScreen: Binding<Bool> = .init {
             store.state.viewState.isShowingSettingsScreen
         } set: { newValue in
@@ -65,9 +59,6 @@ struct ContentView: View {
         .background(Color.white)
         .sheet(isPresented: isShowingSettingsScreen) {
             SettingsView()
-        }
-        .sheet(isPresented: isShowingCreateStoryScreen) {
-            CreateStoryView()
         }
         .sheet(isPresented: isShowingStoryListView) {
             StoryListView()

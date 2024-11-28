@@ -14,7 +14,6 @@ struct Story: Codable, Equatable, Hashable {
     let language: Language
     let title: String
     var chapters: [Chapter]
-    var setting: StorySetting
     var currentChapterIndex = 0
     var lastUpdated: Date
 
@@ -23,7 +22,6 @@ struct Story: Codable, Equatable, Hashable {
          language: Language,
          title: String,
          chapters: [Chapter],
-         setting: StorySetting,
          currentChapterIndex: Int = 0,
          lastUpdated: Date = .now) {
         self.id = UUID()
@@ -32,7 +30,6 @@ struct Story: Codable, Equatable, Hashable {
         self.language = language
         self.title = title
         self.chapters = chapters
-        self.setting = setting
         self.currentChapterIndex = currentChapterIndex
         self.lastUpdated = lastUpdated
     }
@@ -46,7 +43,6 @@ struct Story: Codable, Equatable, Hashable {
         self.language = try container.decode(Language.self, forKey: .language)
         self.title = try container.decode(String.self, forKey: .title)
         self.chapters = (try? container.decode([Chapter].self, forKey: .chapters)) ?? []
-        self.setting = (try? container.decode(StorySetting.self, forKey: .setting)) ?? .futuristic
         self.currentChapterIndex = (try? container.decode(Int.self, forKey: .currentChapterIndex)) ?? 0
         self.lastUpdated = (try? container.decode(Date.self, forKey: .lastUpdated)) ?? .now
     }

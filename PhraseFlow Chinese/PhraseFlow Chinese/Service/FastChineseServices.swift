@@ -25,7 +25,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         let translationLanguage = story?.language ?? settings.language
         let originalLanguage = Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier })
         do {
-            let (response, setting) = try await continueStory(story: story, settings: settings)
+            let response = try await continueStory(story: story, settings: settings)
             let jsonString = try await convertToJson(story: story,
                                                      translation: response,
                                                      settings: settings,
@@ -74,8 +74,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
                              difficulty: .beginner,
                              language: settings.language,
                              title: chapterResponse.titleOfNovel ?? "",
-                             chapters: [chapter],
-                             setting: setting)
+                             chapters: [chapter])
             }
         } catch {
             throw FastChineseServicesError.failedToDecodeSentences
@@ -114,9 +113,14 @@ Write the definition in \(originalLanguage?.displayName ?? "English").
         return try await makeOpenAIRequest(requestBody: requestBody)
     }
 
-    private func continueStory(story: Story?, settings: SettingsState) async throws -> (String, StorySetting) {
-        let setting = (story?.setting ?? StorySetting.allCases.randomElement()) ?? StorySetting.medieval
-        var initialPrompt = "Write an incredible first chapter of a novel set in \(setting.settingName). Use \(story?.language.descriptiveEnglishName ?? settings.language.descriptiveEnglishName) names for characters. Use fictional names for places."
+    private func continueStory(story: Story?, settings: SettingsState) async throws -> String {
+        let storyPrompt = StoryPrompts.all.randomElement() ?? "A medieval town."
+        var initialPrompt = """
+        Write an incredible first chapter of a novel set. Use \(story?.language.descriptiveEnglishName ?? settings.language.descriptiveEnglishName) names for characters.
+        Use fictional names for places.
+        This is the story prompt:
+        \(storyPrompt)
+        """
         var vocabularyPrompt = ""
         switch story?.difficulty ?? settings.difficulty {
         case .beginner:
@@ -153,7 +157,7 @@ Use quotation marks for speech.
         }
         requestBody["messages"] = messages
 
-        return (try await makeOpenrouterRequest(requestBody: requestBody), setting)
+        return try await makeOpenrouterRequest(requestBody: requestBody)
     }
 
     private func convertToJson(story: Story?, translation: String, settings: SettingsState, shouldCreateTitle: Bool) async throws -> String {

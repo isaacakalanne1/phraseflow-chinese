@@ -8,7 +8,7 @@
 import Foundation
 
 struct StoryPrompts {
-    let all: [String] = [
+    static let all: [String] = [
         "You find strange, muddy footprints leading up to your front door.",
         "A stranger sits down next to you on a train and gets up, leaving a package behind. Do you investigate the package?",
         "You hear news of your next-door neighbor vanishing without a trace.",
@@ -69,7 +69,6 @@ struct StoryPrompts {
         "A parole officer falls in love with his parolee.",
         "After their catamaran crashes, a husband and wife on their anniversary trip are left marooned on an island in the tropics.",
         "She’s a burgeoning lingerie model who needs her cute neighbor to take portfolio shots of her.",
-        "An alien falls in love with a forbidden human.",
         "Desperate for cash, a med student signs up to be a nude model for a retired women’s art club.",
         "A cutthroat business woman swore she’d never find love until her best friend sets her up on a blind date.",
         "Two widowed people meet at a community garden.",
@@ -113,12 +112,9 @@ struct StoryPrompts {
         "After people die, their spirits can be brought back from death but at the cost of one random human life. Is it worth it?",
         "Everyone in the world has the ability to read thoughts. Except for one person.",
         "You have to power to build one separate planet. How do you build it? Who gets to live there?",
-        "What team do you gather to fight the largest alien and terrorist threat on Earth?",
-        "The world is dying. In order to save it, you’ve been commanded to sacrifice yourself to an invading alien group.",
         "You are the first person able to breathe in outer space.",
         "A rare form of cancer is the newest superbug. With a team of scientists, you all must find a cure before the population is wiped out.",
         "Human beings begin to find themselves growing extra limbs as global warming amps up.",
-        "It turns out humans have been the aliens all along.",
         "You are in charge of a secretive government agency that aligns people’s fates. Their livelihood is entirely up to you and what you want to do with it.",
         "Technology becomes illegal.",
         "All plant life on the planet is wiped out, except for in Florida.",
@@ -140,12 +136,8 @@ struct StoryPrompts {
         "What do you think happens when the grid goes down?",
         "Describe your perfect utopian world.",
         "Your penpal lives on the opposite side of the universe.",
-        "Aliens who only communicate with sign language invade. To avoid war, our governments must engage a vastly marginalized portion of the human population: the hearing-impaired.",
         "A rogue planet with strange properties collides with our sun, and after it’s all over, worldwide temperature falls forty degrees. Write from the perspective of a someone trying to keep his tropical fruit trees alive.",
-        "Ever read about the world’s loneliest whale? Write a story in which he’s actually the survivor of an aquatic alien species which crashed here eons ago, and he’s trying very hard to learn the “local” whale language so he can fit in. Write from his perspective the first time he makes contact.",
-        "An alien planet starts receiving bizarre audio transmissions from another world (spoiler: they’re from Earth). What does it mean? Are they under attack? Some think so…until classic rock ‘n’ roll hits the airwaves, and these aliens discover dancing. Write from the perspective of the teenaged alien who first figures it out.",
         "Take anything we find normal today (shopping malls, infomercials, products to remove facial hair, etc.) and write a story from the perspective of an archeologist five thousand years in the future who just unearthed this stuff, has NO idea what any of it was for, and has to give a speech in an hour explaining the historical/religious/sociological significance.",
-        "House cats are aliens who have succeeded in their plan to rule the world. Discuss.",
         "A high schooler from fifteen hundred years in our future is assigned a one-page writing project on a twenty-first century person’s life based entirely on TV commercials. Write the beginning of the essay.",
         "Time travel works, but only once in a person’s life. Write from the perspective of someone who chooses to go back in time, knowing they can never return. Where do they go and why?",
         "So yeah, ancient Egypt really was “all that” after all, and the pyramids turn out to be fully functional spaceships (the limestone was to preserve the electronics hidden inside). Write from the perspective of the tourist who accidentally turns one on.",
@@ -388,7 +380,6 @@ struct StoryPrompts {
         "You’ve put that doll in the cabinet, in the closet, in the attic, but no matter where you tuck it, it always shows back up on the sofa. On Halloween night, you come out to find it watching you…",
         "A bad-tempered businessman is driving home after a long day of work. He thinks he sees his kids trick-or-treating and stops to pick them up—but those aren’t costumes.",
         "A young woman goes to her grandmother’s house for tea on Halloween night. They have a wonderful time together, sharing stories, joy, and the best times of family. The next day, the woman learns her grandmother has been dead for a week and no one could get ahold of her to tell her.",
-        "Aliens have just landed on Earth—and boy, did they pick a weird day to come. How do they respond to Halloween, supernatural or otherwise? Do they decide this place is just too bizarre and get the heck out . . . or do they stick around and join in the fun?",
         "On Halloween night, lovers get to come back and spend the evening together one more time. One couple from the Roaring Twenties decides to come back from the grave to help their extreme nerd great-grandchild or the kid will never get married.",
         "A little boy’s lost in the woods, but at least his faithful dog is with him. As they look for the way out, the dog defends his master against terrifying monsters and animals. Finally, the boy arrives safely on the other side, beautiful green field, no more fog or night. Then the dog goes home . . . where his owner, the little boy, has died. The good doggy guarded him all the way to his final rest.",
         "You wake up in the middle of the night to see a dark figure crawling across your floor.",

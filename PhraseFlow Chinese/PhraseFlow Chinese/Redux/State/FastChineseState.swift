@@ -13,7 +13,6 @@ struct FastChineseState {
     var audioState = AudioState()
     var definitionState = DefinitionState()
     var viewState = ViewState()
-    var createStoryState = CreateStoryState()
 
     var currentSpokenWord: WordTimeStampData? {
         storyState.currentChapter?.timestampData.last(where: { audioState.currentPlaybackTime >= $0.time })

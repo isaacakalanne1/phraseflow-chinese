@@ -13,7 +13,6 @@ struct ViewState {
     var translationViewId: UUID
     var storyListViewId: UUID
 
-    var isShowingCreateStoryScreen = false
     var isShowingSettingsScreen = false
     var isShowingStoryListView = false
 
@@ -24,7 +23,6 @@ struct ViewState {
          chapterViewId: UUID = UUID(),
          translationViewId: UUID = UUID(),
          storyListViewId: UUID = UUID(),
-         isShowingCreateStoryScreen: Bool = false,
          isShowingSettingsScreen: Bool = false,
          isShowingStoryListView: Bool = false,
          readerDisplayType: ReaderDisplayType = .fetching,
@@ -33,7 +31,6 @@ struct ViewState {
         self.chapterViewId = chapterViewId
         self.translationViewId = translationViewId
         self.storyListViewId = storyListViewId
-        self.isShowingCreateStoryScreen = isShowingCreateStoryScreen
         self.isShowingSettingsScreen = isShowingSettingsScreen
         self.isShowingStoryListView = isShowingStoryListView
         self.readerDisplayType = readerDisplayType

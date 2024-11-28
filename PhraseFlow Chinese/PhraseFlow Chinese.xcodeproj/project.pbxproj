@@ -17,7 +17,6 @@
 		BB1994CF2CE904F000D61E54 /* DefinitionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994CE2CE904F000D61E54 /* DefinitionState.swift */; };
 		BB1994D12CE9050000D61E54 /* AudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D02CE9050000D61E54 /* AudioState.swift */; };
 		BB1994D32CE9051700D61E54 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D22CE9051700D61E54 /* ViewState.swift */; };
-		BB1994D52CE9059E00D61E54 /* CreateStoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D42CE9059E00D61E54 /* CreateStoryState.swift */; };
 		BB4015C02CF756FD008ACE9C /* StoryPrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4015BF2CF756FD008ACE9C /* StoryPrompts.swift */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
 		BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FastChineseStore.swift */; };
@@ -37,7 +36,6 @@
 		BB6572D22CD165F200AC5981 /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D12CD165F200AC5981 /* Collection+Safe.swift */; };
 		BB6572D42CD3932300AC5981 /* View+GreyBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D32CD3932300AC5981 /* View+GreyBackground.swift */; };
 		BB6572D62CD4E09000AC5981 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D52CD4E08F00AC5981 /* ActionButton.swift */; };
-		BB6572D92CD529DE00AC5981 /* StorySetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D82CD529DE00AC5981 /* StorySetting.swift */; };
 		BB6572DB2CD6816700AC5981 /* CategoryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572DA2CD6816700AC5981 /* CategoryButtonView.swift */; };
 		BB6572DD2CD6847500AC5981 /* Categorisable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572DC2CD6847500AC5981 /* Categorisable.swift */; };
 		BB6572E52CD8D12400AC5981 /* Voice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572E42CD8D12400AC5981 /* Voice.swift */; };
@@ -58,8 +56,6 @@
 		BBB6EF422C8C862A0079D135 /* PhraseFlow_ChineseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF412C8C862A0079D135 /* PhraseFlow_ChineseUITests.swift */; };
 		BBB6EF442C8C862A0079D135 /* PhraseFlow_ChineseUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF432C8C862A0079D135 /* PhraseFlow_ChineseUITestsLaunchTests.swift */; };
 		BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF512C8C86B10079D135 /* Sentence.swift */; };
-		BBE16F1A2CC1314400A7EF1F /* CreateStoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F192CC1314400A7EF1F /* CreateStoryView.swift */; };
-		BBE16F1C2CC1317B00A7EF1F /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F1B2CC1317B00A7EF1F /* Genre.swift */; };
 		BBE16F202CC152C400A7EF1F /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */; };
 		BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F212CC2769C00A7EF1F /* StoryListView.swift */; };
 		BBE16F242CC2AFC800A7EF1F /* ChapterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */; };
@@ -105,7 +101,6 @@
 		BB1994CE2CE904F000D61E54 /* DefinitionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionState.swift; sourceTree = "<group>"; };
 		BB1994D02CE9050000D61E54 /* AudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioState.swift; sourceTree = "<group>"; };
 		BB1994D22CE9051700D61E54 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
-		BB1994D42CE9059E00D61E54 /* CreateStoryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStoryState.swift; sourceTree = "<group>"; };
 		BB4015BF2CF756FD008ACE9C /* StoryPrompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPrompts.swift; sourceTree = "<group>"; };
 		BB4EDB022C90C86300699E7D /* FastChineseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseStore.swift; sourceTree = "<group>"; };
 		BB4EDB042C90C89C00699E7D /* FastChineseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseState.swift; sourceTree = "<group>"; };
@@ -124,7 +119,6 @@
 		BB6572D12CD165F200AC5981 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
 		BB6572D32CD3932300AC5981 /* View+GreyBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+GreyBackground.swift"; sourceTree = "<group>"; };
 		BB6572D52CD4E08F00AC5981 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
-		BB6572D82CD529DE00AC5981 /* StorySetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorySetting.swift; sourceTree = "<group>"; };
 		BB6572DA2CD6816700AC5981 /* CategoryButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryButtonView.swift; sourceTree = "<group>"; };
 		BB6572DC2CD6847500AC5981 /* Categorisable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categorisable.swift; sourceTree = "<group>"; };
 		BB6572E42CD8D12400AC5981 /* Voice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voice.swift; sourceTree = "<group>"; };
@@ -153,8 +147,6 @@
 		BBB6EF412C8C862A0079D135 /* PhraseFlow_ChineseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseUITests.swift; sourceTree = "<group>"; };
 		BBB6EF432C8C862A0079D135 /* PhraseFlow_ChineseUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		BBB6EF512C8C86B10079D135 /* Sentence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sentence.swift; sourceTree = "<group>"; };
-		BBE16F192CC1314400A7EF1F /* CreateStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStoryView.swift; sourceTree = "<group>"; };
-		BBE16F1B2CC1317B00A7EF1F /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
 		BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
 		BBE16F212CC2769C00A7EF1F /* StoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListView.swift; sourceTree = "<group>"; };
 		BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterListView.swift; sourceTree = "<group>"; };
@@ -233,7 +225,6 @@
 			isa = PBXGroup;
 			children = (
 				BB1994D02CE9050000D61E54 /* AudioState.swift */,
-				BB1994D42CE9059E00D61E54 /* CreateStoryState.swift */,
 				BB1994CE2CE904F000D61E54 /* DefinitionState.swift */,
 				BB4EDB042C90C89C00699E7D /* FastChineseState.swift */,
 				BB6572F62CDB991A00AC5981 /* SettingsState.swift */,
@@ -289,8 +280,6 @@
 			isa = PBXGroup;
 			children = (
 				BB6572DC2CD6847500AC5981 /* Categorisable.swift */,
-				BBE16F1B2CC1317B00A7EF1F /* Genre.swift */,
-				BB6572D82CD529DE00AC5981 /* StorySetting.swift */,
 				BB4015BF2CF756FD008ACE9C /* StoryPrompts.swift */,
 			);
 			path = "Create Story";
@@ -403,7 +392,6 @@
 				BBE16F212CC2769C00A7EF1F /* StoryListView.swift */,
 				BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */,
 				BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */,
-				BBE16F192CC1314400A7EF1F /* CreateStoryView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -607,7 +595,6 @@
 			files = (
 				BBE636C52CCC0CDD00873E68 /* DefinitionView.swift in Sources */,
 				BB6572D42CD3932300AC5981 /* View+GreyBackground.swift in Sources */,
-				BBE16F1A2CC1314400A7EF1F /* CreateStoryView.swift in Sources */,
 				BBE636D12CCD77BC00873E68 /* FlowLayout.swift in Sources */,
 				BBE16F282CC420FD00A7EF1F /* ReaderDisplayType.swift in Sources */,
 				BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */,
@@ -627,7 +614,6 @@
 				BBE636C72CCC0E1200873E68 /* EnglishSentenceView.swift in Sources */,
 				BB4EDB1D2C90DFDD00699E7D /* FastChineseRepository.swift in Sources */,
 				BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */,
-				BB6572D92CD529DE00AC5981 /* StorySetting.swift in Sources */,
 				BB84E0A02CEFA96200520F5E /* Language.swift in Sources */,
 				BB4015C02CF756FD008ACE9C /* StoryPrompts.swift in Sources */,
 				BB1994C82CE8E0BE00D61E54 /* Data+AVPlayer.swift in Sources */,
@@ -639,10 +625,8 @@
 				BB4EDB102C90CA4900699E7D /* FastChineseSubscriber.swift in Sources */,
 				BBE636CD2CCC0F8500873E68 /* ReaderView.swift in Sources */,
 				BB1994D32CE9051700D61E54 /* ViewState.swift in Sources */,
-				BB1994D52CE9059E00D61E54 /* CreateStoryState.swift in Sources */,
 				BB84E0AF2CF495CD00520F5E /* Strings.swift in Sources */,
 				BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */,
-				BBE16F1C2CC1317B00A7EF1F /* Genre.swift in Sources */,
 				BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */,
 				BB6572DD2CD6847500AC5981 /* Categorisable.swift in Sources */,
 				BBE636C32CCC0BE900873E68 /* CharacterView.swift in Sources */,
