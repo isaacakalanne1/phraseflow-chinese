@@ -35,7 +35,7 @@ struct ChapterView: View {
                     if story.chapters.count > story.currentChapterIndex + 1 {
                         store.dispatch(.goToNextChapter)
                     } else if let story = store.state.storyState.currentStory {
-                        store.dispatch(.generateChapter(story: story))
+                        store.dispatch(.continueStory(story: story))
                     }
                 }
             }

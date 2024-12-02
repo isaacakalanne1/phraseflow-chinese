@@ -32,7 +32,7 @@ struct ChapterListView: View {
             }
             Button(LocalizedString.newChapter) {
                 if let story = store.state.storyState.currentStory {
-                    store.dispatch(.generateChapter(story: story))
+                    store.dispatch(.continueStory(story: story))
                     store.dispatch(.updateShowingStoryListView(isShowing: false))
                 }
             }

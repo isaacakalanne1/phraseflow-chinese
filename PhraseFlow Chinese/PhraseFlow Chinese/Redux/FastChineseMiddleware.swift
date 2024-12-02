@@ -12,25 +12,17 @@ import AVKit
 typealias FastChineseMiddlewareType = Middleware<FastChineseState, FastChineseAction, FastChineseEnvironmentProtocol>
 let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environment in
     switch action {
-    case .generateNewStory:
-        do {
-            let story = try await environment.generateStory(story: nil, settings: state.settingsState)
-            return .onGeneratedStory(story)
-        } catch {
-            return .failedToGenerateNewStory
-        }
-    case .onGeneratedStory(let story),
-            .onGeneratedChapter(let story):
+    case .onContinuedStory(let story):
         if let chapter = story.chapters[safe: story.currentChapterIndex] {
             return .synthesizeAudio(chapter, voice: state.settingsState.voice, isForced: true)
         }
         return .saveStoryAndSettings(story)
-    case .generateChapter(let story):
+    case .continueStory(let story):
         do {
             let story = try await environment.generateStory(story: story, settings: state.settingsState)
-            return .onGeneratedChapter(story)
+            return .onContinuedStory(story)
         } catch {
-            return .failedToGenerateChapter
+            return .failedToContinueStory
         }
     case .loadStories:
         do {
@@ -192,15 +184,14 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
     case .updateSentenceIndex:
         return .refreshTranslationView
-    case .failedToGenerateNewStory,
-            .failedToLoadStories,
+    case .failedToLoadStories,
             .failedToSaveStory,
             .failedToDefineCharacter,
             .onPlayedAudio,
             .failedToSynthesizeAudio,
             .updateShowingSettings,
             .updateShowingStoryListView,
-            .failedToGenerateChapter,
+            .failedToContinueStory,
             .refreshChapterView,
             .refreshDefinitionView,
             .failedToDeleteStory,

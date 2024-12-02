@@ -15,13 +15,10 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
     switch action {
     case .onLoadedAppSettings(let settings):
         newState.settingsState = settings
-    case .onGeneratedChapter(let story):
+    case .onContinuedStory(let story):
         newState.storyState.currentStory = story
         newState.audioState.audioPlayer = AVPlayer()
         newState.storyState.sentenceIndex = 0
-        newState.settingsState.language = story.language
-    case .onGeneratedStory(let story):
-        newState.storyState.currentStory = story
         newState.settingsState.language = story.language
     case .onLoadedStories(let stories):
         newState.storyState.savedStories = stories
@@ -102,14 +99,10 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         if let language = newState.storyState.currentStory?.language {
             newState.settingsState.language = language
         }
-    case .generateChapter:
-        newState.viewState.readerDisplayType = .loading
-    case .generateNewStory:
+    case .continueStory:
         newState.viewState.readerDisplayType = .loading
         newState.viewState.isShowingStoryListView = false
-    case .failedToGenerateNewStory:
-        newState.viewState.readerDisplayType = .failedToGenerateStory
-    case .failedToGenerateChapter:
+    case .failedToContinueStory:
         newState.viewState.readerDisplayType = .failedToGenerateChapter
     case .updateSentenceIndex(let index):
         newState.storyState.sentenceIndex = index
@@ -152,9 +145,6 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.settingsState.difficulty = difficulty
     case .updateLanguage(let language):
         newState.settingsState.language = language
-        if let voice = language.voices.first {
-            newState.settingsState.voice = voice
-        }
     case .onLoadedDefinitions(let definitions):
         newState.definitionState.definitions = definitions
     case .onDeletedStory:

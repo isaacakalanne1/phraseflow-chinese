@@ -36,7 +36,7 @@ struct StoryListView: View {
                     }
                 }
                 Button("\(store.state.settingsState.language.flagEmoji) \(LocalizedString.newStory) (\(store.state.settingsState.difficulty.title))") {
-                    store.dispatch(.generateNewStory)
+                    store.dispatch(.continueStory(story: nil))
                 }
                 .padding()
                 .background(Color.accentColor)

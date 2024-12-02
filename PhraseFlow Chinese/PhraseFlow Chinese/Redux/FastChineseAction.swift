@@ -13,13 +13,9 @@ enum FastChineseAction {
     case updateShowingStoryListView(isShowing: Bool)
     case updateSentenceIndex(Int)
 
-    case generateNewStory
-    case onGeneratedStory(Story)
-    case failedToGenerateNewStory
-
-    case generateChapter(story: Story)
-    case onGeneratedChapter(Story)
-    case failedToGenerateChapter
+    case continueStory(story: Story?)
+    case onContinuedStory(Story)
+    case failedToContinueStory
 
     case saveStory(Story)
     case failedToSaveStory

@@ -25,7 +25,10 @@ final class FastChineseServices: FastChineseServicesProtocol {
         let translationLanguage = story?.language ?? settings.language
         let originalLanguage = Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier })
         do {
-            let response = try await continueStory(story: story, settings: settings)
+            let storyPrompt = StoryPrompts.all.randomElement() ?? "a medieval town"
+            let response = try await continueStory(story: story,
+                                                   storyPrompt: storyPrompt,
+                                                   settings: settings)
             let jsonString = try await convertToJson(story: story,
                                                      translation: response,
                                                      settings: settings,
@@ -74,7 +77,8 @@ final class FastChineseServices: FastChineseServicesProtocol {
                              difficulty: .beginner,
                              language: settings.language,
                              title: chapterResponse.titleOfNovel ?? "",
-                             chapters: [chapter])
+                             chapters: [chapter],
+                             storyPrompt: storyPrompt)
             }
         } catch {
             throw FastChineseServicesError.failedToDecodeSentences
@@ -113,22 +117,19 @@ Write the definition in \(originalLanguage?.displayName ?? "English").
         return try await makeOpenAIRequest(requestBody: requestBody)
     }
 
-    private func continueStory(story: Story?, settings: SettingsState) async throws -> String {
-        let storyPrompt = StoryPrompts.all.randomElement() ?? "A medieval town."
+    private func continueStory(story: Story?, storyPrompt: String, settings: SettingsState) async throws -> String {
         var initialPrompt = """
-        Write an incredible first chapter of a novel set. Use \(story?.language.descriptiveEnglishName ?? settings.language.descriptiveEnglishName) names for characters.
+        Write an incredible first chapter of a novel set in \(story?.storyPrompt ?? storyPrompt). Use \(story?.language.descriptiveEnglishName ?? settings.language.descriptiveEnglishName) names for characters.
         Use fictional names for places.
-        This is the story prompt:
-        \(storyPrompt)
         """
         var vocabularyPrompt = ""
         switch story?.difficulty ?? settings.difficulty {
         case .beginner:
-            vocabularyPrompt = " Use extremely simple sentence structures and words, and very short sentences."
+            vocabularyPrompt = "\nWrite using very short sentences and very simple words."
         case .intermediate:
-            vocabularyPrompt = " Use very simple sentence structures and words, and short sentences."
+            vocabularyPrompt = "\nWrite using short sentences and simple words."
         case .advanced:
-            vocabularyPrompt = " Use simple words."
+            vocabularyPrompt = "\nUse simple vocabulary and grammar."
         case .expert:
             break
         }

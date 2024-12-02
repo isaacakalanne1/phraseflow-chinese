@@ -34,13 +34,13 @@ struct ContentView: View {
             case .failedToGenerateStory:
                 ErrorView(title: LocalizedString.failedToWriteStory,
                           buttonTitle: LocalizedString.retry) {
-                    store.dispatch(.generateNewStory)
+                    store.dispatch(.continueStory(story: nil))
                 }
             case .failedToGenerateChapter:
                 ErrorView(title: LocalizedString.failedToWriteChapter,
                           buttonTitle: LocalizedString.retry) {
                     if let story = store.state.storyState.currentStory {
-                        store.dispatch(.generateChapter(story: story))
+                        store.dispatch(.continueStory(story: story))
                     }
                 }
             case .normal,
