@@ -121,15 +121,16 @@ Write the definition in \(originalLanguage?.displayName ?? "English").
         var initialPrompt = """
         Write an incredible first chapter of a novel set in \(story?.storyPrompt ?? storyPrompt). Use \(story?.language.descriptiveEnglishName ?? settings.language.descriptiveEnglishName) names for characters.
         Use fictional names for places.
+
         """
         var vocabularyPrompt = ""
         switch story?.difficulty ?? settings.difficulty {
         case .beginner:
-            vocabularyPrompt = "\nWrite using very short sentences and very simple words."
+            vocabularyPrompt = "Use extremely short sentences and extremely simple vocabulary."
         case .intermediate:
-            vocabularyPrompt = "\nWrite using short sentences and simple words."
+            vocabularyPrompt = "Use very short sentences and very simple vocabulary."
         case .advanced:
-            vocabularyPrompt = "\nUse simple vocabulary and grammar."
+            vocabularyPrompt = "Use short sentences and simple vocabulary."
         case .expert:
             break
         }
@@ -140,6 +141,7 @@ Write the definition in \(originalLanguage?.displayName ?? "English").
 The chapter should have complex, three-dimensional characters.
 The chapter should also be long, around 30 sentences.
 Use quotation marks for speech.
+
 """
         initialPrompt.append(qualityPrompt)
         var requestBody: [String: Any] = [
