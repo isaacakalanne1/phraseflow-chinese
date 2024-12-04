@@ -21,7 +21,6 @@ struct StoryPrompts {
         "a sprawling desert bazaar",
         "a small seaside village",
         "a futuristic mega-city",
-        "a dystopian dictatorship",
         "a snowy mountain monastery",
         "a forgotten underground temple",
         "a ship stranded in the arctic",

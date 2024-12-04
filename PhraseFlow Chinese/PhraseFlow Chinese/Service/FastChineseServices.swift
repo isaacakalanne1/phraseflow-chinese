@@ -126,24 +126,25 @@ Write the definition in \(originalLanguage?.displayName ?? "English").
         var vocabularyPrompt = ""
         switch story?.difficulty ?? settings.difficulty {
         case .beginner:
-            vocabularyPrompt = "Use extremely short sentences and extremely simple vocabulary."
+            vocabularyPrompt = "Use very short sentences and very simple grammar. Sentences should be 4 words long max."
         case .intermediate:
-            vocabularyPrompt = "Use very short sentences and very simple vocabulary."
+            vocabularyPrompt = "Use very short sentences and very simple grammar. Sentences should be 10 words long max."
         case .advanced:
-            vocabularyPrompt = "Use short sentences and simple vocabulary."
+            vocabularyPrompt = "Use short sentences and simple grammar."
         case .expert:
             break
         }
-        initialPrompt.append(vocabularyPrompt)
 
         let qualityPrompt = """
 
-The chapter should have complex, three-dimensional characters.
+The chapter should have complex, three-dimensional, flawed characters.
 The chapter should also be long, around 30 sentences.
 Use quotation marks for speech.
 
 """
         initialPrompt.append(qualityPrompt)
+        initialPrompt.append(vocabularyPrompt)
+
         var requestBody: [String: Any] = [
             "model": "meta-llama/llama-3.2-90b-vision-instruct",
         ]
@@ -151,8 +152,8 @@ Use quotation marks for speech.
         var messages: [[String: String]] = [["role": "user", "content": initialPrompt]]
         if let chapters = story?.chapters {
             var continueStoryPrompt = "Write an incredible next chapter of the novel. Use \(story?.language.descriptiveEnglishName ?? settings.language.descriptiveEnglishName) names for characters. Use fictional names for places."
-            continueStoryPrompt.append(vocabularyPrompt)
             continueStoryPrompt.append(qualityPrompt)
+            continueStoryPrompt.append(vocabularyPrompt)
             for chapter in chapters {
                 messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
                 messages.append(["role": "user", "content": continueStoryPrompt])

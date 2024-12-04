@@ -100,6 +100,9 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             newState.settingsState.language = language
         }
     case .continueStory:
+        if let voice = newState.settingsState.language.voices.first {
+            newState.settingsState.voice = voice
+        }
         newState.viewState.readerDisplayType = .loading
         newState.viewState.isShowingStoryListView = false
     case .failedToContinueStory:
