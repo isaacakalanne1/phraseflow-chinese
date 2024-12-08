@@ -13,24 +13,15 @@ struct CategoryButtonView: View {
     let action:  () -> Void
 
     var body: some View {
-        Button(action: {
-            withAnimation(.easeInOut) {
-                action()
-            }
-        }) {
+        Button(action: { withAnimation(.easeInOut) { action() } }) {
             VStack(spacing: 4) {
                 AsyncImage(url: category.imageUrl) { phase in
-                    let image = phase.image?.resizable() ?? Image(uiImage: UIImage())
-                    image
+                    (phase.image?.resizable() ?? Image(uiImage: UIImage()))
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 100, height: 70)
                         .overlay(
-                            Group {
-                                if isHighlighted {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(.accent, lineWidth: 5)
-                                }
-                            }
+                            isHighlighted ? RoundedRectangle(cornerRadius: 10)
+                                .stroke(.accent, lineWidth: 5) : nil
                         )
                         .clipShape(.rect(cornerRadius: 10))
                 }

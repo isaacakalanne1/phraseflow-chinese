@@ -99,7 +99,6 @@ final class FastChineseServices: FastChineseServicesProtocol {
         let mainPrompt =
 """
 Provide a definition for this word: "\(character)"
-If the word is made of different characters, also provide brief definitions for each of the characters in the word.
 Also explain the word in the context of the sentence: "\(sentence.translation)".
 Don't define other words in the sentence.
 Write the definition in \(originalLanguage?.displayName ?? "English").
@@ -126,18 +125,18 @@ Write the definition in \(originalLanguage?.displayName ?? "English").
         var vocabularyPrompt = ""
         switch story?.difficulty ?? settings.difficulty {
         case .beginner:
-            vocabularyPrompt = "Use very short sentences and very simple grammar. Sentences should be 4 words long max."
+            vocabularyPrompt = "The chapter should have short, simple sentences, and very basic grammar."
         case .intermediate:
-            vocabularyPrompt = "Use very short sentences and very simple grammar. Sentences should be 10 words long max."
+            vocabularyPrompt = "Use very short sentences. Use very simple, basic words."
         case .advanced:
-            vocabularyPrompt = "Use short sentences and simple grammar."
+            vocabularyPrompt = "Use short sentences. Use simple, basic words."
         case .expert:
             break
         }
 
         let qualityPrompt = """
 
-The chapter should have complex, three-dimensional, flawed characters.
+The chapter should have complex, three-dimensional characters.
 The chapter should also be long, around 30 sentences.
 Use quotation marks for speech.
 
@@ -170,6 +169,8 @@ Use quotation marks for speech.
 
         let jsonPrompt = """
 Format the following story into JSON. Translate each English sentence into \(originalLanguage == .english ? "" : "\(originalLanguage.descriptiveEnglishName) and ") \(translationLanguage.descriptiveEnglishName).
+Ensure each sentence entry is for an individual sentence.
+Translate the whole sentence, including names and places.
 """
         var requestBody: [String: Any] = [
             "model": "gpt-4o-mini-2024-07-18",
