@@ -117,15 +117,11 @@ Write the definition in \(originalLanguage?.displayName ?? "English").
     }
 
     private func continueStory(story: Story?, storyPrompt: String, settings: SettingsState) async throws -> String {
-        var initialPrompt = """
-        Write an incredible first chapter of a novel set in \(story?.storyPrompt ?? storyPrompt). Use \(story?.language.descriptiveEnglishName ?? settings.language.descriptiveEnglishName) names for characters.
-        Use fictional names for places.
-
-        """
+        var initialPrompt = "Write an incredible first chapter of a novel in English with complex, three-dimensional characters set in \(story?.storyPrompt ?? storyPrompt). "
         var vocabularyPrompt = ""
         switch story?.difficulty ?? settings.difficulty {
         case .beginner:
-            vocabularyPrompt = "The chapter should have short, simple sentences, and very basic grammar."
+            vocabularyPrompt = "Use very basic, simple words and very short sentences."
         case .intermediate:
             vocabularyPrompt = "Use very short sentences. Use very simple, basic words."
         case .advanced:
@@ -133,25 +129,15 @@ Write the definition in \(originalLanguage?.displayName ?? "English").
         case .expert:
             break
         }
-
-        let qualityPrompt = """
-
-The chapter should have complex, three-dimensional characters.
-The chapter should also be long, around 30 sentences.
-Use quotation marks for speech.
-
-"""
-        initialPrompt.append(qualityPrompt)
         initialPrompt.append(vocabularyPrompt)
 
         var requestBody: [String: Any] = [
-            "model": "meta-llama/llama-3.2-90b-vision-instruct",
+            "model": "meta-llama/llama-3.3-70b-instruct",
         ]
 
         var messages: [[String: String]] = [["role": "user", "content": initialPrompt]]
         if let chapters = story?.chapters {
-            var continueStoryPrompt = "Write an incredible next chapter of the novel. Use \(story?.language.descriptiveEnglishName ?? settings.language.descriptiveEnglishName) names for characters. Use fictional names for places."
-            continueStoryPrompt.append(qualityPrompt)
+            var continueStoryPrompt = "Write an incredible first chapter of a novel in English with complex, three-dimensional characters. "
             continueStoryPrompt.append(vocabularyPrompt)
             for chapter in chapters {
                 messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
