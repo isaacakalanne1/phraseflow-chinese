@@ -173,7 +173,7 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
         }
         let encoder = JSONEncoder()
         do {
-            let encodedData = try encoder.encode(stories)
+            let encodedData = try encoder.encode(stories) // TODO: Improve this code, to avoid running out of memory. Possibly save stories one at a time, rather than all stories at once
             try encodedData.write(to: fileURL)
         } catch {
             throw FastChineseDataStoreError.failedToSaveData

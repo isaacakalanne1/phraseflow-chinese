@@ -45,7 +45,7 @@ struct Story: Codable, Equatable, Hashable {
         self.difficulty = try container.decode(Difficulty.self, forKey: .difficulty)
         self.language = try container.decode(Language.self, forKey: .language)
         self.title = try container.decode(String.self, forKey: .title)
-        self.chapters = (try? container.decode([Chapter].self, forKey: .chapters)) ?? []
+        self.chapters = (try? container.decode([Chapter].self, forKey: .chapters)) ?? [] // TODO: Improve this code, to avoid running out of memory. Possibly decode chapters one at a time, rather than all chapters at once
         self.currentChapterIndex = (try? container.decode(Int.self, forKey: .currentChapterIndex)) ?? 0
         self.lastUpdated = (try? container.decode(Date.self, forKey: .lastUpdated)) ?? .now
         self.storyPrompt = (try? container.decode(String.self, forKey: .storyPrompt)) ?? ""

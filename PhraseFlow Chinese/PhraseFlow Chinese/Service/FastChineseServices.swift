@@ -121,11 +121,11 @@ Write the definition in \(originalLanguage?.displayName ?? "English").
         var vocabularyPrompt = ""
         switch story?.difficulty ?? settings.difficulty {
         case .beginner:
-            vocabularyPrompt = "Use very basic, simple words and very short sentences."
+            vocabularyPrompt = "Use extremely basic, simple words and extremely short sentences."
         case .intermediate:
-            vocabularyPrompt = "Use very short sentences. Use very simple, basic words."
+            vocabularyPrompt = "Use basic, simple words and short sentences."
         case .advanced:
-            vocabularyPrompt = "Use short sentences. Use simple, basic words."
+            vocabularyPrompt = "Use simple words and medium length sentences."
         case .expert:
             break
         }
@@ -137,7 +137,7 @@ Write the definition in \(originalLanguage?.displayName ?? "English").
 
         var messages: [[String: String]] = [["role": "user", "content": initialPrompt]]
         if let chapters = story?.chapters {
-            var continueStoryPrompt = "Write an incredible first chapter of a novel in English with complex, three-dimensional characters. "
+            var continueStoryPrompt = "Write an incredible next chapter of the novel in English with complex, three-dimensional characters. "
             continueStoryPrompt.append(vocabularyPrompt)
             for chapter in chapters {
                 messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
