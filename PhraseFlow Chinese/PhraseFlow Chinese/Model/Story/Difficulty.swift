@@ -52,4 +52,17 @@ enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
             maxIntValue
         }
     }
+
+    var vocabularyPrompt: String {
+        switch self {
+        case .beginner:
+            return "Use extremely basic, simple words and very short sentences."
+        case .intermediate:
+            return "Use basic, simple words and short sentences."
+        case .advanced:
+            return "Use simple words and medium length sentences."
+        case .expert:
+            return ""
+        }
+    }
 }

@@ -16,20 +16,17 @@ enum FastChineseServicesError: Error {
 
 protocol FastChineseServicesProtocol {
     func generateStory(story: Story) async throws -> Story
-    func fetchDefinition(of character: String, withinContextOf sentence: Sentence, story: Story?, settings: SettingsState) async throws -> String
+    func fetchDefinition(of character: String, withinContextOf sentence: Sentence, story: Story, settings: SettingsState) async throws -> String
 }
 
 final class FastChineseServices: FastChineseServicesProtocol {
 
     func generateStory(story: Story) async throws -> Story {
-        let translationLanguage = story.language
         let originalLanguage = Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier })
         do {
-            let storyPrompt = StoryPrompts.all.randomElement() ?? "a medieval town"
-            let response = try await continueStory(story: story,
-                                                   storyPrompt: storyPrompt)
+            let storyString = try await continueStory(story: story)
             let jsonString = try await convertToJson(story: story,
-                                                     translation: response,
+                                                     storyString: storyString,
                                                      shouldCreateTitle: story.title.isEmpty)
             guard let jsonData = jsonString.data(using: .utf8) else {
                 throw FastChineseServicesError.failedToGetResponseData
@@ -38,26 +35,31 @@ final class FastChineseServices: FastChineseServicesProtocol {
             decoder.keyDecodingStrategy = .custom({ (keys) -> CodingKey in
                 let lastKey = keys.last!
                 guard lastKey.intValue == nil else { return lastKey }
-                if lastKey.stringValue == originalLanguage?.schemaKey {
+                switch lastKey.stringValue {
+                case originalLanguage?.schemaKey:
                     return AnyKey(stringValue: "original")!
-                } else if lastKey.stringValue == translationLanguage.schemaKey {
+                case story.language.schemaKey:
                     return AnyKey(stringValue: "translation")!
-                } else if lastKey.stringValue == "briefLatestStorySummaryIn\(originalLanguage?.key ?? "English")" {
+                case "briefLatestStorySummaryIn\(originalLanguage?.key ?? "English")":
                     return AnyKey(stringValue: "briefLatestStorySummary")!
-                } else if lastKey.stringValue == "chapterNumberAndTitleIn\(originalLanguage?.key ?? "English")" {
+                case "chapterNumberAndTitleIn\(originalLanguage?.key ?? "English")":
                     return AnyKey(stringValue: "chapterNumberAndTitle")!
-                } else if lastKey.stringValue == "titleOfNovelIn\(originalLanguage?.key ?? "English")" {
+                case "titleOfNovelIn\(originalLanguage?.key ?? "English")":
                     return AnyKey(stringValue: "titleOfNovel")!
+                default:
+                    return AnyKey(stringValue: lastKey.stringValue)!
                 }
-                return AnyKey(stringValue: lastKey.stringValue)!
             })
             let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
-            let sentences = chapterResponse.sentences.map({
-                var translation = $0.translation
-                if story.language == .mandarinChinese {
-                    translation = translation.replacingOccurrences(of: " ", with: "")
+            let sentences = chapterResponse.sentences.map(
+                {
+                    var translation = $0.translation
+                    if story.language == .mandarinChinese {
+                        translation = translation.replacingOccurrences(of: " ", with: "")
+                    }
+                    return Sentence(translation: translation, english: $0.original)
                 }
-                return Sentence(translation: translation, english: $0.original) })
+            )
             let chapter = Chapter(title: chapterResponse.chapterNumberAndTitle ?? "", sentences: sentences)
 
             var story = story
@@ -75,12 +77,11 @@ final class FastChineseServices: FastChineseServicesProtocol {
         }
     }
 
-    func fetchDefinition(of character: String, withinContextOf sentence: Sentence, story: Story?, settings: SettingsState) async throws -> String {
-        let originalLanguage = Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier })
-        let languageName = story?.language.descriptiveEnglishName ?? settings.language.descriptiveEnglishName
+    func fetchDefinition(of character: String, withinContextOf sentence: Sentence, story: Story, settings: SettingsState) async throws -> String {
+        let languageName = story.language.descriptiveEnglishName
         let initialPrompt =
 """
-        You are an AI assistant that provides \(originalLanguage?.displayName ?? "English") definitions for characters in \(languageName) sentences. Your explanations are brief, and simple to understand.
+        You are an AI assistant that provides \(story.deviceLanguage.displayName) definitions for characters in \(languageName) sentences. Your explanations are brief, and simple to understand.
         You provide the pronounciation for the \(languageName) character in brackets after the \(languageName) word.
         If the character is used as part of a larger word, you also provide the pronounciation and definition for each character in this overall word.
         You also provide the definition of the word in the context of the overall sentence.
@@ -91,7 +92,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
 Provide a definition for this word: "\(character)"
 Also explain the word in the context of the sentence: "\(sentence.translation)".
 Don't define other words in the sentence.
-Write the definition in \(originalLanguage?.displayName ?? "English").
+Write the definition in \(story.deviceLanguage.displayName).
 """
         let messages: [[String: String]] = [
             ["role": "system", "content": initialPrompt],
@@ -103,23 +104,12 @@ Write the definition in \(originalLanguage?.displayName ?? "English").
             "messages": messages
         ]
 
-        return try await makeOpenAIRequest(requestBody: requestBody)
+        return try await makeRequest(type: .openAI, requestBody: requestBody)
     }
 
-    private func continueStory(story: Story, storyPrompt: String) async throws -> String {
+    private func continueStory(story: Story) async throws -> String {
         var initialPrompt = "Write an incredible first chapter of a novel in English with complex, three-dimensional characters set in \(story.storyPrompt). "
-        var vocabularyPrompt = ""
-        switch story.difficulty {
-        case .beginner:
-            vocabularyPrompt = "Use extremely basic, simple words and very short sentences."
-        case .intermediate:
-            vocabularyPrompt = "Use basic, simple words and short sentences."
-        case .advanced:
-            vocabularyPrompt = "Use simple words and medium length sentences."
-        case .expert:
-            break
-        }
-        initialPrompt.append(vocabularyPrompt)
+        initialPrompt.append(story.difficulty.vocabularyPrompt)
 
         var requestBody: [String: Any] = [
             "model": "meta-llama/llama-3.3-70b-instruct",
@@ -127,22 +117,19 @@ Write the definition in \(originalLanguage?.displayName ?? "English").
 
         var messages: [[String: String]] = [["role": "user", "content": initialPrompt]]
         var continueStoryPrompt = "Write an incredible next chapter of the novel in English with complex, three-dimensional characters. "
-        continueStoryPrompt.append(vocabularyPrompt)
+        continueStoryPrompt.append(story.difficulty.vocabularyPrompt)
         for chapter in story.chapters {
             messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
             messages.append(["role": "user", "content": continueStoryPrompt])
         }
         requestBody["messages"] = messages
 
-        return try await makeOpenrouterRequest(requestBody: requestBody)
+        return try await makeRequest(type: .openRouter, requestBody: requestBody)
     }
 
-    private func convertToJson(story: Story, translation: String, shouldCreateTitle: Bool) async throws -> String {
-        let originalLanguage = Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier }) ?? .english
-        let translationLanguage = story.language
-
+    private func convertToJson(story: Story, storyString: String, shouldCreateTitle: Bool) async throws -> String {
         let jsonPrompt = """
-Format the following story into JSON. Translate each English sentence into \(originalLanguage == .english ? "" : "\(originalLanguage.descriptiveEnglishName) and ") \(translationLanguage.descriptiveEnglishName).
+Format the following story into JSON. Translate each English sentence into \(story.deviceLanguage == .english ? "" : "\(story.deviceLanguage.descriptiveEnglishName) and ") \(story.language.descriptiveEnglishName).
 Ensure each sentence entry is for an individual sentence.
 Translate the whole sentence, including names and places.
 """
@@ -152,31 +139,24 @@ Translate the whole sentence, including names and places.
 
         let messages: [[String: String]] = [
             ["role": "system", "content": jsonPrompt],
-            ["role": "user", "content": translation]
+            ["role": "user", "content": storyString]
         ]
         requestBody["messages"] = messages
-        requestBody["response_format"] = sentenceSchema(originalLanguage: originalLanguage,
-                                                        translationLanguage: translationLanguage,
+        requestBody["response_format"] = sentenceSchema(originalLanguage: story.deviceLanguage,
+                                                        translationLanguage: story.language,
                                                         shouldCreateTitle: shouldCreateTitle)
 
-        return try await makeOpenAIRequest(requestBody: requestBody)
+        return try await makeRequest(type: .openAI, requestBody: requestBody)
     }
 
-    private func makeOpenrouterRequest(requestBody: [String: Any]) async throws -> String {
-
-        var request = URLRequest(url: URL(string: "https://openrouter.ai/api/v1/chat/completions")!)
-        request.httpMethod = "POST"
-        request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    private func makeRequest(type: APIRequestType, requestBody: [String: Any]) async throws -> String {
+        let request = createURLRequest(baseUrl: type.baseUrl, authKey: type.authKey)
 
         guard let jsonData = try? JSONSerialization.data(withJSONObject: requestBody) else {
             throw FastChineseServicesError.failedToEncodeJson
         }
 
-        let sessionConfig = URLSessionConfiguration.default
-        sessionConfig.timeoutIntervalForRequest = 1200
-        sessionConfig.timeoutIntervalForResource = 1200
-        let session = URLSession(configuration: sessionConfig)
+        let session = createURLSession()
 
         let (data, _) = try await session.upload(for: request, from: jsonData)
         guard let response = try? JSONDecoder().decode(GPTResponse.self, from: data),
@@ -184,32 +164,21 @@ Translate the whole sentence, including names and places.
             throw FastChineseServicesError.failedToDecodeJson
         }
         return responseString
-
     }
 
-    private func makeOpenAIRequest(requestBody: [String: Any]) async throws -> String {
-
-        var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
+    private func createURLRequest(baseUrl: String, authKey: String) -> URLRequest {
+        var request = URLRequest(url: URL(string: baseUrl)!)
         request.httpMethod = "POST"
-        request.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
+        request.addValue("Bearer \(authKey)", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        return request
+    }
 
-        guard let jsonData = try? JSONSerialization.data(withJSONObject: requestBody) else {
-            throw FastChineseServicesError.failedToEncodeJson
-        }
-
+    private func createURLSession() -> URLSession {
         let sessionConfig = URLSessionConfiguration.default
         sessionConfig.timeoutIntervalForRequest = 1200
         sessionConfig.timeoutIntervalForResource = 1200
-        let session = URLSession(configuration: sessionConfig)
-
-        let (data, _) = try await session.upload(for: request, from: jsonData)
-        guard let response = try? JSONDecoder().decode(GPTResponse.self, from: data),
-              let responseString = response.choices.first?.message.content else {
-            throw FastChineseServicesError.failedToDecodeJson
-        }
-        return responseString
-
+        return URLSession(configuration: sessionConfig)
     }
 }
 
@@ -224,5 +193,27 @@ struct AnyKey: CodingKey {
     init?(intValue: Int) {
         self.stringValue = String(intValue)
         self.intValue = intValue
+    }
+}
+
+enum APIRequestType {
+    case openAI, openRouter
+
+    var baseUrl: String {
+        switch self {
+        case .openAI:
+            "https://api.openai.com/v1/chat/completions"
+        case .openRouter:
+            "https://openrouter.ai/api/v1/chat/completions"
+        }
+    }
+
+    var authKey: String {
+        switch self {
+        case .openAI:
+            "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"
+        case .openRouter:
+            "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"
+        }
     }
 }

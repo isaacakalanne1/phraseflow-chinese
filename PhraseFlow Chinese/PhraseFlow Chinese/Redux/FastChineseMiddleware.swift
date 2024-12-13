@@ -94,16 +94,19 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
     case .defineCharacter(let timeStampData, let shouldForce):
         do {
             guard let sentence = state.storyState.currentSentence else {
-                return nil
+                return .failedToDefineCharacter
             }
             
-            if let definition = state.definitionState.definitions.first(where: { $0.character == timeStampData.word && $0.sentence == sentence }),
+            if let definition = state.definitionState.definition(of: timeStampData.word, in: sentence),
                !shouldForce {
                 return .onDefinedCharacter(definition)
             }
+            guard let story = state.storyState.currentStory else {
+                return .failedToDefineCharacter
+            }
             let fetchedDefinition = try await environment.fetchDefinition(of: timeStampData.word,
                                                                           withinContextOf: sentence,
-                                                                          story: state.storyState.currentStory,
+                                                                          story: story,
                                                                           settings: state.settingsState)
             return .onDefinedCharacter(fetchedDefinition)
         } catch {

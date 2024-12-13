@@ -24,4 +24,8 @@ struct FastChineseState {
                      title: "",
                      storyPrompt: StoryPrompts.all.randomElement() ?? "a medieval town")
     }
+
+    func definition(of word: String, in sentence: Sentence) -> Definition? {
+        definitions.first(where: { $0.character == word && $0.sentence == sentence })
+    }
 }

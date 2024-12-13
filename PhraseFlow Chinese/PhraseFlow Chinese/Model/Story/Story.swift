@@ -50,4 +50,8 @@ struct Story: Codable, Equatable, Hashable {
         self.lastUpdated = (try? container.decode(Date.self, forKey: .lastUpdated)) ?? .now
         self.storyPrompt = (try? container.decode(String.self, forKey: .storyPrompt)) ?? ""
     }
+
+    var deviceLanguage: Language {
+        return Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier }) ?? .english
+    }
 }
