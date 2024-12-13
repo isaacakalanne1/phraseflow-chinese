@@ -108,19 +108,17 @@ Write the definition in \(story.deviceLanguage.displayName).
     }
 
     private func continueStory(story: Story) async throws -> String {
-        var initialPrompt = "Write an incredible first chapter of a novel in English with complex, three-dimensional characters set in \(story.storyPrompt). "
-        initialPrompt.append(story.difficulty.vocabularyPrompt)
-
         var requestBody: [String: Any] = [
             "model": "meta-llama/llama-3.3-70b-instruct",
         ]
 
-        var messages: [[String: String]] = [["role": "user", "content": initialPrompt]]
-        var continueStoryPrompt = "Write an incredible next chapter of the novel in English with complex, three-dimensional characters. "
-        continueStoryPrompt.append(story.difficulty.vocabularyPrompt)
+        var messages: [[String: String]] = [
+            ["role": "user", "content": "Write an incredible first chapter of a novel in English with complex, three-dimensional characters set in \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"]
+        ]
+
         for chapter in story.chapters {
             messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
-            messages.append(["role": "user", "content": continueStoryPrompt])
+            messages.append(["role": "user", "content": "Write an incredible next chapter of the novel in English with complex, three-dimensional characters. \(story.difficulty.vocabularyPrompt)"])
         }
         requestBody["messages"] = messages
 
@@ -179,41 +177,5 @@ Translate the whole sentence, including names and places.
         sessionConfig.timeoutIntervalForRequest = 1200
         sessionConfig.timeoutIntervalForResource = 1200
         return URLSession(configuration: sessionConfig)
-    }
-}
-
-struct AnyKey: CodingKey {
-    var stringValue: String
-    var intValue: Int?
-
-    init?(stringValue: String) {
-        self.stringValue = stringValue
-    }
-
-    init?(intValue: Int) {
-        self.stringValue = String(intValue)
-        self.intValue = intValue
-    }
-}
-
-enum APIRequestType {
-    case openAI, openRouter
-
-    var baseUrl: String {
-        switch self {
-        case .openAI:
-            "https://api.openai.com/v1/chat/completions"
-        case .openRouter:
-            "https://openrouter.ai/api/v1/chat/completions"
-        }
-    }
-
-    var authKey: String {
-        switch self {
-        case .openAI:
-            "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"
-        case .openRouter:
-            "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"
-        }
     }
 }
