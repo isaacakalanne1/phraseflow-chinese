@@ -13,7 +13,7 @@ enum FastChineseAction {
     case updateShowingStoryListView(isShowing: Bool)
     case updateSentenceIndex(Int)
 
-    case continueStory(story: Story?)
+    case continueStory(story: Story)
     case onContinuedStory(Story)
     case failedToContinueStory
 

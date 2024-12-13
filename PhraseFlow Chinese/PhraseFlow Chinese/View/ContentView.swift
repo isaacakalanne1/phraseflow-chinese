@@ -34,7 +34,7 @@ struct ContentView: View {
             case .failedToGenerateStory:
                 ErrorView(title: LocalizedString.failedToWriteStory,
                           buttonTitle: LocalizedString.retry) {
-                    store.dispatch(.continueStory(story: nil))
+                    store.dispatch(.continueStory(story: store.state.createNewStory()))
                 }
             case .failedToGenerateChapter:
                 ErrorView(title: LocalizedString.failedToWriteChapter,

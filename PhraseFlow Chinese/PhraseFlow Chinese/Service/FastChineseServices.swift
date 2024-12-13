@@ -15,24 +15,22 @@ enum FastChineseServicesError: Error {
 }
 
 protocol FastChineseServicesProtocol {
-    func generateStory(story: Story?, settings: SettingsState) async throws -> Story
+    func generateStory(story: Story) async throws -> Story
     func fetchDefinition(of character: String, withinContextOf sentence: Sentence, story: Story?, settings: SettingsState) async throws -> String
 }
 
 final class FastChineseServices: FastChineseServicesProtocol {
 
-    func generateStory(story: Story?, settings: SettingsState) async throws -> Story {
-        let translationLanguage = story?.language ?? settings.language
+    func generateStory(story: Story) async throws -> Story {
+        let translationLanguage = story.language
         let originalLanguage = Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier })
         do {
             let storyPrompt = StoryPrompts.all.randomElement() ?? "a medieval town"
             let response = try await continueStory(story: story,
-                                                   storyPrompt: storyPrompt,
-                                                   settings: settings)
+                                                   storyPrompt: storyPrompt)
             let jsonString = try await convertToJson(story: story,
                                                      translation: response,
-                                                     settings: settings,
-                                                     shouldCreateTitle: story == nil)
+                                                     shouldCreateTitle: story.title.isEmpty)
             guard let jsonData = jsonString.data(using: .utf8) else {
                 throw FastChineseServicesError.failedToGetResponseData
             }
@@ -56,30 +54,22 @@ final class FastChineseServices: FastChineseServicesProtocol {
             let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
             let sentences = chapterResponse.sentences.map({
                 var translation = $0.translation
-                if settings.language == .mandarinChinese {
+                if story.language == .mandarinChinese {
                     translation = translation.replacingOccurrences(of: " ", with: "")
                 }
                 return Sentence(translation: translation, english: $0.original) })
             let chapter = Chapter(title: chapterResponse.chapterNumberAndTitle ?? "", sentences: sentences)
 
-            if var story {
-                if story.chapters.isEmpty {
-                    story.chapters = [chapter]
-                } else {
-                    story.chapters.append(chapter)
-                }
-                story.briefLatestStorySummary = chapterResponse.briefLatestStorySummary
-                story.currentChapterIndex = story.chapters.count - 1
-                story.lastUpdated = .now
-                return story
+            var story = story
+            if story.chapters.isEmpty {
+                story.chapters = [chapter]
             } else {
-                return Story(briefLatestStorySummary: chapterResponse.briefLatestStorySummary,
-                             difficulty: .beginner,
-                             language: settings.language,
-                             title: chapterResponse.titleOfNovel ?? "",
-                             chapters: [chapter],
-                             storyPrompt: storyPrompt)
+                story.chapters.append(chapter)
             }
+            story.briefLatestStorySummary = chapterResponse.briefLatestStorySummary
+            story.currentChapterIndex = story.chapters.count - 1
+            story.lastUpdated = .now
+            return story
         } catch {
             throw FastChineseServicesError.failedToDecodeSentences
         }
@@ -116,10 +106,10 @@ Write the definition in \(originalLanguage?.displayName ?? "English").
         return try await makeOpenAIRequest(requestBody: requestBody)
     }
 
-    private func continueStory(story: Story?, storyPrompt: String, settings: SettingsState) async throws -> String {
-        var initialPrompt = "Write an incredible first chapter of a novel in English with complex, three-dimensional characters set in \(story?.storyPrompt ?? storyPrompt). "
+    private func continueStory(story: Story, storyPrompt: String) async throws -> String {
+        var initialPrompt = "Write an incredible first chapter of a novel in English with complex, three-dimensional characters set in \(story.storyPrompt). "
         var vocabularyPrompt = ""
-        switch story?.difficulty ?? settings.difficulty {
+        switch story.difficulty {
         case .beginner:
             vocabularyPrompt = "Use extremely basic, simple words and very short sentences."
         case .intermediate:
@@ -136,22 +126,20 @@ Write the definition in \(originalLanguage?.displayName ?? "English").
         ]
 
         var messages: [[String: String]] = [["role": "user", "content": initialPrompt]]
-        if let chapters = story?.chapters {
-            var continueStoryPrompt = "Write an incredible next chapter of the novel in English with complex, three-dimensional characters. "
-            continueStoryPrompt.append(vocabularyPrompt)
-            for chapter in chapters {
-                messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
-                messages.append(["role": "user", "content": continueStoryPrompt])
-            }
+        var continueStoryPrompt = "Write an incredible next chapter of the novel in English with complex, three-dimensional characters. "
+        continueStoryPrompt.append(vocabularyPrompt)
+        for chapter in story.chapters {
+            messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
+            messages.append(["role": "user", "content": continueStoryPrompt])
         }
         requestBody["messages"] = messages
 
         return try await makeOpenrouterRequest(requestBody: requestBody)
     }
 
-    private func convertToJson(story: Story?, translation: String, settings: SettingsState, shouldCreateTitle: Bool) async throws -> String {
+    private func convertToJson(story: Story, translation: String, shouldCreateTitle: Bool) async throws -> String {
         let originalLanguage = Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier }) ?? .english
-        let translationLanguage = story?.language ?? settings.language
+        let translationLanguage = story.language
 
         let jsonPrompt = """
 Format the following story into JSON. Translate each English sentence into \(originalLanguage == .english ? "" : "\(originalLanguage.descriptiveEnglishName) and ") \(translationLanguage.descriptiveEnglishName).

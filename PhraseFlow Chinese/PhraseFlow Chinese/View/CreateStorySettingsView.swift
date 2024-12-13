@@ -45,7 +45,7 @@ struct CreateStorySettingsView: View {
                 }
                 .frame(maxHeight: .infinity)
                 Button("\(store.state.settingsState.language.flagEmoji) \(LocalizedString.newStory) (\(store.state.settingsState.difficulty.title))") {
-                    store.dispatch(.continueStory(story: nil))
+                    store.dispatch(.continueStory(story: store.state.createNewStory()))
                 }
                 .padding()
                 .background(Color.accentColor)

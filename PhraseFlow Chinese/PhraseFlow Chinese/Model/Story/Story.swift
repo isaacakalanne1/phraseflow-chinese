@@ -18,11 +18,11 @@ struct Story: Codable, Equatable, Hashable {
     var lastUpdated: Date
     var storyPrompt: String
 
-    init(briefLatestStorySummary: String,
+    init(briefLatestStorySummary: String = "",
          difficulty: Difficulty,
          language: Language,
          title: String,
-         chapters: [Chapter],
+         chapters: [Chapter] = [],
          storyPrompt: String,
          currentChapterIndex: Int = 0,
          lastUpdated: Date = .now) {

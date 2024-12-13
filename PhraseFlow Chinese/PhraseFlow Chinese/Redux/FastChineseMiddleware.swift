@@ -19,7 +19,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         return .saveStoryAndSettings(story)
     case .continueStory(let story):
         do {
-            let story = try await environment.generateStory(story: story, settings: state.settingsState)
+            let story = try await environment.generateStory(story: story)
             return .onContinuedStory(story)
         } catch {
             return .failedToContinueStory
