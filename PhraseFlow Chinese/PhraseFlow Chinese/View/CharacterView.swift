@@ -12,7 +12,6 @@ struct CharacterView: View {
 
     let isHighlighted: Bool
     let word: WordTimeStampData
-    private let cornerRadius: CGFloat = 7.5
 
     var body: some View {
         VStack(spacing: 0) {

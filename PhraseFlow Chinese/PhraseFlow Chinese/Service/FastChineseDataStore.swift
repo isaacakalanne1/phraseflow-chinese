@@ -11,7 +11,6 @@ enum FastChineseDataStoreError: Error {
     case failedToCreateUrl
     case failedToSaveData
     case failedToDecodeData
-    case failedToGetDefinition
 }
 
 protocol FastChineseDataStoreProtocol {
@@ -20,7 +19,6 @@ protocol FastChineseDataStoreProtocol {
     func saveStory(_ story: Story) throws
     func saveAppSettings(_ settings: SettingsState) throws
     func loadDefinitions() throws -> [Definition]
-    func loadDefinition(character: String, sentence: Sentence) throws -> Definition
     func saveDefinition(_ definition: Definition) throws
     func saveDefinitions(_ definitions: [Definition]) throws
     func unsaveStory(_ story: Story) throws
@@ -121,23 +119,6 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
             let decoder = JSONDecoder()
             let definitions = try decoder.decode([Definition].self, from: data)
             return definitions
-        } catch {
-            throw FastChineseDataStoreError.failedToDecodeData
-        }
-    }
-
-    func loadDefinition(character: String, sentence: Sentence) throws -> Definition {
-        guard let fileURL = documentsDirectory?.appendingPathComponent("definitions.json") else {
-            throw FastChineseDataStoreError.failedToCreateUrl
-        }
-        do {
-            let data = try Data(contentsOf: fileURL)
-            let decoder = JSONDecoder()
-            let definitions = try decoder.decode([Definition].self, from: data)
-            guard let definition = definitions.first(where: { $0.character == character && $0.sentence == sentence }) else {
-                throw FastChineseDataStoreError.failedToGetDefinition
-            }
-            return definition
         } catch {
             throw FastChineseDataStoreError.failedToDecodeData
         }

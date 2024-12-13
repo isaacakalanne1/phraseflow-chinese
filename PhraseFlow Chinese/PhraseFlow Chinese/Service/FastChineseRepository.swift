@@ -94,8 +94,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                                                 time: audioTimeInSeconds,
                                                 duration: event.duration,
                                                 indexInList: index,
-                                                sentenceIndex: sentenceIndex,
-                                                wordPosition: .middle))
+                                                sentenceIndex: sentenceIndex))
 
                     index += 1
                 }
@@ -185,8 +184,4 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
         return results
     }
 
-}
-
-enum WordPosition: Codable {
-    case first, middle, last
 }

@@ -121,7 +121,7 @@ Write the definition in \(originalLanguage?.displayName ?? "English").
         var vocabularyPrompt = ""
         switch story?.difficulty ?? settings.difficulty {
         case .beginner:
-            vocabularyPrompt = "Use extremely basic, simple words and extremely short sentences."
+            vocabularyPrompt = "Use extremely basic, simple words and very short sentences."
         case .intermediate:
             vocabularyPrompt = "Use basic, simple words and short sentences."
         case .advanced:
