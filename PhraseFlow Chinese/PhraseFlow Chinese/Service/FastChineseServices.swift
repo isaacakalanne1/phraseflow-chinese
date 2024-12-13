@@ -100,7 +100,7 @@ Write the definition in \(story.deviceLanguage.displayName).
         ]
 
         let requestBody: [String: Any] = [
-            "model": "gpt-4o-mini-2024-07-18",
+            "model": APIRequestType.openAI.modelName,
             "messages": messages
         ]
 
@@ -109,7 +109,7 @@ Write the definition in \(story.deviceLanguage.displayName).
 
     private func continueStory(story: Story) async throws -> String {
         var requestBody: [String: Any] = [
-            "model": "meta-llama/llama-3.3-70b-instruct",
+            "model": APIRequestType.openRouter.modelName,
         ]
 
         var messages: [[String: String]] = [
