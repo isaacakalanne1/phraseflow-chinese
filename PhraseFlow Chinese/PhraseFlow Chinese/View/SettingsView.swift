@@ -38,6 +38,8 @@ struct SettingsView: View {
                     }
                     Section {
                         ForEach(store.state.storyState.currentStory?.language.voices.sorted(by: { $0.gender.title < $1.gender.title }) ?? [], id: \.self) { voice in
+                            let isSelectedVoice = store.state.settingsState.voice == voice
+
                             Button(action: {
                                 withAnimation(.easeInOut) {
                                     store.dispatch(.selectVoice(voice))
@@ -45,31 +47,32 @@ struct SettingsView: View {
                             }) {
                                 VStack {
                                     Text(voice.title)
-                                        .fontWeight(store.state.settingsState.voice == voice ? .medium : .light)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .fontWeight(isSelectedVoice ? .medium : .light)
                                     Text(voice.gender.title)
                                         .fontWeight(.light)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
                                 }
-                                .foregroundStyle(store.state.settingsState.voice == voice ? Color.accentColor : Color.primary)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .foregroundStyle(isSelectedVoice ? Color.accentColor : Color.primary)
                             }
-                            .listRowBackground(store.state.settingsState.voice == voice ? Color.gray.opacity(0.3) : Color.white)
+                            .listRowBackground(isSelectedVoice ? Color.gray.opacity(0.3) : Color.white)
                         }
                     } header: {
                         Text(LocalizedString.voice)
                     }
                     Section {
                         ForEach(SpeechSpeed.allCases, id: \.self) { speed in
+                            let isSelectedSpeed = store.state.settingsState.speechSpeed == speed
+                            
                             Button(action: {
                                 withAnimation(.easeInOut) {
                                     store.dispatch(.updateSpeechSpeed(speed))
                                 }
                             }) {
                                 Text(speed.title)
-                                    .foregroundStyle(store.state.settingsState.speechSpeed == speed ? Color.accentColor : Color.primary)
-                                    .fontWeight(store.state.settingsState.speechSpeed == speed ? .medium : .light)
+                                    .foregroundStyle(isSelectedSpeed ? Color.accentColor : Color.primary)
+                                    .fontWeight(isSelectedSpeed ? .medium : .light)
                             }
-                            .listRowBackground(store.state.settingsState.speechSpeed == speed ? Color.gray.opacity(0.3) : Color.white)
+                            .listRowBackground(isSelectedSpeed ? Color.gray.opacity(0.3) : Color.white)
                         }
                     } header: {
                         Text(LocalizedString.speed)

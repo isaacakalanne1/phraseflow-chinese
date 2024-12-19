@@ -16,8 +16,9 @@ struct ChapterView: View {
         if let story = store.state.storyState.currentStory {
             ScrollView(.vertical) {
                 ForEach(0...(chapter.timestampData.last?.sentenceIndex ?? 0), id: \.self) { index in
+                    let sentenceWords = chapter.timestampData.filter({ $0.sentenceIndex == index })
+                    
                     FlowLayout(spacing: 0, language: story.language) {
-                        let sentenceWords = chapter.timestampData.filter({ $0.sentenceIndex == index })
                         ForEach(Array(sentenceWords.enumerated()), id: \.offset) { index, word in
                             CharacterView(isHighlighted: word == store.state.currentSpokenWord, word: word)
                         }
@@ -26,11 +27,8 @@ struct ChapterView: View {
                 .frame(maxWidth: .infinity, alignment: story.language.alignment)
 
                 Button(LocalizedString.nextChapter) {
-                    if story.chapters.count > story.currentChapterIndex + 1 {
-                        store.dispatch(.goToNextChapter)
-                    } else {
-                        store.dispatch(.continueStory(story: story))
-                    }
+                    let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
+                    store.dispatch(doesNextChapterExist ? .goToNextChapter : .continueStory(story: story))
                 }
                 .padding()
                 .background(Color.accentColor)
