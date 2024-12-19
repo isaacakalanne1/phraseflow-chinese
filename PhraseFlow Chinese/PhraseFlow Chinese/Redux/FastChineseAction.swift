@@ -7,6 +7,7 @@
 
 import Foundation
 import AVKit
+import StoreKit
 
 enum FastChineseAction {
     case updateShowingSettings(isShowing: Bool)
@@ -80,4 +81,24 @@ enum FastChineseAction {
 
     case saveAppSettings
     case failedToSaveAppSettings
+
+    case fetchSubscriptions
+    case onFetchedSubscriptions([Product])
+    case failedToFetchSubscriptions
+
+    case purchaseSubscription(Product)
+    case onPurchasedSubscription
+    case failedToPurchaseSubscription
+
+    case restoreSubscriptions
+    case onRestoredSubscriptions
+    case failedToRestoreSubscriptions
+
+    case getCurrentEntitlements
+    case updatePurchasedProducts([VerificationResult<Transaction>])
+
+    case observeTransactionUpdates
+
+    case setSubscriptionSheetShowing(Bool)
+
 }

@@ -7,10 +7,20 @@
 
 import Foundation
 import MicrosoftCognitiveServicesSpeech
+import StoreKit
 
 protocol FastChineseRepositoryProtocol {
-    func synthesizeSpeech(_ chapter: Chapter, voice: Voice, rate: String, language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
-                                                                                           audioData: Data)
+    func synthesizeSpeech(_ chapter: Chapter,
+                          voice: Voice,
+                          rate: String,
+                          language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
+                                                                audioData: Data)
+    func getProducts() async throws -> [Product]
+    func purchase(_ product: Product) async throws
+}
+
+enum FastChineseRepositoryError: Error {
+    case failedToPurchaseSubscription
 }
 
 class FastChineseRepository: FastChineseRepositoryProtocol {
@@ -25,33 +35,25 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
     init() { }
 
     func synthesizeSpeech(_ chapter: Chapter, voice: Voice, rate: String, language: Language?) async throws -> (wordTimestamps: [WordTimeStampData], audioData: Data) {
-        // Replace with your subscription key and service region
         let speechKey = "Fp11D0CAMjjAcf03VNqe2IsKfqycenIKcrAm4uGV8RSiaqMX15NWJQQJ99AKACYeBjFXJ3w3AAAYACOG6Orb"
         let serviceRegion = "eastus"
 
         do {
-            // Initialize speech configuration
             let speechConfig = try SPXSpeechConfiguration(subscription: speechKey, region: serviceRegion)
             speechConfig.requestWordLevelTimestamps()
-//            speechConfig.setServicePropertyTo("explicit", byName: "punctuation", using: .uriQueryParameter)
             speechConfig.outputFormat = .detailed
-            speechConfig.setSpeechSynthesisOutputFormat(.riff16Khz16BitMonoPcm) // Use a format compatible with AVAudioPlayer
+            speechConfig.setSpeechSynthesisOutputFormat(.riff16Khz16BitMonoPcm)
             speechConfig.speechSynthesisVoiceName = voice.speechSynthesisVoiceName
-//            speechConfig.speechSynthesisLanguage = language?.speechCode
 
-            // Create a speech synthesizer
             let synthesizer = try SPXSpeechSynthesizer(speechConfiguration: speechConfig, audioConfiguration: nil)
 
-            // Create an array to hold words, timestamps, and offsets
             var wordTimestamps: [WordTimeStampData] = []
             let wordTimestampsQueue = DispatchQueue(label: "WordTimestampsQueue")
 
-            // Add a handler for the word boundary event
             var index = -1
             var sentenceIndex = -1
             let sentenceMarker = "✓"
             synthesizer.addSynthesisWordBoundaryEventHandler { (synthesizer, event) in
-                // Extract the audio offset (in ticks of 100 nanoseconds)
                 let audioTimeInSeconds = Double(event.audioOffset) / 10_000_000.0
 
                 var word = event.text
@@ -129,10 +131,8 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             """
             ssml.append(ssmlSuffix)
 
-            // Start speech synthesis synchronously using SSML
             let result = try synthesizer.speakSsml(ssml)
 
-            // Check the result for cancellation
             if result.reason == SPXResultReason.canceled {
                 let cancellationDetails = try SPXSpeechSynthesisCancellationDetails(fromCanceledSynthesisResult: result)
                 let errorDetails = cancellationDetails.errorDetails ?? "Unknown error"
@@ -182,6 +182,34 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
         }
 
         return results
+    }
+
+    func getProducts() async throws -> [Product] {
+        return try await Product.products(for: ["com.flowtale.unlimited"])
+    }
+
+    func purchase(_ product: Product) async throws {
+        let result = try await product.purchase()
+
+        switch result {
+        case let .success(.verified(transaction)):
+            // Successful purhcase
+            await transaction.finish()
+            // TODO: Track successful subscription here via AppsFlyer
+        case let .success(.unverified(transaction, _)):
+            // Successful purchase but transaction/receipt can't be verified
+            // Could be a jailbroken phone
+            await transaction.finish()
+            // TODO: Track successful subscription here via AppsFlyer
+            throw FastChineseRepositoryError.failedToPurchaseSubscription
+        case .pending,
+                .userCancelled:
+            // Transaction waiting on SCA (Strong Customer Authentication) or
+            // approval from Ask to Buy
+            throw FastChineseRepositoryError.failedToPurchaseSubscription
+        @unknown default:
+            throw FastChineseRepositoryError.failedToPurchaseSubscription
+        }
     }
 
 }

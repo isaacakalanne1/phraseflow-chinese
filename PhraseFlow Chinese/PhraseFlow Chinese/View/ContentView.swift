@@ -12,6 +12,12 @@ struct ContentView: View {
 
     var body: some View {
 
+        let isShowingSubscriptionView: Binding<Bool> = .init {
+            store.state.viewState.isShowingSubscriptionSheet
+        } set: { newValue in
+            store.dispatch(.setSubscriptionSheetShowing(newValue))
+        }
+
         let isShowingSettingsScreen: Binding<Bool> = .init {
             store.state.viewState.isShowingSettingsScreen
         } set: { newValue in
@@ -62,6 +68,11 @@ struct ContentView: View {
         }
         .sheet(isPresented: isShowingStoryListView) {
             StoryListView()
+        }
+        .sheet(isPresented: isShowingSubscriptionView) {
+            SubscriptionView()
+                .presentationDragIndicator(.hidden)
+                .presentationDetents([.fraction(0.5)])
         }
     }
 

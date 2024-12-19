@@ -8,6 +8,7 @@
 import Foundation
 import ReduxKit
 import AVKit
+import StoreKit
 
 let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, action in
     var newState = state
@@ -41,7 +42,9 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.viewState.readerDisplayType = .defining
     case .onDefinedCharacter(let definition):
         newState.definitionState.currentDefinition = definition
-        newState.definitionState.definitions.removeAll(where: { $0.character == definition.character && $0.sentence == definition.sentence })
+        newState.definitionState.definitions.removeAll(where: {
+            $0.character == definition.character && $0.sentence == definition.sentence
+        })
         newState.definitionState.definitions.append(definition)
         newState.viewState.readerDisplayType = .normal
     case .synthesizeAudio:
@@ -152,6 +155,24 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
         newState.definitionState.definitions = definitions
     case .onDeletedStory:
         newState.viewState.storyListViewId = UUID()
+    case .onFetchedSubscriptions(let subscriptions):
+        newState.subscriptionState.products = subscriptions
+    case .updatePurchasedProducts(let entitlements):
+        for result in entitlements {
+            DispatchQueue.main.async {
+                guard case .verified(let transaction) = result else {
+                    return
+                }
+
+                if transaction.revocationDate == nil {
+                    newState.subscriptionState.purchasedProductIDs.insert(transaction.productID)
+                } else {
+                    newState.subscriptionState.purchasedProductIDs.remove(transaction.productID)
+                }
+            }
+        }
+    case .setSubscriptionSheetShowing(let isShowing):
+        newState.viewState.isShowingSubscriptionSheet = isShowing
     case .saveStory,
             .failedToSaveStory,
             .failedToDefineCharacter,
@@ -172,7 +193,17 @@ let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, 
             .failedToSaveDefinitions,
             .saveStoryAndSettings,
             .onSavedStoryAndSettings,
-            .failedToSaveStoryAndSettings:
+            .failedToSaveStoryAndSettings,
+            .fetchSubscriptions,
+            .failedToFetchSubscriptions,
+            .purchaseSubscription,
+            .onPurchasedSubscription,
+            .failedToPurchaseSubscription,
+            .getCurrentEntitlements,
+            .restoreSubscriptions,
+            .onRestoredSubscriptions,
+            .failedToRestoreSubscriptions,
+            .observeTransactionUpdates:
         break
     }
 

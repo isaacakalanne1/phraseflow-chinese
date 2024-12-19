@@ -6,10 +6,15 @@
 //
 
 import Foundation
+import StoreKit
 
 protocol FastChineseEnvironmentProtocol {
-    func synthesizeSpeech(for chapter: Chapter, voice: Voice, rate: String, language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
-                                                                                             audioData: Data)
+    func synthesizeSpeech(for chapter: Chapter,
+                          voice: Voice,
+                          rate: String,
+                          language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
+                                                                audioData: Data)
+    func getProducts() async throws -> [Product]
     func generateStory(story: Story) async throws -> Story
     func loadStories() throws -> [Story]
     func loadDefinitions() throws -> [Definition]
@@ -20,6 +25,7 @@ protocol FastChineseEnvironmentProtocol {
     func unsaveStory(_ story: Story) throws
 
     func fetchDefinition(of character: String, withinContextOf sentence: Sentence, story: Story, settings: SettingsState) async throws -> Definition
+    func purchase(_ product: Product) async throws
 }
 
 struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
@@ -37,6 +43,10 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
     func synthesizeSpeech(for chapter: Chapter, voice: Voice, rate: String, language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
                                                                                              audioData: Data) {
         try await repository.synthesizeSpeech(chapter, voice: voice, rate: rate, language: language)
+    }
+
+    func getProducts() async throws -> [Product] {
+        try await repository.getProducts()
     }
 
     func generateStory(story: Story) async throws -> Story {
@@ -79,5 +89,9 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
         let definition = Definition(character: string, sentence: sentence, definition: definitionString)
         try dataStore.saveDefinition(definition)
         return definition
+    }
+
+    func purchase(_ product: Product) async throws {
+        try await repository.purchase(product)
     }
 }

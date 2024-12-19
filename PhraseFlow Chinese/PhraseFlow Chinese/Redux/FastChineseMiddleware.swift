@@ -8,6 +8,7 @@
 import Foundation
 import ReduxKit
 import AVKit
+import StoreKit
 
 typealias FastChineseMiddlewareType = Middleware<FastChineseState, FastChineseAction, FastChineseEnvironmentProtocol>
 let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environment in
@@ -186,6 +187,41 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         }
     case .updateSentenceIndex:
         return .refreshTranslationView
+    case .fetchSubscriptions:
+        do {
+            let subscriptions = try await environment.getProducts()
+            return .onFetchedSubscriptions(subscriptions)
+        } catch {
+            return .failedToFetchSubscriptions
+        }
+    case .purchaseSubscription(let product):
+        do {
+            try await environment.purchase(product)
+        } catch {
+            return .failedToPurchaseSubscription
+        }
+        return .onPurchasedSubscription
+    case .onPurchasedSubscription:
+        return .getCurrentEntitlements
+    case .restoreSubscriptions:
+        do {
+            try await AppStore.sync()
+        } catch {
+            return .failedToRestoreSubscriptions
+        }
+        return .onRestoredSubscriptions
+    case .getCurrentEntitlements:
+        var entitlements: [VerificationResult<Transaction>] = []
+        for await result in Transaction.currentEntitlements {
+            entitlements.append(result)
+        }
+        return .updatePurchasedProducts(entitlements)
+    case .observeTransactionUpdates:
+        var entitlements: [VerificationResult<Transaction>] = []
+        for await result in Transaction.updates {
+            entitlements.append(result)
+        }
+        return .updatePurchasedProducts(entitlements)
     case .failedToLoadStories,
             .failedToSaveStory,
             .failedToDefineCharacter,
@@ -206,7 +242,14 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             .failedToLoadDefinitions,
             .failedToSaveDefinitions,
             .failedToSaveStoryAndSettings,
-            .refreshStoryListView:
+            .refreshStoryListView,
+            .onFetchedSubscriptions,
+            .failedToFetchSubscriptions,
+            .updatePurchasedProducts,
+            .failedToPurchaseSubscription,
+            .onRestoredSubscriptions,
+            .failedToRestoreSubscriptions,
+            .setSubscriptionSheetShowing:
         return nil
     }
 }

@@ -15,6 +15,7 @@ struct ViewState {
 
     var isShowingSettingsScreen = false
     var isShowingStoryListView = false
+    var isShowingSubscriptionSheet = false
 
     var readerDisplayType: ReaderDisplayType
     var playButtonDisplayType: PlayButtonDisplayType
@@ -25,6 +26,7 @@ struct ViewState {
          storyListViewId: UUID = UUID(),
          isShowingSettingsScreen: Bool = false,
          isShowingStoryListView: Bool = false,
+         isShowingSubscriptionSheet: Bool = false,
          readerDisplayType: ReaderDisplayType = .fetching,
          playButtonDisplayType: PlayButtonDisplayType = .normal) {
         self.definitionViewId = definitionViewId
@@ -33,6 +35,7 @@ struct ViewState {
         self.storyListViewId = storyListViewId
         self.isShowingSettingsScreen = isShowingSettingsScreen
         self.isShowingStoryListView = isShowingStoryListView
+        self.isShowingSubscriptionSheet = isShowingSubscriptionSheet
         self.readerDisplayType = readerDisplayType
         self.playButtonDisplayType = playButtonDisplayType
     }

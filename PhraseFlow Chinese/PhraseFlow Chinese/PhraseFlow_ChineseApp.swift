@@ -34,6 +34,7 @@ struct PhraseFlow_ChineseApp: App {
                     store.dispatch(.loadStories)
                     store.dispatch(.loadDefinitions)
                     store.dispatch(.loadAppSettings)
+                    store.dispatch(.fetchSubscriptions)
                 }
         }
     }
