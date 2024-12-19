@@ -50,6 +50,8 @@
 		BBAE07D12D0C793000DA95CD /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07D02D0C793000DA95CD /* SubscriptionView.swift */; };
 		BBAE07D32D0C796500DA95CD /* SubscriptionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07D22D0C796500DA95CD /* SubscriptionState.swift */; };
 		BBAE07D52D0CA79A00DA95CD /* SubscriptionOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07D42D0CA79A00DA95CD /* SubscriptionOption.swift */; };
+		BBAE07D72D14BD2400DA95CD /* ChapterHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07D62D14BD2400DA95CD /* ChapterHeaderView.swift */; };
+		BBAE07D92D14BD6D00DA95CD /* AIStatementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07D82D14BD6D00DA95CD /* AIStatementView.swift */; };
 		BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -140,6 +142,8 @@
 		BBAE07D02D0C793000DA95CD /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
 		BBAE07D22D0C796500DA95CD /* SubscriptionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionState.swift; sourceTree = "<group>"; };
 		BBAE07D42D0CA79A00DA95CD /* SubscriptionOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionOption.swift; sourceTree = "<group>"; };
+		BBAE07D62D14BD2400DA95CD /* ChapterHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterHeaderView.swift; sourceTree = "<group>"; };
+		BBAE07D82D14BD6D00DA95CD /* AIStatementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIStatementView.swift; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhraseFlow Chinese.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -387,8 +391,10 @@
 				BBE636C42CCC0CDD00873E68 /* DefinitionView.swift */,
 				BBE636C62CCC0E1200873E68 /* EnglishSentenceView.swift */,
 				BBE636C82CCC0E8400873E68 /* ChapterView.swift */,
+				BBAE07D62D14BD2400DA95CD /* ChapterHeaderView.swift */,
 				BB6572D52CD4E08F00AC5981 /* ActionButton.swift */,
 				BBE636CC2CCC0F8500873E68 /* ReaderView.swift */,
+				BBAE07D82D14BD6D00DA95CD /* AIStatementView.swift */,
 				BBE636C02CCC0B5000873E68 /* ActionButtonsView.swift */,
 				BBE636C22CCC0BE900873E68 /* CharacterView.swift */,
 				BBE636D02CCD77BB00873E68 /* FlowLayout.swift */,
@@ -600,6 +606,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBE636C52CCC0CDD00873E68 /* DefinitionView.swift in Sources */,
+				BBAE07D92D14BD6D00DA95CD /* AIStatementView.swift in Sources */,
 				BB6572D42CD3932300AC5981 /* View+GreyBackground.swift in Sources */,
 				BBE636D12CCD77BC00873E68 /* FlowLayout.swift in Sources */,
 				BBE16F282CC420FD00A7EF1F /* ReaderDisplayType.swift in Sources */,
@@ -652,6 +659,7 @@
 				BB6572F72CDB991B00AC5981 /* SettingsState.swift in Sources */,
 				BB4EDB052C90C89C00699E7D /* FastChineseState.swift in Sources */,
 				BBAE07CD2D0C765B00DA95CD /* APIRequestType.swift in Sources */,
+				BBAE07D72D14BD2400DA95CD /* ChapterHeaderView.swift in Sources */,
 				BB0854852CB42C1400F1661B /* Story.swift in Sources */,
 				BBE636C92CCC0E8400873E68 /* ChapterView.swift in Sources */,
 			);
