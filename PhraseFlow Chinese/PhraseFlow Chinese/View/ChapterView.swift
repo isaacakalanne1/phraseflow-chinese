@@ -14,19 +14,14 @@ struct ChapterView: View {
     var body: some View {
 
         if let story = store.state.storyState.currentStory {
-            let chapterIndex = story.currentChapterIndex
-            let chapter = story.chapters[safe: chapterIndex]
-
             ScrollView(.vertical) {
-
-                ForEach(0...(chapter?.timestampData.last?.sentenceIndex ?? 0), id: \.self) { index in
+                ForEach(0...(chapter.timestampData.last?.sentenceIndex ?? 0), id: \.self) { index in
                     FlowLayout(spacing: 0, language: story.language) {
-                        let sentenceWords = chapter?.timestampData.filter({ $0.sentenceIndex == index }) ?? []
+                        let sentenceWords = chapter.timestampData.filter({ $0.sentenceIndex == index })
                         ForEach(Array(sentenceWords.enumerated()), id: \.offset) { index, word in
                             CharacterView(isHighlighted: word == store.state.currentSpokenWord, word: word)
                         }
                     }
-
                 }
                 .frame(maxWidth: .infinity, alignment: story.language.alignment)
 
