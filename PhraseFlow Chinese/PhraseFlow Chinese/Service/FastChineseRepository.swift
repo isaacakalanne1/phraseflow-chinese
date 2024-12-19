@@ -25,128 +25,120 @@ enum FastChineseRepositoryError: Error {
 
 class FastChineseRepository: FastChineseRepositoryProtocol {
 
-    private let speechCharacters = [
-        "“",
-        "”",
-        "\"",
-        "''"
-    ]
+    private let speechCharacters = ["“", "”", "«", "»", "»", "「", "」", "\"", "''"]
+    let subscriptionKey = "Fp11D0CAMjjAcf03VNqe2IsKfqycenIKcrAm4uGV8RSiaqMX15NWJQQJ99AKACYeBjFXJ3w3AAAYACOG6Orb"
+    let region = "eastus"
 
     init() { }
 
     func synthesizeSpeech(_ chapter: Chapter, voice: Voice, rate: String, language: Language?) async throws -> (wordTimestamps: [WordTimeStampData], audioData: Data) {
-        let speechKey = "Fp11D0CAMjjAcf03VNqe2IsKfqycenIKcrAm4uGV8RSiaqMX15NWJQQJ99AKACYeBjFXJ3w3AAAYACOG6Orb"
-        let serviceRegion = "eastus"
 
+        let synthesizer: SPXSpeechSynthesizer
         do {
-            let speechConfig = try SPXSpeechConfiguration(subscription: speechKey, region: serviceRegion)
-            speechConfig.requestWordLevelTimestamps()
-            speechConfig.outputFormat = .detailed
-            speechConfig.setSpeechSynthesisOutputFormat(.riff16Khz16BitMonoPcm)
-            speechConfig.speechSynthesisVoiceName = voice.speechSynthesisVoiceName
+            let speechConfig = try createSpeechConfig(voice: voice)
+            synthesizer = try SPXSpeechSynthesizer(speechConfiguration: speechConfig, audioConfiguration: nil)
+        } catch {
+            throw error
+        }
 
-            let synthesizer = try SPXSpeechSynthesizer(speechConfiguration: speechConfig, audioConfiguration: nil)
+        var wordTimestamps: [WordTimeStampData] = []
+        let wordTimestampsQueue = DispatchQueue(label: "WordTimestampsQueue")
 
-            var wordTimestamps: [WordTimeStampData] = []
-            let wordTimestampsQueue = DispatchQueue(label: "WordTimestampsQueue")
+        var index = -1
+        var sentenceIndex = -1
+        let sentenceMarker = "✓"
+        synthesizer.addSynthesisWordBoundaryEventHandler { (synthesizer, event) in
+            var word = self.removeSynthesisArtifacts(from: event.text, language: language)
 
-            var index = -1
-            var sentenceIndex = -1
-            let sentenceMarker = "✓"
-            synthesizer.addSynthesisWordBoundaryEventHandler { (synthesizer, event) in
+            wordTimestampsQueue.sync {
+
+                if word.contains(sentenceMarker) {
+                    sentenceIndex += 1
+                    word = word.replacingOccurrences(of: sentenceMarker, with: "")
+                }
+
                 let audioTimeInSeconds = Double(event.audioOffset) / 10_000_000.0
-
-                var word = event.text
-                    .replacingOccurrences(of: "\n", with: "") // Most TTS often add \n
-                    .replacingOccurrences(of: "                ", with: "") // Korean TTS often adds these spaces, which desyncs words
-
-                if language == .mandarinChinese || language == .japanese {
-                    word = word.replacingOccurrences(of: " ", with: "")
-                } else {
-                    word = word + " "
+                if var newTimestamp = wordTimestamps[safe: index] {
+                    newTimestamp.duration = audioTimeInSeconds - newTimestamp.time - 0.0001
+                    wordTimestamps[index] = newTimestamp
                 }
-                
-                wordTimestampsQueue.sync {
+                wordTimestamps.append(.init(word: word,
+                                            time: audioTimeInSeconds,
+                                            duration: event.duration,
+                                            indexInList: index,
+                                            sentenceIndex: sentenceIndex))
 
-                    if word.contains(sentenceMarker) {
-                        sentenceIndex += 1
-                        word = word.replacingOccurrences(of: sentenceMarker, with: "")
-                    }
-
-                    if var newTimestamp = wordTimestamps[safe: index] {
-                        newTimestamp.duration = audioTimeInSeconds - newTimestamp.time - 0.0001
-                        let listOfPrefixes = [
-                            "“",
-                            "”",
-                            "«",
-                            "»",
-                            "»",
-                            "「",
-                            "」",
-                            "\""
-                        ]
-
-                        for prefix in listOfPrefixes {
-                            word = word.replacingOccurrences(of: "\(prefix) ", with: "")
-                            word = word.replacingOccurrences(of: prefix, with: "")
-                        }
-                        wordTimestamps[index] = newTimestamp
-                    }
-                    wordTimestamps.append(.init(word: word,
-                                                time: audioTimeInSeconds,
-                                                duration: event.duration,
-                                                indexInList: index,
-                                                sentenceIndex: sentenceIndex))
-
-                    index += 1
-                }
+                index += 1
             }
+        }
 
-            // Generate the SSML text with the specified rate
-            var ssml = """
-            <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="zh-CN">
-            <voice name="\(voice.speechSynthesisVoiceName)">
-            """
-            // TODO: Update to be able to speak male characters as male voice, storyteller as female, and female characters as same female voice
-            for (_, sentence) in chapter.sentences.enumerated() {
-                let splitSentence = splitSpeechAndNonSpeech(from: sentence.translation)
-                for (index, sentenceSection) in splitSentence.enumerated() {
-                    // TODO: Update styleDegree to also be generated with each sentence
-                    let isSpeech = speechCharacters.firstIndex(where: { sentenceSection.contains($0)} ) != nil
-                    let speechStyle = isSpeech ? SpeechStyle.gentle : voice.defaultSpeechStyle
+        // Generate the SSML text with the specified rate
+        let baseUrl = "http://www.w3.org/2001"
+        var ssml = """
+        <speak version="1.0" xmlns="\(baseUrl)/10/synthesis" xmlns:mstts="\(baseUrl)/mstts" xml:lang="zh-CN">
+        <voice name="\(voice.speechSynthesisVoiceName)">
+        """
+        for sentence in chapter.sentences {
+            let splitSentence = splitSpeechAndNonSpeech(from: sentence.translation)
+            for (index, sentenceSection) in splitSentence.enumerated() {
+                let isSpeech = speechCharacters.firstIndex(where: { sentenceSection.contains($0)} ) != nil
+                let speechStyle = isSpeech ? SpeechStyle.gentle : voice.defaultSpeechStyle
 
-                    let sentenceSsml = """
+                let sentenceSsml = """
                 <mstts:express-as style="\(speechStyle.ssmlName)">
                     <prosody rate="\(rate)">
                         \(index == 0 ? sentenceMarker : "")\(sentenceSection)
                     </prosody>
                 </mstts:express-as>
                 """
-                    ssml.append(sentenceSsml)
-                }
+                ssml.append(sentenceSsml)
             }
-            let ssmlSuffix = """
-                        </voice>
-                        </speak>
-            """
-            ssml.append(ssmlSuffix)
+        }
+        ssml.append("</voice></speak>")
 
+        do {
             let result = try synthesizer.speakSsml(ssml)
 
-            if result.reason == SPXResultReason.canceled {
+            guard result.reason != SPXResultReason.canceled,
+                  let audioData = result.audioData else {
                 let cancellationDetails = try SPXSpeechSynthesisCancellationDetails(fromCanceledSynthesisResult: result)
                 let errorDetails = cancellationDetails.errorDetails ?? "Unknown error"
                 throw NSError(domain: "SpeechSynthesis", code: -1, userInfo: [NSLocalizedDescriptionKey: errorDetails])
             }
 
-            guard let audioData = result.audioData else {
-                throw NSError(domain: "SpeechSynthesis", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to get audioData"])
-            }
             return (wordTimestamps, audioData)
-
         } catch {
             throw error
         }
+    }
+
+    private func createSpeechConfig(voice: Voice) throws -> SPXSpeechConfiguration {
+        let speechConfig = try SPXSpeechConfiguration(subscription: subscriptionKey, region: region)
+        speechConfig.requestWordLevelTimestamps()
+        speechConfig.outputFormat = .detailed
+        speechConfig.setSpeechSynthesisOutputFormat(.riff16Khz16BitMonoPcm)
+        speechConfig.speechSynthesisVoiceName = voice.speechSynthesisVoiceName
+        return speechConfig
+    }
+
+    private func removeSynthesisArtifacts(from text: String, language: Language?) -> String {
+        var word = text
+
+        word = word
+            .replacingOccurrences(of: "\n", with: "") // Most TTS often add \n
+            .replacingOccurrences(of: "                ", with: "") // Korean TTS often adds these spaces, which desyncs words
+
+        for speechMark in speechCharacters {
+            word = word.replacingOccurrences(of: speechMark, with: "")
+        }
+
+        if language == .mandarinChinese || language == .japanese {
+//            word = word.replacingOccurrences(of: " ", with: "") // This code may not be necessary
+        } else {
+            word = word + " "
+        }
+
+        return word
     }
 
     private func splitSpeechAndNonSpeech(from text: String) -> [String] {
