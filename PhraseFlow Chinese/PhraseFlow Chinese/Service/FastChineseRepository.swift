@@ -12,7 +12,7 @@ import StoreKit
 protocol FastChineseRepositoryProtocol {
     func synthesizeSpeech(_ chapter: Chapter,
                           voice: Voice,
-                          rate: String,
+                          speechSpeed: SpeechSpeed,
                           language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
                                                                 audioData: Data)
     func getProducts() async throws -> [Product]
@@ -28,10 +28,11 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
     private let speechCharacters = ["“", "”", "«", "»", "»", "「", "」", "\"", "''"]
     let subscriptionKey = "Fp11D0CAMjjAcf03VNqe2IsKfqycenIKcrAm4uGV8RSiaqMX15NWJQQJ99AKACYeBjFXJ3w3AAAYACOG6Orb"
     let region = "eastus"
+    let sentenceMarker = "✓"
 
     init() { }
 
-    func synthesizeSpeech(_ chapter: Chapter, voice: Voice, rate: String, language: Language?) async throws -> (wordTimestamps: [WordTimeStampData], audioData: Data) {
+    func synthesizeSpeech(_ chapter: Chapter, voice: Voice, speechSpeed: SpeechSpeed, language: Language?) async throws -> (wordTimestamps: [WordTimeStampData], audioData: Data) {
 
         let synthesizer: SPXSpeechSynthesizer
         do {
@@ -42,59 +43,34 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
         }
 
         var wordTimestamps: [WordTimeStampData] = []
-        let wordTimestampsQueue = DispatchQueue(label: "WordTimestampsQueue")
-
         var index = -1
         var sentenceIndex = -1
-        let sentenceMarker = "✓"
+
         synthesizer.addSynthesisWordBoundaryEventHandler { (synthesizer, event) in
             var word = self.removeSynthesisArtifacts(from: event.text, language: language)
 
-            wordTimestampsQueue.sync {
-
-                if word.contains(sentenceMarker) {
-                    sentenceIndex += 1
-                    word = word.replacingOccurrences(of: sentenceMarker, with: "")
-                }
-
-                let audioTimeInSeconds = Double(event.audioOffset) / 10_000_000.0
-                if var newTimestamp = wordTimestamps[safe: index] {
-                    newTimestamp.duration = audioTimeInSeconds - newTimestamp.time - 0.0001
-                    wordTimestamps[index] = newTimestamp
-                }
-                wordTimestamps.append(.init(word: word,
-                                            time: audioTimeInSeconds,
-                                            duration: event.duration,
-                                            indexInList: index,
-                                            sentenceIndex: sentenceIndex))
-
-                index += 1
+            if word.contains(self.sentenceMarker) {
+                sentenceIndex += 1
+                word = word.replacingOccurrences(of: self.sentenceMarker, with: "")
             }
+
+            wordTimestamps = self.increaseAudioDuration(in: wordTimestamps, upTo: Double(event.audioOffset))
+            let audioTimeInSeconds = Double(event.audioOffset) / 10_000_000.0
+            if var newTimestamp = wordTimestamps[safe: index] {
+                newTimestamp.duration = audioTimeInSeconds - newTimestamp.time - 0.0001
+                wordTimestamps[index] = newTimestamp
+            }
+            wordTimestamps.append(.init(word: word,
+                                        time: audioTimeInSeconds,
+                                        duration: event.duration,
+                                        indexInList: index,
+                                        sentenceIndex: sentenceIndex))
+
+            index += 1
         }
 
         // Generate the SSML text with the specified rate
-        let baseUrl = "http://www.w3.org/2001"
-        var ssml = """
-        <speak version="1.0" xmlns="\(baseUrl)/10/synthesis" xmlns:mstts="\(baseUrl)/mstts" xml:lang="zh-CN">
-        <voice name="\(voice.speechSynthesisVoiceName)">
-        """
-        for sentence in chapter.sentences {
-            let splitSentence = splitSpeechAndNonSpeech(from: sentence.translation)
-            for (index, sentenceSection) in splitSentence.enumerated() {
-                let isSpeech = speechCharacters.firstIndex(where: { sentenceSection.contains($0)} ) != nil
-                let speechStyle = isSpeech ? SpeechStyle.gentle : voice.defaultSpeechStyle
-
-                let sentenceSsml = """
-                <mstts:express-as style="\(speechStyle.ssmlName)">
-                    <prosody rate="\(rate)">
-                        \(index == 0 ? sentenceMarker : "")\(sentenceSection)
-                    </prosody>
-                </mstts:express-as>
-                """
-                ssml.append(sentenceSsml)
-            }
-        }
-        ssml.append("</voice></speak>")
+        let ssml = createSpeechSsml(chapter: chapter, voice: voice, speechSpeed: speechSpeed)
 
         do {
             let result = try synthesizer.speakSsml(ssml)
@@ -110,6 +86,42 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
         } catch {
             throw error
         }
+    }
+
+    private func increaseAudioDuration(in wordTimestamps: [WordTimeStampData], upTo time: Double) -> [WordTimeStampData] {
+        let audioTimeInSeconds = time / 10_000_000.0
+        var timestamps = wordTimestamps
+        if var newTimestamp = timestamps[safe: timestamps.count - 2] {
+            newTimestamp.duration = audioTimeInSeconds - newTimestamp.time - 0.0001
+            timestamps[timestamps.count - 2] = newTimestamp
+        }
+        return timestamps
+    }
+
+    private func createSpeechSsml(chapter: Chapter, voice: Voice, speechSpeed: SpeechSpeed) -> String {
+        let baseUrl = "http://www.w3.org/2001"
+        var ssml = """
+        <speak version="1.0" xmlns="\(baseUrl)/10/synthesis" xmlns:mstts="\(baseUrl)/mstts" xml:lang="zh-CN">
+        <voice name="\(voice.speechSynthesisVoiceName)">
+        """
+        for sentence in chapter.sentences {
+            let splitSentence = splitSpeechAndNonSpeech(from: sentence.translation)
+            for (index, sentenceSection) in splitSentence.enumerated() {
+                let isSpeech = speechCharacters.firstIndex(where: { sentenceSection.contains($0)} ) != nil
+                let speechStyle = isSpeech ? SpeechStyle.gentle : voice.defaultSpeechStyle
+
+                let sentenceSsml = """
+                <mstts:express-as style="\(speechStyle.ssmlName)">
+                    <prosody rate="\(speechSpeed.rate)">
+                        \(index == 0 ? sentenceMarker : "")\(sentenceSection)
+                    </prosody>
+                </mstts:express-as>
+                """
+                ssml.append(sentenceSsml)
+            }
+        }
+        ssml.append("</voice></speak>")
+        return ssml
     }
 
     private func createSpeechConfig(voice: Voice) throws -> SPXSpeechConfiguration {

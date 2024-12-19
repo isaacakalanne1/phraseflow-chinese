@@ -11,7 +11,7 @@ import StoreKit
 protocol FastChineseEnvironmentProtocol {
     func synthesizeSpeech(for chapter: Chapter,
                           voice: Voice,
-                          rate: String,
+                          speechSpeed: SpeechSpeed,
                           language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
                                                                 audioData: Data)
     func getProducts() async throws -> [Product]
@@ -40,9 +40,9 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
         self.repository = FastChineseRepository()
     }
 
-    func synthesizeSpeech(for chapter: Chapter, voice: Voice, rate: String, language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
+    func synthesizeSpeech(for chapter: Chapter, voice: Voice, speechSpeed: SpeechSpeed, language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
                                                                                              audioData: Data) {
-        try await repository.synthesizeSpeech(chapter, voice: voice, rate: rate, language: language)
+        try await repository.synthesizeSpeech(chapter, voice: voice, speechSpeed: speechSpeed, language: language)
     }
 
     func getProducts() async throws -> [Product] {
