@@ -5,7 +5,7 @@
 //  Created by iakalann on 21/11/2024.
 //
 
-import Foundation
+import SwiftUI
 
 enum Language: String, Codable, CaseIterable {
     case english,
@@ -186,5 +186,14 @@ enum Language: String, Codable, CaseIterable {
             flags.append(flag)
         }
         return flags.reduce("") { $0 + $1 }
+    }
+
+    var alignment: Alignment {
+        switch self {
+        case .arabicGulf:
+                .trailing
+        default:
+                .leading
+        }
     }
 }

@@ -47,6 +47,7 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
         var sentenceIndex = -1
 
         synthesizer.addSynthesisWordBoundaryEventHandler { (synthesizer, event) in
+            let audioTimeInSeconds = Double(event.audioOffset) / 10_000_000.0
             var word = self.removeSynthesisArtifacts(from: event.text, language: language)
 
             if word.contains(self.sentenceMarker) {
@@ -55,21 +56,16 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             }
 
             wordTimestamps = self.increaseAudioDuration(in: wordTimestamps, upTo: Double(event.audioOffset))
-            let audioTimeInSeconds = Double(event.audioOffset) / 10_000_000.0
-            if var newTimestamp = wordTimestamps[safe: index] {
-                newTimestamp.duration = audioTimeInSeconds - newTimestamp.time - 0.0001
-                wordTimestamps[index] = newTimestamp
-            }
-            wordTimestamps.append(.init(word: word,
-                                        time: audioTimeInSeconds,
-                                        duration: event.duration,
-                                        indexInList: index,
-                                        sentenceIndex: sentenceIndex))
+
+            let newTimestamp = WordTimeStampData(word: word,
+                                                 time: audioTimeInSeconds,
+                                                 duration: event.duration,
+                                                 sentenceIndex: sentenceIndex)
+            wordTimestamps.append(newTimestamp)
 
             index += 1
         }
 
-        // Generate the SSML text with the specified rate
         let ssml = createSpeechSsml(chapter: chapter, voice: voice, speechSpeed: speechSpeed)
 
         do {
@@ -105,15 +101,13 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
         <voice name="\(voice.speechSynthesisVoiceName)">
         """
         for sentence in chapter.sentences {
-            let splitSentence = splitSpeechAndNonSpeech(from: sentence.translation)
-            for (index, sentenceSection) in splitSentence.enumerated() {
-                let isSpeech = speechCharacters.firstIndex(where: { sentenceSection.contains($0)} ) != nil
-                let speechStyle = isSpeech ? SpeechStyle.gentle : voice.defaultSpeechStyle
+            for (index, section) in splitSpeechAndNonSpeech(from: sentence.translation).enumerated() {
+                let isSpeech = speechCharacters.contains(where: { section.contains($0)} )
 
                 let sentenceSsml = """
-                <mstts:express-as style="\(speechStyle.ssmlName)">
+                <mstts:express-as style="\(voice.speechStyle(isSpeech: isSpeech).ssmlName)">
                     <prosody rate="\(speechSpeed.rate)">
-                        \(index == 0 ? sentenceMarker : "")\(sentenceSection)
+                        \(index == 0 ? sentenceMarker : "")\(section)
                     </prosody>
                 </mstts:express-as>
                 """
@@ -138,15 +132,18 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
 
         word = word
             .replacingOccurrences(of: "\n", with: "") // Most TTS often add \n
-            .replacingOccurrences(of: "                ", with: "") // Korean TTS often adds these spaces, which desyncs words
+            .replacingOccurrences(of: "                ", with: "") // Korean TTS often adds these spaces
 
         for speechMark in speechCharacters {
             word = word.replacingOccurrences(of: speechMark, with: "")
         }
 
-        if language == .mandarinChinese || language == .japanese {
+        switch language {
+        case .mandarinChinese,
+                .japanese:
 //            word = word.replacingOccurrences(of: " ", with: "") // This code may not be necessary
-        } else {
+            break
+        default:
             word = word + " "
         }
 

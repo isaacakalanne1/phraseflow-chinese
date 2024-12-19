@@ -140,7 +140,11 @@ enum Voice: String, Codable, CaseIterable, Equatable {
         }
     }
 
-    var defaultSpeechStyle: SpeechStyle {
+    func speechStyle(isSpeech: Bool) -> SpeechStyle {
+        isSpeech ? .gentle : defaultSpeechStyle
+    }
+
+    private var defaultSpeechStyle: SpeechStyle {
         switch self {
         case .xiaoxiao:
                 .lyrical

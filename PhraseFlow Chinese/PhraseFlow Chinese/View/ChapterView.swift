@@ -13,37 +13,36 @@ struct ChapterView: View {
 
     var body: some View {
 
-        let chapterIndex = store.state.storyState.currentStory?.currentChapterIndex ?? 0
-        let chapter = store.state.storyState.currentStory?.chapters[safe: chapterIndex]
+        if let story = store.state.storyState.currentStory {
+            let chapterIndex = story.currentChapterIndex
+            let chapter = story.chapters[safe: chapterIndex]
 
-        ScrollView(.vertical) {
+            ScrollView(.vertical) {
 
-            ForEach(0...(chapter?.timestampData.last?.sentenceIndex ?? 1), id: \.self) { index in
-                FlowLayout(spacing: 0,
-                           language: store.state.storyState.currentStory?.language) {
-                    let sentenceWords = chapter?.timestampData.filter({ $0.sentenceIndex == index }) ?? []
-                    ForEach(Array(sentenceWords.enumerated()), id: \.offset) { index, word in
-                        CharacterView(isHighlighted: word == store.state.currentSpokenWord, word: word)
+                ForEach(0...(chapter?.timestampData.last?.sentenceIndex ?? 0), id: \.self) { index in
+                    FlowLayout(spacing: 0, language: story.language) {
+                        let sentenceWords = chapter?.timestampData.filter({ $0.sentenceIndex == index }) ?? []
+                        ForEach(Array(sentenceWords.enumerated()), id: \.offset) { index, word in
+                            CharacterView(isHighlighted: word == store.state.currentSpokenWord, word: word)
+                        }
                     }
+
                 }
+                .frame(maxWidth: .infinity, alignment: story.language.alignment)
 
-            }
-
-                       .frame(maxWidth: .infinity, alignment: store.state.storyState.currentStory?.language == .arabicGulf ? .trailing : .leading)
-            Button(LocalizedString.nextChapter) {
-                if let story = store.state.storyState.currentStory {
+                Button(LocalizedString.nextChapter) {
                     if story.chapters.count > story.currentChapterIndex + 1 {
                         store.dispatch(.goToNextChapter)
-                    } else if let story = store.state.storyState.currentStory {
+                    } else {
                         store.dispatch(.continueStory(story: story))
                     }
                 }
+                .padding()
+                .background(Color.accentColor)
+                .foregroundColor(.white)
+                .cornerRadius(10)
             }
-            .padding()
-            .background(Color.accentColor)
-            .foregroundColor(.white)
-            .cornerRadius(10)
+            .id(store.state.viewState.chapterViewId)
         }
-        .id(store.state.viewState.chapterViewId)
     }
 }
