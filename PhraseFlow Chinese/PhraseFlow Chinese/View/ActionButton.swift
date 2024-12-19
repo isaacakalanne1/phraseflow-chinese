@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ActionButton: View {
     let title: String
-    let imageName: String
+    let systemImage: SystemImage
     let action: () -> Void
 
     var body: some View {
@@ -17,10 +17,7 @@ struct ActionButton: View {
             action()
         }) {
             VStack {
-                Image(systemName: imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 35, height: 35)
+                SystemImageView(systemImage, size: 35)
                 Text(title)
                     .font(.system(size: 10, weight: .medium))
                     .frame(height: 25)

@@ -25,17 +25,13 @@ struct DefinitionView: View {
                         Button {
                             store.dispatch(.playWord(word))
                         } label: {
-                            Image(systemName: "speaker.circle.fill")
-                                .resizable()
+                            SystemImageView(.speaker)
                         }
-                        .frame(width: 40, height: 40)
                         Button {
                             store.dispatch(.defineCharacter(word, shouldForce: true))
                         } label: {
-                            Image(systemName: "repeat.circle.fill")
-                                .resizable()
+                            SystemImageView(._repeat)
                         }
-                        .frame(width: 40, height: 40)
                     }
                 }
 

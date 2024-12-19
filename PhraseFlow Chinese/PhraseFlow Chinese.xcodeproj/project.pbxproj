@@ -52,6 +52,8 @@
 		BBAE07D52D0CA79A00DA95CD /* SubscriptionOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07D42D0CA79A00DA95CD /* SubscriptionOption.swift */; };
 		BBAE07D72D14BD2400DA95CD /* ChapterHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07D62D14BD2400DA95CD /* ChapterHeaderView.swift */; };
 		BBAE07D92D14BD6D00DA95CD /* AIStatementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07D82D14BD6D00DA95CD /* AIStatementView.swift */; };
+		BBAE07DB2D14BE0B00DA95CD /* SystemImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07DA2D14BE0B00DA95CD /* SystemImageView.swift */; };
+		BBAE07DD2D14BE3000DA95CD /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07DC2D14BE3000DA95CD /* SystemImage.swift */; };
 		BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -144,6 +146,8 @@
 		BBAE07D42D0CA79A00DA95CD /* SubscriptionOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionOption.swift; sourceTree = "<group>"; };
 		BBAE07D62D14BD2400DA95CD /* ChapterHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterHeaderView.swift; sourceTree = "<group>"; };
 		BBAE07D82D14BD6D00DA95CD /* AIStatementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIStatementView.swift; sourceTree = "<group>"; };
+		BBAE07DA2D14BE0B00DA95CD /* SystemImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImageView.swift; sourceTree = "<group>"; };
+		BBAE07DC2D14BE3000DA95CD /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhraseFlow Chinese.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -379,6 +383,7 @@
 				BB84E09F2CEFA96200520F5E /* Language.swift */,
 				BBE16F272CC420FD00A7EF1F /* ReaderDisplayType.swift */,
 				BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */,
+				BBAE07DC2D14BE3000DA95CD /* SystemImage.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -398,6 +403,7 @@
 				BBE636C02CCC0B5000873E68 /* ActionButtonsView.swift */,
 				BBE636C22CCC0BE900873E68 /* CharacterView.swift */,
 				BBE636D02CCD77BB00873E68 /* FlowLayout.swift */,
+				BBAE07DA2D14BE0B00DA95CD /* SystemImageView.swift */,
 				BB4EDB232C91902100699E7D /* SettingsView.swift */,
 				BBE16F212CC2769C00A7EF1F /* StoryListView.swift */,
 				BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */,
@@ -613,8 +619,10 @@
 				BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */,
 				BB84E0AD2CF4952700520F5E /* strings-enum.stencil in Sources */,
 				BB6572CE2CD12A9200AC5981 /* ChapterResponse.swift in Sources */,
+				BBAE07DD2D14BE3000DA95CD /* SystemImage.swift in Sources */,
 				BBE636C12CCC0B5000873E68 /* ActionButtonsView.swift in Sources */,
 				BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */,
+				BBAE07DB2D14BE0B00DA95CD /* SystemImageView.swift in Sources */,
 				BBE636CB2CCC0EEF00873E68 /* ErrorView.swift in Sources */,
 				BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */,
 				BB0854832CB42C0200F1661B /* Chapter.swift in Sources */,
