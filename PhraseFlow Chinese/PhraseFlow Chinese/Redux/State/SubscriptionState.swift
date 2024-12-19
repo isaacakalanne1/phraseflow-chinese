@@ -12,5 +12,4 @@ struct SubscriptionState {
     var isSubscribed = false
     var products: [Product]?
     var purchasedProductIDs = Set<String>()
-    var updates: Task<Void, Never>? = nil
 }

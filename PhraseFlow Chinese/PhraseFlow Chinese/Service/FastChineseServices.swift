@@ -16,7 +16,7 @@ enum FastChineseServicesError: Error {
 
 protocol FastChineseServicesProtocol {
     func generateStory(story: Story) async throws -> Story
-    func fetchDefinition(of character: String, withinContextOf sentence: Sentence, story: Story, settings: SettingsState) async throws -> String
+    func fetchDefinition(of character: String, withinContextOf sentence: Sentence, story: Story) async throws -> String
 }
 
 final class FastChineseServices: FastChineseServicesProtocol {
@@ -77,7 +77,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
         }
     }
 
-    func fetchDefinition(of character: String, withinContextOf sentence: Sentence, story: Story, settings: SettingsState) async throws -> String {
+    func fetchDefinition(of character: String, withinContextOf sentence: Sentence, story: Story) async throws -> String {
         let languageName = story.language.descriptiveEnglishName
         let initialPrompt =
 """
