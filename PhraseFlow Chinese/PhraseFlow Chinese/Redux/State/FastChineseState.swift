@@ -28,7 +28,7 @@ struct FastChineseState {
     }
 
     var deviceLanguage: Language? {
-        Language.allCases.first(where: { $0.identifier == locale.language.languageCode?.identifier })
+        Language.allCases.first(where: { $0.speechCode == locale.identifier })
     }
 
     init(settingsState: SettingsState = SettingsState(),

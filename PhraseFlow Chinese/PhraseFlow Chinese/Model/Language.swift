@@ -115,9 +115,8 @@ enum Language: String, Codable, CaseIterable {
             "ru"
         case .spanish:
             "es"
-        case .europeanPortuguese:
-            "pt"
-        case .brazilianPortuguese:
+        case .europeanPortuguese,
+                .brazilianPortuguese:
             "pt"
         case .english:
             "en"
