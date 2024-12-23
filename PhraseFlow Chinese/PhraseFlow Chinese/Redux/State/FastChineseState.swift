@@ -14,6 +14,7 @@ struct FastChineseState {
     var definitionState = DefinitionState()
     var viewState = ViewState()
     var subscriptionState = SubscriptionState()
+    var locale: Locale
 
     var currentSpokenWord: WordTimeStampData? {
         storyState.currentChapter?.timestampData.last(where: { audioState.currentPlaybackTime >= $0.time })
@@ -27,6 +28,22 @@ struct FastChineseState {
     }
 
     var deviceLanguage: Language? {
-        Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier })
+        Language.allCases.first(where: { $0.identifier == locale.language.languageCode?.identifier })
+    }
+
+    init(settingsState: SettingsState = SettingsState(),
+         storyState: StoryState = StoryState(),
+         audioState: AudioState = AudioState(),
+         definitionState: DefinitionState = DefinitionState(),
+         viewState: ViewState = ViewState(),
+         subscriptionState: SubscriptionState = SubscriptionState(),
+         locale: Locale = Locale.current) {
+        self.settingsState = settingsState
+        self.storyState = storyState
+        self.audioState = audioState
+        self.definitionState = definitionState
+        self.viewState = viewState
+        self.subscriptionState = subscriptionState
+        self.locale = locale
     }
 }

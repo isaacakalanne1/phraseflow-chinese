@@ -95,6 +95,10 @@ enum Language: String, Codable, CaseIterable {
         }
     }
 
+    var locale: Locale {
+        Locale(identifier: speechCode)
+    }
+
     var identifier: String {
         switch self {
         case .arabicGulf:
