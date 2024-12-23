@@ -216,5 +216,14 @@
 // English language name
 "english" = "Anglais";
 
+// Hindi language name
+"french" = "Hindi";
+
 // Ava voice button title
 "voice_ava" = "Ava";
+
+// Ananya Hindi voice button title
+"voice_ananya" = "Ananya";
+
+// Aarav Hindi voice button title
+"voice_aarav" = "Aarav";

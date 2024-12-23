@@ -25,4 +25,8 @@ struct FastChineseState {
                      title: "",
                      storyPrompt: StoryPrompts.all.randomElement() ?? "a medieval town")
     }
+
+    var deviceLanguage: Language? {
+        Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier })
+    }
 }

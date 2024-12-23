@@ -20,7 +20,7 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
         return .saveStoryAndSettings(story)
     case .continueStory(let story):
         do {
-            let story = try await environment.generateStory(story: story)
+            let story = try await environment.generateStory(story: story, deviceLanguage: state.deviceLanguage)
             return .onContinuedStory(story)
         } catch {
             return .failedToContinueStory
@@ -108,7 +108,8 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             let fetchedDefinition = try await environment.fetchDefinition(of: timeStampData.word,
                                                                           withinContextOf: sentence,
                                                                           story: story,
-                                                                          settings: state.settingsState)
+                                                                          settings: state.settingsState,
+                                                                          deviceLanguage: state.deviceLanguage)
             return .onDefinedCharacter(fetchedDefinition)
         } catch {
             return .failedToDefineCharacter

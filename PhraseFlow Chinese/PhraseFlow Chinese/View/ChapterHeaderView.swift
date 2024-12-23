@@ -12,13 +12,14 @@ struct ChapterHeaderView: View {
     let chapter: Chapter
 
     var body: some View {
-        let chapterNumber = (store.state.storyState.currentStory?.currentChapterIndex ?? 0) + 1
-
         VStack {
-            Text(store.state.storyState.currentStory?.title ?? "")
-                .fontWeight(.medium)
-            Text(LocalizedString.chapterNumber(String(chapterNumber)) + ": " + chapter.title)
-                .fontWeight(.light)
+            Group {
+                Text(store.state.storyState.currentStory?.title ?? "")
+                    .fontWeight(.medium)
+                Text(chapter.title)
+                    .fontWeight(.light)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .greyBackground()
     }

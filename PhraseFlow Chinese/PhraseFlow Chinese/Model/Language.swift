@@ -17,6 +17,7 @@ enum Language: String, Codable, CaseIterable {
          korean,
          brazilianPortuguese,
          europeanPortuguese,
+         hindi,
          russian
 
     var descriptiveEnglishName: String {
@@ -62,6 +63,8 @@ enum Language: String, Codable, CaseIterable {
             LocalizedString.french
         case .english:
             LocalizedString.english
+        case .hindi:
+            LocalizedString.hindi
         }
     }
 
@@ -87,6 +90,8 @@ enum Language: String, Codable, CaseIterable {
             "pt-BR"
         case .english:
             "en-US"
+        case .hindi:
+            "hi-IN"
         }
     }
 
@@ -112,6 +117,8 @@ enum Language: String, Codable, CaseIterable {
             "pt"
         case .english:
             "en"
+        case .hindi:
+            "hi"
         }
     }
 
@@ -137,6 +144,8 @@ enum Language: String, Codable, CaseIterable {
             ["br"]
         case .english:
             ["us"]
+        case .hindi:
+            ["in"]
         }
     }
 
@@ -170,6 +179,9 @@ enum Language: String, Codable, CaseIterable {
              .donato]
         case .english:
             [.ava]
+        case .hindi:
+            [.ananya,
+             .aarav]
         }
     }
 

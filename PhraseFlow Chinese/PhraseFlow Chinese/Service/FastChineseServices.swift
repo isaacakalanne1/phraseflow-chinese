@@ -8,6 +8,7 @@
 import Foundation
 
 enum FastChineseServicesError: Error {
+    case failedToGetDeviceLanguage
     case failedToGetResponseData
     case failedToEncodeJson
     case failedToDecodeJson
@@ -15,19 +16,25 @@ enum FastChineseServicesError: Error {
 }
 
 protocol FastChineseServicesProtocol {
-    func generateStory(story: Story) async throws -> Story
-    func fetchDefinition(of character: String, withinContextOf sentence: Sentence, story: Story) async throws -> String
+    func generateStory(story: Story,
+                       deviceLanguage: Language?) async throws -> Story
+    func fetchDefinition(of character: String,
+                         withinContextOf sentence: Sentence,
+                         story: Story,
+                         deviceLanguage: Language?) async throws -> String
 }
 
 final class FastChineseServices: FastChineseServicesProtocol {
 
-    func generateStory(story: Story) async throws -> Story {
+    func generateStory(story: Story,
+                       deviceLanguage: Language?) async throws -> Story {
         let originalLanguage = Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier })
         do {
             let storyString = try await continueStory(story: story)
             let jsonString = try await convertToJson(story: story,
                                                      storyString: storyString,
-                                                     shouldCreateTitle: story.title.isEmpty)
+                                                     shouldCreateTitle: story.title.isEmpty,
+                                                     deviceLanguage: deviceLanguage)
             guard let jsonData = jsonString.data(using: .utf8) else {
                 throw FastChineseServicesError.failedToGetResponseData
             }
@@ -68,6 +75,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
             } else {
                 story.chapters.append(chapter)
             }
+            story.title = chapterResponse.titleOfNovel ?? ""
             story.briefLatestStorySummary = chapterResponse.briefLatestStorySummary
             story.currentChapterIndex = story.chapters.count - 1
             story.lastUpdated = .now
@@ -77,11 +85,17 @@ final class FastChineseServices: FastChineseServicesProtocol {
         }
     }
 
-    func fetchDefinition(of character: String, withinContextOf sentence: Sentence, story: Story) async throws -> String {
+    func fetchDefinition(of character: String,
+                         withinContextOf sentence: Sentence,
+                         story: Story,
+                         deviceLanguage: Language?) async throws -> String {
+        guard let deviceLanguage else {
+            throw FastChineseServicesError.failedToGetDeviceLanguage
+        }
         let languageName = story.language.descriptiveEnglishName
         let initialPrompt =
 """
-        You are an AI assistant that provides \(story.deviceLanguage.displayName) definitions for characters in \(languageName) sentences. Your explanations are brief, and simple to understand.
+        You are an AI assistant that provides \(deviceLanguage.displayName) definitions for characters in \(languageName) sentences. Your explanations are brief, and simple to understand.
         You provide the pronounciation for the \(languageName) character in brackets after the \(languageName) word.
         If the character is used as part of a larger word, you also provide the pronounciation and definition for each character in this overall word.
         You also provide the definition of the word in the context of the overall sentence.
@@ -92,7 +106,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
 Provide a definition for this word: "\(character)"
 Also explain the word in the context of the sentence: "\(sentence.translation)".
 Don't define other words in the sentence.
-Write the definition in \(story.deviceLanguage.displayName).
+Write the definition in \(deviceLanguage.displayName).
 """
         let messages: [[String: String]] = [
             ["role": "system", "content": initialPrompt],
@@ -125,9 +139,15 @@ Write the definition in \(story.deviceLanguage.displayName).
         return try await makeRequest(type: .openRouter, requestBody: requestBody)
     }
 
-    private func convertToJson(story: Story, storyString: String, shouldCreateTitle: Bool) async throws -> String {
+    private func convertToJson(story: Story,
+                               storyString: String,
+                               shouldCreateTitle: Bool,
+                               deviceLanguage: Language?) async throws -> String {
+        guard let deviceLanguage else {
+            throw FastChineseServicesError.failedToGetDeviceLanguage
+        }
         let jsonPrompt = """
-Format the following story into JSON. Translate each English sentence into \(story.deviceLanguage == .english ? "" : "\(story.deviceLanguage.descriptiveEnglishName) and ") \(story.language.descriptiveEnglishName).
+Format the following story into JSON. Translate each English sentence into \(deviceLanguage == .english ? "" : "\(deviceLanguage.descriptiveEnglishName) and ") \(story.language.descriptiveEnglishName).
 Ensure each sentence entry is for an individual sentence.
 Translate the whole sentence, including names and places.
 """
@@ -140,7 +160,7 @@ Translate the whole sentence, including names and places.
             ["role": "user", "content": storyString]
         ]
         requestBody["messages"] = messages
-        requestBody["response_format"] = sentenceSchema(originalLanguage: story.deviceLanguage,
+        requestBody["response_format"] = sentenceSchema(originalLanguage: deviceLanguage,
                                                         translationLanguage: story.language,
                                                         shouldCreateTitle: shouldCreateTitle)
 

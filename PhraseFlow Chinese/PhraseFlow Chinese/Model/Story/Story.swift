@@ -12,7 +12,7 @@ struct Story: Codable, Equatable, Hashable {
     var briefLatestStorySummary: String
     let difficulty: Difficulty
     let language: Language
-    let title: String
+    var title: String
     var chapters: [Chapter]
     var currentChapterIndex = 0
     var lastUpdated: Date
@@ -49,9 +49,5 @@ struct Story: Codable, Equatable, Hashable {
         self.currentChapterIndex = (try? container.decode(Int.self, forKey: .currentChapterIndex)) ?? 0
         self.lastUpdated = (try? container.decode(Date.self, forKey: .lastUpdated)) ?? .now
         self.storyPrompt = (try? container.decode(String.self, forKey: .storyPrompt)) ?? ""
-    }
-
-    var deviceLanguage: Language {
-        return Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier }) ?? .english
     }
 }

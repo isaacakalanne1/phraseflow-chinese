@@ -216,5 +216,14 @@
 // English language name
 "english" = "الإنجليزية";
 
+// Hindi language name
+"gulf_arabic" = "الهندية";
+
 // Ava voice button title
 "voice_ava" = "آفا";
+
+// Ananya Hindi voice button title
+"voice_ananya" = "أنانيا";
+
+// Aarav Hindi voice button title
+"voice_aarav" = "أرَاف";

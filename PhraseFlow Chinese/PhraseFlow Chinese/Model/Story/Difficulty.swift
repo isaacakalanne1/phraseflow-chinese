@@ -54,15 +54,18 @@ enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
     }
 
     var vocabularyPrompt: String {
+        var prompt: String
         switch self {
         case .beginner:
-            return "Use extremely basic, simple words and very short sentences."
+            prompt = "Use extremely basic, simple words and very short sentences."
         case .intermediate:
-            return "Use basic, simple words and short sentences."
+            prompt = "Use basic, simple words and short sentences."
         case .advanced:
-            return "Use simple words and medium length sentences."
+            prompt = "Use simple words and medium length sentences."
         case .expert:
-            return ""
+            prompt = ""
         }
+//        prompt.append(" Use words repeatedly in this chapter, to enforce their learning by the reader.")
+        return prompt
     }
 }

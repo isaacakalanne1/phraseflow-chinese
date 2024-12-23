@@ -55,11 +55,15 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
                 word = word.replacingOccurrences(of: self.sentenceMarker, with: "")
             }
 
-            wordTimestamps = self.increaseAudioDuration(in: wordTimestamps, upTo: Double(event.audioOffset))
+            if var previousTimestamp = wordTimestamps[safe: index] {
+                previousTimestamp.duration = audioTimeInSeconds - previousTimestamp.time
+                wordTimestamps[index] = previousTimestamp
+            }
 
             let newTimestamp = WordTimeStampData(word: word,
                                                  time: audioTimeInSeconds,
                                                  duration: event.duration,
+//                                                 indexInList: index,
                                                  sentenceIndex: sentenceIndex)
             wordTimestamps.append(newTimestamp)
 
@@ -82,16 +86,6 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
         } catch {
             throw error
         }
-    }
-
-    private func increaseAudioDuration(in wordTimestamps: [WordTimeStampData], upTo time: Double) -> [WordTimeStampData] {
-        let audioTimeInSeconds = time / 10_000_000.0
-        var timestamps = wordTimestamps
-        if var newTimestamp = timestamps[safe: timestamps.count - 2] {
-            newTimestamp.duration = audioTimeInSeconds - newTimestamp.time - 0.0001
-            timestamps[timestamps.count - 2] = newTimestamp
-        }
-        return timestamps
     }
 
     private func createSpeechSsml(chapter: Chapter, voice: Voice, speechSpeed: SpeechSpeed) -> String {

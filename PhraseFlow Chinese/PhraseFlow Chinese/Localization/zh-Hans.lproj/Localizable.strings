@@ -216,5 +216,13 @@
 // English language name
 "english" = "英语";
 
+// Hindi language name
+"mandarin_chinese" = "印地语";
+
 // Ava voice button title
 "voice_ava" = "艾娃";
+
+// Ananya Hindi voice button title
+"voice_ananya" = "阿南亚";
+// Aarav Hindi voice button title
+"voice_aarav" = "阿拉夫";

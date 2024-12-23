@@ -12,8 +12,6 @@ struct ReaderView: View {
     let chapter: Chapter
 
     var body: some View {
-        let chapterNumber = (store.state.storyState.currentStory?.currentChapterIndex ?? 0) + 1
-
         VStack(spacing: 10) {
             AIStatementView()
             if store.state.settingsState.isShowingDefinition {

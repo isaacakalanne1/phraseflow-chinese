@@ -43,6 +43,12 @@ struct ActionButtonsView: View {
                 }
             }
 
+            ActionButton(title: LocalizedString.load, systemImage: .arrowDown) {
+                store.dispatch(.synthesizeAudio(chapter,
+                                                voice: store.state.settingsState.voice,
+                                                isForced: true))
+            }
+
             ActionButton(title: LocalizedString.settings, systemImage: .gear) {
                 store.dispatch(.updateShowingSettings(isShowing: true))
             }
