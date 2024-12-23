@@ -21,7 +21,7 @@ struct Story: Codable, Equatable, Hashable {
     init(briefLatestStorySummary: String = "",
          difficulty: Difficulty,
          language: Language,
-         title: String,
+         title: String = "",
          chapters: [Chapter] = [],
          storyPrompt: String,
          currentChapterIndex: Int = 0,

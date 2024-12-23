@@ -23,7 +23,6 @@ struct FastChineseState {
     func createNewStory() -> Story {
         return Story(difficulty: settingsState.difficulty,
                      language: settingsState.language,
-                     title: "",
                      storyPrompt: StoryPrompts.all.randomElement() ?? "a medieval town")
     }
 
