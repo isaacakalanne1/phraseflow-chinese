@@ -20,10 +20,8 @@ struct CharacterView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .foregroundStyle(isHighlighted ? Color.blue : Color.black)
                 .background {
-                    Group  {
-                        if store.state.storyState.sentenceIndex == word.sentenceIndex {
-                            Color.gray.opacity(0.3)
-                        }
+                    if store.state.storyState.sentenceIndex == word.sentenceIndex {
+                        Color.gray.opacity(0.3)
                     }
                 }
         }
@@ -36,6 +34,5 @@ struct CharacterView: View {
                 }
             }
         }
-
     }
 }

@@ -108,7 +108,6 @@ let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environm
             let fetchedDefinition = try await environment.fetchDefinition(of: timeStampData.word,
                                                                           withinContextOf: sentence,
                                                                           story: story,
-                                                                          settings: state.settingsState,
                                                                           deviceLanguage: state.deviceLanguage)
             return .onDefinedCharacter(fetchedDefinition)
         } catch {

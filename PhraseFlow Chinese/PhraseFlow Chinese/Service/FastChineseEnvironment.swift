@@ -27,7 +27,6 @@ protocol FastChineseEnvironmentProtocol {
     func fetchDefinition(of character: String,
                          withinContextOf sentence: Sentence,
                          story: Story,
-                         settings: SettingsState,
                          deviceLanguage: Language?) async throws -> Definition
     func purchase(_ product: Product) async throws
 }
@@ -88,7 +87,6 @@ struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
     func fetchDefinition(of string: String,
                          withinContextOf sentence: Sentence,
                          story: Story,
-                         settings: SettingsState,
                          deviceLanguage: Language?) async throws -> Definition {
         let definitionString = try await service.fetchDefinition(of: string,
                                                                  withinContextOf: sentence,
