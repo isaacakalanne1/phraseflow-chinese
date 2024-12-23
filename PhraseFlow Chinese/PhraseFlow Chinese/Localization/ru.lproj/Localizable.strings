@@ -1,0 +1,229 @@
+/*
+  Localizable.strings
+  PhraseFlow Chinese
+
+  Created by iakalann on 24/11/2024.
+
+*/
+
+// Translation view title
+"translation" = "Перевод";
+
+// Definition View title
+"definition_of" = "Определение: %@";
+
+// Stories button title
+"stories" = "Истории";
+
+// Play button title
+"play" = "Играть";
+
+// Settings View title
+"settings" = "Настройки";
+
+// Choose Story Navigation Bar title
+"choose_story" = "Выбрать историю";
+
+// Create Story Navigation Bar title
+"create_story" = "Создать историю";
+
+// Story Settings Navigation Bar title
+"story_settings" = "Настройки истории";
+
+// New Story button title
+"new_story" = "Новая история";
+
+// Difficulty level title
+"difficulty" = "Сложность";
+
+// Beginner difficulty level
+"beginner" = "Начинающий";
+
+// Intermediate difficulty level
+"intermediate" = "Средний";
+
+// Advanced difficulty level
+"advanced" = "Продвинутый";
+
+// Expert difficulty level
+"expert" = "Эксперт";
+
+// Language Section Title
+"language" = "Язык";
+
+// Mandarin Chinese language name
+"chinese_mandarin" = "Китайский (мандарин)";
+
+// Spanish language name
+"spanish" = "Испанский";
+
+// French language name
+"french" = "Французский";
+
+// Japanese language name
+"japanese" = "Японский";
+
+// Korean language name
+"korean" = "Корейский";
+
+// Russian language name
+"russian" = "Русский";
+
+// Arabic (Gulf Arabic) language name
+"arabicGulf" = "Арабский (Персидский залив)";
+
+// Portuguese (Brazil) language name
+"portuguese_brazil" = "Португальский (Бразилия)";
+
+// Portuguese (European) language name
+"portuguese_european" = "Португальский (Европейский)";
+
+// Retry button title
+"retry" = "Повторить";
+
+// Failed to write story title
+"failed_to_write_story" = "Не удалось написать историю";
+
+// Failed to write chapter title
+"failed_to_write_chapter" = "Не удалось написать главу";
+
+// Writing new chapter title
+"writing_new_chapter" = "Пишем новую главу...";
+
+// New Story button title
+"new_story" = "Новая история";
+
+// Language section title
+"language" = "Язык";
+
+// AI Statement displayed at top of app
+"ai_statement" = "Истории и определения написаны ИИ и могут быть неточными или неуместными.";
+
+// E.g, Chapter 1
+"chapter_number" = "Глава %@";
+
+// Loading button title, shown when a button state is currently loading
+"loading" = "Загрузка";
+
+// Load button title, shown when content is ready to be loaded
+"load" = "Загрузить";
+
+// Pause button title
+"pause" = "Пауза";
+
+// Play button title
+"play" = "Играть";
+
+// Next Chapter button title
+"next_chapter" = "Следующая глава";
+
+// Definition toggle title
+"definition_toggle" = "Определение";
+
+// English toggle title
+"english_toggle" = "Английский";
+
+// Toggle section title
+"toggle" = "Переключение";
+
+// Voice section title
+"voice" = "Голос";
+
+// Speed section title
+"speed" = "Скорость";
+
+// Slow speed button title
+"slow" = "Медленно";
+
+// Normal speed button title
+"normal" = "Нормально";
+
+// Fast speed button title
+"fast" = "Быстро";
+
+// Xiaoxiao Chinese voice button title
+"voice_xiaoxiao" = "Сяосяо";
+
+// Yunjian Chinese voice button title
+"voice_yunjian" = "Юнцзян";
+
+// Denise French voice button title
+"voice_denise" = "Дениз";
+
+// Henri French voice button title
+"voice_henri" = "Анри";
+
+// Mayu Japanese voice button title
+"voice_mayu" = "Маю";
+
+// Keita Japanese voice button title
+"voice_keita" = "Кейта";
+
+// Sun-Hi Korean voice button title
+"voice_sun_hi" = "Сун-Хи";
+
+// Hyun-Su Korean voice button title
+"voice_hyun_su" = "Хён-Су";
+
+// Dariya (Russian) voice button title
+"voice_dariya" = "Дарья";
+
+// Dmitry (Russian) voice button title
+"voice_dmitry" = "Дмитрий";
+
+// Elvira (Spanish) voice button title
+"voice_elvira" = "Эльвира";
+
+// Alvaro (Spanish) voice button title
+"voice_alvaro" = "Альваро";
+
+// Fatima (Arabic, UAE) voice button title
+"voice_fatima" = "Фатима";
+
+// Hamdan (Arabic, UAE) voice button title
+"voice_hamdan" = "Хамдан";
+
+// Raquel (European Portuguese) voice button title
+"voice_raquel" = "Ракель";
+
+// Duarte (European Portuguese) voice button title
+"voice_duarte" = "Дуарте";
+
+// Thalita (Brazilian Portuguese) voice button title
+"voice_thalita" = "Талита";
+
+// Donato (Brazilian Portuguese) voice button title
+"voice_donato" = "Донато";
+
+// Male Gender Button title
+"male" = "Мужской";
+
+// Female Gender Button title
+"female" = "Женский";
+
+// Chapters section title
+"chapters" = "Главы";
+
+// New Chapter button title
+"new_chapter" = "Новая глава";
+
+// Choose Chapter navigation bat title
+"choose_chapter" = "Выбрать главу";
+
+// Defining text while user is fetching the definition of a word
+"defining" = "Определение...";
+
+// English language name
+"english" = "Английский";
+
+// Hindi language name
+"hindi" = "Хинди";
+
+// Ava voice button title
+"voice_ava" = "Ава";
+
+// Ananya Hindi voice button title
+"voice_ananya" = "Ананья";
+
+// Aarav Hindi voice button title
+"voice_aarav" = "Аарав";

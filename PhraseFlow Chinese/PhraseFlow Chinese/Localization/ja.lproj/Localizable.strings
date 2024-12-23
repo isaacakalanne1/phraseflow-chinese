@@ -1,0 +1,229 @@
+/*
+  Localizable.strings
+  PhraseFlow Chinese
+
+  Created by iakalann on 24/11/2024.
+
+*/
+
+// Translation view title
+"translation" = "翻訳";
+
+// Definition View title
+"definition_of" = "定義: %@";
+
+// Stories button title
+"stories" = "物語";
+
+// Play button title
+"play" = "再生";
+
+// Settings View title
+"settings" = "設定";
+
+// Choose Story Navigation Bar title
+"choose_story" = "物語を選ぶ";
+
+// Create Story Navigation Bar title
+"create_story" = "物語を作る";
+
+// Story Settings Navigation Bar title
+"story_settings" = "物語の設定";
+
+// New Story button title
+"new_story" = "新しい物語";
+
+// Difficulty level title
+"difficulty" = "難易度";
+
+// Beginner difficulty level
+"beginner" = "初心者";
+
+// Intermediate difficulty level
+"intermediate" = "中級者";
+
+// Advanced difficulty level
+"advanced" = "上級者";
+
+// Expert difficulty level
+"expert" = "達人";
+
+// Language Section Title
+"language" = "言語";
+
+// Mandarin Chinese language name
+"chinese_mandarin" = "中国語（普通話）";
+
+// Spanish language name
+"spanish" = "スペイン語";
+
+// French language name
+"french" = "フランス語";
+
+// Japanese language name
+"japanese" = "日本語";
+
+// Korean language name
+"korean" = "韓国語";
+
+// Russian language name
+"russian" = "ロシア語";
+
+// Arabic (Gulf Arabic) language name
+"arabicGulf" = "アラビア語（湾岸方言）";
+
+// Portuguese (Brazil) language name
+"portuguese_brazil" = "ポルトガル語（ブラジル）";
+
+// Portuguese (European) language name
+"portuguese_european" = "ポルトガル語（ヨーロッパ）";
+
+// Retry button title
+"retry" = "再試行";
+
+// Failed to write story title
+"failed_to_write_story" = "物語の作成に失敗しました";
+
+// Failed to write chapter title
+"failed_to_write_chapter" = "章の作成に失敗しました";
+
+// Writing new chapter title
+"writing_new_chapter" = "新しい章を作成中...";
+
+// New Story button title
+"new_story" = "新しい物語";
+
+// Language section title
+"language" = "言語";
+
+// AI Statement displayed at top of app
+"ai_statement" = "物語や定義はAIによって作成されており、不正確または不適切な場合があります。";
+
+// E.g, Chapter 1
+"chapter_number" = "第%@章";
+
+// Loading button title, shown when a button state is currently loading
+"loading" = "読み込み中";
+
+// Load button title, shown when content is ready to be loaded
+"load" = "読み込む";
+
+// Pause button title
+"pause" = "一時停止";
+
+// Play button title
+"play" = "再生";
+
+// Next Chapter button title
+"next_chapter" = "次の章";
+
+// Definition toggle title
+"definition_toggle" = "定義";
+
+// English toggle title
+"english_toggle" = "英語";
+
+// Toggle section title
+"toggle" = "切り替え";
+
+// Voice section title
+"voice" = "音声";
+
+// Speed section title
+"speed" = "速度";
+
+// Slow speed button title
+"slow" = "遅い";
+
+// Normal speed button title
+"normal" = "普通";
+
+// Fast speed button title
+"fast" = "速い";
+
+// Xiaoxiao Chinese voice button title
+"voice_xiaoxiao" = "シャオシャオ";
+
+// Yunjian Chinese voice button title
+"voice_yunjian" = "ユンジアン";
+
+// Denise French voice button title
+"voice_denise" = "デニーズ";
+
+// Henri French voice button title
+"voice_henri" = "アンリ";
+
+// Mayu Japanese voice button title
+"voice_mayu" = "まゆ";
+
+// Keita Japanese voice button title
+"voice_keita" = "けいた";
+
+// Sun-Hi Korean voice button title
+"voice_sun_hi" = "スンヒ";
+
+// Hyun-Su Korean voice button title
+"voice_hyun_su" = "ヒョンス";
+
+// Dariya (Russian) voice button title
+"voice_dariya" = "ダリヤ";
+
+// Dmitry (Russian) voice button title
+"voice_dmitry" = "ドミトリー";
+
+// Elvira (Spanish) voice button title
+"voice_elvira" = "エルビラ";
+
+// Alvaro (Spanish) voice button title
+"voice_alvaro" = "アルバロ";
+
+// Fatima (Arabic, UAE) voice button title
+"voice_fatima" = "ファティマ";
+
+// Hamdan (Arabic, UAE) voice button title
+"voice_hamdan" = "ハムダン";
+
+// Raquel (European Portuguese) voice button title
+"voice_raquel" = "ラケル";
+
+// Duarte (European Portuguese) voice button title
+"voice_duarte" = "ドゥアルテ";
+
+// Thalita (Brazilian Portuguese) voice button title
+"voice_thalita" = "タリタ";
+
+// Donato (Brazilian Portuguese) voice button title
+"voice_donato" = "ドナート";
+
+// Male Gender Button title
+"male" = "男性";
+
+// Female Gender Button title
+"female" = "女性";
+
+// Chapters section title
+"chapters" = "章";
+
+// New Chapter button title
+"new_chapter" = "新しい章";
+
+// Choose Chapter navigation bar title
+"choose_chapter" = "章を選ぶ";
+
+// Defining text while user is fetching the definition of a word
+"defining" = "定義中...";
+
+// English language name
+"english" = "英語";
+
+// Hindi language name
+"hindi" = "ヒンディー語";
+
+// Ava voice button title
+"voice_ava" = "アヴァ";
+
+// Ananya Hindi voice button title
+"voice_ananya" = "アナンヤ";
+
+// Aarav Hindi voice button title
+"voice_aarav" = "アーラヴ";
