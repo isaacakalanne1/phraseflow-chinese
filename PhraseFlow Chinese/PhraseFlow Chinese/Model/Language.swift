@@ -8,17 +8,17 @@
 import SwiftUI
 
 enum Language: String, Codable, CaseIterable {
-    case english, //
-         mandarinChinese, //
-         spanish, //
-         french, //
-         arabicGulf, //
-         japanese, //
-         korean, //
-         brazilianPortuguese, //
+    case english,
+         mandarinChinese,
+         spanish,
+         french,
+         arabicGulf,
+         japanese,
+         korean,
+         brazilianPortuguese,
          europeanPortuguese,
-         hindi, //
-         russian //
+         hindi,
+         russian
 
     var descriptiveEnglishName: String {
         switch self {
