@@ -70,7 +70,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         }
     case .onSynthesizedAudio(let result):
         if let story = state.storyState.currentStory {
-            return .saveStory(story)
+            return .saveStoryAndSettings(story)
         }
         return nil
     case .playAudio(let timestamp):
