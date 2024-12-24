@@ -1,6 +1,6 @@
 //
 //  DefinitionView.swift
-//  PhraseFlow Chinese
+//  FlowTale
 //
 //  Created by iakalann on 25/10/2024.
 //

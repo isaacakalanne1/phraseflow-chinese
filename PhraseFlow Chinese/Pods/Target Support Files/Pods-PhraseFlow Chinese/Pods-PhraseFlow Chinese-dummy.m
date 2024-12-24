@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-@interface PodsDummy_Pods_PhraseFlow_Chinese : NSObject
+@interface PodsDummy_Pods_FlowTale : NSObject
 @end
-@implementation PodsDummy_Pods_PhraseFlow_Chinese
+@implementation PodsDummy_Pods_FlowTale
 @end

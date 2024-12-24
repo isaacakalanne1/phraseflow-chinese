@@ -1,6 +1,6 @@
 //
 //  ReaderDisplayType.swift
-//  PhraseFlow Chinese
+//  FlowTale
 //
 //  Created by iakalann on 19/10/2024.
 //

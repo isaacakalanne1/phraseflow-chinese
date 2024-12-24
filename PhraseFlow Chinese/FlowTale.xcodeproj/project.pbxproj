@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		477951978617EF1A543B0EC4 /* libPods-PhraseFlow Chinese.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 278A489BDBA476D2CC0AF9AC /* libPods-PhraseFlow Chinese.a */; };
 		BB0854832CB42C0200F1661B /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854822CB42C0200F1661B /* Chapter.swift */; };
 		BB0854852CB42C1400F1661B /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854842CB42C1400F1661B /* Story.swift */; };
 		BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */; };
@@ -39,6 +38,7 @@
 		BB6572E72CD8D1E300AC5981 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572E62CD8D1E300AC5981 /* Gender.swift */; };
 		BB6572F72CDB991B00AC5981 /* SettingsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572F62CDB991A00AC5981 /* SettingsState.swift */; };
 		BB6572F92CDBB14C00AC5981 /* SpeechStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572F82CDBB14C00AC5981 /* SpeechStyle.swift */; };
+		BB7B6D942D1ACEBF0030344A /* libPods-FlowTale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */; };
 		BB84E0A02CEFA96200520F5E /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB84E09F2CEFA96200520F5E /* Language.swift */; };
 		BB84E0A22CF0AF4200520F5E /* CreateStorySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */; };
 		BB84E0A62CF3EC8600520F5E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BB84E0A42CF3EC8600520F5E /* Localizable.strings */; };
@@ -59,9 +59,9 @@
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
 		BBB6EF2E2C8C86290079D135 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2D2C8C86290079D135 /* Preview Assets.xcassets */; };
-		BBB6EF382C8C862A0079D135 /* PhraseFlow_ChineseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF372C8C862A0079D135 /* PhraseFlow_ChineseTests.swift */; };
-		BBB6EF422C8C862A0079D135 /* PhraseFlow_ChineseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF412C8C862A0079D135 /* PhraseFlow_ChineseUITests.swift */; };
-		BBB6EF442C8C862A0079D135 /* PhraseFlow_ChineseUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF432C8C862A0079D135 /* PhraseFlow_ChineseUITestsLaunchTests.swift */; };
+		BBB6EF382C8C862A0079D135 /* FlowTaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF372C8C862A0079D135 /* FlowTaleTests.swift */; };
+		BBB6EF422C8C862A0079D135 /* FlowTaleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF412C8C862A0079D135 /* FlowTaleUITests.swift */; };
+		BBB6EF442C8C862A0079D135 /* FlowTaleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF432C8C862A0079D135 /* FlowTaleUITestsLaunchTests.swift */; };
 		BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF512C8C86B10079D135 /* Sentence.swift */; };
 		BBE16F202CC152C400A7EF1F /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */; };
 		BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F212CC2769C00A7EF1F /* StoryListView.swift */; };
@@ -129,6 +129,7 @@
 		BB6572E62CD8D1E300AC5981 /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
 		BB6572F62CDB991A00AC5981 /* SettingsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsState.swift; sourceTree = "<group>"; };
 		BB6572F82CDBB14C00AC5981 /* SpeechStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechStyle.swift; sourceTree = "<group>"; };
+		BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-FlowTale.a"; path = "../../../../Library/Developer/Xcode/DerivedData/FlowTale-dzblbgdyrqlsjdggurnqsbvwzaoq/Build/Products/Debug-iphoneos/libPods-FlowTale.a"; sourceTree = "<group>"; };
 		BB84E09F2CEFA96200520F5E /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStorySettingsView.swift; sourceTree = "<group>"; };
 		BB84E0A52CF3EC8600520F5E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -162,10 +163,10 @@
 		BBB6EF2A2C8C86290079D135 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BBB6EF2D2C8C86290079D135 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BBB6EF332C8C862A0079D135 /* FlowTaleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowTaleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BBB6EF372C8C862A0079D135 /* PhraseFlow_ChineseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseTests.swift; sourceTree = "<group>"; };
+		BBB6EF372C8C862A0079D135 /* FlowTaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleTests.swift; sourceTree = "<group>"; };
 		BBB6EF3D2C8C862A0079D135 /* FlowTaleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowTaleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BBB6EF412C8C862A0079D135 /* PhraseFlow_ChineseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseUITests.swift; sourceTree = "<group>"; };
-		BBB6EF432C8C862A0079D135 /* PhraseFlow_ChineseUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		BBB6EF412C8C862A0079D135 /* FlowTaleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleUITests.swift; sourceTree = "<group>"; };
+		BBB6EF432C8C862A0079D135 /* FlowTaleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		BBB6EF512C8C86B10079D135 /* Sentence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sentence.swift; sourceTree = "<group>"; };
 		BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
 		BBE16F212CC2769C00A7EF1F /* StoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListView.swift; sourceTree = "<group>"; };
@@ -187,8 +188,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB7B6D942D1ACEBF0030344A /* libPods-FlowTale.a in Frameworks */,
 				BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */,
-				477951978617EF1A543B0EC4 /* libPods-PhraseFlow Chinese.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,6 +213,7 @@
 		8F09325601693DB4E5512903 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */,
 				278A489BDBA476D2CC0AF9AC /* libPods-PhraseFlow Chinese.a */,
 			);
 			name = Frameworks;
@@ -364,7 +366,7 @@
 		BBB6EF362C8C862A0079D135 /* FlowTaleTests */ = {
 			isa = PBXGroup;
 			children = (
-				BBB6EF372C8C862A0079D135 /* PhraseFlow_ChineseTests.swift */,
+				BBB6EF372C8C862A0079D135 /* FlowTaleTests.swift */,
 				BBA94CCC2D19AAE000EB4A7E /* FlowTaleStateTests.swift */,
 			);
 			path = FlowTaleTests;
@@ -373,8 +375,8 @@
 		BBB6EF402C8C862A0079D135 /* FlowTaleUITests */ = {
 			isa = PBXGroup;
 			children = (
-				BBB6EF412C8C862A0079D135 /* PhraseFlow_ChineseUITests.swift */,
-				BBB6EF432C8C862A0079D135 /* PhraseFlow_ChineseUITestsLaunchTests.swift */,
+				BBB6EF412C8C862A0079D135 /* FlowTaleUITests.swift */,
+				BBB6EF432C8C862A0079D135 /* FlowTaleUITestsLaunchTests.swift */,
 			);
 			path = FlowTaleUITests;
 			sourceTree = "<group>";
@@ -692,7 +694,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBB6EF382C8C862A0079D135 /* PhraseFlow_ChineseTests.swift in Sources */,
+				BBB6EF382C8C862A0079D135 /* FlowTaleTests.swift in Sources */,
 				BBA94CCD2D19AAE000EB4A7E /* FlowTaleStateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -701,8 +703,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBB6EF422C8C862A0079D135 /* PhraseFlow_ChineseUITests.swift in Sources */,
-				BBB6EF442C8C862A0079D135 /* PhraseFlow_ChineseUITestsLaunchTests.swift in Sources */,
+				BBB6EF422C8C862A0079D135 /* FlowTaleUITests.swift in Sources */,
+				BBB6EF442C8C862A0079D135 /* FlowTaleUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

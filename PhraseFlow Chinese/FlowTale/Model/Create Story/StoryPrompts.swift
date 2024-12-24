@@ -1,6 +1,6 @@
 //
 //  StoryPrompts.swift
-//  PhraseFlow Chinese
+//  FlowTale
 //
 //  Created by iakalann on 27/11/2024.
 //

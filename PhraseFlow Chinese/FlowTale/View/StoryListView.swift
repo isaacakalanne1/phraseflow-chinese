@@ -1,6 +1,6 @@
 //
 //  StoryListView.swift
-//  PhraseFlow Chinese
+//  FlowTale
 //
 //  Created by iakalann on 18/10/2024.
 //

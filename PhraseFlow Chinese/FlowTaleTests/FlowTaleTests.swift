@@ -1,14 +1,14 @@
 //
-//  PhraseFlow_ChineseTests.swift
+//  FlowTaleTests.swift
 //  FlowTaleTests
 //
 //  Created by iakalann on 07/09/2024.
 //
 
 import XCTest
-@testable import PhraseFlow_Chinese
+@testable import FlowTale
 
-final class PhraseFlow_ChineseTests: XCTestCase {
+final class FlowTaleTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

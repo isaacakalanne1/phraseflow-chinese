@@ -1,14 +1,14 @@
 //
 //  LanguageTests.swift
-//  PhraseFlow ChineseTests
+//  FlowTaleTests
 //
 //  Created by iakalann on 23/12/2024.
 //
 
 import XCTest
-@testable import PhraseFlow_Chinese
+@testable import FlowTale
 
-final class FlowTaleState: XCTestCase {
+final class FlowTaleStateTests: XCTestCase {
 
     var state: FlowTaleState!
 

@@ -1,5 +1,5 @@
 //
-//  PhraseFlow_ChineseUITestsLaunchTests.swift
+//  FlowTaleUITestsLaunchTests.swift
 //  FlowTaleUITests
 //
 //  Created by iakalann on 07/09/2024.
@@ -7,7 +7,7 @@
 
 import XCTest
 
-final class PhraseFlow_ChineseUITestsLaunchTests: XCTestCase {
+final class FlowTaleUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
