@@ -171,6 +171,9 @@ enum Language: String, Codable, CaseIterable {
         case .hindi:
             [.ananya,
              .aarav]
+        case .german:
+            [.amala,
+             .conrad]
         }
     }
 
