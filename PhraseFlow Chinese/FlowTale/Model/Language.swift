@@ -100,6 +100,36 @@ enum Language: String, Codable, CaseIterable {
         }
     }
 
+    var identifier: String {
+        switch self {
+        case .arabicGulf:
+            "ar"
+        case .mandarinChinese:
+            "zh"
+        case .french:
+            "fr"
+        case .japanese:
+            "ja"
+        case .korean:
+            "ko"
+        case .russian:
+            "ru"
+        case .spanish:
+            "es"
+        case .europeanPortuguese,
+                .brazilianPortuguese:
+            "pt"
+        case .english:
+            "en"
+        case .hindi:
+            "hi"
+        case .german:
+            "de"
+        }
+    }
+
+
+
     var locale: Locale {
         Locale(identifier: speechCode)
     }

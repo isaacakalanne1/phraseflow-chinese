@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		151EDDEDDB51D6B48377E772 /* libPods-FlowTale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6E47BC9388E891E2E0D0FE5 /* libPods-FlowTale.a */; };
 		BB0854832CB42C0200F1661B /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854822CB42C0200F1661B /* Chapter.swift */; };
 		BB0854852CB42C1400F1661B /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854842CB42C1400F1661B /* Story.swift */; };
 		BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */; };
@@ -17,16 +18,16 @@
 		BB1994D32CE9051700D61E54 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D22CE9051700D61E54 /* ViewState.swift */; };
 		BB4015C02CF756FD008ACE9C /* StoryPrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4015BF2CF756FD008ACE9C /* StoryPrompts.swift */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
-		BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FastChineseStore.swift */; };
+		BB4EDB032C90C86300699E7D /* FlowTaleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */; };
 		BB4EDB052C90C89C00699E7D /* FastChineseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB042C90C89C00699E7D /* FastChineseState.swift */; };
-		BB4EDB072C90C8CA00699E7D /* FastChineseAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB062C90C8CA00699E7D /* FastChineseAction.swift */; };
-		BB4EDB0A2C90C8F100699E7D /* FastChineseEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB092C90C8F100699E7D /* FastChineseEnvironment.swift */; };
-		BB4EDB0C2C90C9A100699E7D /* FastChineseReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0B2C90C9A100699E7D /* FastChineseReducer.swift */; };
-		BB4EDB0E2C90CA0300699E7D /* FastChineseMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0D2C90CA0300699E7D /* FastChineseMiddleware.swift */; };
-		BB4EDB102C90CA4900699E7D /* FastChineseSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0F2C90CA4900699E7D /* FastChineseSubscriber.swift */; };
-		BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB142C90CF7400699E7D /* FastChineseDataStore.swift */; };
-		BB4EDB172C90D20300699E7D /* FastChineseServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB162C90D20300699E7D /* FastChineseServices.swift */; };
-		BB4EDB1D2C90DFDD00699E7D /* FastChineseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB1C2C90DFDD00699E7D /* FastChineseRepository.swift */; };
+		BB4EDB072C90C8CA00699E7D /* FlowTaleAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB062C90C8CA00699E7D /* FlowTaleAction.swift */; };
+		BB4EDB0A2C90C8F100699E7D /* FlowTaleEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB092C90C8F100699E7D /* FlowTaleEnvironment.swift */; };
+		BB4EDB0C2C90C9A100699E7D /* FlowTaleReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0B2C90C9A100699E7D /* FlowTaleReducer.swift */; };
+		BB4EDB0E2C90CA0300699E7D /* FlowTaleMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0D2C90CA0300699E7D /* FlowTaleMiddleware.swift */; };
+		BB4EDB102C90CA4900699E7D /* FlowTaleSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0F2C90CA4900699E7D /* FlowTaleSubscriber.swift */; };
+		BB4EDB152C90CF7400699E7D /* FlowTaleDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB142C90CF7400699E7D /* FlowTaleDataStore.swift */; };
+		BB4EDB172C90D20300699E7D /* FlowTaleServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB162C90D20300699E7D /* FlowTaleServices.swift */; };
+		BB4EDB1D2C90DFDD00699E7D /* FlowTaleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB1C2C90DFDD00699E7D /* FlowTaleRepository.swift */; };
 		BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB232C91902100699E7D /* SettingsView.swift */; };
 		BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */; };
 		BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB2A2C91B35D00699E7D /* Definition.swift */; };
@@ -97,8 +98,11 @@
 
 /* Begin PBXFileReference section */
 		03C5BB9FC82BE5D51BD916B3 /* Pods-PhraseFlow Chinese.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhraseFlow Chinese.debug.xcconfig"; path = "Target Support Files/Pods-PhraseFlow Chinese/Pods-PhraseFlow Chinese.debug.xcconfig"; sourceTree = "<group>"; };
+		12D35770448B2EA1CE5FAB27 /* Pods-FlowTale.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowTale.debug.xcconfig"; path = "Target Support Files/Pods-FlowTale/Pods-FlowTale.debug.xcconfig"; sourceTree = "<group>"; };
 		278A489BDBA476D2CC0AF9AC /* libPods-PhraseFlow Chinese.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhraseFlow Chinese.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EDA23FCE91C5CB989C86534 /* Pods-PhraseFlow Chinese.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhraseFlow Chinese.release.xcconfig"; path = "Target Support Files/Pods-PhraseFlow Chinese/Pods-PhraseFlow Chinese.release.xcconfig"; sourceTree = "<group>"; };
+		8DBC39CBD1D5A30498912D09 /* Pods-FlowTale.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowTale.release.xcconfig"; path = "Target Support Files/Pods-FlowTale/Pods-FlowTale.release.xcconfig"; sourceTree = "<group>"; };
+		A6E47BC9388E891E2E0D0FE5 /* libPods-FlowTale.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FlowTale.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB0854822CB42C0200F1661B /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
 		BB0854842CB42C1400F1661B /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpeed.swift; sourceTree = "<group>"; };
@@ -108,16 +112,16 @@
 		BB1994D02CE9050000D61E54 /* AudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioState.swift; sourceTree = "<group>"; };
 		BB1994D22CE9051700D61E54 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		BB4015BF2CF756FD008ACE9C /* StoryPrompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPrompts.swift; sourceTree = "<group>"; };
-		BB4EDB022C90C86300699E7D /* FastChineseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseStore.swift; sourceTree = "<group>"; };
+		BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleStore.swift; sourceTree = "<group>"; };
 		BB4EDB042C90C89C00699E7D /* FastChineseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseState.swift; sourceTree = "<group>"; };
-		BB4EDB062C90C8CA00699E7D /* FastChineseAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseAction.swift; sourceTree = "<group>"; };
-		BB4EDB092C90C8F100699E7D /* FastChineseEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseEnvironment.swift; sourceTree = "<group>"; };
-		BB4EDB0B2C90C9A100699E7D /* FastChineseReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseReducer.swift; sourceTree = "<group>"; };
-		BB4EDB0D2C90CA0300699E7D /* FastChineseMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseMiddleware.swift; sourceTree = "<group>"; };
-		BB4EDB0F2C90CA4900699E7D /* FastChineseSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseSubscriber.swift; sourceTree = "<group>"; };
-		BB4EDB142C90CF7400699E7D /* FastChineseDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseDataStore.swift; sourceTree = "<group>"; };
-		BB4EDB162C90D20300699E7D /* FastChineseServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseServices.swift; sourceTree = "<group>"; };
-		BB4EDB1C2C90DFDD00699E7D /* FastChineseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseRepository.swift; sourceTree = "<group>"; };
+		BB4EDB062C90C8CA00699E7D /* FlowTaleAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleAction.swift; sourceTree = "<group>"; };
+		BB4EDB092C90C8F100699E7D /* FlowTaleEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleEnvironment.swift; sourceTree = "<group>"; };
+		BB4EDB0B2C90C9A100699E7D /* FlowTaleReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleReducer.swift; sourceTree = "<group>"; };
+		BB4EDB0D2C90CA0300699E7D /* FlowTaleMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleMiddleware.swift; sourceTree = "<group>"; };
+		BB4EDB0F2C90CA4900699E7D /* FlowTaleSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleSubscriber.swift; sourceTree = "<group>"; };
+		BB4EDB142C90CF7400699E7D /* FlowTaleDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleDataStore.swift; sourceTree = "<group>"; };
+		BB4EDB162C90D20300699E7D /* FlowTaleServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleServices.swift; sourceTree = "<group>"; };
+		BB4EDB1C2C90DFDD00699E7D /* FlowTaleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleRepository.swift; sourceTree = "<group>"; };
 		BB4EDB232C91902100699E7D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPhrasesResponse.swift; sourceTree = "<group>"; };
 		BB4EDB2A2C91B35D00699E7D /* Definition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Definition.swift; sourceTree = "<group>"; };
@@ -190,6 +194,7 @@
 			files = (
 				BB7B6D942D1ACEBF0030344A /* libPods-FlowTale.a in Frameworks */,
 				BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */,
+				151EDDEDDB51D6B48377E772 /* libPods-FlowTale.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +220,7 @@
 			children = (
 				BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */,
 				278A489BDBA476D2CC0AF9AC /* libPods-PhraseFlow Chinese.a */,
+				A6E47BC9388E891E2E0D0FE5 /* libPods-FlowTale.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -259,12 +265,12 @@
 		BB4EDB012C90C85000699E7D /* Redux */ = {
 			isa = PBXGroup;
 			children = (
-				BB4EDB062C90C8CA00699E7D /* FastChineseAction.swift */,
-				BB4EDB0B2C90C9A100699E7D /* FastChineseReducer.swift */,
-				BB4EDB0D2C90CA0300699E7D /* FastChineseMiddleware.swift */,
+				BB4EDB062C90C8CA00699E7D /* FlowTaleAction.swift */,
+				BB4EDB0B2C90C9A100699E7D /* FlowTaleReducer.swift */,
+				BB4EDB0D2C90CA0300699E7D /* FlowTaleMiddleware.swift */,
 				BB1994CB2CE904C600D61E54 /* State */,
-				BB4EDB022C90C86300699E7D /* FastChineseStore.swift */,
-				BB4EDB0F2C90CA4900699E7D /* FastChineseSubscriber.swift */,
+				BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */,
+				BB4EDB0F2C90CA4900699E7D /* FlowTaleSubscriber.swift */,
 			);
 			path = Redux;
 			sourceTree = "<group>";
@@ -272,10 +278,10 @@
 		BB4EDB082C90C8E100699E7D /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				BB4EDB092C90C8F100699E7D /* FastChineseEnvironment.swift */,
-				BB4EDB162C90D20300699E7D /* FastChineseServices.swift */,
-				BB4EDB142C90CF7400699E7D /* FastChineseDataStore.swift */,
-				BB4EDB1C2C90DFDD00699E7D /* FastChineseRepository.swift */,
+				BB4EDB092C90C8F100699E7D /* FlowTaleEnvironment.swift */,
+				BB4EDB162C90D20300699E7D /* FlowTaleServices.swift */,
+				BB4EDB142C90CF7400699E7D /* FlowTaleDataStore.swift */,
+				BB4EDB1C2C90DFDD00699E7D /* FlowTaleRepository.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -430,6 +436,8 @@
 			children = (
 				03C5BB9FC82BE5D51BD916B3 /* Pods-PhraseFlow Chinese.debug.xcconfig */,
 				5EDA23FCE91C5CB989C86534 /* Pods-PhraseFlow Chinese.release.xcconfig */,
+				12D35770448B2EA1CE5FAB27 /* Pods-FlowTale.debug.xcconfig */,
+				8DBC39CBD1D5A30498912D09 /* Pods-FlowTale.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -597,7 +605,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PhraseFlow Chinese-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-FlowTale-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -610,15 +618,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PhraseFlow Chinese/Pods-PhraseFlow Chinese-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-FlowTale/Pods-FlowTale-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PhraseFlow Chinese/Pods-PhraseFlow Chinese-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-FlowTale/Pods-FlowTale-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PhraseFlow Chinese/Pods-PhraseFlow Chinese-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FlowTale/Pods-FlowTale-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -646,12 +654,12 @@
 				BB6572E52CD8D12400AC5981 /* Voice.swift in Sources */,
 				BBAE07D12D0C793000DA95CD /* SubscriptionView.swift in Sources */,
 				BBAE07D32D0C796500DA95CD /* SubscriptionState.swift in Sources */,
-				BB4EDB072C90C8CA00699E7D /* FastChineseAction.swift in Sources */,
+				BB4EDB072C90C8CA00699E7D /* FlowTaleAction.swift in Sources */,
 				BBE636BF2CC98B2B00873E68 /* WordTimeStampData.swift in Sources */,
 				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,
-				BB4EDB152C90CF7400699E7D /* FastChineseDataStore.swift in Sources */,
+				BB4EDB152C90CF7400699E7D /* FlowTaleDataStore.swift in Sources */,
 				BBE636C72CCC0E1200873E68 /* EnglishSentenceView.swift in Sources */,
-				BB4EDB1D2C90DFDD00699E7D /* FastChineseRepository.swift in Sources */,
+				BB4EDB1D2C90DFDD00699E7D /* FlowTaleRepository.swift in Sources */,
 				BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */,
 				BB84E0A02CEFA96200520F5E /* Language.swift in Sources */,
 				BB4015C02CF756FD008ACE9C /* StoryPrompts.swift in Sources */,
@@ -660,10 +668,10 @@
 				BBAE07D52D0CA79A00DA95CD /* SubscriptionOption.swift in Sources */,
 				BB6572D22CD165F200AC5981 /* Collection+Safe.swift in Sources */,
 				BB1994CD2CE904D900D61E54 /* StoryState.swift in Sources */,
-				BB4EDB0E2C90CA0300699E7D /* FastChineseMiddleware.swift in Sources */,
+				BB4EDB0E2C90CA0300699E7D /* FlowTaleMiddleware.swift in Sources */,
 				BB6572E72CD8D1E300AC5981 /* Gender.swift in Sources */,
 				BBAE07CF2D0C768000DA95CD /* AnyKey.swift in Sources */,
-				BB4EDB102C90CA4900699E7D /* FastChineseSubscriber.swift in Sources */,
+				BB4EDB102C90CA4900699E7D /* FlowTaleSubscriber.swift in Sources */,
 				BBE636CD2CCC0F8500873E68 /* ReaderView.swift in Sources */,
 				BB1994D32CE9051700D61E54 /* ViewState.swift in Sources */,
 				BB84E0AF2CF495CD00520F5E /* Strings.swift in Sources */,
@@ -673,14 +681,14 @@
 				BB84E0A22CF0AF4200520F5E /* CreateStorySettingsView.swift in Sources */,
 				BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */,
 				BB1994CF2CE904F000D61E54 /* DefinitionState.swift in Sources */,
-				BB4EDB0C2C90C9A100699E7D /* FastChineseReducer.swift in Sources */,
+				BB4EDB0C2C90C9A100699E7D /* FlowTaleReducer.swift in Sources */,
 				BB6572F92CDBB14C00AC5981 /* SpeechStyle.swift in Sources */,
-				BB4EDB0A2C90C8F100699E7D /* FastChineseEnvironment.swift in Sources */,
+				BB4EDB0A2C90C8F100699E7D /* FlowTaleEnvironment.swift in Sources */,
 				BB6572D62CD4E09000AC5981 /* ActionButton.swift in Sources */,
 				BBE16F242CC2AFC800A7EF1F /* ChapterListView.swift in Sources */,
-				BB4EDB032C90C86300699E7D /* FastChineseStore.swift in Sources */,
+				BB4EDB032C90C86300699E7D /* FlowTaleStore.swift in Sources */,
 				BBE16F202CC152C400A7EF1F /* Difficulty.swift in Sources */,
-				BB4EDB172C90D20300699E7D /* FastChineseServices.swift in Sources */,
+				BB4EDB172C90D20300699E7D /* FlowTaleServices.swift in Sources */,
 				BB6572F72CDB991B00AC5981 /* SettingsState.swift in Sources */,
 				BB4EDB052C90C89C00699E7D /* FastChineseState.swift in Sources */,
 				BBAE07CD2D0C765B00DA95CD /* APIRequestType.swift in Sources */,
@@ -869,7 +877,7 @@
 		};
 		BBB6EF482C8C862A0079D135 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 03C5BB9FC82BE5D51BD916B3 /* Pods-PhraseFlow Chinese.debug.xcconfig */;
+			baseConfigurationReference = 12D35770448B2EA1CE5FAB27 /* Pods-FlowTale.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -903,7 +911,7 @@
 		};
 		BBB6EF492C8C862A0079D135 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5EDA23FCE91C5CB989C86534 /* Pods-PhraseFlow Chinese.release.xcconfig */;
+			baseConfigurationReference = 8DBC39CBD1D5A30498912D09 /* Pods-FlowTale.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -950,7 +958,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhraseFlow Chinese.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PhraseFlow Chinese";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlowTale.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FlowTale";
 			};
 			name = Debug;
 		};
@@ -970,7 +978,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhraseFlow Chinese.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PhraseFlow Chinese";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlowTale.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FlowTale";
 			};
 			name = Release;
 		};

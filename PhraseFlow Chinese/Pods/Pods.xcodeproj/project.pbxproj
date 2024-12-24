@@ -20,11 +20,11 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		BAFE40E6EC5454225829463BD1665A8D /* Pods-PhraseFlow Chinese-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4843E758CFF370489F78062549C4746B /* Pods-PhraseFlow Chinese-dummy.m */; };
+		491240545AEBC59F5645E9B28B088B6E /* Pods-FlowTale-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 713619A3D91C45DD2FD7FADC0945C3AE /* Pods-FlowTale-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		17F85143A016C96039331F8C0AE0D94E /* PBXContainerItemProxy */ = {
+		F5B0FC043F1E5F47B9303C58D1A1ABDB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -35,21 +35,21 @@
 
 /* Begin PBXFileReference section */
 		02B309B8666986AD9C9FB0221F1D6B5B /* MicrosoftCognitiveServicesSpeech-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "MicrosoftCognitiveServicesSpeech-iOS.debug.xcconfig"; sourceTree = "<group>"; };
-		190CD52E6243D04BD02A75D518AF7455 /* Pods-PhraseFlow Chinese.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PhraseFlow Chinese.release.xcconfig"; sourceTree = "<group>"; };
+		1909D16A2FE4560C3776EC3BB156A87D /* Pods-FlowTale.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-FlowTale.release.xcconfig"; sourceTree = "<group>"; };
 		3C2C15235C8D86720C315F8150511E63 /* MicrosoftCognitiveServicesSpeech-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "MicrosoftCognitiveServicesSpeech-iOS.release.xcconfig"; sourceTree = "<group>"; };
-		45939ACA611BE5A37DF97F0E86CC2627 /* Pods-PhraseFlow Chinese-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PhraseFlow Chinese-acknowledgements.markdown"; sourceTree = "<group>"; };
-		4843E758CFF370489F78062549C4746B /* Pods-PhraseFlow Chinese-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PhraseFlow Chinese-dummy.m"; sourceTree = "<group>"; };
 		58E27837BF8BDC6D6C90D733F67A3679 /* MicrosoftCognitiveServicesSpeech.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; path = MicrosoftCognitiveServicesSpeech.xcframework; sourceTree = "<group>"; };
-		70EF10550D8384833726C79E1232E271 /* Pods-PhraseFlow Chinese-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PhraseFlow Chinese-acknowledgements.plist"; sourceTree = "<group>"; };
+		713619A3D91C45DD2FD7FADC0945C3AE /* Pods-FlowTale-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-FlowTale-dummy.m"; sourceTree = "<group>"; };
+		77EA0C7C8A102B175EECDE73604FE145 /* Pods-FlowTale.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-FlowTale.debug.xcconfig"; sourceTree = "<group>"; };
 		7AD5311B9C93226F8A1F48146C2AF2F9 /* MicrosoftCognitiveServicesSpeech-iOS-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "MicrosoftCognitiveServicesSpeech-iOS-xcframeworks.sh"; sourceTree = "<group>"; };
-		7F7ADD74E90A62B1C93698EBFE7CA6FA /* Pods-PhraseFlow Chinese.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PhraseFlow Chinese.debug.xcconfig"; sourceTree = "<group>"; };
-		890008B15AD609CCB87BC66AF3F98A2D /* Pods-PhraseFlow Chinese */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "Pods-PhraseFlow Chinese"; path = "libPods-PhraseFlow Chinese.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		B04000BCFDB1DB4D1D38BFEBDC235EB9 /* Pods-PhraseFlow Chinese-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PhraseFlow Chinese-frameworks.sh"; sourceTree = "<group>"; };
+		9E254443F802B632A607F9AA2D7D08E9 /* Pods-FlowTale-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-FlowTale-acknowledgements.markdown"; sourceTree = "<group>"; };
+		AE1128BCBF7BFA0DEF65FE9AF4CB0B9A /* Pods-FlowTale-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-FlowTale-acknowledgements.plist"; sourceTree = "<group>"; };
+		AFC6DE72D66A64C87A152A8511587EFF /* Pods-FlowTale-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-FlowTale-frameworks.sh"; sourceTree = "<group>"; };
+		EB07B31336089141C3256BFF1A1E7FAA /* Pods-FlowTale */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "Pods-FlowTale"; path = "libPods-FlowTale.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D4A9E574CC8C3F61F8857EE8FE0994E6 /* Frameworks */ = {
+		32A018E79FC55871936A986E1ED44780 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -59,18 +59,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0C739FF66D45BFFD6F045C913A0DAD26 /* Pods-PhraseFlow Chinese */ = {
+		09C745C58AE56D831FE75DF78D02626D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				45939ACA611BE5A37DF97F0E86CC2627 /* Pods-PhraseFlow Chinese-acknowledgements.markdown */,
-				70EF10550D8384833726C79E1232E271 /* Pods-PhraseFlow Chinese-acknowledgements.plist */,
-				4843E758CFF370489F78062549C4746B /* Pods-PhraseFlow Chinese-dummy.m */,
-				B04000BCFDB1DB4D1D38BFEBDC235EB9 /* Pods-PhraseFlow Chinese-frameworks.sh */,
-				7F7ADD74E90A62B1C93698EBFE7CA6FA /* Pods-PhraseFlow Chinese.debug.xcconfig */,
-				190CD52E6243D04BD02A75D518AF7455 /* Pods-PhraseFlow Chinese.release.xcconfig */,
+				EB07B31336089141C3256BFF1A1E7FAA /* Pods-FlowTale */,
 			);
-			name = "Pods-PhraseFlow Chinese";
-			path = "Target Support Files/Pods-PhraseFlow Chinese";
+			name = Products;
+			sourceTree = "<group>";
+		};
+		329188FC657A91D69F8139A9258B8ACF /* Pods-FlowTale */ = {
+			isa = PBXGroup;
+			children = (
+				9E254443F802B632A607F9AA2D7D08E9 /* Pods-FlowTale-acknowledgements.markdown */,
+				AE1128BCBF7BFA0DEF65FE9AF4CB0B9A /* Pods-FlowTale-acknowledgements.plist */,
+				713619A3D91C45DD2FD7FADC0945C3AE /* Pods-FlowTale-dummy.m */,
+				AFC6DE72D66A64C87A152A8511587EFF /* Pods-FlowTale-frameworks.sh */,
+				77EA0C7C8A102B175EECDE73604FE145 /* Pods-FlowTale.debug.xcconfig */,
+				1909D16A2FE4560C3776EC3BB156A87D /* Pods-FlowTale.release.xcconfig */,
+			);
+			name = "Pods-FlowTale";
+			path = "Target Support Files/Pods-FlowTale";
 			sourceTree = "<group>";
 		};
 		3E1771BA2EFAE07A111504C5BAC132C5 /* MicrosoftCognitiveServicesSpeech-iOS */ = {
@@ -81,14 +89,6 @@
 			);
 			name = "MicrosoftCognitiveServicesSpeech-iOS";
 			path = "MicrosoftCognitiveServicesSpeech-iOS";
-			sourceTree = "<group>";
-		};
-		6BF1285F5D2CEAFF800CF29C100F378B /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				0C739FF66D45BFFD6F045C913A0DAD26 /* Pods-PhraseFlow Chinese */,
-			);
-			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
 		931C5CDED088F9AE7EA013098F892B35 /* Support Files */ = {
@@ -110,22 +110,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		B90A0590050ACC0B8E2475F4217EE0AA /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				890008B15AD609CCB87BC66AF3F98A2D /* Pods-PhraseFlow Chinese */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D89477F20FB1DE18A04690586D7808C4 /* Frameworks */,
 				B8F1FB067BFDF2A33E3DE018084E87A9 /* Pods */,
-				B90A0590050ACC0B8E2475F4217EE0AA /* Products */,
-				6BF1285F5D2CEAFF800CF29C100F378B /* Targets Support Files */,
+				09C745C58AE56D831FE75DF78D02626D /* Products */,
+				E7C322B200AC2A88DAC4CADD43B70D16 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
@@ -144,10 +136,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E7C322B200AC2A88DAC4CADD43B70D16 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				329188FC657A91D69F8139A9258B8ACF /* Pods-FlowTale */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		D174E9920614F42FC7ED769D0A5FE109 /* Headers */ = {
+		DA738F4F1EFA4B6D2DCD0A827BC78454 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -157,22 +157,22 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		AC6812655EB033F557C114FC15AD2465 /* Pods-PhraseFlow Chinese */ = {
+		A767D51F4A795FA298F5FFB4D4F73CBB /* Pods-FlowTale */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6DC6C5D921826B1C626B133254E2C8F5 /* Build configuration list for PBXNativeTarget "Pods-PhraseFlow Chinese" */;
+			buildConfigurationList = 3436BD9EAB253F4EE1AD0D4870A05A9E /* Build configuration list for PBXNativeTarget "Pods-FlowTale" */;
 			buildPhases = (
-				D174E9920614F42FC7ED769D0A5FE109 /* Headers */,
-				0C706DDDBC673A75FD3899C288A7780A /* Sources */,
-				D4A9E574CC8C3F61F8857EE8FE0994E6 /* Frameworks */,
+				DA738F4F1EFA4B6D2DCD0A827BC78454 /* Headers */,
+				83B118D26B8D1BBBB7CA7627BB139F35 /* Sources */,
+				32A018E79FC55871936A986E1ED44780 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				6CDC010DF0F2B0AD01BACB13AA335A41 /* PBXTargetDependency */,
+				F77F13F9734B59F65114A18B373CBBB6 /* PBXTargetDependency */,
 			);
-			name = "Pods-PhraseFlow Chinese";
-			productName = "Pods-PhraseFlow Chinese";
-			productReference = 890008B15AD609CCB87BC66AF3F98A2D /* Pods-PhraseFlow Chinese */;
+			name = "Pods-FlowTale";
+			productName = "Pods-FlowTale";
+			productReference = EB07B31336089141C3256BFF1A1E7FAA /* Pods-FlowTale */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -193,12 +193,12 @@
 				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = B90A0590050ACC0B8E2475F4217EE0AA /* Products */;
+			productRefGroup = 09C745C58AE56D831FE75DF78D02626D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				97D3B6926BF0A2ABAB7F043559FA98A9 /* MicrosoftCognitiveServicesSpeech-iOS */,
-				AC6812655EB033F557C114FC15AD2465 /* Pods-PhraseFlow Chinese */,
+				A767D51F4A795FA298F5FFB4D4F73CBB /* Pods-FlowTale */,
 			);
 		};
 /* End PBXProject section */
@@ -224,26 +224,47 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		0C706DDDBC673A75FD3899C288A7780A /* Sources */ = {
+		83B118D26B8D1BBBB7CA7627BB139F35 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAFE40E6EC5454225829463BD1665A8D /* Pods-PhraseFlow Chinese-dummy.m in Sources */,
+				491240545AEBC59F5645E9B28B088B6E /* Pods-FlowTale-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6CDC010DF0F2B0AD01BACB13AA335A41 /* PBXTargetDependency */ = {
+		F77F13F9734B59F65114A18B373CBBB6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "MicrosoftCognitiveServicesSpeech-iOS";
 			target = 97D3B6926BF0A2ABAB7F043559FA98A9 /* MicrosoftCognitiveServicesSpeech-iOS */;
-			targetProxy = 17F85143A016C96039331F8C0AE0D94E /* PBXContainerItemProxy */;
+			targetProxy = F5B0FC043F1E5F47B9303C58D1A1ABDB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		02EFD24F8EEDB7AC6279BBA05503CE7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 77EA0C7C8A102B175EECDE73604FE145 /* Pods-FlowTale.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 		39F5B7CD9D2655A0D1F7D42E37920E8B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -327,27 +348,9 @@
 			};
 			name = Debug;
 		};
-		95E0A4E5D41495BE6DAA5BD4A2C2EF69 /* Release */ = {
+		5A94605A9866FF3E7F0465F4E8E1E336 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C2C15235C8D86720C315F8150511E63 /* MicrosoftCognitiveServicesSpeech-iOS.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		9FB156EB17C377F9A68D4847CE6E6A45 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 190CD52E6243D04BD02A75D518AF7455 /* Pods-PhraseFlow Chinese.release.xcconfig */;
+			baseConfigurationReference = 1909D16A2FE4560C3776EC3BB156A87D /* Pods-FlowTale.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -362,6 +365,24 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		95E0A4E5D41495BE6DAA5BD4A2C2EF69 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C2C15235C8D86720C315F8150511E63 /* MicrosoftCognitiveServicesSpeech-iOS.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -429,44 +450,23 @@
 			};
 			name = Release;
 		};
-		D93BA4BB71FFF5893B0AF4EE14F983C3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7F7ADD74E90A62B1C93698EBFE7CA6FA /* Pods-PhraseFlow Chinese.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3436BD9EAB253F4EE1AD0D4870A05A9E /* Build configuration list for PBXNativeTarget "Pods-FlowTale" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02EFD24F8EEDB7AC6279BBA05503CE7A /* Debug */,
+				5A94605A9866FF3E7F0465F4E8E1E336 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				39F5B7CD9D2655A0D1F7D42E37920E8B /* Debug */,
 				C873D3C071BDDC046D6E8F63C69C2591 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		6DC6C5D921826B1C626B133254E2C8F5 /* Build configuration list for PBXNativeTarget "Pods-PhraseFlow Chinese" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D93BA4BB71FFF5893B0AF4EE14F983C3 /* Debug */,
-				9FB156EB17C377F9A68D4847CE6E6A45 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

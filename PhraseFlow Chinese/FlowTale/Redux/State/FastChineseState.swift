@@ -27,7 +27,7 @@ struct FlowTaleState {
     }
 
     var deviceLanguage: Language? {
-        Language.allCases.first(where: { $0.speechCode == locale.identifier })
+        Language.allCases.first(where: { $0.identifier == locale.language.languageCode?.identifier })
     }
 
     init(settingsState: SettingsState = SettingsState(),
