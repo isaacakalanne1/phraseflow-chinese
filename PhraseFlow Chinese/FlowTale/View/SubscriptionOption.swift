@@ -15,7 +15,11 @@ struct SubscriptionOption: View {
     let action: () -> Void
 
     var body: some View {
-        Button(action: action) {
+        Button(action: {
+            if product != nil {
+                action()
+            }
+        }, label: {
             VStack {
                 Text(title)
                     .font(.title2)
@@ -25,10 +29,9 @@ struct SubscriptionOption: View {
             }
             .padding()
             .frame(maxWidth: .infinity)
-            .background(product == nil ? Color.accentColor : Color.primary)
-            .foregroundColor(product == nil ? Color.primary : Color.accentColor)
+            .background(product == nil ? Color.gray : Color.accentColor)
+            .foregroundColor(product == nil ? Color.black : Color.white)
             .cornerRadius(10)
-        }
-        .disabled(product == nil)
+        })
     }
 }
