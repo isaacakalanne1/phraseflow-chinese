@@ -236,3 +236,6 @@
 
 // Conrad German voice button title
 "voice_conrad" = "कॉनराड";
+
+// Subscribe button title for subscribing to app
+"subscribe" = "सदस्यता लें";
