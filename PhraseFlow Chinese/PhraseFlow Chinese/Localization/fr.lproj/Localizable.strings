@@ -1,6 +1,6 @@
 /*
   Localizable.strings
-  PhraseFlow Chinese
+  PhraseFlow French
 
   Created by iakalann on 24/11/2024.
 
@@ -22,13 +22,13 @@
 "settings" = "Paramètres";
 
 // Choose Story Navigation Bar title
-"choose_story" = "Choisir une histoire";
+"choose_story" = "Choisir une Histoire";
 
 // Create Story Navigation Bar title
-"create_story" = "Créer une histoire";
+"create_story" = "Créer une Histoire";
 
 // Story Settings Navigation Bar title
-"story_settings" = "Paramètres de l'histoire";
+"story_settings" = "Paramètres de l'Histoire";
 
 // New Story button title
 "new_story" = "Nouvelle Histoire";
@@ -70,7 +70,7 @@
 "russian" = "Russe";
 
 // Arabic (Gulf Arabic) language name
-"arabicGulf" = "Arabe (du Golfe)";
+"arabicGulf" = "Arabe (Arabe du Golfe)";
 
 // Portuguese (Brazil) language name
 "portuguese_brazil" = "Portugais (Brésil)";
@@ -82,13 +82,13 @@
 "retry" = "Réessayer";
 
 // Failed to write story title
-"failed_to_write_story" = "Impossible d'écrire l'histoire";
+"failed_to_write_story" = "Échec de l'écriture de l'histoire";
 
 // Failed to write chapter title
-"failed_to_write_chapter" = "Impossible d'écrire le chapitre";
+"failed_to_write_chapter" = "Échec de l'écriture du chapitre";
 
 // Writing new chapter title
-"writing_new_chapter" = "Rédaction d'un nouveau chapitre...";
+"writing_new_chapter" = "Écriture d'un nouveau chapitre...";
 
 // New Story button title
 "new_story" = "Nouvelle Histoire";
@@ -133,10 +133,10 @@
 "speed" = "Vitesse";
 
 // Slow speed button title
-"slow" = "Lent";
+"slow" = "Lente";
 
 // Normal speed button title
-"normal" = "Normal";
+"normal" = "Normale";
 
 // Fast speed button title
 "fast" = "Rapide";
@@ -207,17 +207,20 @@
 // New Chapter button title
 "new_chapter" = "Nouveau Chapitre";
 
-// Choose Chapter navigation bar title
-"choose_chapter" = "Choisir un chapitre";
+// Choose Chapter navigation bat title
+"choose_chapter" = "Choisir un Chapitre";
 
 // Defining text while user is fetching the definition of a word
-"defining" = "Définition...";
+"defining" = "Définition en cours...";
 
 // English language name
 "english" = "Anglais";
 
 // Hindi language name
-"french" = "Hindi";
+"hindi" = "Hindi";
+
+// German language name
+"german" = "Allemand";
 
 // Ava voice button title
 "voice_ava" = "Ava";
@@ -227,3 +230,9 @@
 
 // Aarav Hindi voice button title
 "voice_aarav" = "Aarav";
+
+// Amala German voice button title
+"voice_amala" = "Amala";
+
+// Conrad German voice button title
+"voice_conrad" = "Conrad";

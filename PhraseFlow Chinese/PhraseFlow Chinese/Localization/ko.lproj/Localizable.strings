@@ -1,9 +1,8 @@
 /*
   Localizable.strings
-  PhraseFlow Chinese
+  PhraseFlow Korean
 
   Created by iakalann on 24/11/2024.
-
 */
 
 // Translation view title
@@ -13,7 +12,7 @@
 "definition_of" = "정의: %@";
 
 // Stories button title
-"stories" = "이야기";
+"stories" = "스토리";
 
 // Play button title
 "play" = "재생";
@@ -22,16 +21,16 @@
 "settings" = "설정";
 
 // Choose Story Navigation Bar title
-"choose_story" = "이야기 선택";
+"choose_story" = "스토리 선택";
 
 // Create Story Navigation Bar title
-"create_story" = "이야기 만들기";
+"create_story" = "스토리 생성";
 
 // Story Settings Navigation Bar title
-"story_settings" = "이야기 설정";
+"story_settings" = "스토리 설정";
 
 // New Story button title
-"new_story" = "새 이야기";
+"new_story" = "새로운 스토리";
 
 // Difficulty level title
 "difficulty" = "난이도";
@@ -52,7 +51,7 @@
 "language" = "언어";
 
 // Mandarin Chinese language name
-"chinese_mandarin" = "중국어 (만다린)";
+"chinese_mandarin" = "중국어 (표준 중국어)";
 
 // Spanish language name
 "spanish" = "스페인어";
@@ -79,25 +78,25 @@
 "portuguese_european" = "포르투갈어 (유럽)";
 
 // Retry button title
-"retry" = "다시 시도";
+"retry" = "재시도";
 
 // Failed to write story title
-"failed_to_write_story" = "이야기를 작성하지 못했습니다";
+"failed_to_write_story" = "스토리 작성 실패";
 
 // Failed to write chapter title
-"failed_to_write_chapter" = "챕터를 작성하지 못했습니다";
+"failed_to_write_chapter" = "챕터 작성 실패";
 
 // Writing new chapter title
-"writing_new_chapter" = "새 챕터 작성 중...";
+"writing_new_chapter" = "새로운 챕터 작성 중...";
 
 // New Story button title
-"new_story" = "새 이야기";
+"new_story" = "새로운 스토리";
 
 // Language section title
 "language" = "언어";
 
 // AI Statement displayed at top of app
-"ai_statement" = "이야기와 정의는 AI에 의해 작성되었으며 부정확하거나 부적절할 수 있습니다.";
+"ai_statement" = "스토리와 정의는 AI에 의해 작성되며 부정확하거나 부적절할 수 있습니다.";
 
 // E.g, Chapter 1
 "chapter_number" = "챕터 %@";
@@ -109,7 +108,7 @@
 "load" = "로드";
 
 // Pause button title
-"pause" = "일시 정지";
+"pause" = "일시정지";
 
 // Play button title
 "play" = "재생";
@@ -145,7 +144,7 @@
 "voice_xiaoxiao" = "샤오샤오";
 
 // Yunjian Chinese voice button title
-"voice_yunjian" = "윤젠";
+"voice_yunjian" = "윈젠";
 
 // Denise French voice button title
 "voice_denise" = "드니즈";
@@ -187,7 +186,7 @@
 "voice_raquel" = "라켈";
 
 // Duarte (European Portuguese) voice button title
-"voice_duarte" = "두아르테";
+"voice_duarte" = "두아르트";
 
 // Thalita (Brazilian Portuguese) voice button title
 "voice_thalita" = "탈리타";
@@ -205,9 +204,9 @@
 "chapters" = "챕터";
 
 // New Chapter button title
-"new_chapter" = "새 챕터";
+"new_chapter" = "새로운 챕터";
 
-// Choose Chapter navigation bat title
+// Choose Chapter navigation bar title
 "choose_chapter" = "챕터 선택";
 
 // Defining text while user is fetching the definition of a word
@@ -219,6 +218,9 @@
 // Hindi language name
 "hindi" = "힌디어";
 
+// German language name
+"german" = "독일어";
+
 // Ava voice button title
 "voice_ava" = "아바";
 
@@ -227,3 +229,9 @@
 
 // Aarav Hindi voice button title
 "voice_aarav" = "아라브";
+
+// Amala German voice button title
+"voice_amala" = "아말라";
+
+// Conrad German voice button title
+"voice_conrad" = "콘라드";

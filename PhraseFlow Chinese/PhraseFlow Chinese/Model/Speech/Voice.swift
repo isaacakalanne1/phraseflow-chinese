@@ -28,7 +28,9 @@ enum Voice: String, Codable, CaseIterable, Equatable {
          donato,
          ava, // English (US)
          ananya, // Hindi
-         aarav
+         aarav,
+         amala, // German
+         conrad
 
     var title: String {
         switch self {
@@ -121,6 +123,10 @@ enum Voice: String, Codable, CaseIterable, Equatable {
             "hi-IN-AnanyaNeural"
         case .aarav:
             "hi-IN-AaravNeural"
+        case .amala:
+            "de-DE-AmalaNeural"
+        case .conrad:
+            "de-DE-ConradNeural"
         }
     }
 
@@ -136,7 +142,8 @@ enum Voice: String, Codable, CaseIterable, Equatable {
                 .raquel,
                 .thalita,
                 .ava,
-                .ananya:
+                .ananya,
+                .amala:
                 .female
         case .yunjian,
                 .henri,
@@ -147,7 +154,8 @@ enum Voice: String, Codable, CaseIterable, Equatable {
                 .hamdan,
                 .duarte,
                 .donato,
-                .aarav:
+                .aarav,
+                .conrad:
                 .male
         }
     }

@@ -1,6 +1,6 @@
 /*
   Localizable.strings
-  PhraseFlow Chinese
+  PhraseFlow Russian
 
   Created by iakalann on 24/11/2024.
 
@@ -52,7 +52,7 @@
 "language" = "Язык";
 
 // Mandarin Chinese language name
-"chinese_mandarin" = "Китайский (мандарин)";
+"chinese_mandarin" = "Китайский (мандаринский)";
 
 // Spanish language name
 "spanish" = "Испанский";
@@ -88,7 +88,7 @@
 "failed_to_write_chapter" = "Не удалось написать главу";
 
 // Writing new chapter title
-"writing_new_chapter" = "Пишем новую главу...";
+"writing_new_chapter" = "Пишется новая глава...";
 
 // New Story button title
 "new_story" = "Новая история";
@@ -124,7 +124,7 @@
 "english_toggle" = "Английский";
 
 // Toggle section title
-"toggle" = "Переключение";
+"toggle" = "Переключатель";
 
 // Voice section title
 "voice" = "Голос";
@@ -145,7 +145,7 @@
 "voice_xiaoxiao" = "Сяосяо";
 
 // Yunjian Chinese voice button title
-"voice_yunjian" = "Юнцзян";
+"voice_yunjian" = "Юньцзянь";
 
 // Denise French voice button title
 "voice_denise" = "Дениз";
@@ -184,7 +184,7 @@
 "voice_hamdan" = "Хамдан";
 
 // Raquel (European Portuguese) voice button title
-"voice_raquel" = "Ракель";
+"voice_raquel" = "Ракил";
 
 // Duarte (European Portuguese) voice button title
 "voice_duarte" = "Дуарте";
@@ -219,6 +219,9 @@
 // Hindi language name
 "hindi" = "Хинди";
 
+// German language name
+"german" = "Немецкий";
+
 // Ava voice button title
 "voice_ava" = "Ава";
 
@@ -226,4 +229,10 @@
 "voice_ananya" = "Ананья";
 
 // Aarav Hindi voice button title
-"voice_aarav" = "Аарав";
+"voice_aarav" = "Арав";
+
+// Amala German voice button title
+"voice_amala" = "Амала";
+
+// Conrad German voice button title
+"voice_conrad" = "Конрад";

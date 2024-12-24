@@ -1,6 +1,6 @@
 /*
   Localizable.strings
-  PhraseFlow Chinese
+  PhraseFlow Japanese
 
   Created by iakalann on 24/11/2024.
 
@@ -13,7 +13,7 @@
 "definition_of" = "定義: %@";
 
 // Stories button title
-"stories" = "物語";
+"stories" = "ストーリー";
 
 // Play button title
 "play" = "再生";
@@ -22,16 +22,16 @@
 "settings" = "設定";
 
 // Choose Story Navigation Bar title
-"choose_story" = "物語を選ぶ";
+"choose_story" = "ストーリーを選択";
 
 // Create Story Navigation Bar title
-"create_story" = "物語を作る";
+"create_story" = "ストーリーを作成";
 
 // Story Settings Navigation Bar title
-"story_settings" = "物語の設定";
+"story_settings" = "ストーリー設定";
 
 // New Story button title
-"new_story" = "新しい物語";
+"new_story" = "新しいストーリー";
 
 // Difficulty level title
 "difficulty" = "難易度";
@@ -40,19 +40,19 @@
 "beginner" = "初心者";
 
 // Intermediate difficulty level
-"intermediate" = "中級者";
+"intermediate" = "中級";
 
 // Advanced difficulty level
-"advanced" = "上級者";
+"advanced" = "上級";
 
 // Expert difficulty level
-"expert" = "達人";
+"expert" = "エキスパート";
 
 // Language Section Title
 "language" = "言語";
 
 // Mandarin Chinese language name
-"chinese_mandarin" = "中国語（普通話）";
+"chinese_mandarin" = "中国語（北京語）";
 
 // Spanish language name
 "spanish" = "スペイン語";
@@ -70,7 +70,7 @@
 "russian" = "ロシア語";
 
 // Arabic (Gulf Arabic) language name
-"arabicGulf" = "アラビア語（湾岸方言）";
+"arabicGulf" = "アラビア語（湾岸アラビア語）";
 
 // Portuguese (Brazil) language name
 "portuguese_brazil" = "ポルトガル語（ブラジル）";
@@ -82,7 +82,7 @@
 "retry" = "再試行";
 
 // Failed to write story title
-"failed_to_write_story" = "物語の作成に失敗しました";
+"failed_to_write_story" = "ストーリーの作成に失敗しました";
 
 // Failed to write chapter title
 "failed_to_write_chapter" = "章の作成に失敗しました";
@@ -91,13 +91,13 @@
 "writing_new_chapter" = "新しい章を作成中...";
 
 // New Story button title
-"new_story" = "新しい物語";
+"new_story" = "新しいストーリー";
 
 // Language section title
 "language" = "言語";
 
 // AI Statement displayed at top of app
-"ai_statement" = "物語や定義はAIによって作成されており、不正確または不適切な場合があります。";
+"ai_statement" = "ストーリーや定義はAIによって作成されており、不正確または不適切な場合があります。";
 
 // E.g, Chapter 1
 "chapter_number" = "第%@章";
@@ -106,7 +106,7 @@
 "loading" = "読み込み中";
 
 // Load button title, shown when content is ready to be loaded
-"load" = "読み込む";
+"load" = "ロード";
 
 // Pause button title
 "pause" = "一時停止";
@@ -207,8 +207,8 @@
 // New Chapter button title
 "new_chapter" = "新しい章";
 
-// Choose Chapter navigation bar title
-"choose_chapter" = "章を選ぶ";
+// Choose Chapter navigation bat title
+"choose_chapter" = "章を選択";
 
 // Defining text while user is fetching the definition of a word
 "defining" = "定義中...";
@@ -219,6 +219,9 @@
 // Hindi language name
 "hindi" = "ヒンディー語";
 
+// German language name
+"german" = "ドイツ語";
+
 // Ava voice button title
 "voice_ava" = "アヴァ";
 
@@ -227,3 +230,9 @@
 
 // Aarav Hindi voice button title
 "voice_aarav" = "アーラヴ";
+
+// Amala German voice button title
+"voice_amala" = "アマラ";
+
+// Conrad German voice button title
+"voice_conrad" = "コンラート";

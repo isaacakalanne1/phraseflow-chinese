@@ -30,6 +30,7 @@ public enum LocalizedString {
   public static let fast = LocalizedString.tr("Localizable", "fast")
   public static let female = LocalizedString.tr("Localizable", "female")
   public static let french = LocalizedString.tr("Localizable", "french")
+  public static let german = LocalizedString.tr("Localizable", "german")
   public static let hindi = LocalizedString.tr("Localizable", "hindi")
   public static let intermediate = LocalizedString.tr("Localizable", "intermediate")
   public static let japanese = LocalizedString.tr("Localizable", "japanese")

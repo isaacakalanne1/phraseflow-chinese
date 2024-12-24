@@ -43,6 +43,11 @@ struct ActionButtonsView: View {
                 }
             }
 
+            // TODO: Localize
+            ActionButton(title: "Subscribe", systemImage: .heart) {
+                store.dispatch(.setSubscriptionSheetShowing(true))
+            }
+
             ActionButton(title: LocalizedString.settings, systemImage: .gear) {
                 store.dispatch(.updateShowingSettings(isShowing: true))
             }

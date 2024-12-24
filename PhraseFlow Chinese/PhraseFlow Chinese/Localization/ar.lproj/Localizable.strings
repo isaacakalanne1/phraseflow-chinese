@@ -1,6 +1,6 @@
 /*
   Localizable.strings
-  PhraseFlow Chinese
+  PhraseFlow Arabic Gulf
 
   Created by iakalann on 24/11/2024.
 
@@ -19,13 +19,13 @@
 "play" = "تشغيل";
 
 // Settings View title
-"settings" = "الإعدادات";
+"settings" = "إعدادات";
 
 // Choose Story Navigation Bar title
 "choose_story" = "اختر قصة";
 
 // Create Story Navigation Bar title
-"create_story" = "إنشاء قصة";
+"create_story" = "أنشئ قصة";
 
 // Story Settings Navigation Bar title
 "story_settings" = "إعدادات القصة";
@@ -73,10 +73,10 @@
 "arabicGulf" = "العربية (الخليجية)";
 
 // Portuguese (Brazil) language name
-"portuguese_brazil" = "البرتغالية (البرازيلية)";
+"portuguese_brazil" = "البرتغالية (البرازيل)";
 
 // Portuguese (European) language name
-"portuguese_european" = "البرتغالية (الأوروبية)";
+"portuguese_european" = "البرتغالية (أوروبا)";
 
 // Retry button title
 "retry" = "إعادة المحاولة";
@@ -97,7 +97,7 @@
 "language" = "اللغة";
 
 // AI Statement displayed at top of app
-"ai_statement" = "التطبيق يعتمد على الذكاء الاصطناعي لتوفير القصص والتعريفات، وقد تحتوي على معلومات غير دقيقة أو غير ملائمة.";
+"ai_statement" = "القصص والتعريفات مكتوبة بواسطة الذكاء الاصطناعي وقد تكون غير دقيقة أو غير ملائمة.";
 
 // E.g, Chapter 1
 "chapter_number" = "الفصل %@";
@@ -124,7 +124,7 @@
 "english_toggle" = "الإنجليزية";
 
 // Toggle section title
-"toggle" = "تبديل";
+"toggle" = "التبديل";
 
 // Voice section title
 "voice" = "الصوت";
@@ -148,7 +148,7 @@
 "voice_yunjian" = "يونجيان";
 
 // Denise French voice button title
-"voice_denise" = "دينيز";
+"voice_denise" = "دينيس";
 
 // Henri French voice button title
 "voice_henri" = "هنري";
@@ -169,7 +169,7 @@
 "voice_dariya" = "داريا";
 
 // Dmitry (Russian) voice button title
-"voice_dmitry" = "ديمتري";
+"voice_dmitry" = "ديميتري";
 
 // Elvira (Spanish) voice button title
 "voice_elvira" = "إلفيرا";
@@ -190,7 +190,7 @@
 "voice_duarte" = "دوارتي";
 
 // Thalita (Brazilian Portuguese) voice button title
-"voice_thalita" = "تاليتا";
+"voice_thalita" = "ثاليتا";
 
 // Donato (Brazilian Portuguese) voice button title
 "voice_donato" = "دوناتو";
@@ -211,13 +211,16 @@
 "choose_chapter" = "اختر فصل";
 
 // Defining text while user is fetching the definition of a word
-"defining" = "جارٍ تحديد التعريف...";
+"defining" = "جاري التعريف...";
 
 // English language name
 "english" = "الإنجليزية";
 
 // Hindi language name
-"gulf_arabic" = "الهندية";
+"hindi" = "الهندية";
+
+// German language name
+"german" = "الألمانية";
 
 // Ava voice button title
 "voice_ava" = "آفا";
@@ -226,4 +229,10 @@
 "voice_ananya" = "أنانيا";
 
 // Aarav Hindi voice button title
-"voice_aarav" = "أرَاف";
+"voice_aarav" = "أراف";
+
+// Amala German voice button title
+"voice_amala" = "أمالا";
+
+// Conrad German voice button title
+"voice_conrad" = "كونراد";

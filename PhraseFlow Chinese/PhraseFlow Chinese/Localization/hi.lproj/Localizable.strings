@@ -16,7 +16,7 @@
 "stories" = "कहानियाँ";
 
 // Play button title
-"play" = "चलाएं";
+"play" = "चलाएँ";
 
 // Settings View title
 "settings" = "सेटिंग्स";
@@ -70,10 +70,10 @@
 "russian" = "रूसी";
 
 // Arabic (Gulf Arabic) language name
-"arabicGulf" = "अरबी (खाड़ी अरबी)";
+"arabicGulf" = "अरबी (गल्फ अरबी)";
 
 // Portuguese (Brazil) language name
-"portuguese_brazil" = "पुर्तगाली (ब्राज़ील)";
+"portuguese_brazil" = "पुर्तगाली (ब्राजील)";
 
 // Portuguese (European) language name
 "portuguese_european" = "पुर्तगाली (यूरोपीय)";
@@ -97,7 +97,7 @@
 "language" = "भाषा";
 
 // AI Statement displayed at top of app
-"ai_statement" = "कहानियाँ और परिभाषाएँ AI द्वारा लिखी गई हैं और गलत या अनुचित हो सकती हैं।";
+"ai_statement" = "कहानियाँ और परिभाषाएँ एआई द्वारा लिखी गई हैं और गलत या अनुचित हो सकती हैं।";
 
 // E.g, Chapter 1
 "chapter_number" = "अध्याय %@";
@@ -109,10 +109,10 @@
 "load" = "लोड करें";
 
 // Pause button title
-"pause" = "रोकें";
+"pause" = "विराम";
 
 // Play button title
-"play" = "चलाएं";
+"play" = "चलाएँ";
 
 // Next Chapter button title
 "next_chapter" = "अगला अध्याय";
@@ -124,7 +124,7 @@
 "english_toggle" = "अंग्रेज़ी";
 
 // Toggle section title
-"toggle" = "स्विच";
+"toggle" = "टॉगल";
 
 // Voice section title
 "voice" = "आवाज़";
@@ -133,7 +133,7 @@
 "speed" = "गति";
 
 // Slow speed button title
-"slow" = "धीमी";
+"slow" = "धीमा";
 
 // Normal speed button title
 "normal" = "सामान्य";
@@ -145,7 +145,7 @@
 "voice_xiaoxiao" = "श्याओश्याओ";
 
 // Yunjian Chinese voice button title
-"voice_yunjian" = "युनजियान";
+"voice_yunjian" = "युनजियन";
 
 // Denise French voice button title
 "voice_denise" = "डेनिस";
@@ -160,37 +160,37 @@
 "voice_keita" = "केइता";
 
 // Sun-Hi Korean voice button title
-"voice_sun_hi" = "सन-ही";
+"voice_sun_hi" = "सुन-ही";
 
 // Hyun-Su Korean voice button title
-"voice_hyun_su" = "ह्यून-सु";
+"voice_hyun_su" = "ह्यून-सू";
 
 // Dariya (Russian) voice button title
-"voice_dariya" = "दारिया";
+"voice_dariya" = "डारिया";
 
 // Dmitry (Russian) voice button title
 "voice_dmitry" = "दिमित्री";
 
 // Elvira (Spanish) voice button title
-"voice_elvira" = "एलवीरा";
+"voice_elvira" = "एल्विरा";
 
 // Alvaro (Spanish) voice button title
-"voice_alvaro" = "अलवारो";
+"voice_alvaro" = "अल्वारो";
 
 // Fatima (Arabic, UAE) voice button title
-"voice_fatima" = "फातिमा";
+"voice_fatima" = "फ़ातिमा";
 
 // Hamdan (Arabic, UAE) voice button title
 "voice_hamdan" = "हमदान";
 
 // Raquel (European Portuguese) voice button title
-"voice_raquel" = "राकेल";
+"voice_raquel" = "राक्वेल";
 
 // Duarte (European Portuguese) voice button title
 "voice_duarte" = "डुआर्टे";
 
 // Thalita (Brazilian Portuguese) voice button title
-"voice_thalita" = "थालीता";
+"voice_thalita" = "थालिटा";
 
 // Donato (Brazilian Portuguese) voice button title
 "voice_donato" = "डोनाटो";
@@ -211,19 +211,28 @@
 "choose_chapter" = "अध्याय चुनें";
 
 // Defining text while user is fetching the definition of a word
-"defining" = "परिभाषा की जा रही है...";
+"defining" = "परिभाषित कर रहे हैं...";
 
 // English language name
 "english" = "अंग्रेज़ी";
 
 // Hindi language name
-"hindi" = "हिन्दी";
+"hindi" = "हिंदी";
+
+// German language name
+"german" = "जर्मन";
 
 // Ava voice button title
-"voice_ava" = "आवा";
+"voice_ava" = "अवा";
 
 // Ananya Hindi voice button title
 "voice_ananya" = "अनन्या";
 
 // Aarav Hindi voice button title
 "voice_aarav" = "आरव";
+
+// Amala German voice button title
+"voice_amala" = "अमला";
+
+// Conrad German voice button title
+"voice_conrad" = "कॉनराड";

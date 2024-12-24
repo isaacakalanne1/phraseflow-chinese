@@ -1,6 +1,6 @@
 /*
   Localizable.strings
-  PhraseFlow Chinese
+  PhraseFlow Portuguese (European)
 
   Created by iakalann on 24/11/2024.
 
@@ -70,7 +70,7 @@
 "russian" = "Russo";
 
 // Arabic (Gulf Arabic) language name
-"arabicGulf" = "Árabe (Golfo Árabe)";
+"arabicGulf" = "Árabe (Árabe do Golfo)";
 
 // Portuguese (Brazil) language name
 "portuguese_brazil" = "Português (Brasil)";
@@ -88,7 +88,7 @@
 "failed_to_write_chapter" = "Falha ao escrever o capítulo";
 
 // Writing new chapter title
-"writing_new_chapter" = "Escrevendo novo capítulo...";
+"writing_new_chapter" = "A escrever novo capítulo...";
 
 // New Story button title
 "new_story" = "Nova História";
@@ -97,13 +97,13 @@
 "language" = "Idioma";
 
 // AI Statement displayed at top of app
-"ai_statement" = "Histórias e definições são escritas por IA e podem ser imprecisas ou inadequadas.";
+"ai_statement" = "Histórias e definições são escritas por IA e podem estar incorretas ou inadequadas.";
 
 // E.g, Chapter 1
 "chapter_number" = "Capítulo %@";
 
 // Loading button title, shown when a button state is currently loading
-"loading" = "Carregando";
+"loading" = "A carregar";
 
 // Load button title, shown when content is ready to be loaded
 "load" = "Carregar";
@@ -133,13 +133,13 @@
 "speed" = "Velocidade";
 
 // Slow speed button title
-"slow" = "Devagar";
+"slow" = "Lenta";
 
 // Normal speed button title
 "normal" = "Normal";
 
 // Fast speed button title
-"fast" = "Rápido";
+"fast" = "Rápida";
 
 // Xiaoxiao Chinese voice button title
 "voice_xiaoxiao" = "Xiaoxiao";
@@ -175,10 +175,10 @@
 "voice_elvira" = "Elvira";
 
 // Alvaro (Spanish) voice button title
-"voice_alvaro" = "Álvaro";
+"voice_alvaro" = "Alvaro";
 
 // Fatima (Arabic, UAE) voice button title
-"voice_fatima" = "Fátima";
+"voice_fatima" = "Fatima";
 
 // Hamdan (Arabic, UAE) voice button title
 "voice_hamdan" = "Hamdan";
@@ -207,17 +207,20 @@
 // New Chapter button title
 "new_chapter" = "Novo Capítulo";
 
-// Choose Chapter navigation bat title
+// Choose Chapter navigation bar title
 "choose_chapter" = "Escolher Capítulo";
 
 // Defining text while user is fetching the definition of a word
-"defining" = "Definindo...";
+"defining" = "A definir...";
 
 // English language name
 "english" = "Inglês";
 
 // Hindi language name
 "hindi" = "Hindi";
+
+// German language name
+"german" = "Alemão";
 
 // Ava voice button title
 "voice_ava" = "Ava";
@@ -227,3 +230,9 @@
 
 // Aarav Hindi voice button title
 "voice_aarav" = "Aarav";
+
+// Amala German voice button title
+"voice_amala" = "Amala";
+
+// Conrad German voice button title
+"voice_conrad" = "Conrad";

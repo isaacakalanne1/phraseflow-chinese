@@ -146,6 +146,7 @@
 		BBA94CCA2D19A96A00EB4A7E /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		BBA94CCB2D19A9A900EB4A7E /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		BBA94CCC2D19AAE000EB4A7E /* FlowTaleStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleStateTests.swift; sourceTree = "<group>"; };
+		BBA94CCE2D19D57E00EB4A7E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BBAE07CC2D0C765B00DA95CD /* APIRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestType.swift; sourceTree = "<group>"; };
 		BBAE07CE2D0C768000DA95CD /* AnyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyKey.swift; sourceTree = "<group>"; };
 		BBAE07D02D0C793000DA95CD /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
@@ -533,6 +534,7 @@
 				ja,
 				"pt-BR",
 				"pt-PT",
+				de,
 			);
 			mainGroup = BBB6EF1A2C8C86240079D135;
 			packageReferences = (
@@ -734,6 +736,7 @@
 				BBA94CC92D19A8EF00EB4A7E /* ja */,
 				BBA94CCA2D19A96A00EB4A7E /* pt-BR */,
 				BBA94CCB2D19A9A900EB4A7E /* pt-PT */,
+				BBA94CCE2D19D57E00EB4A7E /* de */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

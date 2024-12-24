@@ -1,6 +1,6 @@
 /*
   Localizable.strings
-  PhraseFlow Chinese
+  PhraseFlow Brazilian Portuguese
 
   Created by iakalann on 24/11/2024.
 
@@ -70,7 +70,7 @@
 "russian" = "Russo";
 
 // Arabic (Gulf Arabic) language name
-"arabicGulf" = "Árabe (Árabe do Golfo)";
+"arabicGulf" = "Árabe (Golfo Árabe)";
 
 // Portuguese (Brazil) language name
 "portuguese_brazil" = "Português (Brasil)";
@@ -82,10 +82,10 @@
 "retry" = "Tentar Novamente";
 
 // Failed to write story title
-"failed_to_write_story" = "Falha ao escrever história";
+"failed_to_write_story" = "Falha ao criar história";
 
 // Failed to write chapter title
-"failed_to_write_chapter" = "Falha ao escrever capítulo";
+"failed_to_write_chapter" = "Falha ao criar capítulo";
 
 // Writing new chapter title
 "writing_new_chapter" = "Escrevendo novo capítulo...";
@@ -133,13 +133,13 @@
 "speed" = "Velocidade";
 
 // Slow speed button title
-"slow" = "Lento";
+"slow" = "Lenta";
 
 // Normal speed button title
 "normal" = "Normal";
 
 // Fast speed button title
-"fast" = "Rápido";
+"fast" = "Rápida";
 
 // Xiaoxiao Chinese voice button title
 "voice_xiaoxiao" = "Xiaoxiao";
@@ -175,7 +175,7 @@
 "voice_elvira" = "Elvira";
 
 // Alvaro (Spanish) voice button title
-"voice_alvaro" = "Alvaro";
+"voice_alvaro" = "Álvaro";
 
 // Fatima (Arabic, UAE) voice button title
 "voice_fatima" = "Fatima";
@@ -219,6 +219,9 @@
 // Hindi language name
 "hindi" = "Hindi";
 
+// German language name
+"german" = "Alemão";
+
 // Ava voice button title
 "voice_ava" = "Ava";
 
@@ -227,3 +230,9 @@
 
 // Aarav Hindi voice button title
 "voice_aarav" = "Aarav";
+
+// Amala German voice button title
+"voice_amala" = "Amala";
+
+// Conrad German voice button title
+"voice_conrad" = "Conrad";

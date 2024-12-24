@@ -1,145 +1,145 @@
 /*
   Localizable.strings
-  PhraseFlow Spanish
+  PhraseFlow German
 
   Created by iakalann on 24/11/2024.
 
 */
 
 // Translation view title
-"translation" = "Traducción";
+"translation" = "Übersetzung";
 
 // Definition View title
-"definition_of" = "Definición: %@";
+"definition_of" = "Definition: %@";
 
 // Stories button title
-"stories" = "Historias";
+"stories" = "Geschichten";
 
 // Play button title
-"play" = "Reproducir";
+"play" = "Abspielen";
 
 // Settings View title
-"settings" = "Configuración";
+"settings" = "Einstellungen";
 
 // Choose Story Navigation Bar title
-"choose_story" = "Elegir Historia";
+"choose_story" = "Geschichte wählen";
 
 // Create Story Navigation Bar title
-"create_story" = "Crear Historia";
+"create_story" = "Geschichte erstellen";
 
 // Story Settings Navigation Bar title
-"story_settings" = "Configuración de Historia";
+"story_settings" = "Geschichten-Einstellungen";
 
 // New Story button title
-"new_story" = "Nueva Historia";
+"new_story" = "Neue Geschichte";
 
 // Difficulty level title
-"difficulty" = "Dificultad";
+"difficulty" = "Schwierigkeitsgrad";
 
 // Beginner difficulty level
-"beginner" = "Principiante";
+"beginner" = "Anfänger";
 
 // Intermediate difficulty level
-"intermediate" = "Intermedio";
+"intermediate" = "Mittelstufe";
 
 // Advanced difficulty level
-"advanced" = "Avanzado";
+"advanced" = "Fortgeschritten";
 
 // Expert difficulty level
-"expert" = "Experto";
+"expert" = "Experte";
 
 // Language Section Title
-"language" = "Idioma";
+"language" = "Sprache";
 
 // Mandarin Chinese language name
-"chinese_mandarin" = "Chino (Mandarín)";
+"chinese_mandarin" = "Chinesisch (Mandarin)";
 
 // Spanish language name
-"spanish" = "Español";
+"spanish" = "Spanisch";
 
 // French language name
-"french" = "Francés";
+"french" = "Französisch";
 
 // Japanese language name
-"japanese" = "Japonés";
+"japanese" = "Japanisch";
 
 // Korean language name
-"korean" = "Coreano";
+"korean" = "Koreanisch";
 
 // Russian language name
-"russian" = "Ruso";
+"russian" = "Russisch";
 
 // Arabic (Gulf Arabic) language name
-"arabicGulf" = "Árabe (Golfo Árabe)";
+"arabicGulf" = "Arabisch (Golf-Arabisch)";
 
 // Portuguese (Brazil) language name
-"portuguese_brazil" = "Portugués (Brasil)";
+"portuguese_brazil" = "Portugiesisch (Brasilien)";
 
 // Portuguese (European) language name
-"portuguese_european" = "Portugués (Europeo)";
+"portuguese_european" = "Portugiesisch (Europa)";
 
 // Retry button title
-"retry" = "Reintentar";
+"retry" = "Erneut versuchen";
 
 // Failed to write story title
-"failed_to_write_story" = "No se pudo escribir la historia";
+"failed_to_write_story" = "Fehler beim Schreiben der Geschichte";
 
 // Failed to write chapter title
-"failed_to_write_chapter" = "No se pudo escribir el capítulo";
+"failed_to_write_chapter" = "Fehler beim Schreiben des Kapitels";
 
 // Writing new chapter title
-"writing_new_chapter" = "Escribiendo nuevo capítulo...";
+"writing_new_chapter" = "Neues Kapitel wird geschrieben...";
 
 // New Story button title
-"new_story" = "Nueva Historia";
+"new_story" = "Neue Geschichte";
 
 // Language section title
-"language" = "Idioma";
+"language" = "Sprache";
 
 // AI Statement displayed at top of app
-"ai_statement" = "Las historias y definiciones son escritas por IA y pueden ser inexactas o inapropiadas.";
+"ai_statement" = "Geschichten und Definitionen werden von KI geschrieben und können ungenau oder unangemessen sein.";
 
 // E.g, Chapter 1
-"chapter_number" = "Capítulo %@";
+"chapter_number" = "Kapitel %@";
 
 // Loading button title, shown when a button state is currently loading
-"loading" = "Cargando";
+"loading" = "Wird geladen";
 
 // Load button title, shown when content is ready to be loaded
-"load" = "Cargar";
+"load" = "Laden";
 
 // Pause button title
-"pause" = "Pausar";
+"pause" = "Pause";
 
 // Play button title
-"play" = "Reproducir";
+"play" = "Abspielen";
 
 // Next Chapter button title
-"next_chapter" = "Siguiente Capítulo";
+"next_chapter" = "Nächstes Kapitel";
 
 // Definition toggle title
-"definition_toggle" = "Definición";
+"definition_toggle" = "Definition";
 
 // English toggle title
-"english_toggle" = "Inglés";
+"english_toggle" = "Englisch";
 
 // Toggle section title
-"toggle" = "Alternar";
+"toggle" = "Schalter";
 
 // Voice section title
-"voice" = "Voz";
+"voice" = "Stimme";
 
 // Speed section title
-"speed" = "Velocidad";
+"speed" = "Geschwindigkeit";
 
 // Slow speed button title
-"slow" = "Lento";
+"slow" = "Langsam";
 
 // Normal speed button title
 "normal" = "Normal";
 
 // Fast speed button title
-"fast" = "Rápido";
+"fast" = "Schnell";
 
 // Xiaoxiao Chinese voice button title
 "voice_xiaoxiao" = "Xiaoxiao";
@@ -175,7 +175,7 @@
 "voice_elvira" = "Elvira";
 
 // Alvaro (Spanish) voice button title
-"voice_alvaro" = "Álvaro";
+"voice_alvaro" = "Alvaro";
 
 // Fatima (Arabic, UAE) voice button title
 "voice_fatima" = "Fatima";
@@ -196,31 +196,31 @@
 "voice_donato" = "Donato";
 
 // Male Gender Button title
-"male" = "Masculino";
+"male" = "Männlich";
 
 // Female Gender Button title
-"female" = "Femenino";
+"female" = "Weiblich";
 
 // Chapters section title
-"chapters" = "Capítulos";
+"chapters" = "Kapitel";
 
 // New Chapter button title
-"new_chapter" = "Nuevo Capítulo";
+"new_chapter" = "Neues Kapitel";
 
-// Choose Chapter navigation bar title
-"choose_chapter" = "Elegir Capítulo";
+// Choose Chapter navigation bat title
+"choose_chapter" = "Kapitel wählen";
 
 // Defining text while user is fetching the definition of a word
-"defining" = "Definiendo...";
+"defining" = "Definieren...";
 
 // English language name
-"english" = "Inglés";
+"english" = "Englisch";
 
 // Hindi language name
 "hindi" = "Hindi";
 
 // German language name
-"german" = "Alemán";
+"german" = "Deutsch";
 
 // Ava voice button title
 "voice_ava" = "Ava";

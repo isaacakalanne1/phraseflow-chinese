@@ -28,7 +28,6 @@ final class FastChineseServices: FastChineseServicesProtocol {
 
     func generateStory(story: Story,
                        deviceLanguage: Language?) async throws -> Story {
-        let originalLanguage = Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier })
         do {
             let storyString = try await continueStory(story: story)
             let jsonString = try await convertToJson(story: story,
@@ -43,15 +42,15 @@ final class FastChineseServices: FastChineseServicesProtocol {
                 let lastKey = keys.last!
                 guard lastKey.intValue == nil else { return lastKey }
                 switch lastKey.stringValue {
-                case originalLanguage?.schemaKey:
+                case deviceLanguage?.schemaKey:
                     return AnyKey(stringValue: "original")!
                 case story.language.schemaKey:
                     return AnyKey(stringValue: "translation")!
-                case "briefLatestStorySummaryIn\(originalLanguage?.key ?? "English")":
+                case "briefLatestStorySummaryIn\(deviceLanguage?.key ?? "English")":
                     return AnyKey(stringValue: "briefLatestStorySummary")!
-                case "chapterNumberAndTitleIn\(originalLanguage?.key ?? "English")":
+                case "chapterNumberAndTitleIn\(deviceLanguage?.key ?? "English")":
                     return AnyKey(stringValue: "chapterNumberAndTitle")!
-                case "titleOfNovelIn\(originalLanguage?.key ?? "English")":
+                case "titleOfNovelIn\(deviceLanguage?.key ?? "English")":
                     return AnyKey(stringValue: "titleOfNovel")!
                 default:
                     return AnyKey(stringValue: lastKey.stringValue)!

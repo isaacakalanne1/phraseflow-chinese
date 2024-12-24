@@ -219,6 +219,9 @@
 // Hindi language name
 "hindi" = "Hindi";
 
+// German language name
+"german" = "German";
+
 // Ava voice button title
 "voice_ava" = "Ava";
 
@@ -227,3 +230,9 @@
 
 // Aarav Hindi voice button title
 "voice_aarav" = "Aarav";
+
+// Amala German voice button title
+"voice_amala" = "Amala";
+
+// Conrad German voice button title
+"voice_conrad" = "Conrad";

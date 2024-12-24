@@ -18,7 +18,8 @@ enum Language: String, Codable, CaseIterable {
          brazilianPortuguese,
          europeanPortuguese,
          hindi,
-         russian
+         russian,
+         german
 
     var descriptiveEnglishName: String {
         switch self {
@@ -65,6 +66,8 @@ enum Language: String, Codable, CaseIterable {
             LocalizedString.english
         case .hindi:
             LocalizedString.hindi
+        case .german:
+            LocalizedString.german
         }
     }
 
@@ -92,37 +95,13 @@ enum Language: String, Codable, CaseIterable {
             "en-US"
         case .hindi:
             "hi-IN"
+        case .german:
+            "de-DE"
         }
     }
 
     var locale: Locale {
         Locale(identifier: speechCode)
-    }
-
-    var identifier: String {
-        switch self {
-        case .arabicGulf:
-            "ar"
-        case .mandarinChinese:
-            "zh"
-        case .french:
-            "fr"
-        case .japanese:
-            "ja"
-        case .korean:
-            "ko"
-        case .russian:
-            "ru"
-        case .spanish:
-            "es"
-        case .europeanPortuguese,
-                .brazilianPortuguese:
-            "pt"
-        case .english:
-            "en"
-        case .hindi:
-            "hi"
-        }
     }
 
     var flagCodes: [String] {
@@ -149,6 +128,8 @@ enum Language: String, Codable, CaseIterable {
             ["us"]
         case .hindi:
             ["in"]
+        case .german:
+            ["de"]
         }
     }
 
