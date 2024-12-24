@@ -76,6 +76,10 @@ enum Voice: String, Codable, CaseIterable, Equatable {
             LocalizedString.voiceAnanya
         case .aarav:
             LocalizedString.voiceAarav
+        case .amala:
+            LocalizedString.voiceAmala
+        case .conrad:
+            LocalizedString.voiceConrad
         }
     }
 
