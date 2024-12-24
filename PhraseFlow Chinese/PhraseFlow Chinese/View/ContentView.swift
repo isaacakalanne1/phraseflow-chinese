@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  FastChinese
+//  FlowTale
 //
 //  Created by iakalann on 07/09/2024.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var store: FastChineseStore
+    @EnvironmentObject var store: FlowTaleStore
 
     var body: some View {
 

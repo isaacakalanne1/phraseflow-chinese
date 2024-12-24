@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CharacterView: View {
-    @EnvironmentObject var store: FastChineseStore
+    @EnvironmentObject var store: FlowTaleStore
 
     let isHighlighted: Bool
     let word: WordTimeStampData

@@ -10,14 +10,14 @@ import XCTest
 
 final class FlowTaleState: XCTestCase {
 
-    var state: FastChineseState!
+    var state: FlowTaleState!
 
     func testDeviceLanguage_english() {
         // Given
         let language = Language.english
 
         // When
-        let state = FastChineseState(locale: language.locale)
+        let state = FlowTaleState(locale: language.locale)
 
         // Then
         guard let deviceLanguage = state.deviceLanguage else {
@@ -32,7 +32,7 @@ final class FlowTaleState: XCTestCase {
         let language = Language.french
 
         // When
-        let state = FastChineseState(locale: language.locale)
+        let state = FlowTaleState(locale: language.locale)
 
         // Then
         guard let deviceLanguage = state.deviceLanguage else {
@@ -47,7 +47,7 @@ final class FlowTaleState: XCTestCase {
         let language = Language.arabicGulf
 
         // When
-        let state = FastChineseState(locale: language.locale)
+        let state = FlowTaleState(locale: language.locale)
 
         // Then
         guard let deviceLanguage = state.deviceLanguage else {
@@ -62,7 +62,7 @@ final class FlowTaleState: XCTestCase {
         let language = Language.brazilianPortuguese
 
         // When
-        let state = FastChineseState(locale: language.locale)
+        let state = FlowTaleState(locale: language.locale)
 
         // Then
         guard let deviceLanguage = state.deviceLanguage else {
@@ -77,7 +77,7 @@ final class FlowTaleState: XCTestCase {
         let language = Language.europeanPortuguese
 
         // When
-        let state = FastChineseState(locale: language.locale)
+        let state = FlowTaleState(locale: language.locale)
 
         // Then
         guard let deviceLanguage = state.deviceLanguage else {
@@ -92,7 +92,7 @@ final class FlowTaleState: XCTestCase {
         let language = Language.hindi
 
         // When
-        let state = FastChineseState(locale: language.locale)
+        let state = FlowTaleState(locale: language.locale)
 
         // Then
         guard let deviceLanguage = state.deviceLanguage else {
@@ -107,7 +107,7 @@ final class FlowTaleState: XCTestCase {
         let language = Language.japanese
 
         // When
-        let state = FastChineseState(locale: language.locale)
+        let state = FlowTaleState(locale: language.locale)
 
         // Then
         guard let deviceLanguage = state.deviceLanguage else {
@@ -122,7 +122,7 @@ final class FlowTaleState: XCTestCase {
         let language = Language.korean
 
         // When
-        let state = FastChineseState(locale: language.locale)
+        let state = FlowTaleState(locale: language.locale)
 
         // Then
         guard let deviceLanguage = state.deviceLanguage else {
@@ -137,7 +137,7 @@ final class FlowTaleState: XCTestCase {
         let language = Language.mandarinChinese
 
         // When
-        let state = FastChineseState(locale: language.locale)
+        let state = FlowTaleState(locale: language.locale)
 
         // Then
         guard let deviceLanguage = state.deviceLanguage else {
@@ -152,7 +152,7 @@ final class FlowTaleState: XCTestCase {
         let language = Language.russian
 
         // When
-        let state = FastChineseState(locale: language.locale)
+        let state = FlowTaleState(locale: language.locale)
 
         // Then
         guard let deviceLanguage = state.deviceLanguage else {
@@ -167,7 +167,7 @@ final class FlowTaleState: XCTestCase {
         let language = Language.spanish
 
         // When
-        let state = FastChineseState(locale: language.locale)
+        let state = FlowTaleState(locale: language.locale)
 
         // Then
         guard let deviceLanguage = state.deviceLanguage else {

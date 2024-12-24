@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SubscriptionView: View {
-    @EnvironmentObject var store: FastChineseStore
+    @EnvironmentObject var store: FlowTaleStore
 
     var body: some View {
         VStack(spacing: 20) {

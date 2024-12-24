@@ -1,13 +1,13 @@
 //
-//  FastChineseService.swift
-//  FastChinese
+//  FlowTaleService.swift
+//  FlowTale
 //
 //  Created by iakalann on 10/09/2024.
 //
 
 import Foundation
 
-enum FastChineseServicesError: Error {
+enum FlowTaleServicesError: Error {
     case failedToGetDeviceLanguage
     case failedToGetResponseData
     case failedToEncodeJson
@@ -15,7 +15,7 @@ enum FastChineseServicesError: Error {
     case failedToDecodeSentences
 }
 
-protocol FastChineseServicesProtocol {
+protocol FlowTaleServicesProtocol {
     func generateStory(story: Story,
                        deviceLanguage: Language?) async throws -> Story
     func fetchDefinition(of character: String,
@@ -24,7 +24,7 @@ protocol FastChineseServicesProtocol {
                          deviceLanguage: Language?) async throws -> String
 }
 
-final class FastChineseServices: FastChineseServicesProtocol {
+final class FlowTaleServices: FlowTaleServicesProtocol {
 
     func generateStory(story: Story,
                        deviceLanguage: Language?) async throws -> Story {
@@ -35,7 +35,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
                                                      shouldCreateTitle: story.title.isEmpty,
                                                      deviceLanguage: deviceLanguage)
             guard let jsonData = jsonString.data(using: .utf8) else {
-                throw FastChineseServicesError.failedToGetResponseData
+                throw FlowTaleServicesError.failedToGetResponseData
             }
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .custom({ (keys) -> CodingKey in
@@ -80,7 +80,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
             story.lastUpdated = .now
             return story
         } catch {
-            throw FastChineseServicesError.failedToDecodeSentences
+            throw FlowTaleServicesError.failedToDecodeSentences
         }
     }
 
@@ -89,7 +89,7 @@ final class FastChineseServices: FastChineseServicesProtocol {
                          story: Story,
                          deviceLanguage: Language?) async throws -> String {
         guard let deviceLanguage else {
-            throw FastChineseServicesError.failedToGetDeviceLanguage
+            throw FlowTaleServicesError.failedToGetDeviceLanguage
         }
         let languageName = story.language.descriptiveEnglishName
         let initialPrompt =
@@ -143,7 +143,7 @@ Write the definition in \(deviceLanguage.displayName).
                                shouldCreateTitle: Bool,
                                deviceLanguage: Language?) async throws -> String {
         guard let deviceLanguage else {
-            throw FastChineseServicesError.failedToGetDeviceLanguage
+            throw FlowTaleServicesError.failedToGetDeviceLanguage
         }
         let jsonPrompt = """
 Format the following story into JSON. Translate each English sentence into \(deviceLanguage == .english ? "" : "\(deviceLanguage.descriptiveEnglishName) and ") \(story.language.descriptiveEnglishName).
@@ -170,7 +170,7 @@ Translate the whole sentence, including names and places.
         let request = createURLRequest(baseUrl: type.baseUrl, authKey: type.authKey)
 
         guard let jsonData = try? JSONSerialization.data(withJSONObject: requestBody) else {
-            throw FastChineseServicesError.failedToEncodeJson
+            throw FlowTaleServicesError.failedToEncodeJson
         }
 
         let session = createURLSession()
@@ -178,7 +178,7 @@ Translate the whole sentence, including names and places.
         let (data, _) = try await session.upload(for: request, from: jsonData)
         guard let response = try? JSONDecoder().decode(GPTResponse.self, from: data),
               let responseString = response.choices.first?.message.content else {
-            throw FastChineseServicesError.failedToDecodeJson
+            throw FlowTaleServicesError.failedToDecodeJson
         }
         return responseString
     }

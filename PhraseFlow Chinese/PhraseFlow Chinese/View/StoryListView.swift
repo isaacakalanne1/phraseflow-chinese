@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StoryListView: View {
-    @EnvironmentObject var store: FastChineseStore
+    @EnvironmentObject var store: FlowTaleStore
 
     var body: some View {
 

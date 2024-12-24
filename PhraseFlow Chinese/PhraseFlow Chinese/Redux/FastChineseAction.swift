@@ -1,6 +1,6 @@
 //
-//  FastChineseAction.swift
-//  FastChinese
+//  FlowTaleAction.swift
+//  FlowTale
 //
 //  Created by iakalann on 10/09/2024.
 //
@@ -9,7 +9,7 @@ import Foundation
 import AVKit
 import StoreKit
 
-enum FastChineseAction {
+enum FlowTaleAction {
     case updateShowingSettings(isShowing: Bool)
     case updateShowingStoryListView(isShowing: Bool)
     case updateSentenceIndex(Int)

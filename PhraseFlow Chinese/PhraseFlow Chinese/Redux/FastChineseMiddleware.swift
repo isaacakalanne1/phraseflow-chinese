@@ -1,6 +1,6 @@
 //
-//  FastChineseMiddleware.swift
-//  FastChinese
+//  FlowTaleMiddleware.swift
+//  FlowTale
 //
 //  Created by iakalann on 10/09/2024.
 //
@@ -10,8 +10,8 @@ import ReduxKit
 import AVKit
 import StoreKit
 
-typealias FastChineseMiddlewareType = Middleware<FastChineseState, FastChineseAction, FastChineseEnvironmentProtocol>
-let fastChineseMiddleware: FastChineseMiddlewareType = { state, action, environment in
+typealias FlowTaleMiddlewareType = Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol>
+let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     switch action {
     case .onContinuedStory(let story):
         if let chapter = story.chapters[safe: story.currentChapterIndex] {

@@ -1,6 +1,6 @@
 //
-//  FastChineseReducer.swift
-//  FastChinese
+//  FlowTaleReducer.swift
+//  FlowTale
 //
 //  Created by iakalann on 10/09/2024.
 //
@@ -10,7 +10,7 @@ import ReduxKit
 import AVKit
 import StoreKit
 
-let fastChineseReducer: Reducer<FastChineseState, FastChineseAction> = { state, action in
+let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     var newState = state
 
     switch action {

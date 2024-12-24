@@ -1,6 +1,6 @@
 //
 //  SpeechSpeed.swift
-//  FastChinese
+//  FlowTale
 //
 //  Created by iakalann on 08/09/2024.
 //

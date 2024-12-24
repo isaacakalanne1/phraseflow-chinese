@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CreateStorySettingsView: View {
-    @EnvironmentObject var store: FastChineseStore
+    @EnvironmentObject var store: FlowTaleStore
 
     var body: some View {
         NavigationView {

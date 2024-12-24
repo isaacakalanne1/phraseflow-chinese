@@ -1,6 +1,6 @@
 //
-//  FastChineseStore.swift
-//  FastChinese
+//  FlowTaleStore.swift
+//  FlowTale
 //
 //  Created by iakalann on 10/09/2024.
 //
@@ -8,4 +8,4 @@
 import Foundation
 import ReduxKit
 
-typealias FastChineseStore = Store<FastChineseState, FastChineseAction, FastChineseEnvironmentProtocol>
+typealias FlowTaleStore = Store<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol>

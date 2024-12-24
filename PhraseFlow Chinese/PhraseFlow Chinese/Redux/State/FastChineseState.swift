@@ -1,13 +1,13 @@
 //
-//  FastChineseState.swift
-//  FastChinese
+//  FlowTaleState.swift
+//  FlowTale
 //
 //  Created by iakalann on 10/09/2024.
 //
 
 import Foundation
 
-struct FastChineseState {
+struct FlowTaleState {
     var settingsState = SettingsState()
     var storyState = StoryState()
     var audioState = AudioState()

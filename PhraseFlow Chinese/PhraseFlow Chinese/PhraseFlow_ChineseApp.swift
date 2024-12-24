@@ -1,6 +1,6 @@
 //
 //  PhraseFlow_ChineseApp.swift
-//  FastChinese
+//  FlowTale
 //
 //  Created by iakalann on 07/09/2024.
 //
@@ -10,19 +10,19 @@ import SwiftUI
 @main
 struct PhraseFlow_ChineseApp: App {
 
-    private var store: FastChineseStore
+    private var store: FlowTaleStore
 
     init() {
 
-        let state = FastChineseState()
-        let environment = FastChineseEnvironment()
+        let state = FlowTaleState()
+        let environment = FlowTaleEnvironment()
 
-        store = FastChineseStore(
+        store = FlowTaleStore(
             initial: state,
-            reducer: fastChineseReducer,
+            reducer: flowTaleReducer,
             environment: environment,
-            middleware: fastChineseMiddleware,
-            subscriber: fastChineseSubscriber
+            middleware: flowTaleMiddleware,
+            subscriber: flowTaleSubscriber
         )
     }
 

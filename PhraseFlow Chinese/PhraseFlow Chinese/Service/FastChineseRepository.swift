@@ -1,6 +1,6 @@
 //
-//  FastChineseRepository.swift
-//  FastChinese
+//  FlowTaleRepository.swift
+//  FlowTale
 //
 //  Created by iakalann on 10/09/2024.
 //
@@ -9,7 +9,7 @@ import Foundation
 import MicrosoftCognitiveServicesSpeech
 import StoreKit
 
-protocol FastChineseRepositoryProtocol {
+protocol FlowTaleRepositoryProtocol {
     func synthesizeSpeech(_ chapter: Chapter,
                           voice: Voice,
                           speechSpeed: SpeechSpeed,
@@ -19,11 +19,11 @@ protocol FastChineseRepositoryProtocol {
     func purchase(_ product: Product) async throws
 }
 
-enum FastChineseRepositoryError: Error {
+enum FlowTaleRepositoryError: Error {
     case failedToPurchaseSubscription
 }
 
-class FastChineseRepository: FastChineseRepositoryProtocol {
+class FlowTaleRepository: FlowTaleRepositoryProtocol {
 
     private let speechCharacters = ["“", "”", "«", "»", "»", "「", "」", "\"", "''"]
     let subscriptionKey = "Fp11D0CAMjjAcf03VNqe2IsKfqycenIKcrAm4uGV8RSiaqMX15NWJQQJ99AKACYeBjFXJ3w3AAAYACOG6Orb"
@@ -196,14 +196,14 @@ class FastChineseRepository: FastChineseRepositoryProtocol {
             // Could be a jailbroken phone
             await transaction.finish()
             // TODO: Track successful subscription here via AppsFlyer
-            throw FastChineseRepositoryError.failedToPurchaseSubscription
+            throw FlowTaleRepositoryError.failedToPurchaseSubscription
         case .pending,
                 .userCancelled:
             // Transaction waiting on SCA (Strong Customer Authentication) or
             // approval from Ask to Buy
-            throw FastChineseRepositoryError.failedToPurchaseSubscription
+            throw FlowTaleRepositoryError.failedToPurchaseSubscription
         @unknown default:
-            throw FastChineseRepositoryError.failedToPurchaseSubscription
+            throw FlowTaleRepositoryError.failedToPurchaseSubscription
         }
     }
 

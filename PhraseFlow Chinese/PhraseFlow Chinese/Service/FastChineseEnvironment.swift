@@ -1,6 +1,6 @@
 //
-//  FastChineseEnvironment.swift
-//  FastChinese
+//  FlowTaleEnvironment.swift
+//  FlowTale
 //
 //  Created by iakalann on 10/09/2024.
 //
@@ -8,7 +8,7 @@
 import Foundation
 import StoreKit
 
-protocol FastChineseEnvironmentProtocol {
+protocol FlowTaleEnvironmentProtocol {
     func synthesizeSpeech(for chapter: Chapter,
                           voice: Voice,
                           speechSpeed: SpeechSpeed,
@@ -31,16 +31,16 @@ protocol FastChineseEnvironmentProtocol {
     func purchase(_ product: Product) async throws
 }
 
-struct FastChineseEnvironment: FastChineseEnvironmentProtocol {
+struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
 
-    let service: FastChineseServicesProtocol
-    let dataStore: FastChineseDataStoreProtocol
-    let repository: FastChineseRepositoryProtocol
+    let service: FlowTaleServicesProtocol
+    let dataStore: FlowTaleDataStoreProtocol
+    let repository: FlowTaleRepositoryProtocol
 
     init() {
-        self.service = FastChineseServices()
-        self.dataStore = FastChineseDataStore()
-        self.repository = FastChineseRepository()
+        self.service = FlowTaleServices()
+        self.dataStore = FlowTaleDataStore()
+        self.repository = FlowTaleRepository()
     }
 
     func synthesizeSpeech(for chapter: Chapter, voice: Voice, speechSpeed: SpeechSpeed, language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],

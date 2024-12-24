@@ -1,19 +1,19 @@
 //
-//  FastChineseDataStore.swift
-//  FastChinese
+//  FlowTaleDataStore.swift
+//  FlowTale
 //
 //  Created by iakalann on 10/09/2024.
 //
 
 import Foundation
 
-enum FastChineseDataStoreError: Error {
+enum FlowTaleDataStoreError: Error {
     case failedToCreateUrl
     case failedToSaveData
     case failedToDecodeData
 }
 
-protocol FastChineseDataStoreProtocol {
+protocol FlowTaleDataStoreProtocol {
     func loadStories() throws -> [Story]
     func loadAppSettings() throws -> SettingsState
     func saveStory(_ story: Story) throws
@@ -24,7 +24,7 @@ protocol FastChineseDataStoreProtocol {
     func unsaveStory(_ story: Story) throws
 }
 
-class FastChineseDataStore: FastChineseDataStoreProtocol {
+class FlowTaleDataStore: FlowTaleDataStoreProtocol {
 
     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
 
@@ -54,7 +54,7 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
 
     func loadAppSettings() throws -> SettingsState {
         guard let fileURL = documentsDirectory?.appendingPathComponent("settingsState.json") else {
-            throw FastChineseDataStoreError.failedToCreateUrl
+            throw FlowTaleDataStoreError.failedToCreateUrl
         }
         do {
             let data = try Data(contentsOf: fileURL)
@@ -62,13 +62,13 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
             let appSettings = try decoder.decode(SettingsState.self, from: data)
             return appSettings
         } catch {
-            throw FastChineseDataStoreError.failedToDecodeData
+            throw FlowTaleDataStoreError.failedToDecodeData
         }
     }
 
     func loadStories() throws -> [Story] {
         guard let fileURL = documentsDirectory?.appendingPathComponent("userData.json") else {
-            throw FastChineseDataStoreError.failedToCreateUrl
+            throw FlowTaleDataStoreError.failedToCreateUrl
         }
         do {
             let data = try Data(contentsOf: fileURL)
@@ -76,20 +76,20 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
             let stories = try decoder.decode([Story].self, from: data)
             return stories
         } catch {
-            throw FastChineseDataStoreError.failedToDecodeData
+            throw FlowTaleDataStoreError.failedToDecodeData
         }
     }
 
     func saveAppSettings(_ settings: SettingsState) throws {
         guard let fileURL = documentsDirectory?.appendingPathComponent("settingsState.json") else {
-            throw FastChineseDataStoreError.failedToCreateUrl
+            throw FlowTaleDataStoreError.failedToCreateUrl
         }
         let encoder = JSONEncoder()
         do {
             let encodedData = try encoder.encode(settings)
             try encodedData.write(to: fileURL)
         } catch {
-            throw FastChineseDataStoreError.failedToSaveData
+            throw FlowTaleDataStoreError.failedToSaveData
         }
     }
 
@@ -112,7 +112,7 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
 
     func loadDefinitions() throws -> [Definition] {
         guard let fileURL = documentsDirectory?.appendingPathComponent("definitions.json") else {
-            throw FastChineseDataStoreError.failedToCreateUrl
+            throw FlowTaleDataStoreError.failedToCreateUrl
         }
         do {
             let data = try Data(contentsOf: fileURL)
@@ -120,7 +120,7 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
             let definitions = try decoder.decode([Definition].self, from: data)
             return definitions
         } catch {
-            throw FastChineseDataStoreError.failedToDecodeData
+            throw FlowTaleDataStoreError.failedToDecodeData
         }
     }
 
@@ -150,27 +150,27 @@ class FastChineseDataStore: FastChineseDataStoreProtocol {
 
     private func saveStories(_ stories: [Story]) throws {
         guard let fileURL = documentsDirectory?.appendingPathComponent("userData.json") else {
-            throw FastChineseDataStoreError.failedToCreateUrl
+            throw FlowTaleDataStoreError.failedToCreateUrl
         }
         let encoder = JSONEncoder()
         do {
             let encodedData = try encoder.encode(stories) // TODO: Improve this code, to avoid running out of memory. Possibly save stories one at a time, rather than all stories at once
             try encodedData.write(to: fileURL)
         } catch {
-            throw FastChineseDataStoreError.failedToSaveData
+            throw FlowTaleDataStoreError.failedToSaveData
         }
     }
 
     func saveDefinitions(_ definitions: [Definition]) throws {
         guard let fileURL = documentsDirectory?.appendingPathComponent("definitions.json") else {
-            throw FastChineseDataStoreError.failedToCreateUrl
+            throw FlowTaleDataStoreError.failedToCreateUrl
         }
         let encoder = JSONEncoder()
         do {
             let encodedData = try encoder.encode(definitions)
             try encodedData.write(to: fileURL)
         } catch {
-            throw FastChineseDataStoreError.failedToSaveData
+            throw FlowTaleDataStoreError.failedToSaveData
         }
     }
 }

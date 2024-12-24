@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DefinitionView: View {
-    @EnvironmentObject var store: FastChineseStore
+    @EnvironmentObject var store: FlowTaleStore
 
     var body: some View {
         VStack(spacing: 5) {

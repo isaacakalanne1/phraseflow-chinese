@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChapterHeaderView: View {
-    @EnvironmentObject var store: FastChineseStore
+    @EnvironmentObject var store: FlowTaleStore
     let chapter: Chapter
 
     var body: some View {
