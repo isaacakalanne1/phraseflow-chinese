@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:PhraseFlow Chinese.xcodeproj">
+      location = "group:/Users/iakalann/Documents/Apps/phraseflow-chinese/PhraseFlow Chinese/FlowTale.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

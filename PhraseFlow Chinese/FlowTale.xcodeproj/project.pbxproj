@@ -55,7 +55,7 @@
 		BBAE07D92D14BD6D00DA95CD /* AIStatementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07D82D14BD6D00DA95CD /* AIStatementView.swift */; };
 		BBAE07DB2D14BE0B00DA95CD /* SystemImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07DA2D14BE0B00DA95CD /* SystemImageView.swift */; };
 		BBAE07DD2D14BE3000DA95CD /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07DC2D14BE3000DA95CD /* SystemImage.swift */; };
-		BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */; };
+		BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
 		BBB6EF2E2C8C86290079D135 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2D2C8C86290079D135 /* Preview Assets.xcassets */; };
@@ -156,14 +156,14 @@
 		BBAE07D82D14BD6D00DA95CD /* AIStatementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIStatementView.swift; sourceTree = "<group>"; };
 		BBAE07DA2D14BE0B00DA95CD /* SystemImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImageView.swift; sourceTree = "<group>"; };
 		BBAE07DC2D14BE3000DA95CD /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
-		BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhraseFlow Chinese.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseApp.swift; sourceTree = "<group>"; };
+		BBB6EF232C8C86240079D135 /* FlowTale.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowTale.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BBB6EF2A2C8C86290079D135 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BBB6EF2D2C8C86290079D135 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		BBB6EF332C8C862A0079D135 /* PhraseFlow ChineseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PhraseFlow ChineseTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBB6EF332C8C862A0079D135 /* FlowTaleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowTaleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF372C8C862A0079D135 /* PhraseFlow_ChineseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseTests.swift; sourceTree = "<group>"; };
-		BBB6EF3D2C8C862A0079D135 /* PhraseFlow ChineseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PhraseFlow ChineseUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBB6EF3D2C8C862A0079D135 /* FlowTaleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowTaleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF412C8C862A0079D135 /* PhraseFlow_ChineseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseUITests.swift; sourceTree = "<group>"; };
 		BBB6EF432C8C862A0079D135 /* PhraseFlow_ChineseUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseFlow_ChineseUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		BBB6EF512C8C86B10079D135 /* Sentence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sentence.swift; sourceTree = "<group>"; };
@@ -318,9 +318,9 @@
 		BBB6EF1A2C8C86240079D135 = {
 			isa = PBXGroup;
 			children = (
-				BBB6EF252C8C86240079D135 /* PhraseFlow Chinese */,
-				BBB6EF362C8C862A0079D135 /* PhraseFlow ChineseTests */,
-				BBB6EF402C8C862A0079D135 /* PhraseFlow ChineseUITests */,
+				BBB6EF252C8C86240079D135 /* FlowTale */,
+				BBB6EF362C8C862A0079D135 /* FlowTaleTests */,
+				BBB6EF402C8C862A0079D135 /* FlowTaleUITests */,
 				BBB6EF242C8C86240079D135 /* Products */,
 				D2708F9BEB6EBF9B4147F685 /* Pods */,
 				8F09325601693DB4E5512903 /* Frameworks */,
@@ -330,17 +330,17 @@
 		BBB6EF242C8C86240079D135 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */,
-				BBB6EF332C8C862A0079D135 /* PhraseFlow ChineseTests.xctest */,
-				BBB6EF3D2C8C862A0079D135 /* PhraseFlow ChineseUITests.xctest */,
+				BBB6EF232C8C86240079D135 /* FlowTale.app */,
+				BBB6EF332C8C862A0079D135 /* FlowTaleTests.xctest */,
+				BBB6EF3D2C8C862A0079D135 /* FlowTaleUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BBB6EF252C8C86240079D135 /* PhraseFlow Chinese */ = {
+		BBB6EF252C8C86240079D135 /* FlowTale */ = {
 			isa = PBXGroup;
 			children = (
-				BBB6EF262C8C86240079D135 /* PhraseFlow_ChineseApp.swift */,
+				BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */,
 				BB84E0A32CF3EC4200520F5E /* Localization */,
 				BB4EDB112C90CBAE00699E7D /* Extensions */,
 				BB4EDB012C90C85000699E7D /* Redux */,
@@ -350,7 +350,7 @@
 				BBB6EF2A2C8C86290079D135 /* Assets.xcassets */,
 				BBB6EF2C2C8C86290079D135 /* Preview Content */,
 			);
-			path = "PhraseFlow Chinese";
+			path = FlowTale;
 			sourceTree = "<group>";
 		};
 		BBB6EF2C2C8C86290079D135 /* Preview Content */ = {
@@ -361,22 +361,22 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		BBB6EF362C8C862A0079D135 /* PhraseFlow ChineseTests */ = {
+		BBB6EF362C8C862A0079D135 /* FlowTaleTests */ = {
 			isa = PBXGroup;
 			children = (
 				BBB6EF372C8C862A0079D135 /* PhraseFlow_ChineseTests.swift */,
 				BBA94CCC2D19AAE000EB4A7E /* FlowTaleStateTests.swift */,
 			);
-			path = "PhraseFlow ChineseTests";
+			path = FlowTaleTests;
 			sourceTree = "<group>";
 		};
-		BBB6EF402C8C862A0079D135 /* PhraseFlow ChineseUITests */ = {
+		BBB6EF402C8C862A0079D135 /* FlowTaleUITests */ = {
 			isa = PBXGroup;
 			children = (
 				BBB6EF412C8C862A0079D135 /* PhraseFlow_ChineseUITests.swift */,
 				BBB6EF432C8C862A0079D135 /* PhraseFlow_ChineseUITestsLaunchTests.swift */,
 			);
-			path = "PhraseFlow ChineseUITests";
+			path = FlowTaleUITests;
 			sourceTree = "<group>";
 		};
 		BBB6EF502C8C86A50079D135 /* Model */ = {
@@ -435,9 +435,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BBB6EF222C8C86240079D135 /* PhraseFlow Chinese */ = {
+		BBB6EF222C8C86240079D135 /* FlowTale */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BBB6EF472C8C862A0079D135 /* Build configuration list for PBXNativeTarget "PhraseFlow Chinese" */;
+			buildConfigurationList = BBB6EF472C8C862A0079D135 /* Build configuration list for PBXNativeTarget "FlowTale" */;
 			buildPhases = (
 				0A1D975A1B4245905866B684 /* [CP] Check Pods Manifest.lock */,
 				BBB6EF1F2C8C86240079D135 /* Sources */,
@@ -449,17 +449,17 @@
 			);
 			dependencies = (
 			);
-			name = "PhraseFlow Chinese";
+			name = FlowTale;
 			packageProductDependencies = (
 				BB4EDAFF2C90C7E600699E7D /* ReduxKit */,
 			);
 			productName = "PhraseFlow Chinese";
-			productReference = BBB6EF232C8C86240079D135 /* PhraseFlow Chinese.app */;
+			productReference = BBB6EF232C8C86240079D135 /* FlowTale.app */;
 			productType = "com.apple.product-type.application";
 		};
-		BBB6EF322C8C862A0079D135 /* PhraseFlow ChineseTests */ = {
+		BBB6EF322C8C862A0079D135 /* FlowTaleTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BBB6EF4A2C8C862A0079D135 /* Build configuration list for PBXNativeTarget "PhraseFlow ChineseTests" */;
+			buildConfigurationList = BBB6EF4A2C8C862A0079D135 /* Build configuration list for PBXNativeTarget "FlowTaleTests" */;
 			buildPhases = (
 				BBB6EF2F2C8C862A0079D135 /* Sources */,
 				BBB6EF302C8C862A0079D135 /* Frameworks */,
@@ -470,14 +470,14 @@
 			dependencies = (
 				BBB6EF352C8C862A0079D135 /* PBXTargetDependency */,
 			);
-			name = "PhraseFlow ChineseTests";
+			name = FlowTaleTests;
 			productName = "PhraseFlow ChineseTests";
-			productReference = BBB6EF332C8C862A0079D135 /* PhraseFlow ChineseTests.xctest */;
+			productReference = BBB6EF332C8C862A0079D135 /* FlowTaleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		BBB6EF3C2C8C862A0079D135 /* PhraseFlow ChineseUITests */ = {
+		BBB6EF3C2C8C862A0079D135 /* FlowTaleUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BBB6EF4D2C8C862A0079D135 /* Build configuration list for PBXNativeTarget "PhraseFlow ChineseUITests" */;
+			buildConfigurationList = BBB6EF4D2C8C862A0079D135 /* Build configuration list for PBXNativeTarget "FlowTaleUITests" */;
 			buildPhases = (
 				BBB6EF392C8C862A0079D135 /* Sources */,
 				BBB6EF3A2C8C862A0079D135 /* Frameworks */,
@@ -488,9 +488,9 @@
 			dependencies = (
 				BBB6EF3F2C8C862A0079D135 /* PBXTargetDependency */,
 			);
-			name = "PhraseFlow ChineseUITests";
+			name = FlowTaleUITests;
 			productName = "PhraseFlow ChineseUITests";
-			productReference = BBB6EF3D2C8C862A0079D135 /* PhraseFlow ChineseUITests.xctest */;
+			productReference = BBB6EF3D2C8C862A0079D135 /* FlowTaleUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -517,7 +517,7 @@
 					};
 				};
 			};
-			buildConfigurationList = BBB6EF1E2C8C86240079D135 /* Build configuration list for PBXProject "PhraseFlow Chinese" */;
+			buildConfigurationList = BBB6EF1E2C8C86240079D135 /* Build configuration list for PBXProject "FlowTale" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -544,9 +544,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BBB6EF222C8C86240079D135 /* PhraseFlow Chinese */,
-				BBB6EF322C8C862A0079D135 /* PhraseFlow ChineseTests */,
-				BBB6EF3C2C8C862A0079D135 /* PhraseFlow ChineseUITests */,
+				BBB6EF222C8C86240079D135 /* FlowTale */,
+				BBB6EF322C8C862A0079D135 /* FlowTaleTests */,
+				BBB6EF3C2C8C862A0079D135 /* FlowTaleUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -669,7 +669,7 @@
 				BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */,
 				BBE636C32CCC0BE900873E68 /* CharacterView.swift in Sources */,
 				BB84E0A22CF0AF4200520F5E /* CreateStorySettingsView.swift in Sources */,
-				BBB6EF272C8C86240079D135 /* PhraseFlow_ChineseApp.swift in Sources */,
+				BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */,
 				BB1994CF2CE904F000D61E54 /* DefinitionState.swift in Sources */,
 				BB4EDB0C2C90C9A100699E7D /* FastChineseReducer.swift in Sources */,
 				BB6572F92CDBB14C00AC5981 /* SpeechStyle.swift in Sources */,
@@ -711,12 +711,12 @@
 /* Begin PBXTargetDependency section */
 		BBB6EF352C8C862A0079D135 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = BBB6EF222C8C86240079D135 /* PhraseFlow Chinese */;
+			target = BBB6EF222C8C86240079D135 /* FlowTale */;
 			targetProxy = BBB6EF342C8C862A0079D135 /* PBXContainerItemProxy */;
 		};
 		BBB6EF3F2C8C862A0079D135 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = BBB6EF222C8C86240079D135 /* PhraseFlow Chinese */;
+			target = BBB6EF222C8C86240079D135 /* FlowTale */;
 			targetProxy = BBB6EF3E2C8C862A0079D135 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -874,7 +874,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_ASSET_PATHS = "\"PhraseFlow Chinese/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"FlowTale/Preview Content\"";
 				DEVELOPMENT_TEAM = NGW7S9DH6U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -908,7 +908,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_ASSET_PATHS = "\"PhraseFlow Chinese/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"FlowTale/Preview Content\"";
 				DEVELOPMENT_TEAM = NGW7S9DH6U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1011,7 +1011,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BBB6EF1E2C8C86240079D135 /* Build configuration list for PBXProject "PhraseFlow Chinese" */ = {
+		BBB6EF1E2C8C86240079D135 /* Build configuration list for PBXProject "FlowTale" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BBB6EF452C8C862A0079D135 /* Debug */,
@@ -1020,7 +1020,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BBB6EF472C8C862A0079D135 /* Build configuration list for PBXNativeTarget "PhraseFlow Chinese" */ = {
+		BBB6EF472C8C862A0079D135 /* Build configuration list for PBXNativeTarget "FlowTale" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BBB6EF482C8C862A0079D135 /* Debug */,
@@ -1029,7 +1029,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BBB6EF4A2C8C862A0079D135 /* Build configuration list for PBXNativeTarget "PhraseFlow ChineseTests" */ = {
+		BBB6EF4A2C8C862A0079D135 /* Build configuration list for PBXNativeTarget "FlowTaleTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BBB6EF4B2C8C862A0079D135 /* Debug */,
@@ -1038,7 +1038,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BBB6EF4D2C8C862A0079D135 /* Build configuration list for PBXNativeTarget "PhraseFlow ChineseUITests" */ = {
+		BBB6EF4D2C8C862A0079D135 /* Build configuration list for PBXNativeTarget "FlowTaleUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BBB6EF4E2C8C862A0079D135 /* Debug */,

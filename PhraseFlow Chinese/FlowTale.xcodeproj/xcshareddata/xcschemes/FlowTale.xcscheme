@@ -70,11 +70,20 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BBB6EF222C8C86240079D135"
+            BuildableName = "FlowTale.app"
+            BlueprintName = "FlowTale"
+            ReferencedContainer = "container:FlowTale.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "BBB6EF222C8C86240079D135"
             BuildableName = "PhraseFlow Chinese.app"
             BlueprintName = "PhraseFlow Chinese"
             ReferencedContainer = "container:PhraseFlow Chinese.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -92,6 +101,15 @@
             ReferencedContainer = "container:PhraseFlow Chinese.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "BBB6EF222C8C86240079D135"
+            BuildableName = "PhraseFlow Chinese.app"
+            BlueprintName = "PhraseFlow Chinese"
+            ReferencedContainer = "container:PhraseFlow Chinese.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

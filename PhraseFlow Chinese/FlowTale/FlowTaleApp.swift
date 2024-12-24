@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct PhraseFlow_ChineseApp: App {
+struct FlowTaleApp: App {
 
     private var store: FlowTaleStore
 
