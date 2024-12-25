@@ -18,7 +18,6 @@ enum FlowTaleAction {
     case onContinuedStory(Story)
     case failedToContinueStory
 
-    case saveStory(Story)
     case failedToSaveStory
 
     case saveStoryAndSettings(Story)

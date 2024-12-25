@@ -39,13 +39,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         } catch {
             return .failedToLoadDefinitions
         }
-    case .saveStory(let story):
-        do {
-            try environment.saveStory(story)
-            return .loadStories
-        } catch {
-            return .failedToSaveStory
-        }
     case .deleteStory(let story):
         do {
             try environment.unsaveStory(story)
@@ -153,7 +146,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         }
     case .goToNextChapter:
         if let story = state.storyState.currentStory {
-            return .saveStory(story)
+            return .saveStoryAndSettings(story)
         }
         return nil
     case .updatePlayTime:
