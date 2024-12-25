@@ -74,7 +74,10 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
             } else {
                 story.chapters.append(chapter)
             }
-            story.title = chapterResponse.titleOfNovel ?? ""
+
+            if let title = chapterResponse.titleOfNovel {
+                story.title = title
+            }
             story.briefLatestStorySummary = chapterResponse.briefLatestStorySummary
             story.currentChapterIndex = story.chapters.count - 1
             story.lastUpdated = .now

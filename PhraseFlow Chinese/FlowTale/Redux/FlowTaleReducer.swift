@@ -173,7 +173,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         }
     case .setSubscriptionSheetShowing(let isShowing):
         newState.viewState.isShowingSubscriptionSheet = isShowing
-    case .failedToSaveStory,
+    case .saveStoryAndSettings,
+            .failedToSaveStory,
             .failedToDefineCharacter,
             .loadStories,
             .onPlayedAudio,
@@ -190,7 +191,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .saveDefinitions,
             .onSavedDefinitions,
             .failedToSaveDefinitions,
-            .saveStoryAndSettings,
             .onSavedStoryAndSettings,
             .failedToSaveStoryAndSettings,
             .fetchSubscriptions,

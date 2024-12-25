@@ -28,16 +28,10 @@ struct StoryState {
     }
 
     var currentSentence: Sentence? {
-        guard let currentChapter else {
-            return nil
-        }
-        return currentChapter.sentences[safe: sentenceIndex]
+        currentChapter?.sentences[safe: sentenceIndex]
     }
 
     var currentChapterAudioData: Data? {
-        guard let currentStory else {
-            return nil
-        }
-        return currentStory.chapters[safe: currentStory.currentChapterIndex]?.audioData
+        currentChapter?.audioData
     }
 }

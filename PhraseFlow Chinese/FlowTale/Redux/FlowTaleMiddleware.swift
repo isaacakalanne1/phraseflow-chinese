@@ -124,7 +124,15 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .saveStoryAndSettings(story)
         }
         return nil
-    case .saveStoryAndSettings(let story):
+    case .saveStoryAndSettings(var story):
+        story.chapters = story.chapters.enumerated().map({ (index, element) in
+            var newChapter = element
+            let isLastChapter = index >= story.chapters.count - 1
+            if !isLastChapter {
+                newChapter.audioData = nil
+            }
+            return newChapter
+        })
         do {
             try environment.saveStory(story)
             try environment.saveAppSettings(state.settingsState)
