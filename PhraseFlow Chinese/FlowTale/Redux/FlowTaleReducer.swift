@@ -27,10 +27,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         if newState.storyState.currentStory == nil,
            !stories.isEmpty {
             newState.storyState.currentStory = currentStory
-            if let data = newState.storyState.currentChapterAudioData,
-               let player = data.createAVPlayer() {
-                newState.audioState.audioPlayer = player
-            }
+            let data = newState.storyState.currentChapterAudioData
+            let player = data?.createAVPlayer()
+            newState.audioState.audioPlayer = player ?? AVPlayer()
         }
         newState.viewState.readerDisplayType = .normal
     case .failedToLoadStories:
@@ -62,9 +61,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newStory?.chapters[chapterIndex].timestampData = data.wordTimestamps
         newState.storyState.currentStory = newStory
 
-        if let player = data.audioData.createAVPlayer() {
-            newState.audioState.audioPlayer = player
-        }
+        let player = data.audioData.createAVPlayer()
+        newState.audioState.audioPlayer = player ?? AVPlayer()
         newState.viewState.readerDisplayType = .normal
     case .failedToSynthesizeAudio:
         newState.viewState.playButtonDisplayType = .normal
@@ -94,10 +92,10 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.storyState.sentenceIndex = 0
         newState.settingsState.language = story.language
 
-        if let data = newState.storyState.currentChapterAudioData,
-           let player = data.createAVPlayer() {
-            newState.audioState.audioPlayer = player
-        }
+
+        let data = newState.storyState.currentChapterAudioData
+        let player = data?.createAVPlayer()
+        newState.audioState.audioPlayer = player ?? AVPlayer()
     case .onSelectedChapter:
         if let language = newState.storyState.currentStory?.language {
             newState.settingsState.language = language
@@ -133,10 +131,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         var newStory = newState.storyState.currentStory
         newStory?.currentChapterIndex += 1
         newState.storyState.currentStory = newStory
-        if let data = newState.storyState.currentChapterAudioData,
-           let player = data.createAVPlayer() {
-            newState.audioState.audioPlayer = player
-        }
+        let data = newState.storyState.currentChapterAudioData
+        let player = data?.createAVPlayer()
+        newState.audioState.audioPlayer = player ?? AVPlayer()
     case .refreshChapterView:
         newState.viewState.chapterViewId = UUID()
     case .refreshDefinitionView:
