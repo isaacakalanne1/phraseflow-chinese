@@ -26,9 +26,12 @@ struct StudyView: View {
         Group {
             if let definition = currentDefinition {
                 VStack {
+                    Text("Word")
+                        .greyBackground(isShowing: store.state.settingsState.isShowingEnglish)
                     ZStack {
                         Text(definition.timestampData.word)
                             .font(.system(size: 40, weight: .bold))
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         HStack {
                             Spacer()
                             Button {
@@ -39,11 +42,20 @@ struct StudyView: View {
                             .padding(.trailing)
                         }
                     }
+                    Text("Sentence")
+                        .greyBackground(isShowing: store.state.settingsState.isShowingEnglish)
                     Text(definition.sentence.translation)
                         .font(.system(size: 30, weight: .regular))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text("Definition")
+                        .greyBackground(isShowing: store.state.settingsState.isShowingEnglish)
                     if isDefinitionShown {
-                        Text(definition.definition)
-                            .padding(.horizontal)
+                        ScrollView(.vertical) {
+                            Text(definition.definition)
+                                .frame(maxWidth: .infinity,
+                                       maxHeight: .infinity,
+                                       alignment: .topLeading)
+                        }
                         Button("Next") {
                             goToNextDefinition()
                         }
@@ -52,6 +64,7 @@ struct StudyView: View {
                         .foregroundColor(.white)
                         .cornerRadius(10)
                     } else {
+                        Spacer()
                         Button("Reveal") {
                             store.dispatch(.playStudyWord(definition))
                             isDefinitionShown = true
@@ -75,6 +88,7 @@ struct StudyView: View {
             index = 0
             isDefinitionShown = false
         }
+        .padding()
     }
 
     func goToNextDefinition() {
