@@ -81,8 +81,7 @@ struct StudyView: View {
             studyWords = Array(store.state.definitionState.definitions
                 .shuffled()
                 .filter({
-                    $0.language == store.state.storyState.currentStory?.language &&
-                    $0.timestampData.storyId == store.state.storyState.currentStory?.id
+                    $0.language == store.state.storyState.currentStory?.language
                 })
                 .prefix(10))
             index = 0
