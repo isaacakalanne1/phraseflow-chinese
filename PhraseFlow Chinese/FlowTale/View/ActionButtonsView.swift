@@ -28,6 +28,10 @@ struct ActionButtonsView: View {
                 store.dispatch(.setSubscriptionSheetShowing(true))
             }
 
+            ActionButton(title: LocalizedString.subscribe, systemImage: .heart) {
+                store.dispatch(.showSnackBar(.chapterReady))
+            }
+
             ActionButton(title: LocalizedString.settings, systemImage: .gear) {
                 store.dispatch(.updateShowingSettings(isShowing: true))
             }

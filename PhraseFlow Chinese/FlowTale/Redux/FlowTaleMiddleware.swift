@@ -26,8 +26,16 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             let story = try await environment.generateStory(story: story, deviceLanguage: state.deviceLanguage)
             return .onContinuedStory(story)
         } catch {
-            return .failedToContinueStory
+            return .failedToContinueStory(story: story)
         }
+    case .failedToContinueStory(let story):
+        return .showSnackBar(.failedToWriteChapter(story))
+    case .showSnackBar(let type):
+        if let duration = type.showDuration {
+            try? await Task.sleep(for: .seconds(duration))
+            return .hideSnackbar
+        }
+        return nil
     case .loadStories:
         do {
             let stories = try environment.loadStories().sorted(by: { $0.lastUpdated > $1.lastUpdated })
@@ -240,7 +248,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .failedToSynthesizeAudio,
             .updateShowingSettings,
             .updateShowingStoryListView,
-            .failedToContinueStory,
             .refreshChapterView,
             .refreshDefinitionView,
             .failedToDeleteStory,
@@ -261,7 +268,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .onRestoredSubscriptions,
             .failedToRestoreSubscriptions,
             .setSubscriptionSheetShowing,
-            .updateShowingStudyView:
+            .updateShowingStudyView,
+            .hideSnackbar:
         return nil
     }
 }

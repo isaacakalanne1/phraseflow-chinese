@@ -60,8 +60,13 @@ struct ContentView: View {
                 if store.state.storyState.currentStory == nil {
                     CreateStorySettingsView()
                 } else if let chapter = store.state.storyState.currentChapter {
-                    ReaderView(chapter: chapter)
-                        .padding(10)
+                    ZStack(alignment: .top) {
+                        ReaderView(chapter: chapter)
+                            .padding(10)
+                        if store.state.snackBarState.isShowing {
+                            SnackBar()
+                        }
+                    }
                 } else {
 
                 }

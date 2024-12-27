@@ -43,6 +43,10 @@
 		BB7B6D962D1DF0990030344A /* StudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D952D1DF0990030344A /* StudyView.swift */; };
 		BB7B6D982D1E0D070030344A /* StoryInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D972D1E0D070030344A /* StoryInfoView.swift */; };
 		BB7B6D9A2D1EEA3D0030344A /* StudyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D992D1EEA3D0030344A /* StudyState.swift */; };
+		BB7B6D9C2D1F30BC0030344A /* SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D9B2D1F30BC0030344A /* SnackBar.swift */; };
+		BB7B6D9E2D1F31190030344A /* SnackBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D9D2D1F31190030344A /* SnackBarState.swift */; };
+		BB7B6DA02D1F316E0030344A /* SnackBarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D9F2D1F316E0030344A /* SnackBarType.swift */; };
+		BB7B6DA22D1F3B680030344A /* DifficultyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6DA12D1F3B680030344A /* DifficultyView.swift */; };
 		BB84E0A02CEFA96200520F5E /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB84E09F2CEFA96200520F5E /* Language.swift */; };
 		BB84E0A22CF0AF4200520F5E /* CreateStorySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */; };
 		BB84E0A62CF3EC8600520F5E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BB84E0A42CF3EC8600520F5E /* Localizable.strings */; };
@@ -140,6 +144,10 @@
 		BB7B6D952D1DF0990030344A /* StudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyView.swift; sourceTree = "<group>"; };
 		BB7B6D972D1E0D070030344A /* StoryInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryInfoView.swift; sourceTree = "<group>"; };
 		BB7B6D992D1EEA3D0030344A /* StudyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyState.swift; sourceTree = "<group>"; };
+		BB7B6D9B2D1F30BC0030344A /* SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBar.swift; sourceTree = "<group>"; };
+		BB7B6D9D2D1F31190030344A /* SnackBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarState.swift; sourceTree = "<group>"; };
+		BB7B6D9F2D1F316E0030344A /* SnackBarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarType.swift; sourceTree = "<group>"; };
+		BB7B6DA12D1F3B680030344A /* DifficultyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyView.swift; sourceTree = "<group>"; };
 		BB84E09F2CEFA96200520F5E /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStorySettingsView.swift; sourceTree = "<group>"; };
 		BB84E0A52CF3EC8600520F5E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -263,6 +271,7 @@
 				BBAE07D22D0C796500DA95CD /* SubscriptionState.swift */,
 				BB6572F62CDB991A00AC5981 /* SettingsState.swift */,
 				BB1994CC2CE904D900D61E54 /* StoryState.swift */,
+				BB7B6D9D2D1F31190030344A /* SnackBarState.swift */,
 				BB7B6D992D1EEA3D0030344A /* StudyState.swift */,
 				BB1994D22CE9051700D61E54 /* ViewState.swift */,
 			);
@@ -404,6 +413,7 @@
 				BB4EDB2A2C91B35D00699E7D /* Definition.swift */,
 				BBAE07CC2D0C765B00DA95CD /* APIRequestType.swift */,
 				BBAE07CE2D0C768000DA95CD /* AnyKey.swift */,
+				BB7B6D9F2D1F316E0030344A /* SnackBarType.swift */,
 				BB84E09F2CEFA96200520F5E /* Language.swift */,
 				BBE16F272CC420FD00A7EF1F /* ReaderDisplayType.swift */,
 				BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */,
@@ -427,10 +437,12 @@
 				BBE636C02CCC0B5000873E68 /* ActionButtonsView.swift */,
 				BBE636C22CCC0BE900873E68 /* CharacterView.swift */,
 				BB7B6D972D1E0D070030344A /* StoryInfoView.swift */,
+				BB7B6DA12D1F3B680030344A /* DifficultyView.swift */,
 				BBE636D02CCD77BB00873E68 /* FlowLayout.swift */,
 				BBAE07DA2D14BE0B00DA95CD /* SystemImageView.swift */,
 				BB4EDB232C91902100699E7D /* SettingsView.swift */,
 				BBE16F212CC2769C00A7EF1F /* StoryListView.swift */,
+				BB7B6D9B2D1F30BC0030344A /* SnackBar.swift */,
 				BB7B6D952D1DF0990030344A /* StudyView.swift */,
 				BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */,
 				BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */,
@@ -648,10 +660,12 @@
 				BBE636C52CCC0CDD00873E68 /* DefinitionView.swift in Sources */,
 				BBAE07D92D14BD6D00DA95CD /* AIStatementView.swift in Sources */,
 				BB6572D42CD3932300AC5981 /* View+GreyBackground.swift in Sources */,
+				BB7B6DA22D1F3B680030344A /* DifficultyView.swift in Sources */,
 				BBE636D12CCD77BC00873E68 /* FlowLayout.swift in Sources */,
 				BBE16F282CC420FD00A7EF1F /* ReaderDisplayType.swift in Sources */,
 				BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */,
 				BB84E0AD2CF4952700520F5E /* strings-enum.stencil in Sources */,
+				BB7B6D9C2D1F30BC0030344A /* SnackBar.swift in Sources */,
 				BB6572CE2CD12A9200AC5981 /* ChapterResponse.swift in Sources */,
 				BBAE07DD2D14BE3000DA95CD /* SystemImage.swift in Sources */,
 				BBE636C12CCC0B5000873E68 /* ActionButtonsView.swift in Sources */,
@@ -682,6 +696,7 @@
 				BB4EDB0E2C90CA0300699E7D /* FlowTaleMiddleware.swift in Sources */,
 				BB6572E72CD8D1E300AC5981 /* Gender.swift in Sources */,
 				BB7B6D962D1DF0990030344A /* StudyView.swift in Sources */,
+				BB7B6DA02D1F316E0030344A /* SnackBarType.swift in Sources */,
 				BBAE07CF2D0C768000DA95CD /* AnyKey.swift in Sources */,
 				BB4EDB102C90CA4900699E7D /* FlowTaleSubscriber.swift in Sources */,
 				BBE636CD2CCC0F8500873E68 /* ReaderView.swift in Sources */,
@@ -696,6 +711,7 @@
 				BB4EDB0C2C90C9A100699E7D /* FlowTaleReducer.swift in Sources */,
 				BB6572F92CDBB14C00AC5981 /* SpeechStyle.swift in Sources */,
 				BB4EDB0A2C90C8F100699E7D /* FlowTaleEnvironment.swift in Sources */,
+				BB7B6D9E2D1F31190030344A /* SnackBarState.swift in Sources */,
 				BB6572D62CD4E09000AC5981 /* ActionButton.swift in Sources */,
 				BBE16F242CC2AFC800A7EF1F /* ChapterListView.swift in Sources */,
 				BB4EDB032C90C86300699E7D /* FlowTaleStore.swift in Sources */,

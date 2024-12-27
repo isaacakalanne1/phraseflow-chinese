@@ -28,7 +28,7 @@ struct ViewState {
          isShowingSettingsScreen: Bool = false,
          isShowingStoryListView: Bool = false,
          isShowingSubscriptionSheet: Bool = false,
-         readerDisplayType: ReaderDisplayType = .fetching,
+         readerDisplayType: ReaderDisplayType = .normal,
          playButtonDisplayType: PlayButtonDisplayType = .normal) {
         self.definitionViewId = definitionViewId
         self.chapterViewId = chapterViewId

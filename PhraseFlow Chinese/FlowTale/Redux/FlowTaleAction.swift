@@ -17,7 +17,7 @@ enum FlowTaleAction {
 
     case continueStory(story: Story)
     case onContinuedStory(Story)
-    case failedToContinueStory
+    case failedToContinueStory(story: Story)
 
     case failedToSaveStory
 
@@ -104,5 +104,8 @@ enum FlowTaleAction {
     case observeTransactionUpdates
 
     case setSubscriptionSheetShowing(Bool)
+
+    case showSnackBar(SnackBarType)
+    case hideSnackbar
 
 }

@@ -29,6 +29,7 @@ struct ChapterView: View {
                 Button(LocalizedString.nextChapter) {
                     let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
                     store.dispatch(doesNextChapterExist ? .goToNextChapter : .continueStory(story: story))
+//                    store.dispatch(.showSnackBar(.writingChapter))
                 }
                 .padding()
                 .background(Color.accentColor)

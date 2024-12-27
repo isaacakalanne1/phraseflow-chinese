@@ -12,6 +12,7 @@ struct FlowTaleState {
     var storyState = StoryState()
     var audioState = AudioState()
     var studyState = StudyState()
+    var snackBarState = SnackBarState()
     var definitionState = DefinitionState()
     var viewState = ViewState()
     var subscriptionState = SubscriptionState()

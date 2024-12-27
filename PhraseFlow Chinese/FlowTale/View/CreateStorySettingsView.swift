@@ -19,9 +19,12 @@ struct CreateStorySettingsView: View {
                             Button {
                                 store.dispatch(.updateDifficulty(difficulty))
                             } label: {
-                                Text(difficulty.emoji + " " + difficulty.title)
-                                    .fontWeight(store.state.settingsState.difficulty == difficulty ? .medium : .light)
-                                    .foregroundStyle(store.state.settingsState.difficulty == difficulty ? Color.accentColor : Color.primary)
+                                HStack {
+                                    DifficultyView(difficulty: difficulty)
+                                    Text(difficulty.title)
+                                        .fontWeight(store.state.settingsState.difficulty == difficulty ? .medium : .light)
+                                        .foregroundStyle(store.state.settingsState.difficulty == difficulty ? Color.accentColor : Color.primary)
+                                }
                             }
                             .listRowBackground(store.state.settingsState.difficulty == difficulty ? Color.gray.opacity(0.3) : Color.white)
                         }

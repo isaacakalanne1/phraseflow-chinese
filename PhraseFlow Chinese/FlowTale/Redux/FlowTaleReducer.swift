@@ -5,7 +5,7 @@
 //  Created by iakalann on 10/09/2024.
 //
 
-import Foundation
+import SwiftUI
 import ReduxKit
 import AVKit
 import StoreKit
@@ -183,6 +183,11 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         }
     case .setSubscriptionSheetShowing(let isShowing):
         newState.viewState.isShowingSubscriptionSheet = isShowing
+    case .showSnackBar(let type):
+        newState.snackBarState.type = type
+        newState.snackBarState.isShowing = true
+    case .hideSnackbar:
+        newState.snackBarState.isShowing = false
     case .saveStoryAndSettings,
             .failedToSaveStory,
             .failedToDefineCharacter,
