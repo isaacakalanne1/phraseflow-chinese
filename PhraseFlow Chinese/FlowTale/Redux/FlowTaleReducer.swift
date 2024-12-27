@@ -32,6 +32,15 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             newState.audioState.audioPlayer = player ?? AVPlayer()
         }
         newState.viewState.readerDisplayType = .normal
+    case .playStudyWord(let definition):
+        if let story = newState.storyState.savedStories.first(where: { def in
+            def.id == definition.timestampData.storyId
+        }),
+           let chapter = story.chapters[safe: definition.timestampData.chapterIndex],
+           let audioData = chapter.audioData,
+           let player = audioData.createAVPlayer() {
+            newState.studyState.audioPlayer = player
+        }
     case .failedToLoadStories:
         newState.viewState.readerDisplayType = .normal
     case .updateSpeechSpeed(let speed):

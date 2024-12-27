@@ -19,7 +19,7 @@
 		BB4015C02CF756FD008ACE9C /* StoryPrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4015BF2CF756FD008ACE9C /* StoryPrompts.swift */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
 		BB4EDB032C90C86300699E7D /* FlowTaleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */; };
-		BB4EDB052C90C89C00699E7D /* FastChineseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB042C90C89C00699E7D /* FastChineseState.swift */; };
+		BB4EDB052C90C89C00699E7D /* FlowTaleState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB042C90C89C00699E7D /* FlowTaleState.swift */; };
 		BB4EDB072C90C8CA00699E7D /* FlowTaleAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB062C90C8CA00699E7D /* FlowTaleAction.swift */; };
 		BB4EDB0A2C90C8F100699E7D /* FlowTaleEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB092C90C8F100699E7D /* FlowTaleEnvironment.swift */; };
 		BB4EDB0C2C90C9A100699E7D /* FlowTaleReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0B2C90C9A100699E7D /* FlowTaleReducer.swift */; };
@@ -42,6 +42,7 @@
 		BB7B6D942D1ACEBF0030344A /* libPods-FlowTale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */; };
 		BB7B6D962D1DF0990030344A /* StudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D952D1DF0990030344A /* StudyView.swift */; };
 		BB7B6D982D1E0D070030344A /* StoryInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D972D1E0D070030344A /* StoryInfoView.swift */; };
+		BB7B6D9A2D1EEA3D0030344A /* StudyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D992D1EEA3D0030344A /* StudyState.swift */; };
 		BB84E0A02CEFA96200520F5E /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB84E09F2CEFA96200520F5E /* Language.swift */; };
 		BB84E0A22CF0AF4200520F5E /* CreateStorySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */; };
 		BB84E0A62CF3EC8600520F5E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BB84E0A42CF3EC8600520F5E /* Localizable.strings */; };
@@ -115,7 +116,7 @@
 		BB1994D22CE9051700D61E54 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		BB4015BF2CF756FD008ACE9C /* StoryPrompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPrompts.swift; sourceTree = "<group>"; };
 		BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleStore.swift; sourceTree = "<group>"; };
-		BB4EDB042C90C89C00699E7D /* FastChineseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastChineseState.swift; sourceTree = "<group>"; };
+		BB4EDB042C90C89C00699E7D /* FlowTaleState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleState.swift; sourceTree = "<group>"; };
 		BB4EDB062C90C8CA00699E7D /* FlowTaleAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleAction.swift; sourceTree = "<group>"; };
 		BB4EDB092C90C8F100699E7D /* FlowTaleEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleEnvironment.swift; sourceTree = "<group>"; };
 		BB4EDB0B2C90C9A100699E7D /* FlowTaleReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleReducer.swift; sourceTree = "<group>"; };
@@ -138,6 +139,7 @@
 		BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-FlowTale.a"; path = "../../../../Library/Developer/Xcode/DerivedData/FlowTale-dzblbgdyrqlsjdggurnqsbvwzaoq/Build/Products/Debug-iphoneos/libPods-FlowTale.a"; sourceTree = "<group>"; };
 		BB7B6D952D1DF0990030344A /* StudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyView.swift; sourceTree = "<group>"; };
 		BB7B6D972D1E0D070030344A /* StoryInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryInfoView.swift; sourceTree = "<group>"; };
+		BB7B6D992D1EEA3D0030344A /* StudyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyState.swift; sourceTree = "<group>"; };
 		BB84E09F2CEFA96200520F5E /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStorySettingsView.swift; sourceTree = "<group>"; };
 		BB84E0A52CF3EC8600520F5E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -257,10 +259,11 @@
 			children = (
 				BB1994D02CE9050000D61E54 /* AudioState.swift */,
 				BB1994CE2CE904F000D61E54 /* DefinitionState.swift */,
-				BB4EDB042C90C89C00699E7D /* FastChineseState.swift */,
+				BB4EDB042C90C89C00699E7D /* FlowTaleState.swift */,
 				BBAE07D22D0C796500DA95CD /* SubscriptionState.swift */,
 				BB6572F62CDB991A00AC5981 /* SettingsState.swift */,
 				BB1994CC2CE904D900D61E54 /* StoryState.swift */,
+				BB7B6D992D1EEA3D0030344A /* StudyState.swift */,
 				BB1994D22CE9051700D61E54 /* ViewState.swift */,
 			);
 			path = State;
@@ -665,6 +668,7 @@
 				BBE636BF2CC98B2B00873E68 /* WordTimeStampData.swift in Sources */,
 				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FlowTaleDataStore.swift in Sources */,
+				BB7B6D9A2D1EEA3D0030344A /* StudyState.swift in Sources */,
 				BBE636C72CCC0E1200873E68 /* EnglishSentenceView.swift in Sources */,
 				BB4EDB1D2C90DFDD00699E7D /* FlowTaleRepository.swift in Sources */,
 				BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */,
@@ -698,7 +702,7 @@
 				BBE16F202CC152C400A7EF1F /* Difficulty.swift in Sources */,
 				BB4EDB172C90D20300699E7D /* FlowTaleServices.swift in Sources */,
 				BB6572F72CDB991B00AC5981 /* SettingsState.swift in Sources */,
-				BB4EDB052C90C89C00699E7D /* FastChineseState.swift in Sources */,
+				BB4EDB052C90C89C00699E7D /* FlowTaleState.swift in Sources */,
 				BBAE07CD2D0C765B00DA95CD /* APIRequestType.swift in Sources */,
 				BBAE07D72D14BD2400DA95CD /* ChapterHeaderView.swift in Sources */,
 				BB0854852CB42C1400F1661B /* Story.swift in Sources */,

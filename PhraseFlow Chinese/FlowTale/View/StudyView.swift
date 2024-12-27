@@ -32,7 +32,7 @@ struct StudyView: View {
                         HStack {
                             Spacer()
                             Button {
-//                                store.dispatch(.playWord(word)) // TODO: Update logic to allow audio to play for word
+                                store.dispatch(.playStudyWord(definition))
                             } label: {
                                 SystemImageView(.speaker)
                             }
@@ -53,6 +53,7 @@ struct StudyView: View {
                         .cornerRadius(10)
                     } else {
                         Button("Reveal") {
+                            store.dispatch(.playStudyWord(definition))
                             isDefinitionShown = true
                         }
                         .padding()

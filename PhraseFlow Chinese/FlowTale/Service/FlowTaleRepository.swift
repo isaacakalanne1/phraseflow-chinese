@@ -66,6 +66,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
             }
 
             let newTimestamp = WordTimeStampData(storyId: story.id,
+                                                 chapterIndex: story.currentChapterIndex,
                                                  word: word,
                                                  time: audioTimeInSeconds,
                                                  duration: event.duration,

@@ -84,6 +84,12 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         state.audioState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: word.time + word.duration, preferredTimescale: 60000)
         state.audioState.audioPlayer.play()
         return nil
+    case .playStudyWord(let definition):
+        let myTime = CMTime(seconds: definition.timestampData.time, preferredTimescale: 60000)
+        await state.studyState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
+        state.studyState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: definition.timestampData.time + definition.timestampData.duration, preferredTimescale: 60000)
+        state.studyState.audioPlayer.play()
+        return nil
     case .pauseAudio,
             .stopAudio,
             .finishedPlayingWord:
@@ -133,7 +139,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             var newChapter = element
             let isLastChapter = index >= story.chapters.count - 1
             if !isLastChapter {
-                newChapter.audioData = nil
+//                newChapter.audioData = nil // TODO: Update save stories logic to only save individual chapter rather than all chapters at once
             }
             return newChapter
         })

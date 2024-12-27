@@ -24,6 +24,15 @@ struct ActionButtonsView: View {
 
             audioButton
 
+            ActionButton(title: LocalizedString.load, systemImage: .arrowDown) {
+                if let story = store.state.storyState.currentStory {
+                    store.dispatch(.synthesizeAudio(chapter,
+                                                    story: story,
+                                                    voice: store.state.settingsState.voice,
+                                                    isForced: true))
+                }
+            }
+
             ActionButton(title: LocalizedString.subscribe, systemImage: .heart) {
                 store.dispatch(.setSubscriptionSheetShowing(true))
             }
