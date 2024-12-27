@@ -79,6 +79,6 @@ struct StudyView: View {
 
     func goToNextDefinition() {
         isDefinitionShown = false
-        index += 1 % 10
+        index = (index + 1) % studyWords.count
     }
 }
