@@ -14,6 +14,19 @@ enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
         10
     }
 
+    var index: Int {
+        switch self {
+        case .beginner:
+            0
+        case .intermediate:
+            1
+        case .advanced:
+            2
+        case .expert:
+            3
+        }
+    }
+
     var title: String {
         switch self {
         case .beginner:

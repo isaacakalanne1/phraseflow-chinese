@@ -40,6 +40,8 @@
 		BB6572F72CDB991B00AC5981 /* SettingsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572F62CDB991A00AC5981 /* SettingsState.swift */; };
 		BB6572F92CDBB14C00AC5981 /* SpeechStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572F82CDBB14C00AC5981 /* SpeechStyle.swift */; };
 		BB7B6D942D1ACEBF0030344A /* libPods-FlowTale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */; };
+		BB7B6D962D1DF0990030344A /* StudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D952D1DF0990030344A /* StudyView.swift */; };
+		BB7B6D982D1E0D070030344A /* StoryInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D972D1E0D070030344A /* StoryInfoView.swift */; };
 		BB84E0A02CEFA96200520F5E /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB84E09F2CEFA96200520F5E /* Language.swift */; };
 		BB84E0A22CF0AF4200520F5E /* CreateStorySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */; };
 		BB84E0A62CF3EC8600520F5E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BB84E0A42CF3EC8600520F5E /* Localizable.strings */; };
@@ -134,6 +136,8 @@
 		BB6572F62CDB991A00AC5981 /* SettingsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsState.swift; sourceTree = "<group>"; };
 		BB6572F82CDBB14C00AC5981 /* SpeechStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechStyle.swift; sourceTree = "<group>"; };
 		BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-FlowTale.a"; path = "../../../../Library/Developer/Xcode/DerivedData/FlowTale-dzblbgdyrqlsjdggurnqsbvwzaoq/Build/Products/Debug-iphoneos/libPods-FlowTale.a"; sourceTree = "<group>"; };
+		BB7B6D952D1DF0990030344A /* StudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyView.swift; sourceTree = "<group>"; };
+		BB7B6D972D1E0D070030344A /* StoryInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryInfoView.swift; sourceTree = "<group>"; };
 		BB84E09F2CEFA96200520F5E /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStorySettingsView.swift; sourceTree = "<group>"; };
 		BB84E0A52CF3EC8600520F5E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -419,10 +423,12 @@
 				BBAE07D82D14BD6D00DA95CD /* AIStatementView.swift */,
 				BBE636C02CCC0B5000873E68 /* ActionButtonsView.swift */,
 				BBE636C22CCC0BE900873E68 /* CharacterView.swift */,
+				BB7B6D972D1E0D070030344A /* StoryInfoView.swift */,
 				BBE636D02CCD77BB00873E68 /* FlowLayout.swift */,
 				BBAE07DA2D14BE0B00DA95CD /* SystemImageView.swift */,
 				BB4EDB232C91902100699E7D /* SettingsView.swift */,
 				BBE16F212CC2769C00A7EF1F /* StoryListView.swift */,
+				BB7B6D952D1DF0990030344A /* StudyView.swift */,
 				BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */,
 				BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */,
 				BBAE07D02D0C793000DA95CD /* SubscriptionView.swift */,
@@ -654,6 +660,7 @@
 				BB6572E52CD8D12400AC5981 /* Voice.swift in Sources */,
 				BBAE07D12D0C793000DA95CD /* SubscriptionView.swift in Sources */,
 				BBAE07D32D0C796500DA95CD /* SubscriptionState.swift in Sources */,
+				BB7B6D982D1E0D070030344A /* StoryInfoView.swift in Sources */,
 				BB4EDB072C90C8CA00699E7D /* FlowTaleAction.swift in Sources */,
 				BBE636BF2CC98B2B00873E68 /* WordTimeStampData.swift in Sources */,
 				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,
@@ -670,6 +677,7 @@
 				BB1994CD2CE904D900D61E54 /* StoryState.swift in Sources */,
 				BB4EDB0E2C90CA0300699E7D /* FlowTaleMiddleware.swift in Sources */,
 				BB6572E72CD8D1E300AC5981 /* Gender.swift in Sources */,
+				BB7B6D962D1DF0990030344A /* StudyView.swift in Sources */,
 				BBAE07CF2D0C768000DA95CD /* AnyKey.swift in Sources */,
 				BB4EDB102C90CA4900699E7D /* FlowTaleSubscriber.swift in Sources */,
 				BBE636CD2CCC0F8500873E68 /* ReaderView.swift in Sources */,
@@ -883,7 +891,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"FlowTale/Preview Content\"";
 				DEVELOPMENT_TEAM = NGW7S9DH6U;
 				ENABLE_PREVIEWS = YES;
@@ -917,7 +925,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"FlowTale/Preview Content\"";
 				DEVELOPMENT_TEAM = NGW7S9DH6U;
 				ENABLE_PREVIEWS = YES;

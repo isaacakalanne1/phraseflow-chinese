@@ -65,6 +65,7 @@ struct SettingsView: View {
                             
                             Button(action: {
                                 withAnimation(.easeInOut) {
+                                    store.dispatch(.pauseAudio)
                                     store.dispatch(.updateSpeechSpeed(speed))
                                 }
                             }) {

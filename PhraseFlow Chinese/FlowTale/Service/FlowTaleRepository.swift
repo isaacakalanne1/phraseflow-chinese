@@ -11,6 +11,7 @@ import StoreKit
 
 protocol FlowTaleRepositoryProtocol {
     func synthesizeSpeech(_ chapter: Chapter,
+                          story: Story,
                           voice: Voice,
                           speechSpeed: SpeechSpeed,
                           language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
@@ -32,7 +33,11 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
 
     init() { }
 
-    func synthesizeSpeech(_ chapter: Chapter, voice: Voice, speechSpeed: SpeechSpeed, language: Language?) async throws -> (wordTimestamps: [WordTimeStampData], audioData: Data) {
+    func synthesizeSpeech(_ chapter: Chapter,
+                          story: Story,
+                          voice: Voice,
+                          speechSpeed: SpeechSpeed,
+                          language: Language?) async throws -> (wordTimestamps: [WordTimeStampData], audioData: Data) {
 
         let synthesizer: SPXSpeechSynthesizer
         do {
@@ -60,10 +65,10 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
                 wordTimestamps[index] = previousTimestamp
             }
 
-            let newTimestamp = WordTimeStampData(word: word,
+            let newTimestamp = WordTimeStampData(storyId: story.id,
+                                                 word: word,
                                                  time: audioTimeInSeconds,
                                                  duration: event.duration,
-//                                                 indexInList: index,
                                                  sentenceIndex: sentenceIndex)
             wordTimestamps.append(newTimestamp)
 

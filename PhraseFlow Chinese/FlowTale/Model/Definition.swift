@@ -8,7 +8,8 @@
 import Foundation
 
 struct Definition: Codable, Equatable {
-    var character: String
+    var timestampData: WordTimeStampData
     var sentence: Sentence
     var definition: String
+    var language: Language
 }

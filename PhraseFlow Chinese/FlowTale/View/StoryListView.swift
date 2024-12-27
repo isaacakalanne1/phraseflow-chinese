@@ -20,8 +20,11 @@ struct StoryListView: View {
                             HStack {
                                 NavigationLink(destination: ChapterListView(story: story)) {
                                     VStack(alignment: .leading, content: {
-                                        Text(story.title)
-                                            .fontWeight(.medium)
+                                        HStack {
+                                            StoryInfoView(story: story)
+                                            Text(story.title)
+                                                .fontWeight(.medium)
+                                        }
                                         Text(story.briefLatestStorySummary)
                                             .fontWeight(.light)
                                     })

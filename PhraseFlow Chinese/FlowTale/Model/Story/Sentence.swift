@@ -16,10 +16,6 @@ struct Sentence: Codable, Equatable, Hashable {
         self.translation = translation
         self.original = english
     }
-
-    var convertedTranslation: [String] {
-        translation.components(separatedBy: " ")
-    }
 }
 
 func sentenceSchema(originalLanguage: Language,

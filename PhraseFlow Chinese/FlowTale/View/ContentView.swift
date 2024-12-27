@@ -30,6 +30,12 @@ struct ContentView: View {
             store.dispatch(.updateShowingStoryListView(isShowing: newValue))
         }
 
+        let isShowingStudyView: Binding<Bool> = .init {
+            store.state.viewState.isShowingStudyView
+        } set: { newValue in
+            store.dispatch(.updateShowingStudyView(isShowing: newValue))
+        }
+
         VStack(spacing: 10) {
             switch store.state.viewState.readerDisplayType {
             case .loading:
@@ -56,6 +62,8 @@ struct ContentView: View {
                 } else if let chapter = store.state.storyState.currentChapter {
                     ReaderView(chapter: chapter)
                         .padding(10)
+                } else {
+
                 }
             }
         }
@@ -68,6 +76,9 @@ struct ContentView: View {
         }
         .sheet(isPresented: isShowingStoryListView) {
             StoryListView()
+        }
+        .sheet(isPresented: isShowingStudyView) {
+            StudyView()
         }
         .sheet(isPresented: isShowingSubscriptionView) {
             SubscriptionView()

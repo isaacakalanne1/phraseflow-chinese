@@ -42,7 +42,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .onDefinedCharacter(let definition):
         newState.definitionState.currentDefinition = definition
         newState.definitionState.definitions.removeAll(where: {
-            $0.character == definition.character && $0.sentence == definition.sentence
+            $0.timestampData == definition.timestampData && $0.sentence == definition.sentence
         })
         newState.definitionState.definitions.append(definition)
         newState.viewState.readerDisplayType = .normal
@@ -74,6 +74,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.isShowingSettingsScreen = isShowing
     case .updateShowingStoryListView(let isShowing):
         newState.viewState.isShowingStoryListView = isShowing
+    case .updateShowingStudyView(let isShowing):
+        newState.viewState.isShowingStudyView = isShowing
     case .selectChapter(var story, let chapterIndex):
         newState.viewState.isShowingStoryListView = false
         story.lastUpdated = .now
@@ -111,6 +113,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .updateSentenceIndex(let index):
         newState.storyState.sentenceIndex = index
     case .playAudio(let time):
+        newState.currentTappedWord = nil
         newState.audioState.isPlayingAudio = true
         if let time {
             newState.audioState.currentPlaybackTime = time
@@ -125,8 +128,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         if let index = newState.currentSpokenWord?.sentenceIndex {
             newState.storyState.sentenceIndex = index
         }
-    case .selectWord(let timestampData):
-        newState.audioState.currentPlaybackTime = timestampData.time
+    case .selectWord(let word):
+        newState.audioState.currentPlaybackTime = word.time
+        newState.currentTappedWord = word
     case .goToNextChapter:
         var newStory = newState.storyState.currentStory
         newStory?.currentChapterIndex += 1

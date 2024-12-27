@@ -16,6 +16,8 @@ struct FlowTaleState {
     var subscriptionState = SubscriptionState()
     var locale: Locale
 
+    var currentTappedWord: WordTimeStampData?
+
     var currentSpokenWord: WordTimeStampData? {
         storyState.currentChapter?.timestampData.last(where: { audioState.currentPlaybackTime >= $0.time })
     }

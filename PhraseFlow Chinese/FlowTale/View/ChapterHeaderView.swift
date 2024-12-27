@@ -14,8 +14,13 @@ struct ChapterHeaderView: View {
     var body: some View {
         VStack {
             Group {
-                Text(store.state.storyState.currentStory?.title ?? "")
-                    .fontWeight(.medium)
+                if let story = store.state.storyState.currentStory {
+                    HStack {
+                        StoryInfoView(story: story)
+                        Text(story.title)
+                            .fontWeight(.medium)
+                    }
+                }
                 Text(chapter.title)
                     .fontWeight(.light)
             }

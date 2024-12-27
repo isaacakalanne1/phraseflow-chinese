@@ -12,6 +12,7 @@ import StoreKit
 enum FlowTaleAction {
     case updateShowingSettings(isShowing: Bool)
     case updateShowingStoryListView(isShowing: Bool)
+    case updateShowingStudyView(isShowing: Bool)
     case updateSentenceIndex(Int)
 
     case continueStory(story: Story)
@@ -39,7 +40,10 @@ enum FlowTaleAction {
     case onLoadedDefinitions([Definition])
     case failedToLoadDefinitions
 
-    case synthesizeAudio(Chapter, voice: Voice, isForced: Bool)
+    case synthesizeAudio(Chapter,
+                         story: Story,
+                         voice: Voice,
+                         isForced: Bool)
     case onSynthesizedAudio((wordTimestamps: [WordTimeStampData],
                              audioData: Data))
     case playAudio(time: Double?)
@@ -50,7 +54,7 @@ enum FlowTaleAction {
     case updatePlayTime
 
     case defineCharacter(WordTimeStampData, shouldForce: Bool)
-    case playWord(WordTimeStampData)
+    case playWord(WordTimeStampData, story: Story?)
     case finishedPlayingWord
     case onDefinedCharacter(Definition)
     case failedToDefineCharacter

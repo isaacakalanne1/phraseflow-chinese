@@ -15,7 +15,10 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     switch action {
     case .onContinuedStory(let story):
         if let chapter = story.chapters[safe: story.currentChapterIndex] {
-            return .synthesizeAudio(chapter, voice: state.settingsState.voice, isForced: true)
+            return .synthesizeAudio(chapter,
+                                    story: story,
+                                    voice: state.settingsState.voice,
+                                    isForced: true)
         }
         return .saveStoryAndSettings(story)
     case .continueStory(let story):
@@ -48,12 +51,13 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         }
     case .onDeletedStory:
         return .loadStories
-    case .synthesizeAudio(let chapter, let voice, let isForced):
+    case .synthesizeAudio(let chapter, let story, let voice, let isForced):
         if chapter.audioData != nil && chapter.audioVoice == state.settingsState.voice && chapter.audioSpeed == state.settingsState.speechSpeed && !isForced {
             return .playAudio(time: nil)
         }
         do {
             let result = try await environment.synthesizeSpeech(for: chapter,
+                                                                story: story,
                                                                 voice: voice,
                                                                 speechSpeed: state.settingsState.speechSpeed,
                                                                 language: state.storyState.currentStory?.language)
@@ -74,7 +78,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         state.audioState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: .infinity, preferredTimescale: 1)
         state.audioState.audioPlayer.play()
         return nil
-    case .playWord(let word):
+    case .playWord(let word, let story):
         let myTime = CMTime(seconds: word.time, preferredTimescale: 60000)
         await state.audioState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
         state.audioState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: word.time + word.duration, preferredTimescale: 60000)
@@ -98,7 +102,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             guard let story = state.storyState.currentStory else {
                 return .failedToDefineCharacter
             }
-            let fetchedDefinition = try await environment.fetchDefinition(of: timeStampData.word,
+            let fetchedDefinition = try await environment.fetchDefinition(of: timeStampData,
                                                                           withinContextOf: sentence,
                                                                           story: story,
                                                                           deviceLanguage: state.deviceLanguage)
@@ -150,7 +154,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             state.audioState.audioPlayer.play()
             return nil
         } else {
-            return .playWord(word)
+            return .playWord(word, story: state.storyState.currentStory)
         }
     case .goToNextChapter:
         if let story = state.storyState.currentStory {
@@ -250,7 +254,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .failedToPurchaseSubscription,
             .onRestoredSubscriptions,
             .failedToRestoreSubscriptions,
-            .setSubscriptionSheetShowing:
+            .setSubscriptionSheetShowing,
+            .updateShowingStudyView:
         return nil
     }
 }

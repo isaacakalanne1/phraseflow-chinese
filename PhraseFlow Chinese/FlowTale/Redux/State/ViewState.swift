@@ -15,6 +15,7 @@ struct ViewState {
 
     var isShowingSettingsScreen = false
     var isShowingStoryListView = false
+    var isShowingStudyView = false
     var isShowingSubscriptionSheet = false
 
     var readerDisplayType: ReaderDisplayType

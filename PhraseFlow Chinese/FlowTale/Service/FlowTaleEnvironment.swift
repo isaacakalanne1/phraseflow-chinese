@@ -10,6 +10,7 @@ import StoreKit
 
 protocol FlowTaleEnvironmentProtocol {
     func synthesizeSpeech(for chapter: Chapter,
+                          story: Story,
                           voice: Voice,
                           speechSpeed: SpeechSpeed,
                           language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
@@ -24,7 +25,7 @@ protocol FlowTaleEnvironmentProtocol {
     func saveAppSettings(_ settings: SettingsState) throws
     func unsaveStory(_ story: Story) throws
 
-    func fetchDefinition(of character: String,
+    func fetchDefinition(of timestampData: WordTimeStampData,
                          withinContextOf sentence: Sentence,
                          story: Story,
                          deviceLanguage: Language?) async throws -> Definition
@@ -43,9 +44,17 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         self.repository = FlowTaleRepository()
     }
 
-    func synthesizeSpeech(for chapter: Chapter, voice: Voice, speechSpeed: SpeechSpeed, language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
-                                                                                             audioData: Data) {
-        try await repository.synthesizeSpeech(chapter, voice: voice, speechSpeed: speechSpeed, language: language)
+    func synthesizeSpeech(for chapter: Chapter,
+                          story: Story,
+                          voice: Voice,
+                          speechSpeed: SpeechSpeed,
+                          language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
+                                                                audioData: Data) {
+        try await repository.synthesizeSpeech(chapter,
+                                              story: story,
+                                              voice: voice,
+                                              speechSpeed: speechSpeed,
+                                              language: language)
     }
 
     func getProducts() async throws -> [Product] {
@@ -84,15 +93,18 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         try dataStore.loadAppSettings()
     }
 
-    func fetchDefinition(of string: String,
+    func fetchDefinition(of timestampData: WordTimeStampData,
                          withinContextOf sentence: Sentence,
                          story: Story,
                          deviceLanguage: Language?) async throws -> Definition {
-        let definitionString = try await service.fetchDefinition(of: string,
+        let definitionString = try await service.fetchDefinition(of: timestampData.word,
                                                                  withinContextOf: sentence,
                                                                  story: story,
                                                                  deviceLanguage: deviceLanguage)
-        let definition = Definition(character: string, sentence: sentence, definition: definitionString)
+        let definition = Definition(timestampData: timestampData,
+                                    sentence: sentence,
+                                    definition: definitionString,
+                                    language: story.language)
         try dataStore.saveDefinition(definition)
         return definition
     }

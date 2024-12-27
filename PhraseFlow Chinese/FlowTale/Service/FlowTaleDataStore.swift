@@ -29,7 +29,7 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
 
     init() {
-//        clearData(path: "userData.json")
+//        clearData(path: "definitions.json")
 //        clearData(path: "settingsState.json")
     }
 
@@ -128,7 +128,7 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         var allDefinitions: [Definition]
         if let definitions = try? loadDefinitions() {
             allDefinitions = definitions
-            allDefinitions.removeAll(where: { $0.character == definition.character && $0.sentence == definition.sentence })
+            allDefinitions.removeAll(where: { $0.timestampData == definition.timestampData && $0.sentence == definition.sentence })
             if allDefinitions.isEmpty {
                 allDefinitions = [definition]
             } else {
