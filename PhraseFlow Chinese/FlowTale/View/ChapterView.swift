@@ -11,32 +11,79 @@ struct ChapterView: View {
     @EnvironmentObject var store: FlowTaleStore
     let chapter: Chapter
 
-    var body: some View {
+    /// Tracks whether auto-scroll is currently enabled
+    @State private var autoScrollEnabled: Bool = true
 
+    var body: some View {
         if let story = store.state.storyState.currentStory {
-            ScrollView(.vertical) {
-                ForEach(0...(chapter.timestampData.last?.sentenceIndex ?? 0), id: \.self) { index in
-                    let sentenceWords = chapter.timestampData.filter({ $0.sentenceIndex == index })
-                    
-                    FlowLayout(spacing: 0, language: story.language) {
-                        ForEach(Array(sentenceWords.enumerated()), id: \.offset) { index, word in
-                            CharacterView(isHighlighted: word == store.state.currentSpokenWord, word: word)
+            ScrollViewReader { proxy in
+                // Use simultaneousGesture so the ScrollView can still scroll normally
+                scrollView(story: story, proxy: proxy)
+                // 2) Whenever the highlighted word changes, scroll if auto-scroll is still enabled
+                .onChange(of: store.state.currentSpokenWord) { newWord in
+                    guard let newWord = newWord else { return }
+                    if autoScrollEnabled {
+                        withAnimation {
+                            // Scroll so the new word is at the bottom (use .center or .top if you prefer)
+                            proxy.scrollTo(newWord.id, anchor: .bottom)
                         }
                     }
                 }
-                .frame(maxWidth: .infinity, alignment: story.language.alignment)
+            }
+        }
+    }
+
+    /// Call this if you want to manually re-enable auto-scroll.
+    func enableAutoScroll() {
+        autoScrollEnabled = true
+    }
+
+    @ViewBuilder
+    func scrollView(story: Story, proxy: ScrollViewProxy) -> some View {
+        ScrollView(.vertical) {
+            VStack(alignment: .leading, spacing: 16) {
+                ForEach(0...(chapter.timestampData.last?.sentenceIndex ?? 0),
+                        id: \.self) { sentenceIdx in
+                    let sentenceWords = chapter.timestampData.filter {
+                        $0.sentenceIndex == sentenceIdx
+                    }
+
+                    FlowLayout(spacing: 0, language: story.language) {
+                        ForEach(sentenceWords.enumerated().indices, id: \.self) { i in
+                            let word = sentenceWords[i]
+
+                            CharacterView(
+                                isHighlighted: word == store.state.currentSpokenWord,
+                                word: word
+                            )
+                            // Give each word a unique ID so we can scroll to it
+                            .id(word.id)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: story.language.alignment)
+                }
 
                 Button(LocalizedString.nextChapter) {
                     let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
                     store.dispatch(doesNextChapterExist ? .goToNextChapter : .continueStory(story: story))
-//                    store.dispatch(.showSnackBar(.writingChapter))
                 }
                 .padding()
                 .background(Color.accentColor)
                 .foregroundColor(.white)
                 .cornerRadius(10)
             }
-            .id(store.state.viewState.chapterViewId)
+            .padding()
         }
+        // Give this scroll content an ID if you need to reset position later
+        .id(store.state.viewState.chapterViewId)
+
+        // 1) Add the simultaneousGesture on the ScrollView
+        .simultaneousGesture(
+            DragGesture()
+                .onChanged { _ in
+                    // As soon as the user drags, disable auto-scroll
+                    autoScrollEnabled = false
+                }
+        )
     }
 }
