@@ -84,6 +84,7 @@
 		BBE636CB2CCC0EEF00873E68 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636CA2CCC0EEF00873E68 /* ErrorView.swift */; };
 		BBE636CD2CCC0F8500873E68 /* ReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636CC2CCC0F8500873E68 /* ReaderView.swift */; };
 		BBE636D12CCD77BC00873E68 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636D02CCD77BB00873E68 /* FlowLayout.swift */; };
+		BBFDBBE92D203AD80056C448 /* DefinitionsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFDBBE82D203AD80056C448 /* DefinitionsChartView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -199,6 +200,7 @@
 		BBE636CA2CCC0EEF00873E68 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		BBE636CC2CCC0F8500873E68 /* ReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderView.swift; sourceTree = "<group>"; };
 		BBE636D02CCD77BB00873E68 /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
+		BBFDBBE82D203AD80056C448 /* DefinitionsChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionsChartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -444,6 +446,7 @@
 				BBE16F212CC2769C00A7EF1F /* StoryListView.swift */,
 				BB7B6D9B2D1F30BC0030344A /* SnackBar.swift */,
 				BB7B6D952D1DF0990030344A /* StudyView.swift */,
+				BBFDBBE82D203AD80056C448 /* DefinitionsChartView.swift */,
 				BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */,
 				BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */,
 				BBAE07D02D0C793000DA95CD /* SubscriptionView.swift */,
@@ -677,6 +680,7 @@
 				BB6572E52CD8D12400AC5981 /* Voice.swift in Sources */,
 				BBAE07D12D0C793000DA95CD /* SubscriptionView.swift in Sources */,
 				BBAE07D32D0C796500DA95CD /* SubscriptionState.swift in Sources */,
+				BBFDBBE92D203AD80056C448 /* DefinitionsChartView.swift in Sources */,
 				BB7B6D982D1E0D070030344A /* StoryInfoView.swift in Sources */,
 				BB4EDB072C90C8CA00699E7D /* FlowTaleAction.swift in Sources */,
 				BBE636BF2CC98B2B00873E68 /* WordTimeStampData.swift in Sources */,

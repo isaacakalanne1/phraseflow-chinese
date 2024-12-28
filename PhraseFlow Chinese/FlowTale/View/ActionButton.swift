@@ -19,7 +19,7 @@ struct ActionButton: View {
             VStack {
                 SystemImageView(systemImage, size: 35)
                 Text(title)
-                    .font(.system(size: 10, weight: .medium))
+                    .font(.system(size: 12, weight: .medium))
                     .frame(height: 25)
             }
             .foregroundStyle(Color.accentColor)

@@ -101,7 +101,8 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
                                                                  withinContextOf: sentence,
                                                                  story: story,
                                                                  deviceLanguage: deviceLanguage)
-        let definition = Definition(timestampData: timestampData,
+        let definition = Definition(creationDate: .now,
+                                    timestampData: timestampData,
                                     sentence: sentence,
                                     definition: definitionString,
                                     language: story.language)
