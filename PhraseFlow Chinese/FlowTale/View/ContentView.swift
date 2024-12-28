@@ -36,6 +36,12 @@ struct ContentView: View {
             store.dispatch(.updateShowingStudyView(isShowing: newValue))
         }
 
+        let isShowingDefinitionsChartView: Binding<Bool> = .init {
+            store.state.viewState.isShowingDefinitionsChartView
+        } set: { newValue in
+            store.dispatch(.updateShowingDefinitionsChartView(isShowing: newValue))
+        }
+
         VStack(spacing: 10) {
             switch store.state.viewState.readerDisplayType {
             case .loading:
@@ -84,6 +90,11 @@ struct ContentView: View {
         }
         .sheet(isPresented: isShowingStudyView) {
             StudyView()
+        }
+        .sheet(isPresented: isShowingDefinitionsChartView) {
+            NavigationStack {
+                DefinitionsProgressSheetView()
+            }
         }
         .sheet(isPresented: isShowingSubscriptionView) {
             SubscriptionView()

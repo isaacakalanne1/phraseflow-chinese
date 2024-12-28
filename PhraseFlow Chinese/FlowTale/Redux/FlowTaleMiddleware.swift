@@ -269,6 +269,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .failedToRestoreSubscriptions,
             .setSubscriptionSheetShowing,
             .updateShowingStudyView,
+            .updateShowingDefinitionsChartView,
             .hideSnackbar:
         return nil
     }

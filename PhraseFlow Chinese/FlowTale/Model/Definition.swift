@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Definition: Codable, Equatable {
+struct Definition: Codable, Equatable, Hashable {
     var creationDate: Date
     var timestampData: WordTimeStampData
     var sentence: Sentence

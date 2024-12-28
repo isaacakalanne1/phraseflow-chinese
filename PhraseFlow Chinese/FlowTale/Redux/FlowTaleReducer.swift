@@ -85,6 +85,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.isShowingStoryListView = isShowing
     case .updateShowingStudyView(let isShowing):
         newState.viewState.isShowingStudyView = isShowing
+    case .updateShowingDefinitionsChartView(let isShowing):
+        newState.viewState.isShowingDefinitionsChartView = isShowing
     case .selectChapter(var story, let chapterIndex):
         newState.viewState.isShowingStoryListView = false
         story.lastUpdated = .now

@@ -13,6 +13,7 @@ struct StudyView: View {
     @State var studyWords: [Definition] = []
     @State var index: Int = 0
     @State var isDefinitionShown: Bool = false
+    var isWordDefinitionView: Bool = false
 
     var currentDefinition: Definition? {
         studyWords[safe: index]
@@ -25,9 +26,9 @@ struct StudyView: View {
     var body: some View {
         Group {
             if let definition = currentDefinition {
-                VStack {
+                VStack(alignment: .leading) {
                     Text("Word")
-                        .greyBackground(isShowing: store.state.settingsState.isShowingEnglish)
+                        .greyBackground()
                     ZStack {
                         Text(definition.timestampData.word)
                             .font(.system(size: 40, weight: .bold))
@@ -39,53 +40,84 @@ struct StudyView: View {
                             } label: {
                                 SystemImageView(.speaker)
                             }
-                            .padding(.trailing)
                         }
                     }
                     Text("Sentence")
-                        .greyBackground(isShowing: store.state.settingsState.isShowingEnglish)
+                        .greyBackground()
                     Text(definition.sentence.translation)
                         .font(.system(size: 30, weight: .regular))
                         .frame(maxWidth: .infinity, alignment: .leading)
+                    Text("Translation")
+                        .greyBackground()
+                    if isWordDefinitionView || isDefinitionShown {
+                        Text(definition.sentence.original)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    } else {
+                        Text("Tap Reveal to show")
+                    }
                     Text("Definition")
-                        .greyBackground(isShowing: store.state.settingsState.isShowingEnglish)
-                    if isDefinitionShown {
+                        .greyBackground()
+                    if isWordDefinitionView || isDefinitionShown {
                         ScrollView(.vertical) {
                             Text(definition.definition)
                                 .frame(maxWidth: .infinity,
                                        maxHeight: .infinity,
                                        alignment: .topLeading)
                         }
-                        Button("Next") {
-                            goToNextDefinition()
-                        }
-                        .padding()
-                        .background(Color.accentColor)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
                     } else {
+                        Text("Tap Reveal to show")
                         Spacer()
-                        Button("Reveal") {
-                            store.dispatch(.playStudyWord(definition))
-                            isDefinitionShown = true
+                    }
+
+                    HStack {
+                        Button("Previous") {
+                            if index - 1 < 0 {
+                                index = studyWords.count - 1
+                            } else {
+                                index -= 1
+                            }
+                            isDefinitionShown = false
                         }
                         .padding()
                         .background(Color.accentColor)
                         .foregroundColor(.white)
                         .cornerRadius(10)
+                        if !isWordDefinitionView {
+                            if isDefinitionShown {
+                                Button("Next") {
+                                    goToNextDefinition()
+                                }
+                                .padding()
+                                .background(Color.accentColor)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                            } else {
+                                Button("Reveal") {
+                                    store.dispatch(.playStudyWord(definition))
+                                    isDefinitionShown = true
+                                }
+                                .padding()
+                                .background(Color.accentColor)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                            }
+                        }
                     }
+                    .frame(maxWidth: .infinity, alignment: .center)
                 }
             }
         }
         .onAppear {
-            studyWords = Array(store.state.definitionState.definitions
-                .shuffled()
-                .filter({
-                    $0.language == store.state.storyState.currentStory?.language
-                })
-                .prefix(10))
-            index = 0
-            isDefinitionShown = false
+            if !isWordDefinitionView {
+                studyWords = Array(store.state.definitionState.definitions
+                    .shuffled()
+                    .filter({
+                        $0.language == store.state.storyState.currentStory?.language
+                    })
+                        .prefix(10))
+                index = 0
+                isDefinitionShown = false
+            }
         }
         .padding()
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 enum SystemImage {
-    case _repeat, speaker, pause, gear, play, list, ellipsis, arrowDown, heart, starFilled, star, book
+    case _repeat, speaker, pause, gear, play, list, ellipsis, arrowDown, heart, starFilled, star, book, chartBar
 
     var systemName: String {
         switch self {
@@ -19,7 +19,7 @@ enum SystemImage {
         case .pause:
             "pause.fill"
         case .gear:
-            "gearshape.fill"
+            "gearshape"
         case .play:
             "play.fill"
         case .list:
@@ -29,13 +29,15 @@ enum SystemImage {
         case .arrowDown:
             "arrow.down.to.line.circle"
         case .heart:
-            "suit.heart.fill"
+            "suit.heart"
         case .starFilled:
             "star.fill"
         case .star:
             "star"
         case .book:
-            "book.fill"
+            "book"
+        case .chartBar:
+            "chart.bar"
         }
     }
 }
