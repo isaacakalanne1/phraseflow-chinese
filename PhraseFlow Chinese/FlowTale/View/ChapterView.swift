@@ -22,7 +22,7 @@ struct ChapterView: View {
                     if store.state.viewState.isAutoscrollEnabled {
                         withAnimation {
                             // Scroll so the new word is at the bottom (use .center or .top if you prefer)
-                            proxy.scrollTo(newWord.id, anchor: .bottom)
+                            proxy.scrollTo(newWord.id, anchor: .center)
                         }
                     }
                 }
@@ -31,7 +31,7 @@ struct ChapterView: View {
                     if store.state.viewState.isAutoscrollEnabled {
                         withAnimation {
                             // Scroll so the new word is at the bottom (use .center or .top if you prefer)
-                            proxy.scrollTo(newWord.id, anchor: .bottom)
+                            proxy.scrollTo(newWord.id, anchor: .center)
                         }
                     }
                 }

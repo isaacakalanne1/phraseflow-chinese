@@ -34,7 +34,7 @@ struct CharacterView: View {
         }
         .onTapGesture {
             if store.state.viewState.readerDisplayType != .defining {
-                store.dispatch(.pauseAudio)
+//                store.dispatch(.pauseAudio)
                 store.dispatch(.updateSentenceIndex(word.sentenceIndex))
                 store.dispatch(.selectWord(word))
                 if store.state.settingsState.isShowingDefinition {
