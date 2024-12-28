@@ -37,7 +37,7 @@ struct DefinitionsProgressSheetView: View {
             }
         }
         .frame(maxHeight: .infinity)
-        .navigationTitle("\(filteredDefinitions.count) Words")
+        .navigationTitle("Words Learned: \(filteredDefinitions.count)")
     }
 
     func removeDuplicates(from definitions: [Definition]) -> [Definition] {

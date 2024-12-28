@@ -76,8 +76,8 @@ struct DefinitionsChartView: View {
         .chartYScale(domain: 0...yMax)
 
         // -- Axis Labels
-        .chartXAxisLabel("Date", position: .bottom, alignment: .center)
-        .chartYAxisLabel("Learned words", position: .leading)
+//        .chartXAxisLabel("Date", position: .bottom, alignment: .center)
+//        .chartYAxisLabel("Learned words", position: .leading)
 
         // -- Format the X-axis
         .chartXAxis {
