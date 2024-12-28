@@ -270,6 +270,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .setSubscriptionSheetShowing,
             .updateShowingStudyView,
             .updateShowingDefinitionsChartView,
+            .updateAutoScrollEnabled,
             .hideSnackbar:
         return nil
     }

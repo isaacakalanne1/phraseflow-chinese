@@ -11,18 +11,24 @@ struct ChapterView: View {
     @EnvironmentObject var store: FlowTaleStore
     let chapter: Chapter
 
-    /// Tracks whether auto-scroll is currently enabled
-    @State private var autoScrollEnabled: Bool = true
-
     var body: some View {
         if let story = store.state.storyState.currentStory {
             ScrollViewReader { proxy in
                 // Use simultaneousGesture so the ScrollView can still scroll normally
                 scrollView(story: story, proxy: proxy)
                 // 2) Whenever the highlighted word changes, scroll if auto-scroll is still enabled
+                .onChange(of: store.state.viewState.isAutoscrollEnabled) {
+                    guard let newWord = store.state.currentSpokenWord else { return }
+                    if store.state.viewState.isAutoscrollEnabled {
+                        withAnimation {
+                            // Scroll so the new word is at the bottom (use .center or .top if you prefer)
+                            proxy.scrollTo(newWord.id, anchor: .bottom)
+                        }
+                    }
+                }
                 .onChange(of: store.state.currentSpokenWord) { newWord in
                     guard let newWord = newWord else { return }
-                    if autoScrollEnabled {
+                    if store.state.viewState.isAutoscrollEnabled {
                         withAnimation {
                             // Scroll so the new word is at the bottom (use .center or .top if you prefer)
                             proxy.scrollTo(newWord.id, anchor: .bottom)
@@ -33,46 +39,35 @@ struct ChapterView: View {
         }
     }
 
-    /// Call this if you want to manually re-enable auto-scroll.
-    func enableAutoScroll() {
-        autoScrollEnabled = true
-    }
-
     @ViewBuilder
     func scrollView(story: Story, proxy: ScrollViewProxy) -> some View {
         ScrollView(.vertical) {
-            VStack(alignment: .leading, spacing: 16) {
-                ForEach(0...(chapter.timestampData.last?.sentenceIndex ?? 0),
-                        id: \.self) { sentenceIdx in
-                    let sentenceWords = chapter.timestampData.filter {
-                        $0.sentenceIndex == sentenceIdx
+            ForEach(0...(chapter.timestampData.last?.sentenceIndex ?? 0),
+                    id: \.self) { sentenceIdx in
+                let sentenceWords = chapter.timestampData.filter({ $0.sentenceIndex == sentenceIdx })
+
+                FlowLayout(spacing: 0, language: story.language) {
+                    ForEach(Array(sentenceWords.enumerated()), id: \.offset) { index, word in
+                        CharacterView(
+                            isHighlighted: word == store.state.currentSpokenWord,
+                            word: word
+                        )
+                        // Give each word a unique ID so we can scroll to it
+                        .id(word.id)
                     }
-
-                    FlowLayout(spacing: 0, language: story.language) {
-                        ForEach(sentenceWords.enumerated().indices, id: \.self) { i in
-                            let word = sentenceWords[i]
-
-                            CharacterView(
-                                isHighlighted: word == store.state.currentSpokenWord,
-                                word: word
-                            )
-                            // Give each word a unique ID so we can scroll to it
-                            .id(word.id)
-                        }
-                    }
-                    .frame(maxWidth: .infinity, alignment: story.language.alignment)
                 }
+                .frame(maxWidth: .infinity, alignment: story.language.alignment)
+            }
 
-                Button(LocalizedString.nextChapter) {
-                    let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
-                    store.dispatch(doesNextChapterExist ? .goToNextChapter : .continueStory(story: story))
-                }
-                .padding()
-                .background(Color.accentColor)
-                .foregroundColor(.white)
-                .cornerRadius(10)
+            Button(LocalizedString.nextChapter) {
+                let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
+                store.dispatch(doesNextChapterExist ? .goToNextChapter : .continueStory(story: story))
             }
             .padding()
+            .background(Color.accentColor)
+            .foregroundColor(.white)
+            .cornerRadius(10)
+            .cornerRadius(10)
         }
         // Give this scroll content an ID if you need to reset position later
         .id(store.state.viewState.chapterViewId)
@@ -82,7 +77,7 @@ struct ChapterView: View {
             DragGesture()
                 .onChanged { _ in
                     // As soon as the user drags, disable auto-scroll
-                    autoScrollEnabled = false
+                    store.dispatch(.updateAutoScrollEnabled(isEnabled: false))
                 }
         )
     }

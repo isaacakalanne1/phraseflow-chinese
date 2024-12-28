@@ -66,6 +66,7 @@ struct ActionButtonsView: View {
                     let timestampData = store.state.storyState.currentChapter?.timestampData
                     let currentSpokenWord = store.state.currentSpokenWord ?? timestampData?.first
                     store.dispatch(.playAudio(time: currentSpokenWord?.time))
+                    store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
                 }
             }
         }

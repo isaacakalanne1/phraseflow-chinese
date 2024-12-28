@@ -8,6 +8,7 @@
 import Foundation
 
 struct WordTimeStampData: Codable, Equatable, Hashable {
+    let id: UUID
     let storyId: UUID
     let chapterIndex: Int
     var word: String
@@ -15,12 +16,14 @@ struct WordTimeStampData: Codable, Equatable, Hashable {
     var duration: Double
     var sentenceIndex: Int
 
-    init(storyId: UUID,
+    init(id: UUID,
+         storyId: UUID,
          chapterIndex: Int,
          word: String,
          time: Double,
          duration: Double,
          sentenceIndex: Int) {
+        self.id = id
         self.storyId = storyId
         self.chapterIndex = chapterIndex
         self.word = word
@@ -31,6 +34,7 @@ struct WordTimeStampData: Codable, Equatable, Hashable {
 
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = (try? container.decode(UUID.self, forKey: .id)) ?? UUID()
         self.storyId = (try? container.decode(UUID.self, forKey: .storyId)) ?? UUID()
         self.chapterIndex = (try? container.decode(Int.self, forKey: .chapterIndex)) ?? 0
         self.word = try container.decode(String.self, forKey: .word)

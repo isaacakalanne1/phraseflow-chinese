@@ -14,6 +14,7 @@ enum FlowTaleAction {
     case updateShowingStoryListView(isShowing: Bool)
     case updateShowingStudyView(isShowing: Bool)
     case updateShowingDefinitionsChartView(isShowing: Bool)
+    case updateAutoScrollEnabled(isEnabled: Bool)
     case updateSentenceIndex(Int)
 
     case continueStory(story: Story)

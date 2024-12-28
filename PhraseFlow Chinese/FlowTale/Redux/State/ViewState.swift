@@ -19,6 +19,8 @@ struct ViewState {
     var isShowingDefinitionsChartView = false
     var isShowingSubscriptionSheet = false
 
+    var isAutoscrollEnabled = false
+
     var readerDisplayType: ReaderDisplayType
     var playButtonDisplayType: PlayButtonDisplayType
 

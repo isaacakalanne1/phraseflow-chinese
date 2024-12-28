@@ -65,7 +65,8 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
                 wordTimestamps[index] = previousTimestamp
             }
 
-            let newTimestamp = WordTimeStampData(storyId: story.id,
+            let newTimestamp = WordTimeStampData(id: UUID(),
+                                                 storyId: story.id,
                                                  chapterIndex: story.currentChapterIndex,
                                                  word: word,
                                                  time: audioTimeInSeconds,
