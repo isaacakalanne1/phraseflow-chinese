@@ -175,7 +175,8 @@ enum Language: String, Codable, CaseIterable {
     var voices: [Voice] {
         switch self {
         case .mandarinChinese:
-            [.xiaoxiao]
+            [.xiaoxiao,
+             .yunjian]
         case .french:
             [.denise,
              .henri]
@@ -183,13 +184,17 @@ enum Language: String, Codable, CaseIterable {
             [.mayu,
              .keita]
         case .korean:
-            [.sunHi]
+            [.sunHi,
+             .hyunsu]
         case .russian:
-            [.dariya]
+            [.dariya,
+             .dmitry]
         case .spanish:
-            [.elvira]
+            [.elvira,
+             .alvaro]
         case .arabicGulf:
-            [.fatima]
+            [.fatima,
+             .hamdan]
         case .europeanPortuguese:
             [.raquel,
              .duarte]

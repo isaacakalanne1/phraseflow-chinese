@@ -37,7 +37,10 @@ struct SettingsView: View {
                         Text(LocalizedString.toggle)
                     }
                     Section {
-                        ForEach(store.state.storyState.currentStory?.language.voices.sorted(by: { $0.gender.title < $1.gender.title }) ?? [], id: \.self) { voice in
+                        let sortedVoices = store.state.storyState.currentStory?.language.voices
+                            .sorted(by: { $0.gender.title < $1.gender.title })
+                        ForEach(sortedVoices ?? [],
+                                id: \.self) { voice in
                             let isSelectedVoice = store.state.settingsState.voice == voice
 
                             Button(action: {
@@ -45,13 +48,12 @@ struct SettingsView: View {
                                     store.dispatch(.selectVoice(voice))
                                 }
                             }) {
-                                VStack {
+                                VStack(alignment: .leading) {
                                     Text(voice.title)
                                         .fontWeight(isSelectedVoice ? .medium : .light)
                                     Text(voice.gender.title)
                                         .fontWeight(.light)
                                 }
-                                .frame(maxWidth: .infinity, alignment: .leading)
                                 .foregroundStyle(isSelectedVoice ? Color.accentColor : Color.primary)
                             }
                             .listRowBackground(isSelectedVoice ? Color.gray.opacity(0.3) : Color.white)
