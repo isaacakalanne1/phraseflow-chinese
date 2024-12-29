@@ -50,14 +50,12 @@ enum FlowTaleAction {
                              audioData: Data))
     case playAudio(time: Double?)
     case pauseAudio
-    case stopAudio
     case onPlayedAudio
     case failedToSynthesizeAudio
     case updatePlayTime
 
     case defineCharacter(WordTimeStampData, shouldForce: Bool)
     case playWord(WordTimeStampData, story: Story?)
-    case finishedPlayingWord
     case playStudyWord(Definition)
     case onDefinedCharacter(Definition)
     case failedToDefineCharacter

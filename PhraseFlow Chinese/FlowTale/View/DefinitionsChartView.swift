@@ -46,7 +46,7 @@ struct DefinitionsChartView: View {
                     x: .value("Date", dataPoint.date),
                     y: .value("Cumulative Definitions", dataPoint.cumulativeCount)
                 )
-                .interpolationMethod(.cardinal)
+                .interpolationMethod(.linear)
 
                 // -- Add a light fill under the line
                 AreaMark(

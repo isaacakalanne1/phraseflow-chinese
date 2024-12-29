@@ -15,6 +15,8 @@ struct Story: Codable, Equatable, Hashable {
     var title: String
     var chapters: [Chapter]
     var currentChapterIndex = 0
+    var currentSentenceIndex = 0
+    var currentPlaybackTime: Double = 0
     var lastUpdated: Date
     var storyPrompt: String
 
@@ -25,6 +27,8 @@ struct Story: Codable, Equatable, Hashable {
          chapters: [Chapter] = [],
          storyPrompt: String,
          currentChapterIndex: Int = 0,
+         currentSentenceIndex: Int = 0,
+         currentPlaybackTime: Double = 0,
          lastUpdated: Date = .now) {
         self.id = UUID()
         self.briefLatestStorySummary = briefLatestStorySummary
@@ -33,6 +37,8 @@ struct Story: Codable, Equatable, Hashable {
         self.title = title
         self.chapters = chapters
         self.currentChapterIndex = currentChapterIndex
+        self.currentSentenceIndex = currentSentenceIndex
+        self.currentPlaybackTime = currentPlaybackTime
         self.lastUpdated = lastUpdated
         self.storyPrompt = storyPrompt
     }
@@ -47,6 +53,8 @@ struct Story: Codable, Equatable, Hashable {
         self.title = try container.decode(String.self, forKey: .title)
         self.chapters = (try? container.decode([Chapter].self, forKey: .chapters)) ?? [] // TODO: Improve this code, to avoid running out of memory. Possibly decode chapters one at a time, rather than all chapters at once
         self.currentChapterIndex = (try? container.decode(Int.self, forKey: .currentChapterIndex)) ?? 0
+        self.currentSentenceIndex = (try? container.decode(Int.self, forKey: .currentSentenceIndex)) ?? 0
+        self.currentPlaybackTime = (try? container.decode(Double.self, forKey: .currentPlaybackTime)) ?? 0
         self.lastUpdated = (try? container.decode(Date.self, forKey: .lastUpdated)) ?? .now
         self.storyPrompt = (try? container.decode(String.self, forKey: .storyPrompt)) ?? ""
     }

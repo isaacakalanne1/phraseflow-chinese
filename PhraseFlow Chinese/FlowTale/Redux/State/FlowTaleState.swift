@@ -21,7 +21,10 @@ struct FlowTaleState {
     var currentTappedWord: WordTimeStampData?
 
     var currentSpokenWord: WordTimeStampData? {
-        storyState.currentChapter?.timestampData.last(where: { audioState.currentPlaybackTime >= $0.time })
+        guard let playbackTime = storyState.currentStory?.currentPlaybackTime else {
+            return nil
+        }
+        return storyState.currentChapter?.timestampData.last(where: { playbackTime >= $0.time })
     }
 
     func createNewStory() -> Story {

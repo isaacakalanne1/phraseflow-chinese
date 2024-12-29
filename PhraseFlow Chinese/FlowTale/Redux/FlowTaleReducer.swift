@@ -18,8 +18,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.settingsState = settings
     case .onContinuedStory(let story):
         newState.storyState.currentStory = story
+        newState.storyState.currentStory?.currentSentenceIndex = 0
         newState.audioState.audioPlayer = AVPlayer()
-        newState.storyState.sentenceIndex = 0
         newState.settingsState.language = story.language
     case .onLoadedStories(let stories):
         newState.storyState.savedStories = stories
@@ -58,7 +58,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .synthesizeAudio:
         newState.viewState.playButtonDisplayType = .loading
     case .onSynthesizedAudio(var data):
-        newState.audioState.currentPlaybackTime = 0
+        newState.storyState.currentStory?.currentPlaybackTime = 0
         newState.definitionState.currentDefinition = nil
         newState.viewState.playButtonDisplayType = .normal
 
@@ -103,8 +103,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             story.currentChapterIndex = chapterIndex
         }
         newState.storyState.currentStory = story
-
-        newState.storyState.sentenceIndex = 0
         newState.settingsState.language = story.language
 
 
@@ -124,25 +122,24 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .failedToContinueStory:
         newState.viewState.readerDisplayType = .failedToGenerateChapter
     case .updateSentenceIndex(let index):
-        newState.storyState.sentenceIndex = index
+        newState.storyState.currentStory?.currentSentenceIndex = index
     case .playAudio(let time):
         newState.currentTappedWord = nil
         newState.audioState.isPlayingAudio = true
         if let time {
-            newState.audioState.currentPlaybackTime = time
+            newState.storyState.currentStory?.currentPlaybackTime = time
+            newState.storyState.currentStory?.currentPlaybackTime = time
         }
     case .pauseAudio:
         newState.audioState.isPlayingAudio = false
-    case .stopAudio:
-        newState.audioState.isPlayingAudio = false
-        newState.audioState.currentPlaybackTime = 0
     case .updatePlayTime:
-        newState.audioState.currentPlaybackTime = newState.audioState.audioPlayer.currentTime().seconds
+        newState.storyState.currentStory?.currentPlaybackTime = newState.audioState.audioPlayer.currentTime().seconds
+        newState.storyState.currentStory?.currentPlaybackTime = newState.audioState.audioPlayer.currentTime().seconds
         if let index = newState.currentSpokenWord?.sentenceIndex {
-            newState.storyState.sentenceIndex = index
+            newState.storyState.currentStory?.currentSentenceIndex = index
         }
     case .selectWord(let word):
-        newState.audioState.currentPlaybackTime = word.time
+        newState.storyState.currentStory?.currentPlaybackTime = word.time
         newState.currentTappedWord = word
     case .goToNextChapter:
         var newStory = newState.storyState.currentStory
@@ -204,7 +201,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .loadAppSettings,
             .saveAppSettings,
             .playWord,
-            .finishedPlayingWord,
             .loadDefinitions,
             .failedToLoadDefinitions,
             .saveDefinitions,

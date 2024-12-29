@@ -27,7 +27,7 @@ struct CharacterView: View {
                 .background {
                     if isTappedWord {
                         Color.accentColor.opacity(0.5)
-                    } else if store.state.storyState.sentenceIndex == word.sentenceIndex {
+                    } else if store.state.storyState.currentStory?.currentSentenceIndex == word.sentenceIndex {
                         Color.gray.opacity(0.2)
                     }
                 }

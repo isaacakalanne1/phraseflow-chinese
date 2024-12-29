@@ -10,14 +10,11 @@ import Foundation
 struct StoryState {
     var currentStory: Story?
     var savedStories: [Story] = []
-    var sentenceIndex = 0
 
     init(currentStory: Story? = nil,
-         savedStories: [Story] = [],
-         sentenceIndex: Int = 0) {
+         savedStories: [Story] = []) {
         self.currentStory = currentStory
         self.savedStories = savedStories
-        self.sentenceIndex = sentenceIndex
     }
 
     var currentChapter: Chapter? {
@@ -28,7 +25,10 @@ struct StoryState {
     }
 
     var currentSentence: Sentence? {
-        currentChapter?.sentences[safe: sentenceIndex]
+        guard let sentenceIndex = currentStory?.currentSentenceIndex else {
+            return nil
+        }
+        return currentChapter?.sentences[safe: sentenceIndex]
     }
 
     var currentChapterAudioData: Data? {

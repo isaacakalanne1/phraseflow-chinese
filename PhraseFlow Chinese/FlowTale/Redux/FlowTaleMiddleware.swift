@@ -85,12 +85,18 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         }
         state.audioState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: .infinity, preferredTimescale: 1)
         state.audioState.audioPlayer.play()
+        if let story = state.storyState.currentStory {
+            return .saveStoryAndSettings(story)
+        }
         return nil
     case .playWord(let word, let story):
         let myTime = CMTime(seconds: word.time, preferredTimescale: 60000)
         await state.audioState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
         state.audioState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: word.time + word.duration, preferredTimescale: 60000)
         state.audioState.audioPlayer.play()
+        if let story = state.storyState.currentStory {
+            return .saveStoryAndSettings(story)
+        }
         return nil
     case .playStudyWord(let definition):
         let myTime = CMTime(seconds: definition.timestampData.time, preferredTimescale: 60000)
@@ -98,10 +104,11 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         state.studyState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: definition.timestampData.time + definition.timestampData.duration, preferredTimescale: 60000)
         state.studyState.audioPlayer.play()
         return nil
-    case .pauseAudio,
-            .stopAudio,
-            .finishedPlayingWord:
+    case .pauseAudio:
         state.audioState.audioPlayer.pause()
+        if let story = state.storyState.currentStory {
+            return .saveStoryAndSettings(story)
+        }
         return nil
     case .defineCharacter(let timeStampData, let shouldForce):
         do {
@@ -166,10 +173,13 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             await state.audioState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
             state.audioState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: .infinity, preferredTimescale: 60000)
             state.audioState.audioPlayer.play()
-            return nil
         } else {
             return .playWord(word, story: state.storyState.currentStory)
         }
+        if let story = state.storyState.currentStory {
+            return .saveStoryAndSettings(story)
+        }
+        return nil
     case .goToNextChapter:
         if let story = state.storyState.currentStory {
             return .saveStoryAndSettings(story)
