@@ -19,22 +19,27 @@ struct ChapterView: View {
                 // 2) Whenever the highlighted word changes, scroll if auto-scroll is still enabled
                 .onChange(of: store.state.viewState.isAutoscrollEnabled) {
                     guard let newWord = store.state.currentSpokenWord else { return }
-                    if store.state.viewState.isAutoscrollEnabled {
-                        withAnimation {
-                            // Scroll so the new word is at the bottom (use .center or .top if you prefer)
-                            proxy.scrollTo(newWord.id, anchor: .center)
-                        }
-                    }
+                    scrollToCurrentWord(newWord, proxy: proxy)
                 }
                 .onChange(of: store.state.currentSpokenWord) { newWord in
                     guard let newWord = newWord else { return }
-                    if store.state.viewState.isAutoscrollEnabled {
-                        withAnimation {
-                            // Scroll so the new word is at the bottom (use .center or .top if you prefer)
-                            proxy.scrollTo(newWord.id, anchor: .center)
-                        }
-                    }
+                    scrollToCurrentWord(newWord, proxy: proxy)
                 }
+                .onAppear {
+                    guard let newWord = store.state.currentSpokenWord else { return }
+                    scrollToCurrentWord(newWord, proxy: proxy, isForced: true)
+                }
+            }
+        }
+    }
+
+    private func scrollToCurrentWord(_ word: WordTimeStampData,
+                                     proxy: ScrollViewProxy,
+                                     isForced: Bool = false) {
+        if isForced || store.state.viewState.isAutoscrollEnabled {
+            withAnimation {
+                // Scroll so the new word is at the bottom (use .center or .top if you prefer)
+                proxy.scrollTo(word.id, anchor: .center)
             }
         }
     }
