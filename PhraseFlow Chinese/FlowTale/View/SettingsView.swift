@@ -54,9 +54,9 @@ struct SettingsView: View {
                                     Text(voice.gender.title)
                                         .fontWeight(.light)
                                 }
-                                .foregroundStyle(isSelectedVoice ? Color.accentColor : Color.primary)
+                                .foregroundStyle(isSelectedVoice ? FlowTaleColor.accent : FlowTaleColor.primary)
                             }
-                            .listRowBackground(isSelectedVoice ? Color.gray.opacity(0.3) : Color.white)
+                            .listRowBackground(isSelectedVoice ? FlowTaleColor.secondary : FlowTaleColor.background)
                         }
                     } header: {
                         Text(LocalizedString.voice)
@@ -72,10 +72,10 @@ struct SettingsView: View {
                                 }
                             }) {
                                 Text(speed.title)
-                                    .foregroundStyle(isSelectedSpeed ? Color.accentColor : Color.primary)
+                                    .foregroundStyle(isSelectedSpeed ? FlowTaleColor.accent : FlowTaleColor.primary)
                                     .fontWeight(isSelectedSpeed ? .medium : .light)
                             }
-                            .listRowBackground(isSelectedSpeed ? Color.gray.opacity(0.3) : Color.white)
+                            .listRowBackground(isSelectedSpeed ? FlowTaleColor.secondary : FlowTaleColor.background)
                         }
                     } header: {
                         Text(LocalizedString.speed)

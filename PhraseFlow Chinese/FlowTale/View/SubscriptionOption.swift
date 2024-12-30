@@ -29,8 +29,8 @@ struct SubscriptionOption: View {
             }
             .padding()
             .frame(maxWidth: .infinity)
-            .background(product == nil ? Color.gray : Color.accentColor)
-            .foregroundColor(product == nil ? Color.black : Color.white)
+            .background(product == nil ? FlowTaleColor.secondary : FlowTaleColor.accent)
+            .foregroundColor(product == nil ? FlowTaleColor.primary : FlowTaleColor.background)
             .cornerRadius(10)
         })
     }

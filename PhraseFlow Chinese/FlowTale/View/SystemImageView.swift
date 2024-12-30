@@ -23,5 +23,6 @@ struct SystemImageView: View {
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: size, height: size)
+            .foregroundStyle(FlowTaleColor.accent)
     }
 }

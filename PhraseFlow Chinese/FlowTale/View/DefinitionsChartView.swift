@@ -47,6 +47,9 @@ struct DefinitionsChartView: View {
                     y: .value("Cumulative Definitions", dataPoint.cumulativeCount)
                 )
                 .interpolationMethod(.linear)
+                .foregroundStyle(
+                    FlowTaleColor.accent
+                )
 
                 // -- Add a light fill under the line
                 AreaMark(
@@ -54,7 +57,7 @@ struct DefinitionsChartView: View {
                     y: .value("Cumulative Definitions", dataPoint.cumulativeCount)
                 )
                 .foregroundStyle(
-                    Color.blue.opacity(0.2).gradient
+                    FlowTaleColor.accent.opacity(0.2).gradient
                 )
             }
 
@@ -64,7 +67,7 @@ struct DefinitionsChartView: View {
                     y: .value("Checkpoint", checkpoint.value)
                 )
                 .lineStyle(StrokeStyle(lineWidth: 1, dash: [5])) // dotted line
-                .foregroundStyle(.gray)
+                .foregroundStyle(FlowTaleColor.secondary)
                 .annotation(position: .top, alignment: .leading) {
                     Text(checkpoint.label)
                         .font(.caption)

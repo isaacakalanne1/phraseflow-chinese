@@ -12,7 +12,7 @@ struct AIStatementView: View {
     var body: some View {
         Text(LocalizedString.aiStatement)
             .font(.system(size: 11))
-            .foregroundStyle(Color.black.opacity(0.3))
+            .foregroundStyle(FlowTaleColor.primary.opacity(0.3))
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
     }

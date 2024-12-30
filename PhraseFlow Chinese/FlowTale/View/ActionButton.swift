@@ -22,7 +22,7 @@ struct ActionButton: View {
                     .font(.system(size: 12, weight: .medium))
                     .frame(height: 25)
             }
-            .foregroundStyle(Color.accentColor)
+            .foregroundStyle(FlowTaleColor.accent)
         }
     }
 }

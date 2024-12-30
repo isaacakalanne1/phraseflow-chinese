@@ -81,7 +81,7 @@ struct ContentView: View {
         .onAppear {
             startTimer()
         }
-        .background(Color.white)
+        .background(FlowTaleColor.background)
         .sheet(isPresented: isShowingSettingsScreen) {
             SettingsView()
         }

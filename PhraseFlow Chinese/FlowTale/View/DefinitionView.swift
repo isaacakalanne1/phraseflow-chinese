@@ -18,14 +18,14 @@ struct DefinitionView: View {
                 switch store.state.viewState.readerDisplayType {
                 case .defining:
                     ProgressView()
-                        .tint(Color.accentColor)
+                        .tint(FlowTaleColor.accent)
                         .frame(maxWidth: .infinity,
                                maxHeight: .infinity,
                                alignment: .center)
                 default:
                     ScrollView(.vertical) {
                         Text(store.state.definitionState.currentDefinition?.definition ?? "Tap word to define") // TODO: Localize
-                            .foregroundColor(store.state.definitionState.currentDefinition == nil ? .gray : .black)
+                            .foregroundColor(FlowTaleColor.primary)
                             .frame(maxWidth: .infinity,
                                    maxHeight: .infinity,
                                    alignment: .leading)

@@ -37,7 +37,7 @@ struct ChapterListView: View {
                 }
             }
             .padding()
-            .background(Color.accentColor)
+            .background(FlowTaleColor.accent)
             .foregroundColor(.white)
             .cornerRadius(10)
         }

@@ -79,7 +79,7 @@ struct StudyView: View {
                             isDefinitionShown = false
                         }
                         .padding()
-                        .background(Color.accentColor)
+                        .background(FlowTaleColor.accent)
                         .foregroundColor(.white)
                         .cornerRadius(10)
                         if !isWordDefinitionView {
@@ -88,7 +88,7 @@ struct StudyView: View {
                                     goToNextDefinition()
                                 }
                                 .padding()
-                                .background(Color.accentColor)
+                                .background(FlowTaleColor.accent)
                                 .foregroundColor(.white)
                                 .cornerRadius(10)
                             } else {
@@ -97,7 +97,7 @@ struct StudyView: View {
                                     isDefinitionShown = true
                                 }
                                 .padding()
-                                .background(Color.accentColor)
+                                .background(FlowTaleColor.accent)
                                 .foregroundColor(.white)
                                 .cornerRadius(10)
                             }

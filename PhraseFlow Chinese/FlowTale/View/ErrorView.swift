@@ -20,7 +20,7 @@ struct ErrorView: View {
                 buttonAction()
             }
             .padding()
-            .background(Color.accentColor)
+            .background(FlowTaleColor.accent)
             .foregroundColor(.white)
             .cornerRadius(10)
         }

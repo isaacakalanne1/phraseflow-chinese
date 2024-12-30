@@ -69,7 +69,7 @@ struct ChapterView: View {
                 store.dispatch(doesNextChapterExist ? .goToNextChapter : .continueStory(story: story))
             }
             .padding()
-            .background(Color.accentColor)
+            .background(FlowTaleColor.accent)
             .foregroundColor(.white)
             .cornerRadius(10)
             .cornerRadius(10)

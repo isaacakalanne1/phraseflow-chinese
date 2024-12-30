@@ -16,12 +16,12 @@ struct SubscriptionView: View {
             Text(store.state.subscriptionState.isSubscribed ? "Manage" : "Subscribe")
                 .font(.title)
                 .bold()
-                .foregroundColor(Color.primary)
+                .foregroundColor(FlowTaleColor.primary)
             Text("Subscribe now for unlimited chapters")
                 .multilineTextAlignment(.center)
                 .font(.subheadline)
                 .bold()
-                .foregroundColor(Color.primary)
+                .foregroundColor(FlowTaleColor.primary)
 
             SubscriptionOption(title: "\(product?.displayPrice ?? "...") per month",
                                detail: "\(product?.displayName ?? "...")",
@@ -47,7 +47,7 @@ struct SubscriptionView: View {
                     .multilineTextAlignment(.center)
                     .font(.subheadline)
                     .bold()
-                    .foregroundColor(Color.primary)
+                    .foregroundColor(FlowTaleColor.primary)
             }
 
             HStack {
@@ -59,7 +59,7 @@ struct SubscriptionView: View {
                     Text("Terms of Use (EULA)")
                         .multilineTextAlignment(.center)
                         .font(.subheadline)
-                        .foregroundColor(Color.primary)
+                        .foregroundColor(FlowTaleColor.primary)
                 }
 
                 Button {
@@ -70,7 +70,7 @@ struct SubscriptionView: View {
                     Text("Privacy Policy")
                         .multilineTextAlignment(.center)
                         .font(.subheadline)
-                        .foregroundColor(Color.primary)
+                        .foregroundColor(FlowTaleColor.primary)
                 }
             }
 
@@ -79,7 +79,7 @@ struct SubscriptionView: View {
                 Text("To manage your subscriptions, go to iOS Settings App -> Apple ID -> Subscriptions")
                     .multilineTextAlignment(.center)
                     .font(.subheadline)
-                    .foregroundColor(Color.primary)
+                    .foregroundColor(FlowTaleColor.primary)
             }
         }
         .padding([.top, .leading, .trailing], 20)

@@ -18,9 +18,9 @@ struct SnackBar: View {
         }
         .padding()
         .frame(maxWidth: .infinity)
-        .background(Color.accentColor)
+        .background(FlowTaleColor.accent)
         .cornerRadius(15)
-        .foregroundColor(Color.white)
+        .foregroundColor(FlowTaleColor.background)
         .multilineTextAlignment(.center)
         .padding()
         .zIndex(Double.infinity)

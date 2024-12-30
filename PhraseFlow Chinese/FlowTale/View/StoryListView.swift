@@ -31,7 +31,7 @@ struct StoryListView: View {
                                     .padding(.trailing)
                                 }
                             }
-                            .foregroundStyle(Color.primary)
+                            .foregroundStyle(FlowTaleColor.primary)
                         }
                         .onDelete(perform: delete)
                     } header: {
@@ -42,14 +42,15 @@ struct StoryListView: View {
                     store.dispatch(.continueStory(story: store.state.createNewStory()))
                 }
                 .padding()
-                .background(Color.accentColor)
+                .background(FlowTaleColor.accent)
                 .foregroundColor(.white)
                 .cornerRadius(10)
                 NavigationLink(destination: CreateStorySettingsView()) {
                     Text(LocalizedString.settings)
                         .frame(height: 40)
+                        .foregroundStyle(FlowTaleColor.accent)
                 }
-                .foregroundColor(.accentColor)
+                .foregroundColor(FlowTaleColor.accent)
             }
             .toolbar(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
@@ -58,6 +59,7 @@ struct StoryListView: View {
         .onAppear {
             store.dispatch(.loadStories)
         }
+        .tint(FlowTaleColor.accent)
         .id(store.state.viewState.storyListViewId)
     }
 

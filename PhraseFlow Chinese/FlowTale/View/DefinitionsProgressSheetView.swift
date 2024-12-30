@@ -32,7 +32,7 @@ struct DefinitionsProgressSheetView: View {
                         } label: {
                             Text(definition.timestampData.word)
                                 .fontWeight(.light)
-                                .foregroundStyle(Color.primary)
+                                .foregroundStyle(FlowTaleColor.primary)
                         }
                     }
                 } header: {

@@ -23,10 +23,10 @@ struct CreateStorySettingsView: View {
                                     DifficultyView(difficulty: difficulty)
                                     Text(difficulty.title)
                                         .fontWeight(store.state.settingsState.difficulty == difficulty ? .medium : .light)
-                                        .foregroundStyle(store.state.settingsState.difficulty == difficulty ? Color.accentColor : Color.primary)
+                                        .foregroundStyle(store.state.settingsState.difficulty == difficulty ? FlowTaleColor.accent : FlowTaleColor.primary)
                                 }
                             }
-                            .listRowBackground(store.state.settingsState.difficulty == difficulty ? Color.gray.opacity(0.3) : Color.white)
+                            .listRowBackground(store.state.settingsState.difficulty == difficulty ? FlowTaleColor.secondary : FlowTaleColor.background)
                         }
                     } header: {
                         Text(LocalizedString.difficulty)
@@ -38,9 +38,9 @@ struct CreateStorySettingsView: View {
                             } label: {
                                 Text(language.flagEmoji + " " + language.displayName)
                                     .fontWeight(store.state.settingsState.language == language ? .medium : .light)
-                                    .foregroundStyle(store.state.settingsState.language == language ? Color.accentColor : Color.primary)
+                                    .foregroundStyle(store.state.settingsState.language == language ? FlowTaleColor.accent : FlowTaleColor.primary)
                             }
-                            .listRowBackground(store.state.settingsState.language == language ? Color.gray.opacity(0.3) : Color.white)
+                            .listRowBackground(store.state.settingsState.language == language ? FlowTaleColor.secondary : FlowTaleColor.background)
                         }
                     } header: {
                         Text(LocalizedString.language)
@@ -51,11 +51,12 @@ struct CreateStorySettingsView: View {
                     store.dispatch(.continueStory(story: store.state.createNewStory()))
                 }
                 .padding()
-                .background(Color.accentColor)
+                .background(FlowTaleColor.accent)
                 .foregroundColor(.white)
                 .cornerRadius(10)
                 .navigationTitle(store.state.storyState.currentStory == nil ? LocalizedString.createStory : LocalizedString.storySettings)
             }
+            .background(FlowTaleColor.background)
         }
     }
 }
