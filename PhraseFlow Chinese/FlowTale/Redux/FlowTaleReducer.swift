@@ -60,6 +60,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .onSynthesizedAudio(var data):
         newState.storyState.currentStory?.currentPlaybackTime = 0
         newState.definitionState.currentDefinition = nil
+        newState.viewState.chapterViewId = UUID()
         newState.viewState.playButtonDisplayType = .normal
 
         var newStory = newState.storyState.currentStory
@@ -125,6 +126,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.storyState.currentStory?.currentSentenceIndex = index
     case .playAudio(let time):
         newState.currentTappedWord = nil
+        newState.definitionState.currentDefinition = nil
         newState.audioState.isPlayingAudio = true
         if let time {
             newState.storyState.currentStory?.currentPlaybackTime = time
