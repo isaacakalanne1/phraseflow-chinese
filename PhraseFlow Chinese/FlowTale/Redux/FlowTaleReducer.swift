@@ -31,7 +31,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             let player = data?.createAVPlayer()
             newState.audioState.audioPlayer = player ?? AVPlayer()
         }
-        newState.viewState.readerDisplayType = .normal
+//        newState.viewState.readerDisplayType = .normal
     case .playStudyWord(let definition):
         if let story = newState.storyState.savedStories.first(where: { def in
             def.id == definition.timestampData.storyId

@@ -19,25 +19,29 @@ struct DefinitionsProgressSheetView: View {
         let filteredDefinitions = removeDuplicates(from: definitions)
             .sorted(by: { $0.creationDate > $1.creationDate })
 
-        DefinitionsChartView(definitions: filteredDefinitions)
-            .frame(height: 300)
-        List {
-            Section {
-                ForEach(filteredDefinitions, id: \.self) { definition in
-                    NavigationLink {
-                        StudyView(studyWords: [definition], isWordDefinitionView: true)
-                    } label: {
-                        Text(definition.timestampData.word)
-                            .fontWeight(.light)
-                            .foregroundStyle(Color.primary)
+        if filteredDefinitions.isEmpty {
+            Text("No saved words\nTap a word to save")
+        } else {
+            DefinitionsChartView(definitions: filteredDefinitions)
+                .frame(height: 300)
+            List {
+                Section {
+                    ForEach(filteredDefinitions, id: \.self) { definition in
+                        NavigationLink {
+                            StudyView(studyWords: [definition], isWordDefinitionView: true)
+                        } label: {
+                            Text(definition.timestampData.word)
+                                .fontWeight(.light)
+                                .foregroundStyle(Color.primary)
+                        }
                     }
+                } header: {
+                    Text("All Words")
                 }
-            } header: {
-                Text("All Words")
             }
+            .frame(maxHeight: .infinity)
+            .navigationTitle("Words Learned: \(filteredDefinitions.count)")
         }
-        .frame(maxHeight: .infinity)
-        .navigationTitle("Words Learned: \(filteredDefinitions.count)")
     }
 
     func removeDuplicates(from definitions: [Definition]) -> [Definition] {

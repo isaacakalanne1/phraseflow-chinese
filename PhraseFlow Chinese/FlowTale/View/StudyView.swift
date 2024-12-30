@@ -105,6 +105,8 @@ struct StudyView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
+            } else {
+                Text("No saved words\nTap a word to study")
             }
         }
         .onAppear {
@@ -113,8 +115,7 @@ struct StudyView: View {
                     .shuffled()
                     .filter({
                         $0.language == store.state.storyState.currentStory?.language
-                    })
-                        .prefix(10))
+                    }))
                 index = 0
                 isDefinitionShown = false
             }
