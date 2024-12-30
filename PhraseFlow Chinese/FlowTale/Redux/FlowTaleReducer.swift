@@ -170,7 +170,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.storyListViewId = UUID()
     case .onFetchedSubscriptions(let subscriptions):
         newState.subscriptionState.products = subscriptions
-    case .updatePurchasedProducts(let entitlements):
+    case .updatePurchasedProducts(let entitlements, _):
         for result in entitlements {
             switch result {
             case .unverified(let transaction, _),

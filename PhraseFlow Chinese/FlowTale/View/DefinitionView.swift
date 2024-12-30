@@ -33,8 +33,7 @@ struct DefinitionView: View {
                     if let word = store.state.definitionState.tappedWord {
                         VStack {
                             Button {
-                                store.dispatch(.playWord(word,
-                                                         story: store.state.storyState.currentStory))
+                                store.dispatch(.playWord(word, story: store.state.storyState.currentStory))
                             } label: {
                                 SystemImageView(.speaker)
                             }

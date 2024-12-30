@@ -244,19 +244,19 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         for await result in Transaction.currentEntitlements {
             entitlements.append(result)
         }
-        return .updatePurchasedProducts(entitlements)
+        return .updatePurchasedProducts(entitlements, isOnLaunch: true)
     case .observeTransactionUpdates:
         var entitlements: [VerificationResult<Transaction>] = []
         for await result in Transaction.updates {
             entitlements.append(result)
         }
-        return .updatePurchasedProducts(entitlements)
-    case .updatePurchasedProducts(let entitlements):
+        return .updatePurchasedProducts(entitlements, isOnLaunch: false)
+    case .updatePurchasedProducts(let entitlements, let isOnLaunch):
         for result in entitlements {
             switch result {
             case .unverified(let transaction, _),
                     .verified(let transaction):
-                if transaction.revocationDate == nil {
+                if transaction.revocationDate == nil && !isOnLaunch {
                     return .showSnackBar(.subscribed)
                 } else {
                     return nil

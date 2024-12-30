@@ -66,11 +66,17 @@ struct ContentView: View {
                 if store.state.storyState.currentStory == nil {
                     CreateStorySettingsView()
                 } else if let chapter = store.state.storyState.currentChapter {
-                    ZStack(alignment: .top) {
+                    ZStack(alignment: .topTrailing) {
                         ReaderView(chapter: chapter)
                             .padding(10)
-                        if store.state.snackBarState.isShowing {
-                            SnackBar()
+                        VStack {
+                            if store.state.snackBarState.isShowing {
+                                SnackBar()
+                            }
+                            Spacer()
+                            audioButton(chapter: chapter)
+                            Spacer()
+                                .frame(height: 100)
                         }
                     }
                 } else {
@@ -99,7 +105,7 @@ struct ContentView: View {
         .sheet(isPresented: isShowingSubscriptionView) {
             SubscriptionView()
                 .presentationDragIndicator(.hidden)
-                .presentationDetents([.fraction(0.5)])
+                .presentationDetents([.fraction(0.55)])
         }
     }
 
@@ -112,6 +118,50 @@ struct ContentView: View {
             }
 
             startTimer()
+        }
+    }
+
+    @ViewBuilder
+    func audioButton(chapter: Chapter) -> some View {
+        if store.state.viewState.playButtonDisplayType == .loading {
+            Button {
+
+            } label: {
+                SystemImageView(.ellipsis)
+            }
+            .disabled(true)
+        } else if chapter.audioData == nil ||
+                    store.state.settingsState.voice != chapter.audioVoice ||
+                    store.state.settingsState.speechSpeed != chapter.audioSpeed {
+            Button {
+                if let story = store.state.storyState.currentStory {
+                    store.dispatch(.synthesizeAudio(chapter,
+                                                    story: story,
+                                                    voice: store.state.settingsState.voice,
+                                                    isForced: false))
+                }
+            } label: {
+                SystemImageView(.arrowDown)
+            }
+        } else {
+            if store.state.audioState.isPlayingAudio == true {
+                Button {
+                    if let story = store.state.storyState.currentStory {
+                        store.dispatch(.pauseAudio)
+                    }
+                } label: {
+                    SystemImageView(.pause)
+                }
+            } else {
+                Button {
+                    let timestampData = store.state.storyState.currentChapter?.timestampData
+                    let currentSpokenWord = store.state.currentSpokenWord ?? timestampData?.first
+                    store.dispatch(.playAudio(time: currentSpokenWord?.time))
+                    store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
+                } label: {
+                    SystemImageView(.play)
+                }
+            }
         }
     }
 }

@@ -99,7 +99,7 @@ enum FlowTaleAction {
     case failedToRestoreSubscriptions
 
     case getCurrentEntitlements
-    case updatePurchasedProducts([VerificationResult<Transaction>])
+    case updatePurchasedProducts([VerificationResult<Transaction>], isOnLaunch: Bool)
 
     case observeTransactionUpdates
 
