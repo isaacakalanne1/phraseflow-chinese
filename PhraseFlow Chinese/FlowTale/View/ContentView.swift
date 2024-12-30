@@ -75,8 +75,9 @@ struct ContentView: View {
                             }
                             Spacer()
                             audioButton(chapter: chapter)
+                                .padding(.trailing)
                             Spacer()
-                                .frame(height: 100)
+                                .frame(height: 90)
                         }
                     }
                 } else {
@@ -123,11 +124,12 @@ struct ContentView: View {
 
     @ViewBuilder
     func audioButton(chapter: Chapter) -> some View {
+        let buttonSize: CGFloat = 50
         if store.state.viewState.playButtonDisplayType == .loading {
             Button {
 
             } label: {
-                SystemImageView(.ellipsis)
+                SystemImageView(.ellipsis, size: buttonSize)
             }
             .disabled(true)
         } else if chapter.audioData == nil ||
@@ -141,16 +143,14 @@ struct ContentView: View {
                                                     isForced: false))
                 }
             } label: {
-                SystemImageView(.arrowDown)
+                SystemImageView(.arrowDown, size: buttonSize)
             }
         } else {
             if store.state.audioState.isPlayingAudio == true {
                 Button {
-                    if let story = store.state.storyState.currentStory {
-                        store.dispatch(.pauseAudio)
-                    }
+                    store.dispatch(.pauseAudio)
                 } label: {
-                    SystemImageView(.pause)
+                    SystemImageView(.pause, size: buttonSize)
                 }
             } else {
                 Button {
@@ -159,7 +159,7 @@ struct ContentView: View {
                     store.dispatch(.playAudio(time: currentSpokenWord?.time))
                     store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
                 } label: {
-                    SystemImageView(.play)
+                    SystemImageView(.play, size: buttonSize)
                 }
             }
         }

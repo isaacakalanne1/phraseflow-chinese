@@ -17,17 +17,17 @@ enum SystemImage {
         case .speaker:
             "speaker.circle.fill"
         case .pause:
-            "pause.fill"
+            "pause.circle.fill"
         case .gear:
             "gearshape"
         case .play:
-            "play.fill"
+            "play.circle.fill"
         case .list:
             "list.bullet"
         case .ellipsis:
             "ellipsis.circle"
         case .arrowDown:
-            "arrow.down.to.line.circle"
+            "arrow.down.to.line.circle.fill"
         case .heart:
             "suit.heart"
         case .starFilled:
