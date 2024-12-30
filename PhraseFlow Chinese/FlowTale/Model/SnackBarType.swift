@@ -10,16 +10,19 @@ import SwiftUI
 enum SnackBarType {
     case writingChapter
     case chapterReady
+    case subscribed
     case failedToWriteChapter(Story)
 
     var text: String {
         switch self {
         case .writingChapter:
-            "Writing chapter"
+            "Writing chapter."
         case .chapterReady:
-            "Chapter ready"
+            "Chapter ready."
         case .failedToWriteChapter:
-            "Failed to write chapter. Tap to retry"
+            "Failed to write chapter. Tap to retry."
+        case .subscribed:
+            "Subscription complete. Unlimited chapters now available."
         }
     }
 
@@ -29,7 +32,8 @@ enum SnackBarType {
             nil
         case .chapterReady:
             3
-        case .failedToWriteChapter:
+        case .failedToWriteChapter,
+                .subscribed:
             4
         }
     }
@@ -39,7 +43,8 @@ enum SnackBarType {
         switch self {
         case .writingChapter:
             ProgressView()
-        case .chapterReady:
+        case .chapterReady,
+                .subscribed:
             Text("✅")
         case .failedToWriteChapter:
             Text("🔁")
@@ -49,7 +54,8 @@ enum SnackBarType {
     func action(store: FlowTaleStore) {
         switch self {
         case .writingChapter,
-                .chapterReady:
+                .chapterReady,
+                .subscribed:
             break
         case .failedToWriteChapter(let story):
             store.dispatch(.continueStory(story: story))

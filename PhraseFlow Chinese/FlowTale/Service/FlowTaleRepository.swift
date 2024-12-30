@@ -191,25 +191,27 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
     }
 
     func purchase(_ product: Product) async throws {
-        let result = try await product.purchase()
-
-        switch result {
-        case let .success(.verified(transaction)):
-            // Successful purhcase
-            await transaction.finish()
-            // TODO: Track successful subscription here via AppsFlyer
-        case let .success(.unverified(transaction, _)):
-            // Successful purchase but transaction/receipt can't be verified
-            // Could be a jailbroken phone
-            await transaction.finish()
-            // TODO: Track successful subscription here via AppsFlyer
-            throw FlowTaleRepositoryError.failedToPurchaseSubscription
-        case .pending,
-                .userCancelled:
-            // Transaction waiting on SCA (Strong Customer Authentication) or
-            // approval from Ask to Buy
-            throw FlowTaleRepositoryError.failedToPurchaseSubscription
-        @unknown default:
+        do {
+            let result = try await product.purchase()
+            switch result {
+            case let .success(.verified(transaction)):
+                // Successful purchase
+                await transaction.finish()
+                // TODO: Track successful subscription here via AppsFlyer
+            case let .success(.unverified(transaction, _)):
+                // Successful purchase but transaction/receipt can't be verified
+                // Could be a jailbroken phone
+                await transaction.finish()
+                // TODO: Track successful subscription here via AppsFlyer
+            case .pending,
+                    .userCancelled:
+                // Transaction waiting on SCA (Strong Customer Authentication) or
+                // approval from Ask to Buy
+                throw FlowTaleRepositoryError.failedToPurchaseSubscription
+            @unknown default:
+                throw FlowTaleRepositoryError.failedToPurchaseSubscription
+            }
+        } catch {
             throw FlowTaleRepositoryError.failedToPurchaseSubscription
         }
     }

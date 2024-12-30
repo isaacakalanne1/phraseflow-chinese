@@ -172,11 +172,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.subscriptionState.products = subscriptions
     case .updatePurchasedProducts(let entitlements):
         for result in entitlements {
-            DispatchQueue.main.async {
-                guard case .verified(let transaction) = result else {
-                    return
-                }
-
+            switch result {
+            case .unverified(let transaction, _),
+                    .verified(let transaction):
                 if transaction.revocationDate == nil {
                     newState.subscriptionState.purchasedProductIDs.insert(transaction.productID)
                 } else {

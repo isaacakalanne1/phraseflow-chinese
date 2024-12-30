@@ -65,8 +65,12 @@ struct ChapterView: View {
             }
 
             Button(LocalizedString.nextChapter) {
-                let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
-                store.dispatch(doesNextChapterExist ? .goToNextChapter : .continueStory(story: story))
+                if store.state.subscriptionState.isSubscribed {
+                    let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
+                    store.dispatch(doesNextChapterExist ? .goToNextChapter : .continueStory(story: story))
+                } else {
+                    store.dispatch(.setSubscriptionSheetShowing(true))
+                }
             }
             .padding()
             .background(FlowTaleColor.accent)

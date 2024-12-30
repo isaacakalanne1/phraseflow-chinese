@@ -251,6 +251,19 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             entitlements.append(result)
         }
         return .updatePurchasedProducts(entitlements)
+    case .updatePurchasedProducts(let entitlements):
+        for result in entitlements {
+            switch result {
+            case .unverified(let transaction, _),
+                    .verified(let transaction):
+                if transaction.revocationDate == nil {
+                    return .showSnackBar(.subscribed)
+                } else {
+                    return nil
+                }
+            }
+        }
+        return nil
     case .failedToLoadStories,
             .failedToSaveStory,
             .failedToDefineCharacter,
@@ -273,7 +286,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .refreshStoryListView,
             .onFetchedSubscriptions,
             .failedToFetchSubscriptions,
-            .updatePurchasedProducts,
             .failedToPurchaseSubscription,
             .onRestoredSubscriptions,
             .failedToRestoreSubscriptions,

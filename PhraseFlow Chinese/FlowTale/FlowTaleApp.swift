@@ -35,6 +35,8 @@ struct FlowTaleApp: App {
                     store.dispatch(.loadDefinitions)
                     store.dispatch(.loadAppSettings)
                     store.dispatch(.fetchSubscriptions)
+                    store.dispatch(.getCurrentEntitlements)
+                    store.dispatch(.observeTransactionUpdates)
                 }
         }
     }
