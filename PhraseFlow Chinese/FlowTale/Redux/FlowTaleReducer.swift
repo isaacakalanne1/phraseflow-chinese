@@ -16,7 +16,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     switch action {
     case .onLoadedAppSettings(let settings):
         newState.settingsState = settings
-    case .onContinuedStory(let story):
+    case .translateStory:
+        newState.viewState.loadingState = .translating
+    case .onTranslatedStory(let story):
         newState.storyState.currentStory = story
         newState.storyState.currentStory?.currentSentenceIndex = 0
         newState.audioState.audioPlayer = AVPlayer()
@@ -47,21 +49,23 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.settingsState.speechSpeed = speed
     case .defineCharacter(let wordTimeStampData, let shouldForce):
         newState.definitionState.tappedWord = wordTimeStampData
-        newState.viewState.readerDisplayType = .defining
+        newState.viewState.isDefining = true
     case .onDefinedCharacter(let definition):
         newState.definitionState.currentDefinition = definition
         newState.definitionState.definitions.removeAll(where: {
             $0.timestampData == definition.timestampData && $0.sentence == definition.sentence
         })
         newState.definitionState.definitions.append(definition)
-        newState.viewState.readerDisplayType = .normal
+        newState.viewState.isDefining = false
     case .synthesizeAudio:
         newState.viewState.playButtonDisplayType = .loading
+        newState.viewState.loadingState = .generatingSpeech
     case .onSynthesizedAudio(var data):
         newState.storyState.currentStory?.currentPlaybackTime = 0
         newState.definitionState.currentDefinition = nil
         newState.viewState.chapterViewId = UUID()
         newState.viewState.playButtonDisplayType = .normal
+        newState.viewState.loadingState = .complete
 
         var newStory = newState.storyState.currentStory
         let chapterIndex = newStory?.currentChapterIndex ?? 0
@@ -119,9 +123,11 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             newState.settingsState.voice = voice
         }
         newState.viewState.readerDisplayType = .loading
+        newState.viewState.loadingState = .writing
         newState.viewState.isShowingStoryListView = false
-    case .failedToContinueStory:
-        newState.viewState.readerDisplayType = .failedToGenerateChapter
+    case .failedToContinueStory,
+            .failedToTranslateStory:
+        newState.viewState.readerDisplayType = .normal
     case .updateSentenceIndex(let index):
         newState.storyState.currentStory?.currentSentenceIndex = index
     case .playAudio(let time):
@@ -189,9 +195,10 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.snackBarState.isShowing = true
     case .hideSnackbar:
         newState.snackBarState.isShowing = false
+    case .failedToDefineCharacter:
+        newState.viewState.isDefining = false
     case .saveStoryAndSettings,
             .failedToSaveStory,
-            .failedToDefineCharacter,
             .loadStories,
             .onPlayedAudio,
             .deleteStory,

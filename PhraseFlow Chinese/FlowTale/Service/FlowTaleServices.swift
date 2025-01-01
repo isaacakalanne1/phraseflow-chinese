@@ -8,6 +8,7 @@
 import Foundation
 
 enum FlowTaleServicesError: Error {
+    case generalError
     case failedToGetDeviceLanguage
     case failedToGetResponseData
     case failedToEncodeJson
@@ -17,7 +18,10 @@ enum FlowTaleServicesError: Error {
 
 protocol FlowTaleServicesProtocol {
     func generateStory(story: Story,
-                       deviceLanguage: Language?) async throws -> Story
+                       deviceLanguage: Language?) async throws -> String
+    func translateStory(story: Story,
+                        storyString: String,
+                        deviceLanguage: Language?) async throws -> Story
     func fetchDefinition(of character: String,
                          withinContextOf sentence: Sentence,
                          story: Story,
@@ -27,9 +31,18 @@ protocol FlowTaleServicesProtocol {
 final class FlowTaleServices: FlowTaleServicesProtocol {
 
     func generateStory(story: Story,
-                       deviceLanguage: Language?) async throws -> Story {
+                       deviceLanguage: Language?) async throws -> String {
         do {
-            let storyString = try await continueStory(story: story)
+            return try await continueStory(story: story)
+        } catch {
+            throw FlowTaleServicesError.generalError
+        }
+    }
+
+    func translateStory(story: Story,
+                        storyString: String,
+                        deviceLanguage: Language?) async throws -> Story {
+        do {
             let jsonString = try await convertToJson(story: story,
                                                      storyString: storyString,
                                                      shouldCreateTitle: story.title.isEmpty,

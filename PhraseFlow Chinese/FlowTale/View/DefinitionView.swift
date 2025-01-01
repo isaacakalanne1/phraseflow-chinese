@@ -15,14 +15,13 @@ struct DefinitionView: View {
             Text(LocalizedString.definitionOf(store.state.definitionState.tappedWord?.word ?? "..."))
                 .greyBackground()
             HStack {
-                switch store.state.viewState.readerDisplayType {
-                case .defining:
+                if store.state.viewState.isDefining {
                     ProgressView()
                         .tint(FlowTaleColor.accent)
                         .frame(maxWidth: .infinity,
                                maxHeight: .infinity,
                                alignment: .center)
-                default:
+                } else {
                     ScrollView(.vertical) {
                         Text(store.state.definitionState.currentDefinition?.definition ?? "Tap word to define") // TODO: Localize
                             .foregroundColor(FlowTaleColor.primary)

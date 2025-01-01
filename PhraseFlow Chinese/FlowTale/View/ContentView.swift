@@ -42,47 +42,19 @@ struct ContentView: View {
             store.dispatch(.updateShowingDefinitionsChartView(isShowing: newValue))
         }
 
-        VStack(spacing: 10) {
+        ZStack(alignment: .topTrailing) {
             switch store.state.viewState.readerDisplayType {
             case .loading:
-                Text(LocalizedString.writingNewChapter)
-                    .font(.body)
-            case .fetching:
-                EmptyView()
-            case .failedToGenerateStory:
-                ErrorView(title: LocalizedString.failedToWriteStory,
-                          buttonTitle: LocalizedString.retry) {
-                    store.dispatch(.continueStory(story: store.state.createNewStory()))
-                }
-            case .failedToGenerateChapter:
-                ErrorView(title: LocalizedString.failedToWriteChapter,
-                          buttonTitle: LocalizedString.retry) {
-                    if let story = store.state.storyState.currentStory {
-                        store.dispatch(.continueStory(story: story))
-                    }
-                }
-            case .normal,
-                    .defining:
-                if store.state.storyState.currentStory == nil {
-                    CreateStorySettingsView()
-                } else if let chapter = store.state.storyState.currentChapter {
-                    ZStack(alignment: .topTrailing) {
-                        ReaderView(chapter: chapter)
-                            .padding(10)
-                        VStack {
-                            if store.state.snackBarState.isShowing {
-                                SnackBar()
-                            }
-                            Spacer()
-                            audioButton(chapter: chapter)
-                                .padding(.trailing)
-                            Spacer()
-                                .frame(height: 90)
-                        }
-                    }
+                LoadingView()
+            case .normal:
+                if let chapter = store.state.storyState.currentChapter {
+                    ReaderView(chapter: chapter)
                 } else {
-
+                    CreateStorySettingsView()
                 }
+            }
+            if let chapter = store.state.storyState.currentChapter {
+                overlayView(chapter: chapter)
             }
         }
         .onAppear {
@@ -93,7 +65,9 @@ struct ContentView: View {
             SettingsView()
         }
         .sheet(isPresented: isShowingStoryListView) {
-            StoryListView()
+            NavigationStack {
+                StoryListView()
+            }
         }
         .sheet(isPresented: isShowingStudyView) {
             StudyView()
@@ -110,9 +84,22 @@ struct ContentView: View {
         }
     }
 
+    @ViewBuilder
+    private func overlayView(chapter: Chapter) -> some View {
+        VStack {
+            if store.state.snackBarState.isShowing {
+                SnackBar()
+            }
+            Spacer()
+            audioButton(chapter: chapter)
+                .padding(.trailing)
+            Spacer()
+                .frame(height: 90)
+        }
+    }
+
     func startTimer() {
-        let increment: Double = 0.1
-        DispatchQueue.main.asyncAfter(deadline: .now() + increment) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
 
             if store.state.audioState.isPlayingAudio {
                 store.dispatch(.updatePlayTime)

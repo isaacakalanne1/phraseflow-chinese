@@ -13,7 +13,16 @@ import StoreKit
 typealias FlowTaleMiddlewareType = Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol>
 let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     switch action {
-    case .onContinuedStory(let story):
+    case .translateStory(let story, let storyString):
+        do {
+            let story = try await environment.translateStory(story: story,
+                                                             storyString: storyString,
+                                                             deviceLanguage: state.deviceLanguage)
+        } catch {
+            return .failedToTranslateStory(story: story, storyString: storyString)
+        }
+        return .onTranslatedStory(story: story)
+    case .onTranslatedStory(let story):
         if let chapter = story.chapters[safe: story.currentChapterIndex] {
             return .synthesizeAudio(chapter,
                                     story: story,
@@ -23,12 +32,13 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return .saveStoryAndSettings(story)
     case .continueStory(let story):
         do {
-            let story = try await environment.generateStory(story: story, deviceLanguage: state.deviceLanguage)
-            return .onContinuedStory(story)
+            let storyString = try await environment.generateStory(story: story, deviceLanguage: state.deviceLanguage)
+            return .translateStory(story: story, storyString: storyString)
         } catch {
             return .failedToContinueStory(story: story)
         }
-    case .failedToContinueStory(let story):
+    case .failedToContinueStory(let story),
+            .failedToTranslateStory(let story, _):
         return .showSnackBar(.failedToWriteChapter(story))
     case .showSnackBar(let type):
         if let duration = type.showDuration {

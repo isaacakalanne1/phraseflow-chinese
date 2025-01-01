@@ -18,8 +18,11 @@ enum FlowTaleAction {
     case updateSentenceIndex(Int)
 
     case continueStory(story: Story)
-    case onContinuedStory(Story)
     case failedToContinueStory(story: Story)
+
+    case translateStory(story: Story, storyString: String)
+    case onTranslatedStory(story: Story)
+    case failedToTranslateStory(story: Story, storyString: String)
 
     case failedToSaveStory
 

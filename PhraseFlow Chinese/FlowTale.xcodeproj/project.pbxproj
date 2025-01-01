@@ -18,6 +18,8 @@
 		BB1994D32CE9051700D61E54 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D22CE9051700D61E54 /* ViewState.swift */; };
 		BB4015C02CF756FD008ACE9C /* StoryPrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4015BF2CF756FD008ACE9C /* StoryPrompts.swift */; };
 		BB4E6BF62D22E0DB002B5CBA /* FlowTaleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4E6BF52D22E0DB002B5CBA /* FlowTaleColor.swift */; };
+		BB4E6BF82D246AEF002B5CBA /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4E6BF72D246AEF002B5CBA /* LoadingState.swift */; };
+		BB4E6BFA2D246EC0002B5CBA /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4E6BF92D246EC0002B5CBA /* LoadingView.swift */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
 		BB4EDB032C90C86300699E7D /* FlowTaleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */; };
 		BB4EDB052C90C89C00699E7D /* FlowTaleState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB042C90C89C00699E7D /* FlowTaleState.swift */; };
@@ -123,6 +125,8 @@
 		BB1994D22CE9051700D61E54 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		BB4015BF2CF756FD008ACE9C /* StoryPrompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPrompts.swift; sourceTree = "<group>"; };
 		BB4E6BF52D22E0DB002B5CBA /* FlowTaleColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleColor.swift; sourceTree = "<group>"; };
+		BB4E6BF72D246AEF002B5CBA /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
+		BB4E6BF92D246EC0002B5CBA /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleStore.swift; sourceTree = "<group>"; };
 		BB4EDB042C90C89C00699E7D /* FlowTaleState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleState.swift; sourceTree = "<group>"; };
 		BB4EDB062C90C8CA00699E7D /* FlowTaleAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleAction.swift; sourceTree = "<group>"; };
@@ -417,6 +421,7 @@
 				BB1994C62CE8DC2100D61E54 /* Speech */,
 				BB0854862CB42C7100F1661B /* Story */,
 				BB4EDB2A2C91B35D00699E7D /* Definition.swift */,
+				BB4E6BF72D246AEF002B5CBA /* LoadingState.swift */,
 				BB4E6BF52D22E0DB002B5CBA /* FlowTaleColor.swift */,
 				BBAE07CC2D0C765B00DA95CD /* APIRequestType.swift */,
 				BBAE07CE2D0C768000DA95CD /* AnyKey.swift */,
@@ -451,6 +456,7 @@
 				BBE16F212CC2769C00A7EF1F /* StoryListView.swift */,
 				BB7B6D9B2D1F30BC0030344A /* SnackBar.swift */,
 				BB7B6D952D1DF0990030344A /* StudyView.swift */,
+				BB4E6BF92D246EC0002B5CBA /* LoadingView.swift */,
 				BBFDBBE82D203AD80056C448 /* DefinitionsChartView.swift */,
 				BBFDBBEA2D203F080056C448 /* DefinitionsProgressSheetView.swift */,
 				BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */,
@@ -688,6 +694,7 @@
 				BBAE07D32D0C796500DA95CD /* SubscriptionState.swift in Sources */,
 				BBFDBBE92D203AD80056C448 /* DefinitionsChartView.swift in Sources */,
 				BB7B6D982D1E0D070030344A /* StoryInfoView.swift in Sources */,
+				BB4E6BF82D246AEF002B5CBA /* LoadingState.swift in Sources */,
 				BB4EDB072C90C8CA00699E7D /* FlowTaleAction.swift in Sources */,
 				BBE636BF2CC98B2B00873E68 /* WordTimeStampData.swift in Sources */,
 				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,
@@ -700,6 +707,7 @@
 				BB4015C02CF756FD008ACE9C /* StoryPrompts.swift in Sources */,
 				BB1994C82CE8E0BE00D61E54 /* Data+AVPlayer.swift in Sources */,
 				BB1994D12CE9050000D61E54 /* AudioState.swift in Sources */,
+				BB4E6BFA2D246EC0002B5CBA /* LoadingView.swift in Sources */,
 				BBAE07D52D0CA79A00DA95CD /* SubscriptionOption.swift in Sources */,
 				BB4E6BF62D22E0DB002B5CBA /* FlowTaleColor.swift in Sources */,
 				BB6572D22CD165F200AC5981 /* Collection+Safe.swift in Sources */,
