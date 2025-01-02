@@ -24,54 +24,71 @@ struct DefinitionState {
         definitions.first(where: { $0.timestampData.word == word && $0.sentence == sentence })
     }
 
-    func dailyCumulativeCount(from definitions: [Definition]) -> [DailyCumulativeCount] {
-        var filteredDefinitions: [Definition] = []
-        for def in definitions {
-            if !filteredDefinitions.contains(where: { $0.timestampData.word == def.timestampData.word }) {
-                filteredDefinitions.append(def)
-            }
-        }
-        let calendar = Calendar.current
-
-        // Group definitions by the day they were created
-        var dailyCounts: [Date: Int] = [:]
-        for def in filteredDefinitions {
-            // Round the date down to midnight
-            let startOfDay = calendar.startOfDay(for: def.creationDate)
-            dailyCounts[startOfDay, default: 0] += 1
-        }
-
-        // Sort the days chronologically
-        let sortedDays = dailyCounts.keys.sorted()
-
-        // Build an array of DailyCumulativeCount with a running total
-        var cumulativeData: [DailyCumulativeCount] = []
-        var runningTotal = 0
-
-        for day in sortedDays {
-            runningTotal += (dailyCounts[day] ?? 0)
-            cumulativeData.append(DailyCumulativeCount(date: day, cumulativeCount: runningTotal))
-        }
-
-        // --- NEW CODE: Insert a data point for the day before the earliest day ---
-        if let earliestDay = sortedDays.first {
-            // "Day before" earliest day
-            if let dayBeforeEarliest = calendar.date(byAdding: .day, value: -1, to: earliestDay) {
-                // Insert at the beginning with a cumulative count of 0
-                cumulativeData.insert(
-                    DailyCumulativeCount(date: dayBeforeEarliest, cumulativeCount: 0),
-                    at: 0
-                )
-            }
-        }
-
-        return cumulativeData
-    }
-
 }
 
-struct DailyCumulativeCount: Identifiable {
+struct DailyCreationAndStudyStats: Identifiable {
     let id = UUID()
     let date: Date
-    let cumulativeCount: Int
+    let cumulativeCreations: Int
+    let cumulativeStudied: Int
+}
+
+extension DefinitionState {
+
+    func dailyCreationAndStudyCumulative(from definitions: [Definition]) -> [DailyCreationAndStudyStats] {
+        guard !definitions.isEmpty else { return [] }
+
+        let calendar = Calendar.current
+
+        // 1) Tally creation & study events by day
+        var creationCountsByDay: [Date: Int] = [:]
+        var studiedCountsByDay: [Date: Int] = [:]
+
+        for def in definitions {
+            // Creation
+            let creationDay = calendar.startOfDay(for: def.creationDate)
+            creationCountsByDay[creationDay, default: 0] += 1
+
+            // Studied
+            for studyDate in def.studiedDates {
+                let studyDay = calendar.startOfDay(for: studyDate)
+                studiedCountsByDay[studyDay, default: 0] += 1
+            }
+        }
+
+        // 2) Combine all days (creation + study)
+        let allDays = Set(creationCountsByDay.keys)
+            .union(studiedCountsByDay.keys)
+        let sortedDays = allDays.sorted()
+
+        // 3) Build cumulative totals
+        var results: [DailyCreationAndStudyStats] = []
+        var runningCreations = 0
+        var runningStudied   = 0
+        for day in sortedDays {
+            runningCreations += creationCountsByDay[day] ?? 0
+            runningStudied   += studiedCountsByDay[day]   ?? 0
+            results.append(
+                DailyCreationAndStudyStats(
+                    date: day,
+                    cumulativeCreations: runningCreations,
+                    cumulativeStudied: runningStudied
+                )
+            )
+        }
+
+        // 4) (Optional) Insert a day-before entry so the chart can start at 0
+        if let earliestDay = sortedDays.first {
+            if let dayBeforeEarliest = calendar.date(byAdding: .day, value: -1, to: earliestDay) {
+                let zeroStats = DailyCreationAndStudyStats(
+                    date: dayBeforeEarliest,
+                    cumulativeCreations: 0,
+                    cumulativeStudied: 0
+                )
+                results.insert(zeroStats, at: 0)
+            }
+        }
+
+        return results
+    }
 }

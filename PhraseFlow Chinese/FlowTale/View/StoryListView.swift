@@ -57,7 +57,6 @@ struct StoryListView: View {
         .onAppear {
             store.dispatch(.loadStories)
         }
-        .tint(FlowTaleColor.accent)
         .id(store.state.viewState.storyListViewId)
     }
 

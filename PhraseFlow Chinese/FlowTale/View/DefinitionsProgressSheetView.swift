@@ -19,28 +19,45 @@ struct DefinitionsProgressSheetView: View {
         let filteredDefinitions = removeDuplicates(from: definitions)
             .sorted(by: { $0.creationDate > $1.creationDate })
 
-        if filteredDefinitions.isEmpty {
-            Text("No saved words\nTap a word to save")
-        } else {
-            DefinitionsChartView(definitions: filteredDefinitions)
-                .frame(height: 300)
-            List {
-                Section {
-                    ForEach(filteredDefinitions, id: \.self) { definition in
-                        NavigationLink {
-                            StudyView(studyWords: [definition], isWordDefinitionView: true)
-                        } label: {
-                            Text(definition.timestampData.word)
-                                .fontWeight(.light)
-                                .foregroundStyle(FlowTaleColor.primary)
-                        }
-                    }
-                } header: {
-                    Text("All Words")
-                }
+        TabView {
+            sheetContent(isCreations: true,
+                         definitions: filteredDefinitions)
+            .tabItem {
+                Label("Saved", systemImage: "list.dash")
             }
-            .frame(maxHeight: .infinity)
-            .navigationTitle("Words Learned: \(filteredDefinitions.count)")
+
+            sheetContent(isCreations: false,
+                         definitions: filteredDefinitions.filter({ !$0.studiedDates.isEmpty }))
+            .tabItem {
+                Label("Studied", systemImage: "square.and.pencil")
+            }
+        }
+    }
+
+    @ViewBuilder
+    func sheetContent(isCreations: Bool, definitions: [Definition]) -> some View {
+        NavigationView {
+            VStack {
+                DefinitionsChartView(definitions: definitions, isCreations: isCreations)
+                    .frame(height: 300)
+                List {
+                    Section {
+                        ForEach(definitions, id: \.self) { definition in
+                            NavigationLink {
+                                StudyView(studyWords: [definition], isWordDefinitionView: true)
+                            } label: {
+                                Text(definition.timestampData.word)
+                                    .fontWeight(.light)
+                                    .foregroundStyle(FlowTaleColor.primary)
+                            }
+                        }
+                    } header: {
+                        Text("All Words")
+                    }
+                }
+                .frame(maxHeight: .infinity)
+                .navigationTitle((isCreations ? "Words Saved" : "Words Studied") + ": \(definitions.count)")
+            }
         }
     }
 

@@ -25,15 +25,14 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.settingsState.language = story.language
     case .onLoadedStories(let stories):
         newState.storyState.savedStories = stories
-        let currentStory = stories.first
         if newState.storyState.currentStory == nil,
-           !stories.isEmpty {
+           let currentStory = stories.first {
             newState.storyState.currentStory = currentStory
             let data = newState.storyState.currentChapterAudioData
             let player = data?.createAVPlayer()
             newState.audioState.audioPlayer = player ?? AVPlayer()
+            newState.viewState.readerDisplayType = .normal
         }
-//        newState.viewState.readerDisplayType = .normal
     case .playStudyWord(let definition):
         if let story = newState.storyState.savedStories.first(where: { def in
             def.id == definition.timestampData.storyId

@@ -68,6 +68,7 @@ struct ContentView: View {
             NavigationStack {
                 StoryListView()
             }
+            .tint(FlowTaleColor.accent)
         }
         .sheet(isPresented: isShowingStudyView) {
             StudyView()
@@ -76,6 +77,7 @@ struct ContentView: View {
             NavigationStack {
                 DefinitionsProgressSheetView()
             }
+            .tint(FlowTaleColor.accent)
         }
         .sheet(isPresented: isShowingSubscriptionView) {
             SubscriptionView()
@@ -112,41 +114,43 @@ struct ContentView: View {
     @ViewBuilder
     func audioButton(chapter: Chapter) -> some View {
         let buttonSize: CGFloat = 50
-        if store.state.viewState.playButtonDisplayType == .loading {
-            Button {
-
-            } label: {
-                SystemImageView(.ellipsis, size: buttonSize)
-            }
-            .disabled(true)
-        } else if chapter.audioData == nil ||
-                    store.state.settingsState.voice != chapter.audioVoice ||
-                    store.state.settingsState.speechSpeed != chapter.audioSpeed {
-            Button {
-                if let story = store.state.storyState.currentStory {
-                    store.dispatch(.synthesizeAudio(chapter,
-                                                    story: story,
-                                                    voice: store.state.settingsState.voice,
-                                                    isForced: false))
-                }
-            } label: {
-                SystemImageView(.arrowDown, size: buttonSize)
-            }
-        } else {
-            if store.state.audioState.isPlayingAudio == true {
+        if store.state.viewState.readerDisplayType == .normal {
+            if store.state.viewState.playButtonDisplayType == .loading {
                 Button {
-                    store.dispatch(.pauseAudio)
+
                 } label: {
-                    SystemImageView(.pause, size: buttonSize)
+                    SystemImageView(.ellipsis, size: buttonSize)
+                }
+                .disabled(true)
+            } else if chapter.audioData == nil ||
+                        store.state.settingsState.voice != chapter.audioVoice ||
+                        store.state.settingsState.speechSpeed != chapter.audioSpeed {
+                Button {
+                    if let story = store.state.storyState.currentStory {
+                        store.dispatch(.synthesizeAudio(chapter,
+                                                        story: story,
+                                                        voice: store.state.settingsState.voice,
+                                                        isForced: false))
+                    }
+                } label: {
+                    SystemImageView(.arrowDown, size: buttonSize)
                 }
             } else {
-                Button {
-                    let timestampData = store.state.storyState.currentChapter?.timestampData
-                    let currentSpokenWord = store.state.currentSpokenWord ?? timestampData?.first
-                    store.dispatch(.playAudio(time: currentSpokenWord?.time))
-                    store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
-                } label: {
-                    SystemImageView(.play, size: buttonSize)
+                if store.state.audioState.isPlayingAudio == true {
+                    Button {
+                        store.dispatch(.pauseAudio)
+                    } label: {
+                        SystemImageView(.pause, size: buttonSize)
+                    }
+                } else {
+                    Button {
+                        let timestampData = store.state.storyState.currentChapter?.timestampData
+                        let currentSpokenWord = store.state.currentSpokenWord ?? timestampData?.first
+                        store.dispatch(.playAudio(time: currentSpokenWord?.time))
+                        store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
+                    } label: {
+                        SystemImageView(.play, size: buttonSize)
+                    }
                 }
             }
         }

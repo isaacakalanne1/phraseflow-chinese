@@ -18,10 +18,10 @@ struct StoryState {
     }
 
     var currentChapter: Chapter? {
-        guard let currentStory else {
+        guard let story = currentStory else {
             return nil
         }
-        return currentStory.chapters[safe: currentStory.currentChapterIndex]
+        return story.chapters[safe: story.currentChapterIndex]
     }
 
     var currentSentence: Sentence? {

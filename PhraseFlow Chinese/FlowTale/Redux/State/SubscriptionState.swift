@@ -10,7 +10,11 @@ import StoreKit
 
 struct SubscriptionState {
     var isSubscribed: Bool {
-        !purchasedProductIDs.isEmpty
+        #if DEBUG
+            true
+        #else
+            !purchasedProductIDs.isEmpty
+        #endif
     }
     var products: [Product]?
     var purchasedProductIDs = Set<String>()

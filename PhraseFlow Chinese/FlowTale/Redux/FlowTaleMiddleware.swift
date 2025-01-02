@@ -18,10 +18,10 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             let story = try await environment.translateStory(story: story,
                                                              storyString: storyString,
                                                              deviceLanguage: state.deviceLanguage)
+            return .onTranslatedStory(story: story)
         } catch {
             return .failedToTranslateStory(story: story, storyString: storyString)
         }
-        return .onTranslatedStory(story: story)
     case .onTranslatedStory(let story):
         if let chapter = story.chapters[safe: story.currentChapterIndex] {
             return .synthesizeAudio(chapter,

@@ -12,16 +12,17 @@ import Charts
 struct DefinitionsChartView: View {
     @EnvironmentObject var store: FlowTaleStore  // Replace with your own logic
     let definitions: [Definition]
+    let isCreations: Bool
 
     var body: some View {
         // 1) Compute dailyCumulativeCount. You might do this in your store or here:
         // Example: let dailyCumulativeCount = makeDailyCumulativeCount(from: definitions)
         // But in your code, you said you have:
-        let dailyCumulativeCount = store.state.definitionState.dailyCumulativeCount(from: definitions)
+        let dailyCumulativeCount = store.state.definitionState.dailyCreationAndStudyCumulative(from: definitions)
 
         // 2) Get the maximum cumulative count
         let maxCount = dailyCumulativeCount
-            .map { $0.cumulativeCount }
+            .map { isCreations ? $0.cumulativeCreations : $0.cumulativeStudied }
             .max() ?? 0
 
         // 3) Determine up to two "next checkpoints"
@@ -44,7 +45,8 @@ struct DefinitionsChartView: View {
             ForEach(dailyCumulativeCount, id: \.date) { dataPoint in
                 LineMark(
                     x: .value("Date", dataPoint.date),
-                    y: .value("Cumulative Definitions", dataPoint.cumulativeCount)
+                    y: .value((isCreations ? "Saved Definitions" : "Studied Words"),
+                              (isCreations ? dataPoint.cumulativeCreations : dataPoint.cumulativeStudied))
                 )
                 .interpolationMethod(.linear)
                 .foregroundStyle(
@@ -54,7 +56,8 @@ struct DefinitionsChartView: View {
                 // -- Add a light fill under the line
                 AreaMark(
                     x: .value("Date", dataPoint.date),
-                    y: .value("Cumulative Definitions", dataPoint.cumulativeCount)
+                    y: .value((isCreations ? "Saved Definitions" : "Studied Words"),
+                              (isCreations ? dataPoint.cumulativeCreations : dataPoint.cumulativeStudied))
                 )
                 .foregroundStyle(
                     FlowTaleColor.accent.opacity(0.2).gradient
@@ -129,30 +132,4 @@ struct DefinitionsChartView: View {
 
         return result
     }
-}
-
-// MARK: - Optional: Example Logic to Compute dailyCumulativeCount
-// If you do NOT have this logic in your store, you can define it here:
-func makeDailyCumulativeCount(from definitions: [Definition]) -> [DailyCumulativeCount] {
-    let calendar = Calendar.current
-
-    // 1) Group definitions by day
-    var dailyCounts: [Date: Int] = [:]
-    for def in definitions {
-        let startOfDay = calendar.startOfDay(for: def.creationDate)
-        dailyCounts[startOfDay, default: 0] += 1
-    }
-
-    // 2) Sort the days
-    let sortedDays = dailyCounts.keys.sorted()
-
-    // 3) Create running totals
-    var results: [DailyCumulativeCount] = []
-    var runningTotal = 0
-    for day in sortedDays {
-        runningTotal += dailyCounts[day]!
-        results.append(.init(date: day, cumulativeCount: runningTotal))
-    }
-
-    return results
 }
