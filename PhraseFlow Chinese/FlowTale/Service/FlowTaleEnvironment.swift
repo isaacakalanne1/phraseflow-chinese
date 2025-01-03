@@ -31,6 +31,7 @@ protocol FlowTaleEnvironmentProtocol {
                          story: Story,
                          deviceLanguage: Language?) async throws -> Definition
     func purchase(_ product: Product) async throws
+    func generateImage(with prompt: String) async throws -> Data
 }
 
 struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
@@ -117,5 +118,9 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
 
     func purchase(_ product: Product) async throws {
         try await repository.purchase(product)
+    }
+
+    func generateImage(with prompt: String) async throws -> Data {
+        try await service.generateImage(with: prompt)
     }
 }

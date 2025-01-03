@@ -16,6 +16,12 @@ enum FlowTaleServicesError: Error {
     case failedToDecodeSentences
 }
 
+enum FluxImageError: Error {
+    case missingRequestID
+    case missingImageURL
+    case imageDataCorrupted
+}
+
 protocol FlowTaleServicesProtocol {
     func generateStory(story: Story,
                        deviceLanguage: Language?) async throws -> String
@@ -26,9 +32,14 @@ protocol FlowTaleServicesProtocol {
                          withinContextOf sentence: Sentence,
                          story: Story,
                          deviceLanguage: Language?) async throws -> String
+    func generateImage(with prompt: String) async throws -> Data
 }
 
 final class FlowTaleServices: FlowTaleServicesProtocol {
+
+    private let baseURL = "https://queue.fal.run/fal-ai/flux"
+    private let apiKey = ProcessInfo.processInfo.environment["FAL_KEY"] ?? "YOUR_API_KEY"
+    private let session = URLSession.shared
 
     func generateStory(story: Story,
                        deviceLanguage: Language?) async throws -> String {
@@ -212,5 +223,122 @@ Translate the whole sentence, including names and places.
         sessionConfig.timeoutIntervalForRequest = 1200
         sessionConfig.timeoutIntervalForResource = 1200
         return URLSession(configuration: sessionConfig)
+    }
+
+    /// Generates an image from the given prompt at 1024x512 resolution using the Flux API.
+    /// - Parameter prompt: The text prompt describing what to generate.
+    /// - Returns: A `Data` fetched from the final URL returned by the queue.
+    func generateImage(with prompt: String) async throws -> Data {
+        // 1. Submit the request to the queue
+        let requestID = try await submitGenerationRequest(prompt: prompt)
+
+        // 2. Poll the request status until it is completed
+        try await pollRequestStatus(requestID: requestID)
+
+        // 3. Once completed, fetch the result to get the image URL
+        let imageURL = try await fetchResult(requestID: requestID)
+
+        // 4. Download the actual image data
+        let (data, _) = try await session.data(from: imageURL)
+
+        return data
+    }
+
+    // MARK: - Private Helpers
+
+    /// Sends the prompt and custom dimensions to the Flux API to initiate image generation.
+    /// - Parameter prompt: The user prompt.
+    /// - Returns: The request_id needed for polling.
+    private func submitGenerationRequest(prompt: String) async throws -> String {
+        guard let url = URL(string: "\(baseURL)/schnell") else {
+            fatalError("Invalid base URL") // Or handle gracefully
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Key \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        // We fix the image size to 1024x512 as requested
+        let payload: [String: Any] = [
+            "prompt": prompt,
+            "image_size": [
+                "width": 1024,
+                "height": 512
+            ]
+        ]
+
+        let uploadData = try JSONSerialization.data(withJSONObject: payload)
+
+        let (responseData, _) = try await session.upload(for: request, from: uploadData)
+        let json = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any]
+
+        guard let requestID = json?["request_id"] as? String else {
+            throw FluxImageError.missingRequestID
+        }
+
+        return requestID
+    }
+
+    /// Polls the request status endpoint until the request is completed.
+    /// - Parameter requestID: The ID returned when the generation request was submitted.
+    private func pollRequestStatus(requestID: String) async throws {
+        // For demonstration, we simply poll every 1 second.
+        // For larger images or heavier loads, you might want to poll less frequently or use a backoff strategy.
+        while true {
+            try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+
+            guard let url = URL(string: "\(baseURL)/requests/\(requestID)/status") else {
+                fatalError("Invalid status URL") // Or handle gracefully
+            }
+
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            request.setValue("Key \(apiKey)", forHTTPHeaderField: "Authorization")
+
+            let (data, _) = try await session.data(for: request)
+            let statusJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+
+            // If the status is "completed", break out of the loop
+            if let status = statusJSON?["status"] as? String, status == "completed" {
+                return
+            }
+        }
+    }
+
+    /// Fetches the final result of a completed image generation request.
+    /// - Parameter requestID: The ID of the completed request.
+    /// - Returns: The URL for the generated image.
+    private func fetchResult(requestID: String) async throws -> URL {
+        guard let url = URL(string: "\(baseURL)/requests/\(requestID)") else {
+            fatalError("Invalid result URL") // Or handle gracefully
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Key \(apiKey)", forHTTPHeaderField: "Authorization")
+
+        let (data, _) = try await session.data(for: request)
+        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+
+        // The API returns something like:
+        // {
+        //   "images": [
+        //     {
+        //       "url": "<image URL>",
+        //       "content_type": "image/jpeg"
+        //     }
+        //   ],
+        //   ...
+        // }
+        guard
+            let images = json?["images"] as? [[String: Any]],
+            let urlString = images.first?["url"] as? String,
+            let imageURL = URL(string: urlString)
+        else {
+            throw FluxImageError.missingImageURL
+        }
+
+        return imageURL
     }
 }

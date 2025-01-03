@@ -196,6 +196,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.snackBarState.isShowing = false
     case .failedToDefineCharacter:
         newState.viewState.isDefining = false
+    case .onGeneratedImage(let data):
+        newState.storyState.currentStory?.imageData = data
     case .saveStoryAndSettings,
             .failedToSaveStory,
             .loadStories,
@@ -223,7 +225,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .restoreSubscriptions,
             .onRestoredSubscriptions,
             .failedToRestoreSubscriptions,
-            .observeTransactionUpdates:
+            .observeTransactionUpdates,
+            .generateImage,
+            .failedToGenerateImage:
         break
     }
 

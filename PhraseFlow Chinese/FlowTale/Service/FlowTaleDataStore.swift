@@ -94,17 +94,11 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
     }
 
     func saveStory(_ story: Story) throws {
-        var allStories: [Story]
-        if let stories = try? loadStories() {
-            allStories = stories
-            allStories.removeAll(where: { $0.id == story.id })
-            if allStories.isEmpty {
-                allStories = [story]
-            } else {
-                allStories.append(story)
-            }
+        var allStories = (try? loadStories()) ?? []
+        if let storyIndex = allStories.firstIndex(where: { $0.id == story.id }) {
+            allStories.replaceSubrange(storyIndex...storyIndex, with: [story])
         } else {
-            allStories = [story]
+            allStories.append(story)
         }
 
         try saveStories(allStories)

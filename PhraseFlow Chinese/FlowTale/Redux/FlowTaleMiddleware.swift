@@ -154,11 +154,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return .refreshDefinitionView
     case .selectChapter:
         return .onSelectedChapter
-    case .onSelectedChapter:
-        if let story = state.storyState.currentStory {
-            return .saveStoryAndSettings(story)
-        }
-        return nil
     case .saveStoryAndSettings(var story):
         story.chapters = story.chapters.enumerated().map({ (index, element) in
             var newChapter = element
@@ -274,6 +269,18 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             }
         }
         return nil
+    case .generateImage(let passage):
+        do {
+            let data = try await environment.generateImage(with: passage)
+            return .onGeneratedImage(data)
+        } catch {
+            return .failedToGenerateImage
+        }
+    case .onGeneratedImage:
+        if let story = state.storyState.currentStory {
+            return .saveStoryAndSettings(story)
+        }
+        return nil
     case .failedToLoadStories,
             .failedToSaveStory,
             .failedToDefineCharacter,
@@ -303,7 +310,9 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .updateShowingStudyView,
             .updateShowingDefinitionsChartView,
             .updateAutoScrollEnabled,
-            .hideSnackbar:
+            .hideSnackbar,
+            .failedToGenerateImage,
+            .onSelectedChapter:
         return nil
     }
 }
