@@ -50,7 +50,8 @@ enum FlowTaleAction {
                          voice: Voice,
                          isForced: Bool)
     case onSynthesizedAudio((wordTimestamps: [WordTimeStampData],
-                             audioData: Data))
+                             audioData: Data),
+                            Story)
     case playAudio(time: Double?)
     case pauseAudio
     case onPlayedAudio
@@ -111,7 +112,7 @@ enum FlowTaleAction {
     case showSnackBar(SnackBarType)
     case hideSnackbar
 
-    case generateImage(passage: String)
+    case generateImage(passage: String, Story)
     case onGeneratedImage(Data)
-    case failedToGenerateImage
+    case failedToGenerateImage(Story)
 }

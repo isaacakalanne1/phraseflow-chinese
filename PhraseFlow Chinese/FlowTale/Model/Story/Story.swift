@@ -5,7 +5,7 @@
 //  Created by iakalann on 07/10/2024.
 //
 
-import Foundation
+import SwiftUI
 
 struct Story: Codable, Equatable, Hashable {
     let id: UUID
@@ -20,6 +20,13 @@ struct Story: Codable, Equatable, Hashable {
     var lastUpdated: Date
     var storyPrompt: String
     var imageData: Data?
+
+    var coverArt: UIImage? {
+        if let data = imageData {
+            return UIImage(data: data)
+        }
+        return nil
+    }
 
     init(briefLatestStorySummary: String = "",
          difficulty: Difficulty,

@@ -38,7 +38,7 @@ protocol FlowTaleServicesProtocol {
 final class FlowTaleServices: FlowTaleServicesProtocol {
 
     private let baseURL = "https://queue.fal.run/fal-ai/flux"
-    private let apiKey = ProcessInfo.processInfo.environment["FAL_KEY"] ?? "YOUR_API_KEY"
+    private let apiKey = ProcessInfo.processInfo.environment["FAL_KEY"] ?? "e1f58875-fe36-4a31-ad34-badb6bbd0409:4645ce9820c0b75b3cbe1b0d9c324306"
     private let session = URLSession.shared
 
     func generateStory(story: Story,
@@ -251,7 +251,7 @@ Translate the whole sentence, including names and places.
     /// - Returns: The request_id needed for polling.
     private func submitGenerationRequest(prompt: String) async throws -> String {
         guard let url = URL(string: "\(baseURL)/schnell") else {
-            fatalError("Invalid base URL") // Or handle gracefully
+            throw FlowTaleServicesError.generalError
         }
 
         var request = URLRequest(url: url)
@@ -261,7 +261,7 @@ Translate the whole sentence, including names and places.
 
         // We fix the image size to 1024x512 as requested
         let payload: [String: Any] = [
-            "prompt": prompt,
+            "prompt": "Cover art for the following story:\n\(prompt)",
             "image_size": [
                 "width": 1024,
                 "height": 512
@@ -300,7 +300,8 @@ Translate the whole sentence, including names and places.
             let statusJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
 
             // If the status is "completed", break out of the loop
-            if let status = statusJSON?["status"] as? String, status == "completed" {
+            if let status = statusJSON?["status"] as? String,
+               status == "COMPLETED" {
                 return
             }
         }

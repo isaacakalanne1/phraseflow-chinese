@@ -23,22 +23,30 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .failedToTranslateStory(story: story, storyString: storyString)
         }
     case .onTranslatedStory(let story):
-        if let chapter = story.chapters[safe: story.currentChapterIndex] {
-            return .synthesizeAudio(chapter,
-                                    story: story,
-                                    voice: state.settingsState.voice,
-                                    isForced: true)
+        if story.imageData == nil,
+           let passage = story.chapters.first?.passage {
+             return .generateImage(passage: passage, story)
+        } else if let story = state.storyState.currentStory {
+            if let chapter = story.chapters[safe: story.currentChapterIndex] {
+                return .synthesizeAudio(chapter,
+                                        story: story,
+                                        voice: state.settingsState.voice,
+                                        isForced: true)
+            }
+            return .saveStoryAndSettings(story)
         }
-        return .saveStoryAndSettings(story)
+        return nil
     case .continueStory(let story):
         do {
-            let storyString = try await environment.generateStory(story: story, deviceLanguage: state.deviceLanguage)
+            let storyString = try await environment.generateStory(story: story,
+                                                                  deviceLanguage: state.deviceLanguage)
             return .translateStory(story: story, storyString: storyString)
         } catch {
             return .failedToContinueStory(story: story)
         }
     case .failedToContinueStory(let story),
-            .failedToTranslateStory(let story, _):
+            .failedToTranslateStory(let story, _),
+            .failedToGenerateImage(let story):
         return .showSnackBar(.failedToWriteChapter(story))
     case .showSnackBar(let type):
         if let duration = type.showDuration {
@@ -79,15 +87,12 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
                                                                 voice: voice,
                                                                 speechSpeed: state.settingsState.speechSpeed,
                                                                 language: state.storyState.currentStory?.language)
-            return .onSynthesizedAudio(result)
+            return .onSynthesizedAudio(result, story)
         } catch {
             return .failedToSynthesizeAudio
         }
-    case .onSynthesizedAudio(let result):
-        if let story = state.storyState.currentStory {
-            return .saveStoryAndSettings(story)
-        }
-        return nil
+    case .onSynthesizedAudio(let result, let story):
+        return .saveStoryAndSettings(story)
     case .playAudio(let timestamp):
         if let timestamp {
             let myTime = CMTime(seconds: timestamp, preferredTimescale: 60000)
@@ -269,15 +274,21 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             }
         }
         return nil
-    case .generateImage(let passage):
+    case .generateImage(let passage, let story):
         do {
             let data = try await environment.generateImage(with: passage)
             return .onGeneratedImage(data)
         } catch {
-            return .failedToGenerateImage
+            return .failedToGenerateImage(story)
         }
     case .onGeneratedImage:
         if let story = state.storyState.currentStory {
+            if let chapter = story.chapters[safe: story.currentChapterIndex] {
+                return .synthesizeAudio(chapter,
+                                        story: story,
+                                        voice: state.settingsState.voice,
+                                        isForced: true)
+            }
             return .saveStoryAndSettings(story)
         }
         return nil
@@ -311,7 +322,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .updateShowingDefinitionsChartView,
             .updateAutoScrollEnabled,
             .hideSnackbar,
-            .failedToGenerateImage,
             .onSelectedChapter:
         return nil
     }

@@ -16,19 +16,35 @@ struct StoryListView: View {
             List {
                 Section {
                     ForEach(store.state.storyState.savedStories, id: \.self) { story in
-                        HStack {
-                            NavigationLink(destination: ChapterListView(story: story)) {
-                                VStack(alignment: .leading, content: {
-                                    HStack {
-                                        StoryInfoView(story: story)
-                                        Text(story.title)
-                                            .fontWeight(.medium)
+                        NavigationLink(destination: ChapterListView(story: story)) {
+                            VStack(alignment: .leading, content: {
+                                HStack {
+                                    Group {
+                                        if let image = story.coverArt {
+                                            Image(uiImage: image)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: 100, height: 100)
+                                                .clipped()
+                                                .clipShape(RoundedRectangle(cornerSize: .init(width: 10, height: 10)))
+                                        } else {
+                                            Text("")
+                                                .frame(width: 100, height: 100)
+                                        }
                                     }
-                                    Text(story.briefLatestStorySummary)
-                                        .fontWeight(.light)
-                                })
-                                .padding(.trailing)
-                            }
+                                    VStack(alignment: .leading, spacing: 0) {
+                                        HStack {
+                                            StoryInfoView(story: story)
+                                            Text(story.title)
+                                                .fontWeight(.medium)
+                                                .frame(height: 30)
+                                        }
+                                        Text(story.briefLatestStorySummary)
+                                            .fontWeight(.light)
+                                            .frame(height: 70)
+                                    }
+                                }
+                            })
                         }
                         .foregroundStyle(FlowTaleColor.primary)
                     }

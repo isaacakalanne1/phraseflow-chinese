@@ -8,7 +8,7 @@
 import Foundation
 
 enum LoadingState {
-    case complete, writing, translating, generatingSpeech
+    case complete, writing, translating, generatingImage, generatingSpeech
 
     var progressInt: Int {
         switch self {
@@ -16,10 +16,12 @@ enum LoadingState {
             0
         case .translating:
             1
-        case .generatingSpeech:
+        case .generatingImage:
             2
-        case .complete:
+        case .generatingSpeech:
             3
+        case .complete:
+            4
         }
     }
 }

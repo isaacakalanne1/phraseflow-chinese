@@ -18,11 +18,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.settingsState = settings
     case .translateStory:
         newState.viewState.loadingState = .translating
-    case .onTranslatedStory(let story):
-        newState.storyState.currentStory = story
-        newState.storyState.currentStory?.currentSentenceIndex = 0
-        newState.audioState.audioPlayer = AVPlayer()
-        newState.settingsState.language = story.language
+    case .generateImage:
+        newState.viewState.loadingState = .generatingImage
     case .onLoadedStories(let stories):
         newState.storyState.savedStories = stories
         if newState.storyState.currentStory == nil,
@@ -59,7 +56,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .synthesizeAudio:
         newState.viewState.playButtonDisplayType = .loading
         newState.viewState.loadingState = .generatingSpeech
-    case .onSynthesizedAudio(var data):
+    case .onSynthesizedAudio(var data, let story):
         newState.storyState.currentStory?.currentPlaybackTime = 0
         newState.definitionState.currentDefinition = nil
         newState.viewState.chapterViewId = UUID()
@@ -125,7 +122,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.loadingState = .writing
         newState.viewState.isShowingStoryListView = false
     case .failedToContinueStory,
-            .failedToTranslateStory:
+            .failedToTranslateStory,
+            .failedToGenerateImage:
         newState.viewState.readerDisplayType = .normal
     case .updateSentenceIndex(let index):
         newState.storyState.currentStory?.currentSentenceIndex = index
@@ -196,6 +194,12 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.snackBarState.isShowing = false
     case .failedToDefineCharacter:
         newState.viewState.isDefining = false
+    case .onTranslatedStory(let story):
+        newState.storyState.currentStory = story
+        newState.storyState.currentStory?.currentSentenceIndex = 0
+        newState.storyState.currentStory?.currentChapterIndex = story.chapters.count - 1
+        newState.audioState.audioPlayer = AVPlayer()
+        newState.settingsState.language = story.language
     case .onGeneratedImage(let data):
         newState.storyState.currentStory?.imageData = data
     case .saveStoryAndSettings,
@@ -225,9 +229,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .restoreSubscriptions,
             .onRestoredSubscriptions,
             .failedToRestoreSubscriptions,
-            .observeTransactionUpdates,
-            .generateImage,
-            .failedToGenerateImage:
+            .observeTransactionUpdates:
         break
     }
 
