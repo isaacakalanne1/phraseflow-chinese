@@ -153,7 +153,7 @@ Write the definition in \(deviceLanguage.displayName).
         ]
 
         var messages: [[String: String]] = [
-            ["role": "user", "content": "Write an incredible first chapter of a novel in English with complex, three-dimensional characters set in a \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"]
+            ["role": "user", "content": "Write an incredible first chapter of a story in English with set in a \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"]
         ]
 
         for chapter in story.chapters {
@@ -176,6 +176,7 @@ Write the definition in \(deviceLanguage.displayName).
 Format the following story into JSON. Translate each English sentence into \(deviceLanguage == .english ? "" : "\(deviceLanguage.descriptiveEnglishName) and ") \(story.language.descriptiveEnglishName).
 Ensure each sentence entry is for an individual sentence.
 Translate the whole sentence, including names and places.
+In the briefLatestStorySummary section of the JSON, don't mention "In chapter X", "In this chapter", or anything similar to this.
 """
         var requestBody: [String: Any] = [
             "model": "gpt-4o-mini-2024-07-18",

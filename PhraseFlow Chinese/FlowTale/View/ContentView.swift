@@ -42,6 +42,9 @@ struct ContentView: View {
             store.dispatch(.updateShowingDefinitionsChartView(isShowing: newValue))
         }
 
+        let settingsView = SettingsView()
+        let storyListView = StoryListView()
+
         ZStack(alignment: .topTrailing) {
             switch store.state.viewState.readerDisplayType {
             case .loading:
@@ -49,6 +52,9 @@ struct ContentView: View {
             case .normal:
                 if let chapter = store.state.storyState.currentChapter {
                     ReaderView(chapter: chapter)
+                        .sheet(isPresented: isShowingSettingsScreen) {
+                            settingsView
+                        }
                 } else {
                     CreateStorySettingsView()
                 }
@@ -60,13 +66,9 @@ struct ContentView: View {
         .onAppear {
             startTimer()
         }
-        .background(FlowTaleColor.background)
-        .sheet(isPresented: isShowingSettingsScreen) {
-            SettingsView()
-        }
         .sheet(isPresented: isShowingStoryListView) {
             NavigationStack {
-                StoryListView()
+                storyListView
             }
             .tint(FlowTaleColor.accent)
         }
@@ -84,6 +86,7 @@ struct ContentView: View {
                 .presentationDragIndicator(.hidden)
                 .presentationDetents([.fraction(0.55)])
         }
+        .background(FlowTaleColor.background)
     }
 
     @ViewBuilder

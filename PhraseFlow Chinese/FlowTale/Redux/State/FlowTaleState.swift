@@ -16,6 +16,7 @@ struct FlowTaleState {
     var definitionState = DefinitionState()
     var viewState = ViewState()
     var subscriptionState = SubscriptionState()
+    var appAudioState = AppAudioState()
     var locale: Locale
 
     var currentTappedWord: WordTimeStampData?

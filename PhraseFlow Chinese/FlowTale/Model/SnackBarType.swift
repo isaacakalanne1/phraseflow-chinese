@@ -61,4 +61,15 @@ enum SnackBarType {
             store.dispatch(.continueStory(story: story))
         }
     }
+
+    var isError: Bool {
+        switch self {
+        case .writingChapter,
+                .chapterReady,
+                .subscribed:
+            return false
+        case .failedToWriteChapter(let story):
+            return true
+        }
+    }
 }

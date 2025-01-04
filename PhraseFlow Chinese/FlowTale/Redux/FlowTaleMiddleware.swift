@@ -119,6 +119,9 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         state.studyState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: definition.timestampData.time + definition.timestampData.duration, preferredTimescale: 60000)
         state.studyState.audioPlayer.play()
         return nil
+    case .playSound:
+        state.appAudioState.audioPlayer.play()
+        return nil
     case .pauseAudio:
         state.audioState.audioPlayer.pause()
         if let story = state.storyState.currentStory {
@@ -277,21 +280,19 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     case .generateImage(let passage, let story):
         do {
             let data = try await environment.generateImage(with: passage)
-            return .onGeneratedImage(data)
+            return .onGeneratedImage(data, story)
         } catch {
             return .failedToGenerateImage(story)
         }
-    case .onGeneratedImage:
-        if let story = state.storyState.currentStory {
-            if let chapter = story.chapters[safe: story.currentChapterIndex] {
-                return .synthesizeAudio(chapter,
-                                        story: story,
-                                        voice: state.settingsState.voice,
-                                        isForced: true)
-            }
-            return .saveStoryAndSettings(story)
+    case .onGeneratedImage(let data, var story):
+        story.imageData = data
+        if let chapter = story.chapters[safe: story.currentChapterIndex] {
+            return .synthesizeAudio(chapter,
+                                    story: story,
+                                    voice: state.settingsState.voice,
+                                    isForced: true)
         }
-        return nil
+        return .saveStoryAndSettings(story)
     case .updateStudiedWord:
         return .saveDefinitions
     case .failedToLoadStories,

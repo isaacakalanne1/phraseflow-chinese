@@ -14,4 +14,5 @@ struct FlowTaleColor {
     static let accent = Color("FTAccent")
     static let highlight = Color("FTHighlight")
     static let wordHighlight = Color("FTWordHighlight")
+    static let error = Color("FTError")
 }

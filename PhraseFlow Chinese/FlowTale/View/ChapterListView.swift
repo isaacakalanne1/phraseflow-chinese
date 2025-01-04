@@ -46,7 +46,7 @@ struct ChapterListView: View {
                     ForEach(Array(story.chapters.reversed().enumerated()), id: \.offset) { (index, chapter) in
                         Button(action: {
                             withAnimation(.easeInOut) {
-                                store.dispatch(.selectChapter(story, chapterIndex: index))
+                                store.dispatch(.selectChapter(story, chapterIndex: story.chapters.count - 1 - index))
                             }
                         }) {
                             Text(chapter.title)

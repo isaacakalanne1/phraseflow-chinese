@@ -114,7 +114,9 @@ enum FlowTaleAction {
     case hideSnackbar
 
     case generateImage(passage: String, Story)
-    case onGeneratedImage(Data)
+    case onGeneratedImage(Data, Story)
     case failedToGenerateImage(Story)
     case updateStudiedWord(Definition)
+
+    case playSound(AppSound)
 }

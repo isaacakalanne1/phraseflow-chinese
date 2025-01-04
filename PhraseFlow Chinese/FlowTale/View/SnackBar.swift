@@ -11,14 +11,18 @@ import SwiftUI
 struct SnackBar: View {
     @EnvironmentObject private var store: FlowTaleStore
 
+    var type: SnackBarType {
+        store.state.snackBarState.type
+    }
+
     var body: some View {
         HStack {
-            store.state.snackBarState.type.iconView
-            Text(store.state.snackBarState.type.text)
+            type.iconView
+            Text(type.text)
         }
         .padding()
         .frame(maxWidth: .infinity)
-        .background(FlowTaleColor.accent)
+        .background(type.isError ? FlowTaleColor.error : FlowTaleColor.accent)
         .cornerRadius(15)
         .foregroundColor(FlowTaleColor.background)
         .multilineTextAlignment(.center)

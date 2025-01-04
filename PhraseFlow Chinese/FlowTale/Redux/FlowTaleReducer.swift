@@ -39,6 +39,11 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
            let player = audioData.createAVPlayer() {
             newState.studyState.audioPlayer = player
         }
+    case .playSound(let sound):
+        if let url = sound.fileURL,
+        let player = try? AVAudioPlayer(contentsOf: url){
+            newState.appAudioState.audioPlayer = player
+        }
     case .failedToLoadStories:
         newState.viewState.readerDisplayType = .normal
     case .updateSpeechSpeed(let speed):
@@ -131,9 +136,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.currentTappedWord = nil
         newState.definitionState.currentDefinition = nil
         newState.audioState.isPlayingAudio = true
-        if let time {
-            newState.storyState.currentStory?.currentPlaybackTime = time
-            newState.storyState.currentStory?.currentPlaybackTime = time
+        if let wordTime = time {
+            newState.storyState.currentStory?.currentPlaybackTime = wordTime
         }
     case .pauseAudio:
         newState.audioState.isPlayingAudio = false
@@ -199,8 +203,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .onTranslatedStory(let story):
         newState.audioState.audioPlayer = AVPlayer()
         newState.settingsState.language = story.language
-    case .onGeneratedImage(let data):
-        newState.storyState.currentStory?.imageData = data
     case .updateStudiedWord(var definition):
         definition.studiedDates.append(.now)
         var allDefinitions = newState.definitionState.definitions
@@ -236,7 +238,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .restoreSubscriptions,
             .onRestoredSubscriptions,
             .failedToRestoreSubscriptions,
-            .observeTransactionUpdates:
+            .observeTransactionUpdates,
+            .onGeneratedImage:
         break
     }
 

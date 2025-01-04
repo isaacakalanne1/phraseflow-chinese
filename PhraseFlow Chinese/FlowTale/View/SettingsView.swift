@@ -45,6 +45,7 @@ struct SettingsView: View {
 
                             Button(action: {
                                 withAnimation(.easeInOut) {
+                                    store.dispatch(.playSound(.changeSettings))
                                     store.dispatch(.selectVoice(voice))
                                 }
                             }) {
@@ -67,6 +68,7 @@ struct SettingsView: View {
                             
                             Button(action: {
                                 withAnimation(.easeInOut) {
+                                    store.dispatch(.playSound(.changeSettings))
                                     store.dispatch(.pauseAudio)
                                     store.dispatch(.updateSpeechSpeed(speed))
                                 }
