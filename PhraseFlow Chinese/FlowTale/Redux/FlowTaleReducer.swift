@@ -56,19 +56,19 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .synthesizeAudio:
         newState.viewState.playButtonDisplayType = .loading
         newState.viewState.loadingState = .generatingSpeech
-    case .onSynthesizedAudio(var data, let story):
-        newState.storyState.currentStory?.currentPlaybackTime = 0
+    case .onSynthesizedAudio(var data, var newStory):
         newState.definitionState.currentDefinition = nil
         newState.viewState.chapterViewId = UUID()
         newState.viewState.playButtonDisplayType = .normal
         newState.viewState.loadingState = .complete
 
-        var newStory = newState.storyState.currentStory
-        let chapterIndex = newStory?.currentChapterIndex ?? 0
-        newStory?.chapters[chapterIndex].audioData = data.audioData
-        newStory?.chapters[chapterIndex].audioSpeed = newState.settingsState.speechSpeed
-        newStory?.chapters[chapterIndex].audioVoice = newState.settingsState.voice
-        newStory?.chapters[chapterIndex].timestampData = data.wordTimestamps
+        newStory.currentPlaybackTime = 0
+        newStory.currentSentenceIndex = 0
+        newStory.currentChapterIndex = newStory.chapters.count - 1
+        newStory.chapters[newStory.currentChapterIndex].audioData = data.audioData
+        newStory.chapters[newStory.currentChapterIndex].audioSpeed = newState.settingsState.speechSpeed
+        newStory.chapters[newStory.currentChapterIndex].audioVoice = newState.settingsState.voice
+        newStory.chapters[newStory.currentChapterIndex].timestampData = data.wordTimestamps
         newState.storyState.currentStory = newStory
 
         let player = data.audioData.createAVPlayer()
@@ -167,6 +167,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.settingsState.difficulty = difficulty
     case .updateLanguage(let language):
         newState.settingsState.language = language
+    case .updateStoryPrompt(let storyPrompt):
+        newState.settingsState.storyPrompt = storyPrompt
     case .onLoadedDefinitions(let definitions):
         newState.definitionState.definitions = definitions
     case .onDeletedStory:
@@ -195,9 +197,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .failedToDefineCharacter:
         newState.viewState.isDefining = false
     case .onTranslatedStory(let story):
-        newState.storyState.currentStory = story
-        newState.storyState.currentStory?.currentSentenceIndex = 0
-        newState.storyState.currentStory?.currentChapterIndex = story.chapters.count - 1
         newState.audioState.audioPlayer = AVPlayer()
         newState.settingsState.language = story.language
     case .onGeneratedImage(let data):

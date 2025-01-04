@@ -26,16 +26,13 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         if story.imageData == nil,
            let passage = story.chapters.first?.passage {
              return .generateImage(passage: passage, story)
-        } else if let story = state.storyState.currentStory {
-            if let chapter = story.chapters[safe: story.currentChapterIndex] {
-                return .synthesizeAudio(chapter,
-                                        story: story,
-                                        voice: state.settingsState.voice,
-                                        isForced: true)
-            }
-            return .saveStoryAndSettings(story)
+        } else if let chapter = story.chapters[safe: story.currentChapterIndex] {
+            return .synthesizeAudio(chapter,
+                                    story: story,
+                                    voice: state.settingsState.voice,
+                                    isForced: true)
         }
-        return nil
+        return .saveStoryAndSettings(story)
     case .continueStory(let story):
         do {
             let storyString = try await environment.generateStory(story: story,
@@ -91,8 +88,11 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         } catch {
             return .failedToSynthesizeAudio
         }
-    case .onSynthesizedAudio(let result, let story):
-        return .saveStoryAndSettings(story)
+    case .onSynthesizedAudio(let result, _):
+        if let story = state.storyState.currentStory {
+            return .saveStoryAndSettings(story)
+        }
+        return nil
     case .playAudio(let timestamp):
         if let timestamp {
             let myTime = CMTime(seconds: timestamp, preferredTimescale: 60000)
@@ -322,7 +322,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .updateShowingDefinitionsChartView,
             .updateAutoScrollEnabled,
             .hideSnackbar,
-            .onSelectedChapter:
+            .onSelectedChapter,
+            .updateStoryPrompt:
         return nil
     }
 }

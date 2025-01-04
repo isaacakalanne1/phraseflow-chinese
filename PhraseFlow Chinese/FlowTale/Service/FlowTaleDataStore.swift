@@ -119,17 +119,11 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
     }
 
     func saveDefinition(_ definition: Definition) throws {
-        var allDefinitions: [Definition]
-        if let definitions = try? loadDefinitions() {
-            allDefinitions = definitions
-            allDefinitions.removeAll(where: { $0.timestampData == definition.timestampData && $0.sentence == definition.sentence })
-            if allDefinitions.isEmpty {
-                allDefinitions = [definition]
-            } else {
-                allDefinitions.append(definition)
-            }
+        var allDefinitions = (try? loadDefinitions()) ?? []
+        if let index = allDefinitions.firstIndex(where: { $0.timestampData == definition.timestampData }) {
+            allDefinitions.replaceSubrange(index...index, with: [definition])
         } else {
-            allDefinitions = [definition]
+            allDefinitions.append(definition)
         }
 
         try saveDefinitions(allDefinitions)

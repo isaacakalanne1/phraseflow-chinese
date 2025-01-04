@@ -13,6 +13,7 @@ struct SettingsState: Codable {
     var voice: Voice
     var speechSpeed: SpeechSpeed
     var difficulty: Difficulty
+    var storyPrompt: String
     var language: Language
 
     init(isShowingDefinition: Bool = true,
@@ -20,12 +21,14 @@ struct SettingsState: Codable {
          voice: Voice = .xiaoxiao,
          speechSpeed: SpeechSpeed = .normal,
          difficulty: Difficulty = .beginner,
+         storyPrompt: String = "medieval town",
          language: Language = .mandarinChinese) {
         self.isShowingDefinition = isShowingDefinition
         self.isShowingEnglish = isShowingEnglish
         self.voice = voice
         self.speechSpeed = speechSpeed
         self.difficulty = difficulty
+        self.storyPrompt = storyPrompt
         self.language = language
     }
 }

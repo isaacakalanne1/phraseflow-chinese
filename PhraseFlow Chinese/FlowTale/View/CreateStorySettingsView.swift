@@ -44,17 +44,38 @@ struct CreateStorySettingsView: View {
                 } header: {
                     Text(LocalizedString.language)
                 }
+                Section {
+                    ForEach(StoryPrompts.all, id: \.self) { prompt in
+                        let storyPrompt = prompt.capitalized
+                        let isSelectedPrompt = store.state.settingsState.storyPrompt.capitalized == storyPrompt
+                        Button {
+                            store.dispatch(.updateStoryPrompt(storyPrompt))
+                        } label: {
+                            Text(prompt.capitalized)
+                                .fontWeight(isSelectedPrompt ? .medium : .light)
+                                .foregroundStyle(isSelectedPrompt ? FlowTaleColor.accent : FlowTaleColor.primary)
+                        }
+                        .listRowBackground(isSelectedPrompt ? FlowTaleColor.secondary : FlowTaleColor.background)
+                    }
+                } header: {
+                    Text("Setting")
+                }
             }
             .frame(maxHeight: .infinity)
-            Button("\(store.state.settingsState.language.flagEmoji) \(LocalizedString.newStory) (\(store.state.settingsState.difficulty.title))") {
+            Button {
                 store.dispatch(.continueStory(story: store.state.createNewStory()))
+            } label: {
+                HStack(spacing: 5) {
+                    DifficultyView(difficulty: store.state.settingsState.difficulty, color: FlowTaleColor.primary)
+                    Text(store.state.settingsState.language.flagEmoji + " " + LocalizedString.newStory)
+                }
+                .padding()
+                .background(FlowTaleColor.accent)
+                .foregroundColor(.white)
+                .cornerRadius(10)
             }
-            .padding()
-            .background(FlowTaleColor.accent)
-            .foregroundColor(.white)
-            .cornerRadius(10)
-            .navigationTitle(store.state.storyState.currentStory == nil ? LocalizedString.createStory : LocalizedString.storySettings)
         }
+        .navigationTitle(store.state.storyState.currentStory == nil ? LocalizedString.createStory : LocalizedString.storySettings)
         .background(FlowTaleColor.background)
     }
 }

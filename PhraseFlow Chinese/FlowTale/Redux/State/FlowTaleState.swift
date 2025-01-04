@@ -30,7 +30,7 @@ struct FlowTaleState {
     func createNewStory() -> Story {
         return Story(difficulty: settingsState.difficulty,
                      language: settingsState.language,
-                     storyPrompt: StoryPrompts.all.randomElement() ?? "a medieval town")
+                     storyPrompt: settingsState.storyPrompt)
     }
 
     var deviceLanguage: Language? {

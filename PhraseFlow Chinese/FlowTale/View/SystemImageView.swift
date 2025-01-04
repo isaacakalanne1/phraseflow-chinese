@@ -11,11 +11,14 @@ struct SystemImageView: View {
 
     private let systemImage: SystemImage
     private let size: CGFloat
+    private let color: Color
 
     init(_ systemImage: SystemImage,
-         size: CGFloat = 40) {
+         size: CGFloat = 40,
+         color: Color = FlowTaleColor.accent) {
         self.systemImage = systemImage
         self.size = size
+        self.color = color
     }
 
     var body: some View {
@@ -23,6 +26,6 @@ struct SystemImageView: View {
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: size, height: size)
-            .foregroundStyle(FlowTaleColor.accent)
+            .foregroundStyle(color)
     }
 }

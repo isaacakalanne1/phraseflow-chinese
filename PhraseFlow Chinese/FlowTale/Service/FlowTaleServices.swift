@@ -153,7 +153,7 @@ Write the definition in \(deviceLanguage.displayName).
         ]
 
         var messages: [[String: String]] = [
-            ["role": "user", "content": "Write an incredible first chapter of a novel in English with complex, three-dimensional characters set in \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"]
+            ["role": "user", "content": "Write an incredible first chapter of a novel in English with complex, three-dimensional characters set in a \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"]
         ]
 
         for chapter in story.chapters {
