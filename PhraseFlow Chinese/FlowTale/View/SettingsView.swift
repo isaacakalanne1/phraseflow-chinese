@@ -15,15 +15,27 @@ struct SettingsView: View {
         let showDefinition: Binding<Bool> = .init {
             store.state.settingsState.isShowingDefinition
         } set: { newValue in
+            store.dispatch(.playSound(.togglePress))
             store.dispatch(.updateShowDefinition(newValue))
         }
 
         let showEnglish: Binding<Bool> = .init {
             store.state.settingsState.isShowingEnglish
         } set: { newValue in
+            store.dispatch(.playSound(.togglePress))
             store.dispatch(.updateShowEnglish(newValue))
         }
 
+        let playMusic: Binding<Bool> = .init {
+            store.state.settingsState.isPlayingMusic
+        } set: { newValue in
+            store.dispatch(.playSound(.togglePress))
+            if newValue {
+                store.dispatch(.playMusic(.whispersOfAnOpenBook))
+            } else {
+                store.dispatch(.stopMusic)
+            }
+        }
 
         NavigationView {
             VStack(spacing: 0) {
@@ -32,6 +44,8 @@ struct SettingsView: View {
                         Toggle(LocalizedString.definitionToggle, isOn: showDefinition)
                             .fontWeight(.light)
                         Toggle(LocalizedString.englishToggle, isOn: showEnglish)
+                            .fontWeight(.light)
+                        Toggle("Music", isOn: playMusic)
                             .fontWeight(.light)
                     } header: {
                         Text(LocalizedString.toggle)

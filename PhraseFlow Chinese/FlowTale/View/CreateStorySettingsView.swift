@@ -16,6 +16,7 @@ struct CreateStorySettingsView: View {
                 Section {
                     ForEach(Difficulty.allCases, id: \.self) { difficulty in
                         Button {
+                            store.dispatch(.playSound(.changeSettings))
                             store.dispatch(.updateDifficulty(difficulty))
                         } label: {
                             HStack {
@@ -33,6 +34,7 @@ struct CreateStorySettingsView: View {
                 Section {
                     ForEach(Language.allCases, id: \.self) { language in
                         Button {
+                            store.dispatch(.playSound(.changeSettings))
                             store.dispatch(.updateLanguage(language))
                         } label: {
                             Text(language.flagEmoji + " " + language.displayName)
@@ -49,6 +51,7 @@ struct CreateStorySettingsView: View {
                         let storyPrompt = prompt.capitalized
                         let isSelectedPrompt = store.state.settingsState.storyPrompt.capitalized == storyPrompt
                         Button {
+                            store.dispatch(.playSound(.changeSettings))
                             store.dispatch(.updateStoryPrompt(storyPrompt))
                         } label: {
                             Text(prompt.capitalized)

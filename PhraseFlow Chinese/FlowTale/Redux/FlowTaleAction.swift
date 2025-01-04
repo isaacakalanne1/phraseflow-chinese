@@ -119,4 +119,6 @@ enum FlowTaleAction {
     case updateStudiedWord(Definition)
 
     case playSound(AppSound)
+    case playMusic(MusicType)
+    case stopMusic
 }

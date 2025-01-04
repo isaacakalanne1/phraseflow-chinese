@@ -10,6 +10,7 @@ import Foundation
 struct SettingsState: Codable {
     var isShowingDefinition: Bool
     var isShowingEnglish: Bool
+    var isPlayingMusic: Bool
     var voice: Voice
     var speechSpeed: SpeechSpeed
     var difficulty: Difficulty
@@ -18,6 +19,7 @@ struct SettingsState: Codable {
 
     init(isShowingDefinition: Bool = true,
          isShowingEnglish: Bool = true,
+         isPlayingMusic: Bool = true,
          voice: Voice = .xiaoxiao,
          speechSpeed: SpeechSpeed = .normal,
          difficulty: Difficulty = .beginner,
@@ -25,6 +27,7 @@ struct SettingsState: Codable {
          language: Language = .mandarinChinese) {
         self.isShowingDefinition = isShowingDefinition
         self.isShowingEnglish = isShowingEnglish
+        self.isPlayingMusic = isPlayingMusic
         self.voice = voice
         self.speechSpeed = speechSpeed
         self.difficulty = difficulty

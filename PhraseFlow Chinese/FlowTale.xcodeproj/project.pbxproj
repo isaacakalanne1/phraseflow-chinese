@@ -87,10 +87,17 @@
 		BBE636CB2CCC0EEF00873E68 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636CA2CCC0EEF00873E68 /* ErrorView.swift */; };
 		BBE636CD2CCC0F8500873E68 /* ReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636CC2CCC0F8500873E68 /* ReaderView.swift */; };
 		BBE636D12CCD77BC00873E68 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636D02CCD77BB00873E68 /* FlowLayout.swift */; };
-		BBE990B32D29BBFD00FAD3FB /* ActionButtonViewPress.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990B22D29BBFD00FAD3FB /* ActionButtonViewPress.mp3 */; };
+		BBE990B32D29BBFD00FAD3FB /* TogglePress.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990B22D29BBFD00FAD3FB /* TogglePress.mp3 */; };
 		BBE990B52D29BC2200FAD3FB /* AppAudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE990B42D29BC2200FAD3FB /* AppAudioState.swift */; };
 		BBE990B72D29BC5500FAD3FB /* AppSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE990B62D29BC5500FAD3FB /* AppSound.swift */; };
-		BBE990B92D29BD9C00FAD3FB /* ChangeSettings.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990B82D29BD9C00FAD3FB /* ChangeSettings.mp3 */; };
+		BBE990B92D29BD9C00FAD3FB /* BackButtonPress.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990B82D29BD9C00FAD3FB /* BackButtonPress.mp3 */; };
+		BBE990BD2D29C56D00FAD3FB /* MusicAudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE990BC2D29C56D00FAD3FB /* MusicAudioState.swift */; };
+		BBE990C12D29C59C00FAD3FB /* MusicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE990C02D29C59C00FAD3FB /* MusicType.swift */; };
+		BBE990C72D29D9F000FAD3FB /* Whispers of an Open Book.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990C62D29D9F000FAD3FB /* Whispers of an Open Book.mp3 */; };
+		BBE990CB2D29EF5E00FAD3FB /* OpenStory.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990CA2D29EF5E00FAD3FB /* OpenStory.mp3 */; };
+		BBE990CF2D29F28000FAD3FB /* OpenChapter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990CE2D29F28000FAD3FB /* OpenChapter.mp3 */; };
+		BBE990D12D29F2CB00FAD3FB /* ActionButtonPress.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990D02D29F2CB00FAD3FB /* ActionButtonPress.mp3 */; };
+		BBE990D32D29F36C00FAD3FB /* ChangeSettings.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990D22D29F36C00FAD3FB /* ChangeSettings.mp3 */; };
 		BBFDBBE92D203AD80056C448 /* DefinitionsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFDBBE82D203AD80056C448 /* DefinitionsChartView.swift */; };
 		BBFDBBEB2D203F080056C448 /* DefinitionsProgressSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFDBBEA2D203F080056C448 /* DefinitionsProgressSheetView.swift */; };
 /* End PBXBuildFile section */
@@ -210,10 +217,17 @@
 		BBE636CA2CCC0EEF00873E68 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		BBE636CC2CCC0F8500873E68 /* ReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderView.swift; sourceTree = "<group>"; };
 		BBE636D02CCD77BB00873E68 /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
-		BBE990B22D29BBFD00FAD3FB /* ActionButtonViewPress.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ActionButtonViewPress.mp3; sourceTree = "<group>"; };
+		BBE990B22D29BBFD00FAD3FB /* TogglePress.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TogglePress.mp3; sourceTree = "<group>"; };
 		BBE990B42D29BC2200FAD3FB /* AppAudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAudioState.swift; sourceTree = "<group>"; };
 		BBE990B62D29BC5500FAD3FB /* AppSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSound.swift; sourceTree = "<group>"; };
-		BBE990B82D29BD9C00FAD3FB /* ChangeSettings.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ChangeSettings.mp3; sourceTree = "<group>"; };
+		BBE990B82D29BD9C00FAD3FB /* BackButtonPress.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BackButtonPress.mp3; sourceTree = "<group>"; };
+		BBE990BC2D29C56D00FAD3FB /* MusicAudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicAudioState.swift; sourceTree = "<group>"; };
+		BBE990C02D29C59C00FAD3FB /* MusicType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicType.swift; sourceTree = "<group>"; };
+		BBE990C62D29D9F000FAD3FB /* Whispers of an Open Book.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Whispers of an Open Book.mp3"; sourceTree = "<group>"; };
+		BBE990CA2D29EF5E00FAD3FB /* OpenStory.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = OpenStory.mp3; sourceTree = "<group>"; };
+		BBE990CE2D29F28000FAD3FB /* OpenChapter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = OpenChapter.mp3; sourceTree = "<group>"; };
+		BBE990D02D29F2CB00FAD3FB /* ActionButtonPress.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ActionButtonPress.mp3; sourceTree = "<group>"; };
+		BBE990D22D29F36C00FAD3FB /* ChangeSettings.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ChangeSettings.mp3; sourceTree = "<group>"; };
 		BBFDBBE82D203AD80056C448 /* DefinitionsChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionsChartView.swift; sourceTree = "<group>"; };
 		BBFDBBEA2D203F080056C448 /* DefinitionsProgressSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionsProgressSheetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -283,6 +297,7 @@
 			children = (
 				BB1994D02CE9050000D61E54 /* AudioState.swift */,
 				BBE990B42D29BC2200FAD3FB /* AppAudioState.swift */,
+				BBE990BC2D29C56D00FAD3FB /* MusicAudioState.swift */,
 				BB1994CE2CE904F000D61E54 /* DefinitionState.swift */,
 				BB4EDB042C90C89C00699E7D /* FlowTaleState.swift */,
 				BBAE07D22D0C796500DA95CD /* SubscriptionState.swift */,
@@ -430,6 +445,7 @@
 				BB0854862CB42C7100F1661B /* Story */,
 				BB4EDB2A2C91B35D00699E7D /* Definition.swift */,
 				BBE990B62D29BC5500FAD3FB /* AppSound.swift */,
+				BBE990C02D29C59C00FAD3FB /* MusicType.swift */,
 				BB4E6BF72D246AEF002B5CBA /* LoadingState.swift */,
 				BB4E6BF52D22E0DB002B5CBA /* FlowTaleColor.swift */,
 				BBAE07CC2D0C765B00DA95CD /* APIRequestType.swift */,
@@ -479,8 +495,13 @@
 		BBE990B12D29BBF000FAD3FB /* Sound */ = {
 			isa = PBXGroup;
 			children = (
-				BBE990B22D29BBFD00FAD3FB /* ActionButtonViewPress.mp3 */,
-				BBE990B82D29BD9C00FAD3FB /* ChangeSettings.mp3 */,
+				BBE990CE2D29F28000FAD3FB /* OpenChapter.mp3 */,
+				BBE990B22D29BBFD00FAD3FB /* TogglePress.mp3 */,
+				BBE990D22D29F36C00FAD3FB /* ChangeSettings.mp3 */,
+				BBE990D02D29F2CB00FAD3FB /* ActionButtonPress.mp3 */,
+				BBE990B82D29BD9C00FAD3FB /* BackButtonPress.mp3 */,
+				BBE990C62D29D9F000FAD3FB /* Whispers of an Open Book.mp3 */,
+				BBE990CA2D29EF5E00FAD3FB /* OpenStory.mp3 */,
 			);
 			path = Sound;
 			sourceTree = "<group>";
@@ -620,11 +641,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBE990C72D29D9F000FAD3FB /* Whispers of an Open Book.mp3 in Resources */,
+				BBE990D32D29F36C00FAD3FB /* ChangeSettings.mp3 in Resources */,
 				BBB6EF2E2C8C86290079D135 /* Preview Assets.xcassets in Resources */,
 				BB84E0A62CF3EC8600520F5E /* Localizable.strings in Resources */,
-				BBE990B32D29BBFD00FAD3FB /* ActionButtonViewPress.mp3 in Resources */,
-				BBE990B92D29BD9C00FAD3FB /* ChangeSettings.mp3 in Resources */,
+				BBE990B32D29BBFD00FAD3FB /* TogglePress.mp3 in Resources */,
+				BBE990CB2D29EF5E00FAD3FB /* OpenStory.mp3 in Resources */,
+				BBE990B92D29BD9C00FAD3FB /* BackButtonPress.mp3 in Resources */,
+				BBE990CF2D29F28000FAD3FB /* OpenChapter.mp3 in Resources */,
 				BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */,
+				BBE990D12D29F2CB00FAD3FB /* ActionButtonPress.mp3 in Resources */,
 				BB84E0AB2CF494D900520F5E /* swiftgen.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -720,6 +746,7 @@
 				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FlowTaleDataStore.swift in Sources */,
 				BB7B6D9A2D1EEA3D0030344A /* StudyState.swift in Sources */,
+				BBE990C12D29C59C00FAD3FB /* MusicType.swift in Sources */,
 				BBE636C72CCC0E1200873E68 /* EnglishSentenceView.swift in Sources */,
 				BB4EDB1D2C90DFDD00699E7D /* FlowTaleRepository.swift in Sources */,
 				BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */,
@@ -754,6 +781,7 @@
 				BB6572F92CDBB14C00AC5981 /* SpeechStyle.swift in Sources */,
 				BB4EDB0A2C90C8F100699E7D /* FlowTaleEnvironment.swift in Sources */,
 				BB7B6D9E2D1F31190030344A /* SnackBarState.swift in Sources */,
+				BBE990BD2D29C56D00FAD3FB /* MusicAudioState.swift in Sources */,
 				BB6572D62CD4E09000AC5981 /* ActionButton.swift in Sources */,
 				BBE16F242CC2AFC800A7EF1F /* ChapterListView.swift in Sources */,
 				BB4EDB032C90C86300699E7D /* FlowTaleStore.swift in Sources */,

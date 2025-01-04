@@ -44,6 +44,16 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         let player = try? AVAudioPlayer(contentsOf: url){
             newState.appAudioState.audioPlayer = player
         }
+    case .playMusic(let music):
+        if let url = music.fileURL,
+        let player = try? AVAudioPlayer(contentsOf: url) {
+            player.numberOfLoops = -1
+            player.volume = 0.3
+            newState.musicAudioState.audioPlayer = player
+            newState.settingsState.isPlayingMusic = true
+        }
+    case .stopMusic:
+        newState.settingsState.isPlayingMusic = false
     case .failedToLoadStories:
         newState.viewState.readerDisplayType = .normal
     case .updateSpeechSpeed(let speed):

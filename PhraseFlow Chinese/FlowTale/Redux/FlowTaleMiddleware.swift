@@ -122,6 +122,18 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     case .playSound:
         state.appAudioState.audioPlayer.play()
         return nil
+    case .playMusic:
+        state.musicAudioState.audioPlayer.play()
+        if let story = state.storyState.currentStory {
+            return .saveStoryAndSettings(story)
+        }
+        return nil
+    case .stopMusic:
+        state.musicAudioState.audioPlayer.stop()
+        if let story = state.storyState.currentStory {
+            return .saveStoryAndSettings(story)
+        }
+        return nil
     case .pauseAudio:
         state.audioState.audioPlayer.pause()
         if let story = state.storyState.currentStory {
@@ -295,6 +307,11 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return .saveStoryAndSettings(story)
     case .updateStudiedWord:
         return .saveDefinitions
+    case .onLoadedAppSettings:
+        if state.settingsState.isPlayingMusic {
+            return .playMusic(.whispersOfAnOpenBook)
+        }
+        return nil
     case .failedToLoadStories,
             .failedToSaveStory,
             .failedToDefineCharacter,
@@ -306,7 +323,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .refreshDefinitionView,
             .failedToDeleteStory,
             .failedToSaveAppSettings,
-            .onLoadedAppSettings,
             .failedToLoadAppSettings,
             .refreshTranslationView,
             .onLoadedStories,

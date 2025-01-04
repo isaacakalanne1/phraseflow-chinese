@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ChapterListView: View {
     @EnvironmentObject var store: FlowTaleStore
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+
     let story: Story
 
     var body: some View {
@@ -46,6 +48,7 @@ struct ChapterListView: View {
                     ForEach(Array(story.chapters.reversed().enumerated()), id: \.offset) { (index, chapter) in
                         Button(action: {
                             withAnimation(.easeInOut) {
+                                store.dispatch(.playSound(.openChapter))
                                 store.dispatch(.selectChapter(story, chapterIndex: story.chapters.count - 1 - index))
                             }
                         }) {
@@ -68,6 +71,9 @@ struct ChapterListView: View {
             .cornerRadius(10)
         }
         .navigationTitle(LocalizedString.chooseChapter)
+        .onAppear {
+            store.dispatch(.playSound(.openStory))
+        }
     }
 
 }
