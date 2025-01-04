@@ -44,7 +44,7 @@ struct DefinitionsProgressSheetView: View {
                     Section {
                         ForEach(definitions, id: \.self) { definition in
                             NavigationLink {
-                                StudyView(isWordDefinitionView: true)
+                                StudyView(specificWord: definition)
                             } label: {
                                 Text(definition.timestampData.word)
                                     .fontWeight(.light)

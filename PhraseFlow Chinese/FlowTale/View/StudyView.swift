@@ -16,9 +16,13 @@ struct StudyView: View {
                 $0.language == store.state.storyState.currentStory?.language
             })
     }
+
+    var specificWord: Definition? = nil
+    var isWordDefinitionView: Bool {
+        specificWord != nil
+    }
     @State var index: Int = 0
     @State var isDefinitionShown: Bool = false
-    var isWordDefinitionView: Bool = false
 
     var currentDefinition: Definition? {
         studyWords[safe: index]
@@ -29,8 +33,9 @@ struct StudyView: View {
     }
 
     var body: some View {
+        let displayedDefinition = specificWord ?? currentDefinition
         Group {
-            if let definition = currentDefinition {
+            if let definition = displayedDefinition {
                 VStack(alignment: .leading) {
                     Text("Word")
                         .greyBackground()
