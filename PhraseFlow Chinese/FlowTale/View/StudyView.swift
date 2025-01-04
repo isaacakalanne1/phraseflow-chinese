@@ -126,5 +126,8 @@ struct StudyView: View {
     func goToNextDefinition() {
         isDefinitionShown = false
         index = (index + 1) % studyWords.count
+        if let definition = currentDefinition {
+            store.dispatch(.updateStudiedWord(definition))
+        }
     }
 }

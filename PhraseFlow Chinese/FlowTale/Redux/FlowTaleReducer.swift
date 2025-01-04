@@ -201,6 +201,14 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.settingsState.language = story.language
     case .onGeneratedImage(let data):
         newState.storyState.currentStory?.imageData = data
+    case .updateStudiedWord(var definition):
+        definition.studiedDates.append(.now)
+        var allDefinitions = newState.definitionState.definitions
+        if let index = newState.definitionState.definitions.firstIndex(where: { $0 == definition }) {
+            newState.definitionState.definitions.replaceSubrange(index...index, with: [definition])
+        } else {
+            newState.definitionState.definitions.append(definition)
+        }
     case .saveStoryAndSettings,
             .failedToSaveStory,
             .loadStories,

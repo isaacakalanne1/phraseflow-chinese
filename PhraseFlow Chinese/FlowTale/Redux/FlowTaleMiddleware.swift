@@ -292,6 +292,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .saveStoryAndSettings(story)
         }
         return nil
+    case .updateStudiedWord:
+        return .saveDefinitions
     case .failedToLoadStories,
             .failedToSaveStory,
             .failedToDefineCharacter,

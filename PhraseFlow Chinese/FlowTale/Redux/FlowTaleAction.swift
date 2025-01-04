@@ -116,4 +116,5 @@ enum FlowTaleAction {
     case generateImage(passage: String, Story)
     case onGeneratedImage(Data)
     case failedToGenerateImage(Story)
+    case updateStudiedWord(Definition)
 }
