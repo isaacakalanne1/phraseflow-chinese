@@ -10,7 +10,12 @@ import SwiftUI
 struct StudyView: View {
     @EnvironmentObject var store: FlowTaleStore
 
-    @State var studyWords: [Definition] = []
+    var studyWords: [Definition] {
+        store.state.definitionState.definitions
+            .filter({
+                $0.language == store.state.storyState.currentStory?.language
+            })
+    }
     @State var index: Int = 0
     @State var isDefinitionShown: Bool = false
     var isWordDefinitionView: Bool = false
@@ -111,11 +116,6 @@ struct StudyView: View {
         }
         .onAppear {
             if !isWordDefinitionView {
-                studyWords = Array(store.state.definitionState.definitions
-                    .shuffled()
-                    .filter({
-                        $0.language == store.state.storyState.currentStory?.language
-                    }))
                 index = 0
                 isDefinitionShown = false
             }

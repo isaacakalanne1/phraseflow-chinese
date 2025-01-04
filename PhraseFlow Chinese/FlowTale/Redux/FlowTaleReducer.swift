@@ -204,7 +204,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .updateStudiedWord(var definition):
         definition.studiedDates.append(.now)
         var allDefinitions = newState.definitionState.definitions
-        if let index = newState.definitionState.definitions.firstIndex(where: { $0 == definition }) {
+        if let index = newState.definitionState.definitions.firstIndex(where: { $0.timestampData == definition.timestampData }) {
             newState.definitionState.definitions.replaceSubrange(index...index, with: [definition])
         } else {
             newState.definitionState.definitions.append(definition)

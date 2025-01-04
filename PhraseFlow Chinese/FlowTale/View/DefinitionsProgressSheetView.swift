@@ -44,7 +44,7 @@ struct DefinitionsProgressSheetView: View {
                     Section {
                         ForEach(definitions, id: \.self) { definition in
                             NavigationLink {
-                                StudyView(studyWords: [definition], isWordDefinitionView: true)
+                                StudyView(isWordDefinitionView: true)
                             } label: {
                                 Text(definition.timestampData.word)
                                     .fontWeight(.light)
@@ -56,7 +56,9 @@ struct DefinitionsProgressSheetView: View {
                     }
                 }
                 .frame(maxHeight: .infinity)
-                .navigationTitle((isCreations ? "Words Saved" : "Words Studied") + ": \(definitions.count)")
+                .navigationTitle(isCreations ?
+                                 "Words Saved: \(definitions.count)" :
+                                    "Words Studied: \(definitions.reduce(0, { $0 + $1.studiedDates.count }))")
             }
         }
     }

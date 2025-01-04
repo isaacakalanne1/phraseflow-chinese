@@ -120,7 +120,7 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
 
     func saveDefinition(_ definition: Definition) throws {
         var allDefinitions = (try? loadDefinitions()) ?? []
-        if let index = allDefinitions.firstIndex(where: { $0 == definition }) {
+        if let index = allDefinitions.firstIndex(where: { $0.timestampData.id == definition.timestampData.id }) {
             allDefinitions.replaceSubrange(index...index, with: [definition])
         } else {
             allDefinitions.append(definition)
@@ -155,7 +155,7 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         }
         let encoder = JSONEncoder()
         do {
-            let encodedData = try encoder.encode(definitions)
+            let encodedData = try encoder.encode(definitions.shuffled())
             try encodedData.write(to: fileURL)
         } catch {
             throw FlowTaleDataStoreError.failedToSaveData
