@@ -80,5 +80,8 @@ struct CreateStorySettingsView: View {
         }
         .navigationTitle(store.state.storyState.currentStory == nil ? LocalizedString.createStory : LocalizedString.storySettings)
         .background(FlowTaleColor.background)
+        .onAppear {
+            store.dispatch(.playSound(.openStorySettings))
+        }
     }
 }

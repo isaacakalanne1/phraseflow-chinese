@@ -13,15 +13,17 @@ struct SubscriptionView: View {
     var body: some View {
         VStack(spacing: 20) {
             let product = store.state.subscriptionState.products?.first
-            Text(store.state.subscriptionState.isSubscribed ? "Manage" : "Subscribe")
+            Text(store.state.subscriptionState.isSubscribed ? "Manage Subscription" : "Subscribe")
                 .font(.title)
                 .bold()
                 .foregroundColor(FlowTaleColor.primary)
-            Text("Subscribe now for unlimited chapters")
-                .multilineTextAlignment(.center)
-                .font(.subheadline)
-                .bold()
-                .foregroundColor(FlowTaleColor.primary)
+            if !store.state.subscriptionState.isSubscribed {
+                Text("Subscribe now for unlimited chapters")
+                    .multilineTextAlignment(.center)
+                    .font(.subheadline)
+                    .bold()
+                    .foregroundColor(FlowTaleColor.primary)
+            }
 
             SubscriptionOption(title: "\(product?.displayPrice ?? "...") per month",
                                detail: "\(product?.displayName ?? "...")",

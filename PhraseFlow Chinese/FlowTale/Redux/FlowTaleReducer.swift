@@ -41,7 +41,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         }
     case .playSound(let sound):
         if let url = sound.fileURL,
-        let player = try? AVAudioPlayer(contentsOf: url){
+           let player = try? AVAudioPlayer(contentsOf: url) {
+            player.volume = 0.7
             newState.appAudioState.audioPlayer = player
         }
     case .playMusic(let music):
@@ -204,6 +205,11 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .setSubscriptionSheetShowing(let isShowing):
         newState.viewState.isShowingSubscriptionSheet = isShowing
     case .showSnackBar(let type):
+        if let url = type.sound.fileURL,
+           let player = try? AVAudioPlayer(contentsOf: url) {
+            player.volume = 0.7
+            newState.appAudioState.audioPlayer = player
+        }
         newState.snackBarState.type = type
         newState.snackBarState.isShowing = true
     case .hideSnackbar:
@@ -221,6 +227,10 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         } else {
             newState.definitionState.definitions.append(definition)
         }
+    case .updateCustomPrompt(let prompt):
+        newState.settingsState.customPrompt = prompt
+    case .passedModeration:
+        newState.settingsState.confirmedCustomPrompt = newState.settingsState.customPrompt
     case .saveStoryAndSettings,
             .failedToSaveStory,
             .loadStories,
@@ -249,7 +259,11 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .onRestoredSubscriptions,
             .failedToRestoreSubscriptions,
             .observeTransactionUpdates,
-            .onGeneratedImage:
+            .onGeneratedImage,
+            .moderateText,
+            .onModeratedText,
+            .failedToModerateText,
+            .didNotPassModeration:
         break
     }
 

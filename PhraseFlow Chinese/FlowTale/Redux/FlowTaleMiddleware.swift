@@ -46,6 +46,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .failedToGenerateImage(let story):
         return .showSnackBar(.failedToWriteChapter(story))
     case .showSnackBar(let type):
+        state.appAudioState.audioPlayer.play()
         if let duration = type.showDuration {
             try? await Task.sleep(for: .seconds(duration))
             return .hideSnackbar
@@ -312,6 +313,19 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .playMusic(.whispersOfAnOpenBook)
         }
         return nil
+    case .moderateText:
+        do {
+            let response = try await environment.moderateText(state.settingsState.customPrompt)
+            return .onModeratedText(response)
+        } catch {
+            return .failedToModerateText
+        }
+    case .onModeratedText(let response):
+        return response.didPassModeration ? .passedModeration : .didNotPassModeration
+    case .passedModeration:
+        return .showSnackBar(.passedModeration)
+    case .didNotPassModeration:
+        return .showSnackBar(.didNotPassModeration)
     case .failedToLoadStories,
             .failedToSaveStory,
             .failedToDefineCharacter,
@@ -342,7 +356,9 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .updateAutoScrollEnabled,
             .hideSnackbar,
             .onSelectedChapter,
-            .updateStoryPrompt:
+            .updateStoryPrompt,
+            .updateCustomPrompt,
+            .failedToModerateText:
         return nil
     }
 }

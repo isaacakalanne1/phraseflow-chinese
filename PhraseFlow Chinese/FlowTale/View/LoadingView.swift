@@ -22,6 +22,11 @@ struct LoadingView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(FlowTaleColor.background)
+        .onChange(of: store.state.viewState.loadingState, { oldValue, newValue in
+            if newValue != .complete {
+                store.dispatch(.playSound(.progressUpdate))
+            }
+        })
     }
 
     @ViewBuilder

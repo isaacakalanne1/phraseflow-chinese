@@ -22,7 +22,7 @@ struct SnackBar: View {
         }
         .padding()
         .frame(maxWidth: .infinity)
-        .background(type.isError ? FlowTaleColor.error : FlowTaleColor.accent)
+        .background(type.backgroundColor)
         .cornerRadius(15)
         .foregroundColor(FlowTaleColor.background)
         .multilineTextAlignment(.center)

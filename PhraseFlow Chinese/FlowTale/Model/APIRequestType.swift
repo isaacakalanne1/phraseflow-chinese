@@ -33,8 +33,8 @@ enum APIRequestType {
         case .openAI:
             "gpt-4o-mini-2024-07-18"
         case .openRouter:
-//            "meta-llama/llama-3.3-70b-instruct"
-            "deepseek/deepseek-chat"
+            "meta-llama/llama-3.3-70b-instruct"
+//            "deepseek/deepseek-chat"
         }
     }
 }

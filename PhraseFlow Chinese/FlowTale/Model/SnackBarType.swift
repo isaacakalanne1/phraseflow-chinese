@@ -12,6 +12,8 @@ enum SnackBarType {
     case chapterReady
     case subscribed
     case failedToWriteChapter(Story)
+    case passedModeration
+    case didNotPassModeration
 
     var text: String {
         switch self {
@@ -23,6 +25,10 @@ enum SnackBarType {
             "Failed to write chapter. Tap to retry."
         case .subscribed:
             "Subscription complete. Unlimited chapters now available."
+        case .passedModeration:
+            "Custom story added"
+        case .didNotPassModeration:
+            "Your story did not meet our AI provider's usage policies."
         }
     }
 
@@ -30,10 +36,11 @@ enum SnackBarType {
         switch self {
         case .writingChapter:
             nil
-        case .chapterReady:
-            3
-        case .failedToWriteChapter,
-                .subscribed:
+        case .chapterReady,
+                .failedToWriteChapter,
+                .subscribed,
+                .passedModeration,
+                .didNotPassModeration:
             4
         }
     }
@@ -42,12 +49,15 @@ enum SnackBarType {
     var iconView: some View {
         switch self {
         case .writingChapter:
-            ProgressView()
+            Text("✏️")
         case .chapterReady,
-                .subscribed:
+                .subscribed,
+                .passedModeration:
             Text("✅")
         case .failedToWriteChapter:
             Text("🔁")
+        case .didNotPassModeration:
+            Text("⚠️")
         }
     }
 
@@ -55,7 +65,9 @@ enum SnackBarType {
         switch self {
         case .writingChapter,
                 .chapterReady,
-                .subscribed:
+                .subscribed,
+                .passedModeration,
+                .didNotPassModeration:
             break
         case .failedToWriteChapter(let story):
             store.dispatch(.continueStory(story: story))
@@ -66,10 +78,20 @@ enum SnackBarType {
         switch self {
         case .writingChapter,
                 .chapterReady,
-                .subscribed:
+                .subscribed,
+                .didNotPassModeration:
             return false
-        case .failedToWriteChapter(let story):
+        case .failedToWriteChapter,
+                .passedModeration:
             return true
         }
+    }
+
+    var backgroundColor: Color {
+        isError ? FlowTaleColor.error : FlowTaleColor.accent
+    }
+
+    var sound: AppSound {
+        isError ? .errorSnackbar : .snackbar
     }
 }

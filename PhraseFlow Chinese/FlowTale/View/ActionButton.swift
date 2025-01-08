@@ -8,9 +8,17 @@
 import SwiftUI
 
 struct ActionButton: View {
-    let title: String
+    let title: String?
     let systemImage: SystemImage
     let action: () -> Void
+
+    init(title: String? = nil,
+         systemImage: SystemImage,
+         action: @escaping () -> Void) {
+        self.title = title
+        self.systemImage = systemImage
+        self.action = action
+    }
 
     var body: some View {
         Button(action: {
@@ -18,9 +26,11 @@ struct ActionButton: View {
         }) {
             VStack {
                 SystemImageView(systemImage, size: 35)
-                Text(title)
-                    .font(.system(size: 12, weight: .medium))
-                    .frame(height: 25)
+                if let titleString = title {
+                    Text(titleString)
+                        .font(.system(size: 12, weight: .medium))
+                        .frame(height: 25)
+                }
             }
             .foregroundStyle(FlowTaleColor.accent)
         }

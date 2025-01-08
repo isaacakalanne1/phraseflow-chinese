@@ -32,6 +32,7 @@ protocol FlowTaleEnvironmentProtocol {
                          deviceLanguage: Language?) async throws -> Definition
     func purchase(_ product: Product) async throws
     func generateImage(with prompt: String) async throws -> Data
+    func moderateText(_ text: String) async throws -> ModerationResponse
 }
 
 struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
@@ -122,5 +123,9 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
 
     func generateImage(with prompt: String) async throws -> Data {
         try await service.generateImage(with: prompt)
+    }
+
+    func moderateText(_ text: String) async throws -> ModerationResponse {
+        try await service.moderateText(text)
     }
 }

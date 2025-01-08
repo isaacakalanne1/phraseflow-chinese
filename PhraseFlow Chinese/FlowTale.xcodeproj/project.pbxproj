@@ -95,9 +95,16 @@
 		BBE990C12D29C59C00FAD3FB /* MusicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE990C02D29C59C00FAD3FB /* MusicType.swift */; };
 		BBE990C72D29D9F000FAD3FB /* Whispers of an Open Book.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990C62D29D9F000FAD3FB /* Whispers of an Open Book.mp3 */; };
 		BBE990CB2D29EF5E00FAD3FB /* OpenStory.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990CA2D29EF5E00FAD3FB /* OpenStory.mp3 */; };
-		BBE990CF2D29F28000FAD3FB /* OpenChapter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990CE2D29F28000FAD3FB /* OpenChapter.mp3 */; };
-		BBE990D12D29F2CB00FAD3FB /* ActionButtonPress.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990D02D29F2CB00FAD3FB /* ActionButtonPress.mp3 */; };
 		BBE990D32D29F36C00FAD3FB /* ChangeSettings.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990D22D29F36C00FAD3FB /* ChangeSettings.mp3 */; };
+		BBE990D92D29FB6100FAD3FB /* ActionButtonPress.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990D82D29FB6100FAD3FB /* ActionButtonPress.mp3 */; };
+		BBE990DB2D29FC7700FAD3FB /* OpenChapter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990DA2D29FC7700FAD3FB /* OpenChapter.mp3 */; };
+		BBE990DD2D29FE0200FAD3FB /* Whispers of Tranquility.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990DC2D29FE0200FAD3FB /* Whispers of Tranquility.mp3 */; };
+		BBE990DF2D2A9DCC00FAD3FB /* CustomStoryPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE990DE2D2A9DCC00FAD3FB /* CustomStoryPromptView.swift */; };
+		BBE990E12D2AB26300FAD3FB /* Snackbar.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E02D2AB26300FAD3FB /* Snackbar.mp3 */; };
+		BBE990E32D2AB31300FAD3FB /* ErrorSnackbar.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E22D2AB31200FAD3FB /* ErrorSnackbar.mp3 */; };
+		BBE990E52D2AB3D100FAD3FB /* CloseSheet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E42D2AB3D100FAD3FB /* CloseSheet.mp3 */; };
+		BBE990E72D2ABE8B00FAD3FB /* ProgressUpdate.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */; };
+		BBE990EB2D2AC30800FAD3FB /* OpenStorySettings.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990EA2D2AC30800FAD3FB /* OpenStorySettings.mp3 */; };
 		BBFDBBE92D203AD80056C448 /* DefinitionsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFDBBE82D203AD80056C448 /* DefinitionsChartView.swift */; };
 		BBFDBBEB2D203F080056C448 /* DefinitionsProgressSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFDBBEA2D203F080056C448 /* DefinitionsProgressSheetView.swift */; };
 /* End PBXBuildFile section */
@@ -225,9 +232,16 @@
 		BBE990C02D29C59C00FAD3FB /* MusicType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicType.swift; sourceTree = "<group>"; };
 		BBE990C62D29D9F000FAD3FB /* Whispers of an Open Book.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Whispers of an Open Book.mp3"; sourceTree = "<group>"; };
 		BBE990CA2D29EF5E00FAD3FB /* OpenStory.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = OpenStory.mp3; sourceTree = "<group>"; };
-		BBE990CE2D29F28000FAD3FB /* OpenChapter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = OpenChapter.mp3; sourceTree = "<group>"; };
-		BBE990D02D29F2CB00FAD3FB /* ActionButtonPress.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ActionButtonPress.mp3; sourceTree = "<group>"; };
 		BBE990D22D29F36C00FAD3FB /* ChangeSettings.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ChangeSettings.mp3; sourceTree = "<group>"; };
+		BBE990D82D29FB6100FAD3FB /* ActionButtonPress.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ActionButtonPress.mp3; sourceTree = "<group>"; };
+		BBE990DA2D29FC7700FAD3FB /* OpenChapter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = OpenChapter.mp3; sourceTree = "<group>"; };
+		BBE990DC2D29FE0200FAD3FB /* Whispers of Tranquility.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Whispers of Tranquility.mp3"; sourceTree = "<group>"; };
+		BBE990DE2D2A9DCC00FAD3FB /* CustomStoryPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStoryPromptView.swift; sourceTree = "<group>"; };
+		BBE990E02D2AB26300FAD3FB /* Snackbar.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Snackbar.mp3; sourceTree = "<group>"; };
+		BBE990E22D2AB31200FAD3FB /* ErrorSnackbar.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ErrorSnackbar.mp3; sourceTree = "<group>"; };
+		BBE990E42D2AB3D100FAD3FB /* CloseSheet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CloseSheet.mp3; sourceTree = "<group>"; };
+		BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ProgressUpdate.mp3; sourceTree = "<group>"; };
+		BBE990EA2D2AC30800FAD3FB /* OpenStorySettings.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = OpenStorySettings.mp3; sourceTree = "<group>"; };
 		BBFDBBE82D203AD80056C448 /* DefinitionsChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionsChartView.swift; sourceTree = "<group>"; };
 		BBFDBBEA2D203F080056C448 /* DefinitionsProgressSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionsProgressSheetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -467,6 +481,7 @@
 				BBE636C42CCC0CDD00873E68 /* DefinitionView.swift */,
 				BBE636C62CCC0E1200873E68 /* EnglishSentenceView.swift */,
 				BBE636C82CCC0E8400873E68 /* ChapterView.swift */,
+				BBE990DE2D2A9DCC00FAD3FB /* CustomStoryPromptView.swift */,
 				BBAE07D62D14BD2400DA95CD /* ChapterHeaderView.swift */,
 				BB6572D52CD4E08F00AC5981 /* ActionButton.swift */,
 				BBE636CC2CCC0F8500873E68 /* ReaderView.swift */,
@@ -495,13 +510,19 @@
 		BBE990B12D29BBF000FAD3FB /* Sound */ = {
 			isa = PBXGroup;
 			children = (
-				BBE990CE2D29F28000FAD3FB /* OpenChapter.mp3 */,
 				BBE990B22D29BBFD00FAD3FB /* TogglePress.mp3 */,
 				BBE990D22D29F36C00FAD3FB /* ChangeSettings.mp3 */,
-				BBE990D02D29F2CB00FAD3FB /* ActionButtonPress.mp3 */,
+				BBE990DA2D29FC7700FAD3FB /* OpenChapter.mp3 */,
+				BBE990D82D29FB6100FAD3FB /* ActionButtonPress.mp3 */,
 				BBE990B82D29BD9C00FAD3FB /* BackButtonPress.mp3 */,
+				BBE990DC2D29FE0200FAD3FB /* Whispers of Tranquility.mp3 */,
 				BBE990C62D29D9F000FAD3FB /* Whispers of an Open Book.mp3 */,
 				BBE990CA2D29EF5E00FAD3FB /* OpenStory.mp3 */,
+				BBE990E02D2AB26300FAD3FB /* Snackbar.mp3 */,
+				BBE990E22D2AB31200FAD3FB /* ErrorSnackbar.mp3 */,
+				BBE990E42D2AB3D100FAD3FB /* CloseSheet.mp3 */,
+				BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */,
+				BBE990EA2D2AC30800FAD3FB /* OpenStorySettings.mp3 */,
 			);
 			path = Sound;
 			sourceTree = "<group>";
@@ -641,17 +662,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBE990DB2D29FC7700FAD3FB /* OpenChapter.mp3 in Resources */,
+				BBE990DD2D29FE0200FAD3FB /* Whispers of Tranquility.mp3 in Resources */,
+				BBE990EB2D2AC30800FAD3FB /* OpenStorySettings.mp3 in Resources */,
+				BBE990E32D2AB31300FAD3FB /* ErrorSnackbar.mp3 in Resources */,
 				BBE990C72D29D9F000FAD3FB /* Whispers of an Open Book.mp3 in Resources */,
 				BBE990D32D29F36C00FAD3FB /* ChangeSettings.mp3 in Resources */,
 				BBB6EF2E2C8C86290079D135 /* Preview Assets.xcassets in Resources */,
+				BBE990E52D2AB3D100FAD3FB /* CloseSheet.mp3 in Resources */,
 				BB84E0A62CF3EC8600520F5E /* Localizable.strings in Resources */,
+				BBE990E72D2ABE8B00FAD3FB /* ProgressUpdate.mp3 in Resources */,
 				BBE990B32D29BBFD00FAD3FB /* TogglePress.mp3 in Resources */,
+				BBE990D92D29FB6100FAD3FB /* ActionButtonPress.mp3 in Resources */,
 				BBE990CB2D29EF5E00FAD3FB /* OpenStory.mp3 in Resources */,
 				BBE990B92D29BD9C00FAD3FB /* BackButtonPress.mp3 in Resources */,
-				BBE990CF2D29F28000FAD3FB /* OpenChapter.mp3 in Resources */,
 				BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */,
-				BBE990D12D29F2CB00FAD3FB /* ActionButtonPress.mp3 in Resources */,
 				BB84E0AB2CF494D900520F5E /* swiftgen.yml in Resources */,
+				BBE990E12D2AB26300FAD3FB /* Snackbar.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -753,6 +780,7 @@
 				BB84E0A02CEFA96200520F5E /* Language.swift in Sources */,
 				BB4015C02CF756FD008ACE9C /* StoryPrompts.swift in Sources */,
 				BB1994C82CE8E0BE00D61E54 /* Data+AVPlayer.swift in Sources */,
+				BBE990DF2D2A9DCC00FAD3FB /* CustomStoryPromptView.swift in Sources */,
 				BB1994D12CE9050000D61E54 /* AudioState.swift in Sources */,
 				BB4E6BFA2D246EC0002B5CBA /* LoadingView.swift in Sources */,
 				BBAE07D52D0CA79A00DA95CD /* SubscriptionOption.swift in Sources */,

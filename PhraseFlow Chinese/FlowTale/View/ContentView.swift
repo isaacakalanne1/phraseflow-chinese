@@ -46,17 +46,26 @@ struct ContentView: View {
         let storyListView = StoryListView()
 
         ZStack(alignment: .topTrailing) {
-            switch store.state.viewState.readerDisplayType {
-            case .loading:
-                LoadingView()
-            case .normal:
-                if let chapter = store.state.storyState.currentChapter {
-                    ReaderView(chapter: chapter)
-                        .sheet(isPresented: isShowingSettingsScreen) {
-                            settingsView
-                        }
-                } else {
-                    CreateStorySettingsView()
+            Group {
+                switch store.state.viewState.readerDisplayType {
+                case .initialising:
+                    ProgressView()
+                        .tint(FlowTaleColor.accent)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                case .loading:
+                    LoadingView()
+                case .normal:
+                    if let chapter = store.state.storyState.currentChapter {
+                        ReaderView(chapter: chapter)
+                            .sheet(isPresented: isShowingSettingsScreen) {
+                                settingsView
+                            }
+                            .onAppear {
+                                store.dispatch(.showSnackBar(.chapterReady))
+                            }
+                    } else {
+                        CreateStorySettingsView()
+                    }
                 }
             }
             if let chapter = store.state.storyState.currentChapter {
@@ -91,17 +100,20 @@ struct ContentView: View {
 
     @ViewBuilder
     private func overlayView(chapter: Chapter) -> some View {
-        VStack {
+        VStack(alignment: .trailing) {
             if store.state.snackBarState.isShowing {
                 SnackBar()
+                    .transition(.move(edge: .leading))
             }
             Spacer()
             audioButton(chapter: chapter)
                 .padding(.trailing)
             Spacer()
-                .frame(height: 90)
+                .frame(height: 60)
         }
+        .animation(.easeInOut, value: store.state.snackBarState.isShowing)
     }
+
 
     func startTimer() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {

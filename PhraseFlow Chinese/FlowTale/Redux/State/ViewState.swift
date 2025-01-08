@@ -36,7 +36,7 @@ struct ViewState {
          isShowingSubscriptionSheet: Bool = false,
          isAutoscrollEnabled: Bool = false,
          isDefining: Bool = false,
-         readerDisplayType: ReaderDisplayType = .normal,
+         readerDisplayType: ReaderDisplayType = .initialising,
          playButtonDisplayType: PlayButtonDisplayType = .normal,
          loadingState: LoadingState = .complete) {
         self.definitionViewId = definitionViewId

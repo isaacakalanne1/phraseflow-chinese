@@ -121,4 +121,13 @@ enum FlowTaleAction {
     case playSound(AppSound)
     case playMusic(MusicType)
     case stopMusic
+
+    case updateCustomPrompt(String)
+
+    case moderateText
+    case onModeratedText(ModerationResponse)
+    case failedToModerateText
+
+    case passedModeration
+    case didNotPassModeration
 }

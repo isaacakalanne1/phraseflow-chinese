@@ -7,25 +7,11 @@
 
 import Foundation
 
-enum AppSound {
-    case mainActionButtonPress, changeSettings, togglePress, backButtonPress, openStory, openChapter
+enum AppSound: String {
+    case actionButtonPress, changeSettings, togglePress, backButtonPress, openStory, openChapter, snackbar, errorSnackbar, closeSheet, progressUpdate, openStorySettings
 
     var fileURL: URL? {
-        let fileName: String
-        switch self {
-        case .mainActionButtonPress:
-            fileName = "ActionButtonPress"
-        case .changeSettings:
-            fileName = "ChangeSettings"
-        case .togglePress:
-            fileName = "TogglePress"
-        case .backButtonPress:
-            fileName = "BackButtonPress"
-        case .openStory:
-            fileName = "OpenStory"
-        case .openChapter:
-            fileName = "OpenChapter"
-        }
+        let fileName = rawValue.prefix(1).uppercased() + rawValue.dropFirst()
         return Bundle.main.url(forResource: fileName, withExtension: "mp3")
     }
 }

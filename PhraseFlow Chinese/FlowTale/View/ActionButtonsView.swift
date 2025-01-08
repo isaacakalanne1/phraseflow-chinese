@@ -14,32 +14,46 @@ struct ActionButtonsView: View {
     var body: some View {
 
         ScrollView(.horizontal) {
-            HStack(spacing: 20) {
-                ActionButton(title: LocalizedString.stories, systemImage: .list) {
-                    store.dispatch(.playSound(.mainActionButtonPress))
+            HStack(spacing: 12) {
+                ActionButton(systemImage: .list) {
+                    store.dispatch(.playSound(.actionButtonPress))
                     store.dispatch(.updateShowingStoryListView(isShowing: true))
                 }
 
-                ActionButton(title: "Study", systemImage: .book) {
-                    store.dispatch(.playSound(.mainActionButtonPress))
+                divider
+
+                ActionButton(systemImage: .book) {
+                    store.dispatch(.playSound(.actionButtonPress))
                     store.dispatch(.updateShowingStudyView(isShowing: true))
                 }
 
-                ActionButton(title: "Progress", systemImage: .chartBar) {
-                    store.dispatch(.playSound(.mainActionButtonPress))
+                divider
+
+                ActionButton(systemImage: .chartBar) {
+                    store.dispatch(.playSound(.actionButtonPress))
                     store.dispatch(.updateShowingDefinitionsChartView(isShowing: true))
                 }
 
-                ActionButton(title: LocalizedString.subscribe, systemImage: .heart) {
-                    store.dispatch(.playSound(.mainActionButtonPress))
+                divider
+
+                ActionButton(systemImage: .heart) {
+                    store.dispatch(.playSound(.actionButtonPress))
                     store.dispatch(.setSubscriptionSheetShowing(true))
                 }
 
-                ActionButton(title: LocalizedString.settings, systemImage: .gear) {
-                    store.dispatch(.playSound(.mainActionButtonPress))
+                divider
+
+                ActionButton(systemImage: .gear) {
+                    store.dispatch(.playSound(.actionButtonPress))
                     store.dispatch(.updateShowingSettings(isShowing: true))
                 }
             }
         }
+    }
+
+    @ViewBuilder
+    var divider: some View {
+        Divider()
+            .frame(height: 30)
     }
 }

@@ -67,7 +67,11 @@ struct ChapterView: View {
             Button(LocalizedString.nextChapter) {
                 if store.state.subscriptionState.isSubscribed {
                     let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
-                    store.dispatch(doesNextChapterExist ? .goToNextChapter : .continueStory(story: story))
+                    if doesNextChapterExist {
+                        store.dispatch(.goToNextChapter)
+                    } else {
+                        store.dispatch(.continueStory(story: story))
+                    }
                 } else {
                     store.dispatch(.setSubscriptionSheetShowing(true))
                 }

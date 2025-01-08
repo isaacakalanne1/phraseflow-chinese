@@ -16,6 +16,8 @@ struct SettingsState: Codable {
     var difficulty: Difficulty
     var storyPrompt: String
     var language: Language
+    var customPrompt: String
+    var confirmedCustomPrompt: String
 
     init(isShowingDefinition: Bool = true,
          isShowingEnglish: Bool = true,
@@ -24,7 +26,9 @@ struct SettingsState: Codable {
          speechSpeed: SpeechSpeed = .normal,
          difficulty: Difficulty = .beginner,
          storyPrompt: String = "medieval town",
-         language: Language = .mandarinChinese) {
+         language: Language = .mandarinChinese,
+         customPrompt: String = "",
+         confirmedCustomPrompt: String = "") {
         self.isShowingDefinition = isShowingDefinition
         self.isShowingEnglish = isShowingEnglish
         self.isPlayingMusic = isPlayingMusic
@@ -33,5 +37,7 @@ struct SettingsState: Codable {
         self.difficulty = difficulty
         self.storyPrompt = storyPrompt
         self.language = language
+        self.customPrompt = customPrompt
+        self.confirmedCustomPrompt = confirmedCustomPrompt
     }
 }

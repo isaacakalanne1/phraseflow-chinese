@@ -31,6 +31,7 @@ struct FlowTaleApp: App {
             ContentView()
                 .environmentObject(store)
                 .onAppear {
+                    UIApplication.shared.isIdleTimerDisabled = true
                     store.dispatch(.loadStories)
                     store.dispatch(.loadDefinitions)
                     store.dispatch(.loadAppSettings)

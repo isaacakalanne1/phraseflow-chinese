@@ -22,6 +22,35 @@ enum FluxImageError: Error {
     case imageDataCorrupted
 }
 
+/// The request body you’ll send to the moderation endpoint.
+struct ModerationRequest: Codable {
+    let model: String
+    let input: String
+}
+
+/// The top-level response from the Moderation API.
+struct ModerationResponse: Codable {
+    let id: String
+    let model: String
+    let results: [ModerationResult]
+
+    var didPassModeration: Bool {
+        if let sexualScore = results.first?.category_scores["sexual"] as? Float,
+           let minorScore = results.first?.category_scores["sexual/minors"] as? Float {
+            return sexualScore < 1 && minorScore < 1
+        }
+        return true
+    }
+}
+
+/// A single result object in the Moderation API’s response.
+struct ModerationResult: Codable {
+    let flagged: Bool
+    let categories: [String: Bool]
+    let category_scores: [String: Double]
+    let category_applied_input_types: [String: [String]]
+}
+
 protocol FlowTaleServicesProtocol {
     func generateStory(story: Story,
                        deviceLanguage: Language?) async throws -> String
@@ -33,6 +62,7 @@ protocol FlowTaleServicesProtocol {
                          story: Story,
                          deviceLanguage: Language?) async throws -> String
     func generateImage(with prompt: String) async throws -> Data
+    func moderateText(_ text: String) async throws -> ModerationResponse
 }
 
 final class FlowTaleServices: FlowTaleServicesProtocol {
@@ -342,5 +372,45 @@ In the briefLatestStorySummary section of the JSON, don't mention "In chapter X"
         }
 
         return imageURL
+    }
+
+    /// Example function that sends text to the Moderation API.
+    func moderateText(_ text: String) async throws -> ModerationResponse {
+
+        // 1. Construct the request URL.
+        guard let url = URL(string: "https://api.openai.com/v1/moderations") else {
+            throw URLError(.badURL)
+        }
+
+        // 2. Build the HTTP request.
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+
+        // Replace YOUR_OPENAI_API_KEY with your actual API key, or pass it in as a function parameter.
+        request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        // 3. Prepare the JSON-encoded request body.
+        let moderationRequest = ModerationRequest(
+            model: "omni-moderation-latest",  // or "text-moderation-latest"
+            input: text
+        )
+        request.httpBody = try JSONEncoder().encode(moderationRequest)
+
+        // 4. Execute the network call using URLSession with async/await.
+        let (data, response) = try await URLSession.shared.data(for: request)
+
+        // 5. Check the HTTP response status.
+        guard
+            let httpResponse = response as? HTTPURLResponse,
+            (200..<300).contains(httpResponse.statusCode)
+        else {
+            throw URLError(.badServerResponse)
+        }
+
+        // 6. Decode the JSON response into our `ModerationResponse` struct.
+        let moderationResponse = try JSONDecoder().decode(ModerationResponse.self, from: data)
+
+        return moderationResponse
     }
 }
