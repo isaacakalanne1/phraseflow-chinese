@@ -14,7 +14,7 @@ protocol FlowTaleRepositoryProtocol {
                           story: Story,
                           voice: Voice,
                           speechSpeed: SpeechSpeed,
-                          language: Language?) async throws -> ChapterAudio
+                          language: Language) async throws -> ChapterAudio
     func getProducts() async throws -> [Product]
     func purchase(_ product: Product) async throws
 }
@@ -36,7 +36,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
                           story: Story,
                           voice: Voice,
                           speechSpeed: SpeechSpeed,
-                          language: Language?) async throws -> ChapterAudio {
+                          language: Language) async throws -> ChapterAudio {
 
         let synthesizer: SPXSpeechSynthesizer
         do {

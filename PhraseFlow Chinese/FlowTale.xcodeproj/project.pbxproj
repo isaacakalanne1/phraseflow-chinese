@@ -57,6 +57,7 @@
 		BB84E0AD2CF4952700520F5E /* strings-enum.stencil in Sources */ = {isa = PBXBuildFile; fileRef = BB84E0AC2CF4952700520F5E /* strings-enum.stencil */; };
 		BB84E0AF2CF495CD00520F5E /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB84E0AE2CF495CD00520F5E /* Strings.swift */; };
 		BB9B8B5B2D344BD500752993 /* OpenStorySettings.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BB9B8B5A2D344BD500752993 /* OpenStorySettings.mp3 */; };
+		BB9B8B5D2D3461C900752993 /* CreateStory.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BB9B8B5C2D3461C900752993 /* CreateStory.mp3 */; };
 		BBA94CCD2D19AAE000EB4A7E /* FlowTaleStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA94CCC2D19AAE000EB4A7E /* FlowTaleStateTests.swift */; };
 		BBAE07CD2D0C765B00DA95CD /* APIRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07CC2D0C765B00DA95CD /* APIRequestType.swift */; };
 		BBAE07CF2D0C768000DA95CD /* AnyKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07CE2D0C768000DA95CD /* AnyKey.swift */; };
@@ -183,6 +184,7 @@
 		BB84E0B32CF4E60300520F5E /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BB84E0B42CF4E6D800520F5E /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BB9B8B5A2D344BD500752993 /* OpenStorySettings.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = OpenStorySettings.mp3; sourceTree = "<group>"; };
+		BB9B8B5C2D3461C900752993 /* CreateStory.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CreateStory.mp3; sourceTree = "<group>"; };
 		BBA94CC72D19A7F900EB4A7E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BBA94CC82D19A87800EB4A7E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BBA94CC92D19A8EF00EB4A7E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -517,6 +519,7 @@
 				BBE990E42D2AB3D100FAD3FB /* CloseSheet.mp3 */,
 				BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */,
 				BB9B8B5A2D344BD500752993 /* OpenStorySettings.mp3 */,
+				BB9B8B5C2D3461C900752993 /* CreateStory.mp3 */,
 			);
 			path = Sound;
 			sourceTree = "<group>";
@@ -659,6 +662,7 @@
 				BBE990DB2D29FC7700FAD3FB /* OpenChapter.mp3 in Resources */,
 				BBE990DD2D29FE0200FAD3FB /* Whispers of Tranquility.mp3 in Resources */,
 				BBE990E32D2AB31300FAD3FB /* ErrorSnackbar.mp3 in Resources */,
+				BB9B8B5D2D3461C900752993 /* CreateStory.mp3 in Resources */,
 				BBE990C72D29D9F000FAD3FB /* Whispers of an Open Book.mp3 in Resources */,
 				BBE990D32D29F36C00FAD3FB /* ChangeSettings.mp3 in Resources */,
 				BBB6EF2E2C8C86290079D135 /* Preview Assets.xcassets in Resources */,

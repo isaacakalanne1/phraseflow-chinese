@@ -61,6 +61,7 @@ struct ChapterListView: View {
             .frame(maxHeight: .infinity)
             Button(LocalizedString.newChapter) {
                 store.dispatch(.continueStory(story: story))
+                store.dispatch(.playSound(.createStory))
                 store.dispatch(.updateShowingStoryListView(isShowing: false))
             }
             .padding()

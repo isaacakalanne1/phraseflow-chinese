@@ -24,9 +24,8 @@ struct ContentView: View {
                 case .initialising:
                     ProgressView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                case .loading:
-                    LoadingView()
-                case .normal:
+                case .loading,
+                        .normal:
                     ZStack(alignment: .topTrailing) {
                         mainContent()
                         if let chapter = store.state.storyState.currentChapter {
@@ -46,6 +45,12 @@ struct ContentView: View {
                 .presentationDragIndicator(.hidden)
                 .presentationDetents([.fraction(0.55)])
         }
+        .onChange(of: store.state.viewState.loadingState, { oldValue, newValue in
+            if newValue != .complete,
+               newValue != .writing {
+                store.dispatch(.playSound(.progressUpdate))
+            }
+        })
         .background(FlowTaleColor.background)
         .tint(FlowTaleColor.accent)
     }
@@ -54,7 +59,9 @@ struct ContentView: View {
     private func mainContent() -> some View {
         switch store.state.viewState.contentTab {
         case .reader:
-            if let chapter = store.state.storyState.currentChapter {
+            if store.state.viewState.readerDisplayType == .loading {
+                LoadingView()
+            } else if let chapter = store.state.storyState.currentChapter {
                 ReaderView(chapter: chapter)
             } else {
                 CreateStorySettingsView()

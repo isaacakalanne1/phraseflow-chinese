@@ -8,7 +8,7 @@
 import Foundation
 
 enum AppSound: String {
-    case actionButtonPress, changeSettings, togglePress, backButtonPress, openStory, openChapter, snackbar, errorSnackbar, closeSheet, progressUpdate, openStorySettings
+    case actionButtonPress, changeSettings, togglePress, backButtonPress, openStory, openChapter, snackbar, errorSnackbar, closeSheet, progressUpdate, openStorySettings, createStory
 
     var fileURL: URL? {
         let fileName = rawValue.prefix(1).uppercased() + rawValue.dropFirst()

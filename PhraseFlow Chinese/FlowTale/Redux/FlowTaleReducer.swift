@@ -71,7 +71,10 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .synthesizeAudio:
         newState.viewState.playButtonDisplayType = .loading
         newState.viewState.loadingState = .generatingSpeech
-    case .onSynthesizedAudio(var data, var newStory, _):
+    case .onSynthesizedAudio(var data, var newStory, let isForced):
+        if !isForced {
+            newState.viewState.contentTab = .reader
+        }
         newState.definitionState.currentDefinition = nil
         newState.viewState.chapterViewId = UUID()
         newState.viewState.playButtonDisplayType = .normal
@@ -241,7 +244,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.settingsState.storySetting = setting
     case .updateIsShowingCustomPromptAlert(let isShowing):
         newState.viewState.isShowingCustomPromptAlert = isShowing
-    case .selectTab(let tab):
+    case .selectTab(let tab, _):
         newState.viewState.contentTab = tab
     case .deleteCustomPrompt(let prompt):
         newState.settingsState.customPrompts.removeAll(where: { $0 == prompt })

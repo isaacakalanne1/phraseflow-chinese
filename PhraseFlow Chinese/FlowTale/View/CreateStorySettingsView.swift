@@ -104,6 +104,7 @@ struct CreateStorySettingsView: View {
             .frame(maxHeight: .infinity)
 
             Button {
+                store.dispatch(.playSound(.createStory))
                 store.dispatch(.continueStory(story: store.state.createNewStory()))
             } label: {
                 HStack(spacing: 5) {

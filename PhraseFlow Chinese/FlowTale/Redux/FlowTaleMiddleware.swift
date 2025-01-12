@@ -86,13 +86,16 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
                                                                 story: story,
                                                                 voice: voice,
                                                                 speechSpeed: state.settingsState.speechSpeed,
-                                                                language: state.storyState.currentStory?.language)
+                                                                language: story.language)
             return .onSynthesizedAudio(result, story, isForced: isForced)
         } catch {
             return .failedToSynthesizeAudio
         }
-    case .onSynthesizedAudio(let result, let story, let isForced):
-        return .saveStoryAndSettings(story)
+    case .onSynthesizedAudio:
+        if let story = state.storyState.currentStory {
+            return .saveStoryAndSettings(story)
+        }
+        return nil
     case .playAudio(let timestamp):
         if let timestamp {
             let myTime = CMTime(seconds: timestamp, preferredTimescale: 60000)
@@ -174,6 +177,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return .refreshDefinitionView
     case .selectChapter:
         return .onSelectedChapter
+    case .onSelectedChapter:
+        return .selectTab(.reader, shouldPlaySound: false)
     case .saveStoryAndSettings(var story):
         story.chapters = story.chapters.enumerated().map({ (index, element) in
             var newChapter = element
@@ -340,8 +345,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return .showSnackBar(.didNotPassModeration)
     case .failedToModerateText:
         return .showSnackBar(.didNotPassModeration)
-    case .selectTab:
-        return .playSound(.actionButtonPress)
+    case .selectTab(_, let shouldPlaySound):
+        return shouldPlaySound ? .playSound(.actionButtonPress) : nil
     case .onLoadedStories(_, let isAppLaunch):
         return isAppLaunch ? .showSnackBar(.welcomeBack) : nil
     case .deleteCustomPrompt:
@@ -374,7 +379,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .updateShowingDefinitionsChartView,
             .updateAutoScrollEnabled,
             .hideSnackbar,
-            .onSelectedChapter,
             .updateCustomPrompt,
             .updateIsShowingCustomPromptAlert:
         return nil

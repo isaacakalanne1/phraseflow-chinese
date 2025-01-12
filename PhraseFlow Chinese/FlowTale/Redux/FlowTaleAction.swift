@@ -134,5 +134,5 @@ enum FlowTaleAction {
 
     case updateStorySetting(StorySetting)
     case updateIsShowingCustomPromptAlert(Bool)
-    case selectTab(ContentTab)
+    case selectTab(ContentTab, shouldPlaySound: Bool)
 }

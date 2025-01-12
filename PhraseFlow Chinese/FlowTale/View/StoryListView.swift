@@ -55,6 +55,7 @@ struct StoryListView: View {
                     }
                 }
                 Button {
+                    store.dispatch(.playSound(.createStory))
                     store.dispatch(.continueStory(story: store.state.createNewStory()))
                 } label: {
                     HStack(spacing: 5) {
