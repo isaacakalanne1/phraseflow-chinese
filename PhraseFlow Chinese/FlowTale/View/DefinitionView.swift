@@ -17,7 +17,6 @@ struct DefinitionView: View {
             HStack {
                 if store.state.viewState.isDefining {
                     ProgressView()
-                        .tint(FlowTaleColor.accent)
                         .frame(maxWidth: .infinity,
                                maxHeight: .infinity,
                                alignment: .center)

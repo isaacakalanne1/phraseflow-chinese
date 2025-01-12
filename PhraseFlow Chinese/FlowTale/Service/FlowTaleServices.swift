@@ -186,7 +186,8 @@ Write the definition in \(deviceLanguage.displayName).
     }
 
     private func continueStory(story: Story) async throws -> String {
-        let model: APIRequestType = .openRouter(.metaLlama)
+//        let model: APIRequestType = .openRouter(.metaLlama)
+        let model: APIRequestType = .openAI
         var requestBody: [String: Any] = [
             "model": model.modelName,
         ]

@@ -121,7 +121,10 @@ struct StudyView: View {
                 isDefinitionShown = false
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
+        .background(FlowTaleColor.background)
+        .scrollContentBackground(.hidden)
     }
 
     func goToNextDefinition() {

@@ -63,15 +63,6 @@ struct CreateStorySettingsView: View {
                     Text(LocalizedString.language)
                 }
                 Section {
-                    Button {
-                        store.dispatch(.playSound(.changeSettings))
-                        store.dispatch(.updateStorySetting(.random))
-                    } label: {
-                        Text("Random")
-                            .fontWeight(isRandomPromptSelected ? .medium : .light)
-                            .foregroundStyle(isRandomPromptSelected ? FlowTaleColor.accent : FlowTaleColor.primary)
-                    }
-                    .listRowBackground(isRandomPromptSelected ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
 
                     Button {
                         store.dispatch(.updateIsShowingCustomPromptAlert(true))
@@ -81,6 +72,16 @@ struct CreateStorySettingsView: View {
                             .foregroundStyle(FlowTaleColor.primary)
                     }
                     .listRowBackground(Color(uiColor: UIColor.secondarySystemGroupedBackground))
+                    
+                    Button {
+                        store.dispatch(.playSound(.changeSettings))
+                        store.dispatch(.updateStorySetting(.random))
+                    } label: {
+                        Text("Random")
+                            .fontWeight(isRandomPromptSelected ? .medium : .light)
+                            .foregroundStyle(isRandomPromptSelected ? FlowTaleColor.accent : FlowTaleColor.primary)
+                    }
+                    .listRowBackground(isRandomPromptSelected ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
 
                     ForEach(store.state.settingsState.customPrompts, id: \.self) { prompt in
                         let isSelectedPrompt = store.state.settingsState.storySetting == .customPrompt(prompt)

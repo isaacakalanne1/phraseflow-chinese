@@ -23,7 +23,6 @@ struct ChapterListView: View {
                             .aspectRatio(contentMode: .fill)
                     } else {
                         EmptyView()
-                            .tint(FlowTaleColor.accent)
                     }
                 }
                 .frame(maxWidth: .infinity, idealHeight: proxy.size.width/2, alignment: .center)
@@ -73,6 +72,8 @@ struct ChapterListView: View {
         .onAppear {
             store.dispatch(.playSound(.openStory))
         }
+        .background(FlowTaleColor.background)
+        .scrollContentBackground(.hidden)
     }
 
 }

@@ -23,12 +23,16 @@ struct ContentView: View {
                 switch store.state.viewState.readerDisplayType {
                 case .initialising:
                     ProgressView()
-                        .tint(FlowTaleColor.accent)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .loading:
                     LoadingView()
                 case .normal:
-                    mainContent()
+                    ZStack(alignment: .topTrailing) {
+                        mainContent()
+                        if let chapter = store.state.storyState.currentChapter {
+                            overlayView(chapter: chapter)
+                        }
+                    }
                 }
             }
             ActionButtonsView()
@@ -43,6 +47,7 @@ struct ContentView: View {
                 .presentationDetents([.fraction(0.55)])
         }
         .background(FlowTaleColor.background)
+        .tint(FlowTaleColor.accent)
     }
 
     @ViewBuilder
@@ -50,12 +55,7 @@ struct ContentView: View {
         switch store.state.viewState.contentTab {
         case .reader:
             if let chapter = store.state.storyState.currentChapter {
-                ZStack(alignment: .topTrailing) {
-                    ReaderView(chapter: chapter)
-                    if let chapter = store.state.storyState.currentChapter {
-                        overlayView(chapter: chapter)
-                    }
-                }
+                ReaderView(chapter: chapter)
             } else {
                 CreateStorySettingsView()
             }
@@ -78,8 +78,10 @@ struct ContentView: View {
                     .transition(.move(edge: .leading))
             }
             Spacer()
-            audioButton(chapter: chapter)
-                .padding(.trailing)
+            if store.state.viewState.contentTab == .reader {
+                audioButton(chapter: chapter)
+                    .padding(.trailing)
+            }
         }
         .animation(.easeInOut, value: store.state.snackBarState.isShowing)
     }

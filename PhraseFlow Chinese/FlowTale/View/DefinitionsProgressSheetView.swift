@@ -32,7 +32,6 @@ struct DefinitionsProgressSheetView: View {
                 Label("Studied", systemImage: "pencil")
             }
         }
-        .tint(FlowTaleColor.accent)
     }
 
     @ViewBuilder
