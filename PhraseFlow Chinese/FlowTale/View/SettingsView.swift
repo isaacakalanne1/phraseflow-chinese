@@ -71,7 +71,7 @@ struct SettingsView: View {
                                 }
                                 .foregroundStyle(isSelectedVoice ? FlowTaleColor.accent : FlowTaleColor.primary)
                             }
-                            .listRowBackground(isSelectedVoice ? FlowTaleColor.secondary : FlowTaleColor.background)
+                            .listRowBackground(isSelectedVoice ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
                         }
                     } header: {
                         Text(LocalizedString.voice)
@@ -91,7 +91,7 @@ struct SettingsView: View {
                                     .foregroundStyle(isSelectedSpeed ? FlowTaleColor.accent : FlowTaleColor.primary)
                                     .fontWeight(isSelectedSpeed ? .medium : .light)
                             }
-                            .listRowBackground(isSelectedSpeed ? FlowTaleColor.secondary : FlowTaleColor.background)
+                            .listRowBackground(isSelectedSpeed ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
                         }
                     } header: {
                         Text(LocalizedString.speed)
@@ -99,6 +99,8 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle(LocalizedString.settings)
+            .background(FlowTaleColor.background)
+            .scrollContentBackground(.hidden)
         }
     }
 }

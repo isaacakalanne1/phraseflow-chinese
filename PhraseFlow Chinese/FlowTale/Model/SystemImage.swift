@@ -8,7 +8,20 @@
 import Foundation
 
 enum SystemImage {
-    case _repeat, speaker, pause, gear, play, list, ellipsis, arrowDown, heart, starFilled, star, book, chartBar
+    case _repeat,
+         speaker,
+         pause,
+         gear(isFilled: Bool),
+         play,
+         list(isFilled: Bool),
+         ellipsis,
+         arrowDown,
+         heart,
+         starFilled,
+         star,
+         book(isFilled: Bool),
+         bookClosed(isFilled: Bool),
+         chartBar(isFilled: Bool)
 
     var systemName: String {
         switch self {
@@ -18,12 +31,12 @@ enum SystemImage {
             "speaker.circle.fill"
         case .pause:
             "pause.circle.fill"
-        case .gear:
-            "gearshape"
+        case .gear(let isFilled):
+            "gearshape\(isFilled ? ".fill" : "")"
         case .play:
             "play.circle.fill"
-        case .list:
-            "list.bullet"
+        case .list(let isFilled):
+            "list.bullet.rectangle\(isFilled ? ".fill" : "")"
         case .ellipsis:
             "ellipsis.circle"
         case .arrowDown:
@@ -34,10 +47,12 @@ enum SystemImage {
             "star.fill"
         case .star:
             "star"
-        case .book:
-            "book"
-        case .chartBar:
-            "chart.bar"
+        case .book(let isFilled):
+            "book\(isFilled ? ".fill" : "")"
+        case .bookClosed(let isFilled):
+            "book.closed\(isFilled ? ".fill" : "")"
+        case .chartBar(let isFilled):
+            "chart.bar\(isFilled ? ".fill" : "")"
         }
     }
 }

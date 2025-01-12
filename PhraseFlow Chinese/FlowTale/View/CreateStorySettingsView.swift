@@ -42,7 +42,7 @@ struct CreateStorySettingsView: View {
                                     .foregroundStyle(store.state.settingsState.difficulty == difficulty ? FlowTaleColor.accent : FlowTaleColor.primary)
                             }
                         }
-                        .listRowBackground(store.state.settingsState.difficulty == difficulty ? FlowTaleColor.secondary : FlowTaleColor.background)
+                        .listRowBackground(store.state.settingsState.difficulty == difficulty ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
                     }
                 } header: {
                     Text(LocalizedString.difficulty)
@@ -57,7 +57,7 @@ struct CreateStorySettingsView: View {
                                 .fontWeight(store.state.settingsState.language == language ? .medium : .light)
                                 .foregroundStyle(store.state.settingsState.language == language ? FlowTaleColor.accent : FlowTaleColor.primary)
                         }
-                        .listRowBackground(store.state.settingsState.language == language ? FlowTaleColor.secondary : FlowTaleColor.background)
+                        .listRowBackground(store.state.settingsState.language == language ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
                     }
                 } header: {
                     Text(LocalizedString.language)
@@ -71,7 +71,7 @@ struct CreateStorySettingsView: View {
                             .fontWeight(isRandomPromptSelected ? .medium : .light)
                             .foregroundStyle(isRandomPromptSelected ? FlowTaleColor.accent : FlowTaleColor.primary)
                     }
-                    .listRowBackground(isRandomPromptSelected ? FlowTaleColor.secondary : FlowTaleColor.background)
+                    .listRowBackground(isRandomPromptSelected ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
 
                     Button {
                         store.dispatch(.updateIsShowingCustomPromptAlert(true))
@@ -80,7 +80,7 @@ struct CreateStorySettingsView: View {
                             .fontWeight(.light)
                             .foregroundStyle(FlowTaleColor.primary)
                     }
-                    .listRowBackground(FlowTaleColor.background)
+                    .listRowBackground(Color(uiColor: UIColor.secondarySystemGroupedBackground))
 
                     ForEach(store.state.settingsState.customPrompts, id: \.self) { prompt in
                         let isSelectedPrompt = store.state.settingsState.storySetting == .customPrompt(prompt)
@@ -93,7 +93,7 @@ struct CreateStorySettingsView: View {
                                 .fontWeight(isSelectedPrompt ? .medium : .light)
                                 .foregroundStyle(isSelectedPrompt ? FlowTaleColor.accent : FlowTaleColor.primary)
                         }
-                        .listRowBackground(isSelectedPrompt ? FlowTaleColor.secondary : FlowTaleColor.background)
+                        .listRowBackground(isSelectedPrompt ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
                     }
                 } header: {
                     Text("Setting")
@@ -116,6 +116,7 @@ struct CreateStorySettingsView: View {
         }
         .navigationTitle(store.state.storyState.currentStory == nil ? LocalizedString.createStory : LocalizedString.storySettings)
         .background(FlowTaleColor.background)
+        .scrollContentBackground(.hidden)
         .onAppear {
             store.dispatch(.playSound(.openStorySettings))
         }

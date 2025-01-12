@@ -24,7 +24,6 @@ struct ReaderView: View {
             }
             ChapterHeaderView(chapter: chapter)
             ChapterView(chapter: chapter)
-            ActionButtonsView(chapter: chapter)
         }
         .padding(10)
     }

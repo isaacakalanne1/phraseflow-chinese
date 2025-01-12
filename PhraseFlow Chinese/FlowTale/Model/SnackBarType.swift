@@ -8,6 +8,7 @@
 import SwiftUI
 
 enum SnackBarType {
+    case welcomeBack
     case writingChapter
     case chapterReady
     case subscribed
@@ -19,6 +20,8 @@ enum SnackBarType {
 
     var text: String {
         switch self {
+        case .welcomeBack:
+            "Welcome back"
         case .writingChapter:
             "Writing chapter."
         case .chapterReady:
@@ -48,7 +51,8 @@ enum SnackBarType {
                 .moderatingText,
                 .passedModeration,
                 .didNotPassModeration,
-                .couldNotModerateText:
+                .couldNotModerateText,
+                .welcomeBack:
             4
         }
     }
@@ -64,6 +68,8 @@ enum SnackBarType {
                 .subscribed,
                 .passedModeration:
             Text("✅")
+        case .welcomeBack:
+            Text("️‍🔥")
         case .failedToWriteChapter:
             Text("🔁")
         case .didNotPassModeration,
@@ -79,7 +85,8 @@ enum SnackBarType {
                 .subscribed,
                 .moderatingText,
                 .passedModeration,
-                .didNotPassModeration:
+                .didNotPassModeration,
+                .welcomeBack:
             break
         case .failedToWriteChapter(let story):
             store.dispatch(.continueStory(story: story))
@@ -94,7 +101,8 @@ enum SnackBarType {
                 .chapterReady,
                 .subscribed,
                 .moderatingText,
-                .passedModeration:
+                .passedModeration,
+                .welcomeBack:
             return false
         case .failedToWriteChapter,
                 .didNotPassModeration,

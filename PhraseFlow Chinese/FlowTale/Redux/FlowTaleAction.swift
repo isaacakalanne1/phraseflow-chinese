@@ -37,8 +37,8 @@ enum FlowTaleAction {
     case selectChapter(Story, chapterIndex: Int)
     case onSelectedChapter
 
-    case loadStories
-    case onLoadedStories([Story])
+    case loadStories(isAppLaunch: Bool)
+    case onLoadedStories([Story], isAppLaunch: Bool)
     case failedToLoadStories
 
     case loadDefinitions
@@ -51,7 +51,8 @@ enum FlowTaleAction {
                          isForced: Bool)
     case onSynthesizedAudio((wordTimestamps: [WordTimeStampData],
                              audioData: Data),
-                            Story)
+                            Story,
+                            isForced: Bool)
     case playAudio(time: Double?)
     case pauseAudio
     case onPlayedAudio
@@ -132,4 +133,5 @@ enum FlowTaleAction {
 
     case updateStorySetting(StorySetting)
     case updateIsShowingCustomPromptAlert(Bool)
+    case selectTab(ContentTab)
 }

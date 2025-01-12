@@ -18,34 +18,7 @@ struct ContentView: View {
             store.dispatch(.setSubscriptionSheetShowing(newValue))
         }
 
-        let isShowingSettingsScreen: Binding<Bool> = .init {
-            store.state.viewState.isShowingSettingsScreen
-        } set: { newValue in
-            store.dispatch(.updateShowingSettings(isShowing: newValue))
-        }
-
-        let isShowingStoryListView: Binding<Bool> = .init {
-            store.state.viewState.isShowingStoryListView
-        } set: { newValue in
-            store.dispatch(.updateShowingStoryListView(isShowing: newValue))
-        }
-
-        let isShowingStudyView: Binding<Bool> = .init {
-            store.state.viewState.isShowingStudyView
-        } set: { newValue in
-            store.dispatch(.updateShowingStudyView(isShowing: newValue))
-        }
-
-        let isShowingDefinitionsChartView: Binding<Bool> = .init {
-            store.state.viewState.isShowingDefinitionsChartView
-        } set: { newValue in
-            store.dispatch(.updateShowingDefinitionsChartView(isShowing: newValue))
-        }
-
-        let settingsView = SettingsView()
-        let storyListView = StoryListView()
-
-        ZStack(alignment: .topTrailing) {
+        VStack {
             Group {
                 switch store.state.viewState.readerDisplayType {
                 case .initialising:
@@ -55,40 +28,14 @@ struct ContentView: View {
                 case .loading:
                     LoadingView()
                 case .normal:
-                    if let chapter = store.state.storyState.currentChapter {
-                        ReaderView(chapter: chapter)
-                            .sheet(isPresented: isShowingSettingsScreen) {
-                                settingsView
-                            }
-                            .onAppear {
-                                store.dispatch(.showSnackBar(.chapterReady))
-                            }
-                    } else {
-                        CreateStorySettingsView()
-                    }
+                    mainContent()
                 }
             }
-            if let chapter = store.state.storyState.currentChapter {
-                overlayView(chapter: chapter)
-            }
+            ActionButtonsView()
+                .padding(.horizontal, 10)
         }
         .onAppear {
             startTimer()
-        }
-        .sheet(isPresented: isShowingStoryListView) {
-            NavigationStack {
-                storyListView
-            }
-            .tint(FlowTaleColor.accent)
-        }
-        .sheet(isPresented: isShowingStudyView) {
-            StudyView()
-        }
-        .sheet(isPresented: isShowingDefinitionsChartView) {
-            NavigationStack {
-                DefinitionsProgressSheetView()
-            }
-            .tint(FlowTaleColor.accent)
         }
         .sheet(isPresented: isShowingSubscriptionView) {
             SubscriptionView()
@@ -96,6 +43,31 @@ struct ContentView: View {
                 .presentationDetents([.fraction(0.55)])
         }
         .background(FlowTaleColor.background)
+    }
+
+    @ViewBuilder
+    private func mainContent() -> some View {
+        switch store.state.viewState.contentTab {
+        case .reader:
+            if let chapter = store.state.storyState.currentChapter {
+                ZStack(alignment: .topTrailing) {
+                    ReaderView(chapter: chapter)
+                    if let chapter = store.state.storyState.currentChapter {
+                        overlayView(chapter: chapter)
+                    }
+                }
+            } else {
+                CreateStorySettingsView()
+            }
+        case .storyList:
+            StoryListView()
+        case .study:
+            StudyView()
+        case .progress:
+            DefinitionsProgressSheetView()
+        case .settings:
+            SettingsView()
+        }
     }
 
     @ViewBuilder
@@ -108,8 +80,6 @@ struct ContentView: View {
             Spacer()
             audioButton(chapter: chapter)
                 .padding(.trailing)
-            Spacer()
-                .frame(height: 60)
         }
         .animation(.easeInOut, value: store.state.snackBarState.isShowing)
     }

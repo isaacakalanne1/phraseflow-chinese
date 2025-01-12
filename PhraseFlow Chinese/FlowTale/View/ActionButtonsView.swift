@@ -9,51 +9,29 @@ import SwiftUI
 
 struct ActionButtonsView: View {
     @EnvironmentObject var store: FlowTaleStore
-    let chapter: Chapter
 
     var body: some View {
 
-        ScrollView(.horizontal) {
+        let tabs = ContentTab.allCases
+
+        VStack(alignment: .center) {
             HStack(spacing: 12) {
-                ActionButton(systemImage: .list) {
-                    store.dispatch(.playSound(.actionButtonPress))
-                    store.dispatch(.updateShowingStoryListView(isShowing: true))
-                }
-
-                divider
-
-                ActionButton(systemImage: .book) {
-                    store.dispatch(.playSound(.actionButtonPress))
-                    store.dispatch(.updateShowingStudyView(isShowing: true))
-                }
-
-                divider
-
-                ActionButton(systemImage: .chartBar) {
-                    store.dispatch(.playSound(.actionButtonPress))
-                    store.dispatch(.updateShowingDefinitionsChartView(isShowing: true))
-                }
-
-                divider
-
-                ActionButton(systemImage: .heart) {
-                    store.dispatch(.playSound(.actionButtonPress))
-                    store.dispatch(.setSubscriptionSheetShowing(true))
-                }
-
-                divider
-
-                ActionButton(systemImage: .gear) {
-                    store.dispatch(.playSound(.actionButtonPress))
-                    store.dispatch(.updateShowingSettings(isShowing: true))
+                ForEach(tabs) { tab in
+                    let isSelected = store.state.viewState.contentTab == tab
+                    ActionButton(systemImage: tab.image(isFilled: isSelected),
+                                 size: isSelected ? 42 : 35) {
+                        if !isSelected {
+                            withAnimation {
+                                store.dispatch(.selectTab(tab))
+                            }
+                        }
+                    }
+                    if tab.id != tabs.last?.id {
+                        Divider()
+                            .frame(height: 30)
+                    }
                 }
             }
         }
-    }
-
-    @ViewBuilder
-    var divider: some View {
-        Divider()
-            .frame(height: 30)
     }
 }

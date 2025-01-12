@@ -24,6 +24,7 @@ struct ViewState {
     var isDefining = false
 
     var readerDisplayType: ReaderDisplayType
+    var contentTab: ContentTab
     var playButtonDisplayType: PlayButtonDisplayType
 
     var loadingState: LoadingState
@@ -39,6 +40,7 @@ struct ViewState {
          isAutoscrollEnabled: Bool = false,
          isDefining: Bool = false,
          readerDisplayType: ReaderDisplayType = .initialising,
+         contentTab: ContentTab = .reader,
          playButtonDisplayType: PlayButtonDisplayType = .normal,
          loadingState: LoadingState = .complete) {
         self.definitionViewId = definitionViewId
@@ -52,6 +54,7 @@ struct ViewState {
         self.isAutoscrollEnabled = isAutoscrollEnabled
         self.isDefining = isDefining
         self.readerDisplayType = readerDisplayType
+        self.contentTab = contentTab
         self.playButtonDisplayType = playButtonDisplayType
         self.loadingState = loadingState
     }

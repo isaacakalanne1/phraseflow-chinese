@@ -51,10 +51,10 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .hideSnackbar
         }
         return nil
-    case .loadStories:
+    case .loadStories(let isAppLaunch):
         do {
             let stories = try environment.loadStories().sorted(by: { $0.lastUpdated > $1.lastUpdated })
-            return .onLoadedStories(stories)
+            return .onLoadedStories(stories, isAppLaunch: isAppLaunch)
         } catch {
             return .failedToLoadStories
         }
@@ -73,7 +73,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .failedToDeleteStory
         }
     case .onDeletedStory:
-        return .loadStories
+        return .loadStories(isAppLaunch: false)
     case .synthesizeAudio(let chapter, let story, let voice, let isForced):
         if chapter.audioData != nil && chapter.audioVoice == state.settingsState.voice && chapter.audioSpeed == state.settingsState.speechSpeed && !isForced {
             return .playAudio(time: nil)
@@ -84,12 +84,17 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
                                                                 voice: voice,
                                                                 speechSpeed: state.settingsState.speechSpeed,
                                                                 language: state.storyState.currentStory?.language)
-            return .onSynthesizedAudio(result, story)
+            return .onSynthesizedAudio(result, story, isForced: isForced)
         } catch {
             return .failedToSynthesizeAudio
         }
-    case .onSynthesizedAudio(let result, let story):
-        return .saveStoryAndSettings(story)
+    case .onSynthesizedAudio(let result, let story, let isForced):
+        try? environment.saveStory(story)
+        try? environment.saveAppSettings(state.settingsState)
+        if !isForced {
+            return .showSnackBar(.chapterReady)
+        }
+        return nil
     case .playAudio(let timestamp):
         if let timestamp {
             let myTime = CMTime(seconds: timestamp, preferredTimescale: 60000)
@@ -188,7 +193,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .failedToSaveStoryAndSettings
         }
     case .onSavedStoryAndSettings:
-        return .loadStories
+        return .loadStories(isAppLaunch: false)
     case .selectWord(let word):
         if state.audioState.isPlayingAudio {
             let myTime = CMTime(seconds: word.time, preferredTimescale: 60000)
@@ -337,6 +342,10 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return .showSnackBar(.didNotPassModeration)
     case .failedToModerateText:
         return .showSnackBar(.didNotPassModeration)
+    case .selectTab:
+        return .playSound(.actionButtonPress)
+    case .onLoadedStories(_, let isAppLaunch):
+        return isAppLaunch ? .showSnackBar(.welcomeBack) : nil
     case .failedToLoadStories,
             .failedToSaveStory,
             .failedToDefineCharacter,
@@ -350,7 +359,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .failedToSaveAppSettings,
             .failedToLoadAppSettings,
             .refreshTranslationView,
-            .onLoadedStories,
             .onLoadedDefinitions,
             .failedToLoadDefinitions,
             .failedToSaveDefinitions,

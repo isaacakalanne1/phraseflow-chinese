@@ -23,15 +23,16 @@ struct DefinitionsProgressSheetView: View {
             sheetContent(isCreations: true,
                          definitions: filteredDefinitions)
             .tabItem {
-                Label("Saved", systemImage: "list.dash")
+                Label("Saved", systemImage: "case")
             }
 
             sheetContent(isCreations: false,
                          definitions: filteredDefinitions.filter({ !$0.studiedDates.isEmpty }))
             .tabItem {
-                Label("Studied", systemImage: "square.and.pencil")
+                Label("Studied", systemImage: "pencil")
             }
         }
+        .tint(FlowTaleColor.accent)
     }
 
     @ViewBuilder
@@ -59,7 +60,10 @@ struct DefinitionsProgressSheetView: View {
                 .navigationTitle(isCreations ?
                                  "Words Saved: \(definitions.count)" :
                                     "Words Studied: \(definitions.reduce(0, { $0 + $1.studiedDates.count }))")
+                .background(FlowTaleColor.background)
+                .scrollContentBackground(.hidden)
             }
+            .background(FlowTaleColor.background)
         }
     }
 
