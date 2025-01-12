@@ -9,6 +9,15 @@ import Foundation
 
 enum StorySetting: Codable, Equatable {
     case random, customPrompt(String)
+
+    var prompt: String {
+        switch self {
+        case .random:
+            return StoryPrompts.all.shuffled().first ?? "A medieval town"
+        case .customPrompt(let prompt):
+            return prompt
+        }
+    }
 }
 
 struct SettingsState: Codable {
@@ -18,7 +27,6 @@ struct SettingsState: Codable {
     var voice: Voice
     var speechSpeed: SpeechSpeed
     var difficulty: Difficulty
-    var storyPrompt: String
     var language: Language
     var customPrompt: String
     var storySetting: StorySetting
@@ -31,7 +39,6 @@ struct SettingsState: Codable {
          voice: Voice = .xiaoxiao,
          speechSpeed: SpeechSpeed = .normal,
          difficulty: Difficulty = .beginner,
-         storyPrompt: String = "medieval town",
          language: Language = .mandarinChinese,
          customPrompt: String = "",
          storySetting: StorySetting = .random,
@@ -43,7 +50,6 @@ struct SettingsState: Codable {
         self.voice = voice
         self.speechSpeed = speechSpeed
         self.difficulty = difficulty
-        self.storyPrompt = storyPrompt
         self.language = language
         self.customPrompt = customPrompt
         self.customPrompts = customPrompts

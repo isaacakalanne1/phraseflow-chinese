@@ -28,10 +28,6 @@ struct StudyView: View {
         studyWords[safe: index]
     }
 
-    var storyOfDefinition: Story? {
-        store.state.storyState.savedStories.first(where: { $0.id == currentDefinition?.timestampData.storyId })
-    }
-
     var body: some View {
         let displayedDefinition = specificWord ?? currentDefinition
         Group {

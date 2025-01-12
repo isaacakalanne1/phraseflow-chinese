@@ -182,8 +182,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.settingsState.difficulty = difficulty
     case .updateLanguage(let language):
         newState.settingsState.language = language
-    case .updateStoryPrompt(let storyPrompt):
-        newState.settingsState.storyPrompt = storyPrompt
     case .onLoadedDefinitions(let definitions):
         newState.definitionState.definitions = definitions
     case .onDeletedStory:

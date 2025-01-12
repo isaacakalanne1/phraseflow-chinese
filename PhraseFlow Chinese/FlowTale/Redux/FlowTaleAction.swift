@@ -73,7 +73,6 @@ enum FlowTaleAction {
     case updateSpeechSpeed(SpeechSpeed)
     case updateDifficulty(Difficulty)
     case updateLanguage(Language)
-    case updateStoryPrompt(String)
     case selectWord(WordTimeStampData)
 
     case goToNextChapter

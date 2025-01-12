@@ -19,7 +19,6 @@ enum FlowTaleServicesError: Error {
 enum FluxImageError: Error {
     case missingRequestID
     case missingImageURL
-    case imageDataCorrupted
 }
 
 /// The request body you’ll send to the moderation endpoint.
@@ -63,8 +62,7 @@ struct ModerationResult: Codable {
 }
 
 protocol FlowTaleServicesProtocol {
-    func generateStory(story: Story,
-                       deviceLanguage: Language?) async throws -> String
+    func generateStory(story: Story) async throws -> String
     func translateStory(story: Story,
                         storyString: String,
                         deviceLanguage: Language?) async throws -> Story
@@ -82,8 +80,7 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
     private let apiKey = ProcessInfo.processInfo.environment["FAL_KEY"] ?? "e1f58875-fe36-4a31-ad34-badb6bbd0409:4645ce9820c0b75b3cbe1b0d9c324306"
     private let session = URLSession.shared
 
-    func generateStory(story: Story,
-                       deviceLanguage: Language?) async throws -> String {
+    func generateStory(story: Story) async throws -> String {
         do {
             return try await continueStory(story: story)
         } catch {
@@ -189,8 +186,9 @@ Write the definition in \(deviceLanguage.displayName).
     }
 
     private func continueStory(story: Story) async throws -> String {
+        let model: APIRequestType = .openRouter(.metaLlama)
         var requestBody: [String: Any] = [
-            "model": APIRequestType.openRouter.modelName,
+            "model": model.modelName,
         ]
 
         var messages: [[String: String]] = [
@@ -203,7 +201,7 @@ Write the definition in \(deviceLanguage.displayName).
         }
         requestBody["messages"] = messages
 
-        return try await makeRequest(type: .openRouter, requestBody: requestBody)
+        return try await makeRequest(type: model, requestBody: requestBody)
     }
 
     private func convertToJson(story: Story,

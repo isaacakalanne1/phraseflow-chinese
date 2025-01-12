@@ -35,8 +35,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return .saveStoryAndSettings(story)
     case .continueStory(let story):
         do {
-            let storyString = try await environment.generateStory(story: story,
-                                                                  deviceLanguage: state.deviceLanguage)
+            let storyString = try await environment.generateStory(story: story)
             return .translateStory(story: story, storyString: storyString)
         } catch {
             return .failedToContinueStory(story: story)
@@ -89,11 +88,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         } catch {
             return .failedToSynthesizeAudio
         }
-    case .onSynthesizedAudio(let result, _):
-        if let story = state.storyState.currentStory {
-            return .saveStoryAndSettings(story)
-        }
-        return nil
+    case .onSynthesizedAudio(let result, let story):
+        return .saveStoryAndSettings(story)
     case .playAudio(let timestamp):
         if let timestamp {
             let myTime = CMTime(seconds: timestamp, preferredTimescale: 60000)
@@ -335,6 +331,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     case .onModeratedText(let response, let prompt):
         return response.didPassModeration ? .passedModeration(prompt) : .didNotPassModeration
     case .passedModeration:
+        try? environment.saveAppSettings(state.settingsState)
         return .showSnackBar(.passedModeration)
     case .didNotPassModeration:
         return .showSnackBar(.didNotPassModeration)
@@ -370,7 +367,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .updateAutoScrollEnabled,
             .hideSnackbar,
             .onSelectedChapter,
-            .updateStoryPrompt,
             .updateCustomPrompt,
             .updateIsShowingCustomPromptAlert:
         return nil

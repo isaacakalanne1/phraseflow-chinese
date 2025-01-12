@@ -9,15 +9,9 @@ import Foundation
 import AVKit
 
 struct StudyState {
-    var audioPlayer = AVPlayer()
-    var currentPlaybackTime: TimeInterval = 0
-    var isPlayingAudio = false
+    var audioPlayer: AVPlayer
 
-    init(audioPlayer: AVPlayer = AVPlayer(),
-         currentPlaybackTime: TimeInterval = 0,
-         isPlayingAudio: Bool = false) {
+    init(audioPlayer: AVPlayer = AVPlayer()) {
         self.audioPlayer = audioPlayer
-        self.currentPlaybackTime = currentPlaybackTime
-        self.isPlayingAudio = isPlayingAudio
     }
 }

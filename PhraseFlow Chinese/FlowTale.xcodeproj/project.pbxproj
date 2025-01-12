@@ -84,7 +84,6 @@
 		BBE636C52CCC0CDD00873E68 /* DefinitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636C42CCC0CDD00873E68 /* DefinitionView.swift */; };
 		BBE636C72CCC0E1200873E68 /* EnglishSentenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636C62CCC0E1200873E68 /* EnglishSentenceView.swift */; };
 		BBE636C92CCC0E8400873E68 /* ChapterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636C82CCC0E8400873E68 /* ChapterView.swift */; };
-		BBE636CB2CCC0EEF00873E68 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636CA2CCC0EEF00873E68 /* ErrorView.swift */; };
 		BBE636CD2CCC0F8500873E68 /* ReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636CC2CCC0F8500873E68 /* ReaderView.swift */; };
 		BBE636D12CCD77BC00873E68 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636D02CCD77BB00873E68 /* FlowLayout.swift */; };
 		BBE990B32D29BBFD00FAD3FB /* TogglePress.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990B22D29BBFD00FAD3FB /* TogglePress.mp3 */; };
@@ -99,7 +98,6 @@
 		BBE990D92D29FB6100FAD3FB /* ActionButtonPress.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990D82D29FB6100FAD3FB /* ActionButtonPress.mp3 */; };
 		BBE990DB2D29FC7700FAD3FB /* OpenChapter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990DA2D29FC7700FAD3FB /* OpenChapter.mp3 */; };
 		BBE990DD2D29FE0200FAD3FB /* Whispers of Tranquility.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990DC2D29FE0200FAD3FB /* Whispers of Tranquility.mp3 */; };
-		BBE990DF2D2A9DCC00FAD3FB /* CustomStoryPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE990DE2D2A9DCC00FAD3FB /* CustomStoryPromptView.swift */; };
 		BBE990E12D2AB26300FAD3FB /* Snackbar.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E02D2AB26300FAD3FB /* Snackbar.mp3 */; };
 		BBE990E32D2AB31300FAD3FB /* ErrorSnackbar.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E22D2AB31200FAD3FB /* ErrorSnackbar.mp3 */; };
 		BBE990E52D2AB3D100FAD3FB /* CloseSheet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E42D2AB3D100FAD3FB /* CloseSheet.mp3 */; };
@@ -221,7 +219,6 @@
 		BBE636C42CCC0CDD00873E68 /* DefinitionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionView.swift; sourceTree = "<group>"; };
 		BBE636C62CCC0E1200873E68 /* EnglishSentenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishSentenceView.swift; sourceTree = "<group>"; };
 		BBE636C82CCC0E8400873E68 /* ChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterView.swift; sourceTree = "<group>"; };
-		BBE636CA2CCC0EEF00873E68 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		BBE636CC2CCC0F8500873E68 /* ReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderView.swift; sourceTree = "<group>"; };
 		BBE636D02CCD77BB00873E68 /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
 		BBE990B22D29BBFD00FAD3FB /* TogglePress.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TogglePress.mp3; sourceTree = "<group>"; };
@@ -236,7 +233,6 @@
 		BBE990D82D29FB6100FAD3FB /* ActionButtonPress.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ActionButtonPress.mp3; sourceTree = "<group>"; };
 		BBE990DA2D29FC7700FAD3FB /* OpenChapter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = OpenChapter.mp3; sourceTree = "<group>"; };
 		BBE990DC2D29FE0200FAD3FB /* Whispers of Tranquility.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Whispers of Tranquility.mp3"; sourceTree = "<group>"; };
-		BBE990DE2D2A9DCC00FAD3FB /* CustomStoryPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStoryPromptView.swift; sourceTree = "<group>"; };
 		BBE990E02D2AB26300FAD3FB /* Snackbar.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Snackbar.mp3; sourceTree = "<group>"; };
 		BBE990E22D2AB31200FAD3FB /* ErrorSnackbar.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ErrorSnackbar.mp3; sourceTree = "<group>"; };
 		BBE990E42D2AB3D100FAD3FB /* CloseSheet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CloseSheet.mp3; sourceTree = "<group>"; };
@@ -477,11 +473,9 @@
 			isa = PBXGroup;
 			children = (
 				BBB6EF282C8C86240079D135 /* ContentView.swift */,
-				BBE636CA2CCC0EEF00873E68 /* ErrorView.swift */,
 				BBE636C42CCC0CDD00873E68 /* DefinitionView.swift */,
 				BBE636C62CCC0E1200873E68 /* EnglishSentenceView.swift */,
 				BBE636C82CCC0E8400873E68 /* ChapterView.swift */,
-				BBE990DE2D2A9DCC00FAD3FB /* CustomStoryPromptView.swift */,
 				BBAE07D62D14BD2400DA95CD /* ChapterHeaderView.swift */,
 				BB6572D52CD4E08F00AC5981 /* ActionButton.swift */,
 				BBE636CC2CCC0F8500873E68 /* ReaderView.swift */,
@@ -759,7 +753,6 @@
 				BBE636C12CCC0B5000873E68 /* ActionButtonsView.swift in Sources */,
 				BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */,
 				BBAE07DB2D14BE0B00DA95CD /* SystemImageView.swift in Sources */,
-				BBE636CB2CCC0EEF00873E68 /* ErrorView.swift in Sources */,
 				BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */,
 				BB0854832CB42C0200F1661B /* Chapter.swift in Sources */,
 				BB6572E52CD8D12400AC5981 /* Voice.swift in Sources */,
@@ -780,7 +773,6 @@
 				BB84E0A02CEFA96200520F5E /* Language.swift in Sources */,
 				BB4015C02CF756FD008ACE9C /* StoryPrompts.swift in Sources */,
 				BB1994C82CE8E0BE00D61E54 /* Data+AVPlayer.swift in Sources */,
-				BBE990DF2D2A9DCC00FAD3FB /* CustomStoryPromptView.swift in Sources */,
 				BB1994D12CE9050000D61E54 /* AudioState.swift in Sources */,
 				BB4E6BFA2D246EC0002B5CBA /* LoadingView.swift in Sources */,
 				BBAE07D52D0CA79A00DA95CD /* SubscriptionOption.swift in Sources */,

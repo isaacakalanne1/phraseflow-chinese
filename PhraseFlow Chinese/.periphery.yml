@@ -1,7 +1,7 @@
-workspace: PhraseFlow Chinese.xcworkspace
+workspace: FlowTale.xcworkspace
 retain_objc_accessible: true
 retain_public: true
 schemes:
-- PhraseFlow Chinese
+- FlowTale
 targets:
-- PhraseFlow Chinese
+- FlowTale

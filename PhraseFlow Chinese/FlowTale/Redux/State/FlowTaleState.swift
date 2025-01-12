@@ -32,7 +32,7 @@ struct FlowTaleState {
     func createNewStory() -> Story {
         return Story(difficulty: settingsState.difficulty,
                      language: settingsState.language,
-                     storyPrompt: settingsState.storyPrompt)
+                     storyPrompt: settingsState.storySetting.prompt)
     }
 
     var deviceLanguage: Language? {

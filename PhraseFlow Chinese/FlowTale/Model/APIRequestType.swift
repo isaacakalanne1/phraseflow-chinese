@@ -7,8 +7,12 @@
 
 import Foundation
 
+enum OpenRouterModel {
+    case metaLlama, geminiFlash
+}
+
 enum APIRequestType {
-    case openAI, openRouter
+    case openAI, openRouter(OpenRouterModel)
 
     var baseUrl: String {
         switch self {
@@ -31,9 +35,14 @@ enum APIRequestType {
     var modelName: String {
         switch self {
         case .openAI:
-            "gpt-4o-mini-2024-07-18"
-        case .openRouter:
-            "meta-llama/llama-3.3-70b-instruct"
+            return "gpt-4o-mini-2024-07-18"
+        case .openRouter(let model):
+            switch model {
+            case .metaLlama:
+                return "meta-llama/llama-3.3-70b-instruct"
+            case .geminiFlash:
+                return "google/gemini-flash-1.5-8b"
+            }
 //            "deepseek/deepseek-chat"
         }
     }

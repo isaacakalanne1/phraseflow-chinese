@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ChapterListView: View {
     @EnvironmentObject var store: FlowTaleStore
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
     let story: Story
 

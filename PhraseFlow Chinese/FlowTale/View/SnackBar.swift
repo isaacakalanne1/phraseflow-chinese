@@ -29,7 +29,7 @@ struct SnackBar: View {
         .padding()
         .zIndex(Double.infinity)
         .onTapGesture {
-
+            type.action(store: store)
         }
     }
 }

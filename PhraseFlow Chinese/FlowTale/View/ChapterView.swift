@@ -15,7 +15,7 @@ struct ChapterView: View {
         if let story = store.state.storyState.currentStory {
             ScrollViewReader { proxy in
                 // Use simultaneousGesture so the ScrollView can still scroll normally
-                scrollView(story: story, proxy: proxy)
+                scrollView(story: story)
                 // 2) Whenever the highlighted word changes, scroll if auto-scroll is still enabled
                 .onChange(of: store.state.viewState.isAutoscrollEnabled) {
                     guard let newWord = store.state.currentSpokenWord else { return }
@@ -45,7 +45,7 @@ struct ChapterView: View {
     }
 
     @ViewBuilder
-    func scrollView(story: Story, proxy: ScrollViewProxy) -> some View {
+    func scrollView(story: Story) -> some View {
         ScrollView(.vertical) {
             ForEach(0...(chapter.timestampData.last?.sentenceIndex ?? 0),
                     id: \.self) { sentenceIdx in
