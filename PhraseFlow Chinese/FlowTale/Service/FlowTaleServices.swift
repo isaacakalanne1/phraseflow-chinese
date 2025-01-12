@@ -34,10 +34,21 @@ struct ModerationResponse: Codable {
     let model: String
     let results: [ModerationResult]
 
+    var checkedCategories: [String] {
+        [
+            "sexual",
+            "sexual/minors",
+            "violence/graphic",
+            "self-harm/intent",
+            "self-harm/instructions",
+            "illicit/violent"
+        ]
+    }
+
     var didPassModeration: Bool {
-        if let sexualScore = results.first?.category_scores["sexual"] as? Float,
-           let minorScore = results.first?.category_scores["sexual/minors"] as? Float {
-            return sexualScore < 1 && minorScore < 1
+        if let sexualScore = results.first?.category_scores["sexual"] as? Double,
+           let minorScore = results.first?.category_scores["sexual/minors"] as? Double {
+            return sexualScore < 0.7 && minorScore < 0.7
         }
         return true
     }
@@ -387,7 +398,7 @@ In the briefLatestStorySummary section of the JSON, don't mention "In chapter X"
         request.httpMethod = "POST"
 
         // Replace YOUR_OPENAI_API_KEY with your actual API key, or pass it in as a function parameter.
-        request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.addValue("Bearer \(APIRequestType.openAI.authKey)", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
         // 3. Prepare the JSON-encoded request body.
