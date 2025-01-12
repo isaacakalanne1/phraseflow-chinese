@@ -109,7 +109,7 @@ struct ContentView: View {
                     SystemImageView(.ellipsis, size: buttonSize)
                 }
                 .disabled(true)
-            } else if chapter.audioData == nil ||
+            } else if chapter.audio.data == nil ||
                         store.state.settingsState.voice != chapter.audioVoice ||
                         store.state.settingsState.speechSpeed != chapter.audioSpeed {
                 Button {
@@ -131,7 +131,7 @@ struct ContentView: View {
                     }
                 } else {
                     Button {
-                        let timestampData = store.state.storyState.currentChapter?.timestampData
+                        let timestampData = store.state.storyState.currentChapter?.audio.timestamps
                         let currentSpokenWord = store.state.currentSpokenWord ?? timestampData?.first
                         store.dispatch(.playAudio(time: currentSpokenWord?.time))
                         store.dispatch(.updateAutoScrollEnabled(isEnabled: true))

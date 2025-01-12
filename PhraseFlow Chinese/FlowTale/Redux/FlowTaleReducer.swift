@@ -35,8 +35,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             def.id == definition.timestampData.storyId
         }),
            let chapter = story.chapters[safe: definition.timestampData.chapterIndex],
-           let audioData = chapter.audioData,
-           let player = audioData.createAVPlayer() {
+           let player = chapter.audio.data.createAVPlayer() {
             newState.studyState.audioPlayer = player
         }
     case .playSound(let sound):
@@ -81,13 +80,12 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newStory.currentPlaybackTime = 0
         newStory.currentSentenceIndex = 0
         newStory.currentChapterIndex = newStory.chapters.count - 1
-        newStory.chapters[newStory.currentChapterIndex].audioData = data.audioData
+        newStory.chapters[newStory.currentChapterIndex].audio = data
         newStory.chapters[newStory.currentChapterIndex].audioSpeed = newState.settingsState.speechSpeed
         newStory.chapters[newStory.currentChapterIndex].audioVoice = newState.settingsState.voice
-        newStory.chapters[newStory.currentChapterIndex].timestampData = data.wordTimestamps
         newState.storyState.currentStory = newStory
 
-        let player = data.audioData.createAVPlayer()
+        let player = data.data.createAVPlayer()
         newState.audioState.audioPlayer = player ?? AVPlayer()
         newState.viewState.readerDisplayType = .normal
     case .failedToSynthesizeAudio:
@@ -245,6 +243,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.isShowingCustomPromptAlert = isShowing
     case .selectTab(let tab):
         newState.viewState.contentTab = tab
+    case .deleteCustomPrompt(let prompt):
+        newState.settingsState.customPrompts.removeAll(where: { $0 == prompt })
     case .saveStoryAndSettings,
             .failedToSaveStory,
             .loadStories,

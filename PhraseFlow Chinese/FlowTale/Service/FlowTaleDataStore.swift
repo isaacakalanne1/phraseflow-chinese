@@ -29,6 +29,7 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
 
     init() {
+//        clearData(path: "userData.json")
 //        clearData(path: "definitions.json")
 //        clearData(path: "settingsState.json")
     }

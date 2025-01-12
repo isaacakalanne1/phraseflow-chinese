@@ -128,7 +128,9 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
                     return Sentence(translation: translation, english: $0.original)
                 }
             )
-            let chapter = Chapter(title: chapterResponse.chapterNumberAndTitle ?? "", sentences: sentences)
+            let chapter = Chapter(title: chapterResponse.chapterNumberAndTitle ?? "",
+                                  sentences: sentences,
+                                  audio: .init(timestamps: [], data: Data()))
 
             var story = story
             if story.chapters.isEmpty {

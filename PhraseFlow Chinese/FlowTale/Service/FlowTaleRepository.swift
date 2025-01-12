@@ -14,8 +14,7 @@ protocol FlowTaleRepositoryProtocol {
                           story: Story,
                           voice: Voice,
                           speechSpeed: SpeechSpeed,
-                          language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
-                                                                audioData: Data)
+                          language: Language?) async throws -> ChapterAudio
     func getProducts() async throws -> [Product]
     func purchase(_ product: Product) async throws
 }
@@ -37,7 +36,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
                           story: Story,
                           voice: Voice,
                           speechSpeed: SpeechSpeed,
-                          language: Language?) async throws -> (wordTimestamps: [WordTimeStampData], audioData: Data) {
+                          language: Language?) async throws -> ChapterAudio {
 
         let synthesizer: SPXSpeechSynthesizer
         do {
@@ -89,7 +88,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
                 throw NSError(domain: "SpeechSynthesis", code: -1, userInfo: [NSLocalizedDescriptionKey: errorDetails])
             }
 
-            return (wordTimestamps, audioData)
+            return ChapterAudio(timestamps: wordTimestamps, data: audioData)
         } catch {
             throw error
         }

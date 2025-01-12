@@ -34,6 +34,8 @@ enum FlowTaleAction {
     case onDeletedStory
     case failedToDeleteStory
 
+    case deleteCustomPrompt(String)
+
     case selectChapter(Story, chapterIndex: Int)
     case onSelectedChapter
 
@@ -49,8 +51,7 @@ enum FlowTaleAction {
                          story: Story,
                          voice: Voice,
                          isForced: Bool)
-    case onSynthesizedAudio((wordTimestamps: [WordTimeStampData],
-                             audioData: Data),
+    case onSynthesizedAudio(ChapterAudio,
                             Story,
                             isForced: Bool)
     case playAudio(time: Double?)

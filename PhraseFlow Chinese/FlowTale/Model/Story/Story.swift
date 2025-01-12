@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+struct ChapterAudio: Codable, Equatable, Hashable {
+    let timestamps: [WordTimeStampData]
+    let data: Data
+}
+
 struct Story: Codable, Equatable, Hashable {
     let id: UUID
     var briefLatestStorySummary: String

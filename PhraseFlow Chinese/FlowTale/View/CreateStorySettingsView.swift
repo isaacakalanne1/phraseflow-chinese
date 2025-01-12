@@ -96,6 +96,7 @@ struct CreateStorySettingsView: View {
                         }
                         .listRowBackground(isSelectedPrompt ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
                     }
+                    .onDelete(perform: delete)
                 } header: {
                     Text("Setting")
                 }
@@ -136,5 +137,11 @@ struct CreateStorySettingsView: View {
         store.dispatch(.showSnackBar(.moderatingText))
         store.dispatch(.updateIsShowingCustomPromptAlert(false))
         store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))
+    }
+
+    func delete(at offsets: IndexSet) {
+        guard let index = offsets.first,
+              let prompt = store.state.settingsState.customPrompts[safe: index] else { return }
+        store.dispatch(.deleteCustomPrompt(prompt))
     }
 }

@@ -47,9 +47,9 @@ struct ChapterView: View {
     @ViewBuilder
     func scrollView(story: Story) -> some View {
         ScrollView(.vertical) {
-            ForEach(0...(chapter.timestampData.last?.sentenceIndex ?? 0),
+            ForEach(0...(chapter.audio.timestamps.last?.sentenceIndex ?? 0),
                     id: \.self) { sentenceIdx in
-                let sentenceWords = chapter.timestampData.filter({ $0.sentenceIndex == sentenceIdx })
+                let sentenceWords = chapter.audio.timestamps.filter({ $0.sentenceIndex == sentenceIdx })
 
                 FlowLayout(spacing: 0, language: story.language) {
                     ForEach(Array(sentenceWords.enumerated()), id: \.offset) { index, word in

@@ -11,6 +11,7 @@ enum SnackBarType {
     case welcomeBack
     case writingChapter
     case chapterReady
+    case deletedCustomStory
     case subscribed
     case failedToWriteChapter(Story)
     case moderatingText
@@ -38,6 +39,8 @@ enum SnackBarType {
             "Moderating story"
         case .didNotPassModeration:
             "Your story did not meet our AI provider's usage policies."
+        case .deletedCustomStory:
+            "Deleted custom story"
         }
     }
 
@@ -52,7 +55,8 @@ enum SnackBarType {
                 .passedModeration,
                 .didNotPassModeration,
                 .couldNotModerateText,
-                .welcomeBack:
+                .welcomeBack,
+                .deletedCustomStory:
             4
         }
     }
@@ -66,7 +70,8 @@ enum SnackBarType {
             Text("⌛")
         case .chapterReady,
                 .subscribed,
-                .passedModeration:
+                .passedModeration,
+                .deletedCustomStory:
             Text("✅")
         case .welcomeBack:
             Text("️‍🔥")
@@ -86,7 +91,8 @@ enum SnackBarType {
                 .moderatingText,
                 .passedModeration,
                 .didNotPassModeration,
-                .welcomeBack:
+                .welcomeBack,
+                .deletedCustomStory:
             break
         case .failedToWriteChapter(let story):
             store.dispatch(.continueStory(story: story))
@@ -102,7 +108,8 @@ enum SnackBarType {
                 .subscribed,
                 .moderatingText,
                 .passedModeration,
-                .welcomeBack:
+                .welcomeBack,
+                .deletedCustomStory:
             return false
         case .failedToWriteChapter,
                 .didNotPassModeration,

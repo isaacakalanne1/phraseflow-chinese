@@ -75,7 +75,10 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     case .onDeletedStory:
         return .loadStories(isAppLaunch: false)
     case .synthesizeAudio(let chapter, let story, let voice, let isForced):
-        if chapter.audioData != nil && chapter.audioVoice == state.settingsState.voice && chapter.audioSpeed == state.settingsState.speechSpeed && !isForced {
+        if chapter.audio.data != nil,
+           chapter.audioVoice == state.settingsState.voice,
+           chapter.audioSpeed == state.settingsState.speechSpeed,
+           !isForced {
             return .playAudio(time: nil)
         }
         do {
@@ -89,12 +92,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .failedToSynthesizeAudio
         }
     case .onSynthesizedAudio(let result, let story, let isForced):
-        try? environment.saveStory(story)
-        try? environment.saveAppSettings(state.settingsState)
-        if !isForced {
-            return .showSnackBar(.chapterReady)
-        }
-        return nil
+        return .saveStoryAndSettings(story)
     case .playAudio(let timestamp):
         if let timestamp {
             let myTime = CMTime(seconds: timestamp, preferredTimescale: 60000)
@@ -214,7 +212,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return nil
     case .updatePlayTime:
         let time = state.audioState.audioPlayer.currentTime().seconds
-        if let lastWordTime = state.storyState.currentChapter?.timestampData.last?.time,
+        if let lastWordTime = state.storyState.currentChapter?.audio.timestamps.last?.time,
            time > lastWordTime {
             return .pauseAudio
         } else {
@@ -346,6 +344,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return .playSound(.actionButtonPress)
     case .onLoadedStories(_, let isAppLaunch):
         return isAppLaunch ? .showSnackBar(.welcomeBack) : nil
+    case .deleteCustomPrompt:
+        return .showSnackBar(.deletedCustomStory)
     case .failedToLoadStories,
             .failedToSaveStory,
             .failedToDefineCharacter,

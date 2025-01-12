@@ -13,8 +13,7 @@ protocol FlowTaleEnvironmentProtocol {
                           story: Story,
                           voice: Voice,
                           speechSpeed: SpeechSpeed,
-                          language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
-                                                                audioData: Data)
+                          language: Language?) async throws -> ChapterAudio
     func getProducts() async throws -> [Product]
     func generateStory(story: Story) async throws -> String
     func translateStory(story: Story, storyString: String, deviceLanguage: Language?) async throws -> Story
@@ -51,8 +50,7 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
                           story: Story,
                           voice: Voice,
                           speechSpeed: SpeechSpeed,
-                          language: Language?) async throws -> (wordTimestamps: [WordTimeStampData],
-                                                                audioData: Data) {
+                          language: Language?) async throws -> ChapterAudio {
         try await repository.synthesizeSpeech(chapter,
                                               story: story,
                                               voice: voice,

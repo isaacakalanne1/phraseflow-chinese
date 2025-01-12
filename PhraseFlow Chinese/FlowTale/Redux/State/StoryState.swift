@@ -32,6 +32,6 @@ struct StoryState {
     }
 
     var currentChapterAudioData: Data? {
-        currentChapter?.audioData
+        currentChapter?.audio.data
     }
 }
