@@ -229,8 +229,22 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         }
     case .updateCustomPrompt(let prompt):
         newState.settingsState.customPrompt = prompt
-    case .passedModeration:
-        newState.settingsState.confirmedCustomPrompt = newState.settingsState.customPrompt
+    case .passedModeration(let prompt):
+        newState.settingsState.customPrompts.append(prompt)
+        newState.settingsState.storySetting = .customPrompt(prompt)
+    case .updateStorySetting(let setting):
+        switch setting {
+        case .random:
+            newState.settingsState.storySetting = setting
+        case .customPrompt(let prompt):
+            let isExistingPrompt = state.settingsState.customPrompts.contains(prompt)
+            if isExistingPrompt {
+                newState.settingsState.storySetting = setting
+            }
+        }
+        newState.settingsState.storySetting = setting
+    case .updateIsShowingCustomPromptAlert(let isShowing):
+        newState.viewState.isShowingCustomPromptAlert = isShowing
     case .saveStoryAndSettings,
             .failedToSaveStory,
             .loadStories,

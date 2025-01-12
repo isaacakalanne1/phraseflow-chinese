@@ -18,6 +18,7 @@ struct ViewState {
     var isShowingStudyView = false
     var isShowingDefinitionsChartView = false
     var isShowingSubscriptionSheet = false
+    var isShowingCustomPromptAlert = false
 
     var isAutoscrollEnabled = false
     var isDefining = false
@@ -34,6 +35,7 @@ struct ViewState {
          isShowingSettingsScreen: Bool = false,
          isShowingStoryListView: Bool = false,
          isShowingSubscriptionSheet: Bool = false,
+         isShowingCustomPromptAlert: Bool = false,
          isAutoscrollEnabled: Bool = false,
          isDefining: Bool = false,
          readerDisplayType: ReaderDisplayType = .initialising,
@@ -46,6 +48,7 @@ struct ViewState {
         self.isShowingSettingsScreen = isShowingSettingsScreen
         self.isShowingStoryListView = isShowingStoryListView
         self.isShowingSubscriptionSheet = isShowingSubscriptionSheet
+        self.isShowingCustomPromptAlert = isShowingCustomPromptAlert
         self.isAutoscrollEnabled = isAutoscrollEnabled
         self.isDefining = isDefining
         self.readerDisplayType = readerDisplayType

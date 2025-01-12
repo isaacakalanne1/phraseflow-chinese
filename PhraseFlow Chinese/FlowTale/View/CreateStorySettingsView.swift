@@ -11,6 +11,22 @@ struct CreateStorySettingsView: View {
     @EnvironmentObject var store: FlowTaleStore
 
     var body: some View {
+
+        let isRandomPromptSelected = store.state.settingsState.storySetting == .random
+
+        let customPrompt: Binding<String> = .init {
+            store.state.settingsState.customPrompt
+        } set: { newValue in
+            store.dispatch(.updateCustomPrompt(newValue))
+        }
+
+        let isShowingAlert: Binding<Bool> = .init {
+            store.state.viewState.isShowingCustomPromptAlert
+        } set: { newValue in
+            store.dispatch(.updateIsShowingCustomPromptAlert(newValue))
+        }
+
+
         VStack {
             List {
                 Section {
@@ -47,12 +63,31 @@ struct CreateStorySettingsView: View {
                     Text(LocalizedString.language)
                 }
                 Section {
-                    ForEach(StoryPrompts.all, id: \.self) { prompt in
-                        let storyPrompt = prompt.capitalized
-                        let isSelectedPrompt = store.state.settingsState.storyPrompt.capitalized == storyPrompt
+                    Button {
+                        store.dispatch(.playSound(.changeSettings))
+                        store.dispatch(.updateStorySetting(.random))
+                    } label: {
+                        Text("Random")
+                            .fontWeight(isRandomPromptSelected ? .medium : .light)
+                            .foregroundStyle(isRandomPromptSelected ? FlowTaleColor.accent : FlowTaleColor.primary)
+                    }
+                    .listRowBackground(isRandomPromptSelected ? FlowTaleColor.secondary : FlowTaleColor.background)
+
+                    Button {
+                        store.dispatch(.updateIsShowingCustomPromptAlert(true))
+                    } label: {
+                        Text("Custom Prompt...")
+                            .fontWeight(.light)
+                            .foregroundStyle(FlowTaleColor.primary)
+                    }
+                    .listRowBackground(FlowTaleColor.background)
+
+                    ForEach(store.state.settingsState.customPrompts, id: \.self) { prompt in
+                        let isSelectedPrompt = store.state.settingsState.storySetting == .customPrompt(prompt)
+                        
                         Button {
                             store.dispatch(.playSound(.changeSettings))
-                            store.dispatch(.updateStoryPrompt(storyPrompt))
+                            store.dispatch(.updateStorySetting(.customPrompt(prompt)))
                         } label: {
                             Text(prompt.capitalized)
                                 .fontWeight(isSelectedPrompt ? .medium : .light)
@@ -65,6 +100,7 @@ struct CreateStorySettingsView: View {
                 }
             }
             .frame(maxHeight: .infinity)
+
             Button {
                 store.dispatch(.continueStory(story: store.state.createNewStory()))
             } label: {
@@ -83,5 +119,20 @@ struct CreateStorySettingsView: View {
         .onAppear {
             store.dispatch(.playSound(.openStorySettings))
         }
+        .alert("Custom", isPresented: isShowingAlert) {
+            TextField("Custom story", text: customPrompt)
+            Button("OK", action: submitCustomPrompt)
+            Button("Cancel", role: .cancel) {
+                store.dispatch(.updateIsShowingCustomPromptAlert(false))
+            }
+        } message: {
+            Text("Enter your custom story setting")
+        }
+    }
+
+    func submitCustomPrompt() {
+        store.dispatch(.showSnackBar(.moderatingText))
+        store.dispatch(.updateIsShowingCustomPromptAlert(false))
+        store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))
     }
 }

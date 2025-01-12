@@ -124,10 +124,13 @@ enum FlowTaleAction {
 
     case updateCustomPrompt(String)
 
-    case moderateText
-    case onModeratedText(ModerationResponse)
+    case moderateText(String)
+    case onModeratedText(ModerationResponse, String)
     case failedToModerateText
 
-    case passedModeration
+    case passedModeration(String)
     case didNotPassModeration
+
+    case updateStorySetting(StorySetting)
+    case updateIsShowingCustomPromptAlert(Bool)
 }

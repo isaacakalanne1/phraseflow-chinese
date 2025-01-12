@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum StorySetting: Codable, Equatable {
+    case random, customPrompt(String)
+}
+
 struct SettingsState: Codable {
     var isShowingDefinition: Bool
     var isShowingEnglish: Bool
@@ -17,7 +21,9 @@ struct SettingsState: Codable {
     var storyPrompt: String
     var language: Language
     var customPrompt: String
+    var storySetting: StorySetting
     var confirmedCustomPrompt: String
+    var customPrompts: [String]
 
     init(isShowingDefinition: Bool = true,
          isShowingEnglish: Bool = true,
@@ -28,6 +34,8 @@ struct SettingsState: Codable {
          storyPrompt: String = "medieval town",
          language: Language = .mandarinChinese,
          customPrompt: String = "",
+         storySetting: StorySetting = .random,
+         customPrompts: [String] = [],
          confirmedCustomPrompt: String = "") {
         self.isShowingDefinition = isShowingDefinition
         self.isShowingEnglish = isShowingEnglish
@@ -38,6 +46,8 @@ struct SettingsState: Codable {
         self.storyPrompt = storyPrompt
         self.language = language
         self.customPrompt = customPrompt
+        self.customPrompts = customPrompts
+        self.storySetting = storySetting
         self.confirmedCustomPrompt = confirmedCustomPrompt
     }
 }

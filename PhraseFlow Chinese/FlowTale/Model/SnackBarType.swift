@@ -12,7 +12,9 @@ enum SnackBarType {
     case chapterReady
     case subscribed
     case failedToWriteChapter(Story)
+    case moderatingText
     case passedModeration
+    case couldNotModerateText
     case didNotPassModeration
 
     var text: String {
@@ -23,10 +25,14 @@ enum SnackBarType {
             "Chapter ready."
         case .failedToWriteChapter:
             "Failed to write chapter. Tap to retry."
+        case .couldNotModerateText:
+            "Failed to moderate text. Tap to retry."
         case .subscribed:
             "Subscription complete. Unlimited chapters now available."
         case .passedModeration:
             "Custom story added"
+        case .moderatingText:
+            "Moderating story"
         case .didNotPassModeration:
             "Your story did not meet our AI provider's usage policies."
         }
@@ -39,8 +45,10 @@ enum SnackBarType {
         case .chapterReady,
                 .failedToWriteChapter,
                 .subscribed,
+                .moderatingText,
                 .passedModeration,
-                .didNotPassModeration:
+                .didNotPassModeration,
+                .couldNotModerateText:
             4
         }
     }
@@ -50,13 +58,16 @@ enum SnackBarType {
         switch self {
         case .writingChapter:
             Text("✏️")
+        case .moderatingText:
+            Text("⌛")
         case .chapterReady,
                 .subscribed,
                 .passedModeration:
             Text("✅")
         case .failedToWriteChapter:
             Text("🔁")
-        case .didNotPassModeration:
+        case .didNotPassModeration,
+                .couldNotModerateText:
             Text("⚠️")
         }
     }
@@ -66,11 +77,14 @@ enum SnackBarType {
         case .writingChapter,
                 .chapterReady,
                 .subscribed,
+                .moderatingText,
                 .passedModeration,
                 .didNotPassModeration:
             break
         case .failedToWriteChapter(let story):
             store.dispatch(.continueStory(story: story))
+        case .couldNotModerateText:
+            store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))
         }
     }
 
@@ -79,10 +93,12 @@ enum SnackBarType {
         case .writingChapter,
                 .chapterReady,
                 .subscribed,
-                .didNotPassModeration:
+                .moderatingText,
+                .passedModeration:
             return false
         case .failedToWriteChapter,
-                .passedModeration:
+                .didNotPassModeration,
+                .couldNotModerateText:
             return true
         }
     }

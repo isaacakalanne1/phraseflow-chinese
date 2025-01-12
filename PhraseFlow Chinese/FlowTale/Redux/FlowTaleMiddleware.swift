@@ -313,18 +313,32 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .playMusic(.whispersOfAnOpenBook)
         }
         return nil
-    case .moderateText:
+    case .updateStorySetting(let setting):
+        switch setting {
+        case .random:
+            return nil
+        case .customPrompt(let prompt):
+            let isNewPrompt = !state.settingsState.customPrompts.contains(prompt)
+            if isNewPrompt {
+                return .moderateText(prompt)
+            } else {
+                return nil
+            }
+        }
+    case .moderateText(let prompt):
         do {
-            let response = try await environment.moderateText(state.settingsState.customPrompt)
-            return .onModeratedText(response)
+            let response = try await environment.moderateText(prompt)
+            return .onModeratedText(response, prompt)
         } catch {
             return .failedToModerateText
         }
-    case .onModeratedText(let response):
-        return response.didPassModeration ? .passedModeration : .didNotPassModeration
+    case .onModeratedText(let response, let prompt):
+        return response.didPassModeration ? .passedModeration(prompt) : .didNotPassModeration
     case .passedModeration:
         return .showSnackBar(.passedModeration)
     case .didNotPassModeration:
+        return .showSnackBar(.didNotPassModeration)
+    case .failedToModerateText:
         return .showSnackBar(.didNotPassModeration)
     case .failedToLoadStories,
             .failedToSaveStory,
@@ -358,7 +372,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .onSelectedChapter,
             .updateStoryPrompt,
             .updateCustomPrompt,
-            .failedToModerateText:
+            .updateIsShowingCustomPromptAlert:
         return nil
     }
 }
