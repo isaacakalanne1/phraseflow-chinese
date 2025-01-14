@@ -105,6 +105,7 @@ struct CreateStorySettingsView: View {
 
             Button {
                 store.dispatch(.playSound(.createStory))
+                store.dispatch(.selectTab(.reader, shouldPlaySound: false))
                 store.dispatch(.continueStory(story: store.state.createNewStory()))
             } label: {
                 HStack(spacing: 5) {

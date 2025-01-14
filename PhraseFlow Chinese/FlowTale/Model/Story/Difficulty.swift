@@ -70,11 +70,11 @@ enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
         var prompt: String
         switch self {
         case .beginner:
-            prompt = "Use very short, simple sentences and very basic words."
+            prompt = "Use extremely basic, simple words and very short sentences."
         case .intermediate:
-            prompt = "Use short, simple sentences and basic words."
+            prompt = "Use basic, simple words and short sentences."
         case .advanced:
-            prompt = "Use medium length sentences and simple words."
+            prompt = "Use simple words and medium length sentences."
         case .expert:
             prompt = ""
         }

@@ -95,6 +95,7 @@ enum SnackBarType {
                 .deletedCustomStory:
             break
         case .failedToWriteChapter(let story):
+            store.dispatch(.selectTab(.reader, shouldPlaySound: false))
             store.dispatch(.continueStory(story: story))
         case .couldNotModerateText:
             store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))

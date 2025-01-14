@@ -70,6 +70,7 @@ struct ChapterView: View {
                     if doesNextChapterExist {
                         store.dispatch(.goToNextChapter)
                     } else {
+                        store.dispatch(.selectTab(.reader, shouldPlaySound: false))
                         store.dispatch(.continueStory(story: story))
                     }
                 } else {
