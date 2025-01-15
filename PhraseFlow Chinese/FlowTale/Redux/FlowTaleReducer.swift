@@ -79,6 +79,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.chapterViewId = UUID()
         newState.viewState.playButtonDisplayType = .normal
         newState.viewState.loadingState = .complete
+        newState.viewState.contentTab = .reader
 
         newStory.currentPlaybackTime = 0
         newStory.currentSentenceIndex = 0

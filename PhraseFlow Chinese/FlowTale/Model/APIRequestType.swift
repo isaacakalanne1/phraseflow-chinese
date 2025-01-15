@@ -35,7 +35,7 @@ enum APIRequestType {
     var modelName: String {
         switch self {
         case .openAI:
-            return "gpt-4o-mini-2024-07-18"
+            return "gpt-4o-mini"
         case .openRouter(let model):
             switch model {
             case .metaLlama:
