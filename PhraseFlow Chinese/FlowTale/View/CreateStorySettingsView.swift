@@ -26,79 +26,38 @@ struct CreateStorySettingsView: View {
             store.dispatch(.updateIsShowingCustomPromptAlert(newValue))
         }
 
+        let currentDifficulty = store.state.settingsState.difficulty
+        let currentLanguage = store.state.settingsState.language
+        let currentStorySetting = store.state.settingsState.storySetting
 
         VStack {
             List {
-                Section {
-                    ForEach(Difficulty.allCases, id: \.self) { difficulty in
-                        Button {
-                            store.dispatch(.playSound(.changeSettings))
-                            store.dispatch(.updateDifficulty(difficulty))
-                        } label: {
-                            HStack {
-                                DifficultyView(difficulty: difficulty)
-                                Text(difficulty.title)
-                                    .fontWeight(store.state.settingsState.difficulty == difficulty ? .medium : .light)
-                                    .foregroundStyle(store.state.settingsState.difficulty == difficulty ? FlowTaleColor.accent : FlowTaleColor.primary)
-                            }
-                        }
-                        .listRowBackground(store.state.settingsState.difficulty == difficulty ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
-                    }
-                } header: {
-                    Text(LocalizedString.difficulty)
-                }
-                Section {
-                    ForEach(Language.allCases, id: \.self) { language in
-                        Button {
-                            store.dispatch(.playSound(.changeSettings))
-                            store.dispatch(.updateLanguage(language))
-                        } label: {
-                            Text(language.flagEmoji + " " + language.displayName)
-                                .fontWeight(store.state.settingsState.language == language ? .medium : .light)
-                                .foregroundStyle(store.state.settingsState.language == language ? FlowTaleColor.accent : FlowTaleColor.primary)
-                        }
-                        .listRowBackground(store.state.settingsState.language == language ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
-                    }
-                } header: {
-                    Text(LocalizedString.language)
-                }
-                Section {
-
-                    Button {
-                        store.dispatch(.updateIsShowingCustomPromptAlert(true))
-                    } label: {
-                        Text("Custom Prompt...")
+                NavigationLink {
+                    DifficultySettingsView()
+                } label: {
+                    HStack {
+                        DifficultyView(difficulty: currentDifficulty)
+                        Text(currentDifficulty.title)
                             .fontWeight(.light)
                             .foregroundStyle(FlowTaleColor.primary)
                     }
-                    .listRowBackground(Color(uiColor: UIColor.secondarySystemGroupedBackground))
-                    
-                    Button {
-                        store.dispatch(.playSound(.changeSettings))
-                        store.dispatch(.updateStorySetting(.random))
-                    } label: {
-                        Text("Random")
-                            .fontWeight(isRandomPromptSelected ? .medium : .light)
-                            .foregroundStyle(isRandomPromptSelected ? FlowTaleColor.accent : FlowTaleColor.primary)
-                    }
-                    .listRowBackground(isRandomPromptSelected ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
+                }
 
-                    ForEach(store.state.settingsState.customPrompts, id: \.self) { prompt in
-                        let isSelectedPrompt = store.state.settingsState.storySetting == .customPrompt(prompt)
-                        
-                        Button {
-                            store.dispatch(.playSound(.changeSettings))
-                            store.dispatch(.updateStorySetting(.customPrompt(prompt)))
-                        } label: {
-                            Text(prompt.capitalized)
-                                .fontWeight(isSelectedPrompt ? .medium : .light)
-                                .foregroundStyle(isSelectedPrompt ? FlowTaleColor.accent : FlowTaleColor.primary)
-                        }
-                        .listRowBackground(isSelectedPrompt ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
-                    }
-                    .onDelete(perform: delete)
-                } header: {
-                    Text("Setting")
+                NavigationLink {
+                    LanguageSettingsView()
+                } label: {
+                    Text(currentLanguage.flagEmoji + " " + currentLanguage.displayName)
+                        .fontWeight(.light)
+                        .foregroundStyle(FlowTaleColor.primary)
+                }
+
+                NavigationLink {
+                    StoryPromptSettingsView()
+                } label: {
+                    Text("\(currentStorySetting.emoji) Story: \(currentStorySetting.title)")
+                        .fontWeight(.light)
+                        .foregroundStyle(FlowTaleColor.primary)
+                        .lineLimit(1)
                 }
             }
             .frame(maxHeight: .infinity)

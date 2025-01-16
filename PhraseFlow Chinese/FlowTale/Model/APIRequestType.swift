@@ -8,7 +8,7 @@
 import Foundation
 
 enum OpenRouterModel {
-    case metaLlama, geminiFlash
+    case metaLlama, geminiFlash, euryaleLlama
 }
 
 enum APIRequestType {
@@ -42,6 +42,8 @@ enum APIRequestType {
                 return "meta-llama/llama-3.3-70b-instruct"
             case .geminiFlash:
                 return "google/gemini-flash-1.5-8b"
+            case .euryaleLlama:
+                return "eva-unit-01/eva-llama-3.33-70b"
             }
 //            "deepseek/deepseek-chat"
         }

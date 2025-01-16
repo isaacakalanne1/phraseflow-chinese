@@ -70,7 +70,7 @@ enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
         var prompt: String
         switch self {
         case .beginner:
-            prompt = "Write using very short sentences only 5 words long or shorter. The sentences should still be gramatically correct, but should be extremely short, and use very simple words."
+            prompt = "Use short sentences of 4 or 5 words. Use very simple words and tenses."
         case .intermediate:
             prompt = "Use basic, simple words and short sentences."
         case .advanced:

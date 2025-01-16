@@ -42,6 +42,9 @@
 		BB6572E72CD8D1E300AC5981 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572E62CD8D1E300AC5981 /* Gender.swift */; };
 		BB6572F72CDB991B00AC5981 /* SettingsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572F62CDB991A00AC5981 /* SettingsState.swift */; };
 		BB6572F92CDBB14C00AC5981 /* SpeechStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572F82CDBB14C00AC5981 /* SpeechStyle.swift */; };
+		BB6DD0992D39BAF400EF6AF9 /* DifficultySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6DD0982D39BAF400EF6AF9 /* DifficultySettingsView.swift */; };
+		BB6DD09B2D39BB9700EF6AF9 /* LanguageSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6DD09A2D39BB9700EF6AF9 /* LanguageSettingsView.swift */; };
+		BB6DD09D2D39BCF900EF6AF9 /* StoryPromptSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6DD09C2D39BCF900EF6AF9 /* StoryPromptSettingsView.swift */; };
 		BB7B6D942D1ACEBF0030344A /* libPods-FlowTale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */; };
 		BB7B6D962D1DF0990030344A /* StudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D952D1DF0990030344A /* StudyView.swift */; };
 		BB7B6D982D1E0D070030344A /* StoryInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D972D1E0D070030344A /* StoryInfoView.swift */; };
@@ -164,6 +167,9 @@
 		BB6572E62CD8D1E300AC5981 /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
 		BB6572F62CDB991A00AC5981 /* SettingsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsState.swift; sourceTree = "<group>"; };
 		BB6572F82CDBB14C00AC5981 /* SpeechStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechStyle.swift; sourceTree = "<group>"; };
+		BB6DD0982D39BAF400EF6AF9 /* DifficultySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultySettingsView.swift; sourceTree = "<group>"; };
+		BB6DD09A2D39BB9700EF6AF9 /* LanguageSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsView.swift; sourceTree = "<group>"; };
+		BB6DD09C2D39BCF900EF6AF9 /* StoryPromptSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPromptSettingsView.swift; sourceTree = "<group>"; };
 		BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-FlowTale.a"; path = "../../../../Library/Developer/Xcode/DerivedData/FlowTale-dzblbgdyrqlsjdggurnqsbvwzaoq/Build/Products/Debug-iphoneos/libPods-FlowTale.a"; sourceTree = "<group>"; };
 		BB7B6D952D1DF0990030344A /* StudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyView.swift; sourceTree = "<group>"; };
 		BB7B6D972D1E0D070030344A /* StoryInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryInfoView.swift; sourceTree = "<group>"; };
@@ -493,9 +499,12 @@
 				BB7B6D9B2D1F30BC0030344A /* SnackBar.swift */,
 				BB7B6D952D1DF0990030344A /* StudyView.swift */,
 				BB4E6BF92D246EC0002B5CBA /* LoadingView.swift */,
+				BB6DD0982D39BAF400EF6AF9 /* DifficultySettingsView.swift */,
 				BBFDBBE82D203AD80056C448 /* DefinitionsChartView.swift */,
 				BBFDBBEA2D203F080056C448 /* DefinitionsProgressSheetView.swift */,
 				BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */,
+				BB6DD09C2D39BCF900EF6AF9 /* StoryPromptSettingsView.swift */,
+				BB6DD09A2D39BB9700EF6AF9 /* LanguageSettingsView.swift */,
 				BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */,
 				BBAE07D02D0C793000DA95CD /* SubscriptionView.swift */,
 				BBAE07D42D0CA79A00DA95CD /* SubscriptionOption.swift */,
@@ -758,6 +767,7 @@
 				BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */,
 				BBAE07DB2D14BE0B00DA95CD /* SystemImageView.swift in Sources */,
 				BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */,
+				BB6DD0992D39BAF400EF6AF9 /* DifficultySettingsView.swift in Sources */,
 				BB0854832CB42C0200F1661B /* Chapter.swift in Sources */,
 				BB6572E52CD8D12400AC5981 /* Voice.swift in Sources */,
 				BBAE07D12D0C793000DA95CD /* SubscriptionView.swift in Sources */,
@@ -794,6 +804,7 @@
 				BB1994D32CE9051700D61E54 /* ViewState.swift in Sources */,
 				BB84E0AF2CF495CD00520F5E /* Strings.swift in Sources */,
 				BBFDBBEB2D203F080056C448 /* DefinitionsProgressSheetView.swift in Sources */,
+				BB6DD09D2D39BCF900EF6AF9 /* StoryPromptSettingsView.swift in Sources */,
 				BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */,
 				BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */,
 				BBE636C32CCC0BE900873E68 /* CharacterView.swift in Sources */,
@@ -815,6 +826,7 @@
 				BB4EDB052C90C89C00699E7D /* FlowTaleState.swift in Sources */,
 				BBAE07CD2D0C765B00DA95CD /* APIRequestType.swift in Sources */,
 				BBAE07D72D14BD2400DA95CD /* ChapterHeaderView.swift in Sources */,
+				BB6DD09B2D39BB9700EF6AF9 /* LanguageSettingsView.swift in Sources */,
 				BB0854852CB42C1400F1661B /* Story.swift in Sources */,
 				BBE636C92CCC0E8400873E68 /* ChapterView.swift in Sources */,
 			);
