@@ -12,53 +12,52 @@ struct CreateStorySettingsView: View {
 
     var body: some View {
 
-        let isRandomPromptSelected = store.state.settingsState.storySetting == .random
-
-        let customPrompt: Binding<String> = .init {
-            store.state.settingsState.customPrompt
-        } set: { newValue in
-            store.dispatch(.updateCustomPrompt(newValue))
-        }
-
-        let isShowingAlert: Binding<Bool> = .init {
-            store.state.viewState.isShowingCustomPromptAlert
-        } set: { newValue in
-            store.dispatch(.updateIsShowingCustomPromptAlert(newValue))
-        }
-
         let currentDifficulty = store.state.settingsState.difficulty
         let currentLanguage = store.state.settingsState.language
         let currentStorySetting = store.state.settingsState.storySetting
 
         VStack {
             List {
-                NavigationLink {
-                    DifficultySettingsView()
-                } label: {
-                    HStack {
-                        DifficultyView(difficulty: currentDifficulty)
-                        Text(currentDifficulty.title)
+                Section {
+                    NavigationLink {
+                        LanguageSettingsView()
+                    } label: {
+                        Text(currentLanguage.flagEmoji + " " + currentLanguage.displayName)
                             .fontWeight(.light)
                             .foregroundStyle(FlowTaleColor.primary)
                     }
+                } header: {
+                    Text("Language")
+                }
+                
+                Section {
+                    NavigationLink {
+                        DifficultySettingsView()
+                    } label: {
+                        HStack {
+                            DifficultyView(difficulty: currentDifficulty)
+                            Text(currentDifficulty.title)
+                                .fontWeight(.light)
+                                .foregroundStyle(FlowTaleColor.primary)
+                        }
+                    }
+                } header: {
+                    Text("Difficulty")
                 }
 
-                NavigationLink {
-                    LanguageSettingsView()
-                } label: {
-                    Text(currentLanguage.flagEmoji + " " + currentLanguage.displayName)
-                        .fontWeight(.light)
-                        .foregroundStyle(FlowTaleColor.primary)
+                Section {
+                    NavigationLink {
+                        StoryPromptSettingsView()
+                    } label: {
+                        Text(currentStorySetting.emoji + " " + currentStorySetting.title)
+                            .fontWeight(.light)
+                            .foregroundStyle(FlowTaleColor.primary)
+                            .lineLimit(1)
+                    }
+                } header: {
+                    Text("Story")
                 }
 
-                NavigationLink {
-                    StoryPromptSettingsView()
-                } label: {
-                    Text("\(currentStorySetting.emoji) Story: \(currentStorySetting.title)")
-                        .fontWeight(.light)
-                        .foregroundStyle(FlowTaleColor.primary)
-                        .lineLimit(1)
-                }
             }
             .frame(maxHeight: .infinity)
 
@@ -83,21 +82,6 @@ struct CreateStorySettingsView: View {
         .onAppear {
             store.dispatch(.playSound(.openStorySettings))
         }
-        .alert("Custom", isPresented: isShowingAlert) {
-            TextField("Custom story", text: customPrompt)
-            Button("OK", action: submitCustomPrompt)
-            Button("Cancel", role: .cancel) {
-                store.dispatch(.updateIsShowingCustomPromptAlert(false))
-            }
-        } message: {
-            Text("Enter your custom story setting")
-        }
-    }
-
-    func submitCustomPrompt() {
-        store.dispatch(.showSnackBar(.moderatingText))
-        store.dispatch(.updateIsShowingCustomPromptAlert(false))
-        store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))
     }
 
     func delete(at offsets: IndexSet) {

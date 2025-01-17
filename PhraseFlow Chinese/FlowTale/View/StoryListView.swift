@@ -54,19 +54,13 @@ struct StoryListView: View {
                         Text(LocalizedString.stories)
                     }
                 }
-                Button {
+                PrimaryButton(icon: {
+                    DifficultyView(difficulty: store.state.settingsState.difficulty, color: FlowTaleColor.primary)
+                },
+                              title: store.state.settingsState.language.flagEmoji + " " + LocalizedString.newStory) {
                     store.dispatch(.playSound(.createStory))
                     store.dispatch(.selectTab(.reader, shouldPlaySound: false))
                     store.dispatch(.continueStory(story: store.state.createNewStory()))
-                } label: {
-                    HStack(spacing: 5) {
-                        DifficultyView(difficulty: store.state.settingsState.difficulty, color: FlowTaleColor.primary)
-                        Text(store.state.settingsState.language.flagEmoji + " " + LocalizedString.newStory)
-                    }
-                    .padding()
-                    .background(FlowTaleColor.accent)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
                 }
                 NavigationLink(destination: CreateStorySettingsView()) {
                     Text(LocalizedString.settings)

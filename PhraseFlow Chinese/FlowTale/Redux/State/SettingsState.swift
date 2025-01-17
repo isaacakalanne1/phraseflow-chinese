@@ -22,9 +22,9 @@ enum StorySetting: Codable, Equatable {
     var title: String {
         switch self {
         case .random:
-            return "Random"
+            return "Random story"
         case .customPrompt(let prompt):
-            return "Custom (\(prompt)"
+            return "Custom story (\(prompt)"
         }
     }
 
