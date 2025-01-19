@@ -121,14 +121,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.settingsState.isShowingDefinition = isShowing
     case .updateShowEnglish(let isShowing):
         newState.settingsState.isShowingEnglish = isShowing
-    case .updateShowingSettings(let isShowing):
-        newState.viewState.isShowingSettingsScreen = isShowing
-    case .updateShowingStoryListView(let isShowing):
-        newState.viewState.isShowingStoryListView = isShowing
     case .updateAutoScrollEnabled(let isEnabled):
         newState.viewState.isAutoscrollEnabled = isEnabled
     case .selectChapter(var story, let chapterIndex):
-        newState.viewState.isShowingStoryListView = false
         newState.definitionState.currentDefinition = nil
         story.lastUpdated = .now
         if let chapter = story.chapters[safe: chapterIndex] {
@@ -158,7 +153,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         }
         newState.viewState.readerDisplayType = .loading
         newState.viewState.loadingState = .writing
-        newState.viewState.isShowingStoryListView = false
     case .failedToContinueStory,
             .failedToTranslateStory,
             .failedToGenerateImage:

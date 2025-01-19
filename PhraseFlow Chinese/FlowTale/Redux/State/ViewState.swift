@@ -13,8 +13,6 @@ struct ViewState {
     var translationViewId: UUID
     var storyListViewId: UUID
 
-    var isShowingSettingsScreen = false
-    var isShowingStoryListView = false
     var isShowingSubscriptionSheet = false
     var isShowingCustomPromptAlert = false
     var isShowingModerationFailedAlert = false
@@ -34,8 +32,6 @@ struct ViewState {
          chapterViewId: UUID = UUID(),
          translationViewId: UUID = UUID(),
          storyListViewId: UUID = UUID(),
-         isShowingSettingsScreen: Bool = false,
-         isShowingStoryListView: Bool = false,
          isShowingSubscriptionSheet: Bool = false,
          isShowingCustomPromptAlert: Bool = false,
          isAutoscrollEnabled: Bool = false,
@@ -48,8 +44,6 @@ struct ViewState {
         self.chapterViewId = chapterViewId
         self.translationViewId = translationViewId
         self.storyListViewId = storyListViewId
-        self.isShowingSettingsScreen = isShowingSettingsScreen
-        self.isShowingStoryListView = isShowingStoryListView
         self.isShowingSubscriptionSheet = isShowingSubscriptionSheet
         self.isShowingCustomPromptAlert = isShowingCustomPromptAlert
         self.isAutoscrollEnabled = isAutoscrollEnabled

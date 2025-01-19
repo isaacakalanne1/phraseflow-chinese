@@ -375,8 +375,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .failedToDefineCharacter,
             .onPlayedAudio,
             .failedToSynthesizeAudio,
-            .updateShowingSettings,
-            .updateShowingStoryListView,
             .refreshChapterView,
             .refreshDefinitionView,
             .failedToDeleteStory,

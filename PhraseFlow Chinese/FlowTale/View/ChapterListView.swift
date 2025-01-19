@@ -78,7 +78,6 @@ struct ChapterListView: View {
                     store.dispatch(.selectTab(.reader, shouldPlaySound: false))
                     store.dispatch(.continueStory(story: story))
                     store.dispatch(.playSound(.createStory))
-                    store.dispatch(.updateShowingStoryListView(isShowing: false))
                 }
                 .padding()
                 .background(FlowTaleColor.accent)
