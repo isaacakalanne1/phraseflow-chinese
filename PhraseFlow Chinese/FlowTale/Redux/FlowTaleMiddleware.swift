@@ -162,7 +162,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
                 return .failedToDefineCharacter
             }
             
-            if let definition = state.definitionState.definition(of: timeStampData.word, in: sentence),
+            if let definition = state.definitionState.definition(timestampData: timeStampData, in: sentence),
                !shouldForce {
                 return .onDefinedCharacter(definition)
             }
