@@ -53,10 +53,23 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return nil
     case .loadStories(let isAppLaunch):
         do {
-            let stories = try environment.loadStories().sorted(by: { $0.lastUpdated > $1.lastUpdated })
+            var stories = try environment.loadAllStories()
+                .sorted(by: { $0.lastUpdated > $1.lastUpdated })
+            // No call to loadAllChapters(for:) here — we skip that
             return .onLoadedStories(stories, isAppLaunch: isAppLaunch)
         } catch {
             return .failedToLoadStories
+        }
+    case .loadChapters(let story):
+        do {
+            // 1) Load the chapters for just this one story
+            let chapters = try environment.loadAllChapters(for: story.id)
+
+            // 2) Dispatch success with the loaded chapters
+            return .onLoadedChapters(story, chapters)
+        } catch {
+            // 3) Dispatch failure
+            return .failedToLoadChapters
         }
     case .loadDefinitions:
         do {
@@ -179,17 +192,23 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     case .onSelectedChapter:
         return .selectTab(.reader, shouldPlaySound: false)
     case .saveStoryAndSettings(var story):
-        story.chapters = story.chapters.enumerated().map({ (index, element) in
-            var newChapter = element
-            let isLastChapter = index >= story.chapters.count - 1
-            if !isLastChapter {
-//                newChapter.audioData = nil // TODO: Update save stories logic to only save individual chapter rather than all chapters at once
-            }
-            return newChapter
-        })
+        // (Optional) Some code that modifies `story.chapters` as you do now.
+        // e.g. removing big audio data from older chapters or whatever else.
+
         do {
+            // 1) Save each chapter individually.
+            for (index, chapter) in story.chapters.enumerated() {
+                // Chapter indexes typically start at 1, since 0 is the main story
+                try environment.saveChapter(chapter, storyId: story.id, chapterIndex: index + 1)
+            }
+
+            // 2) Save the main story. (Chapters array is not persisted to JSON.)
             try environment.saveStory(story)
+
+            // 3) Save updated settings.
             try environment.saveAppSettings(state.settingsState)
+
+            // Return success action to update state.
             return .onSavedStoryAndSettings
         } catch {
             return .failedToSaveStoryAndSettings
@@ -379,7 +398,9 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .updateAutoScrollEnabled,
             .hideSnackbar,
             .updateCustomPrompt,
-            .updateIsShowingCustomPromptAlert:
+            .updateIsShowingCustomPromptAlert,
+            .onLoadedChapters,
+            .failedToLoadChapters:
         return nil
     }
 }

@@ -76,6 +76,9 @@ struct ChapterListView: View {
         }
         .background(FlowTaleColor.background)
         .scrollContentBackground(.hidden)
+        .onAppear {
+            store.dispatch(.loadChapters(story))
+        }
     }
 
 }

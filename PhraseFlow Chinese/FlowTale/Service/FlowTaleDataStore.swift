@@ -151,6 +151,7 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         // By default, store all fields but remove the chapters array to reduce duplication.
         // You can store them if you prefer, but they will also be saved individually below.
         var storyCopy = story
+        storyCopy.chapters = []
 
         let url = try fileURL(for: story.id, chapterIndex: 0)
         let encoder = JSONEncoder()

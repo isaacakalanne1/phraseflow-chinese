@@ -43,6 +43,15 @@ enum FlowTaleAction {
     case onLoadedStories([Story], isAppLaunch: Bool)
     case failedToLoadStories
 
+    // 1) Request to load chapters for a specific story
+    case loadChapters(Story)
+    
+    // 2) Called on success, includes the original Story + the loaded chapters
+    case onLoadedChapters(Story, [Chapter])
+    
+    // 3) Called on failure
+    case failedToLoadChapters
+
     case loadDefinitions
     case onLoadedDefinitions([Definition])
     case failedToLoadDefinitions

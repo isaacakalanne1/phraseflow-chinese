@@ -27,6 +27,7 @@ protocol FlowTaleEnvironmentProtocol {
     func loadStory(by id: UUID) throws -> Story
     func loadAllStories() throws -> [Story]
     func deleteStory(_ storyId: UUID) throws
+    func unsaveStory(_ story: Story) throws
 
     // Chapters
     func saveChapter(_ chapter: Chapter, storyId: UUID, chapterIndex: Int) throws

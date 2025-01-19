@@ -19,6 +19,7 @@ struct Story: Codable, Equatable, Hashable {
     let language: Language
 
     var title: String
+    var chapters: [Chapter]       // You can choose not to decode or encode in your store
     var currentChapterIndex = 0
     var currentSentenceIndex = 0
     var currentPlaybackTime: Double = 0
@@ -37,6 +38,7 @@ struct Story: Codable, Equatable, Hashable {
          difficulty: Difficulty,
          language: Language,
          title: String = "",
+         chapters: [Chapter] = [],
          storyPrompt: String,
          imageData: Data? = nil,
          currentChapterIndex: Int = 0,
@@ -48,6 +50,7 @@ struct Story: Codable, Equatable, Hashable {
         self.difficulty = difficulty
         self.language = language
         self.title = title
+        self.chapters = chapters
         self.currentChapterIndex = currentChapterIndex
         self.currentSentenceIndex = currentSentenceIndex
         self.currentPlaybackTime = currentPlaybackTime
@@ -64,6 +67,7 @@ struct Story: Codable, Equatable, Hashable {
         self.difficulty               = try container.decode(Difficulty.self, forKey: .difficulty)
         self.language                 = try container.decode(Language.self, forKey: .language)
         self.title                    = try container.decode(String.self, forKey: .title)
+        self.chapters                 = (try? container.decode([Chapter].self, forKey: .chapters)) ?? []
         self.currentChapterIndex      = (try? container.decode(Int.self, forKey: .currentChapterIndex)) ?? 0
         self.currentSentenceIndex     = (try? container.decode(Int.self, forKey: .currentSentenceIndex)) ?? 0
         self.currentPlaybackTime      = (try? container.decode(Double.self, forKey: .currentPlaybackTime)) ?? 0

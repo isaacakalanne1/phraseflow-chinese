@@ -30,6 +30,25 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             newState.audioState.audioPlayer = player ?? AVPlayer()
             newState.viewState.readerDisplayType = .normal
         }
+    case .onLoadedChapters(let story, let chapters):
+        // 1) Find this story in savedStories (or currentStory)
+        //    We’ll do both, depending on how your app organizes it.
+
+        // Example: update in savedStories
+        if let index = newState.storyState.savedStories.firstIndex(where: { $0.id == story.id }) {
+            var updatedStory = newState.storyState.savedStories[index]
+            // 2) Merge the newly loaded chapters into the story object
+            updatedStory.chapters = chapters
+            // 3) Update the array
+            newState.storyState.savedStories[index] = updatedStory
+        }
+
+        // If you also keep a `currentStory`, and it's the same story, update that too:
+        if newState.storyState.currentStory?.id == story.id {
+            newState.storyState.currentStory?.chapters = chapters
+        }
+
+        return newState
     case .playStudyWord(let definition):
         if let story = newState.storyState.savedStories.first(where: { def in
             def.id == definition.timestampData.storyId
@@ -281,7 +300,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .moderateText,
             .onModeratedText,
             .failedToModerateText,
-            .didNotPassModeration:
+            .didNotPassModeration,
+            .loadChapters,
+            .failedToLoadChapters:
         break
     }
 
