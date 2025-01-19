@@ -46,6 +46,7 @@ struct StudyView: View {
                             } label: {
                                 SystemImageView(.speaker)
                             }
+                            .disabled(store.state.studyState.currentChapter == nil)
                         }
                     }
                     Text("Sentence")
@@ -119,6 +120,11 @@ struct StudyView: View {
             if !isWordDefinitionView {
                 index = 0
                 isDefinitionShown = false
+                if let definition = currentDefinition {
+                    store.dispatch(.updateStudiedWord(definition))
+                    store.dispatch(.updateStudyChapter(nil))
+                    store.dispatch(.prepareToPlayStudyWord(definition))
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -132,6 +138,8 @@ struct StudyView: View {
         index = (index + 1) % studyWords.count
         if let definition = currentDefinition {
             store.dispatch(.updateStudiedWord(definition))
+            store.dispatch(.updateStudyChapter(nil))
+            store.dispatch(.prepareToPlayStudyWord(definition))
         }
     }
 }

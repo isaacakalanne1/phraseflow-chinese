@@ -129,6 +129,14 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .saveStoryAndSettings(story)
         }
         return nil
+    case .prepareToPlayStudyWord(let definition):
+        do {
+            let chapter = try environment.loadChapter(storyId: definition.timestampData.storyId,
+                                                      chapterIndex: definition.timestampData.chapterIndex)
+            return .updateStudyChapter(chapter)
+        } catch {
+            return .failedToPrepareStudyWord
+        }
     case .playStudyWord(let definition):
         let myTime = CMTime(seconds: definition.timestampData.time, preferredTimescale: 60000)
         await state.studyState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
@@ -417,7 +425,9 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .failedToLoadChapters,
             .dismissFailedModerationAlert,
             .showModerationDetails,
-            .updateIsShowingModerationDetails:
+            .updateIsShowingModerationDetails,
+            .updateStudyChapter,
+            .failedToPrepareStudyWord:
         return nil
     }
 }

@@ -252,7 +252,7 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
 
     /// Loads a single chapter from "<storyId>@(chapterIndex).json".
     func loadChapter(storyId: UUID, chapterIndex: Int) throws -> Chapter {
-        let url = try fileURL(for: storyId, chapterIndex: chapterIndex)
+        let url = try fileURL(for: storyId, chapterIndex: chapterIndex + 1)
         guard fileManager.fileExists(atPath: url.path) else {
             throw FlowTaleDataStoreError.chapterNotFound
         }

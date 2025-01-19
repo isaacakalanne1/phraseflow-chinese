@@ -73,6 +73,8 @@ enum FlowTaleAction {
 
     case defineCharacter(WordTimeStampData, shouldForce: Bool)
     case playWord(WordTimeStampData, story: Story?)
+    case prepareToPlayStudyWord(Definition)
+    case failedToPrepareStudyWord
     case playStudyWord(Definition)
     case onDefinedCharacter(Definition)
     case onDefinedSentence([Definition], tappedDefinition: Definition)
@@ -83,6 +85,7 @@ enum FlowTaleAction {
 
     case updateShowDefinition(Bool)
     case updateShowEnglish(Bool)
+    case updateStudyChapter(Chapter?)
 
     case updateSpeechSpeed(SpeechSpeed)
     case updateDifficulty(Difficulty)

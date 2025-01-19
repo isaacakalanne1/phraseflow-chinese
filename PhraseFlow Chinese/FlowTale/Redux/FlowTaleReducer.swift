@@ -53,14 +53,10 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         }
 
         return newState
+    case .updateStudyChapter(let chapter):
+        newState.studyState.currentChapter = chapter
     case .playStudyWord(let definition):
-        if let story = newState.storyState.savedStories.first(where: { def in
-            def.id == definition.timestampData.storyId
-        }),
-           let chapter = story.chapters[safe: definition.timestampData.chapterIndex],
-           let player = chapter.audio.data.createAVPlayer() {
-            newState.studyState.audioPlayer = player
-        }
+        newState.studyState.audioPlayer = newState.studyState.currentChapter?.audio.data.createAVPlayer() ?? AVPlayer()
     case .playSound(let sound):
         if let url = sound.fileURL,
            let player = try? AVAudioPlayer(contentsOf: url) {
@@ -315,9 +311,10 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .onGeneratedImage,
             .moderateText,
             .failedToModerateText,
-            .didNotPassModeration,
+            .prepareToPlayStudyWord,
             .loadChapters,
-            .failedToLoadChapters:
+            .failedToLoadChapters,
+            .failedToPrepareStudyWord:
         break
     }
 
