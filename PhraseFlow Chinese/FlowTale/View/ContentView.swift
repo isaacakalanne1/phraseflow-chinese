@@ -121,8 +121,7 @@ struct ContentView: View {
                     SystemImageView(.ellipsis, size: buttonSize)
                 }
                 .disabled(true)
-            } else if chapter.audio.data == nil ||
-                        store.state.settingsState.voice != chapter.audioVoice ||
+            } else if store.state.settingsState.voice != chapter.audioVoice ||
                         store.state.settingsState.speechSpeed != chapter.audioSpeed {
                 Button {
                     if let story = store.state.storyState.currentStory {

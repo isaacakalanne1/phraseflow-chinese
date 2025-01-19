@@ -17,8 +17,8 @@ struct Story: Codable, Equatable, Hashable {
     var briefLatestStorySummary: String
     let difficulty: Difficulty
     let language: Language
+
     var title: String
-    var chapters: [Chapter]
     var currentChapterIndex = 0
     var currentSentenceIndex = 0
     var currentPlaybackTime: Double = 0
@@ -37,7 +37,6 @@ struct Story: Codable, Equatable, Hashable {
          difficulty: Difficulty,
          language: Language,
          title: String = "",
-         chapters: [Chapter] = [],
          storyPrompt: String,
          imageData: Data? = nil,
          currentChapterIndex: Int = 0,
@@ -49,7 +48,6 @@ struct Story: Codable, Equatable, Hashable {
         self.difficulty = difficulty
         self.language = language
         self.title = title
-        self.chapters = chapters
         self.currentChapterIndex = currentChapterIndex
         self.currentSentenceIndex = currentSentenceIndex
         self.currentPlaybackTime = currentPlaybackTime
@@ -60,22 +58,17 @@ struct Story: Codable, Equatable, Hashable {
 
     // Custom decoder to assign default values
     init(from decoder: Decoder) throws {
-        do {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.id = try container.decode(UUID.self, forKey: .id)
-            self.briefLatestStorySummary = try container.decode(String.self, forKey: .briefLatestStorySummary)
-            self.difficulty = try container.decode(Difficulty.self, forKey: .difficulty)
-            self.language = try container.decode(Language.self, forKey: .language)
-            self.title = try container.decode(String.self, forKey: .title)
-            self.chapters = (try? container.decode([Chapter].self, forKey: .chapters)) ?? [] // TODO: Improve this code, to avoid running out of memory. Possibly decode chapters one at a time, rather than all chapters at once
-            self.currentChapterIndex = (try? container.decode(Int.self, forKey: .currentChapterIndex)) ?? 0
-            self.currentSentenceIndex = (try? container.decode(Int.self, forKey: .currentSentenceIndex)) ?? 0
-            self.currentPlaybackTime = (try? container.decode(Double.self, forKey: .currentPlaybackTime)) ?? 0
-            self.lastUpdated = (try? container.decode(Date.self, forKey: .lastUpdated)) ?? .now
-            self.storyPrompt = (try? container.decode(String.self, forKey: .storyPrompt)) ?? ""
-            self.imageData = try? container.decode(Data.self, forKey: .imageData)
-        } catch {
-            throw NSError()
-        }
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id                       = try container.decode(UUID.self, forKey: .id)
+        self.briefLatestStorySummary  = try container.decode(String.self, forKey: .briefLatestStorySummary)
+        self.difficulty               = try container.decode(Difficulty.self, forKey: .difficulty)
+        self.language                 = try container.decode(Language.self, forKey: .language)
+        self.title                    = try container.decode(String.self, forKey: .title)
+        self.currentChapterIndex      = (try? container.decode(Int.self, forKey: .currentChapterIndex)) ?? 0
+        self.currentSentenceIndex     = (try? container.decode(Int.self, forKey: .currentSentenceIndex)) ?? 0
+        self.currentPlaybackTime      = (try? container.decode(Double.self, forKey: .currentPlaybackTime)) ?? 0
+        self.lastUpdated              = (try? container.decode(Date.self, forKey: .lastUpdated)) ?? .now
+        self.storyPrompt              = (try? container.decode(String.self, forKey: .storyPrompt)) ?? ""
+        self.imageData                = try? container.decode(Data.self, forKey: .imageData)
     }
 }

@@ -75,8 +75,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     case .onDeletedStory:
         return .loadStories(isAppLaunch: false)
     case .synthesizeAudio(let chapter, let story, let voice, let isForced):
-        if chapter.audio.data != nil,
-           chapter.audioVoice == state.settingsState.voice,
+        if chapter.audioVoice == state.settingsState.voice,
            chapter.audioSpeed == state.settingsState.speechSpeed,
            !isForced {
             return .playAudio(time: nil)

@@ -17,13 +17,21 @@ protocol FlowTaleEnvironmentProtocol {
     func getProducts() async throws -> [Product]
     func generateStory(story: Story) async throws -> String
     func translateStory(story: Story, storyString: String, deviceLanguage: Language?) async throws -> Story
-    func loadStories() throws -> [Story]
     func loadDefinitions() throws -> [Definition]
     func saveDefinitions(_ definitions: [Definition]) throws
     func loadAppSettings() throws -> SettingsState
-    func saveStory(_ story: Story) throws
     func saveAppSettings(_ settings: SettingsState) throws
-    func unsaveStory(_ story: Story) throws
+
+    // Stories & Chapters
+    func saveStory(_ story: Story) throws
+    func loadStory(by id: UUID) throws -> Story
+    func loadAllStories() throws -> [Story]
+    func deleteStory(_ storyId: UUID) throws
+
+    // Chapters
+    func saveChapter(_ chapter: Chapter, storyId: UUID, chapterIndex: Int) throws
+    func loadChapter(storyId: UUID, chapterIndex: Int) throws -> Chapter
+    func loadAllChapters(for storyId: UUID) throws -> [Chapter]
 
     func fetchDefinition(of timestampData: WordTimeStampData,
                          withinContextOf sentence: Sentence,
@@ -70,8 +78,36 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         try await service.translateStory(story: story, storyString: storyString, deviceLanguage: deviceLanguage)
     }
 
+    // MARK: Stories
+
     func saveStory(_ story: Story) throws {
         try dataStore.saveStory(story)
+    }
+
+    func loadStory(by id: UUID) throws -> Story {
+        try dataStore.loadStory(by: id)
+    }
+
+    func loadAllStories() throws -> [Story] {
+        try dataStore.loadAllStories()
+    }
+
+    func deleteStory(_ storyId: UUID) throws {
+        try dataStore.deleteStory(storyId)
+    }
+
+    // MARK: Chapter
+
+    func saveChapter(_ chapter: Chapter, storyId: UUID, chapterIndex: Int) throws {
+        try dataStore.saveChapter(chapter, storyId: storyId, chapterIndex: chapterIndex)
+    }
+
+    func loadChapter(storyId: UUID, chapterIndex: Int) throws -> Chapter {
+        try dataStore.loadChapter(storyId: storyId, chapterIndex: chapterIndex)
+    }
+
+    func loadAllChapters(for storyId: UUID) throws -> [Chapter] {
+        try dataStore.loadAllChapters(for: storyId)
     }
 
     func saveAppSettings(_ settings: SettingsState) throws {
@@ -80,10 +116,6 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
 
     func unsaveStory(_ story: Story) throws {
         try dataStore.unsaveStory(story)
-    }
-
-    func loadStories() throws -> [Story] {
-        try dataStore.loadStories()
     }
 
     func loadDefinitions() throws -> [Definition] {
