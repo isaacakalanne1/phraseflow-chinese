@@ -270,6 +270,18 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.contentTab = tab
     case .deleteCustomPrompt(let prompt):
         newState.settingsState.customPrompts.removeAll(where: { $0 == prompt })
+    case .onModeratedText(let response, _):
+        newState.moderationResponse = response
+    case .didNotPassModeration:
+        newState.viewState.isShowingModerationFailedAlert = true
+    case .dismissFailedModerationAlert:
+        newState.viewState.isShowingModerationFailedAlert = false
+    case .showModerationDetails:
+        // We'll dismiss the alert (if it's open) and show the details screen.
+        newState.viewState.isShowingModerationFailedAlert = false
+        newState.viewState.isShowingModerationDetails = true
+    case .updateIsShowingModerationDetails(let isShowing):
+        newState.viewState.isShowingModerationDetails = isShowing
     case .saveStoryAndSettings,
             .failedToSaveStory,
             .loadStories,
@@ -300,7 +312,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .observeTransactionUpdates,
             .onGeneratedImage,
             .moderateText,
-            .onModeratedText,
             .failedToModerateText,
             .didNotPassModeration,
             .loadChapters,

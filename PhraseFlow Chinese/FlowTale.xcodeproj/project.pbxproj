@@ -108,6 +108,7 @@
 		BBE990E32D2AB31300FAD3FB /* ErrorSnackbar.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E22D2AB31200FAD3FB /* ErrorSnackbar.mp3 */; };
 		BBE990E52D2AB3D100FAD3FB /* CloseSheet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E42D2AB3D100FAD3FB /* CloseSheet.mp3 */; };
 		BBE990E72D2ABE8B00FAD3FB /* ProgressUpdate.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */; };
+		BBFB3B072D3D37F2001997A8 /* ModerationExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFB3B062D3D37F2001997A8 /* ModerationExplanationView.swift */; };
 		BBFDBBE92D203AD80056C448 /* DefinitionsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFDBBE82D203AD80056C448 /* DefinitionsChartView.swift */; };
 		BBFDBBEB2D203F080056C448 /* DefinitionsProgressSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFDBBEA2D203F080056C448 /* DefinitionsProgressSheetView.swift */; };
 /* End PBXBuildFile section */
@@ -248,6 +249,7 @@
 		BBE990E22D2AB31200FAD3FB /* ErrorSnackbar.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ErrorSnackbar.mp3; sourceTree = "<group>"; };
 		BBE990E42D2AB3D100FAD3FB /* CloseSheet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CloseSheet.mp3; sourceTree = "<group>"; };
 		BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ProgressUpdate.mp3; sourceTree = "<group>"; };
+		BBFB3B062D3D37F2001997A8 /* ModerationExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationExplanationView.swift; sourceTree = "<group>"; };
 		BBFDBBE82D203AD80056C448 /* DefinitionsChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionsChartView.swift; sourceTree = "<group>"; };
 		BBFDBBEA2D203F080056C448 /* DefinitionsProgressSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionsProgressSheetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -507,6 +509,7 @@
 				BBFDBBEA2D203F080056C448 /* DefinitionsProgressSheetView.swift */,
 				BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */,
 				BB6DD09C2D39BCF900EF6AF9 /* StoryPromptSettingsView.swift */,
+				BBFB3B062D3D37F2001997A8 /* ModerationExplanationView.swift */,
 				BB6DD09A2D39BB9700EF6AF9 /* LanguageSettingsView.swift */,
 				BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */,
 				BBAE07D02D0C793000DA95CD /* SubscriptionView.swift */,
@@ -821,6 +824,7 @@
 				BB4EDB0A2C90C8F100699E7D /* FlowTaleEnvironment.swift in Sources */,
 				BB7B6D9E2D1F31190030344A /* SnackBarState.swift in Sources */,
 				BBE990BD2D29C56D00FAD3FB /* MusicAudioState.swift in Sources */,
+				BBFB3B072D3D37F2001997A8 /* ModerationExplanationView.swift in Sources */,
 				BB6572D62CD4E09000AC5981 /* ActionButton.swift in Sources */,
 				BBE16F242CC2AFC800A7EF1F /* ChapterListView.swift in Sources */,
 				BB4EDB032C90C86300699E7D /* FlowTaleStore.swift in Sources */,

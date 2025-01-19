@@ -19,6 +19,9 @@ struct ViewState {
     var isShowingDefinitionsChartView = false
     var isShowingSubscriptionSheet = false
     var isShowingCustomPromptAlert = false
+    var isShowingModerationFailedAlert = false
+    
+    var isShowingModerationDetails = false
 
     var isAutoscrollEnabled = false
     var isDefining = false

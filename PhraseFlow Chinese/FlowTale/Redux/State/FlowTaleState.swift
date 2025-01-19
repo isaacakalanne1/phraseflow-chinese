@@ -19,6 +19,7 @@ struct FlowTaleState {
     var appAudioState = AppAudioState()
     var musicAudioState = MusicAudioState()
     var locale: Locale
+    var moderationResponse: ModerationResponse?
 
     var currentTappedWord: WordTimeStampData?
 

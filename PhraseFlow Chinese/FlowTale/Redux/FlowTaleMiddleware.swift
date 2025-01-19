@@ -400,7 +400,10 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .updateCustomPrompt,
             .updateIsShowingCustomPromptAlert,
             .onLoadedChapters,
-            .failedToLoadChapters:
+            .failedToLoadChapters,
+            .dismissFailedModerationAlert,
+            .showModerationDetails,
+            .updateIsShowingModerationDetails:
         return nil
     }
 }

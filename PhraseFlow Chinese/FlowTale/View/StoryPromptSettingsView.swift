@@ -107,7 +107,6 @@ struct StoryPromptSettingsView: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-
         VStack {
             StoryPromptMenu()
 
@@ -116,6 +115,41 @@ struct StoryPromptSettingsView: View {
             }
             .padding()
         }
+        // Attach the alert:
+        .alert(
+            "This story didn't pass moderation",
+            isPresented: Binding<Bool>(
+                get: { store.state.viewState.isShowingModerationFailedAlert },
+                set: { newValue in
+                    if !newValue {
+                        store.dispatch(.dismissFailedModerationAlert)
+                    }
+                }
+            ),
+            actions: {
+                Button("Why?") {
+                    store.dispatch(.showModerationDetails)
+                }
+                Button("OK") {
+                    store.dispatch(.dismissFailedModerationAlert)
+                }
+            },
+            message: {
+                Text("We check story ideas to ensure they align with our AI provider’s policies.")
+            }
+        )
+        // If you are using iOS 16 NavigationStack with .navigationDestination, do that below
+        .navigationDestination(
+            isPresented: Binding<Bool>(
+                get: { store.state.viewState.isShowingModerationDetails },
+                set: {
+                    if !$0 {
+                        store.dispatch(.updateIsShowingModerationDetails(isShowing: false))
+                    }
+                }
+            )
+        ) {
+            ModerationExplanationView()
+        }
     }
-
 }

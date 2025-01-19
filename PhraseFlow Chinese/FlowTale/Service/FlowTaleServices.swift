@@ -27,39 +27,140 @@ struct ModerationRequest: Codable {
     let input: String
 }
 
-/// The top-level response from the Moderation API.
-struct ModerationResponse: Codable {
-    let id: String
-    let model: String
-    let results: [ModerationResult]
+enum ModerationCategories: CaseIterable {
+    case sexual
+    case sexualMinors
+    case violenceGraphic
+    case selfHarmIntent
+    case selfHarmInstructions
+    case illicitViolent
 
-    var checkedCategories: [String] {
-        [
-            "sexual",
-            "sexual/minors",
-            "violence/graphic",
-            "self-harm/intent",
-            "self-harm/instructions",
-            "illicit/violent"
-        ]
+    /// Human-readable name you want to display in the UI
+    var name: String {
+        switch self {
+        case .sexual:
+            return "Sexual"
+        case .sexualMinors:
+            return "Sexual content involving minors"
+        case .violenceGraphic:
+            return "Graphic Violence"
+        case .selfHarmIntent:
+            return "Self Harm (Intent)"
+        case .selfHarmInstructions:
+            return "Self Harm (Instructions)"
+        case .illicitViolent:
+            return "Illicit Violence"
+        }
     }
 
-    var didPassModeration: Bool {
-        if let sexualScore = results.first?.category_scores["sexual"] as? Double,
-           let minorScore = results.first?.category_scores["sexual/minors"] as? Double {
-            return sexualScore < 0.7 && minorScore < 0.7
+    /// Key to use when looking up the category_scores dictionary from the API
+    var key: String {
+        switch self {
+        case .sexual:
+            return "sexual"
+        case .sexualMinors:
+            return "sexual/minors"
+        case .violenceGraphic:
+            return "violence/graphic"
+        case .selfHarmIntent:
+            return "self-harm/intent"
+        case .selfHarmInstructions:
+            return "self-harm/instructions"
+        case .illicitViolent:
+            return "illicit/violent"
         }
-        return true
+    }
+
+    /// The threshold above which the story fails moderation
+    var thresholdScore: Double {
+        switch self {
+        case .sexual:
+            return 0.8
+        case .sexualMinors:
+            return 0.2
+        case .violenceGraphic:
+            return 0.7
+        case .selfHarmIntent:
+            return 0.2
+        case .selfHarmInstructions:
+            return 0.2
+        case .illicitViolent:
+            return 0.2
+        }
     }
 }
 
-/// A single result object in the Moderation API’s response.
+/// A single result object in the Moderation API’s response
 struct ModerationResult: Codable {
     let flagged: Bool
     let categories: [String: Bool]
     let category_scores: [String: Double]
     let category_applied_input_types: [String: [String]]
 }
+
+/// The top-level response from the Moderation API
+struct ModerationResponse: Codable {
+    let id: String
+    let model: String
+    let results: [ModerationResult]
+
+    /// Returns `true` if all categories are below threshold
+    var didPassModeration: Bool {
+        guard let firstResult = results.first else {
+            // If no results, consider it “passed” or handle as needed
+            return true
+        }
+        for category in ModerationCategories.allCases {
+            // Use category.key, not category.name
+            let score = firstResult.category_scores[category.key] ?? 0.0
+            if score >= category.thresholdScore {
+                return false
+            }
+        }
+        return true
+    }
+
+    /// Returns an array of category results (threshold + actual score)
+    /// so you can display them in your "Why didn't it pass?" UI.
+    var categoryResults: [CategoryResult] {
+        guard let firstResult = results.first else {
+            return []
+        }
+
+        return ModerationCategories.allCases.map { category in
+            let score = firstResult.category_scores[category.key] ?? 0.0
+            return CategoryResult(
+                category: category,
+                threshold: category.thresholdScore,
+                score: score
+            )
+        }
+    }
+}
+
+/// A model that ties together the category, the threshold, and the actual score.
+struct CategoryResult: Identifiable {
+    let id = UUID()
+
+    let category: ModerationCategories
+    let threshold: Double
+    let score: Double
+
+    /// Did this particular category pass (score < threshold)?
+    var didPass: Bool {
+        score < threshold
+    }
+
+    /// For easy display in the UI: "80%" or "92%" etc.
+    var thresholdPercentageString: String {
+        "\(Int(threshold * 100))%"
+    }
+
+    var scorePercentageString: String {
+        "\(Int(score * 100))%"
+    }
+}
+
 
 protocol FlowTaleServicesProtocol {
     func generateStory(story: Story) async throws -> String

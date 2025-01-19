@@ -41,6 +41,9 @@ struct ContentView: View {
                     .padding(.horizontal, 10)
             }
         }
+        .onAppear {
+            startTimer()
+        }
         // 2) Whenever the `currentStory` changes, if it has no chapters, load them
         .onChange(of: store.state.storyState.currentStory) { newStory in
             guard let story = newStory else { return }

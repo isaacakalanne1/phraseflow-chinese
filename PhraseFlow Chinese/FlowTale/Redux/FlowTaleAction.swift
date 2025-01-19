@@ -24,6 +24,12 @@ enum FlowTaleAction {
     case onTranslatedStory(story: Story)
     case failedToTranslateStory(story: Story, storyString: String)
 
+    case didNotPassModeration
+    case dismissFailedModerationAlert
+    case showModerationDetails
+
+    case updateIsShowingModerationDetails(isShowing: Bool)
+
     case failedToSaveStory
 
     case saveStoryAndSettings(Story)
@@ -139,7 +145,6 @@ enum FlowTaleAction {
     case failedToModerateText
 
     case passedModeration(String)
-    case didNotPassModeration
 
     case updateStorySetting(StorySetting)
     case updateIsShowingCustomPromptAlert(Bool)
