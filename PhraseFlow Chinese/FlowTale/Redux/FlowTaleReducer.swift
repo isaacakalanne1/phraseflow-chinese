@@ -47,6 +47,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         // If you also keep a `currentStory`, and it's the same story, update that too:
         if newState.storyState.currentStory?.id == story.id {
             newState.storyState.currentStory?.chapters = chapters
+            let data = newState.storyState.currentChapterAudioData
+            let player = data?.createAVPlayer()
+            newState.audioState.audioPlayer = player ?? AVPlayer()
         }
 
         return newState
