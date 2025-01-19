@@ -17,7 +17,7 @@ struct StoryListView: View {
                 List {
                     Section {
                         ForEach(store.state.storyState.savedStories, id: \.self) { story in
-                            NavigationLink(destination: ChapterListView(story: story)) {
+                            NavigationLink(destination: ChapterListView(storyId: story.id)) {
                                 VStack(alignment: .leading, content: {
                                     HStack {
                                         Group {
