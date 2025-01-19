@@ -12,8 +12,6 @@ import StoreKit
 enum FlowTaleAction {
     case updateShowingSettings(isShowing: Bool)
     case updateShowingStoryListView(isShowing: Bool)
-    case updateShowingStudyView(isShowing: Bool)
-    case updateShowingDefinitionsChartView(isShowing: Bool)
     case updateAutoScrollEnabled(isEnabled: Bool)
     case updateSentenceIndex(Int)
 

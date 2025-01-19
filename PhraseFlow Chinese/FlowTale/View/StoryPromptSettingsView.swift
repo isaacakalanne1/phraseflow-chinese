@@ -115,6 +115,7 @@ struct StoryPromptSettingsView: View {
             }
             .padding()
         }
+        .background(FlowTaleColor.background)
         // Attach the alert:
         .alert(
             "This story didn't pass moderation",

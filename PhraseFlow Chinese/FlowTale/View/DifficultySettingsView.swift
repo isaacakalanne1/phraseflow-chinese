@@ -52,7 +52,6 @@ struct DifficultyMenu: View {
 }
 
 struct DifficultySettingsView: View {
-    @EnvironmentObject var store: FlowTaleStore
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
@@ -64,5 +63,6 @@ struct DifficultySettingsView: View {
             }
             .padding()
         }
+        .background(FlowTaleColor.background)
     }
 }

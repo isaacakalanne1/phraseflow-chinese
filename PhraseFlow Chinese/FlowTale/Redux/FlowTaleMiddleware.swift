@@ -394,8 +394,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .onRestoredSubscriptions,
             .failedToRestoreSubscriptions,
             .setSubscriptionSheetShowing,
-            .updateShowingStudyView,
-            .updateShowingDefinitionsChartView,
             .updateAutoScrollEnabled,
             .hideSnackbar,
             .updateCustomPrompt,

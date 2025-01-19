@@ -15,12 +15,10 @@ struct ViewState {
 
     var isShowingSettingsScreen = false
     var isShowingStoryListView = false
-    var isShowingStudyView = false
-    var isShowingDefinitionsChartView = false
     var isShowingSubscriptionSheet = false
     var isShowingCustomPromptAlert = false
     var isShowingModerationFailedAlert = false
-    
+
     var isShowingModerationDetails = false
 
     var isAutoscrollEnabled = false

@@ -26,14 +26,12 @@ protocol FlowTaleDataStoreProtocol {
     func loadDefinitions() throws -> [Definition]
     func saveDefinition(_ definition: Definition) throws
     func saveDefinitions(_ definitions: [Definition]) throws
-    func deleteAllDefinitions() throws
     func deleteDefinitions(for storyId: UUID) throws
 
     // Stories & Chapters
     func saveStory(_ story: Story) throws
     func loadStory(by id: UUID) throws -> Story
     func loadAllStories() throws -> [Story]
-    func deleteStory(_ storyId: UUID) throws
 
     // Chapters
     func saveChapter(_ chapter: Chapter, storyId: UUID, chapterIndex: Int) throws
@@ -126,29 +124,6 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         } catch {
             throw FlowTaleDataStoreError.failedToSaveData
         }
-    }
-
-    // MARK: - Delete All Definitions
-    func deleteAllDefinitions() throws {
-        guard let fileURL = documentsDirectory?.appendingPathComponent("definitions.json") else {
-            throw FlowTaleDataStoreError.failedToCreateUrl
-        }
-
-        // Option A: Simply remove the file
-        if FileManager.default.fileExists(atPath: fileURL.path) {
-            do {
-                try FileManager.default.removeItem(at: fileURL)
-            } catch {
-                throw FlowTaleDataStoreError.failedToSaveData
-            }
-        }
-
-        // Option B: Overwrite with an empty array instead
-        /*
-        let encoder = JSONEncoder()
-        let emptyData = try encoder.encode([Definition]())
-        try emptyData.write(to: fileURL)
-        */
     }
 
     // MARK: - Delete Definitions by Story ID
@@ -252,15 +227,6 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         }
 
         return stories
-    }
-
-    /// Deletes just the main story file. Does NOT remove chapters.
-    func deleteStory(_ storyId: UUID) throws {
-        let url = try fileURL(for: storyId, chapterIndex: 0)
-        guard fileManager.fileExists(atPath: url.path) else {
-            throw FlowTaleDataStoreError.storyNotFound
-        }
-        try fileManager.removeItem(at: url)
     }
 
     // ---------------------------------------

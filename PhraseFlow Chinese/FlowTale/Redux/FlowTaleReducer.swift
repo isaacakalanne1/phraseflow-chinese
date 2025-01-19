@@ -125,10 +125,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.isShowingSettingsScreen = isShowing
     case .updateShowingStoryListView(let isShowing):
         newState.viewState.isShowingStoryListView = isShowing
-    case .updateShowingStudyView(let isShowing):
-        newState.viewState.isShowingStudyView = isShowing
-    case .updateShowingDefinitionsChartView(let isShowing):
-        newState.viewState.isShowingDefinitionsChartView = isShowing
     case .updateAutoScrollEnabled(let isEnabled):
         newState.viewState.isAutoscrollEnabled = isEnabled
     case .selectChapter(var story, let chapterIndex):
