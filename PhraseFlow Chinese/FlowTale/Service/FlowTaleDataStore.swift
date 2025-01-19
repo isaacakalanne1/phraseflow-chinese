@@ -26,6 +26,8 @@ protocol FlowTaleDataStoreProtocol {
     func loadDefinitions() throws -> [Definition]
     func saveDefinition(_ definition: Definition) throws
     func saveDefinitions(_ definitions: [Definition]) throws
+    func deleteAllDefinitions() throws
+    func deleteDefinitions(for storyId: UUID) throws
 
     // Stories & Chapters
     func saveStory(_ story: Story) throws
@@ -124,6 +126,43 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         } catch {
             throw FlowTaleDataStoreError.failedToSaveData
         }
+    }
+
+    // MARK: - Delete All Definitions
+    func deleteAllDefinitions() throws {
+        guard let fileURL = documentsDirectory?.appendingPathComponent("definitions.json") else {
+            throw FlowTaleDataStoreError.failedToCreateUrl
+        }
+
+        // Option A: Simply remove the file
+        if FileManager.default.fileExists(atPath: fileURL.path) {
+            do {
+                try FileManager.default.removeItem(at: fileURL)
+            } catch {
+                throw FlowTaleDataStoreError.failedToSaveData
+            }
+        }
+
+        // Option B: Overwrite with an empty array instead
+        /*
+        let encoder = JSONEncoder()
+        let emptyData = try encoder.encode([Definition]())
+        try emptyData.write(to: fileURL)
+        */
+    }
+
+    // MARK: - Delete Definitions by Story ID
+    func deleteDefinitions(for storyId: UUID) throws {
+        // 1. Read current definitions
+        let currentDefinitions = try loadDefinitions()
+
+        // 2. Filter out all definitions that match the given storyId
+        let filteredDefinitions = currentDefinitions.filter {
+            $0.timestampData.storyId != storyId
+        }
+
+        // 3. Save the updated list
+        try saveDefinitions(filteredDefinitions)
     }
 
     // ---------------------------------------

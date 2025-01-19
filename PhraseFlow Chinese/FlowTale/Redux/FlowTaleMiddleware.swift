@@ -80,6 +80,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         }
     case .deleteStory(let story):
         do {
+            try environment.deleteDefinitions(for: story.id)
             try environment.unsaveStory(story)
             return .onDeletedStory
         } catch {
