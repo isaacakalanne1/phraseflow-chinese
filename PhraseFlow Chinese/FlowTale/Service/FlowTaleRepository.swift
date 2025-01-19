@@ -141,7 +141,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
         switch language {
         case .mandarinChinese,
                 .japanese:
-//            word = word.replacingOccurrences(of: " ", with: "") // This code may not be necessary
+            word = word.replacingOccurrences(of: " ", with: "") // This code may not be necessary
             break
         default:
             word = word + " "

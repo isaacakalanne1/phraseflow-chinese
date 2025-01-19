@@ -186,7 +186,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
                 deviceLanguage: deviceLanguage
             )
 
-            if let tappedDefinition = fetchedDefinitions.first(where: { $0.timestampData.id == timeStampData.id }) {
+            if let tappedDefinition = fetchedDefinitions.first(where: { $0.timestampData == timeStampData }) {
                 return .onDefinedSentence(fetchedDefinitions, tappedDefinition: tappedDefinition)
             }
             return nil

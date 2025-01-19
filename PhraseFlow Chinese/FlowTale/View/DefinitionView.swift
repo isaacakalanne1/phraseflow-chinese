@@ -25,7 +25,7 @@ struct DefinitionView: View {
                         if let definition = store.state.definitionState.currentDefinition {
                             ScrollView(.vertical) {
                                 VStack(alignment: .leading) {
-                                    HStack {
+                                    HStack(alignment: .top) {
                                         Text("✏️ " + definition.detail.definition)
                                         Spacer()
                                         Text("🗣️ " + definition.detail.pronunciation)
