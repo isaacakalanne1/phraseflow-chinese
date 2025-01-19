@@ -22,13 +22,14 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.loadingState = .generatingImage
     case .onLoadedStories(let stories, _):
         newState.storyState.savedStories = stories
+        newState.viewState.readerDisplayType = .normal
+        
         if newState.storyState.currentStory == nil,
            let currentStory = stories.first {
             newState.storyState.currentStory = currentStory
             let data = newState.storyState.currentChapterAudioData
             let player = data?.createAVPlayer()
             newState.audioState.audioPlayer = player ?? AVPlayer()
-            newState.viewState.readerDisplayType = .normal
         }
     case .onLoadedChapters(let story, let chapters):
         // 1) Find this story in savedStories (or currentStory)

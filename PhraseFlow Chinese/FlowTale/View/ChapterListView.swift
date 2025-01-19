@@ -9,11 +9,12 @@ import SwiftUI
 
 struct ChapterListView: View {
     @EnvironmentObject var store: FlowTaleStore
-
     let story: Story
 
-    var body: some View {
+    /// Local loading state for chapters
+    @State private var isLoadingChapters = false
 
+    var body: some View {
         VStack(spacing: 5) {
             GeometryReader { proxy in
                 Group {
@@ -25,9 +26,13 @@ struct ChapterListView: View {
                         EmptyView()
                     }
                 }
-                .frame(maxWidth: .infinity, idealHeight: proxy.size.width/2, alignment: .center)
+                .frame(
+                    maxWidth: .infinity,
+                    idealHeight: proxy.size.width / 2,
+                    alignment: .center
+                )
             }
-            
+
             Group {
                 HStack {
                     Text(story.title)
@@ -41,24 +46,36 @@ struct ChapterListView: View {
                     .font(.system(size: 15, weight: .light))
             }
             .padding()
-            List {
-                Section {
-                    ForEach(Array(story.chapters.reversed().enumerated()), id: \.offset) { (index, chapter) in
-                        Button(action: {
-                            withAnimation(.easeInOut) {
-                                store.dispatch(.playSound(.openChapter))
-                                store.dispatch(.selectChapter(story, chapterIndex: story.chapters.count - 1 - index))
+
+            // MARK: - Show Spinner if We're Loading & No Chapters Yet
+            if story.chapters.isEmpty && isLoadingChapters {
+                ProgressView("Loading chapters...")
+                    .frame(maxHeight: .infinity)
+            } else {
+                // MARK: - Chapters List
+                List {
+                    Section {
+                        ForEach(Array(story.chapters.reversed().enumerated()), id: \.offset) { (index, chapter) in
+                            Button {
+                                withAnimation(.easeInOut) {
+                                    store.dispatch(.playSound(.openChapter))
+                                    // Convert reversed() index back to original:
+                                    let chapterIndex = story.chapters.count - 1 - index
+                                    store.dispatch(.selectChapter(story, chapterIndex: chapterIndex))
+                                }
+                            } label: {
+                                Text(chapter.title)
+                                    .foregroundColor(.primary)
                             }
-                        }) {
-                            Text(chapter.title)
-                                .foregroundColor(.primary)
                         }
+                    } header: {
+                        Text(LocalizedString.chapters)
                     }
-                } header: {
-                    Text(LocalizedString.chapters)
                 }
+                .frame(maxHeight: .infinity)
             }
-            .frame(maxHeight: .infinity)
+
+            // MARK: - "New Chapter" Button
             Button(LocalizedString.newChapter) {
                 store.dispatch(.selectTab(.reader, shouldPlaySound: false))
                 store.dispatch(.continueStory(story: story))
@@ -71,14 +88,23 @@ struct ChapterListView: View {
             .cornerRadius(10)
         }
         .navigationTitle(LocalizedString.chooseChapter)
-        .onAppear {
-            store.dispatch(.playSound(.openStory))
-        }
         .background(FlowTaleColor.background)
         .scrollContentBackground(.hidden)
+
+        // MARK: - onAppear
         .onAppear {
-            store.dispatch(.loadChapters(story))
+            store.dispatch(.playSound(.openStory))
+            // If the chapters are empty, start loading
+            if story.chapters.isEmpty {
+                isLoadingChapters = true
+                store.dispatch(.loadChapters(story))
+            }
+        }
+        // MARK: - Detect When Chapters Come In
+        .onChange(of: story.chapters) { newChapters in
+            // Once the store updates `story.chapters`, turn off the spinner
+            // (Even if still empty, you might want to hide the spinner to indicate "No chapters.")
+            isLoadingChapters = false
         }
     }
-
 }

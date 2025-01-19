@@ -24,8 +24,9 @@ struct ContentView: View {
                 case .initialising:
                     ProgressView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
+
                 case .loading,
-                        .normal:
+                     .normal:
                     ZStack(alignment: .topTrailing) {
                         mainContent()
                         if let chapter = store.state.storyState.currentChapter {
@@ -40,48 +41,62 @@ struct ContentView: View {
                     .padding(.horizontal, 10)
             }
         }
-        .onAppear {
-            startTimer()
+        // 2) Whenever the `currentStory` changes, if it has no chapters, load them
+        .onChange(of: store.state.storyState.currentStory) { newStory in
+            guard let story = newStory else { return }
+            // If the story is "bare" (chapters is empty), load chapters
+            if story.chapters.isEmpty {
+                store.dispatch(.loadChapters(story))
+            }
         }
         .sheet(isPresented: isShowingSubscriptionView) {
             SubscriptionView()
                 .presentationDragIndicator(.hidden)
                 .presentationDetents([.fraction(0.55)])
         }
-        .onChange(of: store.state.viewState.loadingState, { oldValue, newValue in
+        .onChange(of: store.state.viewState.loadingState) { oldValue, newValue in
             if newValue != .complete,
                newValue != .writing {
                 store.dispatch(.playSound(.progressUpdate))
             }
-        })
+        }
         .background(FlowTaleColor.background)
         .tint(FlowTaleColor.accent)
     }
 
+    // MARK: - Main Content
     @ViewBuilder
     private func mainContent() -> some View {
         switch store.state.viewState.contentTab {
         case .reader:
             if store.state.viewState.readerDisplayType == .loading {
                 LoadingView()
-            } else if let chapter = store.state.storyState.currentChapter {
-                ReaderView(chapter: chapter)
+            } else if let story = store.state.storyState.currentStory {
+                ReaderView(chapter: story.chapters.last)
             } else {
+                // If no currentStory or no chapters, show Onboarding
+                // (This is the scenario where we haven't loaded
+                // or don't have any stories yet.)
                 NavigationStack {
                     LanguageOnboardingView()
                 }
             }
+
         case .storyList:
             StoryListView()
+
         case .study:
             StudyView()
+
         case .progress:
             DefinitionsProgressSheetView()
+
         case .settings:
             SettingsView()
         }
     }
 
+    // MARK: - Overlay
     @ViewBuilder
     private func overlayView(chapter: Chapter) -> some View {
         VStack(alignment: .trailing) {
@@ -99,25 +114,23 @@ struct ContentView: View {
     }
 
 
+    // MARK: - Timer
     func startTimer() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-
             if store.state.audioState.isPlayingAudio {
                 store.dispatch(.updatePlayTime)
             }
-
             startTimer()
         }
     }
 
+    // MARK: - Audio Button
     @ViewBuilder
     func audioButton(chapter: Chapter) -> some View {
         let buttonSize: CGFloat = 50
         if store.state.viewState.readerDisplayType == .normal {
             if store.state.viewState.playButtonDisplayType == .loading {
-                Button {
-
-                } label: {
+                Button {} label: {
                     SystemImageView(.ellipsis, size: buttonSize)
                 }
                 .disabled(true)
@@ -142,8 +155,8 @@ struct ContentView: View {
                     }
                 } else {
                     Button {
-                        let timestampData = store.state.storyState.currentChapter?.audio.timestamps
-                        let currentSpokenWord = store.state.currentSpokenWord ?? timestampData?.first
+                        let timestamps = chapter.audio.timestamps
+                        let currentSpokenWord = store.state.currentSpokenWord ?? timestamps.first
                         store.dispatch(.playAudio(time: currentSpokenWord?.time))
                         store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
                     } label: {
