@@ -245,7 +245,8 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
             )
             let chapter = Chapter(title: chapterResponse.chapterNumberAndTitle ?? "",
                                   sentences: sentences,
-                                  audio: .init(timestamps: [], data: Data()))
+                                  audio: .init(timestamps: [], data: Data()),
+                                  passage: storyString)
 
             var story = story
             if story.chapters.isEmpty {
@@ -360,7 +361,7 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
                   sentence: sentence,
                   detail: wordDef,
                   definition: fullDefinitionText,
-                  language: deviceLanguage
+                  language: story.language
               )
           }
 
@@ -434,6 +435,7 @@ Write the definition in \(deviceLanguage.displayName).
 Format the following story into JSON. Translate each English sentence into \(deviceLanguage == .english ? "" : "\(deviceLanguage.descriptiveEnglishName) and ") \(story.language.descriptiveEnglishName).
 Ensure each sentence entry is for an individual sentence.
 Translate the whole sentence, including names and places.
+This is chapter \(story.chapters.count + 1)
 In the briefLatestStorySummary section of the JSON, don't mention "In chapter X", "In this chapter", or anything similar to this.
 """
         var requestBody: [String: Any] = [

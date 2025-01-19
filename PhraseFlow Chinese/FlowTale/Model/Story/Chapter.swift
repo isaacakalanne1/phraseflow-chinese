@@ -13,16 +13,33 @@ struct Chapter: Codable, Equatable, Hashable {
     var audioVoice: Voice?
     var audioSpeed: SpeechSpeed?
     var audio: ChapterAudio
+    var passage: String
 
-    var passageWithoutNewLines: String {
-        sentences.reduce("") { $0 + $1.original }
+    init(title: String,
+         sentences: [Sentence],
+         audioVoice: Voice? = nil,
+         audioSpeed: SpeechSpeed? = nil,
+         audio: ChapterAudio,
+         passage: String) {
+        self.title = title
+        self.sentences = sentences
+        self.audioVoice = audioVoice
+        self.audioSpeed = audioSpeed
+        self.audio = audio
+        self.passage = passage
     }
 
-    var passage: String {
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.sentences = try container.decode([Sentence].self, forKey: .sentences)
+        self.audioVoice = try container.decodeIfPresent(Voice.self, forKey: .audioVoice)
+        self.audioSpeed = try container.decodeIfPresent(SpeechSpeed.self, forKey: .audioSpeed)
+        self.audio = try container.decode(ChapterAudio.self, forKey: .audio)
         let newLine = """
 
 
 """
-        return sentences.reduce("") { $0 + newLine + $1.original }
+        self.passage = (try? container.decode(String.self, forKey: .audio)) ?? sentences.reduce("") { $0 + newLine + $1.original }
     }
 }

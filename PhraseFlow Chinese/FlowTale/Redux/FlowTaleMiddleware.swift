@@ -175,7 +175,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
                   let deviceLanguage = state.deviceLanguage,
                   let currentSentence = state.storyState.currentSentence,
                   let sentenceIndex = state.storyState.currentStory?.currentSentenceIndex else {
-                return nil
+                return .failedToDefineCharacter
             }
 
             let fetchedDefinitions = try await environment.fetchDefinitions(
@@ -189,7 +189,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             if let tappedDefinition = fetchedDefinitions.first(where: { $0.timestampData == timeStampData }) {
                 return .onDefinedSentence(fetchedDefinitions, tappedDefinition: tappedDefinition)
             }
-            return nil
+            return .failedToDefineCharacter
         } catch {
             return .failedToDefineCharacter
         }
