@@ -34,8 +34,11 @@ struct ContentView: View {
                     }
                 }
             }
-            ActionButtonsView()
-                .padding(.horizontal, 10)
+            if store.state.viewState.readerDisplayType != .loading,
+               store.state.storyState.currentChapter != nil {
+                ActionButtonsView()
+                    .padding(.horizontal, 10)
+            }
         }
         .onAppear {
             startTimer()
@@ -64,7 +67,9 @@ struct ContentView: View {
             } else if let chapter = store.state.storyState.currentChapter {
                 ReaderView(chapter: chapter)
             } else {
-                CreateStorySettingsView()
+                NavigationStack {
+                    LanguageOnboardingView()
+                }
             }
         case .storyList:
             StoryListView()

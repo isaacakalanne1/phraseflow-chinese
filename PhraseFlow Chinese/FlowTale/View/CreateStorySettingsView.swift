@@ -61,20 +61,7 @@ struct CreateStorySettingsView: View {
             }
             .frame(maxHeight: .infinity)
 
-            Button {
-                store.dispatch(.playSound(.createStory))
-                store.dispatch(.selectTab(.reader, shouldPlaySound: false))
-                store.dispatch(.continueStory(story: store.state.createNewStory()))
-            } label: {
-                HStack(spacing: 5) {
-                    DifficultyView(difficulty: store.state.settingsState.difficulty, color: FlowTaleColor.primary)
-                    Text(store.state.settingsState.language.flagEmoji + " " + LocalizedString.newStory)
-                }
-                .padding()
-                .background(FlowTaleColor.accent)
-                .foregroundColor(.white)
-                .cornerRadius(10)
-            }
+            CreateStoryButton()
         }
         .navigationTitle(store.state.storyState.currentStory == nil ? LocalizedString.createStory : LocalizedString.storySettings)
         .background(FlowTaleColor.background)
@@ -88,5 +75,26 @@ struct CreateStorySettingsView: View {
         guard let index = offsets.first,
               let prompt = store.state.settingsState.customPrompts[safe: index] else { return }
         store.dispatch(.deleteCustomPrompt(prompt))
+    }
+}
+
+struct CreateStoryButton: View {
+    @EnvironmentObject var store: FlowTaleStore
+
+    var body: some View {
+        Button {
+            store.dispatch(.playSound(.createStory))
+            store.dispatch(.selectTab(.reader, shouldPlaySound: false))
+            store.dispatch(.continueStory(story: store.state.createNewStory()))
+        } label: {
+            HStack(spacing: 5) {
+                DifficultyView(difficulty: store.state.settingsState.difficulty, color: FlowTaleColor.primary)
+                Text(store.state.settingsState.language.flagEmoji + " " + LocalizedString.newStory)
+            }
+            .padding()
+            .background(FlowTaleColor.accent)
+            .foregroundColor(.white)
+            .cornerRadius(10)
+        }
     }
 }

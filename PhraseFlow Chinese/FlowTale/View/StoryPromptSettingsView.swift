@@ -7,9 +7,18 @@
 
 import SwiftUI
 
-struct StoryPromptSettingsView: View {
+struct StoryPromptOnboardingView: View {
+    var body: some View {
+        VStack {
+            StoryPromptMenu()
+            CreateStoryButton()
+        }
+        .background(FlowTaleColor.background)
+    }
+}
+
+struct StoryPromptMenu: View {
     @EnvironmentObject var store: FlowTaleStore
-    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         let isRandomPromptSelected = store.state.settingsState.storySetting == .random
@@ -26,54 +35,47 @@ struct StoryPromptSettingsView: View {
             store.dispatch(.updateCustomPrompt(newValue))
         }
 
-        VStack {
-            List {
-                Section {
+        List {
+            Section {
 
-                    Button {
-                        store.dispatch(.updateIsShowingCustomPromptAlert(true))
-                    } label: {
-                        Text("Custom Story...")
-                            .fontWeight(.light)
-                            .foregroundStyle(FlowTaleColor.primary)
-                    }
-                    .listRowBackground(Color(uiColor: UIColor.secondarySystemGroupedBackground))
+                Button {
+                    store.dispatch(.updateIsShowingCustomPromptAlert(true))
+                } label: {
+                    Text("Custom Story...")
+                        .fontWeight(.light)
+                        .foregroundStyle(FlowTaleColor.primary)
+                }
+                .listRowBackground(Color(uiColor: UIColor.secondarySystemGroupedBackground))
+
+                Button {
+                    store.dispatch(.playSound(.changeSettings))
+                    store.dispatch(.updateStorySetting(.random))
+                } label: {
+                    Text("Random")
+                        .fontWeight(isRandomPromptSelected ? .medium : .light)
+                        .foregroundStyle(isRandomPromptSelected ? FlowTaleColor.accent : FlowTaleColor.primary)
+                }
+                .listRowBackground(isRandomPromptSelected ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
+
+                ForEach(store.state.settingsState.customPrompts, id: \.self) { prompt in
+                    let isSelectedPrompt = store.state.settingsState.storySetting == .customPrompt(prompt)
 
                     Button {
                         store.dispatch(.playSound(.changeSettings))
-                        store.dispatch(.updateStorySetting(.random))
+                        store.dispatch(.updateStorySetting(.customPrompt(prompt)))
                     } label: {
-                        Text("Random")
-                            .fontWeight(isRandomPromptSelected ? .medium : .light)
-                            .foregroundStyle(isRandomPromptSelected ? FlowTaleColor.accent : FlowTaleColor.primary)
+                        Text(prompt.capitalized)
+                            .fontWeight(isSelectedPrompt ? .medium : .light)
+                            .foregroundStyle(isSelectedPrompt ? FlowTaleColor.accent : FlowTaleColor.primary)
                     }
-                    .listRowBackground(isRandomPromptSelected ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
-
-                    ForEach(store.state.settingsState.customPrompts, id: \.self) { prompt in
-                        let isSelectedPrompt = store.state.settingsState.storySetting == .customPrompt(prompt)
-
-                        Button {
-                            store.dispatch(.playSound(.changeSettings))
-                            store.dispatch(.updateStorySetting(.customPrompt(prompt)))
-                        } label: {
-                            Text(prompt.capitalized)
-                                .fontWeight(isSelectedPrompt ? .medium : .light)
-                                .foregroundStyle(isSelectedPrompt ? FlowTaleColor.accent : FlowTaleColor.primary)
-                        }
-                        .listRowBackground(isSelectedPrompt ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
-                    }
-                    .onDelete(perform: delete)
-                } header: {
-                    Text("Setting")
+                    .listRowBackground(isSelectedPrompt ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
                 }
+                .onDelete(perform: delete)
+            } header: {
+                Text("Setting")
             }
-
-            PrimaryButton(title: "Done") {
-                dismiss()
-            }
-            .padding()
         }
-        .navigationTitle("Story")
+        .navigationTitle("How do you want the story to start?")
         .background(FlowTaleColor.background)
         .scrollContentBackground(.hidden)
         .alert("Custom", isPresented: isShowingAlert) {
@@ -98,4 +100,22 @@ struct StoryPromptSettingsView: View {
               let prompt = store.state.settingsState.customPrompts[safe: index] else { return }
         store.dispatch(.deleteCustomPrompt(prompt))
     }
+}
+
+struct StoryPromptSettingsView: View {
+    @EnvironmentObject var store: FlowTaleStore
+    @Environment(\.dismiss) var dismiss
+
+    var body: some View {
+
+        VStack {
+            StoryPromptMenu()
+
+            PrimaryButton(title: "Done") {
+                dismiss()
+            }
+            .padding()
+        }
+    }
+
 }

@@ -7,37 +7,59 @@
 
 import SwiftUI
 
+struct LanguageOnboardingView: View {
+    var body: some View {
+        VStack {
+            LanguageMenu()
+            NavigationLink {
+                DifficultyOnboardingView()
+            } label: {
+                PrimaryButton(title: "Next")
+            }
+        }
+        .background(FlowTaleColor.background)
+    }
+}
+
+struct LanguageMenu: View {
+    @EnvironmentObject var store: FlowTaleStore
+
+    var body: some View {
+        List {
+            Section {
+                ForEach(Language.allCases, id: \.self) { language in
+                    Button {
+                        store.dispatch(.playSound(.changeSettings))
+                        store.dispatch(.updateLanguage(language))
+                    } label: {
+                        Text(language.flagEmoji + " " + language.displayName)
+                            .fontWeight(store.state.settingsState.language == language ? .medium : .light)
+                            .foregroundStyle(store.state.settingsState.language == language ? FlowTaleColor.accent : FlowTaleColor.primary)
+                    }
+                    .listRowBackground(store.state.settingsState.language == language ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
+                }
+            } header: {
+                Text("Which language would you like to learn?")
+            }
+        }
+        .navigationTitle("Language")
+        .background(FlowTaleColor.background)
+        .scrollContentBackground(.hidden)
+    }
+}
+
 struct LanguageSettingsView: View {
     @EnvironmentObject var store: FlowTaleStore
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
         VStack {
-            List {
-                Section {
-                    ForEach(Language.allCases, id: \.self) { language in
-                        Button {
-                            store.dispatch(.playSound(.changeSettings))
-                            store.dispatch(.updateLanguage(language))
-                        } label: {
-                            Text(language.flagEmoji + " " + language.displayName)
-                                .fontWeight(store.state.settingsState.language == language ? .medium : .light)
-                                .foregroundStyle(store.state.settingsState.language == language ? FlowTaleColor.accent : FlowTaleColor.primary)
-                        }
-                        .listRowBackground(store.state.settingsState.language == language ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
-                    }
-                } header: {
-                    Text(LocalizedString.language)
-                }
-            }
+            LanguageMenu()
 
             PrimaryButton(title: "Done") {
                 dismiss()
             }
             .padding()
         }
-        .navigationTitle("Language")
-        .background(FlowTaleColor.background)
-        .scrollContentBackground(.hidden)
     }
 }

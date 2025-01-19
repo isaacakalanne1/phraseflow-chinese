@@ -29,7 +29,7 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
 
     init() {
-//        clearData(path: "userData.json")
+        clearData(path: "userData.json")
 //        clearData(path: "definitions.json")
 //        clearData(path: "settingsState.json")
     }
@@ -131,9 +131,12 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
     }
 
     func unsaveStory(_ story: Story) throws {
-        if var stories = try? loadStories() {
+        if var stories = try? loadStories(),
+           var definitions = try? loadDefinitions() {
             stories.removeAll(where: { $0.id == story.id })
+            definitions.removeAll(where: { $0.timestampData.storyId == story.id })
             try saveStories(stories)
+            try saveDefinitions(definitions)
         }
     }
 
