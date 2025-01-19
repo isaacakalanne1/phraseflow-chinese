@@ -166,18 +166,35 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
                !shouldForce {
                 return .onDefinedCharacter(definition)
             }
-            guard let story = state.storyState.currentStory else {
+            guard let story = state.storyState.currentStory,
+                  let chapter  = state.storyState.currentChapter else {
                 return .failedToDefineCharacter
             }
-            let fetchedDefinition = try await environment.fetchDefinition(of: timeStampData,
-                                                                          withinContextOf: sentence,
-                                                                          story: story,
-                                                                          deviceLanguage: state.deviceLanguage)
-            return .onDefinedCharacter(fetchedDefinition)
+
+            guard let story = state.storyState.currentStory,
+                  let deviceLanguage = state.deviceLanguage,
+                  let currentSentence = state.storyState.currentSentence,
+                  let sentenceIndex = state.storyState.currentStory?.currentSentenceIndex else {
+                return nil
+            }
+
+            let fetchedDefinitions = try await environment.fetchDefinitions(
+                for: sentenceIndex,
+                in: currentSentence,
+                chapter: chapter,
+                story: story,
+                deviceLanguage: deviceLanguage
+            )
+
+            if let tappedDefinition = fetchedDefinitions.first(where: { $0.timestampData.id == timeStampData.id }) {
+                return .onDefinedSentence(fetchedDefinitions, tappedDefinition: tappedDefinition)
+            }
+            return nil
         } catch {
             return .failedToDefineCharacter
         }
-    case .onDefinedCharacter:
+    case .onDefinedSentence,
+            .onDefinedCharacter:
         return .saveDefinitions
     case .saveDefinitions:
         do {

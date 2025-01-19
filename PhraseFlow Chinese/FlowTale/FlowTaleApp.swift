@@ -33,7 +33,7 @@ struct FlowTaleApp: App {
                 .onAppear {
                     UIApplication.shared.isIdleTimerDisabled = true
                     store.dispatch(.loadStories(isAppLaunch: true))
-                    store.dispatch(.loadDefinitions)
+//                    store.dispatch(.loadDefinitions)
                     store.dispatch(.loadAppSettings)
                     store.dispatch(.fetchSubscriptions)
                     store.dispatch(.getCurrentEntitlements)

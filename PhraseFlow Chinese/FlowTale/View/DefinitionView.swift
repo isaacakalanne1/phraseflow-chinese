@@ -21,13 +21,26 @@ struct DefinitionView: View {
                                maxHeight: .infinity,
                                alignment: .center)
                 } else {
-                    ScrollView(.vertical) {
-                        Text(store.state.definitionState.currentDefinition?.definition ?? "Tap word to define") // TODO: Localize
-                            .foregroundColor(FlowTaleColor.primary)
-                            .frame(maxWidth: .infinity,
-                                   maxHeight: .infinity,
-                                   alignment: .leading)
+                    Group {
+                        if let definition = store.state.definitionState.currentDefinition {
+                            ScrollView(.vertical) {
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        Text("✏️ " + definition.detail.definition)
+                                        Spacer()
+                                        Text("🗣️ " + definition.detail.pronunciation)
+                                    }
+                                    Text("🌎 " + definition.detail.definitionInContextOfSentence)
+                                }
+                            }
+                        } else {
+                            Text("Tap word to define")
+                        }
                     }
+                    .foregroundColor(FlowTaleColor.primary)
+                    .frame(maxWidth: .infinity,
+                           maxHeight: .infinity,
+                           alignment: .topLeading)
                     if let word = store.state.definitionState.tappedWord {
                         VStack {
                             Button {

@@ -7,8 +7,17 @@
 
 import Foundation
 
+struct WordDefinition: Codable, Equatable, Hashable {
+    let word: String
+    let pronunciation: String
+    let definition: String
+    let definitionInContextOfSentence: String
+}
+
 enum FlowTaleServicesError: Error {
     case generalError
+    case invalidJSON
+    case failedToGetChapter
     case failedToGetDeviceLanguage
     case failedToGetResponseData
     case failedToEncodeJson
@@ -167,6 +176,11 @@ protocol FlowTaleServicesProtocol {
     func translateStory(story: Story,
                         storyString: String,
                         deviceLanguage: Language?) async throws -> Story
+    func fetchDefinitions(for sentenceIndex: Int,
+                          in sentence: Sentence,
+                          chapter: Chapter,
+                          story: Story,
+                          deviceLanguage: Language?) async throws -> [Definition]
     func fetchDefinition(of character: String,
                          withinContextOf sentence: Sentence,
                          story: Story,
@@ -250,6 +264,107 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
         } catch {
             throw FlowTaleServicesError.failedToDecodeSentences
         }
+    }
+
+    func fetchDefinitions(for sentenceIndex: Int,
+                          in sentence: Sentence,
+                          chapter: Chapter,
+                          story: Story,
+                          deviceLanguage: Language?) async throws -> [Definition]
+    {
+        // 1. Ensure we have a device language
+        guard let deviceLanguage else {
+            throw FlowTaleServicesError.failedToGetDeviceLanguage
+        }
+
+        let matchingTimestamps = chapter.audio.timestamps.filter {
+            $0.sentenceIndex == sentenceIndex
+        }
+
+        guard !matchingTimestamps.isEmpty else {
+            // No words found for that sentence
+            return []
+        }
+
+        // 3. Build prompts
+        let languageName = story.language.descriptiveEnglishName
+        let wordsToDefine = matchingTimestamps.map { $0.word }
+
+        let initialPrompt = """
+        You are an AI assistant that provides \(deviceLanguage.displayName) definitions for words in \(languageName) sentences.
+        Your explanations are brief and simple.
+        """
+
+        let mainPrompt = """
+        We have this sentence in \(languageName): "\(sentence.original)".
+        The user sees a translation: "\(sentence.translation)".
+        Define each of the following words in the context of the above sentence:
+        "\(wordsToDefine.joined(separator: "\", \""))"
+        """
+
+        let messages: [[String: String]] = [
+            ["role": "system", "content": initialPrompt],
+            ["role": "user",   "content": mainPrompt]
+        ]
+
+        // 4. Make your request body
+        let requestBody: [String: Any] = [
+            "model": APIRequestType.openAI.modelName,
+            "messages": messages,
+            "response_format": definitionSchema(),
+            // If you're using function-calling:
+            // "function_call": ["name": "wordDefinitions"]
+        ]
+
+        // 5. Execute the request -> get JSON string back
+        let jsonString = try await makeRequest(type: .openAI, requestBody: requestBody)
+
+        // 6. Decode into a temporary struct that holds "words"
+        //    (We can define a small container for convenience.)
+        struct MultipleWordsResponse: Codable {
+            let words: [WordDefinition]
+        }
+
+        // Turn JSON string into Data, decode
+        guard let data = jsonString.data(using: .utf8) else {
+            throw FlowTaleServicesError.invalidJSON
+        }
+
+        let multipleWordsResponse = try JSONDecoder().decode(MultipleWordsResponse.self, from: data)
+
+        // 7. We have [WordDefinition].
+        //    Now create our final [Definition]—one per word/timeStampData pair.
+        //    We assume the order returned by the AI matches the order of `wordsToDefine`.
+        let wordDefinitions = multipleWordsResponse.words
+
+        // Just to be safe, ensure counts match (in case the user typed repeated words).
+        // If there's a mismatch, handle accordingly; here we just take the min.
+        let minCount = min(matchingTimestamps.count, wordDefinitions.count)
+
+        // 8. Map each WordDefinition to your existing Definition structure
+        //    We’ll store everything in the `definition` property, combining
+        //    the base definition, context, and pronunciation, but you can do
+        //    whatever you prefer.
+        let finalDefinitions: [Definition] = zip(matchingTimestamps.prefix(minCount),
+                                                 wordDefinitions.prefix(minCount))
+          .map { (timeStamp, wordDef) -> Definition in
+              let fullDefinitionText = """
+              🗣️ \(wordDef.pronunciation)
+              ✏️ \(wordDef.definition)
+              🌎 \(wordDef.definitionInContextOfSentence)
+              """
+              return Definition(
+                  creationDate: Date(),
+                  studiedDates: [],
+                  timestampData: timeStamp,
+                  sentence: sentence,
+                  detail: wordDef,
+                  definition: fullDefinitionText,
+                  language: deviceLanguage
+              )
+          }
+
+        return finalDefinitions
     }
 
     func fetchDefinition(of character: String,

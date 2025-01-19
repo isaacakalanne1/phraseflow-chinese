@@ -34,10 +34,11 @@ protocol FlowTaleEnvironmentProtocol {
     func loadChapter(storyId: UUID, chapterIndex: Int) throws -> Chapter
     func loadAllChapters(for storyId: UUID) throws -> [Chapter]
 
-    func fetchDefinition(of timestampData: WordTimeStampData,
-                         withinContextOf sentence: Sentence,
-                         story: Story,
-                         deviceLanguage: Language?) async throws -> Definition
+    func fetchDefinitions(for sentenceIndex: Int,
+                          in sentence: Sentence,
+                          chapter: Chapter,
+                          story: Story,
+                          deviceLanguage: Language?) async throws -> [Definition]
     func purchase(_ product: Product) async throws
     func generateImage(with prompt: String) async throws -> Data
     func moderateText(_ text: String) async throws -> ModerationResponse
@@ -131,21 +132,16 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         try dataStore.loadAppSettings()
     }
 
-    func fetchDefinition(of timestampData: WordTimeStampData,
-                         withinContextOf sentence: Sentence,
-                         story: Story,
-                         deviceLanguage: Language?) async throws -> Definition {
-        let definitionString = try await service.fetchDefinition(of: timestampData.word,
-                                                                 withinContextOf: sentence,
-                                                                 story: story,
-                                                                 deviceLanguage: deviceLanguage)
-        let definition = Definition(creationDate: .now,
-                                    timestampData: timestampData,
-                                    sentence: sentence,
-                                    definition: definitionString,
-                                    language: story.language)
-        try dataStore.saveDefinition(definition)
-        return definition
+    func fetchDefinitions(for sentenceIndex: Int,
+                          in sentence: Sentence,
+                          chapter: Chapter,
+                          story: Story,
+                          deviceLanguage: Language?) async throws -> [Definition] {
+        try await service.fetchDefinitions(for: sentenceIndex,
+                                           in: sentence,
+                                           chapter: chapter,
+                                           story: story,
+                                           deviceLanguage: deviceLanguage)
     }
 
     func purchase(_ product: Product) async throws {

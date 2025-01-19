@@ -91,6 +91,15 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         })
         newState.definitionState.definitions.append(definition)
         newState.viewState.isDefining = false
+    case .onDefinedSentence(let definitions, let tappedDefinition):
+        newState.definitionState.currentDefinition = tappedDefinition
+        for definition in definitions {
+            newState.definitionState.definitions.removeAll(where: {
+                $0.timestampData == definition.timestampData && $0.sentence == definition.sentence
+            })
+            newState.definitionState.definitions.append(definition)
+        }
+        newState.viewState.isDefining = false
     case .synthesizeAudio:
         newState.viewState.playButtonDisplayType = .loading
         newState.viewState.loadingState = .generatingSpeech

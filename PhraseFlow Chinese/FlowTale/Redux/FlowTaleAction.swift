@@ -75,6 +75,7 @@ enum FlowTaleAction {
     case playWord(WordTimeStampData, story: Story?)
     case playStudyWord(Definition)
     case onDefinedCharacter(Definition)
+    case onDefinedSentence([Definition], tappedDefinition: Definition)
     case failedToDefineCharacter
     case saveDefinitions
     case onSavedDefinitions
