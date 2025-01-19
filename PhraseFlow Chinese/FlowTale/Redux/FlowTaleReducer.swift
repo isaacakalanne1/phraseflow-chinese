@@ -204,7 +204,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .updateLanguage(let language):
         newState.settingsState.language = language
     case .onLoadedDefinitions(let definitions):
-        newState.definitionState.definitions = definitions
+        newState.definitionState.definitions = definitions.shuffled()
     case .onDeletedStory:
         newState.viewState.storyListViewId = UUID()
     case .onFetchedSubscriptions(let subscriptions):
