@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ReaderView: View {
     @EnvironmentObject var store: FlowTaleStore
-    let chapter: Chapter?
+    let chapter: Chapter
 
     var body: some View {
         VStack(spacing: 10) {
@@ -22,13 +22,8 @@ struct ReaderView: View {
                 EnglishSentenceView()
                     .frame(height: 120)
             }
-            if let chapt = chapter {
-                ChapterHeaderView(chapter: chapt)
-                ChapterView(chapter: chapt)
-            } else {
-                ProgressView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
+            ChapterHeaderView(chapter: chapter)
+            ChapterView(chapter: chapter)
         }
         .padding(10)
     }

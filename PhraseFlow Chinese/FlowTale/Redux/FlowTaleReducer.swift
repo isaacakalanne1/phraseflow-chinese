@@ -130,6 +130,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.isAutoscrollEnabled = isEnabled
     case .selectChapter(var story, let chapterIndex):
         newState.viewState.isShowingStoryListView = false
+        newState.definitionState.currentDefinition = nil
         story.lastUpdated = .now
         if let chapter = story.chapters[safe: chapterIndex] {
             if let voice = chapter.audioVoice {

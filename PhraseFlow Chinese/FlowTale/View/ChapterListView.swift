@@ -11,9 +11,6 @@ struct ChapterListView: View {
     @EnvironmentObject var store: FlowTaleStore
     let storyId: UUID
 
-    /// Local loading state for chapters
-    @State private var isLoadingChapters = false
-
     // A computed property that looks up the current story from the store.
     // If it's not found, this can be nil (or handle accordingly).
     private var story: Story? {
@@ -56,31 +53,25 @@ struct ChapterListView: View {
                 .padding()
 
                 // MARK: - Show Spinner if We're Loading & No Chapters Yet
-                if story.chapters.isEmpty && isLoadingChapters {
-                    ProgressView()
-                        .frame(maxHeight: .infinity)
-                } else {
-                    // MARK: - Chapters List
-                    List {
-                        Section {
-                            ForEach(Array(story.chapters.reversed().enumerated()), id: \.offset) { (index, chapter) in
-                                Button {
-                                    withAnimation(.easeInOut) {
-                                        store.dispatch(.playSound(.openChapter))
-                                        let chapterIndex = story.chapters.count - 1 - index
-                                        store.dispatch(.selectChapter(story, chapterIndex: chapterIndex))
-                                    }
-                                } label: {
-                                    Text(chapter.title)
-                                        .foregroundColor(.primary)
+                List {
+                    Section {
+                        ForEach(Array(story.chapters.reversed().enumerated()), id: \.offset) { (index, chapter) in
+                            Button {
+                                withAnimation(.easeInOut) {
+                                    store.dispatch(.playSound(.openChapter))
+                                    let chapterIndex = story.chapters.count - 1 - index
+                                    store.dispatch(.selectChapter(story, chapterIndex: chapterIndex))
                                 }
+                            } label: {
+                                Text(chapter.title)
+                                    .foregroundColor(.primary)
                             }
-                        } header: {
-                            Text(LocalizedString.chapters)
                         }
+                    } header: {
+                        Text(LocalizedString.chapters)
                     }
-                    .frame(maxHeight: .infinity)
                 }
+                .frame(maxHeight: .infinity)
 
                 // MARK: - "New Chapter" Button
                 Button(LocalizedString.newChapter) {
@@ -102,13 +93,8 @@ struct ChapterListView: View {
 
                 // If the chapters are empty, start loading
                 if story.chapters.isEmpty {
-                    isLoadingChapters = true
                     store.dispatch(.loadChapters(story))
                 }
-            }
-            .onChange(of: story.chapters) { _ in
-                // Once the store updates story.chapters, turn off the spinner
-                isLoadingChapters = false
             }
         } else {
             // If no story found in store, show something like:

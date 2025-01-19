@@ -71,8 +71,13 @@ struct ContentView: View {
         case .reader:
             if store.state.viewState.readerDisplayType == .loading {
                 LoadingView()
-            } else if let story = store.state.storyState.currentStory {
-                ReaderView(chapter: story.chapters.last)
+            } else if let _ = store.state.storyState.currentStory {
+                if let chapter = store.state.storyState.currentChapter {
+                    ReaderView(chapter: chapter)
+                } else {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
             } else {
                 // If no currentStory or no chapters, show Onboarding
                 // (This is the scenario where we haven't loaded
