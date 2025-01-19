@@ -72,20 +72,20 @@ struct StoryPromptMenu: View {
                 }
                 .onDelete(perform: delete)
             } header: {
-                Text("Setting")
+                Text("How do you want the story to start?")
             }
         }
-        .navigationTitle("How do you want the story to start?")
+        .navigationTitle("Story")
         .background(FlowTaleColor.background)
         .scrollContentBackground(.hidden)
-        .alert("Custom", isPresented: isShowingAlert) {
-            TextField("Custom story", text: customPrompt)
+        .alert("Custom story", isPresented: isShowingAlert) {
+            TextField("...", text: customPrompt)
             Button("OK", action: submitCustomPrompt)
             Button("Cancel", role: .cancel) {
                 store.dispatch(.updateIsShowingCustomPromptAlert(false))
             }
         } message: {
-            Text("Enter your custom story setting")
+            Text("Describe the start of your story")
         }
     }
 

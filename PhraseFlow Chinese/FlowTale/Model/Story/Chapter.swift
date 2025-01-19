@@ -10,7 +10,6 @@ import AVKit
 
 struct Chapter: Codable, Equatable, Hashable {
 
-
     var passageWithoutNewLines: String {
         return sentences.reduce("") { $0 + $1.original }
     }
