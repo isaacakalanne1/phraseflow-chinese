@@ -20,8 +20,7 @@ struct SubscriptionView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             Spacer()
             if !store.state.subscriptionState.isSubscribed {
-                // TODO: Localize
-                Text("Subscribe now for unlimited chapters")
+                Text(LocalizedString.subscribeNowUnlimitedChapters)
                     .multilineTextAlignment(.center)
                     .font(.subheadline)
                     .bold()
@@ -40,8 +39,7 @@ struct SubscriptionView: View {
                 store.dispatch(.setSubscriptionSheetShowing(false))
             })
 
-            // TODO: Localize
-            SubscriptionOption(title: "Free", detail: LocalizedString.chaptersPerStory("3"), product: nil, action: { })
+            SubscriptionOption(title: LocalizedString.free, detail: LocalizedString.chaptersPerStory("3"), product: nil, action: { })
 
             Button {
                 Task {

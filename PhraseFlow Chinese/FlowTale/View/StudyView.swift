@@ -60,8 +60,7 @@ struct StudyView: View {
                         Text(definition.sentence.original)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     } else {
-                        // TODO: Localize
-                        Text("Tap Reveal to show")
+                        Text(LocalizedString.tapRevealToShow)
                     }
                     Text(LocalizedString.definition)
                         .greyBackground()
@@ -73,8 +72,7 @@ struct StudyView: View {
                                        alignment: .topLeading)
                         }
                     } else {
-                        // TODO: Localize
-                        Text("Tap Reveal to show")
+                        Text(LocalizedString.tapRevealToShow)
                         Spacer()
                     }
 
@@ -119,8 +117,7 @@ struct StudyView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
             } else {
-                // TODO: Localize
-                Text("No saved words\nTap a word to study")
+                Text(LocalizedString.noSavedWords + "\n" + LocalizedString.tapWordToStudy)
             }
         }
         .onAppear {

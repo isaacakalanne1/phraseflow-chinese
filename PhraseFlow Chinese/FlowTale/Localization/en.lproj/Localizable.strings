@@ -362,3 +362,18 @@
 
 // Snackbar text telling the user their custom story was deleted
 "deleted_custom_story" = "Deleted custom story";
+
+// Title telling the user to tap reveal to show the content
+"tap_reveal_to_show" = "Tap Reveal to show";
+
+// Title saying that no words have been saved
+"no_saved_words" = "No saved words";
+
+// Title telling user to tap a word to study it
+"tap_word_to_study" = "Tap a word to study";
+
+// Title telling the user to subscribe now for unlimited chapters
+"subscribe_now_unlimited_chapters" = "Subscribe now for unlimited chapters";
+
+// Title telling the user that this costs no money
+"free" = "Free";
