@@ -75,9 +75,14 @@ struct ChapterListView: View {
 
                 // MARK: - "New Chapter" Button
                 Button(LocalizedString.newChapter) {
-                    store.dispatch(.selectTab(.reader, shouldPlaySound: false))
-                    store.dispatch(.continueStory(story: story))
-                    store.dispatch(.playSound(.createStory))
+                    if !store.state.subscriptionState.isSubscribed,
+                       story.chapters.count >= 2 {
+                        store.dispatch(.setSubscriptionSheetShowing(true))
+                    } else {
+                        store.dispatch(.selectTab(.reader, shouldPlaySound: false))
+                        store.dispatch(.continueStory(story: story))
+                        store.dispatch(.playSound(.createStory))
+                    }
                 }
                 .padding()
                 .background(FlowTaleColor.accent)
@@ -92,7 +97,7 @@ struct ChapterListView: View {
 
                 // If the chapters are empty, start loading
                 if story.chapters.isEmpty {
-                    store.dispatch(.loadChapters(story))
+                    store.dispatch(.loadChapters(story, isAppLaunch: false))
                 }
             }
         } else {

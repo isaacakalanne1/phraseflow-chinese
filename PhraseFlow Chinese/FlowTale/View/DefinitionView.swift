@@ -27,7 +27,7 @@ struct DefinitionView: View {
                                 VStack(alignment: .leading) {
                                     HStack(alignment: .top) {
                                         Text("✏️ " + definition.detail.definition)
-                                        Spacer()
+                                            .frame(maxWidth: .infinity, alignment: .leading)
                                         Text("🗣️ " + definition.detail.pronunciation)
                                     }
                                     Text("🌎 " + definition.detail.definitionInContextOfSentence)

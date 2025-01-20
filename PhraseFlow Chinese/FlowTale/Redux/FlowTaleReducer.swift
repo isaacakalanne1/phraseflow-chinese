@@ -31,7 +31,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             let player = data?.createAVPlayer()
             newState.audioState.audioPlayer = player ?? AVPlayer()
         }
-    case .onLoadedChapters(let story, let chapters):
+    case .onLoadedChapters(let story, let chapters, _):
         // 1) Find this story in savedStories (or currentStory)
         //    We’ll do both, depending on how your app organizes it.
 

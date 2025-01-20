@@ -61,26 +61,27 @@ enum SnackBarType {
         }
     }
 
-    @ViewBuilder
     var iconView: some View {
+        let emoji: String
         switch self {
         case .writingChapter:
-            Text("✏️")
+            emoji = "✏️"
         case .moderatingText:
-            Text("⌛")
+            emoji = "⌛"
         case .chapterReady,
                 .subscribed,
                 .passedModeration,
                 .deletedCustomStory:
-            Text("✅")
+            emoji = "✅"
         case .welcomeBack:
-            Text("️‍🔥")
+            emoji = "🔥"
         case .failedToWriteChapter:
-            Text("🔁")
+            emoji = "🔁"
         case .didNotPassModeration,
                 .couldNotModerateText:
-            Text("⚠️")
+            emoji = "⚠️"
         }
+        return Text(emoji)
     }
 
     func action(store: FlowTaleStore) {

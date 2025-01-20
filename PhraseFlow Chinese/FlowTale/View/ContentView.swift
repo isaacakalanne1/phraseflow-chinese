@@ -44,14 +44,6 @@ struct ContentView: View {
         .onAppear {
             startTimer()
         }
-        // 2) Whenever the `currentStory` changes, if it has no chapters, load them
-        .onChange(of: store.state.storyState.currentStory) { newStory in
-            guard let story = newStory else { return }
-            // If the story is "bare" (chapters is empty), load chapters
-            if story.chapters.isEmpty {
-                store.dispatch(.loadChapters(story))
-            }
-        }
         .sheet(isPresented: isShowingSubscriptionView) {
             SubscriptionView()
                 .presentationDragIndicator(.hidden)
@@ -98,6 +90,9 @@ struct ContentView: View {
 
         case .progress:
             DefinitionsProgressSheetView()
+
+        case .subscribe:
+            SubscriptionView()
 
         case .settings:
             SettingsView()

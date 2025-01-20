@@ -84,6 +84,10 @@ struct StudyView: View {
                                 index -= 1
                             }
                             isDefinitionShown = false
+                            if let definition = currentDefinition {
+                                store.dispatch(.updateStudyChapter(nil))
+                                store.dispatch(.prepareToPlayStudyWord(definition))
+                            }
                         }
                         .padding()
                         .background(FlowTaleColor.accent)
@@ -121,7 +125,6 @@ struct StudyView: View {
                 index = 0
                 isDefinitionShown = false
                 if let definition = currentDefinition {
-                    store.dispatch(.updateStudiedWord(definition))
                     store.dispatch(.updateStudyChapter(nil))
                     store.dispatch(.prepareToPlayStudyWord(definition))
                 }

@@ -25,7 +25,7 @@ enum FlowTaleRepositoryError: Error {
 
 class FlowTaleRepository: FlowTaleRepositoryProtocol {
 
-    private let speechCharacters = ["“", "”", "«", "»", "»", "「", "」", "\"", "''"]
+    private let speechCharacters = ["“", "”", "«", "»", "「", "」", "\"", "''"]
     let subscriptionKey = "Fp11D0CAMjjAcf03VNqe2IsKfqycenIKcrAm4uGV8RSiaqMX15NWJQQJ99AKACYeBjFXJ3w3AAAYACOG6Orb"
     let region = "eastus"
     let sentenceMarker = "✓"

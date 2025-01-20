@@ -239,3 +239,126 @@
 
 // Subscribe button title for subscribing to app
 "subscribe" = "Subscribe";
+
+// Welcome back text welcoming the user back to the app
+"welcome_back" = "Welcome back";
+
+// Text instructing the user to tap a word to define it
+"tap_a_word_to_define_it" = "Tap a word to define it";
+
+// Word title, of the "Word" section of the study feature
+"word" = "Word";
+
+// Sentence title, of the "Sentence" section of the study feature
+"sentence" = "Sentence";
+
+// Translation title, of the "Translation" section of the study feature
+"translation" = "Translation";
+
+// Definition title, of the "Definition" section of the study feature
+"definition" = "Definition";
+
+// Button title for going to the previous selection
+"previous" = "Previous";
+
+// Button title to reveal hidden content
+"reveal" = "Reveal";
+
+// Button title for going to the next selection
+"next" = "Next";
+
+// Title for showing the number of saved words
+"words_saved" = "Words Saved: %@";
+
+// Title for showing the number of studied words
+"words_saved" = "Words Studied: %@";
+
+// Title for All Words section, which shows all words
+"all_words" = "All Words";
+
+// Saved tab bar title, for tab section which shows saved words
+"saved" = "Saved";
+
+// Studied tab bar title, for tab section which shows studied words
+"studied" = "Studied";
+
+// Music toggle title, for toggle which plays or pauses music
+"music" = "Music";
+
+// Story section title, for section which contains details about the story
+"story" = "Story";
+
+// Custom story Button title, which user taps to create a custom story
+"custom_story" = "Custom story...";
+
+// Random Button title, which user taps to create a random story
+"random" = "Random";
+
+// Title for section asking the user how they want their story to start
+"how_story_start" = "How do you want the story to start?";
+
+// Title for section asking the user which language they would like to learn
+"which_language_learn" = "Which language would you like to learn?";
+
+// Title for section asking the user how difficult they would like the story to be
+"how_difficult_story" = "How difficult would you like the story to be?";
+
+// Done button title, which the user taps when they are done on a certain screen
+"done" = "Done";
+
+// Title for screen of managing the user's app subscription
+"manage_subscription" = "Manage Subscription";
+
+// Title for screen presenting the user with the option of subscribing
+"subscribe" = "Subscribe";
+
+// Title telling user the number of chapters they can create per story
+"chapters_per_story" = "%@ chapters per story";
+
+// Title telling user they can create unlimited chapters per story
+"unlimited_chapters" = "Unlimited chapters";
+
+// Button title the user can tap to restore their app subscription
+"restore_subscription" = "Restore subscription";
+
+// Button title for Terms of use (End User License Agreement)
+"terms_of_use" = "Terms of Use (EULA)";
+
+// Button title for Privacy Policy
+"privacy_policy" = "Privacy Policy";
+
+// Title telling user how to manage their app subscription
+"manage_subscriptions_instructions" = "To manage your subscriptions, go to iOS Settings App -> Apple ID -> Subscriptions";
+
+// Title telling user the subscription price per month
+"price_per_month" = "%@ per month";
+
+// Welcome back snackbar text
+"welcome_back" = "Welcome back";
+
+// Snackbar text telling the user the chapter is being written
+"writing_chapter" = "Writing chapter.";
+
+// Snackbar text telling the user the chapter is ready
+"chapter_ready" = "Chapter ready.";
+
+// Snackbar text telling the user the chapter failed to be written, and they can tap to retry
+"failed_write_chapter" = "Failed to write chapter. Tap to retry.";
+
+// Snackbar text telling the user the text failed to be moderated, and they can tap to retry
+"failed_moderate_text" = "Failed to moderate text. Tap to retry.";
+
+// Snackbar text telling the user their action of subscribing to the app is complete, and that unlimited chapters are now available
+"subscription_complete" = "Subscription complete. Unlimited chapters now available.";
+
+// Snackbar text telling the user their custom story has been added
+"custom_story_added" = "Custom story added";
+
+// Snackbar text telling the user their story is being moderated
+"moderating_story" = "Moderating story";
+
+// Snackbar text telling the user their story did not meet the AI provider's usage policies
+"story_did_not_meet_policies" = "Your story did not meet our AI provider's usage policies.";
+
+// Snackbar text telling the user their custom story was deleted
+"deleted_custom_story" = "Deleted custom story";

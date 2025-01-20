@@ -65,22 +65,17 @@ struct ChapterView: View {
             }
 
             Button(LocalizedString.nextChapter) {
-                if store.state.subscriptionState.isSubscribed {
-                    let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
-                    if doesNextChapterExist {
-                        store.dispatch(.goToNextChapter)
-                    } else {
-                        store.dispatch(.selectTab(.reader, shouldPlaySound: false))
-                        store.dispatch(.continueStory(story: story))
-                    }
-                } else {
+                if !store.state.subscriptionState.isSubscribed,
+                   story.currentChapterIndex >= 2 {
                     store.dispatch(.setSubscriptionSheetShowing(true))
+                } else {
+                    let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
+                    store.dispatch(doesNextChapterExist ? .goToNextChapter : .continueStory(story: story))
                 }
             }
             .padding()
             .background(FlowTaleColor.accent)
             .foregroundColor(.white)
-            .cornerRadius(10)
             .cornerRadius(10)
         }
         // Give this scroll content an ID if you need to reset position later

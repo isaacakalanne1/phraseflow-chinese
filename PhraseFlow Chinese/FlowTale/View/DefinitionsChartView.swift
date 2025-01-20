@@ -87,7 +87,7 @@ struct DefinitionsChartView: View {
 
         // -- Format the X-axis
         .chartXAxis {
-            AxisMarks(values: .stride(by: .day)) { value in
+            AxisMarks(values: .automatic) { value in
                 AxisGridLine()
                 AxisValueLabel(format: .dateTime.day().month(.abbreviated))
             }

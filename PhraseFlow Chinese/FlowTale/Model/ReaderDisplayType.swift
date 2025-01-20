@@ -16,7 +16,7 @@ enum ContentTab: CaseIterable, Equatable, Identifiable {
         UUID()
     }
 
-    case reader, storyList, study, progress, settings
+    case reader, storyList, study, progress, subscribe, settings
 
     func image(isFilled: Bool) -> SystemImage {
         switch self {
@@ -28,6 +28,8 @@ enum ContentTab: CaseIterable, Equatable, Identifiable {
                 .bookClosed(isFilled: isFilled)
         case .progress:
                 .chartBar(isFilled: isFilled)
+        case .subscribe:
+                .heart(isFilled: isFilled)
         case .settings:
                 .gear(isFilled: isFilled)
         }

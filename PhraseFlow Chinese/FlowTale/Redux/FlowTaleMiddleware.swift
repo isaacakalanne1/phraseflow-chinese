@@ -60,13 +60,13 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         } catch {
             return .failedToLoadStories
         }
-    case .loadChapters(let story):
+    case .loadChapters(let story, let isAppLaunch):
         do {
             // 1) Load the chapters for just this one story
             let chapters = try environment.loadAllChapters(for: story.id)
 
             // 2) Dispatch success with the loaded chapters
-            return .onLoadedChapters(story, chapters)
+            return .onLoadedChapters(story, chapters, isAppLaunch: isAppLaunch)
         } catch {
             // 3) Dispatch failure
             return .failedToLoadChapters
@@ -391,7 +391,14 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return .showSnackBar(.didNotPassModeration)
     case .selectTab(_, let shouldPlaySound):
         return shouldPlaySound ? .playSound(.actionButtonPress) : nil
-    case .onLoadedStories(_, let isAppLaunch):
+    case .onLoadedStories(let stories, let isAppLaunch):
+        if isAppLaunch,
+           let story = stories.first,
+           story.chapters.isEmpty {
+            return .loadChapters(story, isAppLaunch: isAppLaunch)
+        }
+        return nil
+    case .onLoadedChapters(let story, let chapters, let isAppLaunch):
         return isAppLaunch ? .showSnackBar(.welcomeBack) : nil
     case .deleteCustomPrompt:
         return .showSnackBar(.deletedCustomStory)
@@ -421,7 +428,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .hideSnackbar,
             .updateCustomPrompt,
             .updateIsShowingCustomPromptAlert,
-            .onLoadedChapters,
             .failedToLoadChapters,
             .dismissFailedModerationAlert,
             .showModerationDetails,

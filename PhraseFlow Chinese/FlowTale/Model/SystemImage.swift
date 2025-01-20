@@ -16,7 +16,7 @@ enum SystemImage {
          list(isFilled: Bool),
          ellipsis,
          arrowDown,
-         heart,
+         heart(isFilled: Bool),
          starFilled,
          star,
          book(isFilled: Bool),
@@ -41,8 +41,8 @@ enum SystemImage {
             "ellipsis.circle"
         case .arrowDown:
             "arrow.down.to.line.circle.fill"
-        case .heart:
-            "suit.heart"
+        case .heart(let isFilled):
+            "suit.heart\(isFilled ? ".fill" : "")"
         case .starFilled:
             "star.fill"
         case .star:

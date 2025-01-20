@@ -17,6 +17,8 @@ struct SubscriptionView: View {
                 .font(.title)
                 .bold()
                 .foregroundColor(FlowTaleColor.primary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Spacer()
             if !store.state.subscriptionState.isSubscribed {
                 Text("Subscribe now for unlimited chapters")
                     .multilineTextAlignment(.center)
@@ -84,9 +86,7 @@ struct SubscriptionView: View {
                     .foregroundColor(FlowTaleColor.primary)
             }
         }
-        .padding([.top, .leading, .trailing], 20)
-        .frame(maxHeight: .infinity, alignment: .top)
-        .edgesIgnoringSafeArea(.all)
+        .padding(20)
+        .frame(maxHeight: .infinity)
     }
 }
-
