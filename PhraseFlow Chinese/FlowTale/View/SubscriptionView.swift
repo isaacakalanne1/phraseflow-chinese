@@ -13,13 +13,14 @@ struct SubscriptionView: View {
     var body: some View {
         VStack(spacing: 20) {
             let product = store.state.subscriptionState.products?.first
-            Text(store.state.subscriptionState.isSubscribed ? "Manage Subscription" : "Subscribe")
+            Text(store.state.subscriptionState.isSubscribed ? LocalizedString.manageSubscription : LocalizedString.subscribe)
                 .font(.title)
                 .bold()
                 .foregroundColor(FlowTaleColor.primary)
                 .frame(maxWidth: .infinity, alignment: .leading)
             Spacer()
             if !store.state.subscriptionState.isSubscribed {
+                // TODO: Localize
                 Text("Subscribe now for unlimited chapters")
                     .multilineTextAlignment(.center)
                     .font(.subheadline)
@@ -27,7 +28,7 @@ struct SubscriptionView: View {
                     .foregroundColor(FlowTaleColor.primary)
             }
 
-            SubscriptionOption(title: "\(product?.displayPrice ?? "...") per month",
+            SubscriptionOption(title: LocalizedString.pricePerMonth(product?.displayPrice ?? "..."),
                                detail: "\(product?.displayName ?? "...")",
                                product: product,
                                action: {
@@ -39,7 +40,8 @@ struct SubscriptionView: View {
                 store.dispatch(.setSubscriptionSheetShowing(false))
             })
 
-            SubscriptionOption(title: "Free", detail: "2 chapters per story", product: nil, action: { })
+            // TODO: Localize
+            SubscriptionOption(title: "Free", detail: LocalizedString.chaptersPerStory("3"), product: nil, action: { })
 
             Button {
                 Task {
@@ -47,7 +49,7 @@ struct SubscriptionView: View {
                     store.dispatch(.setSubscriptionSheetShowing(false))
                 }
             } label: {
-                Text("Restore subscription")
+                Text(LocalizedString.restoreSubscription)
                     .multilineTextAlignment(.center)
                     .font(.subheadline)
                     .bold()
@@ -60,7 +62,7 @@ struct SubscriptionView: View {
                         UIApplication.shared.open(url, options: [:], completionHandler: nil)
                     }
                 } label: {
-                    Text("Terms of Use (EULA)")
+                    Text(LocalizedString.termsOfUse)
                         .multilineTextAlignment(.center)
                         .font(.subheadline)
                         .foregroundColor(FlowTaleColor.primary)
@@ -71,7 +73,7 @@ struct SubscriptionView: View {
                         UIApplication.shared.open(url, options: [:], completionHandler: nil)
                     }
                 } label: {
-                    Text("Privacy Policy")
+                    Text(LocalizedString.privacyPolicy)
                         .multilineTextAlignment(.center)
                         .font(.subheadline)
                         .foregroundColor(FlowTaleColor.primary)
@@ -80,7 +82,7 @@ struct SubscriptionView: View {
 
 
             if store.state.subscriptionState.isSubscribed {
-                Text("To manage your subscriptions, go to iOS Settings App -> Apple ID -> Subscriptions")
+                Text(LocalizedString.manageSubscriptionsInstructions)
                     .multilineTextAlignment(.center)
                     .font(.subheadline)
                     .foregroundColor(FlowTaleColor.primary)

@@ -12,7 +12,7 @@ struct LoadingView: View {
 
     var body: some View {
         VStack {
-            Text("Writing new story")
+            Text(LocalizedString.writingNewChapter)
             HStack {
                 progressView(checkIfComplete: .writing)
                 progressView(checkIfComplete: .translating)
@@ -26,10 +26,13 @@ struct LoadingView: View {
 
     @ViewBuilder
     func progressView(checkIfComplete completeState: LoadingState) -> some View {
-        if store.state.viewState.loadingState.progressInt > completeState.progressInt {
-            Text("✅")
-        } else {
-            ProgressView()
+        Group {
+            if store.state.viewState.loadingState.progressInt > completeState.progressInt {
+                Text("✅")
+            } else {
+                ProgressView()
+            }
         }
+        .frame(width: 30, height: 30)
     }
 }

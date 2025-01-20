@@ -22,25 +22,25 @@ enum SnackBarType {
     var text: String {
         switch self {
         case .welcomeBack:
-            "Welcome back"
+            LocalizedString.welcomeBack
         case .writingChapter:
-            "Writing chapter."
+            LocalizedString.writingChapter
         case .chapterReady:
-            "Chapter ready."
+            LocalizedString.chapterReady
         case .failedToWriteChapter:
-            "Failed to write chapter. Tap to retry."
+            LocalizedString.failedToWriteChapter
         case .couldNotModerateText:
-            "Failed to moderate text. Tap to retry."
+            LocalizedString.failedModerateText
         case .subscribed:
-            "Subscription complete. Unlimited chapters now available."
+            LocalizedString.subscriptionComplete
         case .passedModeration:
-            "Custom story added"
+            LocalizedString.customStoryAdded
         case .moderatingText:
-            "Moderating story"
+            LocalizedString.moderatingStory
         case .didNotPassModeration:
-            "Your story did not meet our AI provider's usage policies."
+            LocalizedString.storyDidNotMeetPolicies
         case .deletedCustomStory:
-            "Deleted custom story"
+            LocalizedString.deletedCustomStory
         }
     }
 

@@ -23,13 +23,13 @@ struct DefinitionsProgressSheetView: View {
             sheetContent(isCreations: true,
                          definitions: filteredDefinitions)
             .tabItem {
-                Label("Saved", systemImage: "case")
+                Label(LocalizedString.saved, systemImage: "case")
             }
 
             sheetContent(isCreations: false,
                          definitions: filteredDefinitions.filter({ !$0.studiedDates.isEmpty }))
             .tabItem {
-                Label("Studied", systemImage: "pencil")
+                Label(LocalizedString.studied, systemImage: "pencil")
             }
         }
     }
@@ -52,13 +52,13 @@ struct DefinitionsProgressSheetView: View {
                             }
                         }
                     } header: {
-                        Text("All Words")
+                        Text(LocalizedString.allWords)
                     }
                 }
                 .frame(maxHeight: .infinity)
                 .navigationTitle(isCreations ?
-                                 "Words Saved: \(definitions.count)" :
-                                    "Words Studied: \(definitions.reduce(0, { $0 + $1.studiedDates.count }))")
+                                 LocalizedString.wordsSaved("\(definitions.count)") :
+                                    LocalizedString.wordsStudied("\(definitions.reduce(0, { $0 + $1.studiedDates.count }))"))
                 .background(FlowTaleColor.background)
                 .scrollContentBackground(.hidden)
             }

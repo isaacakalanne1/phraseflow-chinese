@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct GPTResponse: Codable { // TODO: Update this to match OpenAI API
+struct GPTResponse: Codable {
     var choices: [ChoiceResponse]
 
     struct ChoiceResponse: Codable {
         var message: MessageResponse
 
         struct MessageResponse: Codable {
-            var content: String // TODO: Update to be [Sentence] directly
+            var content: String
         }
     }
 }

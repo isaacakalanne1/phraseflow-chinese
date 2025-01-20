@@ -34,7 +34,7 @@ struct DefinitionView: View {
                                 }
                             }
                         } else {
-                            Text("Tap word to define")
+                            Text(LocalizedString.tapAWordToDefineIt)
                         }
                     }
                     .foregroundColor(FlowTaleColor.primary)

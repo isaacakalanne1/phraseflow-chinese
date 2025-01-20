@@ -45,7 +45,7 @@ struct SettingsView: View {
                             .fontWeight(.light)
                         Toggle(LocalizedString.englishToggle, isOn: showEnglish)
                             .fontWeight(.light)
-                        Toggle("Music", isOn: playMusic)
+                        Toggle(LocalizedString.music, isOn: playMusic)
                             .fontWeight(.light)
                     } header: {
                         Text(LocalizedString.toggle)

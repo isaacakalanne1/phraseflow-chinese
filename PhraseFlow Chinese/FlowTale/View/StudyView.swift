@@ -33,7 +33,7 @@ struct StudyView: View {
         Group {
             if let definition = displayedDefinition {
                 VStack(alignment: .leading) {
-                    Text("Word")
+                    Text(LocalizedString.word)
                         .greyBackground()
                     ZStack {
                         Text(definition.timestampData.word)
@@ -49,20 +49,21 @@ struct StudyView: View {
                             .disabled(store.state.studyState.currentChapter == nil)
                         }
                     }
-                    Text("Sentence")
+                    Text(LocalizedString.sentence)
                         .greyBackground()
                     Text(definition.sentence.translation)
                         .font(.system(size: 30, weight: .regular))
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    Text("Translation")
+                    Text(LocalizedString.translation)
                         .greyBackground()
                     if isWordDefinitionView || isDefinitionShown {
                         Text(definition.sentence.original)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     } else {
+                        // TODO: Localize
                         Text("Tap Reveal to show")
                     }
-                    Text("Definition")
+                    Text(LocalizedString.definition)
                         .greyBackground()
                     if isWordDefinitionView || isDefinitionShown {
                         ScrollView(.vertical) {
@@ -72,30 +73,31 @@ struct StudyView: View {
                                        alignment: .topLeading)
                         }
                     } else {
+                        // TODO: Localize
                         Text("Tap Reveal to show")
                         Spacer()
                     }
 
                     HStack {
-                        Button("Previous") {
-                            if index - 1 < 0 {
-                                index = studyWords.count - 1
-                            } else {
-                                index -= 1
-                            }
-                            isDefinitionShown = false
-                            if let definition = currentDefinition {
-                                store.dispatch(.updateStudyChapter(nil))
-                                store.dispatch(.prepareToPlayStudyWord(definition))
-                            }
-                        }
-                        .padding()
-                        .background(FlowTaleColor.accent)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
                         if !isWordDefinitionView {
+                            Button(LocalizedString.previous) {
+                                if index - 1 < 0 {
+                                    index = studyWords.count - 1
+                                } else {
+                                    index -= 1
+                                }
+                                isDefinitionShown = false
+                                if let definition = currentDefinition {
+                                    store.dispatch(.updateStudyChapter(nil))
+                                    store.dispatch(.prepareToPlayStudyWord(definition))
+                                }
+                            }
+                            .padding()
+                            .background(FlowTaleColor.accent)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                             if isDefinitionShown {
-                                Button("Next") {
+                                Button(LocalizedString.next) {
                                     goToNextDefinition()
                                 }
                                 .padding()
@@ -103,7 +105,7 @@ struct StudyView: View {
                                 .foregroundColor(.white)
                                 .cornerRadius(10)
                             } else {
-                                Button("Reveal") {
+                                Button(LocalizedString.reveal) {
                                     store.dispatch(.playStudyWord(definition))
                                     isDefinitionShown = true
                                 }
@@ -117,6 +119,7 @@ struct StudyView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
             } else {
+                // TODO: Localize
                 Text("No saved words\nTap a word to study")
             }
         }
