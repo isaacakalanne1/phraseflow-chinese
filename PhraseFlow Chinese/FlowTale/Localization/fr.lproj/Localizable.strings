@@ -10,7 +10,7 @@
 "translation" = "Traduction";
 
 // Definition View title
-"definition_of" = "Définition : %@";
+"definition_of" = "Définition : %@";
 
 // Stories button title
 "stories" = "Histoires";
@@ -22,16 +22,16 @@
 "settings" = "Paramètres";
 
 // Choose Story Navigation Bar title
-"choose_story" = "Choisir une Histoire";
+"choose_story" = "Choisir une histoire";
 
 // Create Story Navigation Bar title
-"create_story" = "Créer une Histoire";
+"create_story" = "Créer une histoire";
 
 // Story Settings Navigation Bar title
-"story_settings" = "Paramètres de l'Histoire";
+"story_settings" = "Paramètres de l'histoire";
 
 // New Story button title
-"new_story" = "Nouvelle Histoire";
+"new_story" = "Nouvelle histoire";
 
 // Difficulty level title
 "difficulty" = "Difficulté";
@@ -52,7 +52,7 @@
 "language" = "Langue";
 
 // Mandarin Chinese language name
-"chinese_mandarin" = "Chinois (Mandarin)";
+"chinese_mandarin" = "Chinois (mandarin)";
 
 // Spanish language name
 "spanish" = "Espagnol";
@@ -70,34 +70,34 @@
 "russian" = "Russe";
 
 // Arabic (Gulf Arabic) language name
-"arabicGulf" = "Arabe (Arabe du Golfe)";
+"arabicGulf" = "Arabe (arabe du Golfe)";
 
 // Portuguese (Brazil) language name
 "portuguese_brazil" = "Portugais (Brésil)";
 
 // Portuguese (European) language name
-"portuguese_european" = "Portugais (Européen)";
+"portuguese_european" = "Portugais (européen)";
 
 // Retry button title
 "retry" = "Réessayer";
 
 // Failed to write story title
-"failed_to_write_story" = "Échec de l'écriture de l'histoire";
+"failed_to_write_story" = "Impossible d'écrire l'histoire";
 
 // Failed to write chapter title
-"failed_to_write_chapter" = "Échec de l'écriture du chapitre";
+"failed_to_write_chapter" = "Impossible d'écrire le chapitre";
 
 // Writing new chapter title
-"writing_new_chapter" = "Écriture d'un nouveau chapitre...";
+"writing_new_chapter" = "Rédaction d'un nouveau chapitre...";
 
 // New Story button title
-"new_story" = "Nouvelle Histoire";
+"new_story" = "Nouvelle histoire";
 
 // Language section title
 "language" = "Langue";
 
 // AI Statement displayed at top of app
-"ai_statement" = "Les histoires et définitions sont écrites par une IA et peuvent être inexactes ou inappropriées.";
+"ai_statement" = "Les histoires et les définitions sont rédigées par l'IA et peuvent être inexactes ou inappropriées.";
 
 // E.g, Chapter 1
 "chapter_number" = "Chapitre %@";
@@ -115,7 +115,7 @@
 "play" = "Jouer";
 
 // Next Chapter button title
-"next_chapter" = "Chapitre Suivant";
+"next_chapter" = "Chapitre suivant";
 
 // Definition toggle title
 "definition_toggle" = "Définition";
@@ -133,10 +133,10 @@
 "speed" = "Vitesse";
 
 // Slow speed button title
-"slow" = "Lente";
+"slow" = "Lent";
 
 // Normal speed button title
-"normal" = "Normale";
+"normal" = "Normal";
 
 // Fast speed button title
 "fast" = "Rapide";
@@ -205,10 +205,10 @@
 "chapters" = "Chapitres";
 
 // New Chapter button title
-"new_chapter" = "Nouveau Chapitre";
+"new_chapter" = "Nouveau chapitre";
 
-// Choose Chapter navigation bat title
-"choose_chapter" = "Choisir un Chapitre";
+// Choose Chapter navigation bar title
+"choose_chapter" = "Choisir un chapitre";
 
 // Defining text while user is fetching the definition of a word
 "defining" = "Définition en cours...";
@@ -239,3 +239,126 @@
 
 // Subscribe button title for subscribing to app
 "subscribe" = "S'abonner";
+
+// Welcome back text welcoming the user back to the app
+"welcome_back" = "Bon retour";
+
+// Text instructing the user to tap a word to define it
+"tap_a_word_to_define_it" = "Touchez un mot pour le définir";
+
+// Word title, of the "Word" section of the study feature
+"word" = "Mot";
+
+// Sentence title, of the "Sentence" section of the study feature
+"sentence" = "Phrase";
+
+// Translation title, of the "Translation" section of the study feature
+"translation" = "Traduction";
+
+// Definition title, of the "Definition" section of the study feature
+"definition" = "Définition";
+
+// Button title for going to the previous selection
+"previous" = "Précédent";
+
+// Button title to reveal hidden content
+"reveal" = "Révéler";
+
+// Button title for going to the next selection
+"next" = "Suivant";
+
+// Title for showing the number of saved words
+"words_saved" = "Mots enregistrés : %@";
+
+// Title for showing the number of studied words
+"words_saved" = "Mots étudiés : %@";
+
+// Title for All Words section, which shows all words
+"all_words" = "Tous les mots";
+
+// Saved tab bar title, for tab section which shows saved words
+"saved" = "Enregistrés";
+
+// Studied tab bar title, for tab section which shows studied words
+"studied" = "Étudiés";
+
+// Music toggle title, for toggle which plays or pauses music
+"music" = "Musique";
+
+// Story section title, for section which contains details about the story
+"story" = "Histoire";
+
+// Custom story Button title, which user taps to create a custom story
+"custom_story" = "Histoire personnalisée...";
+
+// Random Button title, which user taps to create a random story
+"random" = "Aléatoire";
+
+// Title for section asking the user how they want their story to start
+"how_story_start" = "Comment souhaitez-vous que l'histoire commence ?";
+
+// Title for section asking the user which language they would like to learn
+"which_language_learn" = "Quelle langue souhaitez-vous apprendre ?";
+
+// Title for section asking the user how difficult they would like the story to be
+"how_difficult_story" = "Quel niveau de difficulté souhaitez-vous pour l'histoire ?";
+
+// Done button title, which the user taps when they are done on a certain screen
+"done" = "Terminé";
+
+// Title for screen of managing the user's app subscription
+"manage_subscription" = "Gérer l'abonnement";
+
+// Title for screen presenting the user with the option of subscribing
+"subscribe" = "S'abonner";
+
+// Title telling user the number of chapters they can create per story
+"chapters_per_story" = "%@ chapitres par histoire";
+
+// Title telling user they can create unlimited chapters per story
+"unlimited_chapters" = "Chapitres illimités";
+
+// Button title the user can tap to restore their app subscription
+"restore_subscription" = "Restaurer l'abonnement";
+
+// Button title for Terms of use (End User License Agreement)
+"terms_of_use" = "Conditions d'utilisation (CLUF)";
+
+// Button title for Privacy Policy
+"privacy_policy" = "Politique de confidentialité";
+
+// Title telling user how to manage their app subscription
+"manage_subscriptions_instructions" = "Pour gérer vos abonnements, accédez à l'application Réglages iOS -> Identifiant Apple -> Abonnements";
+
+// Title telling user the subscription price per month
+"price_per_month" = "%@ par mois";
+
+// Welcome back snackbar text
+"welcome_back" = "Bon retour";
+
+// Snackbar text telling the user the chapter is being written
+"writing_chapter" = "Rédaction du chapitre.";
+
+// Snackbar text telling the user the chapter is ready
+"chapter_ready" = "Chapitre prêt.";
+
+// Snackbar text telling the user the chapter failed to be written, and they can tap to retry
+"failed_write_chapter" = "Impossible d'écrire le chapitre. Touchez pour réessayer.";
+
+// Snackbar text telling the user the text failed to be moderated, and they can tap to retry
+"failed_moderate_text" = "Impossible de modérer le texte. Touchez pour réessayer.";
+
+// Snackbar text telling the user their action of subscribing to the app is complete, and that unlimited chapters are now available
+"subscription_complete" = "Abonnement réussi. Chapitres illimités désormais disponibles.";
+
+// Snackbar text telling the user their custom story has been added
+"custom_story_added" = "Histoire personnalisée ajoutée.";
+
+// Snackbar text telling the user their story is being moderated
+"moderating_story" = "Modération de l'histoire en cours";
+
+// Snackbar text telling the user their story did not meet the AI provider's usage policies
+"story_did_not_meet_policies" = "Votre histoire n'a pas respecté les règles d'utilisation de notre fournisseur d'IA.";
+
+// Snackbar text telling the user their custom story was deleted
+"deleted_custom_story" = "Histoire personnalisée supprimée";

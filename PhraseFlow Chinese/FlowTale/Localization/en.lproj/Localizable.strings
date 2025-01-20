@@ -271,7 +271,7 @@
 "words_saved" = "Words Saved: %@";
 
 // Title for showing the number of studied words
-"words_saved" = "Words Studied: %@";
+"words_studied" = "Words Studied: %@";
 
 // Title for All Words section, which shows all words
 "all_words" = "All Words";
