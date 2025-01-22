@@ -1,5 +1,5 @@
 /*
-  Localizable.strings (Chinese - Simplified)
+  Localizable.strings
   FlowTale
 
   Created by iakalann on 24/11/2024.
@@ -9,13 +9,13 @@
 // Translation view title
 "translation" = "翻译";
 
-// Definition View title
+// Definition View title for showing the definition of a word
 "definition_of" = "定义：%@";
 
 // Stories button title
 "stories" = "故事";
 
-// Play button title
+// Play audio button title
 "play" = "播放";
 
 // Settings View title
@@ -37,7 +37,7 @@
 "difficulty" = "难度";
 
 // Beginner difficulty level
-"beginner" = "初学者";
+"beginner" = "初级";
 
 // Intermediate difficulty level
 "intermediate" = "中级";
@@ -70,7 +70,7 @@
 "russian" = "俄语";
 
 // Arabic (Gulf Arabic) language name
-"arabicGulf" = "阿拉伯语（海湾方言）";
+"arabicGulf" = "阿拉伯语（海湾阿拉伯语）";
 
 // Portuguese (Brazil) language name
 "portuguese_brazil" = "葡萄牙语（巴西）";
@@ -82,13 +82,13 @@
 "retry" = "重试";
 
 // Failed to write story title
-"failed_to_write_story" = "未能写入故事";
+"failed_to_write_story" = "未能生成故事";
 
 // Failed to write chapter title
-"failed_to_write_chapter" = "未能写入章节";
+"failed_to_write_chapter" = "未能生成章节";
 
 // Writing new chapter title
-"writing_new_chapter" = "正在写新章节...";
+"writing_new_chapter" = "正在撰写新章节...";
 
 // New Story button title
 "new_story" = "新故事";
@@ -97,7 +97,7 @@
 "language" = "语言";
 
 // AI Statement displayed at top of app
-"ai_statement" = "故事和定义由 AI 撰写，可能存在不准确或不当之处。";
+"ai_statement" = "故事和定义由 AI 撰写，可能不准确或不恰当。";
 
 // E.g, Chapter 1
 "chapter_number" = "第 %@ 章";
@@ -108,11 +108,8 @@
 // Load button title, shown when content is ready to be loaded
 "load" = "加载";
 
-// Pause button title
+// Pause audio button title
 "pause" = "暂停";
-
-// Play button title
-"play" = "播放";
 
 // Next Chapter button title
 "next_chapter" = "下一章";
@@ -123,7 +120,7 @@
 // English toggle title
 "english_toggle" = "英语";
 
-// Toggle section title
+// Toggle selection section title
 "toggle" = "切换";
 
 // Voice section title
@@ -148,52 +145,52 @@
 "voice_yunjian" = "云健";
 
 // Denise French voice button title
-"voice_denise" = "Denise";
+"voice_denise" = "丹妮丝";
 
 // Henri French voice button title
-"voice_henri" = "Henri";
+"voice_henri" = "亨利";
 
 // Mayu Japanese voice button title
-"voice_mayu" = "Mayu";
+"voice_mayu" = "麻由";
 
 // Keita Japanese voice button title
-"voice_keita" = "Keita";
+"voice_keita" = "启太";
 
 // Sun-Hi Korean voice button title
-"voice_sun_hi" = "Sun-Hi";
+"voice_sun_hi" = "善熙";
 
 // Hyun-Su Korean voice button title
-"voice_hyun_su" = "Hyun-Su";
+"voice_hyun_su" = "贤秀";
 
 // Dariya (Russian) voice button title
-"voice_dariya" = "Dariya";
+"voice_dariya" = "达莉娅";
 
 // Dmitry (Russian) voice button title
-"voice_dmitry" = "Dmitry";
+"voice_dmitry" = "德米特里";
 
 // Elvira (Spanish) voice button title
-"voice_elvira" = "Elvira";
+"voice_elvira" = "艾尔薇拉";
 
 // Alvaro (Spanish) voice button title
-"voice_alvaro" = "Alvaro";
+"voice_alvaro" = "阿尔瓦罗";
 
 // Fatima (Arabic, UAE) voice button title
-"voice_fatima" = "Fatima";
+"voice_fatima" = "法蒂玛";
 
 // Hamdan (Arabic, UAE) voice button title
-"voice_hamdan" = "Hamdan";
+"voice_hamdan" = "哈姆丹";
 
 // Raquel (European Portuguese) voice button title
-"voice_raquel" = "Raquel";
+"voice_raquel" = "拉克尔";
 
 // Duarte (European Portuguese) voice button title
-"voice_duarte" = "Duarte";
+"voice_duarte" = "杜阿尔特";
 
 // Thalita (Brazilian Portuguese) voice button title
-"voice_thalita" = "Thalita";
+"voice_thalita" = "塔莉塔";
 
 // Donato (Brazilian Portuguese) voice button title
-"voice_donato" = "Donato";
+"voice_donato" = "多纳托";
 
 // Male Gender Button title
 "male" = "男";
@@ -207,7 +204,7 @@
 // New Chapter button title
 "new_chapter" = "新章节";
 
-// Choose Chapter navigation bar title
+// Choose Chapter navigation bat title
 "choose_chapter" = "选择章节";
 
 // Defining text while user is fetching the definition of a word
@@ -223,19 +220,19 @@
 "german" = "德语";
 
 // Ava voice button title
-"voice_ava" = "Ava";
+"voice_ava" = "艾娃";
 
 // Ananya Hindi voice button title
-"voice_ananya" = "Ananya";
+"voice_ananya" = "阿娜尼亚";
 
 // Aarav Hindi voice button title
-"voice_aarav" = "Aarav";
+"voice_aarav" = "阿拉夫";
 
 // Amala German voice button title
-"voice_amala" = "Amala";
+"voice_amala" = "阿玛拉";
 
 // Conrad German voice button title
-"voice_conrad" = "Conrad";
+"voice_conrad" = "康拉德";
 
 // Subscribe button title for subscribing to app
 "subscribe" = "订阅";
@@ -244,7 +241,7 @@
 "welcome_back" = "欢迎回来";
 
 // Text instructing the user to tap a word to define it
-"tap_a_word_to_define_it" = "轻触任意单词即可查看定义";
+"tap_a_word_to_define_it" = "轻点一个单词查看定义";
 
 // Word title, of the "Word" section of the study feature
 "word" = "单词";
@@ -313,7 +310,7 @@
 "subscribe" = "订阅";
 
 // Title telling user the number of chapters they can create per story
-"chapters_per_story" = "每个故事最多可写 %@ 章";
+"chapters_per_story" = "每个故事可创建 %@ 章";
 
 // Title telling user they can create unlimited chapters per story
 "unlimited_chapters" = "无限章节";
@@ -328,7 +325,7 @@
 "privacy_policy" = "隐私政策";
 
 // Title telling user how to manage their app subscription
-"manage_subscriptions_instructions" = "要管理订阅，请进入 iOS 设置 -> Apple ID -> 订阅";
+"manage_subscriptions_instructions" = "要管理订阅，请转到 iOS 设置 App -> Apple ID -> 订阅";
 
 // Title telling user the subscription price per month
 "price_per_month" = "每月 %@";
@@ -337,28 +334,118 @@
 "welcome_back" = "欢迎回来";
 
 // Snackbar text telling the user the chapter is being written
-"writing_chapter" = "正在写章节。";
+"writing_chapter" = "正在撰写章节。";
 
 // Snackbar text telling the user the chapter is ready
-"chapter_ready" = "章节已就绪。";
+"chapter_ready" = "章节已完成。";
 
 // Snackbar text telling the user the chapter failed to be written, and they can tap to retry
-"failed_write_chapter" = "章节写入失败。点击重试。";
+"failed_write_chapter" = "未能生成章节。轻点重试。";
 
 // Snackbar text telling the user the text failed to be moderated, and they can tap to retry
-"failed_moderate_text" = "文本审核失败。点击重试。";
+"failed_moderate_text" = "未能通过文本审核。轻点重试。";
 
 // Snackbar text telling the user their action of subscribing to the app is complete, and that unlimited chapters are now available
-"subscription_complete" = "订阅成功。现在可使用无限章节。";
+"subscription_complete" = "订阅完成。现在可享无限章节。";
 
 // Snackbar text telling the user their custom story has been added
-"custom_story_added" = "自定义故事已添加。";
+"custom_story_added" = "已添加自定义故事";
 
 // Snackbar text telling the user their story is being moderated
-"moderating_story" = "正在审核故事。";
+"moderating_story" = "正在审核故事";
 
 // Snackbar text telling the user their story did not meet the AI provider's usage policies
-"story_did_not_meet_policies" = "你的故事不符合我们的 AI 提供商的使用政策。";
+"story_did_not_meet_policies" = "您的故事不符合我们的 AI 提供商的使用政策。";
 
 // Snackbar text telling the user their custom story was deleted
 "deleted_custom_story" = "已删除自定义故事";
+
+// Title telling the user to tap reveal to show the content
+"tap_reveal_to_show" = "轻点“显示”以查看";
+
+// Title saying that no words have been saved
+"no_saved_words" = "没有已保存的单词";
+
+// Title telling user to tap a word to study it
+"tap_word_to_study" = "轻点一个单词开始学习";
+
+// Title telling the user to subscribe now for unlimited chapters
+"subscribe_now_unlimited_chapters" = "立即订阅，享受无限章节";
+
+// Title telling the user that this costs no money
+"free" = "免费";
+
+// Title: Explains that the story didn't pass moderation
+"story_did_not_pass_moderation" = "您的故事未通过审核";
+
+// Displaying the custom prompt in settings
+"custom_prompt" = "%@";
+
+// Title: What is moderation?
+"what_is_moderation" = "什么是审核？";
+
+// Explanation: Moderation overview
+"moderation_explanation" = "我们会审核故事构思，以确保它们符合我们的 AI 提供商的使用政策。";
+
+// Title: How moderation works
+"how_does_moderation_work" = "审核是如何进行的？";
+
+// Explanation: How moderation works
+"moderation_work_explanation" = "我们会使用可信度评分来审核故事。\n这表示 AI 对该内容是否包含在故事中的信心。\n如果您的故事在某类别的可信度评分高于可接受范围，则无法通过审核。";
+
+// Title: Why it didn't pass
+"why_didnt_it_pass" = "为什么没有通过？";
+
+// Text: Acceptance threshold explanation
+"acceptance_threshold_explanation" = "我们的接受标准低于 %@";
+
+// Text: User score explanation
+"user_score_explanation" = "您的评分为 %@";
+
+// Button: Okay
+"okay_button" = "好的";
+
+// Navigation title: Why?
+"navigation_title_why" = "为什么？";
+
+// Alert title: Custom story
+"custom_story_alert_title" = "自定义故事";
+
+// TextField placeholder: Describe the story prompt
+"custom_story_textfield_placeholder" = "...";
+
+// Button: OK
+"custom_story_ok_button" = "确定";
+
+// Button: Cancel
+"custom_story_cancel_button" = "取消";
+
+// Alert message: Prompt description
+"custom_story_alert_message" = "描述您的故事开头";
+
+// Button: Why?
+"failed_moderation_why_button" = "为什么？";
+
+// Button: OK
+"failed_moderation_ok_button" = "确定";
+
+// Message: Moderation explanation
+"failed_moderation_message" = "我们会审核故事构思，以确保它们符合我们的 AI 提供商的使用政策。";
+
+// Category: Sexual content
+"moderation_category_sexual" = "性内容";
+
+// Category: Sexual content involving minors
+"moderation_category_sexual_minors" = "涉及未成年人的性内容";
+
+// Category: Graphic violence
+"moderation_category_violence_graphic" = "血腥暴力";
+
+// Category: Self-harm (intent)
+"moderation_category_self_harm_intent" = "自残（意图）";
+
+// Category: Self-harm (instructions)
+"moderation_category_self_harm_instructions" = "自残（指导）";
+
+// Category: Illicit violence
+"moderation_category_illicit_violence" = "非法暴力";

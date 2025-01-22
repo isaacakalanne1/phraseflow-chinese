@@ -9,14 +9,14 @@
 // Translation view title
 "translation" = "अनुवाद";
 
-// Definition View title
+// Definition View title for showing the definition of a word
 "definition_of" = "परिभाषा: %@";
 
 // Stories button title
-"stories" = "कहानियाँ";
+"stories" = "कहानियां";
 
-// Play button title
-"play" = "चलाएँ";
+// Play audio button title
+"play" = "चलाएं";
 
 // Settings View title
 "settings" = "सेटिंग्स";
@@ -25,7 +25,7 @@
 "choose_story" = "कहानी चुनें";
 
 // Create Story Navigation Bar title
-"create_story" = "कहानी बनाएँ";
+"create_story" = "कहानी बनाएं";
 
 // Story Settings Navigation Bar title
 "story_settings" = "कहानी सेटिंग्स";
@@ -34,7 +34,7 @@
 "new_story" = "नई कहानी";
 
 // Difficulty level title
-"difficulty" = "कठिनाई";
+"difficulty" = "कठिनाई स्तर";
 
 // Beginner difficulty level
 "beginner" = "शुरुआती";
@@ -73,7 +73,7 @@
 "arabicGulf" = "अरबी (गल्फ अरबी)";
 
 // Portuguese (Brazil) language name
-"portuguese_brazil" = "पुर्तगाली (ब्राजील)";
+"portuguese_brazil" = "पुर्तगाली (ब्राज़ील)";
 
 // Portuguese (European) language name
 "portuguese_european" = "पुर्तगाली (यूरोपीय)";
@@ -97,7 +97,7 @@
 "language" = "भाषा";
 
 // AI Statement displayed at top of app
-"ai_statement" = "कहानियाँ और परिभाषाएँ एआई द्वारा लिखी गई हैं और गलत या अनुचित हो सकती हैं।";
+"ai_statement" = "कहानियां और परिभाषाएं AI द्वारा लिखी गई हैं और यह गलत या अनुचित हो सकती हैं।";
 
 // E.g, Chapter 1
 "chapter_number" = "अध्याय %@";
@@ -108,11 +108,8 @@
 // Load button title, shown when content is ready to be loaded
 "load" = "लोड करें";
 
-// Pause button title
-"pause" = "विराम";
-
-// Play button title
-"play" = "चलाएँ";
+// Pause audio button title
+"pause" = "रोकें";
 
 // Next Chapter button title
 "next_chapter" = "अगला अध्याय";
@@ -123,7 +120,7 @@
 // English toggle title
 "english_toggle" = "अंग्रेज़ी";
 
-// Toggle section title
+// Toggle selection section title
 "toggle" = "टॉगल";
 
 // Voice section title
@@ -142,10 +139,10 @@
 "fast" = "तेज़";
 
 // Xiaoxiao Chinese voice button title
-"voice_xiaoxiao" = "श्याओश्याओ";
+"voice_xiaoxiao" = "ज़ियाओज़ियाओ";
 
 // Yunjian Chinese voice button title
-"voice_yunjian" = "युनजियन";
+"voice_yunjian" = "युंजियान";
 
 // Denise French voice button title
 "voice_denise" = "डेनिस";
@@ -154,28 +151,28 @@
 "voice_henri" = "हेनरी";
 
 // Mayu Japanese voice button title
-"voice_mayu" = "मायु";
+"voice_mayu" = "मायू";
 
 // Keita Japanese voice button title
 "voice_keita" = "केइता";
 
 // Sun-Hi Korean voice button title
-"voice_sun_hi" = "सुन-ही";
+"voice_sun_hi" = "सन-ही";
 
 // Hyun-Su Korean voice button title
 "voice_hyun_su" = "ह्यून-सू";
 
 // Dariya (Russian) voice button title
-"voice_dariya" = "डारिया";
+"voice_dariya" = "दारिया";
 
 // Dmitry (Russian) voice button title
 "voice_dmitry" = "दिमित्री";
 
 // Elvira (Spanish) voice button title
-"voice_elvira" = "एल्विरा";
+"voice_elvira" = "एलविरा";
 
 // Alvaro (Spanish) voice button title
-"voice_alvaro" = "अल्वारो";
+"voice_alvaro" = "अलवारो";
 
 // Fatima (Arabic, UAE) voice button title
 "voice_fatima" = "फ़ातिमा";
@@ -190,7 +187,7 @@
 "voice_duarte" = "डुआर्टे";
 
 // Thalita (Brazilian Portuguese) voice button title
-"voice_thalita" = "थालिटा";
+"voice_thalita" = "थालिता";
 
 // Donato (Brazilian Portuguese) voice button title
 "voice_donato" = "डोनाटो";
@@ -211,7 +208,7 @@
 "choose_chapter" = "अध्याय चुनें";
 
 // Defining text while user is fetching the definition of a word
-"defining" = "परिभाषित कर रहे हैं...";
+"defining" = "परिभाषा दी जा रही है...";
 
 // English language name
 "english" = "अंग्रेज़ी";
@@ -223,7 +220,7 @@
 "german" = "जर्मन";
 
 // Ava voice button title
-"voice_ava" = "अवा";
+"voice_ava" = "आवा";
 
 // Ananya Hindi voice button title
 "voice_ananya" = "अनन्या";
@@ -238,4 +235,217 @@
 "voice_conrad" = "कॉनराड";
 
 // Subscribe button title for subscribing to app
-"subscribe" = "सदस्यता लें";
+"subscribe" = "सब्सक्राइब करें";
+
+// Welcome back text welcoming the user back to the app
+"welcome_back" = "वापसी पर स्वागत है";
+
+// Text instructing the user to tap a word to define it
+"tap_a_word_to_define_it" = "परिभाषा के लिए शब्द पर टैप करें";
+
+// Word title, of the "Word" section of the study feature
+"word" = "शब्द";
+
+// Sentence title, of the "Sentence" section of the study feature
+"sentence" = "वाक्य";
+
+// Translation title, of the "Translation" section of the study feature
+"translation" = "अनुवाद";
+
+// Definition title, of the "Definition" section of the study feature
+"definition" = "परिभाषा";
+
+// Button title for going to the previous selection
+"previous" = "पिछला";
+
+// Button title to reveal hidden content
+"reveal" = "प्रकट करें";
+
+// Button title for going to the next selection
+"next" = "अगला";
+
+// Title for showing the number of saved words
+"words_saved" = "सहेजे गए शब्द: %@";
+
+// Title for showing the number of studied words
+"words_studied" = "अध्ययन किए गए शब्द: %@";
+
+// Title for All Words section, which shows all words
+"all_words" = "सभी शब्द";
+
+// Saved tab bar title, for tab section which shows saved words
+"saved" = "सहेजा गया";
+
+// Studied tab bar title, for tab section which shows studied words
+"studied" = "अध्ययन किया गया";
+
+// Music toggle title, for toggle which plays or pauses music
+"music" = "संगीत";
+
+// Story section title, for section which contains details about the story
+"story" = "कहानी";
+
+// Custom story Button title, which user taps to create a custom story
+"custom_story" = "कस्टम कहानी...";
+
+// Random Button title, which user taps to create a random story
+"random" = "यादृच्छिक";
+
+// Title for section asking the user how they want their story to start
+"how_story_start" = "आप अपनी कहानी कैसे शुरू करना चाहते हैं?";
+
+// Title for section asking the user which language they would like to learn
+"which_language_learn" = "आप कौन सी भाषा सीखना चाहेंगे?";
+
+// Title for section asking the user how difficult they would like the story to be
+"how_difficult_story" = "आप कहानी को कितना कठिन बनाना चाहते हैं?";
+
+// Done button title, which the user taps when they are done on a certain screen
+"done" = "हो गया";
+
+// Title for screen of managing the user's app subscription
+"manage_subscription" = "सदस्यता प्रबंधित करें";
+
+// Title for screen presenting the user with the option of subscribing
+"subscribe" = "सब्सक्राइब करें";
+
+// Title telling user the number of chapters they can create per story
+"chapters_per_story" = "%@ अध्याय प्रति कहानी";
+
+// Title telling user they can create unlimited chapters per story
+"unlimited_chapters" = "असीमित अध्याय";
+
+// Button title the user can tap to restore their app subscription
+"restore_subscription" = "सदस्यता पुनर्स्थापित करें";
+
+// Button title for Terms of use (End User License Agreement)
+"terms_of_use" = "उपयोग की शर्तें (EULA)";
+
+// Button title for Privacy Policy
+"privacy_policy" = "गोपनीयता नीति";
+
+// Title telling user how to manage their app subscription
+"manage_subscriptions_instructions" = "अपनी सदस्यता प्रबंधित करने के लिए, iOS सेटिंग्स ऐप -> एप्पल आईडी -> सदस्यता पर जाएं";
+
+// Title telling user the subscription price per month
+"price_per_month" = "%@ प्रति माह";
+
+// Welcome back snackbar text
+"welcome_back" = "वापसी पर स्वागत है";
+
+// Snackbar text telling the user the chapter is being written
+"writing_chapter" = "अध्याय लिखा जा रहा है।";
+
+// Snackbar text telling the user the chapter is ready
+"chapter_ready" = "अध्याय तैयार है।";
+
+// Snackbar text telling the user the chapter failed to be written, and they can tap to retry
+"failed_write_chapter" = "अध्याय लिखने में विफल। पुनः प्रयास के लिए टैप करें।";
+
+// Snackbar text telling the user the text failed to be moderated, and they can tap to retry
+"failed_moderate_text" = "पाठ को मॉडरेट करने में विफल। पुनः प्रयास के लिए टैप करें।";
+
+// Snackbar text telling the user their action of subscribing to the app is complete, and that unlimited chapters are now available
+"subscription_complete" = "सदस्यता पूरी हो गई। अब असीमित अध्याय उपलब्ध हैं।";
+
+// Snackbar text telling the user their custom story has been added
+"custom_story_added" = "कस्टम कहानी जोड़ी गई";
+
+// Snackbar text telling the user their story is being moderated
+"moderating_story" = "कहानी का निरीक्षण हो रहा है";
+
+// Snackbar text telling the user their story did not meet the AI provider's usage policies
+"story_did_not_meet_policies" = "आपकी कहानी हमारे AI प्रदाता की उपयोग नीतियों का पालन नहीं करती।";
+
+// Snackbar text telling the user their custom story was deleted
+"deleted_custom_story" = "कस्टम कहानी हटाई गई";
+
+// Title telling the user to tap reveal to show the content
+"tap_reveal_to_show" = "सामग्री दिखाने के लिए प्रकट पर टैप करें";
+
+// Title saying that no words have been saved
+"no_saved_words" = "कोई शब्द सहेजे नहीं गए";
+
+// Title telling user to tap a word to study it
+"tap_word_to_study" = "पढ़ने के लिए किसी शब्द पर टैप करें";
+
+// Title telling the user to subscribe now for unlimited chapters
+"subscribe_now_unlimited_chapters" = "असीमित अध्यायों के लिए अब सब्सक्राइब करें";
+
+// Title telling the user that this costs no money
+"free" = "मुफ्त";
+
+// Title: Explains that the story didn't pass moderation
+"story_did_not_pass_moderation" = "आपकी कहानी मॉडरेशन पास नहीं कर सकी";
+
+// Displaying the custom prompt in settings
+"custom_prompt" = "%@";
+
+// Title: What is moderation?
+"what_is_moderation" = "मॉडरेशन क्या है?";
+
+// Explanation: Moderation overview
+"moderation_explanation" = "हम कहानी विचारों की जांच करते हैं ताकि यह सुनिश्चित किया जा सके कि वे हमारे AI प्रदाता की उपयोग नीतियों का पालन करते हैं।";
+
+// Title: How moderation works
+"how_does_moderation_work" = "मॉडरेशन कैसे काम करता है?";
+
+// Explanation: How moderation works
+"moderation_work_explanation" = "हम आत्मविश्वास स्कोर का उपयोग करके कहानी की जांच करते हैं।\nयह AI का आत्मविश्वास है कि यह सामग्री कहानी के भीतर है।\nयदि आपकी कहानी किसी श्रेणी के लिए स्वीकृत आत्मविश्वास स्कोर से ऊपर है, तो यह मॉडरेशन पास नहीं करेगी।";
+
+// Title: Why it didn't pass
+"why_didnt_it_pass" = "यह पास क्यों नहीं हुआ?";
+
+// Text: Acceptance threshold explanation
+"acceptance_threshold_explanation" = "हम %@ से नीचे स्वीकार करते हैं";
+
+// Text: User score explanation
+"user_score_explanation" = "आपका स्कोर %@ है";
+
+// Button: Okay
+"okay_button" = "ठीक है";
+
+// Navigation title: Why?
+"navigation_title_why" = "क्यों?";
+
+// Alert title: Custom story
+"custom_story_alert_title" = "कस्टम कहानी";
+
+// TextField placeholder: Describe the story prompt
+"custom_story_textfield_placeholder" = "...";
+
+// Button: OK
+"custom_story_ok_button" = "ठीक है";
+
+// Button: Cancel
+"custom_story_cancel_button" = "रद्द करें";
+
+// Alert message: Prompt description
+"custom_story_alert_message" = "अपनी कहानी की शुरुआत का वर्णन करें";
+
+// Button: Why?
+"failed_moderation_why_button" = "क्यों?";
+
+// Button: OK
+"failed_moderation_ok_button" = "ठीक है";
+
+// Message: Moderation explanation
+"failed_moderation_message" = "हम कहानी विचारों की जांच करते हैं ताकि यह सुनिश्चित किया जा सके कि वे हमारे AI प्रदाता की नीतियों का पालन करते हैं।";
+
+// Category: Sexual content
+"moderation_category_sexual" = "यौन";
+
+// Category: Sexual content involving minors
+"moderation_category_sexual_minors" = "नाबालिगों से संबंधित यौन सामग्री";
+
+// Category: Graphic violence
+"moderation_category_violence_graphic" = "ग्राफिक हिंसा";
+
+// Category: Self-harm (intent)
+"moderation_category_self_harm_intent" = "आत्म-क्षति (इरादा)";
+
+// Category: Self-harm (instructions)
+"moderation_category_self_harm_instructions" = "आत्म-क्षति (निर्देश)";
+
+// Category: Illicit violence
+"moderation_category_illicit_violence" = "गैरकानूनी हिंसा";

@@ -48,17 +48,17 @@ enum ModerationCategories: CaseIterable {
     var name: String {
         switch self {
         case .sexual:
-            return "Sexual"
+            return LocalizedString.moderationCategorySexual
         case .sexualMinors:
-            return "Sexual content involving minors"
+            return LocalizedString.moderationCategorySexualMinors
         case .violenceGraphic:
-            return "Graphic Violence"
+            return LocalizedString.moderationCategoryViolenceGraphic
         case .selfHarmIntent:
-            return "Self Harm (Intent)"
+            return LocalizedString.moderationCategorySelfHarmIntent
         case .selfHarmInstructions:
-            return "Self Harm (Instructions)"
+            return LocalizedString.moderationCategorySelfHarmInstructions
         case .illicitViolent:
-            return "Illicit Violence"
+            return LocalizedString.moderationCategoryIllicitViolence
         }
     }
 

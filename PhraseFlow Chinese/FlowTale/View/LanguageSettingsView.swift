@@ -14,7 +14,7 @@ struct LanguageOnboardingView: View {
             NavigationLink {
                 DifficultyOnboardingView()
             } label: {
-                PrimaryButton(title: "Next")
+                PrimaryButton(title: LocalizedString.next)
             }
         }
         .background(FlowTaleColor.background)
@@ -39,10 +39,10 @@ struct LanguageMenu: View {
                     .listRowBackground(store.state.settingsState.language == language ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
                 }
             } header: {
-                Text("Which language would you like to learn?")
+                Text(LocalizedString.whichLanguageLearn)
             }
         }
-        .navigationTitle("Language")
+        .navigationTitle(LocalizedString.language)
         .background(FlowTaleColor.background)
         .scrollContentBackground(.hidden)
     }
@@ -55,7 +55,7 @@ struct LanguageSettingsView: View {
         VStack {
             LanguageMenu()
 
-            PrimaryButton(title: "Done") {
+            PrimaryButton(title: LocalizedString.done) {
                 dismiss()
             }
             .padding()

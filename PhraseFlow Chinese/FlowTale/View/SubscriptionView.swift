@@ -56,7 +56,7 @@ struct SubscriptionView: View {
 
             HStack {
                 Button {
-                    if let url = URL(string: "https://www.smileydude.co.uk/post/terms-of-use-eula") {
+                    if let url = URL(string: "https://www.smileydude.co.uk/post/flowtale-terms-of-use-eula") {
                         UIApplication.shared.open(url, options: [:], completionHandler: nil)
                     }
                 } label: {
@@ -67,7 +67,7 @@ struct SubscriptionView: View {
                 }
 
                 Button {
-                    if let url = URL(string: "https://www.smileydude.co.uk/post/privacy-policy") {
+                    if let url = URL(string: "https://www.smileydude.co.uk/post/flowtale-privacy-policy") {
                         UIApplication.shared.open(url, options: [:], completionHandler: nil)
                     }
                 } label: {

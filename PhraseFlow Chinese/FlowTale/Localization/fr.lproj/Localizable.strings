@@ -9,20 +9,20 @@
 // Translation view title
 "translation" = "Traduction";
 
-// Definition View title
-"definition_of" = "Définition : %@";
+// Definition View title for showing the definition of a word
+"definition_of" = "Définition : %@";
 
 // Stories button title
 "stories" = "Histoires";
 
-// Play button title
-"play" = "Jouer";
+// Play audio button title
+"play" = "Lire";
 
 // Settings View title
 "settings" = "Paramètres";
 
 // Choose Story Navigation Bar title
-"choose_story" = "Choisir une histoire";
+"choose_story" = "Choisir l'histoire";
 
 // Create Story Navigation Bar title
 "create_story" = "Créer une histoire";
@@ -70,22 +70,22 @@
 "russian" = "Russe";
 
 // Arabic (Gulf Arabic) language name
-"arabicGulf" = "Arabe (arabe du Golfe)";
+"arabicGulf" = "Arabe (dialecte du Golfe)";
 
 // Portuguese (Brazil) language name
 "portuguese_brazil" = "Portugais (Brésil)";
 
 // Portuguese (European) language name
-"portuguese_european" = "Portugais (européen)";
+"portuguese_european" = "Portugais (Europe)";
 
 // Retry button title
 "retry" = "Réessayer";
 
 // Failed to write story title
-"failed_to_write_story" = "Impossible d'écrire l'histoire";
+"failed_to_write_story" = "Échec de la rédaction de l'histoire";
 
 // Failed to write chapter title
-"failed_to_write_chapter" = "Impossible d'écrire le chapitre";
+"failed_to_write_chapter" = "Échec de la rédaction du chapitre";
 
 // Writing new chapter title
 "writing_new_chapter" = "Rédaction d'un nouveau chapitre...";
@@ -97,7 +97,7 @@
 "language" = "Langue";
 
 // AI Statement displayed at top of app
-"ai_statement" = "Les histoires et les définitions sont rédigées par l'IA et peuvent être inexactes ou inappropriées.";
+"ai_statement" = "Les histoires et définitions sont rédigées par une IA et peuvent être inexactes ou inappropriées.";
 
 // E.g, Chapter 1
 "chapter_number" = "Chapitre %@";
@@ -108,11 +108,8 @@
 // Load button title, shown when content is ready to be loaded
 "load" = "Charger";
 
-// Pause button title
+// Pause audio button title
 "pause" = "Pause";
-
-// Play button title
-"play" = "Jouer";
 
 // Next Chapter button title
 "next_chapter" = "Chapitre suivant";
@@ -123,8 +120,8 @@
 // English toggle title
 "english_toggle" = "Anglais";
 
-// Toggle section title
-"toggle" = "Basculer";
+// Toggle selection section title
+"toggle" = "Bascule";
 
 // Voice section title
 "voice" = "Voix";
@@ -207,8 +204,8 @@
 // New Chapter button title
 "new_chapter" = "Nouveau chapitre";
 
-// Choose Chapter navigation bar title
-"choose_chapter" = "Choisir un chapitre";
+// Choose Chapter navigation bat title
+"choose_chapter" = "Choisir le chapitre";
 
 // Defining text while user is fetching the definition of a word
 "defining" = "Définition en cours...";
@@ -268,10 +265,10 @@
 "next" = "Suivant";
 
 // Title for showing the number of saved words
-"words_saved" = "Mots enregistrés : %@";
+"words_saved" = "Mots enregistrés : %@";
 
 // Title for showing the number of studied words
-"words_saved" = "Mots étudiés : %@";
+"words_studied" = "Mots étudiés : %@";
 
 // Title for All Words section, which shows all words
 "all_words" = "Tous les mots";
@@ -295,13 +292,13 @@
 "random" = "Aléatoire";
 
 // Title for section asking the user how they want their story to start
-"how_story_start" = "Comment souhaitez-vous que l'histoire commence ?";
+"how_story_start" = "Comment voulez-vous que l'histoire commence ?";
 
 // Title for section asking the user which language they would like to learn
-"which_language_learn" = "Quelle langue souhaitez-vous apprendre ?";
+"which_language_learn" = "Quelle langue souhaitez-vous apprendre ?";
 
 // Title for section asking the user how difficult they would like the story to be
-"how_difficult_story" = "Quel niveau de difficulté souhaitez-vous pour l'histoire ?";
+"how_difficult_story" = "À quel point voulez-vous que l'histoire soit difficile ?";
 
 // Done button title, which the user taps when they are done on a certain screen
 "done" = "Terminé";
@@ -328,7 +325,7 @@
 "privacy_policy" = "Politique de confidentialité";
 
 // Title telling user how to manage their app subscription
-"manage_subscriptions_instructions" = "Pour gérer vos abonnements, accédez à l'application Réglages iOS -> Identifiant Apple -> Abonnements";
+"manage_subscriptions_instructions" = "Pour gérer vos abonnements, allez dans Réglages iOS -> Identifiant Apple -> Abonnements";
 
 // Title telling user the subscription price per month
 "price_per_month" = "%@ par mois";
@@ -343,22 +340,112 @@
 "chapter_ready" = "Chapitre prêt.";
 
 // Snackbar text telling the user the chapter failed to be written, and they can tap to retry
-"failed_write_chapter" = "Impossible d'écrire le chapitre. Touchez pour réessayer.";
+"failed_write_chapter" = "Échec de la rédaction du chapitre. Touchez pour réessayer.";
 
 // Snackbar text telling the user the text failed to be moderated, and they can tap to retry
-"failed_moderate_text" = "Impossible de modérer le texte. Touchez pour réessayer.";
+"failed_moderate_text" = "Échec de la modération du texte. Touchez pour réessayer.";
 
 // Snackbar text telling the user their action of subscribing to the app is complete, and that unlimited chapters are now available
-"subscription_complete" = "Abonnement réussi. Chapitres illimités désormais disponibles.";
+"subscription_complete" = "Abonnement terminé. Chapitres illimités maintenant disponibles.";
 
 // Snackbar text telling the user their custom story has been added
-"custom_story_added" = "Histoire personnalisée ajoutée.";
+"custom_story_added" = "Histoire personnalisée ajoutée";
 
 // Snackbar text telling the user their story is being moderated
 "moderating_story" = "Modération de l'histoire en cours";
 
 // Snackbar text telling the user their story did not meet the AI provider's usage policies
-"story_did_not_meet_policies" = "Votre histoire n'a pas respecté les règles d'utilisation de notre fournisseur d'IA.";
+"story_did_not_meet_policies" = "Votre histoire n'a pas respecté les politiques d'utilisation de notre fournisseur d'IA.";
 
 // Snackbar text telling the user their custom story was deleted
 "deleted_custom_story" = "Histoire personnalisée supprimée";
+
+// Title telling the user to tap reveal to show the content
+"tap_reveal_to_show" = "Touchez « Révéler » pour afficher";
+
+// Title saying that no words have been saved
+"no_saved_words" = "Aucun mot enregistré";
+
+// Title telling user to tap a word to study it
+"tap_word_to_study" = "Touchez un mot pour l'étudier";
+
+// Title telling the user to subscribe now for unlimited chapters
+"subscribe_now_unlimited_chapters" = "Abonnez-vous maintenant pour des chapitres illimités";
+
+// Title telling the user that this costs no money
+"free" = "Gratuit";
+
+// Title: Explains that the story didn't pass moderation
+"story_did_not_pass_moderation" = "Votre histoire n'a pas passé la modération";
+
+// Displaying the custom prompt in settings
+"custom_prompt" = "%@";
+
+// Title: What is moderation?
+"what_is_moderation" = "Qu'est-ce que la modération ?";
+
+// Explanation: Moderation overview
+"moderation_explanation" = "Nous vérifions les idées d'histoires pour nous assurer qu'elles respectent les politiques d'utilisation de notre fournisseur d'IA.";
+
+// Title: How moderation works
+"how_does_moderation_work" = "Comment fonctionne la modération ?";
+
+// Explanation: How moderation works
+"moderation_work_explanation" = "Nous vérifions l'histoire à l'aide de scores de confiance.\nC'est la fiabilité estimée par l'IA pour ce contenu.\nSi votre histoire dépasse un certain score de confiance dans une catégorie, elle ne passera pas la modération.";
+
+// Title: Why it didn't pass
+"why_didnt_it_pass" = "Pourquoi cela n'a-t-il pas été approuvé ?";
+
+// Text: Acceptance threshold explanation
+"acceptance_threshold_explanation" = "Nous acceptons en dessous de %@";
+
+// Text: User score explanation
+"user_score_explanation" = "Votre score : %@";
+
+// Button: Okay
+"okay_button" = "OK";
+
+// Navigation title: Why?
+"navigation_title_why" = "Pourquoi ?";
+
+// Alert title: Custom story
+"custom_story_alert_title" = "Histoire personnalisée";
+
+// TextField placeholder: Describe the story prompt
+"custom_story_textfield_placeholder" = "...";
+
+// Button: OK
+"custom_story_ok_button" = "OK";
+
+// Button: Cancel
+"custom_story_cancel_button" = "Annuler";
+
+// Alert message: Prompt description
+"custom_story_alert_message" = "Décrivez le début de votre histoire";
+
+// Button: Why?
+"failed_moderation_why_button" = "Pourquoi ?";
+
+// Button: OK
+"failed_moderation_ok_button" = "OK";
+
+// Message: Moderation explanation
+"failed_moderation_message" = "Nous vérifions les idées d'histoires afin de nous assurer qu'elles respectent les politiques de notre fournisseur d'IA.";
+
+// Category: Sexual content
+"moderation_category_sexual" = "Sexuel";
+
+// Category: Sexual content involving minors
+"moderation_category_sexual_minors" = "Contenu sexuel impliquant des mineurs";
+
+// Category: Graphic violence
+"moderation_category_violence_graphic" = "Violence explicite";
+
+// Category: Self-harm (intent)
+"moderation_category_self_harm_intent" = "Automutilation (intention)";
+
+// Category: Self-harm (instructions)
+"moderation_category_self_harm_instructions" = "Automutilation (instructions)";
+
+// Category: Illicit violence
+"moderation_category_illicit_violence" = "Violence illicite";

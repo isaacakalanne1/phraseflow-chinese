@@ -9,13 +9,13 @@
 // Translation view title
 "translation" = "Translation";
 
-// Definition View title
+// Definition View title for showing the definition of a word
 "definition_of" = "Definition: %@";
 
 // Stories button title
 "stories" = "Stories";
 
-// Play button title
+// Play audio button title
 "play" = "Play";
 
 // Settings View title
@@ -108,11 +108,8 @@
 // Load button title, shown when content is ready to be loaded
 "load" = "Load";
 
-// Pause button title
+// Pause audio button title
 "pause" = "Pause";
-
-// Play button title
-"play" = "Play";
 
 // Next Chapter button title
 "next_chapter" = "Next Chapter";
@@ -123,7 +120,7 @@
 // English toggle title
 "english_toggle" = "English";
 
-// Toggle section title
+// Toggle selection section title
 "toggle" = "Toggle";
 
 // Voice section title
@@ -377,3 +374,78 @@
 
 // Title telling the user that this costs no money
 "free" = "Free";
+
+// Title: Explains that the story didn't pass moderation
+"story_did_not_pass_moderation" = "Your story didn't pass moderation";
+
+// Displaying the custom prompt in settings
+"custom_prompt" = "%@";
+
+// Title: What is moderation?
+"what_is_moderation" = "What's moderation?";
+
+// Explanation: Moderation overview
+"moderation_explanation" = "We check story ideas to make sure they align with our AI provider's usage policies.";
+
+// Title: How moderation works
+"how_does_moderation_work" = "How does moderation work?";
+
+// Explanation: How moderation works
+"moderation_work_explanation" = "We check the story using confidence scores.\nThis is how confident the AI is that this content is within the story.\nIf your story is above an accepted confidence score for a category, it will not pass moderation.";
+
+// Title: Why it didn't pass
+"why_didnt_it_pass" = "Why didn't it pass?";
+
+// Text: Acceptance threshold explanation
+"acceptance_threshold_explanation" = "We accept below %@";
+
+// Text: User score explanation
+"user_score_explanation" = "You scored %@";
+
+// Button: Okay
+"okay_button" = "Okay";
+
+// Navigation title: Why?
+"navigation_title_why" = "Why?";
+
+// Alert title: Custom story
+"custom_story_alert_title" = "Custom story";
+
+// TextField placeholder: Describe the story prompt
+"custom_story_textfield_placeholder" = "...";
+
+// Button: OK
+"custom_story_ok_button" = "OK";
+
+// Button: Cancel
+"custom_story_cancel_button" = "Cancel";
+
+// Alert message: Prompt description
+"custom_story_alert_message" = "Describe the start of your story";
+
+// Button: Why?
+"failed_moderation_why_button" = "Why?";
+
+// Button: OK
+"failed_moderation_ok_button" = "OK";
+
+// Message: Moderation explanation
+"failed_moderation_message" = "We check story ideas to ensure they align with our AI provider’s policies.";
+
+// Category: Sexual content
+"moderation_category_sexual" = "Sexual";
+
+// Category: Sexual content involving minors
+"moderation_category_sexual_minors" = "Sexual content involving minors";
+
+// Category: Graphic violence
+"moderation_category_violence_graphic" = "Graphic Violence";
+
+// Category: Self-harm (intent)
+"moderation_category_self_harm_intent" = "Self Harm (Intent)";
+
+// Category: Self-harm (instructions)
+"moderation_category_self_harm_instructions" = "Self Harm (Instructions)";
+
+// Category: Illicit violence
+"moderation_category_illicit_violence" = "Illicit Violence";

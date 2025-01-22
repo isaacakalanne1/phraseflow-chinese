@@ -27,7 +27,7 @@ struct CreateStorySettingsView: View {
                             .foregroundStyle(FlowTaleColor.primary)
                     }
                 } header: {
-                    Text("Language")
+                    Text(LocalizedString.language)
                 }
                 
                 Section {
@@ -42,7 +42,7 @@ struct CreateStorySettingsView: View {
                         }
                     }
                 } header: {
-                    Text("Difficulty")
+                    Text(LocalizedString.difficulty)
                 }
 
                 Section {
@@ -55,7 +55,7 @@ struct CreateStorySettingsView: View {
                             .lineLimit(1)
                     }
                 } header: {
-                    Text("Story")
+                    Text(LocalizedString.story)
                 }
 
             }

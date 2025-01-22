@@ -9,14 +9,14 @@
 // Translation view title
 "translation" = "Перевод";
 
-// Definition View title
+// Definition View title for showing the definition of a word
 "definition_of" = "Определение: %@";
 
 // Stories button title
 "stories" = "Истории";
 
-// Play button title
-"play" = "Играть";
+// Play audio button title
+"play" = "Воспроизвести";
 
 // Settings View title
 "settings" = "Настройки";
@@ -70,13 +70,13 @@
 "russian" = "Русский";
 
 // Arabic (Gulf Arabic) language name
-"arabicGulf" = "Арабский (Персидский залив)";
+"arabicGulf" = "Арабский (залив)";
 
 // Portuguese (Brazil) language name
 "portuguese_brazil" = "Португальский (Бразилия)";
 
 // Portuguese (European) language name
-"portuguese_european" = "Португальский (Европейский)";
+"portuguese_european" = "Португальский (Европа)";
 
 // Retry button title
 "retry" = "Повторить";
@@ -88,7 +88,7 @@
 "failed_to_write_chapter" = "Не удалось написать главу";
 
 // Writing new chapter title
-"writing_new_chapter" = "Пишется новая глава...";
+"writing_new_chapter" = "Создание новой главы...";
 
 // New Story button title
 "new_story" = "Новая история";
@@ -108,11 +108,8 @@
 // Load button title, shown when content is ready to be loaded
 "load" = "Загрузить";
 
-// Pause button title
+// Pause audio button title
 "pause" = "Пауза";
-
-// Play button title
-"play" = "Играть";
 
 // Next Chapter button title
 "next_chapter" = "Следующая глава";
@@ -123,7 +120,7 @@
 // English toggle title
 "english_toggle" = "Английский";
 
-// Toggle section title
+// Toggle selection section title
 "toggle" = "Переключатель";
 
 // Voice section title
@@ -184,7 +181,7 @@
 "voice_hamdan" = "Хамдан";
 
 // Raquel (European Portuguese) voice button title
-"voice_raquel" = "Ракил";
+"voice_raquel" = "Ракель";
 
 // Duarte (European Portuguese) voice button title
 "voice_duarte" = "Дуарте";
@@ -207,7 +204,7 @@
 // New Chapter button title
 "new_chapter" = "Новая глава";
 
-// Choose Chapter navigation bat title
+// Choose Chapter navigation bar title
 "choose_chapter" = "Выбрать главу";
 
 // Defining text while user is fetching the definition of a word
@@ -229,7 +226,7 @@
 "voice_ananya" = "Ананья";
 
 // Aarav Hindi voice button title
-"voice_aarav" = "Арав";
+"voice_aarav" = "Аарав";
 
 // Amala German voice button title
 "voice_amala" = "Амала";
@@ -239,3 +236,216 @@
 
 // Subscribe button title for subscribing to app
 "subscribe" = "Подписаться";
+
+// Welcome back text welcoming the user back to the app
+"welcome_back" = "С возвращением";
+
+// Text instructing the user to tap a word to define it
+"tap_a_word_to_define_it" = "Нажмите на слово, чтобы определить его";
+
+// Word title, of the "Word" section of the study feature
+"word" = "Слово";
+
+// Sentence title, of the "Sentence" section of the study feature
+"sentence" = "Предложение";
+
+// Translation title, of the "Translation" section of the study feature
+"translation" = "Перевод";
+
+// Definition title, of the "Definition" section of the study feature
+"definition" = "Определение";
+
+// Button title for going to the previous selection
+"previous" = "Предыдущий";
+
+// Button title to reveal hidden content
+"reveal" = "Показать";
+
+// Button title for going to the next selection
+"next" = "Следующий";
+
+// Title for showing the number of saved words
+"words_saved" = "Сохраненные слова: %@";
+
+// Title for showing the number of studied words
+"words_studied" = "Изученные слова: %@";
+
+// Title for All Words section, which shows all words
+"all_words" = "Все слова";
+
+// Saved tab bar title, for tab section which shows saved words
+"saved" = "Сохраненные";
+
+// Studied tab bar title, for tab section which shows studied words
+"studied" = "Изученные";
+
+// Music toggle title, for toggle which plays or pauses music
+"music" = "Музыка";
+
+// Story section title, for section which contains details about the story
+"story" = "История";
+
+// Custom story Button title, which user taps to create a custom story
+"custom_story" = "Своя история...";
+
+// Random Button title, which user taps to create a random story
+"random" = "Случайная";
+
+// Title for section asking the user how they want their story to start
+"how_story_start" = "Как вы хотите начать историю?";
+
+// Title for section asking the user which language they would like to learn
+"which_language_learn" = "Какой язык вы хотите изучать?";
+
+// Title for section asking the user how difficult they would like the story to be
+"how_difficult_story" = "Какой уровень сложности истории вы предпочитаете?";
+
+// Done button title, which the user taps when they are done on a certain screen
+"done" = "Готово";
+
+// Title for screen of managing the user's app subscription
+"manage_subscription" = "Управление подпиской";
+
+// Title for screen presenting the user with the option of subscribing
+"subscribe" = "Подписаться";
+
+// Title telling user the number of chapters they can create per story
+"chapters_per_story" = "%@ глав в одной истории";
+
+// Title telling user they can create unlimited chapters per story
+"unlimited_chapters" = "Неограниченное количество глав";
+
+// Button title the user can tap to restore their app subscription
+"restore_subscription" = "Восстановить подписку";
+
+// Button title for Terms of use (End User License Agreement)
+"terms_of_use" = "Условия использования (EULA)";
+
+// Button title for Privacy Policy
+"privacy_policy" = "Политика конфиденциальности";
+
+// Title telling user how to manage their app subscription
+"manage_subscriptions_instructions" = "Чтобы управлять подписками, перейдите в Настройки iOS -> Apple ID -> Подписки";
+
+// Title telling user the subscription price per month
+"price_per_month" = "%@ в месяц";
+
+// Welcome back snackbar text
+"welcome_back" = "С возвращением";
+
+// Snackbar text telling the user the chapter is being written
+"writing_chapter" = "Пишется глава.";
+
+// Snackbar text telling the user the chapter is ready
+"chapter_ready" = "Глава готова.";
+
+// Snackbar text telling the user the chapter failed to be written, and they can tap to retry
+"failed_write_chapter" = "Не удалось написать главу. Нажмите, чтобы повторить.";
+
+// Snackbar text telling the user the text failed to be moderated, and they can tap to retry
+"failed_moderate_text" = "Не удалось модерировать текст. Нажмите, чтобы повторить.";
+
+// Snackbar text telling the user their action of subscribing to the app is complete, and that unlimited chapters are now available
+"subscription_complete" = "Подписка завершена. Неограниченное количество глав теперь доступно.";
+
+// Snackbar text telling the user their custom story has been added
+"custom_story_added" = "Своя история добавлена";
+
+// Snackbar text telling the user their story is being moderated
+"moderating_story" = "Модерируется история";
+
+// Snackbar text telling the user their story did not meet the AI provider's usage policies
+"story_did_not_meet_policies" = "Ваша история не соответствует политике использования нашего ИИ.";
+
+// Snackbar text telling the user their custom story was deleted
+"deleted_custom_story" = "Своя история удалена";
+
+// Title telling the user to tap reveal to show the content
+"tap_reveal_to_show" = "Нажмите, чтобы показать";
+
+// Title saying that no words have been saved
+"no_saved_words" = "Сохраненных слов нет";
+
+// Title telling user to tap a word to study it
+"tap_word_to_study" = "Нажмите на слово, чтобы изучить его";
+
+// Title telling the user to subscribe now for unlimited chapters
+"subscribe_now_unlimited_chapters" = "Подпишитесь сейчас для неограниченного количества глав";
+
+// Title telling the user that this costs no money
+"free" = "Бесплатно";
+
+// Title: Explains that the story didn't pass moderation
+"story_did_not_pass_moderation" = "Ваша история не прошла модерацию";
+
+// Displaying the custom prompt in settings
+"custom_prompt" = "%@";
+
+// Title: What is moderation?
+"what_is_moderation" = "Что такое модерация?";
+
+// Explanation: Moderation overview
+"moderation_explanation" = "Мы проверяем идеи историй, чтобы убедиться, что они соответствуют правилам использования нашего ИИ.";
+
+// Title: How moderation works
+"how_does_moderation_work" = "Как работает модерация?";
+
+// Explanation: How moderation works
+"moderation_work_explanation" = "Мы проверяем историю с использованием коэффициентов уверенности.\nЭто показывает, насколько ИИ уверен, что данный контент подходит для истории.\nЕсли ваша история превышает установленный коэффициент уверенности для категории, она не пройдет модерацию.";
+
+// Title: Why it didn't pass
+"why_didnt_it_pass" = "Почему она не прошла?";
+
+// Text: Acceptance threshold explanation
+"acceptance_threshold_explanation" = "Мы принимаем ниже %@";
+
+// Text: User score explanation
+"user_score_explanation" = "Ваш результат %@";
+
+// Button: Okay
+"okay_button" = "Ок";
+
+// Navigation title: Why?
+"navigation_title_why" = "Почему?";
+
+// Alert title: Custom story
+"custom_story_alert_title" = "Своя история";
+
+// TextField placeholder: Describe the story prompt
+"custom_story_textfield_placeholder" = "...";
+
+// Button: OK
+"custom_story_ok_button" = "ОК";
+
+// Button: Cancel
+"custom_story_cancel_button" = "Отмена";
+
+// Alert message: Prompt description
+"custom_story_alert_message" = "Опишите начало вашей истории";
+
+// Button: Why?
+"failed_moderation_why_button" = "Почему?";
+
+// Button: OK
+"failed_moderation_ok_button" = "ОК";
+
+// Message: Moderation explanation
+"failed_moderation_message" = "Мы проверяем идеи историй, чтобы убедиться, что они соответствуют политике использования нашего ИИ.";
+
+// Category: Sexual content
+"moderation_category_sexual" = "Сексуальное содержание";
+
+// Category: Sexual content involving minors
+"moderation_category_sexual_minors" = "Сексуальное содержание с участием несовершеннолетних";
+
+// Category: Graphic violence
+"moderation_category_violence_graphic" = "Графическое насилие";
+
+// Category: Self-harm (intent)
+"moderation_category_self_harm_intent" = "Самоповреждение (намерение)";
+
+// Category: Self-harm (instructions)
+"moderation_category_self_harm_instructions" = "Самоповреждение (инструкции)";
+
+// Category: Illicit violence
+"moderation_category_illicit_violence" = "Незаконное насилие";

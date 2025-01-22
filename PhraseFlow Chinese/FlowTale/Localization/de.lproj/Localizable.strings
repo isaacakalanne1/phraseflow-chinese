@@ -9,26 +9,26 @@
 // Translation view title
 "translation" = "Übersetzung";
 
-// Definition View title
+// Definition View title for showing the definition of a word
 "definition_of" = "Definition: %@";
 
 // Stories button title
 "stories" = "Geschichten";
 
-// Play button title
+// Play audio button title
 "play" = "Abspielen";
 
 // Settings View title
 "settings" = "Einstellungen";
 
 // Choose Story Navigation Bar title
-"choose_story" = "Geschichte wählen";
+"choose_story" = "Geschichte auswählen";
 
 // Create Story Navigation Bar title
 "create_story" = "Geschichte erstellen";
 
 // Story Settings Navigation Bar title
-"story_settings" = "Geschichten-Einstellungen";
+"story_settings" = "Geschichtseinstellungen";
 
 // New Story button title
 "new_story" = "Neue Geschichte";
@@ -82,10 +82,10 @@
 "retry" = "Erneut versuchen";
 
 // Failed to write story title
-"failed_to_write_story" = "Fehler beim Schreiben der Geschichte";
+"failed_to_write_story" = "Geschichte konnte nicht geschrieben werden";
 
 // Failed to write chapter title
-"failed_to_write_chapter" = "Fehler beim Schreiben des Kapitels";
+"failed_to_write_chapter" = "Kapitel konnte nicht geschrieben werden";
 
 // Writing new chapter title
 "writing_new_chapter" = "Neues Kapitel wird geschrieben...";
@@ -97,22 +97,19 @@
 "language" = "Sprache";
 
 // AI Statement displayed at top of app
-"ai_statement" = "Geschichten und Definitionen werden von KI geschrieben und können ungenau oder unangemessen sein.";
+"ai_statement" = "Geschichten und Definitionen werden von KI erstellt und können ungenau oder unangemessen sein.";
 
 // E.g, Chapter 1
 "chapter_number" = "Kapitel %@";
 
 // Loading button title, shown when a button state is currently loading
-"loading" = "Wird geladen";
+"loading" = "Lädt";
 
 // Load button title, shown when content is ready to be loaded
 "load" = "Laden";
 
-// Pause button title
+// Pause audio button title
 "pause" = "Pause";
-
-// Play button title
-"play" = "Abspielen";
 
 // Next Chapter button title
 "next_chapter" = "Nächstes Kapitel";
@@ -123,8 +120,8 @@
 // English toggle title
 "english_toggle" = "Englisch";
 
-// Toggle section title
-"toggle" = "Schalter";
+// Toggle selection section title
+"toggle" = "Umschalten";
 
 // Voice section title
 "voice" = "Stimme";
@@ -208,10 +205,10 @@
 "new_chapter" = "Neues Kapitel";
 
 // Choose Chapter navigation bat title
-"choose_chapter" = "Kapitel wählen";
+"choose_chapter" = "Kapitel auswählen";
 
 // Defining text while user is fetching the definition of a word
-"defining" = "Definieren...";
+"defining" = "Definiert...";
 
 // English language name
 "english" = "Englisch";
@@ -239,3 +236,216 @@
 
 // Subscribe button title for subscribing to app
 "subscribe" = "Abonnieren";
+
+// Welcome back text welcoming the user back to the app
+"welcome_back" = "Willkommen zurück";
+
+// Text instructing the user to tap a word to define it
+"tap_a_word_to_define_it" = "Tippe auf ein Wort, um es zu definieren";
+
+// Word title, of the "Word" section of the study feature
+"word" = "Wort";
+
+// Sentence title, of the "Sentence" section of the study feature
+"sentence" = "Satz";
+
+// Translation title, of the "Translation" section of the study feature
+"translation" = "Übersetzung";
+
+// Definition title, of the "Definition" section of the study feature
+"definition" = "Definition";
+
+// Button title for going to the previous selection
+"previous" = "Zurück";
+
+// Button title to reveal hidden content
+"reveal" = "Aufdecken";
+
+// Button title for going to the next selection
+"next" = "Weiter";
+
+// Title for showing the number of saved words
+"words_saved" = "Gespeicherte Wörter: %@";
+
+// Title for showing the number of studied words
+"words_studied" = "Gelernte Wörter: %@";
+
+// Title for All Words section, which shows all words
+"all_words" = "Alle Wörter";
+
+// Saved tab bar title, for tab section which shows saved words
+"saved" = "Gespeichert";
+
+// Studied tab bar title, for tab section which shows studied words
+"studied" = "Gelernt";
+
+// Music toggle title, for toggle which plays or pauses music
+"music" = "Musik";
+
+// Story section title, for section which contains details about the story
+"story" = "Geschichte";
+
+// Custom story Button title, which user taps to create a custom story
+"custom_story" = "Eigene Geschichte...";
+
+// Random Button title, which user taps to create a random story
+"random" = "Zufällig";
+
+// Title for section asking the user how they want their story to start
+"how_story_start" = "Wie soll die Geschichte beginnen?";
+
+// Title for section asking the user which language they would like to learn
+"which_language_learn" = "Welche Sprache möchtest du lernen?";
+
+// Title for section asking the user how difficult they would like the story to be
+"how_difficult_story" = "Wie schwierig soll die Geschichte sein?";
+
+// Done button title, which the user taps when they are done on a certain screen
+"done" = "Fertig";
+
+// Title for screen of managing the user's app subscription
+"manage_subscription" = "Abonnement verwalten";
+
+// Title for screen presenting the user with the option of subscribing
+"subscribe" = "Abonnieren";
+
+// Title telling user the number of chapters they can create per story
+"chapters_per_story" = "%@ Kapitel pro Geschichte";
+
+// Title telling user they can create unlimited chapters per story
+"unlimited_chapters" = "Unbegrenzte Kapitel";
+
+// Button title the user can tap to restore their app subscription
+"restore_subscription" = "Abonnement wiederherstellen";
+
+// Button title for Terms of use (End User License Agreement)
+"terms_of_use" = "Nutzungsbedingungen (EULA)";
+
+// Button title for Privacy Policy
+"privacy_policy" = "Datenschutzrichtlinie";
+
+// Title telling user how to manage their app subscription
+"manage_subscriptions_instructions" = "Um deine Abonnements zu verwalten, gehe zu iOS Einstellungen -> Apple-ID -> Abonnements";
+
+// Title telling user the subscription price per month
+"price_per_month" = "%@ pro Monat";
+
+// Welcome back snackbar text
+"welcome_back" = "Willkommen zurück";
+
+// Snackbar text telling the user the chapter is being written
+"writing_chapter" = "Kapitel wird geschrieben.";
+
+// Snackbar text telling the user the chapter is ready
+"chapter_ready" = "Kapitel bereit.";
+
+// Snackbar text telling the user the chapter failed to be written, and they can tap to retry
+"failed_write_chapter" = "Kapitel konnte nicht geschrieben werden. Tippe, um es erneut zu versuchen.";
+
+// Snackbar text telling the user the text failed to be moderated, and they can tap to retry
+"failed_moderate_text" = "Text konnte nicht moderiert werden. Tippe, um es erneut zu versuchen.";
+
+// Snackbar text telling the user their action of subscribing to the app is complete, and that unlimited chapters are now available
+"subscription_complete" = "Abonnement abgeschlossen. Unbegrenzte Kapitel jetzt verfügbar.";
+
+// Snackbar text telling the user their custom story has been added
+"custom_story_added" = "Eigene Geschichte hinzugefügt";
+
+// Snackbar text telling the user their story is being moderated
+"moderating_story" = "Geschichte wird moderiert";
+
+// Snackbar text telling the user their story did not meet the AI provider's usage policies
+"story_did_not_meet_policies" = "Deine Geschichte entspricht nicht den Nutzungsrichtlinien unseres KI-Anbieters.";
+
+// Snackbar text telling the user their custom story was deleted
+"deleted_custom_story" = "Eigene Geschichte gelöscht";
+
+// Title telling the user to tap reveal to show the content
+"tap_reveal_to_show" = "Tippe auf Aufdecken, um den Inhalt zu zeigen";
+
+// Title saying that no words have been saved
+"no_saved_words" = "Keine gespeicherten Wörter";
+
+// Title telling user to tap a word to study it
+"tap_word_to_study" = "Tippe auf ein Wort, um es zu lernen";
+
+// Title telling the user to subscribe now for unlimited chapters
+"subscribe_now_unlimited_chapters" = "Jetzt abonnieren für unbegrenzte Kapitel";
+
+// Title telling the user that this costs no money
+"free" = "Kostenlos";
+
+// Title: Explains that the story didn't pass moderation
+"story_did_not_pass_moderation" = "Deine Geschichte hat die Moderation nicht bestanden";
+
+// Displaying the custom prompt in settings
+"custom_prompt" = "%@";
+
+// Title: What is moderation?
+"what_is_moderation" = "Was ist Moderation?";
+
+// Explanation: Moderation overview
+"moderation_explanation" = "Wir prüfen Geschichten, um sicherzustellen, dass sie den Nutzungsrichtlinien unseres KI-Anbieters entsprechen.";
+
+// Title: How moderation works
+"how_does_moderation_work" = "Wie funktioniert die Moderation?";
+
+// Explanation: How moderation works
+"moderation_work_explanation" = "Wir überprüfen die Geschichte anhand von Vertrauenswerten.\nDas zeigt, wie sicher die KI ist, dass der Inhalt den Richtlinien entspricht.\nWenn deine Geschichte über einem akzeptierten Vertrauenswert für eine Kategorie liegt, wird sie die Moderation nicht bestehen.";
+
+// Title: Why it didn't pass
+"why_didnt_it_pass" = "Warum hat es nicht bestanden?";
+
+// Text: Acceptance threshold explanation
+"acceptance_threshold_explanation" = "Wir akzeptieren unter %@";
+
+// Text: User score explanation
+"user_score_explanation" = "Deine Punktzahl: %@";
+
+// Button: Okay
+"okay_button" = "Okay";
+
+// Navigation title: Why?
+"navigation_title_why" = "Warum?";
+
+// Alert title: Custom story
+"custom_story_alert_title" = "Eigene Geschichte";
+
+// TextField placeholder: Describe the story prompt
+"custom_story_textfield_placeholder" = "...";
+
+// Button: OK
+"custom_story_ok_button" = "OK";
+
+// Button: Cancel
+"custom_story_cancel_button" = "Abbrechen";
+
+// Alert message: Prompt description
+"custom_story_alert_message" = "Beschreibe den Anfang deiner Geschichte";
+
+// Button: Why?
+"failed_moderation_why_button" = "Warum?";
+
+// Button: OK
+"failed_moderation_ok_button" = "OK";
+
+// Message: Moderation explanation
+"failed_moderation_message" = "Wir prüfen Geschichtenideen, um sicherzustellen, dass sie den Richtlinien unseres KI-Anbieters entsprechen.";
+
+// Category: Sexual content
+"moderation_category_sexual" = "Sexuell";
+
+// Category: Sexual content involving minors
+"moderation_category_sexual_minors" = "Sexuelle Inhalte mit Minderjährigen";
+
+// Category: Graphic violence
+"moderation_category_violence_graphic" = "Grafische Gewalt";
+
+// Category: Self-harm (intent)
+"moderation_category_self_harm_intent" = "Selbstverletzung (Absicht)";
+
+// Category: Self-harm (instructions)
+"moderation_category_self_harm_instructions" = "Selbstverletzung (Anleitung)";
+
+// Category: Illicit violence
+"moderation_category_illicit_violence" = "Unerlaubte Gewalt";

@@ -4,6 +4,9 @@ import Foundation
 
 
 public enum LocalizedString {
+  public static func acceptanceThresholdExplanation(_ p1: String) -> String {
+    return LocalizedString.tr("Localizable", "acceptance_threshold_explanation", p1)
+  }
   public static let advanced = LocalizedString.tr("Localizable", "advanced")
   public static let aiStatement = LocalizedString.tr("Localizable", "ai_statement")
   public static let allWords = LocalizedString.tr("Localizable", "all_words")
@@ -21,8 +24,16 @@ public enum LocalizedString {
   public static let chooseChapter = LocalizedString.tr("Localizable", "choose_chapter")
   public static let chooseStory = LocalizedString.tr("Localizable", "choose_story")
   public static let createStory = LocalizedString.tr("Localizable", "create_story")
+  public static func customPrompt(_ p1: String) -> String {
+    return LocalizedString.tr("Localizable", "custom_prompt", p1)
+  }
   public static let customStory = LocalizedString.tr("Localizable", "custom_story")
   public static let customStoryAdded = LocalizedString.tr("Localizable", "custom_story_added")
+  public static let customStoryAlertMessage = LocalizedString.tr("Localizable", "custom_story_alert_message")
+  public static let customStoryAlertTitle = LocalizedString.tr("Localizable", "custom_story_alert_title")
+  public static let customStoryCancelButton = LocalizedString.tr("Localizable", "custom_story_cancel_button")
+  public static let customStoryOkButton = LocalizedString.tr("Localizable", "custom_story_ok_button")
+  public static let customStoryTextfieldPlaceholder = LocalizedString.tr("Localizable", "custom_story_textfield_placeholder")
   public static let defining = LocalizedString.tr("Localizable", "defining")
   public static let definition = LocalizedString.tr("Localizable", "definition")
   public static func definitionOf(_ p1: String) -> String {
@@ -36,6 +47,9 @@ public enum LocalizedString {
   public static let englishToggle = LocalizedString.tr("Localizable", "english_toggle")
   public static let expert = LocalizedString.tr("Localizable", "expert")
   public static let failedModerateText = LocalizedString.tr("Localizable", "failed_moderate_text")
+  public static let failedModerationMessage = LocalizedString.tr("Localizable", "failed_moderation_message")
+  public static let failedModerationOkButton = LocalizedString.tr("Localizable", "failed_moderation_ok_button")
+  public static let failedModerationWhyButton = LocalizedString.tr("Localizable", "failed_moderation_why_button")
   public static let failedToWriteChapter = LocalizedString.tr("Localizable", "failed_to_write_chapter")
   public static let failedToWriteStory = LocalizedString.tr("Localizable", "failed_to_write_story")
   public static let failedWriteChapter = LocalizedString.tr("Localizable", "failed_write_chapter")
@@ -46,6 +60,7 @@ public enum LocalizedString {
   public static let german = LocalizedString.tr("Localizable", "german")
   public static let hindi = LocalizedString.tr("Localizable", "hindi")
   public static let howDifficultStory = LocalizedString.tr("Localizable", "how_difficult_story")
+  public static let howDoesModerationWork = LocalizedString.tr("Localizable", "how_does_moderation_work")
   public static let howStoryStart = LocalizedString.tr("Localizable", "how_story_start")
   public static let intermediate = LocalizedString.tr("Localizable", "intermediate")
   public static let japanese = LocalizedString.tr("Localizable", "japanese")
@@ -57,13 +72,23 @@ public enum LocalizedString {
   public static let manageSubscription = LocalizedString.tr("Localizable", "manage_subscription")
   public static let manageSubscriptionsInstructions = LocalizedString.tr("Localizable", "manage_subscriptions_instructions")
   public static let moderatingStory = LocalizedString.tr("Localizable", "moderating_story")
+  public static let moderationCategoryIllicitViolence = LocalizedString.tr("Localizable", "moderation_category_illicit_violence")
+  public static let moderationCategorySelfHarmInstructions = LocalizedString.tr("Localizable", "moderation_category_self_harm_instructions")
+  public static let moderationCategorySelfHarmIntent = LocalizedString.tr("Localizable", "moderation_category_self_harm_intent")
+  public static let moderationCategorySexual = LocalizedString.tr("Localizable", "moderation_category_sexual")
+  public static let moderationCategorySexualMinors = LocalizedString.tr("Localizable", "moderation_category_sexual_minors")
+  public static let moderationCategoryViolenceGraphic = LocalizedString.tr("Localizable", "moderation_category_violence_graphic")
+  public static let moderationExplanation = LocalizedString.tr("Localizable", "moderation_explanation")
+  public static let moderationWorkExplanation = LocalizedString.tr("Localizable", "moderation_work_explanation")
   public static let music = LocalizedString.tr("Localizable", "music")
+  public static let navigationTitleWhy = LocalizedString.tr("Localizable", "navigation_title_why")
   public static let newChapter = LocalizedString.tr("Localizable", "new_chapter")
   public static let newStory = LocalizedString.tr("Localizable", "new_story")
   public static let next = LocalizedString.tr("Localizable", "next")
   public static let nextChapter = LocalizedString.tr("Localizable", "next_chapter")
   public static let noSavedWords = LocalizedString.tr("Localizable", "no_saved_words")
   public static let normal = LocalizedString.tr("Localizable", "normal")
+  public static let okayButton = LocalizedString.tr("Localizable", "okay_button")
   public static let pause = LocalizedString.tr("Localizable", "pause")
   public static let play = LocalizedString.tr("Localizable", "play")
   public static let portugueseBrazil = LocalizedString.tr("Localizable", "portuguese_brazil")
@@ -87,6 +112,7 @@ public enum LocalizedString {
   public static let stories = LocalizedString.tr("Localizable", "stories")
   public static let story = LocalizedString.tr("Localizable", "story")
   public static let storyDidNotMeetPolicies = LocalizedString.tr("Localizable", "story_did_not_meet_policies")
+  public static let storyDidNotPassModeration = LocalizedString.tr("Localizable", "story_did_not_pass_moderation")
   public static let storySettings = LocalizedString.tr("Localizable", "story_settings")
   public static let studied = LocalizedString.tr("Localizable", "studied")
   public static let subscribe = LocalizedString.tr("Localizable", "subscribe")
@@ -99,6 +125,9 @@ public enum LocalizedString {
   public static let toggle = LocalizedString.tr("Localizable", "toggle")
   public static let translation = LocalizedString.tr("Localizable", "translation")
   public static let unlimitedChapters = LocalizedString.tr("Localizable", "unlimited_chapters")
+  public static func userScoreExplanation(_ p1: String) -> String {
+    return LocalizedString.tr("Localizable", "user_score_explanation", p1)
+  }
   public static let voice = LocalizedString.tr("Localizable", "voice")
   public static let voiceAarav = LocalizedString.tr("Localizable", "voice_aarav")
   public static let voiceAlvaro = LocalizedString.tr("Localizable", "voice_alvaro")
@@ -124,7 +153,9 @@ public enum LocalizedString {
   public static let voiceXiaoxiao = LocalizedString.tr("Localizable", "voice_xiaoxiao")
   public static let voiceYunjian = LocalizedString.tr("Localizable", "voice_yunjian")
   public static let welcomeBack = LocalizedString.tr("Localizable", "welcome_back")
+  public static let whatIsModeration = LocalizedString.tr("Localizable", "what_is_moderation")
   public static let whichLanguageLearn = LocalizedString.tr("Localizable", "which_language_learn")
+  public static let whyDidntItPass = LocalizedString.tr("Localizable", "why_didnt_it_pass")
   public static let word = LocalizedString.tr("Localizable", "word")
   public static func wordsSaved(_ p1: String) -> String {
     return LocalizedString.tr("Localizable", "words_saved", p1)

@@ -11,13 +11,10 @@ struct ModerationExplanationView: View {
     @EnvironmentObject var store: FlowTaleStore
     @Environment(\.dismiss) private var dismiss
 
-    // Suppose your store holds the latest ModerationResponse in
-    // `store.state.moderationResponse`.
-    // Adjust as needed for your architecture.
     var body: some View {
         VStack(spacing: 16) {
-            VStack(alignment: .leading) {
-                Text("Your story didn't pass moderation")
+            VStack(alignment: .leading) { // TODO: Localize
+                Text(LocalizedString.storyDidNotPassModeration)
                     .lineLimit(0)
                     .font(.title)
                     .fontWeight(.semibold)
@@ -28,25 +25,25 @@ struct ModerationExplanationView: View {
 
                 Divider()
 
-                Text("What's moderation?")
+                Text(LocalizedString.whatIsModeration)
                     .font(.title2)
                     .fontWeight(.medium)
-                Text("We check story ideas to make sure they align with our AI provider's usage policies.")
+                Text(LocalizedString.moderationExplanation)
                     .font(.footnote)
                     .fontWeight(.light)
 
                 Divider()
 
-                Text("How does moderation work?")
+                Text(LocalizedString.howDoesModerationWork)
                     .font(.title2)
                     .fontWeight(.medium)
-                Text("We check the story using confidence scores.\nThis is how confident the AI is that this content is within the story.\nIf your story is above an accepted confidence score for a category, it will not pass moderation.")
+                Text(LocalizedString.moderationWorkExplanation)
                     .font(.footnote)
                     .fontWeight(.light)
 
                 Divider()
 
-                Text("Why didn't it pass?")
+                Text(LocalizedString.whyDidntItPass)
                     .font(.title2)
                     .fontWeight(.medium)
 
@@ -70,8 +67,8 @@ struct ModerationExplanationView: View {
                                 // Example text:
                                 // "We accept below 80% | You scored 92%"
                                 VStack(alignment: .trailing) {
-                                    Text("We accept below \(result.thresholdPercentageString)")
-                                    Text("You scored \(result.scorePercentageString)")
+                                    Text(LocalizedString.acceptanceThresholdExplanation("\(result.thresholdPercentageString)"))
+                                         Text(LocalizedString.userScoreExplanation("\(result.scorePercentageString)"))
                                         .bold(!result.didPass)
                                 }
                                 .font(.footnote)
@@ -83,12 +80,12 @@ struct ModerationExplanationView: View {
                 }
             }
 
-            PrimaryButton(title: "Okay") {
+            PrimaryButton(title: LocalizedString.okayButton) {
                 dismiss()
             }
         }
         .padding()
-        .navigationTitle("Why?")
+        .navigationTitle(LocalizedString.navigationTitleWhy)
         .navigationBarTitleDisplayMode(.inline)
         .background(FlowTaleColor.background)
     }

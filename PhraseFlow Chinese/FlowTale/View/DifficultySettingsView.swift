@@ -42,10 +42,10 @@ struct DifficultyMenu: View {
                     .listRowBackground(store.state.settingsState.difficulty == difficulty ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
                 }
             } header: {
-                Text("How difficult would you like the story to be?")
+                Text(LocalizedString.howDifficultStory)
             }
         }
-        .navigationTitle("Difficulty")
+        .navigationTitle(LocalizedString.difficulty)
         .background(FlowTaleColor.background)
         .scrollContentBackground(.hidden)
     }
@@ -58,7 +58,7 @@ struct DifficultySettingsView: View {
         VStack {
             DifficultyMenu()
 
-            PrimaryButton(title: "Done") {
+            PrimaryButton(title: LocalizedString.done) {
                 dismiss()
             }
             .padding()

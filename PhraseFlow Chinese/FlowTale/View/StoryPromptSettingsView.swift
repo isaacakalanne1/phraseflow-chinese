@@ -41,7 +41,8 @@ struct StoryPromptMenu: View {
                 Button {
                     store.dispatch(.updateIsShowingCustomPromptAlert(true))
                 } label: {
-                    Text("Custom Story...")
+                    //
+                    Text(LocalizedString.customStory)
                         .fontWeight(.light)
                         .foregroundStyle(FlowTaleColor.primary)
                 }
@@ -51,7 +52,7 @@ struct StoryPromptMenu: View {
                     store.dispatch(.playSound(.changeSettings))
                     store.dispatch(.updateStorySetting(.random))
                 } label: {
-                    Text("Random")
+                    Text(LocalizedString.random)
                         .fontWeight(isRandomPromptSelected ? .medium : .light)
                         .foregroundStyle(isRandomPromptSelected ? FlowTaleColor.accent : FlowTaleColor.primary)
                 }
@@ -72,20 +73,20 @@ struct StoryPromptMenu: View {
                 }
                 .onDelete(perform: delete)
             } header: {
-                Text("How do you want the story to start?")
+                Text(LocalizedString.howStoryStart)
             }
         }
-        .navigationTitle("Story")
+        .navigationTitle(LocalizedString.story)
         .background(FlowTaleColor.background)
         .scrollContentBackground(.hidden)
-        .alert("Custom story", isPresented: isShowingAlert) {
-            TextField("...", text: customPrompt)
-            Button("OK", action: submitCustomPrompt)
-            Button("Cancel", role: .cancel) {
+        .alert(LocalizedString.customStoryAlertTitle, isPresented: isShowingAlert) {
+            TextField(LocalizedString.customStoryTextfieldPlaceholder, text: customPrompt)
+            Button(LocalizedString.customStoryOkButton, action: submitCustomPrompt)
+            Button(LocalizedString.customStoryCancelButton, role: .cancel) {
                 store.dispatch(.updateIsShowingCustomPromptAlert(false))
             }
         } message: {
-            Text("Describe the start of your story")
+            Text(LocalizedString.customStoryAlertMessage)
         }
     }
 
@@ -110,7 +111,7 @@ struct StoryPromptSettingsView: View {
         VStack {
             StoryPromptMenu()
 
-            PrimaryButton(title: "Done") {
+            PrimaryButton(title: LocalizedString.done) {
                 dismiss()
             }
             .padding()
@@ -118,7 +119,7 @@ struct StoryPromptSettingsView: View {
         .background(FlowTaleColor.background)
         // Attach the alert:
         .alert(
-            "This story didn't pass moderation",
+            LocalizedString.storyDidNotPassModeration,
             isPresented: Binding<Bool>(
                 get: { store.state.viewState.isShowingModerationFailedAlert },
                 set: { newValue in
@@ -128,15 +129,15 @@ struct StoryPromptSettingsView: View {
                 }
             ),
             actions: {
-                Button("Why?") {
+                Button(LocalizedString.failedModerationWhyButton) {
                     store.dispatch(.showModerationDetails)
                 }
-                Button("OK") {
+                Button(LocalizedString.failedModerationOkButton) {
                     store.dispatch(.dismissFailedModerationAlert)
                 }
             },
             message: {
-                Text("We check story ideas to ensure they align with our AI provider’s policies.")
+                Text(LocalizedString.failedModerationMessage)
             }
         )
         // If you are using iOS 16 NavigationStack with .navigationDestination, do that below
