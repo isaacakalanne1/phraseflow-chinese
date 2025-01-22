@@ -18,18 +18,22 @@ struct ActionButtonsView: View {
             HStack(spacing: 12) {
                 ForEach(tabs) { tab in
                     let isSelected = store.state.viewState.contentTab == tab
-                    ActionButton(systemImage: tab.image(isFilled: isSelected),
-                                 size: isSelected ? 42 : 35) {
-                        if !isSelected {
-                            withAnimation {
-                                store.dispatch(.selectTab(tab, shouldPlaySound: true))
+                    VStack(spacing: 4) {
+                        ActionButton(systemImage: tab.image(isSelected: isSelected),
+                                     isSelected: isSelected,
+                                     size: 35) {
+                            if !isSelected {
+                                withAnimation {
+                                    store.dispatch(.selectTab(tab, shouldPlaySound: true))
+                                }
                             }
                         }
+                        Rectangle()
+                            .frame(width: 35, height: 2)
+                            .foregroundStyle(isSelected ? FlowTaleColor.accent : Color.clear)
                     }
-                    if tab.id != tabs.last?.id {
-                        Divider()
-                            .frame(height: 30)
-                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.top, 4)
                 }
             }
         }

@@ -18,20 +18,20 @@ enum ContentTab: CaseIterable, Equatable, Identifiable {
 
     case reader, storyList, study, progress, subscribe, settings
 
-    func image(isFilled: Bool) -> SystemImage {
+    func image(isSelected: Bool) -> SystemImage {
         switch self {
         case .reader:
-                .book(isFilled: isFilled)
+                .book(isSelected: isSelected)
         case .storyList:
-                .list(isFilled: isFilled)
+                .list(isSelected: isSelected)
         case .study:
-                .bookClosed(isFilled: isFilled)
+                .pencil(isSelected: isSelected)
         case .progress:
-                .chartBar(isFilled: isFilled)
+                .chartLine(isSelected: isSelected)
         case .subscribe:
-                .heart(isFilled: isFilled)
+                .heart(isSelected: isSelected)
         case .settings:
-                .gear(isFilled: isFilled)
+                .gear(isSelected: isSelected)
         }
     }
 }

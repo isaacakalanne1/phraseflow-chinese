@@ -37,6 +37,8 @@ struct ContentView: View {
             }
             if store.state.viewState.readerDisplayType != .loading,
                store.state.storyState.currentChapter != nil {
+                Divider()
+                    .padding(.horizontal, 10)
                 ActionButtonsView()
                     .padding(.horizontal, 10)
             }
