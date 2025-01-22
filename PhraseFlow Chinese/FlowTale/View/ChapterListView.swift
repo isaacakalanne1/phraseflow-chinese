@@ -73,8 +73,7 @@ struct ChapterListView: View {
                 }
                 .frame(maxHeight: .infinity)
 
-                // MARK: - "New Chapter" Button
-                Button(LocalizedString.newChapter) {
+                PrimaryButton(title: LocalizedString.newChapter) {
                     if !store.state.subscriptionState.isSubscribed,
                        story.chapters.count >= 2 {
                         store.dispatch(.setSubscriptionSheetShowing(true))
@@ -84,10 +83,7 @@ struct ChapterListView: View {
                         store.dispatch(.playSound(.createStory))
                     }
                 }
-                .padding()
-                .background(FlowTaleColor.accent)
-                .foregroundColor(.white)
-                .cornerRadius(10)
+                .padding(.bottom)
             }
             .navigationTitle(LocalizedString.chooseChapter)
             .background(FlowTaleColor.background)

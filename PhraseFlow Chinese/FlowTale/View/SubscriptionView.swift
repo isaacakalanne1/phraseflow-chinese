@@ -86,7 +86,8 @@ struct SubscriptionView: View {
             }
         }
         .padding(20)
-        .frame(maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(FlowTaleColor.background)
         .navigationTitle(LocalizedString.subscribe)
         .navigationBarTitleDisplayMode(.inline)
     }

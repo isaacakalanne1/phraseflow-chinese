@@ -28,7 +28,7 @@ struct ActionButtonsView: View {
                                 }
                             }
                         }
-                        Rectangle()
+                        RoundedRectangle(cornerRadius: 1, style: .continuous)
                             .frame(width: 35, height: 2)
                             .foregroundStyle(isSelected ? FlowTaleColor.accent : Color.clear)
                     }

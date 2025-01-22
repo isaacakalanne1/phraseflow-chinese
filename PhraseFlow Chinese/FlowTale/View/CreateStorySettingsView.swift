@@ -62,6 +62,7 @@ struct CreateStorySettingsView: View {
             .frame(maxHeight: .infinity)
 
             CreateStoryButton()
+                .padding(.bottom)
         }
         .navigationTitle(store.state.storyState.currentStory == nil ? LocalizedString.createStory : LocalizedString.storySettings)
         .background(FlowTaleColor.background)
