@@ -11,7 +11,8 @@ struct Changelog {
     static var changes: [String: [String]] {
         [
             "1.1": [
-                "Updated tab bar to be more clear"
+                "Updated tab bar to be more clear",
+                "Updated screen titles to have consistent sizing"
             ]
         ]
     }

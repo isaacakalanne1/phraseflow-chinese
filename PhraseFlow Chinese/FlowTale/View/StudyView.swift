@@ -120,6 +120,8 @@ struct StudyView: View {
                 Text(LocalizedString.noSavedWords + "\n" + LocalizedString.tapWordToStudy)
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Study") // TODO: Localize
         .onAppear {
             if !isWordDefinitionView {
                 index = 0

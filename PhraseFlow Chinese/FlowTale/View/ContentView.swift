@@ -64,40 +64,44 @@ struct ContentView: View {
     // MARK: - Main Content
     @ViewBuilder
     private func mainContent() -> some View {
-        switch store.state.viewState.contentTab {
-        case .reader:
-            if store.state.viewState.readerDisplayType == .loading {
-                LoadingView()
-            } else if let _ = store.state.storyState.currentStory {
-                if let chapter = store.state.storyState.currentChapter {
-                    ReaderView(chapter: chapter)
-                } else {
-                    ProgressView()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
-            } else {
-                // If no currentStory or no chapters, show Onboarding
-                // (This is the scenario where we haven't loaded
-                // or don't have any stories yet.)
-                NavigationStack {
-                    LanguageOnboardingView()
+        NavigationStack {
+            Group {
+                switch store.state.viewState.contentTab {
+                case .reader:
+                    if store.state.viewState.readerDisplayType == .loading {
+                        LoadingView()
+                    } else if let _ = store.state.storyState.currentStory {
+                        if let chapter = store.state.storyState.currentChapter {
+                            ReaderView(chapter: chapter)
+                        } else {
+                            ProgressView()
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        }
+                    } else {
+                        // If no currentStory or no chapters, show Onboarding
+                        // (This is the scenario where we haven't loaded
+                        // or don't have any stories yet.)
+                        LanguageOnboardingView()
+                    }
+
+                case .storyList:
+                    StoryListView()
+
+                case .study:
+                    StudyView()
+
+                case .progress:
+                    DefinitionsProgressSheetView()
+
+                case .subscribe:
+                    SubscriptionView()
+
+                case .settings:
+                    SettingsView()
                 }
             }
-
-        case .storyList:
-            StoryListView()
-
-        case .study:
-            StudyView()
-
-        case .progress:
-            DefinitionsProgressSheetView()
-
-        case .subscribe:
-            SubscriptionView()
-
-        case .settings:
-            SettingsView()
+            .background(FlowTaleColor.background)
+            .scrollContentBackground(.hidden)
         }
     }
 

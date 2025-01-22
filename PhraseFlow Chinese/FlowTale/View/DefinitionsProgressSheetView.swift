@@ -59,6 +59,7 @@ struct DefinitionsProgressSheetView: View {
                 .navigationTitle(isCreations ?
                                  LocalizedString.wordsSaved("\(definitions.count)") :
                                     LocalizedString.wordsStudied("\(definitions.reduce(0, { $0 + $1.studiedDates.count }))"))
+                .navigationBarTitleDisplayMode(.inline)
                 .background(FlowTaleColor.background)
                 .scrollContentBackground(.hidden)
             }

@@ -13,12 +13,11 @@ struct SubscriptionView: View {
     var body: some View {
         VStack(spacing: 20) {
             let product = store.state.subscriptionState.products?.first
+            Spacer()
             Text(store.state.subscriptionState.isSubscribed ? LocalizedString.manageSubscription : LocalizedString.subscribe)
                 .font(.title)
                 .bold()
                 .foregroundColor(FlowTaleColor.primary)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            Spacer()
             if !store.state.subscriptionState.isSubscribed {
                 Text(LocalizedString.subscribeNowUnlimitedChapters)
                     .multilineTextAlignment(.center)
@@ -88,5 +87,7 @@ struct SubscriptionView: View {
         }
         .padding(20)
         .frame(maxHeight: .infinity)
+        .navigationTitle(LocalizedString.subscribe)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
