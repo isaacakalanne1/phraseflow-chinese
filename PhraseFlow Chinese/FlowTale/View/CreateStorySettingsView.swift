@@ -60,19 +60,6 @@ struct CreateStorySettingsView: View {
 
                 Section {
                     NavigationLink {
-                        StoryPromptSettingsView()
-                    } label: {
-                        Text(currentStorySetting.emoji + " " + currentStorySetting.title)
-                            .fontWeight(.light)
-                            .foregroundStyle(FlowTaleColor.primary)
-                            .lineLimit(1)
-                    }
-                } header: {
-                    Text(LocalizedString.voice)
-                }
-
-                Section {
-                    NavigationLink {
                         VoiceSettingsView()
                     } label: {
                         Text(store.state.settingsState.voice.title)
