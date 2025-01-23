@@ -190,6 +190,10 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         let data = newState.storyState.currentChapterAudioData
         let player = data?.createAVPlayer()
         newState.audioState.audioPlayer = player ?? AVPlayer()
+        newState.storyState.currentStory?.currentSentenceIndex = 0
+        let chapter = newState.storyState.currentChapter
+        newState.storyState.currentStory?.currentPlaybackTime = chapter?.audio.timestamps.first?.time ?? 0.1
+        newState.currentTappedWord = nil
     case .refreshChapterView:
         newState.viewState.chapterViewId = UUID()
     case .refreshDefinitionView:
@@ -283,6 +287,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.isShowingModerationDetails = isShowing
     case .updateColorScheme(let colorScheme):
         newState.settingsState.appColorScheme = colorScheme
+    case .updateShouldPlaySound(let shouldPlaySound):
+        newState.settingsState.shouldPlaySound = shouldPlaySound
     case .saveStoryAndSettings,
             .failedToSaveStory,
             .loadStories,

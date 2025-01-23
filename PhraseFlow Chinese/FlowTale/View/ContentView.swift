@@ -123,6 +123,8 @@ struct ContentView: View {
             Spacer()
             if store.state.viewState.contentTab == .reader {
                 audioButton(chapter: chapter)
+                    .background(FlowTaleColor.background)
+                    .clipShape(Circle())
                     .padding(.trailing)
             }
         }

@@ -70,7 +70,14 @@ struct ChapterView: View {
                     store.dispatch(.setSubscriptionSheetShowing(true))
                 } else {
                     let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
-                    store.dispatch(doesNextChapterExist ? .goToNextChapter : .continueStory(story: story))
+                    if doesNextChapterExist {
+                        store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
+                        store.dispatch(.playSound(.goToNextChapter))
+                        store.dispatch(.goToNextChapter)
+                    } else {
+                        store.dispatch(.playSound(.createNextChapter))
+                        store.dispatch(.continueStory(story: story))
+                    }
                 }
             }
             .padding()

@@ -150,7 +150,9 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         state.studyState.audioPlayer.play()
         return nil
     case .playSound:
-        state.appAudioState.audioPlayer.play()
+        if state.settingsState.shouldPlaySound {
+            state.appAudioState.audioPlayer.play()
+        }
         return nil
     case .playMusic:
         state.musicAudioState.audioPlayer.play()
@@ -279,7 +281,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .updateShowEnglish,
             .updateLanguage,
             .updateDifficulty,
-            .updateColorScheme:
+            .updateColorScheme,
+            .updateShouldPlaySound:
         return .saveAppSettings
     case .saveAppSettings:
         do {

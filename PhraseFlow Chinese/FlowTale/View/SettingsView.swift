@@ -45,19 +45,34 @@ struct SettingsView: View {
             store.dispatch(.updateColorScheme(newValue ? .dark : .light))
         }
 
+        let shouldPlayButtonSounds: Binding<Bool> = .init {
+            store.state.settingsState.shouldPlaySound
+        } set: { newValue in
+            store.dispatch(.updateShouldPlaySound(newValue))
+            if newValue {
+                store.dispatch(.playSound(.togglePress))
+            }
+        }
+
         VStack(spacing: 0) {
             List {
                 Section {
                     Toggle(LocalizedString.definitionToggle, isOn: showDefinition)
                         .fontWeight(.light)
-                    Toggle(LocalizedString.englishToggle, isOn: showEnglish)
+                    Toggle(LocalizedString.translation, isOn: showEnglish)
                         .fontWeight(.light)
-                    Toggle(LocalizedString.music, isOn: playMusic)
-                        .fontWeight(.light)
-                    Toggle("Dark Mode", isOn: isDarkMode)
+                    Toggle("Dark Mode", isOn: isDarkMode) // TODO: Localize
                         .fontWeight(.light)
                 } header: {
-                    Text(LocalizedString.toggle)
+                    Text("Appearance") // TODO: Localize
+                }
+                Section {
+                    Toggle(LocalizedString.music, isOn: playMusic)
+                        .fontWeight(.light)
+                    Toggle("Sounds", isOn: shouldPlayButtonSounds) // TODO: Localize
+                        .fontWeight(.light)
+                } header: {
+                    Text("Sound") // TODO: Localize
                 }
                 Section {
                     let sortedVoices = store.state.storyState.currentStory?.language.voices
@@ -111,5 +126,6 @@ struct SettingsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .background(FlowTaleColor.background)
         .scrollContentBackground(.hidden)
+        .scrollIndicators(.hidden)
     }
 }

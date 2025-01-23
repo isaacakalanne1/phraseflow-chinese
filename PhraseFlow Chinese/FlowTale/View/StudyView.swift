@@ -33,7 +33,46 @@ struct StudyView: View {
         let displayedDefinition = specificWord ?? currentDefinition
         Group {
             if let definition = displayedDefinition {
-                wordView(definition: definition)
+                VStack {
+                    ScrollView {
+                        wordView(definition: definition)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .scrollBounceBehavior(.basedOnSize)
+                    HStack {
+                        if !isWordDefinitionView {
+                            Button {
+                                goToPreviousDefinition()
+                            } label: {
+                                Text(LocalizedString.previous)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(FlowTaleColor.accent)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                            }
+                            Button {
+                                if isDefinitionShown {
+                                    goToNextDefinition()
+                                } else {
+                                    store.dispatch(.playStudyWord(definition))
+                                    withAnimation {
+                                        isPronounciationShown = true
+                                        isDefinitionShown = true
+                                    }
+                                }
+                            } label: {
+                                Text(isDefinitionShown ? LocalizedString.next : LocalizedString.reveal)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(FlowTaleColor.accent)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                            }
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .bottom)
+                }
             } else {
                 Text(LocalizedString.noSavedWords + "\n" + LocalizedString.tapWordToStudy)
             }
@@ -64,8 +103,19 @@ struct StudyView: View {
         }
     }
 
+    func goToPreviousDefinition() {
+        if index - 1 < 0 {
+            index = studyWords.count - 1
+        } else {
+            index -= 1
+        }
+        store.dispatch(.playSound(.previousStudyWord))
+        updateDefinition()
+    }
+
     func goToNextDefinition() {
         index = (index + 1) % studyWords.count
+        store.dispatch(.playSound(.nextStudyWord))
         updateDefinition(didStudyWord: true)
     }
 
@@ -200,45 +250,6 @@ struct StudyView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .opacity(isWordDefinitionView || isDefinitionShown ? 1 : 0)
                 .scaleEffect(x: 1, y: isWordDefinitionView || isDefinitionShown ? 1 : 0, anchor: .top)
-
-            HStack {
-                if !isWordDefinitionView {
-                    Button {
-                        if index - 1 < 0 {
-                            index = studyWords.count - 1
-                        } else {
-                            index -= 1
-                        }
-                        updateDefinition()
-                    } label: {
-                        Text(LocalizedString.previous)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(FlowTaleColor.accent)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                    }
-                    Button {
-                        if isDefinitionShown {
-                            goToNextDefinition()
-                        } else {
-                            store.dispatch(.playStudyWord(definition))
-                            withAnimation {
-                                isPronounciationShown = true
-                                isDefinitionShown = true
-                            }
-                        }
-                    } label: {
-                        Text(isDefinitionShown ? LocalizedString.next : LocalizedString.reveal)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(FlowTaleColor.accent)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                    }
-                }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         }
     }
 }

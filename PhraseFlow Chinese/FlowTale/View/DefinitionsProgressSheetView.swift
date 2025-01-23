@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DefinitionsProgressSheetView: View {
     @EnvironmentObject var store: FlowTaleStore
+    @State var selectedTab = 0
 
     var body: some View {
         let definitions = store.state.definitionState.definitions
@@ -19,18 +20,23 @@ struct DefinitionsProgressSheetView: View {
         let filteredDefinitions = removeDuplicates(from: definitions)
             .sorted(by: { $0.creationDate > $1.creationDate })
 
-        TabView {
+        TabView(selection: $selectedTab) {
             sheetContent(isCreations: true,
                          definitions: filteredDefinitions)
             .tabItem {
-                Label(LocalizedString.saved, systemImage: "case")
+                Label(LocalizedString.saved, systemImage: "folder.fill")
             }
+            .tag(0)
 
             sheetContent(isCreations: false,
                          definitions: filteredDefinitions.filter({ !$0.studiedDates.isEmpty }))
             .tabItem {
-                Label(LocalizedString.studied, systemImage: "pencil")
+                Label(LocalizedString.studied, systemImage: "eyeglasses")
             }
+            .tag(1)
+        }
+        .onChange(of: selectedTab) {
+            store.dispatch(.playSound(.actionButtonPress))
         }
     }
 
