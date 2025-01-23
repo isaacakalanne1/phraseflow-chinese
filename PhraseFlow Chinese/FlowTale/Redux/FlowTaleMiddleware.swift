@@ -143,6 +143,12 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         state.studyState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: definition.timestampData.time + definition.timestampData.duration, preferredTimescale: 60000)
         state.studyState.audioPlayer.play()
         return nil
+    case .playStudySentence(let startWord, let endWord):
+        let myTime = CMTime(seconds: startWord.time, preferredTimescale: 60000)
+        await state.studyState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
+        state.studyState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: endWord.time + endWord.duration, preferredTimescale: 60000)
+        state.studyState.audioPlayer.play()
+        return nil
     case .playSound:
         state.appAudioState.audioPlayer.play()
         return nil

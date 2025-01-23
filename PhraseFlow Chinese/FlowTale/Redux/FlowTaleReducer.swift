@@ -55,7 +55,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         return newState
     case .updateStudyChapter(let chapter):
         newState.studyState.currentChapter = chapter
-    case .playStudyWord(let definition):
+    case .playStudyWord,
+            .playStudySentence:
         newState.studyState.audioPlayer = newState.studyState.currentChapter?.audio.data.createAVPlayer() ?? AVPlayer()
     case .playSound(let sound):
         if let url = sound.fileURL,

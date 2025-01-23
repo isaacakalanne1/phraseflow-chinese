@@ -170,17 +170,28 @@ struct StudyView: View {
             .scaleEffect(x: 1, y: isWordDefinitionView || isDefinitionShown ? 1 : 0, anchor: .top)
             Text(LocalizedString.sentence)
                 .greyBackground()
-            if characterCount >= 0,
-               characterCount + definition.timestampData.word.count <= baseString.count,
-               let highlighted = boldSubstring(in: baseString, at: characterCount, length: definition.timestampData.word.count) {
-                // In SwiftUI, just show it:
-                Text(highlighted)
-                    .font(.system(size: 30, weight: .light))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            } else {
-                Text(definition.sentence.translation)
-                    .font(.system(size: 30, weight: .light))
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            HStack {
+                if characterCount >= 0,
+                   characterCount + definition.timestampData.word.count <= baseString.count,
+                   let highlighted = boldSubstring(in: baseString, at: characterCount, length: definition.timestampData.word.count) {
+                    // In SwiftUI, just show it:
+                    Text(highlighted)
+                        .font(.system(size: 30, weight: .light))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                } else {
+                    Text(definition.sentence.translation)
+                        .font(.system(size: 30, weight: .light))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                Button {
+                    if let startWord = timestampData?.first,
+                       let endWord = timestampData?.last {
+                        store.dispatch(.playStudySentence(startWord: startWord, endWord: endWord))
+                    }
+                } label: {
+                    SystemImageView(.speaker)
+                }
+                .disabled(store.state.studyState.currentChapter == nil)
             }
             Text(LocalizedString.translation)
                 .greyBackground()

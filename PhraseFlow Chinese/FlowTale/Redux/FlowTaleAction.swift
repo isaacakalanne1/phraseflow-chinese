@@ -76,6 +76,7 @@ enum FlowTaleAction {
     case prepareToPlayStudyWord(Definition)
     case failedToPrepareStudyWord
     case playStudyWord(Definition)
+    case playStudySentence(startWord: WordTimeStampData, endWord: WordTimeStampData)
     case onDefinedCharacter(Definition)
     case onDefinedSentence([Definition], tappedDefinition: Definition)
     case failedToDefineCharacter
