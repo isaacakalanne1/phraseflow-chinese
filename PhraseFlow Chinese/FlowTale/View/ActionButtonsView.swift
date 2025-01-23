@@ -28,8 +28,8 @@ struct ActionButtonsView: View {
                                 }
                             }
                         }
-                        RoundedRectangle(cornerRadius: 1, style: .continuous)
-                            .frame(width: 35, height: 2)
+                        RoundedRectangle(cornerRadius: 1.5, style: .continuous)
+                            .frame(width: 50, height: 3)
                             .foregroundStyle(isSelected ? FlowTaleColor.accent : Color.clear)
                     }
                     .frame(maxWidth: .infinity)
