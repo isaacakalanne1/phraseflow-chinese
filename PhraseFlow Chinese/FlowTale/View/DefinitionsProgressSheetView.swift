@@ -19,6 +19,7 @@ struct DefinitionsProgressSheetView: View {
 
         let filteredDefinitions = removeDuplicates(from: definitions)
             .sorted(by: { $0.creationDate > $1.creationDate })
+            .filter({ !$0.timestampData.word.trimmingCharacters(in: CharacterSet.punctuationCharacters).isEmpty })
 
         TabView(selection: $selectedTab) {
             sheetContent(isCreations: true,

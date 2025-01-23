@@ -13,7 +13,8 @@ struct StudyView: View {
     var studyWords: [Definition] {
         store.state.definitionState.definitions
             .filter({
-                $0.language == store.state.storyState.currentStory?.language
+                $0.language == store.state.storyState.currentStory?.language &&
+                !$0.timestampData.word.trimmingCharacters(in: CharacterSet.punctuationCharacters).isEmpty
             })
     }
 
@@ -31,7 +32,7 @@ struct StudyView: View {
 
     var body: some View {
         let displayedDefinition = specificWord ?? currentDefinition
-        Group {
+        return Group {
             if let definition = displayedDefinition {
                 VStack {
                     ScrollView {
@@ -39,6 +40,7 @@ struct StudyView: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .scrollBounceBehavior(.basedOnSize)
+                    .scrollIndicators(.hidden)
                     HStack {
                         if !isWordDefinitionView {
                             Button {

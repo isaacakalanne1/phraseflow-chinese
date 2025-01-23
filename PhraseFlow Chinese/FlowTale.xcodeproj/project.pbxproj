@@ -109,8 +109,8 @@
 		BBE990E52D2AB3D100FAD3FB /* CloseSheet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E42D2AB3D100FAD3FB /* CloseSheet.mp3 */; };
 		BBE990E72D2ABE8B00FAD3FB /* ProgressUpdate.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */; };
 		BBF6187A2D4159BB00CA3229 /* Changelog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF618792D4159BB00CA3229 /* Changelog.swift */; };
-		BBF6187E2D42DE6D00CA3229 /* PreviousStudyWord.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF6187D2D42DE6C00CA3229 /* PreviousStudyWord.mp3 */; };
-		BBF618822D42E06800CA3229 /* NextStudyWord.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618812D42E06800CA3229 /* NextStudyWord.mp3 */; };
+		BBF6187E2D42DE6D00CA3229 /* NextStudyWord.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF6187D2D42DE6C00CA3229 /* NextStudyWord.mp3 */; };
+		BBF618822D42E06800CA3229 /* PreviousStudyWord.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618812D42E06800CA3229 /* PreviousStudyWord.mp3 */; };
 		BBF618842D42E43E00CA3229 /* CreateNextChapter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618832D42E43E00CA3229 /* CreateNextChapter.mp3 */; };
 		BBF618862D42E63D00CA3229 /* GoToNextChapter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618852D42E63D00CA3229 /* GoToNextChapter.mp3 */; };
 		BBFB3B072D3D37F2001997A8 /* ModerationExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFB3B062D3D37F2001997A8 /* ModerationExplanationView.swift */; };
@@ -255,8 +255,8 @@
 		BBE990E42D2AB3D100FAD3FB /* CloseSheet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CloseSheet.mp3; sourceTree = "<group>"; };
 		BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ProgressUpdate.mp3; sourceTree = "<group>"; };
 		BBF618792D4159BB00CA3229 /* Changelog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Changelog.swift; sourceTree = "<group>"; };
-		BBF6187D2D42DE6C00CA3229 /* PreviousStudyWord.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PreviousStudyWord.mp3; sourceTree = "<group>"; };
-		BBF618812D42E06800CA3229 /* NextStudyWord.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = NextStudyWord.mp3; sourceTree = "<group>"; };
+		BBF6187D2D42DE6C00CA3229 /* NextStudyWord.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = NextStudyWord.mp3; sourceTree = "<group>"; };
+		BBF618812D42E06800CA3229 /* PreviousStudyWord.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PreviousStudyWord.mp3; sourceTree = "<group>"; };
 		BBF618832D42E43E00CA3229 /* CreateNextChapter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CreateNextChapter.mp3; sourceTree = "<group>"; };
 		BBF618852D42E63D00CA3229 /* GoToNextChapter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = GoToNextChapter.mp3; sourceTree = "<group>"; };
 		BBFB3B062D3D37F2001997A8 /* ModerationExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationExplanationView.swift; sourceTree = "<group>"; };
@@ -546,8 +546,8 @@
 				BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */,
 				BB9B8B5A2D344BD500752993 /* OpenStorySettings.mp3 */,
 				BB9B8B5C2D3461C900752993 /* CreateStory.mp3 */,
-				BBF6187D2D42DE6C00CA3229 /* PreviousStudyWord.mp3 */,
-				BBF618812D42E06800CA3229 /* NextStudyWord.mp3 */,
+				BBF6187D2D42DE6C00CA3229 /* NextStudyWord.mp3 */,
+				BBF618812D42E06800CA3229 /* PreviousStudyWord.mp3 */,
 				BBF618832D42E43E00CA3229 /* CreateNextChapter.mp3 */,
 				BBF618852D42E63D00CA3229 /* GoToNextChapter.mp3 */,
 			);
@@ -705,11 +705,11 @@
 				BBE990D92D29FB6100FAD3FB /* ActionButtonPress.mp3 in Resources */,
 				BB9B8B5B2D344BD500752993 /* OpenStorySettings.mp3 in Resources */,
 				BBE990CB2D29EF5E00FAD3FB /* OpenStory.mp3 in Resources */,
-				BBF618822D42E06800CA3229 /* NextStudyWord.mp3 in Resources */,
+				BBF618822D42E06800CA3229 /* PreviousStudyWord.mp3 in Resources */,
 				BBE990B92D29BD9C00FAD3FB /* BackButtonPress.mp3 in Resources */,
 				BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */,
 				BB84E0AB2CF494D900520F5E /* swiftgen.yml in Resources */,
-				BBF6187E2D42DE6D00CA3229 /* PreviousStudyWord.mp3 in Resources */,
+				BBF6187E2D42DE6D00CA3229 /* NextStudyWord.mp3 in Resources */,
 				BBE990E12D2AB26300FAD3FB /* Snackbar.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
