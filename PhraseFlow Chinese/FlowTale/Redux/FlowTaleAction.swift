@@ -139,6 +139,7 @@ enum FlowTaleAction {
     case stopMusic
 
     case updateCustomPrompt(String)
+    case updateColorScheme(FlowTaleColorScheme)
 
     case moderateText(String)
     case onModeratedText(ModerationResponse, String)

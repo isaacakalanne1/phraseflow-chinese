@@ -59,6 +59,7 @@ struct ContentView: View {
         }
         .background(FlowTaleColor.background)
         .tint(FlowTaleColor.accent)
+        .preferredColorScheme(store.state.settingsState.appColorScheme?.colorScheme)
     }
 
     // MARK: - Main Content

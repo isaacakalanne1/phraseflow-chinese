@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var store: FlowTaleStore
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
 
@@ -37,6 +38,13 @@ struct SettingsView: View {
             }
         }
 
+        let isDarkMode: Binding<Bool> = .init {
+            (store.state.settingsState.appColorScheme?.colorScheme ?? colorScheme) == .dark
+        } set: { newValue in
+            store.dispatch(.playSound(.togglePress))
+            store.dispatch(.updateColorScheme(newValue ? .dark : .light))
+        }
+
         VStack(spacing: 0) {
             List {
                 Section {
@@ -45,6 +53,8 @@ struct SettingsView: View {
                     Toggle(LocalizedString.englishToggle, isOn: showEnglish)
                         .fontWeight(.light)
                     Toggle(LocalizedString.music, isOn: playMusic)
+                        .fontWeight(.light)
+                    Toggle("Dark Mode", isOn: isDarkMode)
                         .fontWeight(.light)
                 } header: {
                     Text(LocalizedString.toggle)

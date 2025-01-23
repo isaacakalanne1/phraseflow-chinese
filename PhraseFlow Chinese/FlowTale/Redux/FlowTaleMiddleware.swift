@@ -272,7 +272,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .updateShowDefinition,
             .updateShowEnglish,
             .updateLanguage,
-            .updateDifficulty:
+            .updateDifficulty,
+            .updateColorScheme:
         return .saveAppSettings
     case .saveAppSettings:
         do {

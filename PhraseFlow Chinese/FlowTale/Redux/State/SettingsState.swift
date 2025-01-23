@@ -5,7 +5,20 @@
 //  Created by iakalann on 06/11/2024.
 //
 
-import Foundation
+import SwiftUI
+
+enum FlowTaleColorScheme: Codable {
+    case light, dark
+
+    var colorScheme: ColorScheme {
+        switch self {
+        case .light:
+                .light
+        case .dark:
+                .dark
+        }
+    }
+}
 
 enum StorySetting: Codable, Equatable {
     case random, customPrompt(String)
@@ -50,6 +63,7 @@ struct SettingsState: Codable {
     var storySetting: StorySetting
     var confirmedCustomPrompt: String
     var customPrompts: [String]
+    var appColorScheme: FlowTaleColorScheme?
 
     init(isShowingDefinition: Bool = true,
          isShowingEnglish: Bool = true,
@@ -61,6 +75,7 @@ struct SettingsState: Codable {
          customPrompt: String = "",
          storySetting: StorySetting = .random,
          customPrompts: [String] = [],
+         colorScheme: FlowTaleColorScheme? = nil,
          confirmedCustomPrompt: String = "") {
         self.isShowingDefinition = isShowingDefinition
         self.isShowingEnglish = isShowingEnglish
@@ -73,5 +88,22 @@ struct SettingsState: Codable {
         self.customPrompts = customPrompts
         self.storySetting = storySetting
         self.confirmedCustomPrompt = confirmedCustomPrompt
+        self.appColorScheme = colorScheme
+    }
+
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.isShowingDefinition = try container.decode(Bool.self, forKey: .isShowingDefinition)
+        self.isShowingEnglish = try container.decode(Bool.self, forKey: .isShowingEnglish)
+        self.isPlayingMusic = try container.decode(Bool.self, forKey: .isPlayingMusic)
+        self.voice = try container.decode(Voice.self, forKey: .voice)
+        self.speechSpeed = try container.decode(SpeechSpeed.self, forKey: .speechSpeed)
+        self.difficulty = try container.decode(Difficulty.self, forKey: .difficulty)
+        self.language = try container.decode(Language.self, forKey: .language)
+        self.customPrompt = try container.decode(String.self, forKey: .customPrompt)
+        self.storySetting = try container.decode(StorySetting.self, forKey: .storySetting)
+        self.confirmedCustomPrompt = try container.decode(String.self, forKey: .confirmedCustomPrompt)
+        self.customPrompts = try container.decode([String].self, forKey: .customPrompts)
+        self.appColorScheme = try? container.decode(FlowTaleColorScheme?.self, forKey: .appColorScheme)
     }
 }

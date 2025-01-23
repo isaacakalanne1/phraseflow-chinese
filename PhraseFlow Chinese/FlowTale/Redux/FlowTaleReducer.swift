@@ -280,6 +280,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.isShowingModerationDetails = true
     case .updateIsShowingModerationDetails(let isShowing):
         newState.viewState.isShowingModerationDetails = isShowing
+    case .updateColorScheme(let colorScheme):
+        newState.settingsState.appColorScheme = colorScheme
     case .saveStoryAndSettings,
             .failedToSaveStory,
             .loadStories,
