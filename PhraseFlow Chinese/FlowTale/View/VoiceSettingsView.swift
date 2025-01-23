@@ -40,10 +40,8 @@ struct VoiceMenu: View {
                         }
                     }) {
                         VStack(alignment: .leading) {
-                            Text(voice.title)
+                            Text(voice.gender.emoji + " " + voice.title)
                                 .fontWeight(isSelectedVoice ? .medium : .light)
-                            Text(voice.gender.title)
-                                .fontWeight(.light)
                         }
                         .foregroundStyle(isSelectedVoice ? FlowTaleColor.accent : FlowTaleColor.primary)
                     }

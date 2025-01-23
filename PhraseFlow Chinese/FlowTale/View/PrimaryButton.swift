@@ -29,6 +29,7 @@ struct PrimaryButton<Content: View>: View {
                     icon
                     Text(title)
                 }
+                .frame(maxWidth: .infinity)
                 .padding()
                 .background(FlowTaleColor.accent)
                 .foregroundColor(.white)
@@ -39,6 +40,7 @@ struct PrimaryButton<Content: View>: View {
                 icon
                 Text(title)
             }
+            .frame(maxWidth: .infinity)
             .padding()
             .background(FlowTaleColor.accent)
             .foregroundColor(.white)

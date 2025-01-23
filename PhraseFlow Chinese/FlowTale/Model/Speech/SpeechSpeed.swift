@@ -31,4 +31,15 @@ enum SpeechSpeed: CaseIterable, Codable, Equatable {
             "fast"
         }
     }
+
+    var emoji: String {
+        switch self {
+        case .slow:
+            "🐌"
+        case .normal:
+            "🚗"
+        case .fast:
+            "🚀"
+        }
+    }
 }

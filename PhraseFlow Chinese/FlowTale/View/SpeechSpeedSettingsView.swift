@@ -33,7 +33,7 @@ struct SpeechSpeedMenu: View {
                             store.dispatch(.updateSpeechSpeed(speed))
                         }
                     }) {
-                        Text(speed.title)
+                        Text(speed.emoji + " " + speed.title)
                             .foregroundStyle(isSelectedSpeed ? FlowTaleColor.accent : FlowTaleColor.primary)
                             .fontWeight(isSelectedSpeed ? .medium : .light)
                     }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CreateStorySettingsView: View {
     @EnvironmentObject var store: FlowTaleStore
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
 
@@ -62,7 +63,7 @@ struct CreateStorySettingsView: View {
                     NavigationLink {
                         VoiceSettingsView()
                     } label: {
-                        Text(store.state.settingsState.voice.title)
+                        Text(store.state.settingsState.voice.gender.emoji + " " + store.state.settingsState.voice.title)
                             .fontWeight(.light)
                             .foregroundStyle(FlowTaleColor.primary)
                             .lineLimit(1)
@@ -75,7 +76,7 @@ struct CreateStorySettingsView: View {
                     NavigationLink {
                         SpeechSpeedSettingsView()
                     } label: {
-                        Text(store.state.settingsState.speechSpeed.title)
+                        Text(store.state.settingsState.speechSpeed.emoji + " " + store.state.settingsState.speechSpeed.title)
                             .fontWeight(.light)
                             .foregroundStyle(FlowTaleColor.primary)
                             .lineLimit(1)
@@ -87,8 +88,11 @@ struct CreateStorySettingsView: View {
             }
             .frame(maxHeight: .infinity)
 
-            CreateStoryButton()
-                .padding(.bottom)
+            PrimaryButton(title: "Done") {
+                dismiss()
+            }
+            .frame(maxWidth: .infinity)
+            .padding([.horizontal, .bottom])
         }
         .navigationTitle(store.state.storyState.currentStory == nil ? LocalizedString.createStory : LocalizedString.storySettings)
         .background(FlowTaleColor.background)

@@ -54,20 +54,20 @@ struct StoryListView: View {
                         Text(LocalizedString.stories)
                     }
                 }
-                PrimaryButton(icon: {
-                    DifficultyView(difficulty: store.state.settingsState.difficulty, color: FlowTaleColor.primary)
-                },
-                              title: store.state.settingsState.language.flagEmoji + " " + LocalizedString.newStory) {
-                    store.dispatch(.playSound(.createStory))
-                    store.dispatch(.selectTab(.reader, shouldPlaySound: false))
-                    store.dispatch(.continueStory(story: store.state.createNewStory()))
+                HStack {
+                    NavigationLink(destination: CreateStorySettingsView()) {
+                        PrimaryButton(title: LocalizedString.settings)
+                    }
+                    PrimaryButton(icon: {
+                        DifficultyView(difficulty: store.state.settingsState.difficulty, color: FlowTaleColor.primary)
+                    },
+                                  title: store.state.settingsState.language.flagEmoji + " " + LocalizedString.newStory) {
+                        store.dispatch(.playSound(.createStory))
+                        store.dispatch(.selectTab(.reader, shouldPlaySound: false))
+                        store.dispatch(.continueStory(story: store.state.createNewStory()))
+                    }
                 }
-                NavigationLink(destination: CreateStorySettingsView()) {
-                    Text(LocalizedString.settings)
-                        .frame(height: 40)
-                        .foregroundStyle(FlowTaleColor.accent)
-                }
-                .foregroundColor(FlowTaleColor.accent)
+                .padding([.horizontal, .bottom])
             }
             .toolbar(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
