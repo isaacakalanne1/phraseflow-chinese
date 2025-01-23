@@ -39,25 +39,37 @@ struct StudyView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle("Study") // TODO: Localize
+        .navigationTitle("Practice") // TODO: Localize
         .onAppear {
             if !isWordDefinitionView {
                 index = 0
                 updateDefinition()
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding()
         .background(FlowTaleColor.background)
         .scrollContentBackground(.hidden)
+        .onTapGesture {
+            withAnimation {
+                if !isPronounciationShown {
+                    isPronounciationShown = true
+                } else if !isDefinitionShown {
+                    isDefinitionShown = true
+                } else {
+                    isPronounciationShown = false
+                    isDefinitionShown = false
+                }
+            }
+        }
     }
 
     func goToNextDefinition() {
         index = (index + 1) % studyWords.count
-        updateDefinition()
+        updateDefinition(didStudyWord: true)
     }
 
-    func updateDefinition() {
+    func updateDefinition(didStudyWord: Bool = false) {
         isPronounciationShown = false
         isDefinitionShown = false
         if let definition = currentDefinition {
@@ -120,12 +132,10 @@ struct StudyView: View {
         let baseString = definition.sentence.translation
 
         return VStack(alignment: .leading) {
-            Text(LocalizedString.word)
-                .greyBackground()
             ZStack {
                 Text(definition.timestampData.word)
-                    .font(.system(size: 40, weight: .light))
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.system(size: 60, weight: .light))
+                    .frame(maxWidth: .infinity, alignment: .center)
                 HStack {
                     Spacer()
                     Button {
@@ -138,11 +148,26 @@ struct StudyView: View {
             }
             Text("Pronounciation") // TODO: Localize
                 .greyBackground()
-            Text(definition.detail.pronunciation)
-                .font(.system(size: 30, weight: .light))
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .frame(height: isPronounciationShown ? 30 : 0)
-                .animation(.easeInOut, value: isPronounciationShown)
+            VStack {
+                Text("🗣️ " + definition.detail.pronunciation)
+                    .font(.system(size: 20, weight: .light))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .scaleEffect(x: 1, y: isPronounciationShown ? 1 : 0, anchor: .top)
+            .opacity(isPronounciationShown ? 1 : 0)
+            Text(LocalizedString.definition)
+                .greyBackground()
+            Group {
+                Text("✏️ " + definition.detail.definition)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.system(size: 20, weight: .light))
+                Text("🌎 " + definition.detail.definitionInContextOfSentence)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .scaleEffect(x: 1, y: isWordDefinitionView || isDefinitionShown ? 1 : 0, anchor: .top)
+                    .font(.system(size: 20, weight: .light))
+            }
+            .opacity(isWordDefinitionView || isDefinitionShown ? 1 : 0)
+            .scaleEffect(x: 1, y: isWordDefinitionView || isDefinitionShown ? 1 : 0, anchor: .top)
             Text(LocalizedString.sentence)
                 .greyBackground()
             if characterCount >= 0,
@@ -159,65 +184,50 @@ struct StudyView: View {
             }
             Text(LocalizedString.translation)
                 .greyBackground()
-            if isWordDefinitionView || isDefinitionShown {
-                Text(definition.sentence.original)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            } else {
-                Text(LocalizedString.tapRevealToShow)
-            }
-            Text(LocalizedString.definition)
-                .greyBackground()
-            if isWordDefinitionView || isDefinitionShown {
-                ScrollView(.vertical) {
-                    Text(definition.definition)
-                        .frame(maxWidth: .infinity,
-                               maxHeight: .infinity,
-                               alignment: .topLeading)
-                }
-            } else {
-                Text(LocalizedString.tapRevealToShow)
-                Spacer()
-            }
+            Text(definition.sentence.original)
+                .font(.system(size: 20, weight: .light))
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .opacity(isWordDefinitionView || isDefinitionShown ? 1 : 0)
+                .scaleEffect(x: 1, y: isWordDefinitionView || isDefinitionShown ? 1 : 0, anchor: .top)
 
             HStack {
                 if !isWordDefinitionView {
-                    Button(LocalizedString.previous) {
+                    Button {
                         if index - 1 < 0 {
                             index = studyWords.count - 1
                         } else {
                             index -= 1
                         }
-                        isDefinitionShown = false
-                        if let definition = currentDefinition {
-                            store.dispatch(.updateStudyChapter(nil))
-                            store.dispatch(.prepareToPlayStudyWord(definition))
-                        }
+                        updateDefinition()
+                    } label: {
+                        Text(LocalizedString.previous)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(FlowTaleColor.accent)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                     }
-                    .padding()
-                    .background(FlowTaleColor.accent)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    if isDefinitionShown {
-                        Button(LocalizedString.next) {
+                    Button {
+                        if isDefinitionShown {
                             goToNextDefinition()
-                        }
-                        .padding()
-                        .background(FlowTaleColor.accent)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                    } else {
-                        Button(LocalizedString.reveal) {
+                        } else {
                             store.dispatch(.playStudyWord(definition))
-                            isDefinitionShown = true
+                            withAnimation {
+                                isPronounciationShown = true
+                                isDefinitionShown = true
+                            }
                         }
-                        .padding()
-                        .background(FlowTaleColor.accent)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                    } label: {
+                        Text(isDefinitionShown ? LocalizedString.next : LocalizedString.reveal)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(FlowTaleColor.accent)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                     }
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .center)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         }
     }
 }
