@@ -11,7 +11,11 @@ struct StoryPromptOnboardingView: View {
     var body: some View {
         VStack {
             StoryPromptMenu()
-            CreateStoryButton()
+            NavigationLink {
+                VoiceOnboardingView()
+            } label: {
+                PrimaryButton(title: "Next")
+            }
         }
         .background(FlowTaleColor.background)
     }

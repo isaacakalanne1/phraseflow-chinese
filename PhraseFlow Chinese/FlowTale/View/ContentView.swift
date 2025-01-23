@@ -147,39 +147,20 @@ struct ContentView: View {
     func audioButton(chapter: Chapter) -> some View {
         let buttonSize: CGFloat = 50
         if store.state.viewState.readerDisplayType == .normal {
-            if store.state.viewState.playButtonDisplayType == .loading {
-                Button {} label: {
-                    SystemImageView(.ellipsis, size: buttonSize)
-                }
-                .disabled(true)
-            } else if store.state.settingsState.voice != chapter.audioVoice ||
-                        store.state.settingsState.speechSpeed != chapter.audioSpeed {
+            if store.state.audioState.isPlayingAudio == true {
                 Button {
-                    if let story = store.state.storyState.currentStory {
-                        store.dispatch(.synthesizeAudio(chapter,
-                                                        story: story,
-                                                        voice: store.state.settingsState.voice,
-                                                        isForced: false))
-                    }
+                    store.dispatch(.pauseAudio)
                 } label: {
-                    SystemImageView(.arrowDown, size: buttonSize)
+                    SystemImageView(.pause, size: buttonSize)
                 }
             } else {
-                if store.state.audioState.isPlayingAudio == true {
-                    Button {
-                        store.dispatch(.pauseAudio)
-                    } label: {
-                        SystemImageView(.pause, size: buttonSize)
-                    }
-                } else {
-                    Button {
-                        let timestamps = chapter.audio.timestamps
-                        let currentSpokenWord = store.state.currentSpokenWord ?? timestamps.first
-                        store.dispatch(.playAudio(time: currentSpokenWord?.time))
-                        store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
-                    } label: {
-                        SystemImageView(.play, size: buttonSize)
-                    }
+                Button {
+                    let timestamps = chapter.audio.timestamps
+                    let currentSpokenWord = store.state.currentSpokenWord ?? timestamps.first
+                    store.dispatch(.playAudio(time: currentSpokenWord?.time))
+                    store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
+                } label: {
+                    SystemImageView(.play, size: buttonSize)
                 }
             }
         }

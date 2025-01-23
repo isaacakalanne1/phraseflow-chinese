@@ -113,6 +113,8 @@
 		BBF618822D42E06800CA3229 /* PreviousStudyWord.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618812D42E06800CA3229 /* PreviousStudyWord.mp3 */; };
 		BBF618842D42E43E00CA3229 /* CreateNextChapter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618832D42E43E00CA3229 /* CreateNextChapter.mp3 */; };
 		BBF618862D42E63D00CA3229 /* GoToNextChapter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618852D42E63D00CA3229 /* GoToNextChapter.mp3 */; };
+		BBF618882D42F7C300CA3229 /* VoiceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF618872D42F7C300CA3229 /* VoiceSettingsView.swift */; };
+		BBF6188A2D42F84200CA3229 /* SpeechSpeedSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF618892D42F84200CA3229 /* SpeechSpeedSettingsView.swift */; };
 		BBFB3B072D3D37F2001997A8 /* ModerationExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFB3B062D3D37F2001997A8 /* ModerationExplanationView.swift */; };
 		BBFDBBE92D203AD80056C448 /* DefinitionsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFDBBE82D203AD80056C448 /* DefinitionsChartView.swift */; };
 		BBFDBBEB2D203F080056C448 /* DefinitionsProgressSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFDBBEA2D203F080056C448 /* DefinitionsProgressSheetView.swift */; };
@@ -259,6 +261,8 @@
 		BBF618812D42E06800CA3229 /* PreviousStudyWord.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PreviousStudyWord.mp3; sourceTree = "<group>"; };
 		BBF618832D42E43E00CA3229 /* CreateNextChapter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CreateNextChapter.mp3; sourceTree = "<group>"; };
 		BBF618852D42E63D00CA3229 /* GoToNextChapter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = GoToNextChapter.mp3; sourceTree = "<group>"; };
+		BBF618872D42F7C300CA3229 /* VoiceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSettingsView.swift; sourceTree = "<group>"; };
+		BBF618892D42F84200CA3229 /* SpeechSpeedSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpeedSettingsView.swift; sourceTree = "<group>"; };
 		BBFB3B062D3D37F2001997A8 /* ModerationExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationExplanationView.swift; sourceTree = "<group>"; };
 		BBFDBBE82D203AD80056C448 /* DefinitionsChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionsChartView.swift; sourceTree = "<group>"; };
 		BBFDBBEA2D203F080056C448 /* DefinitionsProgressSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionsProgressSheetView.swift; sourceTree = "<group>"; };
@@ -509,6 +513,8 @@
 				BB7B6DA12D1F3B680030344A /* DifficultyView.swift */,
 				BBE636D02CCD77BB00873E68 /* FlowLayout.swift */,
 				BBAE07DA2D14BE0B00DA95CD /* SystemImageView.swift */,
+				BBF618872D42F7C300CA3229 /* VoiceSettingsView.swift */,
+				BBF618892D42F84200CA3229 /* SpeechSpeedSettingsView.swift */,
 				BB4EDB232C91902100699E7D /* SettingsView.swift */,
 				BBE16F212CC2769C00A7EF1F /* StoryListView.swift */,
 				BB7B6D9B2D1F30BC0030344A /* SnackBar.swift */,
@@ -784,6 +790,7 @@
 				BB7B6DA22D1F3B680030344A /* DifficultyView.swift in Sources */,
 				BBE636D12CCD77BC00873E68 /* FlowLayout.swift in Sources */,
 				BBE16F282CC420FD00A7EF1F /* ReaderDisplayType.swift in Sources */,
+				BBF618882D42F7C300CA3229 /* VoiceSettingsView.swift in Sources */,
 				BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */,
 				BB84E0AD2CF4952700520F5E /* strings-enum.stencil in Sources */,
 				BB7B6D9C2D1F30BC0030344A /* SnackBar.swift in Sources */,
@@ -799,6 +806,7 @@
 				BB9C21932D3ACE05004C7689 /* PrimaryButton.swift in Sources */,
 				BBAE07D12D0C793000DA95CD /* SubscriptionView.swift in Sources */,
 				BBAE07D32D0C796500DA95CD /* SubscriptionState.swift in Sources */,
+				BBF6188A2D42F84200CA3229 /* SpeechSpeedSettingsView.swift in Sources */,
 				BBFDBBE92D203AD80056C448 /* DefinitionsChartView.swift in Sources */,
 				BB7B6D982D1E0D070030344A /* StoryInfoView.swift in Sources */,
 				BB4E6BF82D246AEF002B5CBA /* LoadingState.swift in Sources */,

@@ -74,52 +74,6 @@ struct SettingsView: View {
                 } header: {
                     Text("Sound") // TODO: Localize
                 }
-                Section {
-                    let sortedVoices = store.state.storyState.currentStory?.language.voices
-                        .sorted(by: { $0.gender.title < $1.gender.title })
-                    ForEach(sortedVoices ?? [],
-                            id: \.self) { voice in
-                        let isSelectedVoice = store.state.settingsState.voice == voice
-
-                        Button(action: {
-                            withAnimation(.easeInOut) {
-                                store.dispatch(.playSound(.changeSettings))
-                                store.dispatch(.selectVoice(voice))
-                            }
-                        }) {
-                            VStack(alignment: .leading) {
-                                Text(voice.title)
-                                    .fontWeight(isSelectedVoice ? .medium : .light)
-                                Text(voice.gender.title)
-                                    .fontWeight(.light)
-                            }
-                            .foregroundStyle(isSelectedVoice ? FlowTaleColor.accent : FlowTaleColor.primary)
-                        }
-                        .listRowBackground(isSelectedVoice ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
-                    }
-                } header: {
-                    Text(LocalizedString.voice)
-                }
-                Section {
-                    ForEach(SpeechSpeed.allCases, id: \.self) { speed in
-                        let isSelectedSpeed = store.state.settingsState.speechSpeed == speed
-
-                        Button(action: {
-                            withAnimation(.easeInOut) {
-                                store.dispatch(.playSound(.changeSettings))
-                                store.dispatch(.pauseAudio)
-                                store.dispatch(.updateSpeechSpeed(speed))
-                            }
-                        }) {
-                            Text(speed.title)
-                                .foregroundStyle(isSelectedSpeed ? FlowTaleColor.accent : FlowTaleColor.primary)
-                                .fontWeight(isSelectedSpeed ? .medium : .light)
-                        }
-                        .listRowBackground(isSelectedSpeed ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
-                    }
-                } header: {
-                    Text(LocalizedString.speed)
-                }
             }
         }
         .navigationTitle(LocalizedString.settings)

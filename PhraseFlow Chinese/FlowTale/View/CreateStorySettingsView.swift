@@ -58,6 +58,45 @@ struct CreateStorySettingsView: View {
                     Text(LocalizedString.story)
                 }
 
+                Section {
+                    NavigationLink {
+                        StoryPromptSettingsView()
+                    } label: {
+                        Text(currentStorySetting.emoji + " " + currentStorySetting.title)
+                            .fontWeight(.light)
+                            .foregroundStyle(FlowTaleColor.primary)
+                            .lineLimit(1)
+                    }
+                } header: {
+                    Text(LocalizedString.voice)
+                }
+
+                Section {
+                    NavigationLink {
+                        VoiceSettingsView()
+                    } label: {
+                        Text(store.state.settingsState.voice.title)
+                            .fontWeight(.light)
+                            .foregroundStyle(FlowTaleColor.primary)
+                            .lineLimit(1)
+                    }
+                } header: {
+                    Text(LocalizedString.voice)
+                }
+
+                Section {
+                    NavigationLink {
+                        SpeechSpeedSettingsView()
+                    } label: {
+                        Text(store.state.settingsState.speechSpeed.title)
+                            .fontWeight(.light)
+                            .foregroundStyle(FlowTaleColor.primary)
+                            .lineLimit(1)
+                    }
+                } header: {
+                    Text("Speech Speed") // TODO: Localize
+                }
+
             }
             .frame(maxHeight: .infinity)
 
