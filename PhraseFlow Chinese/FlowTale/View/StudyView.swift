@@ -170,15 +170,20 @@ struct StudyView: View {
     }
 
     func wordView(definition: Definition) -> some View {
-        let story = store.state.storyState.savedStories.first(where: { $0.id == definition.timestampData.storyId })
-        let chapter = story?.chapters[safe: definition.timestampData.chapterIndex]
+        let chapter = store.state.studyState.currentChapter
         let timestampData = chapter?.audio.timestamps.filter({ $0.sentenceIndex == definition.timestampData.sentenceIndex })
-        var characterCount = 0
+        var characterCount: Int? = nil
         for data in timestampData ?? [] {
             if data == definition.timestampData {
+                if characterCount == nil {
+                    characterCount = 0
+                }
                 break
             } else {
-                characterCount += data.word.count
+                if characterCount == nil {
+                    characterCount = 0
+                }
+                characterCount? += data.word.count
             }
         }
         let baseString = definition.sentence.translation
@@ -223,9 +228,10 @@ struct StudyView: View {
             Text(LocalizedString.sentence)
                 .greyBackground()
             HStack {
-                if characterCount >= 0,
-                   characterCount + definition.timestampData.word.count <= baseString.count,
-                   let highlighted = boldSubstring(in: baseString, at: characterCount, length: definition.timestampData.word.count) {
+                if let count = characterCount,
+                   count >= 0,
+                   count + definition.timestampData.word.count <= baseString.count,
+                   let highlighted = boldSubstring(in: baseString, at: count, length: definition.timestampData.word.count) {
                     // In SwiftUI, just show it:
                     Text(highlighted)
                         .font(.system(size: 30, weight: .light))
