@@ -200,7 +200,6 @@ struct StudyView: View {
                     } label: {
                         SystemImageView(.speaker)
                     }
-                    .disabled(store.state.studyState.currentChapter == nil)
                 }
             }
             Text("Pronounciation") // TODO: Localize
@@ -249,7 +248,6 @@ struct StudyView: View {
                 } label: {
                     SystemImageView(.speaker)
                 }
-                .disabled(store.state.studyState.currentChapter == nil)
             }
             Text(LocalizedString.translation)
                 .greyBackground()

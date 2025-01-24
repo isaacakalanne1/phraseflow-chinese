@@ -22,7 +22,8 @@ enum SystemImage {
          star,
          book(isSelected: Bool),
          chartLine(isSelected: Bool),
-         plus(isSelected: Bool)
+         plus(isSelected: Bool),
+         chevronRight
 
     var systemName: String {
         switch self {
@@ -56,6 +57,8 @@ enum SystemImage {
             isSelected ? "chart.line.uptrend.xyaxis" : "chart.xyaxis.line"
         case .plus(let isSelected):
             isSelected ? "plus.message.fill" : "plus.circle"
+        case .chevronRight:
+            "chevron.right.square.fill"
         }
     }
 }

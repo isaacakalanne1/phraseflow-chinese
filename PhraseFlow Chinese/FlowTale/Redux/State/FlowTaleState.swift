@@ -5,7 +5,7 @@
 //  Created by iakalann on 10/09/2024.
 //
 
-import Foundation
+import SwiftUI
 
 struct FlowTaleState {
     var settingsState = SettingsState()

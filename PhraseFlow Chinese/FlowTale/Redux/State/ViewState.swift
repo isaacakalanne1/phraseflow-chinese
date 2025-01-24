@@ -19,6 +19,12 @@ struct ViewState {
 
     var isShowingModerationDetails = false
 
+    var isShowingLanguageSettings = false
+    var isShowingDifficultySettings = false
+    var isShowingPromptSettings = false
+    var isShowingVoiceSettings = false
+    var isShowingSpeedSettings = false
+
     var isAutoscrollEnabled = false
     var isDefining = false
 
