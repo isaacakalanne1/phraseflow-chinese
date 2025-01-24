@@ -18,75 +18,73 @@ struct CreateStorySettingsView: View {
         let currentStorySetting = store.state.settingsState.storySetting
 
         VStack {
-            ScrollView {
-                List {
-                    Section {
-                        NavigationLink {
-                            LanguageSettingsView()
-                        } label: {
-                            Text(currentLanguage.flagEmoji + " " + currentLanguage.displayName)
-                                .fontWeight(.light)
-                                .foregroundStyle(FlowTaleColor.primary)
-                        }
-                    } header: {
-                        Text(LocalizedString.language)
+            List {
+                Section {
+                    NavigationLink {
+                        LanguageSettingsView()
+                    } label: {
+                        Text(currentLanguage.flagEmoji + " " + currentLanguage.displayName)
+                            .fontWeight(.light)
+                            .foregroundStyle(FlowTaleColor.primary)
                     }
-
-                    Section {
-                        NavigationLink {
-                            DifficultySettingsView()
-                        } label: {
-                            HStack {
-                                DifficultyView(difficulty: currentDifficulty)
-                                Text(currentDifficulty.title)
-                                    .fontWeight(.light)
-                                    .foregroundStyle(FlowTaleColor.primary)
-                            }
-                        }
-                    } header: {
-                        Text(LocalizedString.difficulty)
-                    }
-
-                    Section {
-                        NavigationLink {
-                            StoryPromptSettingsView()
-                        } label: {
-                            Text(currentStorySetting.emoji + " " + currentStorySetting.title)
-                                .fontWeight(.light)
-                                .foregroundStyle(FlowTaleColor.primary)
-                                .lineLimit(1)
-                        }
-                    } header: {
-                        Text(LocalizedString.story)
-                    }
-
-                    Section {
-                        NavigationLink {
-                            VoiceSettingsView()
-                        } label: {
-                            Text(store.state.settingsState.voice.gender.emoji + " " + store.state.settingsState.voice.title)
-                                .fontWeight(.light)
-                                .foregroundStyle(FlowTaleColor.primary)
-                                .lineLimit(1)
-                        }
-                    } header: {
-                        Text(LocalizedString.voice)
-                    }
-
-                    Section {
-                        NavigationLink {
-                            SpeechSpeedSettingsView()
-                        } label: {
-                            Text(store.state.settingsState.speechSpeed.emoji + " " + store.state.settingsState.speechSpeed.title)
-                                .fontWeight(.light)
-                                .foregroundStyle(FlowTaleColor.primary)
-                                .lineLimit(1)
-                        }
-                    } header: {
-                        Text("Speech Speed") // TODO: Localize
-                    }
-
+                } header: {
+                    Text(LocalizedString.language)
                 }
+                
+                Section {
+                    NavigationLink {
+                        DifficultySettingsView()
+                    } label: {
+                        HStack {
+                            DifficultyView(difficulty: currentDifficulty)
+                            Text(currentDifficulty.title)
+                                .fontWeight(.light)
+                                .foregroundStyle(FlowTaleColor.primary)
+                        }
+                    }
+                } header: {
+                    Text(LocalizedString.difficulty)
+                }
+
+                Section {
+                    NavigationLink {
+                        StoryPromptSettingsView()
+                    } label: {
+                        Text(currentStorySetting.emoji + " " + currentStorySetting.title)
+                            .fontWeight(.light)
+                            .foregroundStyle(FlowTaleColor.primary)
+                            .lineLimit(1)
+                    }
+                } header: {
+                    Text(LocalizedString.story)
+                }
+
+                Section {
+                    NavigationLink {
+                        VoiceSettingsView()
+                    } label: {
+                        Text(store.state.settingsState.voice.gender.emoji + " " + store.state.settingsState.voice.title)
+                            .fontWeight(.light)
+                            .foregroundStyle(FlowTaleColor.primary)
+                            .lineLimit(1)
+                    }
+                } header: {
+                    Text(LocalizedString.voice)
+                }
+
+                Section {
+                    NavigationLink {
+                        SpeechSpeedSettingsView()
+                    } label: {
+                        Text(store.state.settingsState.speechSpeed.emoji + " " + store.state.settingsState.speechSpeed.title)
+                            .fontWeight(.light)
+                            .foregroundStyle(FlowTaleColor.primary)
+                            .lineLimit(1)
+                    }
+                } header: {
+                    Text("Speech Speed") // TODO: Localize
+                }
+
             }
             .frame(maxHeight: .infinity)
             .scrollBounceBehavior(.basedOnSize)
@@ -98,6 +96,18 @@ struct CreateStorySettingsView: View {
         .navigationTitle(LocalizedString.createStory)
         .background(FlowTaleColor.background)
         .scrollContentBackground(.hidden)
+//        .navigationDestination(
+//            isPresented: Binding<Bool>(
+//                get: { store.state.viewState.isShowingModerationDetails },
+//                set: {
+//                    if !$0 {
+//                        store.dispatch(.updateIsShowingModerationDetails(isShowing: false))
+//                    }
+//                }
+//            )
+//        ) {
+//            ModerationExplanationView()
+//        }
     }
 
     func delete(at offsets: IndexSet) {
@@ -120,6 +130,7 @@ struct CreateStoryButton: View {
                 DifficultyView(difficulty: store.state.settingsState.difficulty, color: FlowTaleColor.primary)
                 Text(store.state.settingsState.language.flagEmoji + " " + LocalizedString.newStory)
             }
+            .frame(maxWidth: .infinity)
             .padding()
             .background(FlowTaleColor.accent)
             .foregroundColor(.white)
