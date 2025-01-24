@@ -135,7 +135,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
             .replacingOccurrences(of: "                ", with: "") // Korean TTS often adds these spaces
 
         for speechMark in speechCharacters {
-            word = word.replacingOccurrences(of: speechMark, with: "")
+//            word = word.replacingOccurrences(of: speechMark, with: "")
         }
 
         switch language {
@@ -186,7 +186,9 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
     }
 
     func getProducts() async throws -> [Product] {
-        return try await Product.products(for: ["com.flowtale.unlimited_chapter_subscription"])
+        return try await Product.products(for: [
+            "com.flowtale.unlimited_chapter_subscription"
+        ])
     }
 
     func purchase(_ product: Product) async throws {

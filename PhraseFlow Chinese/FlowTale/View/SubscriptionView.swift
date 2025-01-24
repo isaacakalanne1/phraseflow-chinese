@@ -26,17 +26,18 @@ struct SubscriptionView: View {
                     .foregroundColor(FlowTaleColor.primary)
             }
 
-            SubscriptionOption(title: LocalizedString.pricePerMonth(product?.displayPrice ?? "..."),
-                               detail: "\(product?.displayName ?? "...")",
-                               product: product,
-                               action: {
-                Task {
-                    if let prod = product {
-                        store.dispatch(.purchaseSubscription(prod))
+
+            ForEach(store.state.subscriptionState.products ?? []) { product in
+                SubscriptionOption(title: LocalizedString.pricePerMonth(product.displayPrice),
+                                   detail: product.displayName,
+                                   product: product,
+                                   action: {
+                    Task {
+                        store.dispatch(.purchaseSubscription(product))
                     }
-                }
-                store.dispatch(.setSubscriptionSheetShowing(false))
-            })
+                    store.dispatch(.setSubscriptionSheetShowing(false))
+                })
+            }
 
             SubscriptionOption(title: LocalizedString.free, detail: LocalizedString.chaptersPerStory("3"), product: nil, action: { })
 
