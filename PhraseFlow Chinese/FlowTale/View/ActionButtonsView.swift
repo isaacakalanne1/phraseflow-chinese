@@ -21,7 +21,7 @@ struct ActionButtonsView: View {
                     VStack(spacing: 4) {
                         ActionButton(systemImage: tab.image(isSelected: isSelected),
                                      isSelected: isSelected,
-                                     size: 35) {
+                                     size: 30) {
                             if !isSelected {
                                 withAnimation {
                                     store.dispatch(.selectTab(tab, shouldPlaySound: true))
@@ -29,7 +29,7 @@ struct ActionButtonsView: View {
                             }
                         }
                         RoundedRectangle(cornerRadius: 1.5, style: .continuous)
-                            .frame(width: 50, height: 3)
+                            .frame(width: 40, height: 3)
                             .foregroundStyle(isSelected ? FlowTaleColor.accent : Color.clear)
                     }
                     .frame(maxWidth: .infinity)

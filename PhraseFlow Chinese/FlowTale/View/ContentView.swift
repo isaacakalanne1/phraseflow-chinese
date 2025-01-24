@@ -85,6 +85,11 @@ struct ContentView: View {
                 }
             }
 
+        case .create:
+            NavigationStack {
+                CreateStorySettingsView()
+            }
+
         case .storyList:
             NavigationStack {
                 StoryListView()

@@ -16,12 +16,14 @@ enum ContentTab: CaseIterable, Equatable, Identifiable {
         UUID()
     }
 
-    case reader, storyList, study, progress, subscribe, settings
+    case reader, create, storyList, study, progress, subscribe, settings
 
     func image(isSelected: Bool) -> SystemImage {
         switch self {
         case .reader:
                 .book(isSelected: isSelected)
+        case .create:
+                .plus(isSelected: isSelected)
         case .storyList:
                 .list(isSelected: isSelected)
         case .study:
