@@ -42,6 +42,7 @@ protocol FlowTaleEnvironmentProtocol {
     func purchase(_ product: Product) async throws
     func generateImage(with prompt: String) async throws -> Data
     func moderateText(_ text: String) async throws -> ModerationResponse
+    func enforceChapterCreationLimit(subscription: SubscriptionLevel?) throws
 }
 
 struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
@@ -155,4 +156,9 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     func moderateText(_ text: String) async throws -> ModerationResponse {
         try await service.moderateText(text)
     }
+
+    func enforceChapterCreationLimit(subscription: SubscriptionLevel?) throws {
+        try dataStore.trackChapterCreation(subscription: subscription)
+    }
+
 }

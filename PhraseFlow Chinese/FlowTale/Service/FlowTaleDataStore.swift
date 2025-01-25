@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Security
 
 enum FlowTaleDataStoreError: Error {
     case failedToCreateUrl
@@ -13,6 +14,11 @@ enum FlowTaleDataStoreError: Error {
     case failedToDecodeData
     case storyNotFound
     case chapterNotFound
+    // Existing daily-limit error
+    case chapterCreationLimitReached
+
+    // New: free user overall limit
+    case freeUserChapterLimitReached
 }
 
 // MARK: - Protocol
@@ -40,23 +46,125 @@ protocol FlowTaleDataStoreProtocol {
 
     // Remove entire story (and its chapters) from disk
     func unsaveStory(_ story: Story) throws
+
+    func trackChapterCreation(subscription: SubscriptionLevel?) throws
 }
 
-// MARK: - Implementation
+final class KeychainManager {
+
+    static let shared = KeychainManager()
+
+    private init() {}
+
+    // Store data in keychain
+    func setData(_ data: Data, forKey key: String) throws {
+        let query: [String: Any] = [
+            kSecClass as String:            kSecClassGenericPassword,
+            kSecAttrAccount as String:      key,
+            kSecValueData as String:        data
+        ]
+
+        // Remove any existing item first
+        SecItemDelete(query as CFDictionary)
+
+        let status = SecItemAdd(query as CFDictionary, nil)
+        guard status == errSecSuccess else {
+            throw KeychainError.unhandledError(status: status)
+        }
+    }
+
+    // Retrieve data from keychain
+    func getData(forKey key: String) -> Data? {
+        let query: [String: Any] = [
+            kSecClass as String:            kSecClassGenericPassword,
+            kSecAttrAccount as String:      key,
+            kSecReturnData as String:       true,
+            kSecMatchLimit as String:       kSecMatchLimitOne
+        ]
+
+        var item: AnyObject?
+        let status = SecItemCopyMatching(query as CFDictionary, &item)
+
+        guard status == errSecSuccess else { return nil }
+        return item as? Data
+    }
+
+    // You can also expose a helper for removing items by key
+    func removeValue(forKey key: String) {
+        let query: [String: Any] = [
+            kSecClass as String:        kSecClassGenericPassword,
+            kSecAttrAccount as String:  key
+        ]
+        SecItemDelete(query as CFDictionary)
+    }
+
+    // Basic error
+    enum KeychainError: Error {
+        case unhandledError(status: OSStatus)
+    }
+}
+
 
 class FlowTaleDataStore: FlowTaleDataStoreProtocol {
 
     private let fileManager = FileManager.default
+
+    // Keychain keys
+    private let kDailyCreationKey = "dailyChapterCreationTimestamps"
+    private let kFreeUserTotalKey = "freeUserChapterCount"
+
+    // We'll use this reference:
+    private let keychain = KeychainManager.shared
+
+    /// Filename used to track chapter-creation timestamps
+    private let chapterCreationLogFilename = "chapterCreationLog.json"
 
     /// Documents directory URL
     private var documentsDirectory: URL? {
         return fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
     }
 
+    // MARK: - Daily usage in Keychain
+    private func loadDailyCreationDates() throws -> [Date] {
+        guard let data = keychain.getData(forKey: kDailyCreationKey),
+              !data.isEmpty else {
+            return []
+        }
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        do {
+            return try decoder.decode([Date].self, from: data)
+        } catch {
+            return []
+        }
+    }
+
+    private func saveDailyCreationDates(_ dates: [Date]) throws {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        let data = try encoder.encode(dates)
+        try keychain.setData(data, forKey: kDailyCreationKey)
+    }
+
+    // MARK: - Free-user total usage in Keychain
+    private func loadFreeUserChapterCount() -> Int {
+        guard let data = keychain.getData(forKey: kFreeUserTotalKey),
+              !data.isEmpty,
+              let stringVal = String(data: data, encoding: .utf8),
+              let intVal = Int(stringVal) else {
+            return 0 // If not found or parse fails, default to 0
+        }
+        return intVal
+    }
+
+    private func saveFreeUserChapterCount(_ count: Int) throws {
+        let data = Data("\(count)".utf8)
+        try keychain.setData(data, forKey: kFreeUserTotalKey)
+    }
+
     // ---------------------------------------
     // MARK: - App Settings
     // ---------------------------------------
-
     func loadAppSettings() throws -> SettingsState {
         guard let fileURL = documentsDirectory?.appendingPathComponent("settingsState.json") else {
             throw FlowTaleDataStoreError.failedToCreateUrl
@@ -87,7 +195,6 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
     // ---------------------------------------
     // MARK: - Definitions
     // ---------------------------------------
-
     func loadDefinitions() throws -> [Definition] {
         guard let fileURL = documentsDirectory?.appendingPathComponent("definitions.json") else {
             throw FlowTaleDataStoreError.failedToCreateUrl
@@ -126,27 +233,17 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         }
     }
 
-    // MARK: - Delete Definitions by Story ID
     func deleteDefinitions(for storyId: UUID) throws {
-        // 1. Read current definitions
         let currentDefinitions = try loadDefinitions()
-
-        // 2. Filter out all definitions that match the given storyId
         let filteredDefinitions = currentDefinitions.filter {
             $0.timestampData.storyId != storyId
         }
-
-        // 3. Save the updated list
         try saveDefinitions(filteredDefinitions)
     }
 
     // ---------------------------------------
     // MARK: - Stories (Main) & Chapters
     // ---------------------------------------
-
-    /// Helper to build a file URL for a given storyId & index.
-    /// - parameter storyId: The UUID of the story
-    /// - parameter chapterIndex: 0 for the main `Story`, 1..n for chapters
     private func fileURL(for storyId: UUID, chapterIndex: Int) throws -> URL {
         guard let dir = documentsDirectory else {
             throw FlowTaleDataStoreError.failedToCreateUrl
@@ -155,15 +252,8 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         return dir.appendingPathComponent(fileName)
     }
 
-    // ---------------------------------------
     // Saving & Loading the main Story object
-    // ---------------------------------------
-
-    /// Saves the main `Story` under "<storyId>@0.json".
-    /// This example strips out chapters to avoid duplication, but you can adapt as needed.
     func saveStory(_ story: Story) throws {
-        // By default, store all fields but remove the chapters array to reduce duplication.
-        // You can store them if you prefer, but they will also be saved individually below.
         var storyCopy = story
         storyCopy.chapters = []
 
@@ -176,14 +266,8 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         } catch {
             throw FlowTaleDataStoreError.failedToSaveData
         }
-
-        // Optionally, if you want to automatically save all chapters too:
-        // for (index, chapter) in story.chapters.enumerated() {
-        //     try saveChapter(chapter, storyId: story.id, chapterIndex: index + 1)
-        // }
     }
 
-    /// Loads the main `Story` by ID from "<storyId>@0.json".
     func loadStory(by id: UUID) throws -> Story {
         let url = try fileURL(for: id, chapterIndex: 0)
         guard fileManager.fileExists(atPath: url.path) else {
@@ -200,14 +284,11 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         }
     }
 
-    /// Loads **all** stories by scanning for filenames that match "@0.json" in the documents folder.
     func loadAllStories() throws -> [Story] {
         guard let dir = documentsDirectory else {
             throw FlowTaleDataStoreError.failedToCreateUrl
         }
         let files = try fileManager.contentsOfDirectory(atPath: dir.path)
-
-        // Filter to only files that contain "@0.json"
         let storyFiles = files.filter { $0.hasSuffix("@0.json") }
 
         var stories: [Story] = []
@@ -221,8 +302,7 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
                 let story = try decoder.decode(Story.self, from: data)
                 stories.append(story)
             } catch {
-                // You could either throw or just skip files that fail
-                // throw FlowTaleDataStoreError.failedToDecodeData
+                // Skip files that fail or throw an error—your choice.
             }
         }
 
@@ -230,12 +310,55 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
     }
 
     // ---------------------------------------
-    // Saving & Loading individual Chapters
+    // MARK: - Daily Chapter-Creation Tracking
     // ---------------------------------------
+    /// Loads the creation dates from disk.
+    private func loadChapterCreationDates() throws -> [Date] {
+        guard let dir = documentsDirectory else {
+            throw FlowTaleDataStoreError.failedToCreateUrl
+        }
+        let fileURL = dir.appendingPathComponent(chapterCreationLogFilename)
 
-    /// Saves a single chapter under "<storyId>@(chapterIndex).json" (where chapterIndex >= 1).
-    func saveChapter(_ chapter: Chapter, storyId: UUID, chapterIndex: Int) throws {
-        // Typically 1..N for the chapters
+        guard fileManager.fileExists(atPath: fileURL.path) else {
+            // If no file yet, return empty
+            return []
+        }
+
+        let data = try Data(contentsOf: fileURL)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        do {
+            return try decoder.decode([Date].self, from: data)
+        } catch {
+            // If decoding fails for any reason, you can decide to discard or throw
+            return []
+        }
+    }
+
+    /// Saves the creation dates back to disk.
+    private func saveChapterCreationDates(_ dates: [Date]) throws {
+        guard let dir = documentsDirectory else {
+            throw FlowTaleDataStoreError.failedToCreateUrl
+        }
+        let fileURL = dir.appendingPathComponent(chapterCreationLogFilename)
+
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        do {
+            let data = try encoder.encode(dates)
+            try data.write(to: fileURL)
+        } catch {
+            throw FlowTaleDataStoreError.failedToSaveData
+        }
+    }
+
+    // ---------------------------------------
+    // MARK: - Saving & Loading individual Chapters
+    // ---------------------------------------
+    func saveChapter(_ chapter: Chapter,
+                     storyId: UUID,
+                     chapterIndex: Int) throws
+    {
         guard chapterIndex >= 1 else {
             fatalError("Chapter index for saving must be >= 1. The main story is index 0.")
         }
@@ -250,7 +373,6 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         }
     }
 
-    /// Loads a single chapter from "<storyId>@(chapterIndex).json".
     func loadChapter(storyId: UUID, chapterIndex: Int) throws -> Chapter {
         let url = try fileURL(for: storyId, chapterIndex: chapterIndex + 1)
         guard fileManager.fileExists(atPath: url.path) else {
@@ -266,22 +388,18 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         }
     }
 
-    /// Loads **all** chapters for the given story ID by scanning filenames `<storyId>@1.json`, `<storyId>@2.json`, etc.
     func loadAllChapters(for storyId: UUID) throws -> [Chapter] {
         guard let dir = documentsDirectory else {
             throw FlowTaleDataStoreError.failedToCreateUrl
         }
 
         let contents = try fileManager.contentsOfDirectory(atPath: dir.path)
-
-        // We are looking for files that match: "<storyId>@X.json" with X >= 1
         let prefix = storyId.uuidString + "@"
+
+        // We are looking for files like "<storyId>@X.json" with X >= 1
         let chapterFiles = contents
             .filter { $0.hasPrefix(prefix) && $0.hasSuffix(".json") }
             .filter {
-                // Extract the part after '@' and before '.json'
-                // e.g. "UUID@3.json" => "3"
-                // Then ensure it's an Int >= 1
                 let withoutPrefix = $0.replacingOccurrences(of: prefix, with: "")
                 let withoutSuffix = withoutPrefix.replacingOccurrences(of: ".json", with: "")
                 if let num = Int(withoutSuffix), num >= 1 {
@@ -290,8 +408,6 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
                 return false
             }
             .sorted { lhs, rhs in
-                // Sort by chapter index ascending
-                // Extract numeric part and compare
                 let leftIdx = Int(
                     lhs.split(separator: "@")
                        .last?
@@ -323,9 +439,8 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
     }
 
     // ---------------------------------------
-    // Remove entire story & chapters
+    // MARK: - Remove entire story & chapters
     // ---------------------------------------
-
     func unsaveStory(_ story: Story) throws {
         let storyId = story.id
 
@@ -335,7 +450,7 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
             try fileManager.removeItem(at: mainURL)
         }
 
-        // 2) Remove all chapters: "<storyId>@1.json", "<storyId>@2.json", etc.
+        // 2) Remove all chapters
         guard let dir = documentsDirectory else { return }
         let contents = try fileManager.contentsOfDirectory(atPath: dir.path)
 
@@ -350,7 +465,6 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
     // ---------------------------------------
     // Example helper to clear data
     // ---------------------------------------
-
     func clearData(path: String) {
         guard let documentsDirectory = documentsDirectory else {
             return
@@ -367,5 +481,55 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         } else {
             print("No data found at \(path) to clear.")
         }
+    }
+}
+
+extension FlowTaleDataStore {
+    /// Checks usage for both free and subscribed users, and logs a new creation if allowed.
+    /// - Parameter subscription: The user's current subscription level (nil if free user).
+    /// - Throws: `chapterCreationLimitReached` or `freeUserChapterLimitReached` if the user
+    ///           cannot create more chapters.
+    func trackChapterCreation(subscription: SubscriptionLevel?) throws {
+
+        // 1) If subscription == nil => free user
+        guard let subscription = subscription else {
+            try trackFreeUserCreation()
+            return
+        }
+
+        // 2) If subscribed => daily usage check
+        try trackSubscribedUserCreation(level: subscription)
+    }
+
+    /// If user is free (no subscription), total usage is limited to 4 chapters total.
+    private func trackFreeUserCreation() throws {
+        let currentCount = loadFreeUserChapterCount()
+        let maxFree = 4
+        if currentCount >= maxFree {
+            throw FlowTaleDataStoreError.freeUserChapterLimitReached
+        }
+        // increment
+        let newCount = currentCount + 1
+        try saveFreeUserChapterCount(newCount)
+    }
+
+    /// If user is subscribed, enforce daily limit from `subscription.chapterLimitPerDay`.
+    private func trackSubscribedUserCreation(level: SubscriptionLevel) throws {
+        var creationDates = try loadDailyCreationDates()
+        let now = Date()
+        let cutoff = now.addingTimeInterval(-24 * 60 * 60)
+
+        // Remove timestamps older than 24 hours
+        creationDates = creationDates.filter { $0 > cutoff }
+
+        // Check limit
+        let limit = level.chapterLimitPerDay
+        if creationDates.count >= limit {
+            throw FlowTaleDataStoreError.chapterCreationLimitReached
+        }
+
+        // Otherwise, log new creation
+        creationDates.append(now)
+        try saveDailyCreationDates(creationDates)
     }
 }

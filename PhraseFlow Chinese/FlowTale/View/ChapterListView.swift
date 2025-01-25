@@ -74,14 +74,9 @@ struct ChapterListView: View {
                 .frame(maxHeight: .infinity)
 
                 PrimaryButton(title: LocalizedString.newChapter) {
-                    if !store.state.subscriptionState.isSubscribed,
-                       story.chapters.count >= 2 {
-                        store.dispatch(.setSubscriptionSheetShowing(true))
-                    } else {
-                        store.dispatch(.selectTab(.reader, shouldPlaySound: false))
-                        store.dispatch(.continueStory(story: story))
-                        store.dispatch(.playSound(.createStory))
-                    }
+                    store.dispatch(.selectTab(.reader, shouldPlaySound: false))
+                    store.dispatch(.continueStory(story: story))
+                    store.dispatch(.playSound(.createStory))
                 }
                 .padding(.bottom)
             }

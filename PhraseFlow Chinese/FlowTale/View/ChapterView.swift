@@ -65,19 +65,14 @@ struct ChapterView: View {
             }
 
             Button(LocalizedString.nextChapter) {
-                if !store.state.subscriptionState.isSubscribed,
-                   story.currentChapterIndex >= 2 {
-                    store.dispatch(.setSubscriptionSheetShowing(true))
+                let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
+                if doesNextChapterExist {
+                    store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
+                    store.dispatch(.playSound(.goToNextChapter))
+                    store.dispatch(.goToNextChapter)
                 } else {
-                    let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
-                    if doesNextChapterExist {
-                        store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
-                        store.dispatch(.playSound(.goToNextChapter))
-                        store.dispatch(.goToNextChapter)
-                    } else {
-                        store.dispatch(.playSound(.createNextChapter))
-                        store.dispatch(.continueStory(story: story))
-                    }
+                    store.dispatch(.playSound(.createNextChapter))
+                    store.dispatch(.continueStory(story: story))
                 }
             }
             .padding()
