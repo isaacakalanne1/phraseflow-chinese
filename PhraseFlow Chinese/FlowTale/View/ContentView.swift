@@ -51,7 +51,7 @@ struct ContentView: View {
         .sheet(isPresented: isShowingSubscriptionView) {
             SubscriptionView()
                 .presentationDragIndicator(.hidden)
-                .presentationDetents([.fraction(0.55)])
+                .presentationDetents([.fraction(0.8)])
         }
         .onChange(of: store.state.viewState.loadingState) { oldValue, newValue in
             if newValue != .complete,
