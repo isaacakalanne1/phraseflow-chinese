@@ -292,7 +292,9 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
 
     func getProducts() async throws -> [Product] {
         return try await Product.products(for: [
-            "com.flowtale.unlimited_chapter_subscription"
+            "com.flowtale.level_1",
+            "com.flowtale.level_2",
+            "com.flowtale.level_3"
         ])
     }
 

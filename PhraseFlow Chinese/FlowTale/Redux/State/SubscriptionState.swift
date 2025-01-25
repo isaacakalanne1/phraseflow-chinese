@@ -9,6 +9,22 @@ import Foundation
 import StoreKit
 
 struct SubscriptionState {
+    var currentSubscription: SubscriptionLevel? {
+        #if DEBUG
+            .max
+        #else
+        if purchasedProductIDs?.contains("com.flowtale.level_3") {
+            return .level3
+        } else if purchasedProductIDs?.contains("com.flowtale.level_2") {
+            return .level2
+        } else if purchasedProductIDs?.contains("com.flowtale.level_1") {
+            return .level1
+        } else {
+            return nil
+        }
+        #endif
+    }
+
     var isSubscribed: Bool {
         #if DEBUG
             true

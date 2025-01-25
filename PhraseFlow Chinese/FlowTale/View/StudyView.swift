@@ -217,6 +217,7 @@ struct StudyView: View {
                 Text("✏️ " + definition.detail.definition)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.system(size: 20, weight: .light))
+                Divider()
                 Text("🌎 " + definition.detail.definitionInContextOfSentence)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .scaleEffect(x: 1, y: isWordDefinitionView || isDefinitionShown ? 1 : 0, anchor: .top)

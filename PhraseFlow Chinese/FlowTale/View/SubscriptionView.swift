@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct SubscriptionView: View {
     @EnvironmentObject var store: FlowTaleStore
@@ -27,9 +28,9 @@ struct SubscriptionView: View {
             }
 
 
-            ForEach(store.state.subscriptionState.products ?? []) { product in
-                SubscriptionOption(title: LocalizedString.pricePerMonth(product.displayPrice),
-                                   detail: product.displayName,
+            ForEach(store.state.subscriptionState.products?.sorted(by: { $0.price > $1.price }) ?? []) { product in
+                SubscriptionOption(title: product.displayName,
+                                   detail: LocalizedString.pricePerMonth(product.displayPrice),
                                    product: product,
                                    action: {
                     Task {
@@ -39,7 +40,8 @@ struct SubscriptionView: View {
                 })
             }
 
-            SubscriptionOption(title: LocalizedString.free, detail: LocalizedString.chaptersPerStory("3"), product: nil, action: { })
+            // TODO: Localize
+            SubscriptionOption(title: LocalizedString.free, detail: "4 free chapters", product: nil, action: { })
 
             Button {
                 Task {
@@ -91,5 +93,37 @@ struct SubscriptionView: View {
         .background(FlowTaleColor.background)
         .navigationTitle(LocalizedString.subscribe)
         .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+extension String {
+    var subscriptionLevel: SubscriptionLevel? {
+        switch self {
+        case "com.flowtale.level_1":
+                .level1
+        case "com.flowtale.level_2":
+                .level2
+        case "com.flowtale.level_3":
+                .level3
+        default:
+            nil
+        }
+    }
+}
+
+enum SubscriptionLevel {
+    case level1, level2, level3, max
+
+    var chapterLimitPerDay: Int {
+        switch self {
+        case .level1:
+            3
+        case .level2:
+            6
+        case .level3:
+            10
+        case .max:
+            9999999
+        }
     }
 }
