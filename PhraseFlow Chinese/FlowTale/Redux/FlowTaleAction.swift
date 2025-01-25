@@ -125,7 +125,7 @@ enum FlowTaleAction {
 
     case observeTransactionUpdates
 
-    case setSubscriptionSheetShowing(Bool)
+    case setSubscriptionSheetShowing(Bool, SubscriptionSheetType)
 
     case showSnackBar(SnackBarType)
     case hideSnackbar
@@ -152,4 +152,8 @@ enum FlowTaleAction {
     case updateStorySetting(StorySetting)
     case updateIsShowingCustomPromptAlert(Bool)
     case selectTab(ContentTab, shouldPlaySound: Bool)
+}
+
+enum SubscriptionSheetType {
+    case manualOpen, freeLimitReached
 }

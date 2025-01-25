@@ -15,7 +15,9 @@ struct ContentView: View {
         let isShowingSubscriptionView: Binding<Bool> = .init {
             store.state.viewState.isShowingSubscriptionSheet
         } set: { newValue in
-            store.dispatch(.setSubscriptionSheetShowing(newValue))
+            if !newValue {
+                store.dispatch(.setSubscriptionSheetShowing(newValue, .manualOpen))
+            }
         }
 
         VStack {

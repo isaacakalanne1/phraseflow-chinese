@@ -20,7 +20,7 @@ struct SubscriptionView: View {
                 .bold()
                 .foregroundColor(FlowTaleColor.primary)
             if !store.state.subscriptionState.isSubscribed {
-                Text(LocalizedString.subscribeNowUnlimitedChapters)
+                Text("Subscribe now to create more chapters") // TODO: Localize
                     .multilineTextAlignment(.center)
                     .font(.subheadline)
                     .bold()
@@ -36,7 +36,7 @@ struct SubscriptionView: View {
                     Task {
                         store.dispatch(.purchaseSubscription(product))
                     }
-                    store.dispatch(.setSubscriptionSheetShowing(false))
+                    store.dispatch(.setSubscriptionSheetShowing(false, .manualOpen))
                 })
             }
 
@@ -46,7 +46,7 @@ struct SubscriptionView: View {
             Button {
                 Task {
                     store.dispatch(.restoreSubscriptions)
-                    store.dispatch(.setSubscriptionSheetShowing(false))
+                    store.dispatch(.setSubscriptionSheetShowing(false, .manualOpen))
                 }
             } label: {
                 Text(LocalizedString.restoreSubscription)
@@ -96,22 +96,7 @@ struct SubscriptionView: View {
     }
 }
 
-extension String {
-    var subscriptionLevel: SubscriptionLevel? {
-        switch self {
-        case "com.flowtale.level_1":
-                .level1
-        case "com.flowtale.level_2":
-                .level2
-        case "com.flowtale.level_3":
-                .level3
-        default:
-            nil
-        }
-    }
-}
-
-enum SubscriptionLevel {
+enum SubscriptionLevel: CaseIterable {
     case level1, level2, level3, max
 
     var chapterLimitPerDay: Int {
@@ -125,5 +110,25 @@ enum SubscriptionLevel {
         case .max:
             9999999
         }
+    }
+
+    var idString: String {
+        switch self {
+        case .level1:
+            "com.flowtale.level_1"
+        case .level2:
+            "com.flowtale.level_2"
+        case .level3:
+            "com.flowtale.level_3"
+        case .max:
+            "MAX_SUB_FOR_DEBUG"
+        }
+    }
+
+    init?(id: String) {
+        guard let level = SubscriptionLevel.allCases.first(where: { $0.idString == id }) else {
+            return nil
+        }
+        self = level
     }
 }

@@ -14,6 +14,7 @@ struct ViewState {
     var storyListViewId: UUID
 
     var isShowingSubscriptionSheet = false
+    var subscriptionSheetType: SubscriptionSheetType = .manualOpen
     var isShowingCustomPromptAlert = false
     var isShowingModerationFailedAlert = false
 

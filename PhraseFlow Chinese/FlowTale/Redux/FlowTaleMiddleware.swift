@@ -45,10 +45,10 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .translateStory(story: story, storyString: storyString)
         } catch FlowTaleDataStoreError.freeUserChapterLimitReached {
             // If the free user has created all 4 chapters, show an error or prompt to upgrade
-            return .setSubscriptionSheetShowing(true)
+            return .setSubscriptionSheetShowing(true, .freeLimitReached)
         } catch FlowTaleDataStoreError.chapterCreationLimitReached {
             // If the subscribed user hit the daily limit
-            return .setSubscriptionSheetShowing(true)
+            return .showSnackBar(.chapterReady) // TODO: Create snackbar for daily chapter limit reached
         } catch {
             // Some other error from generateStory
             return .failedToContinueStory(story: story)

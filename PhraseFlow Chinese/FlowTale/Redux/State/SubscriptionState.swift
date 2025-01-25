@@ -10,27 +10,27 @@ import StoreKit
 
 struct SubscriptionState {
     var currentSubscription: SubscriptionLevel? {
-        #if DEBUG
-            .max
-        #else
-        if purchasedProductIDs?.contains("com.flowtale.level_3") {
+//        #if DEBUG
+//            .max
+//        #else
+        if purchasedProductIDs.contains("com.flowtale.level_3") {
             return .level3
-        } else if purchasedProductIDs?.contains("com.flowtale.level_2") {
+        } else if purchasedProductIDs.contains("com.flowtale.level_2") {
             return .level2
-        } else if purchasedProductIDs?.contains("com.flowtale.level_1") {
+        } else if purchasedProductIDs.contains("com.flowtale.level_1") {
             return .level1
         } else {
             return nil
         }
-        #endif
+//        #endif
     }
 
     var isSubscribed: Bool {
-        #if DEBUG
-            true
-        #else
-            !purchasedProductIDs.isEmpty
-        #endif
+//        #if DEBUG
+//            true
+//        #else
+            currentSubscription != nil
+//        #endif
     }
     var products: [Product]?
     var purchasedProductIDs = Set<String>()
