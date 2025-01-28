@@ -90,6 +90,7 @@ enum SnackBarType {
     }
 
     func action(store: FlowTaleStore) {
+        store.dispatch(.hideSnackbar)
         switch self {
         case .writingChapter,
                 .chapterReady,

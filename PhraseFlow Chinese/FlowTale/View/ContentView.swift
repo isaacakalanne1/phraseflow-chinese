@@ -67,13 +67,27 @@ struct ContentView: View {
     // MARK: - Main Content
     @ViewBuilder
     private func mainContent() -> some View {
+
+        let isShowingDailyLimitExplanationScreen: Binding<Bool> = .init {
+            store.state.viewState.isShowingDailyLimitExplanation
+        } set: { newValue in
+            store.dispatch(.showDailyLimitExplanationScreen(isShowing: newValue))
+        }
+
         switch store.state.viewState.contentTab {
         case .reader:
             if store.state.viewState.readerDisplayType == .loading {
                 LoadingView()
             } else if let _ = store.state.storyState.currentStory {
                 if let chapter = store.state.storyState.currentChapter {
-                    ReaderView(chapter: chapter)
+                    NavigationStack {
+                        ReaderView(chapter: chapter)
+                            .navigationDestination(
+                                isPresented: isShowingDailyLimitExplanationScreen
+                            ) {
+                                Text("I'm here!")
+                            }
+                    }
                 } else {
                     ProgressView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -90,11 +104,21 @@ struct ContentView: View {
         case .create:
             NavigationStack {
                 CreateStorySettingsView()
+                    .navigationDestination(
+                        isPresented: isShowingDailyLimitExplanationScreen
+                    ) {
+                        Text("I'm here!")
+                    }
             }
 
         case .storyList:
             NavigationStack {
                 StoryListView()
+                    .navigationDestination(
+                        isPresented: isShowingDailyLimitExplanationScreen
+                    ) {
+                        Text("I'm here!")
+                    }
             }
 
         case .study:

@@ -26,5 +26,6 @@ struct ReaderView: View {
             ChapterView(chapter: chapter)
         }
         .padding(10)
+        .background(FlowTaleColor.background)
     }
 }
