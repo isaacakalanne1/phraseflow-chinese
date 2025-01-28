@@ -16,6 +16,8 @@ enum FlowTaleAction {
     case continueStory(story: Story)
     case failedToContinueStory(story: Story)
 
+    case beginContinueStory(Story)
+
     case translateStory(story: Story, storyString: String)
     case onTranslatedStory(story: Story)
     case failedToTranslateStory(story: Story, storyString: String)

@@ -40,9 +40,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             // If user has subscription => daily limit based on level.
             try environment.enforceChapterCreationLimit(subscription: state.subscriptionState.currentSubscription)
 
-            // 2) If we get here, user is allowed to create.
-            let storyString = try await environment.generateStory(story: story)
-            return .translateStory(story: story, storyString: storyString)
+            return .beginContinueStory(story)
         } catch FlowTaleDataStoreError.freeUserChapterLimitReached {
             // If the free user has created all 4 chapters, show an error or prompt to upgrade
             return .setSubscriptionSheetShowing(true, .freeLimitReached)
@@ -54,6 +52,14 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .failedToContinueStory(story: story)
         }
 
+    case .beginContinueStory(let story):
+        do {
+            let storyString = try await environment.generateStory(story: story)
+            return .translateStory(story: story, storyString: storyString)
+        } catch {
+            // Some other error from generateStory
+            return .failedToContinueStory(story: story)
+        }
 
     case .failedToContinueStory(let story),
             .failedToTranslateStory(let story, _),

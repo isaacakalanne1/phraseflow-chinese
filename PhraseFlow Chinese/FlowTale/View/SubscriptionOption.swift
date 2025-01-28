@@ -23,7 +23,7 @@ struct SubscriptionOption: View {
     var backgroundColor: Color {
         if let prod = product {
             if isUserCurrentSubscription {
-                return FlowTaleColor.background
+                return FlowTaleColor.primary
             } else {
                 return FlowTaleColor.accent
             }
