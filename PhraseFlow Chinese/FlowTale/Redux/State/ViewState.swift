@@ -25,6 +25,7 @@ struct ViewState {
     var isShowingPromptSettings = false
     var isShowingVoiceSettings = false
     var isShowingSpeedSettings = false
+    var isShowingDailyLimitExplanation = false
 
     var isAutoscrollEnabled = false
     var isDefining = false

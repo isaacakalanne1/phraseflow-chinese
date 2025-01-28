@@ -18,6 +18,8 @@ enum FlowTaleAction {
 
     case beginContinueStory(Story)
 
+    case showDailyLimitExplanationScreen(isShowing: Bool)
+
     case translateStory(story: Story, storyString: String)
     case onTranslatedStory(story: Story)
     case failedToTranslateStory(story: Story, storyString: String)

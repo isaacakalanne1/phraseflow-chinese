@@ -18,7 +18,7 @@ enum SnackBarType {
     case passedModeration
     case couldNotModerateText
     case didNotPassModeration
-    case dailyChapterLimitReached
+    case dailyChapterLimitReached(nextAvailable: String)
 
     var text: String {
         switch self {
@@ -42,8 +42,8 @@ enum SnackBarType {
             LocalizedString.storyDidNotMeetPolicies
         case .deletedCustomStory:
             LocalizedString.deletedCustomStory
-        case .dailyChapterLimitReached:
-            "Your daily chapter limit has been reached. Tap here to learn why."
+        case .dailyChapterLimitReached(let nextAvailable):
+            "You can create more chapters in \(nextAvailable). Tap here to learn why."
         }
     }
 
@@ -98,14 +98,15 @@ enum SnackBarType {
                 .passedModeration,
                 .didNotPassModeration,
                 .welcomeBack,
-                .deletedCustomStory,
-                .dailyChapterLimitReached:
+                .deletedCustomStory:
             break
         case .failedToWriteChapter(let story):
             store.dispatch(.selectTab(.reader, shouldPlaySound: false))
             store.dispatch(.continueStory(story: story))
         case .couldNotModerateText:
             store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))
+        case .dailyChapterLimitReached:
+            store.dispatch(.showDailyLimitExplanationScreen(isShowing: true))
         }
     }
 
@@ -117,12 +118,12 @@ enum SnackBarType {
                 .moderatingText,
                 .passedModeration,
                 .welcomeBack,
-                .deletedCustomStory:
+                .deletedCustomStory,
+                .dailyChapterLimitReached:
             return false
         case .failedToWriteChapter,
                 .didNotPassModeration,
-                .couldNotModerateText,
-                .dailyChapterLimitReached:
+                .couldNotModerateText:
             return true
         }
     }

@@ -23,6 +23,13 @@ struct CreateStorySettingsView: View {
         let currentLanguage = store.state.settingsState.language
         let currentStorySetting = store.state.settingsState.storySetting
 
+        let isShowingDailyLimitExplanationScreen: Binding<Bool> = .init {
+            store.state.viewState.isShowingDailyLimitExplanation
+        } set: { newValue in
+            store.dispatch(.showDailyLimitExplanationScreen(isShowing: newValue))
+        }
+
+
         VStack {
             List {
                 Section {
@@ -149,6 +156,11 @@ struct CreateStorySettingsView: View {
             isPresented: $isShowingSpeedSettings
         ) {
             SpeechSpeedSettingsView()
+        }
+        .navigationDestination(
+            isPresented: isShowingDailyLimitExplanationScreen
+        ) {
+            Text("I'm here!")
         }
     }
 

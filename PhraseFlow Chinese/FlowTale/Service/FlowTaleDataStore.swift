@@ -14,11 +14,9 @@ enum FlowTaleDataStoreError: Error {
     case failedToDecodeData
     case storyNotFound
     case chapterNotFound
-    // Existing daily-limit error
-    case chapterCreationLimitReached
-
     // New: free user overall limit
     case freeUserChapterLimitReached
+    case chapterCreationLimitReached(timeUntilNextAvailable: String)
 }
 
 // MARK: - Protocol
@@ -410,15 +408,15 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
             .sorted { lhs, rhs in
                 let leftIdx = Int(
                     lhs.split(separator: "@")
-                       .last?
-                       .replacingOccurrences(of: ".json", with: "")
+                        .last?
+                        .replacingOccurrences(of: ".json", with: "")
                     ?? ""
                 ) ?? 0
 
                 let rightIdx = Int(
                     rhs.split(separator: "@")
-                       .last?
-                       .replacingOccurrences(of: ".json", with: "")
+                        .last?
+                        .replacingOccurrences(of: ".json", with: "")
                     ?? ""
                 ) ?? 0
 
@@ -513,23 +511,78 @@ extension FlowTaleDataStore {
         try saveFreeUserChapterCount(newCount)
     }
 
-    /// If user is subscribed, enforce daily limit from `subscription.chapterLimitPerDay`.
+    // --------------------------------------------------------
+    // MARK: - Subscribed User Logic (daily limit)
+    // --------------------------------------------------------
     private func trackSubscribedUserCreation(level: SubscriptionLevel) throws {
         var creationDates = try loadDailyCreationDates()
         let now = Date()
         let cutoff = now.addingTimeInterval(-24 * 60 * 60)
 
-        // Remove timestamps older than 24 hours
+        // Filter out timestamps older than 24h
         creationDates = creationDates.filter { $0 > cutoff }
 
         // Check limit
         let limit = level.chapterLimitPerDay
         if creationDates.count >= limit {
-            throw FlowTaleDataStoreError.chapterCreationLimitReached
+            // The user is at their daily limit => throw an error that includes the time
+            // until next creation is available.
+            if let earliest = creationDates.min() {
+                let nextAvailableTimeString = timeRemainingStringUntilNextChapter(earliestCreationDate: earliest)
+                // Attach the localized string to the error
+                throw FlowTaleDataStoreError.chapterCreationLimitReached(timeUntilNextAvailable: nextAvailableTimeString)
+            } else {
+                // Fallback (shouldn't happen if .count >= limit, but just in case)
+                throw FlowTaleDataStoreError.chapterCreationLimitReached(timeUntilNextAvailable: "24 hours")
+            }
         }
 
-        // Otherwise, log new creation
+        // Otherwise, log a new creation
         creationDates.append(now)
         try saveDailyCreationDates(creationDates)
+    }
+
+    // --------------------------------------------------------
+    // MARK: - Time-Remaining Formatter
+    // --------------------------------------------------------
+    /// Returns a localized string describing how long until earliestCreationDate + 24h from now,
+    /// e.g. "23 hours, 59 minutes" or "5 minutes".
+    private func timeRemainingStringUntilNextChapter(earliestCreationDate: Date) -> String {
+        let now = Date()
+        let nextAvailable = earliestCreationDate.addingTimeInterval(24 * 60 * 60)
+
+        let interval = nextAvailable.timeIntervalSince(now)
+        guard interval > 0 else {
+            // If something is off and the user can already create
+            return "Now"
+        }
+
+        let formatter = DateComponentsFormatter()
+        // .full => "2 hours, 5 minutes, 30 seconds"
+        // .abbreviated => "2h 5m 30s"
+        // .short => "2 hr, 5 min, 30 sec"
+        // .spellOut => "two hours, five minutes..."
+        formatter.unitsStyle = .full
+
+        // Choose which units you want to display
+        // e.g. days, hours, minutes, seconds
+        formatter.allowedUnits = [.day, .hour, .minute, .second]
+
+        // Remove any zero-value components
+        formatter.zeroFormattingBehavior = [.dropAll]
+
+        // If you want up to 2 components only, e.g. "22 hours, 30 minutes", then do:
+        // formatter.maximumUnitCount = 2
+        // But let's show them all.
+
+        // Set the locale if you want to ensure correct language
+        formatter.calendar?.locale = .current
+
+        if let formatted = formatter.string(from: interval) {
+            return formatted
+        } else {
+            // Fallback
+            return "24 hours"
+        }
     }
 }

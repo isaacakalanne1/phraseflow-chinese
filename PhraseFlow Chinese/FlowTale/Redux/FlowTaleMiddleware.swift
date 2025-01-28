@@ -44,9 +44,9 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         } catch FlowTaleDataStoreError.freeUserChapterLimitReached {
             // If the free user has created all 4 chapters, show an error or prompt to upgrade
             return .setSubscriptionSheetShowing(true, .freeLimitReached)
-        } catch FlowTaleDataStoreError.chapterCreationLimitReached {
+        } catch FlowTaleDataStoreError.chapterCreationLimitReached(let nextAvailable) {
             // If the subscribed user hit the daily limit
-            return .showSnackBar(.chapterReady) // TODO: Create snackbar for daily chapter limit reached
+            return .showSnackBar(.dailyChapterLimitReached(nextAvailable: nextAvailable)) // TODO: Create snackbar for daily chapter limit reached
         } catch {
             // Some other error from generateStory
             return .failedToContinueStory(story: story)
@@ -464,7 +464,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .showModerationDetails,
             .updateIsShowingModerationDetails,
             .updateStudyChapter,
-            .failedToPrepareStudyWord:
+            .failedToPrepareStudyWord,
+            .showDailyLimitExplanationScreen:
         return nil
     }
 }

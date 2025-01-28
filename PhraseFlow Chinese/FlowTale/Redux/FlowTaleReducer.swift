@@ -153,7 +153,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         if let language = newState.storyState.currentStory?.language {
             newState.settingsState.language = language
         }
-    case .continueStory:
+    case .beginContinueStory:
         if let voice = newState.settingsState.language.voices.first {
             newState.settingsState.voice = voice
         }
@@ -291,6 +291,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.settingsState.appColorScheme = colorScheme
     case .updateShouldPlaySound(let shouldPlaySound):
         newState.settingsState.shouldPlaySound = shouldPlaySound
+    case .showDailyLimitExplanationScreen(let isShowing):
+        newState.viewState.isShowingDailyLimitExplanation = isShowing
     case .saveStoryAndSettings,
             .failedToSaveStory,
             .loadStories,
@@ -325,7 +327,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .prepareToPlayStudyWord,
             .loadChapters,
             .failedToLoadChapters,
-            .failedToPrepareStudyWord:
+            .failedToPrepareStudyWord,
+            .continueStory:
         break
     }
 
