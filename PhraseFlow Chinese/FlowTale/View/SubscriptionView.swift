@@ -35,9 +35,7 @@ struct SubscriptionView: View {
                         .underline()
                         .foregroundColor(FlowTaleColor.primary)
                 }
-
             }
-
 
             ForEach(store.state.subscriptionState.products?.sorted(by: { $0.price > $1.price }) ?? []) { product in
                 SubscriptionOption(title: product.displayName,
