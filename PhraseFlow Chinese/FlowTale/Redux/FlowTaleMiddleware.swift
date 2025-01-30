@@ -33,6 +33,25 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
                                     isForced: true)
         }
         return .saveStoryAndSettings(story)
+    case .checkFreeTrialLimit:
+        do {
+            // 1) Enforce usage limit:
+            // If user is free, subscription = nil => total limit (4).
+            // If user has subscription => daily limit based on level.
+            try environment.enforceChapterCreationLimit(subscription: state.subscriptionState.currentSubscription)
+
+            return nil
+        } catch FlowTaleDataStoreError.freeUserChapterLimitReached {
+            // If the free user has created all 4 chapters, show an error or prompt to upgrade
+            return .hasReachedFreeTrialLimit
+        } catch FlowTaleDataStoreError.chapterCreationLimitReached(let nextAvailable) {
+            // If the subscribed user hit the daily limit
+            return .hasReachedDailyLimit
+        } catch {
+            // Some other error from generateStory
+            return nil
+        }
+
     case .continueStory(let story):
         do {
             // 1) Enforce usage limit:
@@ -134,6 +153,12 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         if let timestamp {
             let myTime = CMTime(seconds: timestamp, preferredTimescale: 60000)
             await state.audioState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
+        } else {
+            let time = state.audioState.audioPlayer.currentTime().seconds
+            if let lastWordTime = state.storyState.currentChapter?.audio.timestamps.last?.time,
+               time > lastWordTime {
+                await state.audioState.audioPlayer.seek(to: CMTime(seconds: 0, preferredTimescale: 60000), toleranceBefore: .zero, toleranceAfter: .zero)
+            }
         }
         state.audioState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: .infinity, preferredTimescale: 1)
         state.audioState.audioPlayer.play()
@@ -203,12 +228,9 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
                !shouldForce {
                 return .onDefinedCharacter(definition)
             }
-            guard let story = state.storyState.currentStory,
-                  let chapter  = state.storyState.currentChapter else {
-                return .failedToDefineCharacter
-            }
 
             guard let story = state.storyState.currentStory,
+                  let chapter  = state.storyState.currentChapter,
                   let deviceLanguage = state.deviceLanguage,
                   let currentSentence = state.storyState.currentSentence,
                   let sentenceIndex = state.storyState.currentStory?.currentSentenceIndex else {
@@ -465,7 +487,9 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .updateIsShowingModerationDetails,
             .updateStudyChapter,
             .failedToPrepareStudyWord,
-            .showDailyLimitExplanationScreen:
+            .showDailyLimitExplanationScreen,
+            .hasReachedFreeTrialLimit,
+            .hasReachedDailyLimit:
         return nil
     }
 }

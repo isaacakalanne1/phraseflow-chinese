@@ -17,6 +17,8 @@
 		BB1994D12CE9050000D61E54 /* AudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D02CE9050000D61E54 /* AudioState.swift */; };
 		BB1994D32CE9051700D61E54 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D22CE9051700D61E54 /* ViewState.swift */; };
 		BB4015C02CF756FD008ACE9C /* StoryPrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4015BF2CF756FD008ACE9C /* StoryPrompts.swift */; };
+		BB45C5692D4A785C00B3705A /* DailyLimitExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB45C5682D4A785C00B3705A /* DailyLimitExplanationView.swift */; };
+		BB45C56B2D4A7C4000B3705A /* FreeLimitExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB45C56A2D4A7C4000B3705A /* FreeLimitExplanationView.swift */; };
 		BB4E6BF62D22E0DB002B5CBA /* FlowTaleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4E6BF52D22E0DB002B5CBA /* FlowTaleColor.swift */; };
 		BB4E6BF82D246AEF002B5CBA /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4E6BF72D246AEF002B5CBA /* LoadingState.swift */; };
 		BB4E6BFA2D246EC0002B5CBA /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4E6BF92D246EC0002B5CBA /* LoadingView.swift */; };
@@ -152,6 +154,8 @@
 		BB1994D02CE9050000D61E54 /* AudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioState.swift; sourceTree = "<group>"; };
 		BB1994D22CE9051700D61E54 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		BB4015BF2CF756FD008ACE9C /* StoryPrompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPrompts.swift; sourceTree = "<group>"; };
+		BB45C5682D4A785C00B3705A /* DailyLimitExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLimitExplanationView.swift; sourceTree = "<group>"; };
+		BB45C56A2D4A7C4000B3705A /* FreeLimitExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeLimitExplanationView.swift; sourceTree = "<group>"; };
 		BB4E6BF52D22E0DB002B5CBA /* FlowTaleColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleColor.swift; sourceTree = "<group>"; };
 		BB4E6BF72D246AEF002B5CBA /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		BB4E6BF92D246EC0002B5CBA /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -515,6 +519,8 @@
 				BBAE07DA2D14BE0B00DA95CD /* SystemImageView.swift */,
 				BBF618872D42F7C300CA3229 /* VoiceSettingsView.swift */,
 				BBF618892D42F84200CA3229 /* SpeechSpeedSettingsView.swift */,
+				BB45C5682D4A785C00B3705A /* DailyLimitExplanationView.swift */,
+				BB45C56A2D4A7C4000B3705A /* FreeLimitExplanationView.swift */,
 				BB4EDB232C91902100699E7D /* SettingsView.swift */,
 				BBE16F212CC2769C00A7EF1F /* StoryListView.swift */,
 				BB7B6D9B2D1F30BC0030344A /* SnackBar.swift */,
@@ -814,6 +820,7 @@
 				BBE636BF2CC98B2B00873E68 /* WordTimeStampData.swift in Sources */,
 				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FlowTaleDataStore.swift in Sources */,
+				BB45C5692D4A785C00B3705A /* DailyLimitExplanationView.swift in Sources */,
 				BB7B6D9A2D1EEA3D0030344A /* StudyState.swift in Sources */,
 				BBE990C12D29C59C00FAD3FB /* MusicType.swift in Sources */,
 				BBE636C72CCC0E1200873E68 /* EnglishSentenceView.swift in Sources */,
@@ -834,6 +841,7 @@
 				BB7B6D962D1DF0990030344A /* StudyView.swift in Sources */,
 				BB7B6DA02D1F316E0030344A /* SnackBarType.swift in Sources */,
 				BBAE07CF2D0C768000DA95CD /* AnyKey.swift in Sources */,
+				BB45C56B2D4A7C4000B3705A /* FreeLimitExplanationView.swift in Sources */,
 				BB4EDB102C90CA4900699E7D /* FlowTaleSubscriber.swift in Sources */,
 				BBE636CD2CCC0F8500873E68 /* ReaderView.swift in Sources */,
 				BB1994D32CE9051700D61E54 /* ViewState.swift in Sources */,

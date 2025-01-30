@@ -18,6 +18,7 @@ enum FlowTaleAction {
 
     case beginContinueStory(Story)
 
+    case showFreeLimitExplanationScreen(isShowing: Bool)
     case showDailyLimitExplanationScreen(isShowing: Bool)
 
     case translateStory(story: Story, storyString: String)
@@ -156,6 +157,10 @@ enum FlowTaleAction {
     case updateStorySetting(StorySetting)
     case updateIsShowingCustomPromptAlert(Bool)
     case selectTab(ContentTab, shouldPlaySound: Bool)
+
+    case checkFreeTrialLimit
+    case hasReachedFreeTrialLimit
+    case hasReachedDailyLimit
 }
 
 enum SubscriptionSheetType {

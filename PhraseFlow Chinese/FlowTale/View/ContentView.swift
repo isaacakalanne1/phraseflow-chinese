@@ -74,6 +74,12 @@ struct ContentView: View {
             store.dispatch(.showDailyLimitExplanationScreen(isShowing: newValue))
         }
 
+        let isShowingFreeLimitExplanationScreen: Binding<Bool> = .init {
+            store.state.viewState.isShowingFreeLimitExplanation
+        } set: { newValue in
+            store.dispatch(.showFreeLimitExplanationScreen(isShowing: newValue))
+        }
+
         switch store.state.viewState.contentTab {
         case .reader:
             if store.state.viewState.readerDisplayType == .loading {
@@ -85,7 +91,7 @@ struct ContentView: View {
                             .navigationDestination(
                                 isPresented: isShowingDailyLimitExplanationScreen
                             ) {
-                                Text("I'm here!")
+                                DailyLimitExplanationView()
                             }
                     }
                 } else {
@@ -107,7 +113,7 @@ struct ContentView: View {
                     .navigationDestination(
                         isPresented: isShowingDailyLimitExplanationScreen
                     ) {
-                        Text("I'm here!")
+                        DailyLimitExplanationView()
                     }
             }
 
@@ -117,7 +123,7 @@ struct ContentView: View {
                     .navigationDestination(
                         isPresented: isShowingDailyLimitExplanationScreen
                     ) {
-                        Text("I'm here!")
+                        DailyLimitExplanationView()
                     }
             }
 

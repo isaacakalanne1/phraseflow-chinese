@@ -293,6 +293,12 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.settingsState.shouldPlaySound = shouldPlaySound
     case .showDailyLimitExplanationScreen(let isShowing):
         newState.viewState.isShowingDailyLimitExplanation = isShowing
+    case .showFreeLimitExplanationScreen(let isShowing):
+        newState.viewState.isShowingFreeLimitExplanation = isShowing
+    case .hasReachedFreeTrialLimit:
+        newState.subscriptionState.hasReachedFreeTrialLimit = true
+    case .hasReachedDailyLimit:
+        newState.subscriptionState.hasReachedDailyLimit = true
     case .saveStoryAndSettings,
             .failedToSaveStory,
             .loadStories,
@@ -328,7 +334,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .loadChapters,
             .failedToLoadChapters,
             .failedToPrepareStudyWord,
-            .continueStory:
+            .continueStory,
+            .checkFreeTrialLimit:
         break
     }
 

@@ -25,6 +25,17 @@ struct SubscriptionView: View {
                     .font(.subheadline)
                     .bold()
                     .foregroundColor(FlowTaleColor.primary)
+
+                Button {
+                    store.dispatch(.showFreeLimitExplanationScreen(isShowing: true))
+                } label: {
+                    Text("Why is there a free trial limit?") // TODO: Localize
+                        .multilineTextAlignment(.center)
+                        .font(.subheadline)
+                        .underline()
+                        .foregroundColor(FlowTaleColor.primary)
+                }
+
             }
 
 
