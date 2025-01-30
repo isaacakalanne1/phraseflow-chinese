@@ -38,10 +38,16 @@ struct SubscriptionView: View {
             }
 
             ForEach(store.state.subscriptionState.products?.sorted(by: { $0.price > $1.price }) ?? []) { product in
-                SubscriptionOption(title: product.displayName,
-                                   detail: LocalizedString.pricePerMonth(product.displayPrice),
-                                   product: product,
-                                   action: {
+                let chapterLimitString: String
+                if let chapterLimit = SubscriptionLevel(id: product.id)?.chapterLimitPerDay {
+                    chapterLimitString = "\(chapterLimit) chapters per day"
+                } else {
+                    chapterLimitString = product.displayName
+                }
+                return SubscriptionOption(title: chapterLimitString,
+                                          detail: LocalizedString.pricePerMonth(product.displayPrice),
+                                          product: product,
+                                          action: {
                     Task {
                         store.dispatch(.purchaseSubscription(product))
                     }
@@ -88,7 +94,6 @@ struct SubscriptionView: View {
                         .foregroundColor(FlowTaleColor.primary)
                 }
             }
-
 
             if store.state.subscriptionState.isSubscribed {
                 Text(LocalizedString.manageSubscriptionsInstructions)
