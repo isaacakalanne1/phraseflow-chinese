@@ -71,6 +71,24 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .failedToContinueStory(story: story)
         }
 
+    case .summarizeStory(let story):
+        do {
+            let summaryString = try await environment.summarizeStory(story: story)
+            return .onSummarizedStory(summary: summaryString, story)
+        } catch {
+            // Some other error from generateStory
+            return .failedToContinueStory(story: story)
+        }
+
+    case .onSummarizedStory(_, let story):
+        if let chapter = story.chapters[safe: story.currentChapterIndex] {
+            return .synthesizeAudio(chapter,
+                                    story: story,
+                                    voice: state.settingsState.voice,
+                                    isForced: true)
+        }
+        return .saveStoryAndSettings(story)
+
     case .beginContinueStory(let story):
         do {
             let storyString = try await environment.generateStory(story: story)
@@ -400,7 +418,9 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         }
     case .onGeneratedImage(let data, var story):
         story.imageData = data
-        if let chapter = story.chapters[safe: story.currentChapterIndex] {
+        if story.chapters.count >= 20 {
+            return .summarizeStory(story: story)
+        } else if let chapter = story.chapters[safe: story.currentChapterIndex] {
             return .synthesizeAudio(chapter,
                                     story: story,
                                     voice: state.settingsState.voice,
@@ -489,7 +509,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .failedToPrepareStudyWord,
             .showDailyLimitExplanationScreen,
             .hasReachedFreeTrialLimit,
-            .hasReachedDailyLimit:
+            .hasReachedDailyLimit,
+            .showFreeLimitExplanationScreen:
         return nil
     }
 }

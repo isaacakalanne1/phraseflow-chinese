@@ -28,6 +28,7 @@ struct SubscriptionView: View {
 
                 Button {
                     store.dispatch(.showFreeLimitExplanationScreen(isShowing: true))
+                    store.dispatch(.setSubscriptionSheetShowing(false, .manualOpen))
                 } label: {
                     Text("Why is there a free trial limit?") // TODO: Localize
                         .multilineTextAlignment(.center)
@@ -40,7 +41,7 @@ struct SubscriptionView: View {
             ForEach(store.state.subscriptionState.products?.sorted(by: { $0.price > $1.price }) ?? []) { product in
                 let chapterLimitString: String
                 if let chapterLimit = SubscriptionLevel(id: product.id)?.chapterLimitPerDay {
-                    chapterLimitString = "\(chapterLimit) chapters per day"
+                    chapterLimitString = "\(chapterLimit) chapters per day" // TODO: Localize
                 } else {
                     chapterLimitString = product.displayName
                 }

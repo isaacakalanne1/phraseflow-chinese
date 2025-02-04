@@ -93,6 +93,11 @@ struct ContentView: View {
                             ) {
                                 DailyLimitExplanationView()
                             }
+                            .navigationDestination(
+                                isPresented: isShowingFreeLimitExplanationScreen
+                            ) {
+                                FreeLimitExplanationView()
+                            }
                     }
                 } else {
                     ProgressView()
@@ -140,6 +145,11 @@ struct ContentView: View {
         case .subscribe:
             NavigationStack {
                 SubscriptionView()
+                    .navigationDestination(
+                        isPresented: isShowingFreeLimitExplanationScreen
+                    ) {
+                        FreeLimitExplanationView()
+                    }
             }
 
         case .settings:

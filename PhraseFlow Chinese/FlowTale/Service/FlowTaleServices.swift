@@ -173,6 +173,7 @@ struct CategoryResult: Identifiable {
 
 protocol FlowTaleServicesProtocol {
     func generateStory(story: Story) async throws -> String
+    func summarizeStory(story: Story) async throws -> String
     func translateStory(story: Story,
                         storyString: String,
                         deviceLanguage: Language?) async throws -> Story
@@ -418,6 +419,26 @@ Write the definition in \(deviceLanguage.displayName).
         for chapter in story.chapters {
             messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
             messages.append(["role": "user", "content": "Write an incredible next chapter of the novel in English with complex, three-dimensional characters. \(story.difficulty.vocabularyPrompt)"])
+        }
+        requestBody["messages"] = messages
+
+        return try await makeRequest(type: model, requestBody: requestBody)
+    }
+
+    func summarizeStory(story: Story) async throws -> String {
+        let model: APIRequestType = .openRouter(.metaLlama)
+//        let model: APIRequestType = .openAI
+        var requestBody: [String: Any] = [
+            "model": model.modelName,
+        ]
+
+        var messages: [[String: String]] = [
+            ["role": "system", "content": "A story will be provided below, which you will write a summary of."]
+        ]
+
+        for chapter in story.chapters {
+            messages.append(["role": "user", "content": chapter.title + "\n" + chapter.passage])
+            messages.append(["role": "user", "content": "Write a summary of the following story in English. The summary should be around 10 sentences."])
         }
         requestBody["messages"] = messages
 

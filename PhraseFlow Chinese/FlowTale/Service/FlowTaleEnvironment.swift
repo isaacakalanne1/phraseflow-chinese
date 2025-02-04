@@ -16,6 +16,7 @@ protocol FlowTaleEnvironmentProtocol {
                           language: Language) async throws -> ChapterAudio
     func getProducts() async throws -> [Product]
     func generateStory(story: Story) async throws -> String
+    func summarizeStory(story: Story) async throws -> String
     func translateStory(story: Story, storyString: String, deviceLanguage: Language?) async throws -> Story
     func loadDefinitions() throws -> [Definition]
     func saveDefinitions(_ definitions: [Definition]) throws
@@ -75,6 +76,10 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
 
     func generateStory(story: Story) async throws -> String {
         try await service.generateStory(story: story)
+    }
+
+    func summarizeStory(story: Story) async throws -> String {
+        try await service.summarizeStory(story: story)
     }
 
     func translateStory(story: Story, storyString: String, deviceLanguage: Language?) async throws -> Story {

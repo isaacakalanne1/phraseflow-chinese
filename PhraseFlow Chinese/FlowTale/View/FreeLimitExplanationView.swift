@@ -18,8 +18,8 @@ struct FreeLimitExplanationView: View {
                     Text("What happened?")
                         .font(.title2)
                         .fontWeight(.medium)
-                    Text("You have reached your free trial limit for creating chapters.")
-                        .font(.footnote)
+                    Text("• You have reached your free trial limit for creating chapters.")
+                        .font(.body)
                         .fontWeight(.light)
                     Divider()
                 }
@@ -27,8 +27,8 @@ struct FreeLimitExplanationView: View {
                 Text("Why is there a free trial limit?")
                     .font(.title2)
                     .fontWeight(.medium)
-                Text("The text to speech AI is really expensive.\nCreating the stories themselves is actually relatively cheap. However, the text to speech AI costs around 5-10p per chapter.\nAs a result, creating just 4 chapters costs around 20-80p.\nThis doesn't sound like a big deal, but if just 50 users joined the app every day, this would cost us around $200-$600 every month.\nApple sends us subscription payments after around 45 days or so, and so we have to make sure we can afford the costs until the subscription payments come through.\nWe've searched far and wide, but there are no cheaper alternatives for the text to speech AI that don't suck.")
-                    .font(.footnote)
+                Text("• The text to speech AI is really expensive.\n• Creating the stories themselves is actually relatively cheap. However, the text to speech AI costs around 5-10p per chapter.\n• As a result, creating just 4 chapters costs around 20-80p.\n• This doesn't sound like a big deal, but if just 50 users joined the app every day, this would cost us around $200-$600 every month.\n• Apple sends us subscription payments after around 45 days or so, and so we have to make sure we can afford the costs until the subscription payments come through.\n• We've searched far and wide, but there are no cheaper alternatives for the text to speech AI that don't suck.")
+                    .font(.body)
                     .fontWeight(.light)
 
                 Divider()
@@ -71,6 +71,7 @@ struct FreeLimitExplanationView: View {
 //                    }
 //                }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
 
             PrimaryButton(title: LocalizedString.okayButton) {
                 dismiss()

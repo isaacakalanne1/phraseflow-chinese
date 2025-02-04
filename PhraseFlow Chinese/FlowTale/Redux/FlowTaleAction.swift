@@ -16,6 +16,11 @@ enum FlowTaleAction {
     case continueStory(story: Story)
     case failedToContinueStory(story: Story)
 
+    case summarizeStory(story: Story)
+    case failedToSummarizeStory(story: Story)
+    
+    case onSummarizedStory(summary: String, Story)
+
     case beginContinueStory(Story)
 
     case showFreeLimitExplanationScreen(isShowing: Bool)

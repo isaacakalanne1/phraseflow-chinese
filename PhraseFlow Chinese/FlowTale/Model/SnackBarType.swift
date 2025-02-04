@@ -59,9 +59,10 @@ enum SnackBarType {
                 .didNotPassModeration,
                 .couldNotModerateText,
                 .welcomeBack,
-                .deletedCustomStory,
-                .dailyChapterLimitReached:
+                .deletedCustomStory:
             4
+        case .dailyChapterLimitReached:
+            6
         }
     }
 
