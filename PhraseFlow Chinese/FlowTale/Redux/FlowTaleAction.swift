@@ -19,7 +19,7 @@ enum FlowTaleAction {
     case summarizeStory(story: Story)
     case failedToSummarizeStory(story: Story)
     
-    case onSummarizedStory(summary: String, Story)
+    case onSummarizedStory(Story)
 
     case beginContinueStory(Story)
 
@@ -144,6 +144,8 @@ enum FlowTaleAction {
     case onGeneratedImage(Data, Story)
     case failedToGenerateImage(Story)
     case updateStudiedWord(Definition)
+
+    case onDailyChapterLimitReached(nextAvailable: String)
 
     case playSound(AppSound)
     case playMusic(MusicType)

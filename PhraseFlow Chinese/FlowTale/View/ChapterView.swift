@@ -64,21 +64,25 @@ struct ChapterView: View {
                 .frame(maxWidth: .infinity, alignment: story.language.alignment)
             }
 
-            Button(LocalizedString.nextChapter) {
-                let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
-                if doesNextChapterExist {
-                    store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
-                    store.dispatch(.playSound(.goToNextChapter))
-                    store.dispatch(.goToNextChapter)
-                } else {
-                    store.dispatch(.playSound(.createNextChapter))
-                    store.dispatch(.continueStory(story: story))
+            if story.chapters.count < 20 {
+                Button(LocalizedString.nextChapter) {
+                    let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
+                    if doesNextChapterExist {
+                        store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
+                        store.dispatch(.playSound(.goToNextChapter))
+                        store.dispatch(.goToNextChapter)
+                    } else {
+                        store.dispatch(.playSound(.createNextChapter))
+                        store.dispatch(.continueStory(story: story))
+                    }
                 }
+                .padding()
+                .background(FlowTaleColor.accent)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+            } else {
+                // TODO: Create sequel button
             }
-            .padding()
-            .background(FlowTaleColor.accent)
-            .foregroundColor(.white)
-            .cornerRadius(10)
         }
         // Give this scroll content an ID if you need to reset position later
         .id(store.state.viewState.chapterViewId)

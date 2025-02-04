@@ -37,4 +37,5 @@ struct SubscriptionState {
 
     var hasReachedFreeTrialLimit = false
     var hasReachedDailyLimit = false
+    var nextAvailableDescription = ""
 }

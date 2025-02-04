@@ -65,22 +65,24 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .setSubscriptionSheetShowing(true, .freeLimitReached)
         } catch FlowTaleDataStoreError.chapterCreationLimitReached(let nextAvailable) {
             // If the subscribed user hit the daily limit
-            return .showSnackBar(.dailyChapterLimitReached(nextAvailable: nextAvailable)) // TODO: Create snackbar for daily chapter limit reached
+            return .onDailyChapterLimitReached(nextAvailable: nextAvailable)
         } catch {
             // Some other error from generateStory
             return .failedToContinueStory(story: story)
         }
 
-    case .summarizeStory(let story):
+    case .onDailyChapterLimitReached(let nextAvailable):
+        return .showSnackBar(.dailyChapterLimitReached(nextAvailable: nextAvailable))
+    case .summarizeStory(var story):
         do {
-            let summaryString = try await environment.summarizeStory(story: story)
-            return .onSummarizedStory(summary: summaryString, story)
+            story.totalSummary = try await environment.summarizeStory(story: story)
+            return .onSummarizedStory(story)
         } catch {
             // Some other error from generateStory
             return .failedToContinueStory(story: story)
         }
 
-    case .onSummarizedStory(_, let story):
+    case .onSummarizedStory(let story):
         if let chapter = story.chapters[safe: story.currentChapterIndex] {
             return .synthesizeAudio(chapter,
                                     story: story,

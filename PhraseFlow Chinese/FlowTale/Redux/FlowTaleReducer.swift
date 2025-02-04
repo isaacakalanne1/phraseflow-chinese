@@ -299,6 +299,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.subscriptionState.hasReachedFreeTrialLimit = true
     case .hasReachedDailyLimit:
         newState.subscriptionState.hasReachedDailyLimit = true
+    case .onDailyChapterLimitReached(let nextAvailable):
+        newState.subscriptionState.nextAvailableDescription = nextAvailable
     case .saveStoryAndSettings,
             .failedToSaveStory,
             .loadStories,
@@ -335,7 +337,10 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .failedToLoadChapters,
             .failedToPrepareStudyWord,
             .continueStory,
-            .checkFreeTrialLimit:
+            .checkFreeTrialLimit,
+            .summarizeStory,
+            .onSummarizedStory,
+            .failedToSummarizeStory:
         break
     }
 

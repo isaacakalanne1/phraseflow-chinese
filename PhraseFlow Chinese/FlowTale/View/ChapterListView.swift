@@ -73,12 +73,16 @@ struct ChapterListView: View {
                 }
                 .frame(maxHeight: .infinity)
 
-                PrimaryButton(title: LocalizedString.newChapter) {
-                    store.dispatch(.selectTab(.reader, shouldPlaySound: false))
-                    store.dispatch(.continueStory(story: story))
-                    store.dispatch(.playSound(.createStory))
+                if story.chapters.count < 20 {
+                    PrimaryButton(title: LocalizedString.newChapter) {
+                        store.dispatch(.selectTab(.reader, shouldPlaySound: false))
+                        store.dispatch(.continueStory(story: story))
+                        store.dispatch(.playSound(.createStory))
+                    }
+                    .padding(.bottom)
+                } else {
+                    // TODO: Create sequel button
                 }
-                .padding(.bottom)
             }
             .navigationTitle(LocalizedString.chooseChapter)
             .background(FlowTaleColor.background)
