@@ -7,10 +7,10 @@
 
 import Foundation
 
-enum GenerateChapterType {
+enum CreateChapterType {
     case newStory
     case existingStory(Story)
-    case sequel(Story)
+    case sequel(Story, newId: UUID)
 }
 
 struct WordDefinition: Codable, Equatable, Hashable {
@@ -406,7 +406,6 @@ Write the definition in \(deviceLanguage.displayName).
 
     func generateStory(story: Story) async throws -> String {
         let model: APIRequestType = .openRouter(.metaLlama)
-//        let model: APIRequestType = .openAI
         var requestBody: [String: Any] = [
             "model": model.modelName,
         ]
@@ -414,22 +413,12 @@ Write the definition in \(deviceLanguage.displayName).
         var messages: [[String: String]] = []
 
         var initialPrompt = "Write an incredible first chapter of a novel in English set in \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"
-        initialPrompt.append(" This is a sequel to a story. This is a summary of the previous story:\n\(story.totalSummary)")
+        if !story.prequelSummaries.isEmpty { // TODO: Update this to use totalsummary for previous stories
+            initialPrompt.append("\nThis is a sequel to a story. This is a summary of the previous story:\n\(story.prequelSummaries.reduce("", { $0 + "\n" + $1 }))")
+        }
         for chapter in story.chapters {
             messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
             messages.append(["role": "user", "content": "Write an incredible next chapter of the novel in English with complex, three-dimensional characters. \(story.difficulty.vocabularyPrompt)"])
-        }
-
-        if !story.totalSummary.isEmpty {
-
-            messages.append(["role": "user", "content": initialPrompt])
-        } else {
-            messages.append(["role": "user", "content": initialPrompt])
-
-            for chapter in story.chapters {
-                messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
-                messages.append(["role": "user", "content": "Write an incredible next chapter of the novel in English with complex, three-dimensional characters. \(story.difficulty.vocabularyPrompt)"])
-            }
         }
 
         requestBody["messages"] = messages
@@ -439,31 +428,18 @@ Write the definition in \(deviceLanguage.displayName).
 
     func generateSequel(story: Story, summary: String) async throws -> String {
         let model: APIRequestType = .openRouter(.metaLlama)
-//        let model: APIRequestType = .openAI
         var requestBody: [String: Any] = [
             "model": model.modelName,
         ]
 
         var messages: [[String: String]] = []
 
-        var initialPrompt = "Write an incredible first chapter of a novel in English set in \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"
-        initialPrompt.append(" This is a sequel to a story. This is a summary of the previous story:\n\(story.totalSummary)")
-        for chapter in story.chapters {
-            messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
-            messages.append(["role": "user", "content": "Write an incredible next chapter of the novel in English with complex, three-dimensional characters. \(story.difficulty.vocabularyPrompt)"])
+        var initialPrompt = "Write an incredible first chapter of a sequel novel in English set in \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"
+        if !story.prequelSummaries.isEmpty { // TODO: Update this to use totalsummary for previous stories
+            initialPrompt.append("\nThis is a sequel to a story. This is a summary of the previous story:\n\(story.prequelSummaries.reduce("", { $0 + "\n" + $1 }))")
         }
 
-        if !story.totalSummary.isEmpty {
-
-            messages.append(["role": "user", "content": initialPrompt])
-        } else {
-            messages.append(["role": "user", "content": initialPrompt])
-
-            for chapter in story.chapters {
-                messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
-                messages.append(["role": "user", "content": "Write an incredible next chapter of the novel in English with complex, three-dimensional characters. \(story.difficulty.vocabularyPrompt)"])
-            }
-        }
+        messages.append(["role": "user", "content": initialPrompt])
 
         requestBody["messages"] = messages
 
@@ -483,7 +459,7 @@ Write the definition in \(deviceLanguage.displayName).
         for chapter in story.chapters {
             messages.append(["role": "user", "content": chapter.title + "\n" + chapter.passage])
         }
-        messages.append(["role": "user", "content": "Write a summary of the following story in English. The summary should be around 10 sentences."])
+        messages.append(["role": "user", "content": "Write a summary of the following story in English. The summary should be around 10 sentences.\n\(story.chapters.reduce("", { $0 + $1.title + "\n" + $1.passage + "\n" }))"])
         requestBody["messages"] = messages
 
         return try await makeRequest(type: model, requestBody: requestBody)

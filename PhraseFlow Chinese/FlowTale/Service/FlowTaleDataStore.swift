@@ -502,7 +502,11 @@ extension FlowTaleDataStore {
     /// If user is free (no subscription), total usage is limited to 4 chapters total.
     private func trackFreeUserCreation() throws {
         let currentCount = loadFreeUserChapterCount()
-        let maxFree = 4
+        #if DEBUG
+        let maxFree: Int = 999999999999999999
+        #else
+        let maxFree: Int = 3
+        #endif
         if currentCount >= maxFree {
             throw FlowTaleDataStoreError.freeUserChapterLimitReached
         }

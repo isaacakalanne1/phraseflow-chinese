@@ -13,7 +13,7 @@ enum SnackBarType {
     case chapterReady
     case deletedCustomStory
     case subscribed
-    case failedToWriteChapter(Story)
+    case failedToWriteChapter
     case moderatingText
     case passedModeration
     case couldNotModerateText
@@ -29,7 +29,7 @@ enum SnackBarType {
         case .chapterReady:
             LocalizedString.chapterReady
         case .failedToWriteChapter:
-            LocalizedString.failedToWriteChapter
+            "Failed to write chapter" // TODO: Localize
         case .couldNotModerateText:
             LocalizedString.failedModerateText
         case .subscribed:
@@ -43,7 +43,7 @@ enum SnackBarType {
         case .deletedCustomStory:
             LocalizedString.deletedCustomStory
         case .dailyChapterLimitReached(let nextAvailable):
-            "You can create more chapters in \(nextAvailable). Tap here to learn why."
+            "You can create more chapters in \(nextAvailable). Tap here to learn why." // TODO: Localize
         }
     }
 
@@ -60,9 +60,9 @@ enum SnackBarType {
                 .couldNotModerateText,
                 .welcomeBack,
                 .deletedCustomStory:
-            4
+            2.5
         case .dailyChapterLimitReached:
-            6
+            4
         }
     }
 
@@ -81,10 +81,9 @@ enum SnackBarType {
             emoji = "✅"
         case .welcomeBack:
             emoji = "🔥"
-        case .failedToWriteChapter:
-            emoji = "🔁"
         case .didNotPassModeration,
-                .couldNotModerateText:
+                .couldNotModerateText,
+                .failedToWriteChapter:
             emoji = "⚠️"
         }
         return Text(emoji)
@@ -100,11 +99,9 @@ enum SnackBarType {
                 .passedModeration,
                 .didNotPassModeration,
                 .welcomeBack,
-                .deletedCustomStory:
+                .deletedCustomStory,
+                .failedToWriteChapter:
             break
-        case .failedToWriteChapter(let story):
-            store.dispatch(.selectTab(.reader, shouldPlaySound: false))
-            store.dispatch(.continueStory(story: story))
         case .couldNotModerateText:
             store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))
         case .dailyChapterLimitReached:

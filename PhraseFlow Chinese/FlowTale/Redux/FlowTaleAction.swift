@@ -13,24 +13,20 @@ enum FlowTaleAction {
     case updateAutoScrollEnabled(isEnabled: Bool)
     case updateSentenceIndex(Int)
 
-    case continueStory(story: Story)
-    case failedToContinueStory(story: Story)
+    case createChapter(CreateChapterType)
+    case failedToCreateChapter
 
     case summarizeStory(story: Story)
-    case failedToSummarizeStory(story: Story)
+    case failedToSummarizeStory
     
     case onSummarizedStory(Story)
-
-    case beginContinueStory(Story)
-
-    case createSequel(prequelSummary: String)
 
     case showFreeLimitExplanationScreen(isShowing: Bool)
     case showDailyLimitExplanationScreen(isShowing: Bool)
 
     case translateStory(story: Story, storyString: String)
     case onTranslatedStory(story: Story)
-    case failedToTranslateStory(story: Story, storyString: String)
+    case failedToTranslateStory
 
     case didNotPassModeration
     case dismissFailedModerationAlert
@@ -144,7 +140,7 @@ enum FlowTaleAction {
 
     case generateImage(passage: String, Story)
     case onGeneratedImage(Data, Story)
-    case failedToGenerateImage(Story)
+    case failedToGenerateImage
     case updateStudiedWord(Definition)
 
     case onDailyChapterLimitReached(nextAvailable: String)

@@ -20,10 +20,12 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.loadingState = .translating
     case .generateImage:
         newState.viewState.loadingState = .generatingImage
-    case .onLoadedStories(let stories, _):
+    case .onLoadedStories(let stories, let isAppLaunch):
         newState.storyState.savedStories = stories
-        newState.viewState.readerDisplayType = .normal
-        
+        if isAppLaunch {
+            newState.viewState.readerDisplayType = .normal
+        }
+
         if newState.storyState.currentStory == nil,
            let currentStory = stories.first {
             newState.storyState.currentStory = currentStory
@@ -153,13 +155,19 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         if let language = newState.storyState.currentStory?.language {
             newState.settingsState.language = language
         }
-    case .beginContinueStory:
-        if let voice = newState.settingsState.language.voices.first {
-            newState.settingsState.voice = voice
+    case .createChapter(let type):
+        switch type {
+        case .newStory:
+            break
+        case .existingStory(let story),
+                .sequel(let story, _):
+            if let voice = story.chapters.last?.audioVoice {
+                newState.settingsState.voice = voice
+            }
         }
         newState.viewState.readerDisplayType = .loading
         newState.viewState.loadingState = .writing
-    case .failedToContinueStory,
+    case .failedToCreateChapter,
             .failedToTranslateStory,
             .failedToGenerateImage:
         newState.viewState.readerDisplayType = .normal
@@ -336,14 +344,11 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .loadChapters,
             .failedToLoadChapters,
             .failedToPrepareStudyWord,
-            .continueStory,
             .checkFreeTrialLimit,
             .summarizeStory,
             .onSummarizedStory,
             .failedToSummarizeStory:
         break
-    case .(prequelSummary: let prequelSummary):
-        <#code#>
     }
 
     return newState

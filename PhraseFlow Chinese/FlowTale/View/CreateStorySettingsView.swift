@@ -166,7 +166,7 @@ struct CreateStoryButton: View {
         Button {
             store.dispatch(.playSound(.createStory))
             store.dispatch(.selectTab(.reader, shouldPlaySound: false))
-            store.dispatch(.continueStory(story: store.state.createNewStory()))
+            store.dispatch(.createChapter(.newStory))
         } label: {
             HStack(spacing: 5) {
                 DifficultyView(difficulty: store.state.settingsState.difficulty, color: FlowTaleColor.primary)

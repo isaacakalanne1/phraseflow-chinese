@@ -64,7 +64,7 @@ struct ChapterView: View {
                 .frame(maxWidth: .infinity, alignment: story.language.alignment)
             }
 
-            if story.chapters.count < 20 {
+            if story.totalSummary.isEmpty {
                 Button(LocalizedString.nextChapter) {
                     let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
                     if doesNextChapterExist {
@@ -73,7 +73,7 @@ struct ChapterView: View {
                         store.dispatch(.goToNextChapter)
                     } else {
                         store.dispatch(.playSound(.createNextChapter))
-                        store.dispatch(.continueStory(story: story))
+                        store.dispatch(.createChapter(.existingStory(story)))
                     }
                 }
                 .padding()
@@ -81,17 +81,28 @@ struct ChapterView: View {
                 .foregroundColor(.white)
                 .cornerRadius(10)
             } else {
-                // TODO: Create sequel button
+                Button("Create Sequel") { // TODO: Localize
+                    store.dispatch(.playSound(.createNextChapter))
+                    let sequelId = UUID()
+                    var prequelStory = story
+                    prequelStory.sequelId = sequelId
+                    prequelStory.id = UUID()
+                    store.dispatch(.createChapter(.sequel(story,
+                                                          newId: sequelId)))
+                    store.dispatch(.deleteStory(story))
+                    store.dispatch(.saveStoryAndSettings(prequelStory))
+                }
+                .padding()
+                .background(FlowTaleColor.accent)
+                .foregroundColor(.white)
+                .cornerRadius(10)
             }
         }
-        // Give this scroll content an ID if you need to reset position later
         .id(store.state.viewState.chapterViewId)
 
-        // 1) Add the simultaneousGesture on the ScrollView
         .simultaneousGesture(
             DragGesture()
                 .onChanged { _ in
-                    // As soon as the user drags, disable auto-scroll
                     store.dispatch(.updateAutoScrollEnabled(isEnabled: false))
                 }
         )
