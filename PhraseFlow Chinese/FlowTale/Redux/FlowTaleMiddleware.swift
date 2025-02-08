@@ -52,6 +52,16 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return nil
         }
 
+    case .createSequel(let summary):
+        do {
+            let storyString = try await environment.generateSequel(story: <#T##Story#>, summary: <#T##String#>)
+            return .translateStory(story: story, storyString: storyString)
+        } catch {
+            // Some other error from generateStory
+            return .failedToContinueStory(story: story)
+        }
+        return .continueStory(story: story)
+
     case .continueStory(let story):
         do {
             // 1) Enforce usage limit:

@@ -23,6 +23,8 @@ enum FlowTaleAction {
 
     case beginContinueStory(Story)
 
+    case createSequel(prequelSummary: String)
+
     case showFreeLimitExplanationScreen(isShowing: Bool)
     case showDailyLimitExplanationScreen(isShowing: Bool)
 

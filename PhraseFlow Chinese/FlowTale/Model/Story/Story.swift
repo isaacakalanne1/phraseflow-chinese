@@ -15,7 +15,8 @@ struct ChapterAudio: Codable, Equatable, Hashable {
 struct Story: Codable, Equatable, Hashable {
     let id: UUID
     var briefLatestStorySummary: String
-    var totalSummary = ""
+    var totalSummary: String?
+    var prequelIds: [UUID] = []
     let difficulty: Difficulty
     let language: Language
 
@@ -36,6 +37,7 @@ struct Story: Codable, Equatable, Hashable {
     }
 
     init(briefLatestStorySummary: String = "",
+         totalSummary: String? = nil,
          difficulty: Difficulty,
          language: Language,
          title: String = "",
@@ -48,6 +50,7 @@ struct Story: Codable, Equatable, Hashable {
          lastUpdated: Date = .now) {
         self.id = UUID()
         self.briefLatestStorySummary = briefLatestStorySummary
+        self.totalSummary = totalSummary
         self.difficulty = difficulty
         self.language = language
         self.title = title
@@ -65,7 +68,8 @@ struct Story: Codable, Equatable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id                       = try container.decode(UUID.self, forKey: .id)
         self.briefLatestStorySummary  = try container.decode(String.self, forKey: .briefLatestStorySummary)
-        self.totalSummary             = (try? container.decode(String.self, forKey: .totalSummary)) ?? ""
+        self.totalSummary             = try? container.decode(String?.self, forKey: .totalSummary)
+        self.prequelIds               = (try? container.decode([UUID].self, forKey: .prequelIds)) ?? []
         self.difficulty               = try container.decode(Difficulty.self, forKey: .difficulty)
         self.language                 = try container.decode(Language.self, forKey: .language)
         self.title                    = try container.decode(String.self, forKey: .title)

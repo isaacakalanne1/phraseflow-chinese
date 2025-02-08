@@ -22,13 +22,9 @@ struct DailyLimitExplanationView: View {
         VStack(spacing: 16) {
             VStack(alignment: .leading) { // TODO: Localize
                 Text(title)
-                    .lineLimit(0)
+                    .lineLimit(-1)
                     .font(.title)
                     .fontWeight(.semibold)
-
-                Text(store.state.settingsState.customPrompt)
-                    .font(.footnote)
-                    .fontWeight(.light)
 
                 Divider()
 

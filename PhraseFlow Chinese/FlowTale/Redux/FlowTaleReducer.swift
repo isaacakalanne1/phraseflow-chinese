@@ -342,6 +342,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .onSummarizedStory,
             .failedToSummarizeStory:
         break
+    case .(prequelSummary: let prequelSummary):
+        <#code#>
     }
 
     return newState

@@ -7,6 +7,12 @@
 
 import Foundation
 
+enum GenerateChapterType {
+    case newStory
+    case existingStory(Story)
+    case sequel(Story)
+}
+
 struct WordDefinition: Codable, Equatable, Hashable {
     let word: String
     let pronunciation: String
@@ -173,6 +179,7 @@ struct CategoryResult: Identifiable {
 
 protocol FlowTaleServicesProtocol {
     func generateStory(story: Story) async throws -> String
+    func generateSequel(story: Story, summary: String) async throws -> String
     func summarizeStory(story: Story) async throws -> String
     func translateStory(story: Story,
                         storyString: String,
@@ -195,14 +202,6 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
     private let baseURL = "https://queue.fal.run/fal-ai/flux"
     private let apiKey = ProcessInfo.processInfo.environment["FAL_KEY"] ?? "e1f58875-fe36-4a31-ad34-badb6bbd0409:4645ce9820c0b75b3cbe1b0d9c324306"
     private let session = URLSession.shared
-
-    func generateStory(story: Story) async throws -> String {
-        do {
-            return try await continueStory(story: story)
-        } catch {
-            throw FlowTaleServicesError.generalError
-        }
-    }
 
     func translateStory(story: Story,
                         storyString: String,
@@ -405,21 +404,67 @@ Write the definition in \(deviceLanguage.displayName).
         return try await makeRequest(type: .openAI, requestBody: requestBody)
     }
 
-    private func continueStory(story: Story) async throws -> String {
+    func generateStory(story: Story) async throws -> String {
         let model: APIRequestType = .openRouter(.metaLlama)
 //        let model: APIRequestType = .openAI
         var requestBody: [String: Any] = [
             "model": model.modelName,
         ]
 
-        var messages: [[String: String]] = [
-            ["role": "user", "content": "Write an incredible first chapter of a novel in English set in \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"]
-        ]
+        var messages: [[String: String]] = []
 
+        var initialPrompt = "Write an incredible first chapter of a novel in English set in \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"
+        initialPrompt.append(" This is a sequel to a story. This is a summary of the previous story:\n\(story.totalSummary)")
         for chapter in story.chapters {
             messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
             messages.append(["role": "user", "content": "Write an incredible next chapter of the novel in English with complex, three-dimensional characters. \(story.difficulty.vocabularyPrompt)"])
         }
+
+        if !story.totalSummary.isEmpty {
+
+            messages.append(["role": "user", "content": initialPrompt])
+        } else {
+            messages.append(["role": "user", "content": initialPrompt])
+
+            for chapter in story.chapters {
+                messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
+                messages.append(["role": "user", "content": "Write an incredible next chapter of the novel in English with complex, three-dimensional characters. \(story.difficulty.vocabularyPrompt)"])
+            }
+        }
+
+        requestBody["messages"] = messages
+
+        return try await makeRequest(type: model, requestBody: requestBody)
+    }
+
+    func generateSequel(story: Story, summary: String) async throws -> String {
+        let model: APIRequestType = .openRouter(.metaLlama)
+//        let model: APIRequestType = .openAI
+        var requestBody: [String: Any] = [
+            "model": model.modelName,
+        ]
+
+        var messages: [[String: String]] = []
+
+        var initialPrompt = "Write an incredible first chapter of a novel in English set in \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"
+        initialPrompt.append(" This is a sequel to a story. This is a summary of the previous story:\n\(story.totalSummary)")
+        for chapter in story.chapters {
+            messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
+            messages.append(["role": "user", "content": "Write an incredible next chapter of the novel in English with complex, three-dimensional characters. \(story.difficulty.vocabularyPrompt)"])
+        }
+
+        if !story.totalSummary.isEmpty {
+
+            messages.append(["role": "user", "content": initialPrompt])
+        } else {
+            messages.append(["role": "user", "content": initialPrompt])
+
+            for chapter in story.chapters {
+                messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
+                messages.append(["role": "user", "content": "Write an incredible next chapter of the novel in English with complex, three-dimensional characters. \(story.difficulty.vocabularyPrompt)"])
+            }
+        }
+
         requestBody["messages"] = messages
 
         return try await makeRequest(type: model, requestBody: requestBody)
@@ -427,7 +472,6 @@ Write the definition in \(deviceLanguage.displayName).
 
     func summarizeStory(story: Story) async throws -> String {
         let model: APIRequestType = .openRouter(.metaLlama)
-//        let model: APIRequestType = .openAI
         var requestBody: [String: Any] = [
             "model": model.modelName,
         ]
@@ -438,8 +482,8 @@ Write the definition in \(deviceLanguage.displayName).
 
         for chapter in story.chapters {
             messages.append(["role": "user", "content": chapter.title + "\n" + chapter.passage])
-            messages.append(["role": "user", "content": "Write a summary of the following story in English. The summary should be around 10 sentences."])
         }
+        messages.append(["role": "user", "content": "Write a summary of the following story in English. The summary should be around 10 sentences."])
         requestBody["messages"] = messages
 
         return try await makeRequest(type: model, requestBody: requestBody)
