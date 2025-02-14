@@ -71,7 +71,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
                 let storyString = try await environment.generateSequel(story: story, summary: story.totalSummary)
                 story.chapters = []
                 story.prequelIds.append(story.id)
-                story.prequelSummaries.append(story.totalSummary)
                 story.totalSummary = ""
                 story.id = newId
                 story.imageData = nil
@@ -426,9 +425,15 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         }
     case .onGeneratedImage(let data, var story):
         story.imageData = data
-        if story.chapters.count >= 20 {
-            return .summarizeStory(story: story)
-        } else if let chapter = story.chapters[safe: story.currentChapterIndex] {
+//        if story.chapters.count >= 20 {
+//            return .summarizeStory(story: story)
+//        } else if let chapter = story.chapters[safe: story.currentChapterIndex] {
+//            return .synthesizeAudio(chapter,
+//                                    story: story,
+//                                    voice: state.settingsState.voice,
+//                                    isForced: true)
+//        }
+        if let chapter = story.chapters[safe: story.currentChapterIndex] {
             return .synthesizeAudio(chapter,
                                     story: story,
                                     voice: state.settingsState.voice,

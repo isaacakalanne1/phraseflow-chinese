@@ -74,24 +74,24 @@ struct ChapterListView: View {
                 .frame(maxHeight: .infinity)
 
                 Group {
-                    if story.totalSummary.isEmpty {
+                    if story.chapters.count >= 20 {
                         PrimaryButton(title: LocalizedString.newChapter) {
                             store.dispatch(.selectTab(.reader, shouldPlaySound: false))
                             store.dispatch(.createChapter(.existingStory(story)))
                             store.dispatch(.playSound(.createStory))
                         }
                     } else {
-                        PrimaryButton(title: "Create Sequel") { // TODO: Localize
-                            store.dispatch(.selectTab(.reader, shouldPlaySound: false))
-                            let sequelId = UUID()
-                            var prequelStory = story
-                            prequelStory.id = UUID()
-                            prequelStory.sequelId = sequelId
-                            store.dispatch(.createChapter(.sequel(story, newId: sequelId)))
-                            store.dispatch(.deleteStory(story))
-                            store.dispatch(.saveStoryAndSettings(prequelStory))
-                            store.dispatch(.playSound(.createStory))
-                        }
+//                        PrimaryButton(title: "Create Sequel") { // TODO: Localize
+//                            store.dispatch(.selectTab(.reader, shouldPlaySound: false))
+//                            let sequelId = UUID()
+//                            var prequelStory = story
+//                            prequelStory.id = UUID()
+//                            prequelStory.sequelId = sequelId
+//                            store.dispatch(.createChapter(.sequel(story, newId: sequelId)))
+//                            store.dispatch(.deleteStory(story))
+//                            store.dispatch(.saveStoryAndSettings(prequelStory))
+//                            store.dispatch(.playSound(.createStory))
+//                        }
                     }
                 }
                 .padding(.bottom)

@@ -413,9 +413,9 @@ Write the definition in \(deviceLanguage.displayName).
         var messages: [[String: String]] = []
 
         var initialPrompt = "Write an incredible first chapter of a novel in English set in \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"
-        if !story.prequelSummaries.isEmpty { // TODO: Update this to use totalsummary for previous stories
-            initialPrompt.append("\nThis is a sequel to a story. This is a summary of the previous story:\n\(story.prequelSummaries.reduce("", { $0 + "\n" + $1 }))")
-        }
+//        if !story.prequelSummaries.isEmpty { // TODO: Update this to use totalsummary for previous stories
+//            initialPrompt.append("\nThis is a sequel to a story. This is a summary of the previous story:\n\(story.prequelSummaries.reduce("", { $0 + "\n" + $1 }))")
+//        }
         for chapter in story.chapters {
             messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
             messages.append(["role": "user", "content": "Write an incredible next chapter of the novel in English with complex, three-dimensional characters. \(story.difficulty.vocabularyPrompt)"])
