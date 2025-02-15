@@ -159,8 +159,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         switch type {
         case .newStory:
             break
-        case .existingStory(let story),
-                .sequel(let story, _):
+        case .existingStory(let story):
             if let voice = story.chapters.last?.audioVoice {
                 newState.settingsState.voice = voice
             }
@@ -344,10 +343,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .loadChapters,
             .failedToLoadChapters,
             .failedToPrepareStudyWord,
-            .checkFreeTrialLimit,
-            .summarizeStory,
-            .onSummarizedStory,
-            .failedToSummarizeStory:
+            .checkFreeTrialLimit:
         break
     }
 

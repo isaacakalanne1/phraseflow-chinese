@@ -15,9 +15,6 @@ struct ChapterAudio: Codable, Equatable, Hashable {
 struct Story: Codable, Equatable, Hashable {
     var id: UUID
     var briefLatestStorySummary: String
-    var totalSummary = ""
-    var prequelIds: [UUID] = []
-    var prequelSummaries: [String] = []
     let difficulty: Difficulty
     let language: Language
 
@@ -29,7 +26,6 @@ struct Story: Codable, Equatable, Hashable {
     var lastUpdated: Date
     var storyPrompt: String
     var imageData: Data?
-    var sequelId: UUID?
 
     var coverArt: UIImage? {
         if let data = imageData {
@@ -39,8 +35,6 @@ struct Story: Codable, Equatable, Hashable {
     }
 
     init(briefLatestStorySummary: String = "",
-         totalSummary: String = "",
-         sequelId: UUID? = nil,
          difficulty: Difficulty,
          language: Language,
          title: String = "",
@@ -53,8 +47,6 @@ struct Story: Codable, Equatable, Hashable {
          lastUpdated: Date = .now) {
         self.id = UUID()
         self.briefLatestStorySummary = briefLatestStorySummary
-        self.totalSummary = totalSummary
-        self.sequelId = sequelId
         self.difficulty = difficulty
         self.language = language
         self.title = title
@@ -72,9 +64,6 @@ struct Story: Codable, Equatable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id                       = try container.decode(UUID.self, forKey: .id)
         self.briefLatestStorySummary  = try container.decode(String.self, forKey: .briefLatestStorySummary)
-        self.totalSummary             = (try? container.decode(String.self, forKey: .totalSummary)) ?? ""
-        self.sequelId                 = try? container.decode(UUID?.self, forKey: .sequelId)
-        self.prequelIds               = (try? container.decode([UUID].self, forKey: .prequelIds)) ?? []
         self.difficulty               = try container.decode(Difficulty.self, forKey: .difficulty)
         self.language                 = try container.decode(Language.self, forKey: .language)
         self.title                    = try container.decode(String.self, forKey: .title)

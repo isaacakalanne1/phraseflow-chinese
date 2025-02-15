@@ -26,8 +26,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         if story.imageData == nil,
            let passage = story.chapters.first?.passage {
              return .generateImage(passage: passage, story)
-        } else if story.chapters.count >= 20 {
-            return .summarizeStory(story: story)
         } else if let chapter = story.chapters[safe: story.currentChapterIndex] {
             return .synthesizeAudio(chapter,
                                     story: story,
@@ -67,15 +65,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
                 let story = st
                 let storyString = try await environment.generateStory(story: story)
                 return .translateStory(story: story, storyString: storyString)
-            case .sequel(var story, let newId): // TODO: Add check that totalSummary is not empty, otherwise create summary
-                let storyString = try await environment.generateSequel(story: story, summary: story.totalSummary)
-                story.chapters = []
-                story.prequelIds.append(story.id)
-                story.totalSummary = ""
-                story.id = newId
-                story.imageData = nil
-
-                return .translateStory(story: story, storyString: storyString)
             }
         } catch FlowTaleDataStoreError.freeUserChapterLimitReached {
             return .setSubscriptionSheetShowing(true, .freeLimitReached)
@@ -87,27 +76,10 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
 
     case .onDailyChapterLimitReached(let nextAvailable):
         return .showSnackBar(.dailyChapterLimitReached(nextAvailable: nextAvailable))
-    case .summarizeStory(var story):
-        do {
-            story.totalSummary = try await environment.summarizeStory(story: story)
-            return .onSummarizedStory(story)
-        } catch {
-            return .failedToCreateChapter
-        }
-
-    case .onSummarizedStory(let story):
-        if let chapter = story.chapters[safe: story.currentChapterIndex] {
-            return .synthesizeAudio(chapter,
-                                    story: story,
-                                    voice: state.settingsState.voice,
-                                    isForced: true)
-        }
-        return .saveStoryAndSettings(story)
 
     case .failedToCreateChapter,
             .failedToTranslateStory,
-            .failedToGenerateImage,
-            .failedToSummarizeStory:
+            .failedToGenerateImage:
         return .showSnackBar(.failedToWriteChapter)
     case .showSnackBar(let type):
         state.appAudioState.audioPlayer.play()
@@ -425,14 +397,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         }
     case .onGeneratedImage(let data, var story):
         story.imageData = data
-//        if story.chapters.count >= 20 {
-//            return .summarizeStory(story: story)
-//        } else if let chapter = story.chapters[safe: story.currentChapterIndex] {
-//            return .synthesizeAudio(chapter,
-//                                    story: story,
-//                                    voice: state.settingsState.voice,
-//                                    isForced: true)
-//        }
         if let chapter = story.chapters[safe: story.currentChapterIndex] {
             return .synthesizeAudio(chapter,
                                     story: story,

@@ -16,11 +16,6 @@ enum FlowTaleAction {
     case createChapter(CreateChapterType)
     case failedToCreateChapter
 
-    case summarizeStory(story: Story)
-    case failedToSummarizeStory
-    
-    case onSummarizedStory(Story)
-
     case showFreeLimitExplanationScreen(isShowing: Bool)
     case showDailyLimitExplanationScreen(isShowing: Bool)
 
