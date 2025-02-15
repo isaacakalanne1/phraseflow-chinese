@@ -61,18 +61,18 @@ struct SettingsView: View {
                         .fontWeight(.light)
                     Toggle(LocalizedString.translation, isOn: showEnglish)
                         .fontWeight(.light)
-                    Toggle("Dark Mode", isOn: isDarkMode) // TODO: Localize
+                    Toggle(LocalizedString.settingsDarkMode, isOn: isDarkMode)
                         .fontWeight(.light)
                 } header: {
-                    Text("Appearance") // TODO: Localize
+                    Text(LocalizedString.settingsAppearance)
                 }
                 Section {
                     Toggle(LocalizedString.music, isOn: playMusic)
                         .fontWeight(.light)
-                    Toggle("Sounds", isOn: shouldPlayButtonSounds) // TODO: Localize
+                    Toggle(LocalizedString.settingsSounds, isOn: shouldPlayButtonSounds)
                         .fontWeight(.light)
                 } header: {
-                    Text("Sound") // TODO: Localize
+                    Text(LocalizedString.settingsSoundHeader)
                 }
             }
         }

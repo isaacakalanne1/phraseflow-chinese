@@ -14,7 +14,7 @@ struct VoiceOnboardingView: View {
             NavigationLink {
                 SpeechSpeedOnboardingView()
             } label: {
-                PrimaryButton(title: "Next")
+                PrimaryButton(title: LocalizedString.next)
             }
         }
         .background(FlowTaleColor.background)
@@ -48,7 +48,7 @@ struct VoiceMenu: View {
                     .listRowBackground(isSelectedVoice ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
                 }
             } header: {
-                Text("Which voice would you like to use?") // TODO: Localize
+                Text(LocalizedString.voiceMenuHeader)
             }
         }
         .navigationTitle(LocalizedString.voice)

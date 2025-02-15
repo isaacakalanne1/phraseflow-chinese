@@ -26,11 +26,11 @@ struct DefinitionView: View {
                             ScrollView(.vertical) {
                                 VStack(alignment: .leading) {
                                     HStack(alignment: .top) {
-                                        Text("✏️ " + definition.detail.definition)
+                                        Text(LocalizedString.studyDefinitionPrefix + definition.detail.definition)
                                             .frame(maxWidth: .infinity, alignment: .leading)
-                                        Text("🗣️ " + definition.detail.pronunciation)
+                                        Text(LocalizedString.studyPronunciationPrefix + definition.detail.pronunciation)
                                     }
-                                    Text("🌎 " + definition.detail.definitionInContextOfSentence)
+                                    Text(LocalizedString.studyContextPrefix + definition.detail.definitionInContextOfSentence)
                                 }
                             }
                         } else {

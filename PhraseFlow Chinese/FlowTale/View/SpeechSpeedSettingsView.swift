@@ -40,10 +40,10 @@ struct SpeechSpeedMenu: View {
                     .listRowBackground(isSelectedSpeed ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
                 }
             } header: {
-                Text("How fast would you like the voice to speak?") // TODO: Localize
+                Text(LocalizedString.speechSpeedMenuHeader)
             }
         }
-        .navigationTitle("Speech Speed") // TODO: Localize
+        .navigationTitle(LocalizedString.speechSpeedNavTitle)
         .background(FlowTaleColor.background)
         .scrollContentBackground(.hidden)
     }

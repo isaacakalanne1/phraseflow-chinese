@@ -20,7 +20,7 @@ struct SubscriptionView: View {
                 .bold()
                 .foregroundColor(FlowTaleColor.primary)
             if !store.state.subscriptionState.isSubscribed {
-                Text("Subscribe now to create more chapters") // TODO: Localize
+                Text(LocalizedString.subscriptionSubscribeNow)
                     .multilineTextAlignment(.center)
                     .font(.subheadline)
                     .bold()
@@ -30,7 +30,7 @@ struct SubscriptionView: View {
                     store.dispatch(.showFreeLimitExplanationScreen(isShowing: true))
                     store.dispatch(.setSubscriptionSheetShowing(false, .manualOpen))
                 } label: {
-                    Text("Why is there a free trial limit?") // TODO: Localize
+                    Text(LocalizedString.freeTrialWhyHeader)
                         .multilineTextAlignment(.center)
                         .font(.subheadline)
                         .underline()
@@ -41,7 +41,7 @@ struct SubscriptionView: View {
             ForEach(store.state.subscriptionState.products?.sorted(by: { $0.price > $1.price }) ?? []) { product in
                 let chapterLimitString: String
                 if let chapterLimit = SubscriptionLevel(id: product.id)?.chapterLimitPerDay {
-                    chapterLimitString = "\(chapterLimit) chapters per day" // TODO: Localize
+                    chapterLimitString = LocalizedString.subscriptionChaptersPerDay(chapterLimit)
                 } else {
                     chapterLimitString = product.displayName
                 }
@@ -56,8 +56,7 @@ struct SubscriptionView: View {
                 })
             }
 
-            // TODO: Localize
-            SubscriptionOption(title: LocalizedString.free, detail: "4 free chapters", product: nil, action: { })
+            SubscriptionOption(title: LocalizedString.free, detail: LocalizedString.subscriptionFreeChaptersDetail(4), product: nil, action: { })
 
             Button {
                 Task {
@@ -112,7 +111,7 @@ struct SubscriptionView: View {
 }
 
 enum SubscriptionLevel: CaseIterable {
-    case level1, level2, level3, max
+    case level1, level2, level3
 
     var chapterLimitPerDay: Int {
         switch self {
@@ -121,9 +120,7 @@ enum SubscriptionLevel: CaseIterable {
         case .level2:
             6
         case .level3:
-            10
-        case .max:
-            9999999
+            9
         }
     }
 
@@ -135,8 +132,6 @@ enum SubscriptionLevel: CaseIterable {
             "com.flowtale.level_2"
         case .level3:
             "com.flowtale.level_3"
-        case .max:
-            "MAX_SUB_FOR_DEBUG"
         }
     }
 

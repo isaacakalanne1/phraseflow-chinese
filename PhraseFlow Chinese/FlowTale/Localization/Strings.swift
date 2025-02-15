@@ -12,6 +12,8 @@ public enum LocalizedString {
   public static let allWords = LocalizedString.tr("Localizable", "all_words")
   public static let arabicGulf = LocalizedString.tr("Localizable", "arabicGulf")
   public static let beginner = LocalizedString.tr("Localizable", "beginner")
+  public static let chapterListLongerStoriesComingSoon = LocalizedString.tr("Localizable", "chapter_list_longer_stories_coming_soon")
+  public static let chapterListStoryNotFound = LocalizedString.tr("Localizable", "chapter_list_story_not_found")
   public static func chapterNumber(_ p1: String) -> String {
     return LocalizedString.tr("Localizable", "chapter_number", p1)
   }
@@ -24,6 +26,7 @@ public enum LocalizedString {
   public static let chooseChapter = LocalizedString.tr("Localizable", "choose_chapter")
   public static let chooseStory = LocalizedString.tr("Localizable", "choose_story")
   public static let createStory = LocalizedString.tr("Localizable", "create_story")
+  public static let createStorySpeechSpeed = LocalizedString.tr("Localizable", "create_story_speech_speed")
   public static func customPrompt(_ p1: String) -> String {
     return LocalizedString.tr("Localizable", "custom_prompt", p1)
   }
@@ -34,6 +37,18 @@ public enum LocalizedString {
   public static let customStoryCancelButton = LocalizedString.tr("Localizable", "custom_story_cancel_button")
   public static let customStoryOkButton = LocalizedString.tr("Localizable", "custom_story_ok_button")
   public static let customStoryTextfieldPlaceholder = LocalizedString.tr("Localizable", "custom_story_textfield_placeholder")
+  public static let dailyLimitExplanation = LocalizedString.tr("Localizable", "daily_limit_explanation")
+  public static func dailyLimitNextAvailable(_ p1: String) -> String {
+    return LocalizedString.tr("Localizable", "daily_limit_next_available", p1)
+  }
+  public static let dailyLimitReached = LocalizedString.tr("Localizable", "daily_limit_reached")
+  public static func dailyLimitReachedWithLimit(_ p1: Int) -> String {
+    return LocalizedString.tr("Localizable", "daily_limit_reached_with_limit", p1)
+  }
+  public static let dailyLimitWhatHappened = LocalizedString.tr("Localizable", "daily_limit_what_happened")
+  public static let dailyLimitWhenCanCreateMore = LocalizedString.tr("Localizable", "daily_limit_when_can_create_more")
+  public static let dailyLimitWhy = LocalizedString.tr("Localizable", "daily_limit_why")
+  public static let dailyLimitWhyHeader = LocalizedString.tr("Localizable", "daily_limit_why_header")
   public static let defining = LocalizedString.tr("Localizable", "defining")
   public static let definition = LocalizedString.tr("Localizable", "definition")
   public static func definitionOf(_ p1: String) -> String {
@@ -56,6 +71,10 @@ public enum LocalizedString {
   public static let fast = LocalizedString.tr("Localizable", "fast")
   public static let female = LocalizedString.tr("Localizable", "female")
   public static let free = LocalizedString.tr("Localizable", "free")
+  public static let freeTrialExplanation = LocalizedString.tr("Localizable", "free_trial_explanation")
+  public static let freeTrialReachedLimit = LocalizedString.tr("Localizable", "free_trial_reached_limit")
+  public static let freeTrialWhatHappened = LocalizedString.tr("Localizable", "free_trial_what_happened")
+  public static let freeTrialWhyHeader = LocalizedString.tr("Localizable", "free_trial_why_header")
   public static let french = LocalizedString.tr("Localizable", "french")
   public static let german = LocalizedString.tr("Localizable", "german")
   public static let hindi = LocalizedString.tr("Localizable", "hindi")
@@ -106,8 +125,18 @@ public enum LocalizedString {
   public static let saved = LocalizedString.tr("Localizable", "saved")
   public static let sentence = LocalizedString.tr("Localizable", "sentence")
   public static let settings = LocalizedString.tr("Localizable", "settings")
+  public static let settingsAppearance = LocalizedString.tr("Localizable", "settings_appearance")
+  public static let settingsDarkMode = LocalizedString.tr("Localizable", "settings_dark_mode")
+  public static let settingsSoundHeader = LocalizedString.tr("Localizable", "settings_sound_header")
+  public static let settingsSounds = LocalizedString.tr("Localizable", "settings_sounds")
   public static let slow = LocalizedString.tr("Localizable", "slow")
+  public static func snackbarDailyChapterLimitReached(_ p1: String) -> String {
+    return LocalizedString.tr("Localizable", "snackbar_daily_chapter_limit_reached", p1)
+  }
+  public static let snackbarFailedWriteChapter = LocalizedString.tr("Localizable", "snackbar_failed_write_chapter")
   public static let spanish = LocalizedString.tr("Localizable", "spanish")
+  public static let speechSpeedMenuHeader = LocalizedString.tr("Localizable", "speech_speed_menu_header")
+  public static let speechSpeedNavTitle = LocalizedString.tr("Localizable", "speech_speed_nav_title")
   public static let speed = LocalizedString.tr("Localizable", "speed")
   public static let stories = LocalizedString.tr("Localizable", "stories")
   public static let story = LocalizedString.tr("Localizable", "story")
@@ -115,9 +144,22 @@ public enum LocalizedString {
   public static let storyDidNotPassModeration = LocalizedString.tr("Localizable", "story_did_not_pass_moderation")
   public static let storySettings = LocalizedString.tr("Localizable", "story_settings")
   public static let studied = LocalizedString.tr("Localizable", "studied")
+  public static let studyContextPrefix = LocalizedString.tr("Localizable", "study_context_prefix")
+  public static let studyDefinitionPrefix = LocalizedString.tr("Localizable", "study_definition_prefix")
+  public static let studyNavTitle = LocalizedString.tr("Localizable", "study_nav_title")
+  public static let studyPronunciationLabel = LocalizedString.tr("Localizable", "study_pronunciation_label")
+  public static let studyPronunciationPrefix = LocalizedString.tr("Localizable", "study_pronunciation_prefix")
   public static let subscribe = LocalizedString.tr("Localizable", "subscribe")
   public static let subscribeNowUnlimitedChapters = LocalizedString.tr("Localizable", "subscribe_now_unlimited_chapters")
+  public static func subscriptionChaptersPerDay(_ p1: Int) -> String {
+    return LocalizedString.tr("Localizable", "subscription_chapters_per_day", p1)
+  }
   public static let subscriptionComplete = LocalizedString.tr("Localizable", "subscription_complete")
+  public static func subscriptionFreeChaptersDetail(_ p1: Int) -> String {
+    return LocalizedString.tr("Localizable", "subscription_free_chapters_detail", p1)
+  }
+  public static let subscriptionFreeTrialLimitQuestion = LocalizedString.tr("Localizable", "subscription_free_trial_limit_question")
+  public static let subscriptionSubscribeNow = LocalizedString.tr("Localizable", "subscription_subscribe_now")
   public static let tapAWordToDefineIt = LocalizedString.tr("Localizable", "tap_a_word_to_define_it")
   public static let tapRevealToShow = LocalizedString.tr("Localizable", "tap_reveal_to_show")
   public static let tapWordToStudy = LocalizedString.tr("Localizable", "tap_word_to_study")
@@ -147,6 +189,7 @@ public enum LocalizedString {
   public static let voiceHyunSu = LocalizedString.tr("Localizable", "voice_hyun_su")
   public static let voiceKeita = LocalizedString.tr("Localizable", "voice_keita")
   public static let voiceMayu = LocalizedString.tr("Localizable", "voice_mayu")
+  public static let voiceMenuHeader = LocalizedString.tr("Localizable", "voice_menu_header")
   public static let voiceRaquel = LocalizedString.tr("Localizable", "voice_raquel")
   public static let voiceSunHi = LocalizedString.tr("Localizable", "voice_sun_hi")
   public static let voiceThalita = LocalizedString.tr("Localizable", "voice_thalita")

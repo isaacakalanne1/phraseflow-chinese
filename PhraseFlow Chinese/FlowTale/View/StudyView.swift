@@ -80,7 +80,7 @@ struct StudyView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle("Practice") // TODO: Localize
+        .navigationTitle(LocalizedString.studyNavTitle)
         .onAppear {
             if !isWordDefinitionView {
                 index = 0
@@ -202,10 +202,10 @@ struct StudyView: View {
                     }
                 }
             }
-            Text("Pronounciation") // TODO: Localize
+            Text(LocalizedString.studyPronunciationLabel)
                 .greyBackground()
             VStack {
-                Text("🗣️ " + definition.detail.pronunciation)
+                Text(LocalizedString.studyPronunciationPrefix + definition.detail.pronunciation)
                     .font(.system(size: 20, weight: .light))
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -214,11 +214,11 @@ struct StudyView: View {
             Text(LocalizedString.definition)
                 .greyBackground()
             Group {
-                Text("✏️ " + definition.detail.definition)
+                Text(LocalizedString.studyDefinitionPrefix + definition.detail.definition)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.system(size: 20, weight: .light))
                 Divider()
-                Text("🌎 " + definition.detail.definitionInContextOfSentence)
+                Text(LocalizedString.studyContextPrefix + definition.detail.definitionInContextOfSentence)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .scaleEffect(x: 1, y: isWordDefinitionView || isDefinitionShown ? 1 : 0, anchor: .top)
                     .font(.system(size: 20, weight: .light))

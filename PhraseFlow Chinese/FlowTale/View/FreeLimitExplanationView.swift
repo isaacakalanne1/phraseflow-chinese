@@ -13,21 +13,21 @@ struct FreeLimitExplanationView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            VStack(alignment: .leading) { // TODO: Localize
+            VStack(alignment: .leading) {
                 if store.state.subscriptionState.hasReachedFreeTrialLimit {
-                    Text("What happened?")
+                    Text(LocalizedString.freeTrialWhatHappened)
                         .font(.title2)
                         .fontWeight(.medium)
-                    Text("• You have reached your free trial limit for creating chapters.")
+                    Text(LocalizedString.freeTrialReachedLimit)
                         .font(.body)
                         .fontWeight(.light)
                     Divider()
                 }
 
-                Text("Why is there a free trial limit?")
+                Text(LocalizedString.freeTrialWhyHeader)
                     .font(.title2)
                     .fontWeight(.medium)
-                Text("• The text to speech AI is really expensive.\n• Creating the stories themselves is actually relatively cheap. However, the text to speech AI costs around 5-10p per chapter.\n• As a result, creating just 4 chapters costs around 20-80p.\n• This doesn't sound like a big deal, but if just 50 users joined the app every day, this would cost us around $200-$600 every month.\n• Apple sends us subscription payments after around 45 days or so, and so we have to make sure we can afford the costs until the subscription payments come through.\n• We've searched far and wide, but there are no cheaper alternatives for the text to speech AI that don't suck.")
+                Text(LocalizedString.freeTrialExplanation)
                     .font(.body)
                     .fontWeight(.light)
 

@@ -64,39 +64,21 @@ struct ChapterView: View {
                 .frame(maxWidth: .infinity, alignment: story.language.alignment)
             }
 
-            if story.chapters.count >= 20 {
-                Button(LocalizedString.nextChapter) {
-                    let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
-                    if doesNextChapterExist {
-                        store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
-                        store.dispatch(.playSound(.goToNextChapter))
-                        store.dispatch(.goToNextChapter)
-                    } else {
-                        store.dispatch(.playSound(.createNextChapter))
-                        store.dispatch(.createChapter(.existingStory(story)))
-                    }
+            Button(LocalizedString.nextChapter) {
+                let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
+                if doesNextChapterExist {
+                    store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
+                    store.dispatch(.playSound(.goToNextChapter))
+                    store.dispatch(.goToNextChapter)
+                } else {
+                    store.dispatch(.playSound(.createNextChapter))
+                    store.dispatch(.createChapter(.existingStory(story)))
                 }
-                .padding()
-                .background(FlowTaleColor.accent)
-                .foregroundColor(.white)
-                .cornerRadius(10)
-            } else {
-//                Button("Create Sequel") { // TODO: Localize
-//                    store.dispatch(.playSound(.createNextChapter))
-//                    let sequelId = UUID()
-//                    var prequelStory = story
-//                    prequelStory.sequelId = sequelId
-//                    prequelStory.id = UUID()
-//                    store.dispatch(.createChapter(.sequel(story,
-//                                                          newId: sequelId)))
-//                    store.dispatch(.deleteStory(story))
-//                    store.dispatch(.saveStoryAndSettings(prequelStory))
-//                }
-//                .padding()
-//                .background(FlowTaleColor.accent)
-//                .foregroundColor(.white)
-//                .cornerRadius(10)
             }
+            .padding()
+            .background(FlowTaleColor.accent)
+            .foregroundColor(.white)
+            .cornerRadius(10)
         }
         .id(store.state.viewState.chapterViewId)
 

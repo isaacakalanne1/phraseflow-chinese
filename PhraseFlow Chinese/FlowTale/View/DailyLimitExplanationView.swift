@@ -13,14 +13,14 @@ struct DailyLimitExplanationView: View {
 
     var title: String {
         if let limit = store.state.subscriptionState.currentSubscription?.chapterLimitPerDay {
-            return "You have reached your daily limit of \(limit) chapters"
+            return LocalizedString.dailyLimitReachedWithLimit(limit)
         }
-        return "You have reached your daily limit of chapters"
+        return LocalizedString.dailyLimitReached
     }
 
     var body: some View {
         VStack(spacing: 16) {
-            VStack(alignment: .leading) { // TODO: Localize
+            VStack(alignment: .leading) {
                 Text(title)
                     .lineLimit(-1)
                     .font(.title)
@@ -28,26 +28,26 @@ struct DailyLimitExplanationView: View {
 
                 Divider()
 
-                Text("What happened?")
+                Text(LocalizedString.dailyLimitWhyHeader)
                     .font(.title2)
                     .fontWeight(.medium)
-                Text("You have reached your daily limit for creating chapters.")
+                Text(LocalizedString.dailyLimitExplanation)
                     .font(.footnote)
                     .fontWeight(.light)
 
-                Text("When can I create more?")
+                Text(LocalizedString.dailyLimitWhenCanCreateMore)
                     .font(.title2)
                     .fontWeight(.medium)
-                Text("You can create more chaptrs in \(store.state.subscriptionState.nextAvailableDescription)")
+                Text(LocalizedString.dailyLimitNextAvailable(store.state.subscriptionState.nextAvailableDescription))
                     .font(.footnote)
                     .fontWeight(.light)
 
                 Divider()
 
-                Text("Why is there a daily limit?")
+                Text(LocalizedString.dailyLimitWhyHeader)
                     .font(.title2)
                     .fontWeight(.medium)
-                Text("The text to speech AI is really expensive.\nIf we let users create infinite chapters, we would go bankrupt.\nOur daily limit gives you the most stories possible without risking us going bankrupt.")
+                Text(LocalizedString.dailyLimitWhy)
                     .font(.footnote)
                     .fontWeight(.light)
 

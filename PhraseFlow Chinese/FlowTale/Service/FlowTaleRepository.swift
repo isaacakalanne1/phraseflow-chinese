@@ -186,8 +186,9 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
         var word = text
 
         // Remove newlines and large spaces
-        word = word.replacingOccurrences(of: "\n", with: "")
-        word = word.replacingOccurrences(of: "                ", with: "") // Korean TTS often adds these
+        word = word
+            .replacingOccurrences(of: "\n", with: "")
+            .replacingOccurrences(of: "                ", with: "") // Korean TTS often adds these
 
         if removeSpeechMarks {
             for speechMark in speechCharacters {
@@ -215,28 +216,18 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
         let baseUrl = "http://www.w3.org/2001"
 
         var ssml = """
-        <speak version="1.0" xmlns="\(baseUrl)/10/synthesis" xmlns:mstts="\(baseUrl)/mstts" xml:lang="zh-CN">
-        <voice name="\(voice.speechSynthesisVoiceName)">
-        """
+<speak version="1.0" xmlns="\(baseUrl)/10/synthesis" xmlns:mstts="\(baseUrl)/mstts">
+<voice name="\(voice.speechSynthesisVoiceName)">
+<prosody rate="\(speechSpeed.rate)">
+"""
 
         for sentence in chapter.sentences {
             for (index, section) in splitSpeechAndNonSpeech(from: sentence.translation).enumerated() {
-                // If the section includes any speech mark, we set the style accordingly
-                let isSpeech = speechCharacters.contains(where: { section.contains($0) })
-
-                let sentenceSsml = """
-                <mstts:express-as style="\(voice.speechStyle(isSpeech: isSpeech).ssmlName)">
-                    <prosody rate="\(speechSpeed.rate)">
-                        \(index == 0 ? sentenceMarker : "")\(section)
-                    </prosody>
-                </mstts:express-as>
-                """
-
-                ssml.append(sentenceSsml)
+                ssml.append("\(index == 0 ? sentenceMarker : "")\(section)")
             }
         }
 
-        ssml.append("</voice></speak>")
+        ssml.append("</prosody></voice></speak>")
         return ssml
     }
 

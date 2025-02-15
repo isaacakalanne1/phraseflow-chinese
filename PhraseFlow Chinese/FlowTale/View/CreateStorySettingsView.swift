@@ -111,7 +111,7 @@ struct CreateStorySettingsView: View {
                         }
                     }
                 } header: {
-                    Text("Speech Speed") // TODO: Localize
+                    Text(LocalizedString.speechSpeedNavTitle)
                 }
 
             }

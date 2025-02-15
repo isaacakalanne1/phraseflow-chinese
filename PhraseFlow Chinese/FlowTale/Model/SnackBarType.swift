@@ -29,7 +29,7 @@ enum SnackBarType {
         case .chapterReady:
             LocalizedString.chapterReady
         case .failedToWriteChapter:
-            "Failed to write chapter" // TODO: Localize
+            LocalizedString.snackbarFailedWriteChapter
         case .couldNotModerateText:
             LocalizedString.failedModerateText
         case .subscribed:
@@ -43,7 +43,7 @@ enum SnackBarType {
         case .deletedCustomStory:
             LocalizedString.deletedCustomStory
         case .dailyChapterLimitReached(let nextAvailable):
-            "You can create more chapters in \(nextAvailable). Tap here to learn why." // TODO: Localize
+            LocalizedString.snackbarDailyChapterLimitReached(nextAvailable)
         }
     }
 

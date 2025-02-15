@@ -13,7 +13,7 @@ struct ModerationExplanationView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            VStack(alignment: .leading) { // TODO: Localize
+            VStack(alignment: .leading) {
                 Text(LocalizedString.storyDidNotPassModeration)
                     .lineLimit(0)
                     .font(.title)
