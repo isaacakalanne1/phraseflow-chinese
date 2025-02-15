@@ -408,9 +408,13 @@ Write the definition in \(deviceLanguage.displayName).
         ]
 
         var messages: [[String: String]] = []
+        let maxChaptersInHistory = 20
 
-        var initialPrompt = "Write an incredible first chapter of a novel in English set in \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"
-        for chapter in story.chapters {
+        let firstChapterDescription = story.chapters.count < maxChaptersInHistory ? "first chapter" : "Chapter \((story.chapters.count + 1) - maxChaptersInHistory)"
+        let initialPrompt = "Write an incredible \(firstChapterDescription) of a novel in English set in \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"
+
+        messages.append(["role": "user", "content": initialPrompt])
+        for chapter in story.chapters.suffix(20) {
             messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
             messages.append(["role": "user", "content": "Write an incredible next chapter of the novel in English with complex, three-dimensional characters. \(story.difficulty.vocabularyPrompt)"])
         }
