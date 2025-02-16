@@ -449,3 +449,104 @@
 
 // Category: Illicit violence
 "moderation_category_illicit_violence" = "Незаконное насилие";
+
+// MARK: VERSION 1.0
+
+// Header for the voice selection section in VoiceMenu
+"voice_menu_header" = "Какой голос вы хотели бы использовать?";
+
+// Header for the speech speed selection section in SpeechSpeedMenu
+"speech_speed_menu_header" = "С какой скоростью вы хотите, чтобы голос говорил?";
+
+// Navigation title for SpeechSpeedMenu
+"speech_speed_nav_title" = "Скорость речи";
+
+// Title when a daily limit exists (with a chapter limit placeholder)
+"daily_limit_reached_with_limit" = "Вы достигли дневного лимита в %d глав";
+
+// Fallback title when a daily limit exists but no limit is provided
+"daily_limit_reached" = "Вы достигли дневного лимита глав";
+
+// Section header for explaining what happened
+"daily_limit_what_happened" = "Что произошло?";
+
+// Explanation for reaching the daily chapter creation limit
+"daily_limit_explanation" = "Вы достигли дневного лимита на создание глав.";
+
+// Section header for when more chapters can be created
+"daily_limit_when_can_create_more" = "Когда я смогу создать больше?";
+
+// Explanation for when the user can create more chapters (with a placeholder for time description)
+"daily_limit_next_available" = "Вы сможете создать больше глав через %@";
+
+// Section header for explaining the reason behind the daily limit
+"daily_limit_why_header" = "Почему установлен дневной лимит?";
+
+// Explanation detailing why the daily limit is in place (with newline characters)
+"daily_limit_why" = "Технология синтеза речи действительно дорогая.\nЕсли бы мы позволяли пользователям создавать бесконечное количество глав, мы бы обанкротились.\nНаш дневной лимит позволяет вам создавать как можно больше историй, не подвергая нас риску банкротства.";
+
+// Header shown when the free trial limit has been reached
+"free_trial_what_happened" = "Что произошло?";
+
+// Message explaining that the free trial limit for creating chapters has been reached
+"free_trial_reached_limit" = "• Вы достигли лимита бесплатного пробного периода для создания глав.";
+
+// Header asking why there is a free trial limit
+"free_trial_why_header" = "Почему существует лимит бесплатного пробного периода?";
+
+// Detailed explanation for the free trial limit (with newline characters)
+"free_trial_explanation" = "• Технология синтеза речи действительно дорогая.\n• Создание самих историй относительно дешево. Однако технология синтеза речи стоит около 5-10 пенсов за главу.\n• В результате, создание всего 4 глав стоит примерно 20-80 пенсов.\n• Это может показаться незначительной суммой, но если всего 50 пользователей будут присоединяться к приложению каждый день, это будет стоить нам примерно $200-$600 в месяц.\n• Apple переводит нам платежи по подписке примерно через 45 дней, поэтому мы должны быть уверены, что сможем покрыть расходы до поступления платежей.\n• Мы искали повсюду, но не нашли более дешевых альтернатив технологии синтеза речи, которые бы не уступали по качеству.";
+
+// Label for the Dark Mode toggle
+"settings_dark_mode" = "Темный режим";
+
+// Section header for appearance-related settings
+"settings_appearance" = "Внешний вид";
+
+// Label for the Sounds toggle
+"settings_sounds" = "Звуки";
+
+// Section header for sound-related settings
+"settings_sound_header" = "Звук";
+
+// Navigation title for the study view
+"study_nav_title" = "Практика";
+
+// Label above the pronunciation section in the word view
+"study_pronunciation_label" = "Произношение";
+
+// Prefix for the pronunciation text (emoji)
+"study_pronunciation_prefix" = "🗣️ ";
+
+// Prefix for the definition text (emoji)
+"study_definition_prefix" = "✏️ ";
+
+// Prefix for the definition-in-context text (emoji)
+"study_context_prefix" = "🌎 ";
+
+// Section header for the Speech Speed settings in CreateStorySettingsView
+"create_story_speech_speed" = "Скорость речи";
+
+// Message shown when a story is not found
+"chapter_list_story_not_found" = "История не найдена.";
+
+// Message shown when the story has 20 or more chapters
+"chapter_list_longer_stories_coming_soon" = "Скоро появятся более длинные истории";
+
+// Message encouraging users to subscribe when not yet subscribed
+"subscription_subscribe_now" = "Подпишитесь сейчас, чтобы создавать больше глав";
+
+// Button title asking why there is a free trial limit
+"subscription_free_trial_limit_question" = "Почему существует лимит бесплатного пробного периода?";
+
+// Format for showing the chapter limit per day (with a placeholder for the number of chapters)
+"subscription_chapters_per_day" = "%d глав в день";
+
+// Detail text for the free subscription option
+"subscription_free_chapters_detail" = "%d бесплатных глав";
+
+// Snackbar message when writing a chapter fails
+"snackbar_failed_write_chapter" = "Не удалось создать главу";
+
+// Snackbar message when the daily chapter limit is reached, with a placeholder for the next available time
+"snackbar_daily_chapter_limit_reached" = "Вы сможете создать больше глав через %@. Нажмите здесь, чтобы узнать почему.";

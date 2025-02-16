@@ -449,3 +449,104 @@
 
 // Category: Illicit violence
 "moderation_category_illicit_violence" = "Violence illicite";
+
+// MARK: VERSION 1.0
+
+// Header for the voice selection section in VoiceMenu
+"voice_menu_header" = "Quelle voix souhaitez-vous utiliser ?";
+
+// Header for the speech speed selection section in SpeechSpeedMenu
+"speech_speed_menu_header" = "À quelle vitesse souhaitez-vous que la voix parle ?";
+
+// Navigation title for SpeechSpeedMenu
+"speech_speed_nav_title" = "Vitesse de parole";
+
+// Title when a daily limit exists (with a chapter limit placeholder)
+"daily_limit_reached_with_limit" = "Vous avez atteint votre limite quotidienne de %d chapitres";
+
+// Fallback title when a daily limit exists but no limit is provided
+"daily_limit_reached" = "Vous avez atteint votre limite quotidienne de chapitres";
+
+// Section header for explaining what happened
+"daily_limit_what_happened" = "Que s'est-il passé ?";
+
+// Explanation for reaching the daily chapter creation limit
+"daily_limit_explanation" = "Vous avez atteint votre limite quotidienne de création de chapitres.";
+
+// Section header for when more chapters can be created
+"daily_limit_when_can_create_more" = "Quand puis-je créer plus ?";
+
+// Explanation for when the user can create more chapters (with a placeholder for time description)
+"daily_limit_next_available" = "Vous pourrez créer plus de chapitres dans %@";
+
+// Section header for explaining the reason behind the daily limit
+"daily_limit_why_header" = "Pourquoi y a-t-il une limite quotidienne ?";
+
+// Explanation detailing why the daily limit is in place (with newline characters)
+"daily_limit_why" = "L'IA de synthèse vocale coûte vraiment cher.\nSi nous permettions aux utilisateurs de créer un nombre infini de chapitres, nous ferions faillite.\nNotre limite quotidienne vous offre le maximum d'histoires possible sans risquer notre faillite.";
+
+// Header shown when the free trial limit has been reached
+"free_trial_what_happened" = "Que s'est-il passé ?";
+
+// Message explaining that the free trial limit for creating chapters has been reached
+"free_trial_reached_limit" = "• Vous avez atteint votre limite d'essai gratuit pour la création de chapitres.";
+
+// Header asking why there is a free trial limit
+"free_trial_why_header" = "Pourquoi y a-t-il une limite d'essai gratuit ?";
+
+// Detailed explanation for the free trial limit (with newline characters)
+"free_trial_explanation" = "• L'IA de synthèse vocale coûte vraiment cher.\n• La création des histoires en elle-même est relativement peu coûteuse. Cependant, l'IA de synthèse vocale coûte environ 5 à 10 centimes par chapitre.\n• Par conséquent, créer seulement 4 chapitres coûte environ 20 à 80 centimes.\n• Cela peut sembler minime, mais si seulement 50 utilisateurs rejoignaient l'application chaque jour, cela nous coûterait environ 200 à 600 $ par mois.\n• Apple nous verse les paiements d'abonnement après environ 45 jours, nous devons donc nous assurer de pouvoir couvrir les coûts jusqu'à la réception des paiements.\n• Nous avons cherché partout, mais il n'existe aucune alternative moins chère à l'IA de synthèse vocale qui soit acceptable.";
+
+// Label for the Dark Mode toggle
+"settings_dark_mode" = "Mode Sombre";
+
+// Section header for appearance-related settings
+"settings_appearance" = "Apparence";
+
+// Label for the Sounds toggle
+"settings_sounds" = "Sons";
+
+// Section header for sound-related settings
+"settings_sound_header" = "Son";
+
+// Navigation title for the study view
+"study_nav_title" = "Pratique";
+
+// Label above the pronunciation section in the word view
+"study_pronunciation_label" = "Prononciation";
+
+// Prefix for the pronunciation text (emoji)
+"study_pronunciation_prefix" = "🗣️ ";
+
+// Prefix for the definition text (emoji)
+"study_definition_prefix" = "✏️ ";
+
+// Prefix for the definition-in-context text (emoji)
+"study_context_prefix" = "🌎 ";
+
+// Section header for the Speech Speed settings in CreateStorySettingsView
+"create_story_speech_speed" = "Vitesse de parole";
+
+// Message shown when a story is not found
+"chapter_list_story_not_found" = "Histoire introuvable.";
+
+// Message shown when the story has 20 or more chapters
+"chapter_list_longer_stories_coming_soon" = "Des histoires plus longues arrivent bientôt";
+
+// Message encouraging users to subscribe when not yet subscribed
+"subscription_subscribe_now" = "Abonnez-vous maintenant pour créer plus de chapitres";
+
+// Button title asking why there is a free trial limit
+"subscription_free_trial_limit_question" = "Pourquoi y a-t-il une limite d'essai gratuit ?";
+
+// Format for showing the chapter limit per day (with a placeholder for the number of chapters)
+"subscription_chapters_per_day" = "%d chapitres par jour";
+
+// Detail text for the free subscription option
+"subscription_free_chapters_detail" = "%d chapitres gratuits";
+
+// Snackbar message when writing a chapter fails
+"snackbar_failed_write_chapter" = "Échec de l'écriture du chapitre";
+
+// Snackbar message when the daily chapter limit is reached, with a placeholder for the next available time
+"snackbar_daily_chapter_limit_reached" = "Vous pourrez créer plus de chapitres dans %@. Appuyez ici pour savoir pourquoi.";
