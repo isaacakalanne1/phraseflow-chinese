@@ -505,7 +505,7 @@ extension FlowTaleDataStore {
         #if DEBUG
         let maxFree: Int = 999999999999999999
         #else
-        let maxFree: Int = 3
+        let maxFree: Int = 4
         #endif
         if currentCount >= maxFree {
             throw FlowTaleDataStoreError.freeUserChapterLimitReached

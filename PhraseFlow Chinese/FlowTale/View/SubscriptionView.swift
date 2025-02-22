@@ -25,17 +25,6 @@ struct SubscriptionView: View {
                     .font(.subheadline)
                     .bold()
                     .foregroundColor(FlowTaleColor.primary)
-
-                Button {
-                    store.dispatch(.showFreeLimitExplanationScreen(isShowing: true))
-                    store.dispatch(.setSubscriptionSheetShowing(false, .manualOpen))
-                } label: {
-                    Text(LocalizedString.freeTrialWhyHeader)
-                        .multilineTextAlignment(.center)
-                        .font(.subheadline)
-                        .underline()
-                        .foregroundColor(FlowTaleColor.primary)
-                }
             }
 
             ForEach(store.state.subscriptionState.products?.sorted(by: { $0.price > $1.price }) ?? []) { product in
@@ -111,16 +100,14 @@ struct SubscriptionView: View {
 }
 
 enum SubscriptionLevel: CaseIterable {
-    case level1, level2, level3
+    case level1, level2
 
     var chapterLimitPerDay: Int {
         switch self {
         case .level1:
-            3
+            10
         case .level2:
-            6
-        case .level3:
-            9
+            20
         }
     }
 
@@ -130,8 +117,6 @@ enum SubscriptionLevel: CaseIterable {
             "com.flowtale.level_1"
         case .level2:
             "com.flowtale.level_2"
-        case .level3:
-            "com.flowtale.level_3"
         }
     }
 

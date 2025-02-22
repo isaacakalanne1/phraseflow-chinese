@@ -13,9 +13,7 @@ struct SubscriptionState {
 //        #if DEBUG
 //            .max
 //        #else
-        if purchasedProductIDs.contains("com.flowtale.level_3") {
-            return .level3
-        } else if purchasedProductIDs.contains("com.flowtale.level_2") {
+        if purchasedProductIDs.contains("com.flowtale.level_2") {
             return .level2
         } else if purchasedProductIDs.contains("com.flowtale.level_1") {
             return .level1

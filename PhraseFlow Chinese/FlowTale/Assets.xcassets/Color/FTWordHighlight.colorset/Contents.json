@@ -6,24 +6,6 @@
         "components" : {
           "alpha" : "1.000",
           "blue" : "255",
-          "green" : "105",
-          "red" : "2"
-        }
-      },
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "color" : {
-        "color-space" : "display-p3",
-        "components" : {
-          "alpha" : "1.000",
-          "blue" : "255",
           "green" : "164",
           "red" : "86"
         }

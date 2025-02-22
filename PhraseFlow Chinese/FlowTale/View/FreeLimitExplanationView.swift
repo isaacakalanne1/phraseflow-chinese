@@ -27,7 +27,7 @@ struct FreeLimitExplanationView: View {
                 Text(LocalizedString.freeTrialWhyHeader)
                     .font(.title2)
                     .fontWeight(.medium)
-                Text(LocalizedString.freeTrialExplanation)
+                Text(LocalizedString.dailyLimitWhy)
                     .font(.body)
                     .fontWeight(.light)
 

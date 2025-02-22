@@ -21,6 +21,11 @@ struct ContentView: View {
         }
 
         VStack {
+            if !store.state.subscriptionState.isSubscribed {
+                Text("Free trial")
+                    .font(.system(size: 11))
+                    .foregroundStyle(FlowTaleColor.primary)
+            }
             Group {
                 switch store.state.viewState.readerDisplayType {
                 case .initialising:

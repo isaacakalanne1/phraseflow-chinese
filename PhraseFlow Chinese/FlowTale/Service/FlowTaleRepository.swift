@@ -216,7 +216,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
         let baseUrl = "http://www.w3.org/2001"
 
         var ssml = """
-<speak version="1.0" xmlns="\(baseUrl)/10/synthesis" xmlns:mstts="\(baseUrl)/mstts">
+<speak version="1.0" xmlns="\(baseUrl)/10/synthesis" xmlns:mstts="\(baseUrl)/mstts" xml:lang="zh-CN">
 <voice name="\(voice.speechSynthesisVoiceName)">
 <prosody rate="\(speechSpeed.rate)">
 """

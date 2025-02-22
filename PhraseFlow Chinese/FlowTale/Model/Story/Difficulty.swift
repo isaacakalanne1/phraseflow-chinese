@@ -70,15 +70,15 @@ enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
         var prompt: String
         switch self {
         case .beginner:
-            prompt = "Write using short, simple sentences. The phrases should still be gramatically correct sentences, but simply be very short. Use a vocabulary of 50 simple words."
+            prompt = "Write using short, simple sentences. The phrases should still be gramatically correct sentences, but simply be very short."
         case .intermediate:
-            prompt = "Use basic, simple words and short sentences."
+            prompt = "Use basic, simple words and short sentences, for someone who has started learning the language, but is at intermediate level, and has basic knowledge of the language."
         case .advanced:
-            prompt = "Use simple words and medium length sentences."
+            prompt = "Use simple words and medium length sentences, for someone who is learning the language, but is at an advanced level, and has a great deal of vocabulary under their belt."
         case .expert:
             prompt = ""
         }
-        prompt.append("The story should be 10 paragraphs. Each paragraph should have around 40 words.")
+        prompt.append(" The chapter should be around 150 words long.")
         return prompt
     }
 }

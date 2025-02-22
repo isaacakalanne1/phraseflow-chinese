@@ -540,7 +540,7 @@
 "subscription_free_trial_limit_question" = "なぜ無料試用上限があるのですか？";
 
 // Format for showing the chapter limit per day (with a placeholder for the number of chapters)
-"subscription_chapters_per_day" = "1日につき %d 章";
+"subscription_chapters_per_day" = "毎日%d章を作成する";
 
 // Detail text for the free subscription option
 "subscription_free_chapters_detail" = "無料 %d 章";
