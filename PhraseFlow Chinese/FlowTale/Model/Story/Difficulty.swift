@@ -78,7 +78,6 @@ enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
         case .expert:
             prompt = ""
         }
-        prompt.append(" The chapter should be around 150 words long.")
         return prompt
     }
 }

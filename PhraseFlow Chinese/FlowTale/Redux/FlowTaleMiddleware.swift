@@ -289,7 +289,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     case .onSavedStoryAndSettings:
         return .loadStories(isAppLaunch: false)
     case .setMusicVolume(let volume):
-        state.musicAudioState.audioPlayer.setVolume(volume.float, fadeDuration: 0.25)
+        state.musicAudioState.audioPlayer.setVolume(volume.float, fadeDuration: 0.2)
         return nil
     case .selectWord(let word):
         if state.audioState.isPlayingAudio {
