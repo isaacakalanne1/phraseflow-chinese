@@ -22,7 +22,7 @@ struct ContentView: View {
 
         VStack {
             if !store.state.subscriptionState.isSubscribed {
-                Text("Free trial")
+                Text(LocalizedString.freeTrial)
                     .font(.system(size: 11))
                     .foregroundStyle(FlowTaleColor.primary)
             }

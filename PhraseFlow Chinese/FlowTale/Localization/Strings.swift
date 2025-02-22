@@ -71,6 +71,7 @@ public enum LocalizedString {
   public static let fast = LocalizedString.tr("Localizable", "fast")
   public static let female = LocalizedString.tr("Localizable", "female")
   public static let free = LocalizedString.tr("Localizable", "free")
+  public static let freeTrial = LocalizedString.tr("Localizable", "free_trial")
   public static let freeTrialExplanation = LocalizedString.tr("Localizable", "free_trial_explanation")
   public static let freeTrialReachedLimit = LocalizedString.tr("Localizable", "free_trial_reached_limit")
   public static let freeTrialWhatHappened = LocalizedString.tr("Localizable", "free_trial_what_happened")

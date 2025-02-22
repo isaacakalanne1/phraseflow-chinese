@@ -550,3 +550,6 @@
 
 // Snackbar message when the daily chapter limit is reached, with a placeholder for the next available time
 "snackbar_daily_chapter_limit_reached" = "Вы сможете создать больше глав через %@. Нажмите здесь, чтобы узнать почему.";
+
+// Title informing the user that they are currently on a free trial of the app
+"free_trial" = "Бесплатная пробная версия";
