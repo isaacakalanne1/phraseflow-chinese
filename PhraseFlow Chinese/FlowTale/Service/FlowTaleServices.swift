@@ -411,7 +411,7 @@ Write the definition in \(deviceLanguage.displayName).
         let maxChaptersInHistory = 20
 
         let firstChapterDescription = story.chapters.count < maxChaptersInHistory ? "first chapter" : "Chapter \((story.chapters.count + 1) - maxChaptersInHistory)"
-        let initialPrompt = "Write an incredible \(firstChapterDescription) of a novel in English set in \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"
+        let initialPrompt = "Write an incredible \(firstChapterDescription) of a novel in English with complex, three-dimensional characters set in \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"
 
         messages.append(["role": "user", "content": initialPrompt])
         for chapter in story.chapters.suffix(20) {

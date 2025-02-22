@@ -96,24 +96,6 @@ struct CreateStorySettingsView: View {
                     Text(LocalizedString.voice)
                 }
 
-                Section {
-                    Button {
-                        isShowingSpeedSettings = true
-                        store.dispatch(.playSound(.openStorySettings))
-                    } label: {
-                        HStack {
-                            Text(store.state.settingsState.speechSpeed.emoji + " " + store.state.settingsState.speechSpeed.title)
-                                .fontWeight(.light)
-                                .foregroundStyle(FlowTaleColor.primary)
-                                .lineLimit(1)
-                            Spacer()
-                            SystemImageView(.chevronRight, size: 20, color: FlowTaleColor.secondary)
-                        }
-                    }
-                } header: {
-                    Text(LocalizedString.speechSpeedNavTitle)
-                }
-
             }
             .frame(maxHeight: .infinity)
             .scrollBounceBehavior(.basedOnSize)

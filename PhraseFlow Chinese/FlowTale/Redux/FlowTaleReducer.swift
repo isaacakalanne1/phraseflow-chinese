@@ -70,10 +70,12 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         if let url = music.fileURL,
         let player = try? AVAudioPlayer(contentsOf: url) {
             player.numberOfLoops = -1
-            player.volume = 0.3
+            player.volume = 0.7
             newState.musicAudioState.audioPlayer = player
             newState.settingsState.isPlayingMusic = true
         }
+    case .setMusicVolume(let volume):
+        newState.musicAudioState.volume = volume
     case .stopMusic:
         newState.settingsState.isPlayingMusic = false
     case .failedToLoadStories:

@@ -9,6 +9,7 @@ import Foundation
 import AVKit
 
 struct MusicAudioState {
+    var volume: MusicVolume = .normal
     var audioPlayer = AVAudioPlayer()
 
     init(audioPlayer: AVAudioPlayer = AVAudioPlayer()) {

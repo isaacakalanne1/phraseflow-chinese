@@ -289,12 +289,15 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         }
     case .onSavedStoryAndSettings:
         return .loadStories(isAppLaunch: false)
+    case .setMusicVolume(let volume):
+        state.musicAudioState.audioPlayer.setVolume(volume.float, fadeDuration: 0.25)
+        return nil
     case .selectWord(let word):
         if state.audioState.isPlayingAudio {
             let myTime = CMTime(seconds: word.time, preferredTimescale: 60000)
             await state.audioState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
             state.audioState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: .infinity, preferredTimescale: 60000)
-            state.audioState.audioPlayer.play()
+            state.audioState.audioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
         } else {
             return .playWord(word, story: state.storyState.currentStory)
         }

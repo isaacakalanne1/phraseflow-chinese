@@ -181,10 +181,32 @@ struct ContentView: View {
     // MARK: - Timer
     func startTimer() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            if store.state.audioState.audioPlayer.rate != 0 {
+                if store.state.musicAudioState.volume == .normal {
+                    store.dispatch(.setMusicVolume(.quiet))
+                }
+            } else {
+                if store.state.musicAudioState.volume == .quiet {
+                    store.dispatch(.setMusicVolume(.normal))
+                }
+            }
             if store.state.audioState.isPlayingAudio {
                 store.dispatch(.updatePlayTime)
             }
             startTimer()
+        }
+    }
+}
+
+enum MusicVolume {
+    case normal, quiet
+
+    var float: Float {
+        switch self {
+        case .normal:
+            0.6
+        case .quiet:
+            0.25
         }
     }
 }

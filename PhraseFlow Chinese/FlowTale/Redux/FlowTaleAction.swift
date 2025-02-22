@@ -16,6 +16,8 @@ enum FlowTaleAction {
     case createChapter(CreateChapterType)
     case failedToCreateChapter
 
+    case setMusicVolume(MusicVolume)
+
     case showFreeLimitExplanationScreen(isShowing: Bool)
     case showDailyLimitExplanationScreen(isShowing: Bool)
 
