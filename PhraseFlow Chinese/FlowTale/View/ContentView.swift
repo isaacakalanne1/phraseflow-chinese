@@ -206,7 +206,7 @@ enum MusicVolume {
         case .normal:
             0.6
         case .quiet:
-            0.25
+            0.15
         }
     }
 }
