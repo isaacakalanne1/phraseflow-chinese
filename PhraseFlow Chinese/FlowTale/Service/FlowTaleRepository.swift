@@ -218,7 +218,6 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
         var ssml = """
 <speak version="1.0" xmlns="\(baseUrl)/10/synthesis" xmlns:mstts="\(baseUrl)/mstts" xml:lang="zh-CN">
 <voice name="\(voice.speechSynthesisVoiceName)">
-<prosody rate="\(speechSpeed.rate)">
 """
 
         for sentence in chapter.sentences {
@@ -227,7 +226,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
             }
         }
 
-        ssml.append("</prosody></voice></speak>")
+        ssml.append("</voice></speak>")
         return ssml
     }
 

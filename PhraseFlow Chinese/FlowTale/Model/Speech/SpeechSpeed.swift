@@ -21,6 +21,28 @@ enum SpeechSpeed: CaseIterable, Codable, Equatable {
         }
     }
 
+    var nextSpeed: SpeechSpeed {
+        switch self {
+        case .slow:
+                .normal
+        case .normal:
+                .fast
+        case .fast:
+                .slow
+        }
+    }
+
+    var playRate: Float {
+        switch self {
+        case .slow:
+            0.5
+        case .normal:
+            1
+        case .fast:
+            1.5
+        }
+    }
+
     var rate: String {
         switch self {
         case .slow:
@@ -40,6 +62,17 @@ enum SpeechSpeed: CaseIterable, Codable, Equatable {
             "🚗"
         case .fast:
             "🚀"
+        }
+    }
+
+    var text: String {
+        switch self {
+        case .slow:
+            "0.5X"
+        case .normal:
+            "1X"
+        case .fast:
+            "1.5X"
         }
     }
 }

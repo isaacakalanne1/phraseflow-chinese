@@ -158,7 +158,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             }
         }
         state.audioState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: .infinity, preferredTimescale: 1)
-        state.audioState.audioPlayer.play()
+        state.audioState.audioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
         if let story = state.storyState.currentStory {
             return .saveStoryAndSettings(story)
         }
@@ -167,7 +167,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         let myTime = CMTime(seconds: word.time, preferredTimescale: 60000)
         await state.audioState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
         state.audioState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: word.time + word.duration, preferredTimescale: 60000)
-        state.audioState.audioPlayer.play()
+        state.audioState.audioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
         if let story = state.storyState.currentStory {
             return .saveStoryAndSettings(story)
         }
@@ -184,13 +184,13 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         let myTime = CMTime(seconds: definition.timestampData.time, preferredTimescale: 60000)
         await state.studyState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
         state.studyState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: definition.timestampData.time + definition.timestampData.duration, preferredTimescale: 60000)
-        state.studyState.audioPlayer.play()
+        state.studyState.audioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
         return nil
     case .playStudySentence(let startWord, let endWord):
         let myTime = CMTime(seconds: startWord.time, preferredTimescale: 60000)
         await state.studyState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
         state.studyState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: endWord.time + endWord.duration, preferredTimescale: 60000)
-        state.studyState.audioPlayer.play()
+        state.studyState.audioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
         return nil
     case .playSound:
         if state.settingsState.shouldPlaySound {

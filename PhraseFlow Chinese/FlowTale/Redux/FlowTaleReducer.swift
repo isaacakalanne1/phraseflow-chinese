@@ -80,6 +80,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.readerDisplayType = .normal
     case .updateSpeechSpeed(let speed):
         newState.settingsState.speechSpeed = speed
+        if newState.audioState.audioPlayer.rate != 0 {
+            newState.audioState.audioPlayer.rate = speed.playRate
+        }
     case .defineCharacter(let wordTimeStampData, let shouldForce):
         newState.definitionState.tappedWord = wordTimeStampData
         newState.viewState.isDefining = true

@@ -173,12 +173,6 @@ struct ContentView: View {
                     .transition(.move(edge: .leading))
             }
             Spacer()
-            if store.state.viewState.contentTab == .reader {
-                audioButton(chapter: chapter)
-                    .background(FlowTaleColor.background)
-                    .clipShape(Circle())
-                    .padding(.trailing)
-            }
         }
         .animation(.easeInOut, value: store.state.snackBarState.isShowing)
     }
@@ -191,30 +185,6 @@ struct ContentView: View {
                 store.dispatch(.updatePlayTime)
             }
             startTimer()
-        }
-    }
-
-    // MARK: - Audio Button
-    @ViewBuilder
-    func audioButton(chapter: Chapter) -> some View {
-        let buttonSize: CGFloat = 50
-        if store.state.viewState.readerDisplayType == .normal {
-            if store.state.audioState.isPlayingAudio == true {
-                Button {
-                    store.dispatch(.pauseAudio)
-                } label: {
-                    SystemImageView(.pause, size: buttonSize)
-                }
-            } else {
-                Button {
-                    let timestamps = chapter.audio.timestamps
-                    let currentSpokenWord = store.state.currentSpokenWord ?? timestamps.first
-                    store.dispatch(.playAudio(time: currentSpokenWord?.time))
-                    store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
-                } label: {
-                    SystemImageView(.play, size: buttonSize)
-                }
-            }
         }
     }
 }
