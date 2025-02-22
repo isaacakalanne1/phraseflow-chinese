@@ -14,17 +14,11 @@ struct ViewState {
     var storyListViewId: UUID
 
     var isShowingSubscriptionSheet = false
-    var subscriptionSheetType: SubscriptionSheetType = .manualOpen
     var isShowingCustomPromptAlert = false
     var isShowingModerationFailedAlert = false
 
     var isShowingModerationDetails = false
 
-    var isShowingLanguageSettings = false
-    var isShowingDifficultySettings = false
-    var isShowingPromptSettings = false
-    var isShowingVoiceSettings = false
-    var isShowingSpeedSettings = false
     var isShowingFreeLimitExplanation = false
     var isShowingDailyLimitExplanation = false
 
@@ -33,7 +27,6 @@ struct ViewState {
 
     var readerDisplayType: ReaderDisplayType
     var contentTab: ContentTab
-    var playButtonDisplayType: PlayButtonDisplayType
 
     var loadingState: LoadingState
 
@@ -47,7 +40,6 @@ struct ViewState {
          isDefining: Bool = false,
          readerDisplayType: ReaderDisplayType = .initialising,
          contentTab: ContentTab = .reader,
-         playButtonDisplayType: PlayButtonDisplayType = .normal,
          loadingState: LoadingState = .complete) {
         self.definitionViewId = definitionViewId
         self.chapterViewId = chapterViewId
@@ -59,7 +51,6 @@ struct ViewState {
         self.isDefining = isDefining
         self.readerDisplayType = readerDisplayType
         self.contentTab = contentTab
-        self.playButtonDisplayType = playButtonDisplayType
         self.loadingState = loadingState
     }
 }

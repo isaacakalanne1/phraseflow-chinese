@@ -9,7 +9,6 @@ import SwiftUI
 
 struct CreateStorySettingsView: View {
     @EnvironmentObject var store: FlowTaleStore
-    @Environment(\.dismiss) var dismiss
 
     @State var isShowingLanguageSettings = false
     @State var isShowingDifficultySettings = false
@@ -132,12 +131,6 @@ struct CreateStorySettingsView: View {
         ) {
             SpeechSpeedSettingsView()
         }
-    }
-
-    func delete(at offsets: IndexSet) {
-        guard let index = offsets.first,
-              let prompt = store.state.settingsState.customPrompts[safe: index] else { return }
-        store.dispatch(.deleteCustomPrompt(prompt))
     }
 }
 

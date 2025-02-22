@@ -16,7 +16,7 @@ struct ContentView: View {
             store.state.viewState.isShowingSubscriptionSheet
         } set: { newValue in
             if !newValue {
-                store.dispatch(.setSubscriptionSheetShowing(newValue, .manualOpen))
+                store.dispatch(.setSubscriptionSheetShowing(newValue))
             }
         }
 
@@ -37,7 +37,7 @@ struct ContentView: View {
                     ZStack(alignment: .topTrailing) {
                         mainContent()
                         if let chapter = store.state.storyState.currentChapter {
-                            overlayView(chapter: chapter)
+                            overlayView()
                         }
                     }
                 }
@@ -166,7 +166,7 @@ struct ContentView: View {
 
     // MARK: - Overlay
     @ViewBuilder
-    private func overlayView(chapter: Chapter) -> some View {
+    private func overlayView() -> some View {
         VStack(alignment: .trailing) {
             if store.state.snackBarState.isShowing {
                 SnackBar()

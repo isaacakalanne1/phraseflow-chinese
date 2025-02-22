@@ -118,10 +118,10 @@ struct StudyView: View {
     func goToNextDefinition() {
         index = (index + 1) % studyWords.count
         store.dispatch(.playSound(.nextStudyWord))
-        updateDefinition(didStudyWord: true)
+        updateDefinition()
     }
 
-    func updateDefinition(didStudyWord: Bool = false) {
+    func updateDefinition() {
         isPronounciationShown = false
         isDefinitionShown = false
         if let definition = currentDefinition {

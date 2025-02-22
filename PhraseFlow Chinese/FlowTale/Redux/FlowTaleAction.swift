@@ -130,7 +130,7 @@ enum FlowTaleAction {
 
     case observeTransactionUpdates
 
-    case setSubscriptionSheetShowing(Bool, SubscriptionSheetType)
+    case setSubscriptionSheetShowing(Bool)
 
     case showSnackBar(SnackBarType)
     case hideSnackbar
@@ -163,8 +163,4 @@ enum FlowTaleAction {
     case checkFreeTrialLimit
     case hasReachedFreeTrialLimit
     case hasReachedDailyLimit
-}
-
-enum SubscriptionSheetType {
-    case manualOpen, freeLimitReached
 }

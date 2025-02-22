@@ -13,7 +13,6 @@ protocol FlowTaleRepositoryProtocol {
     func synthesizeSpeech(_ chapter: Chapter,
                           story: Story,
                           voice: Voice,
-                          speechSpeed: SpeechSpeed,
                           language: Language) async throws -> ChapterAudio
     func getProducts() async throws -> [Product]
     func purchase(_ product: Product) async throws
@@ -38,7 +37,6 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
     func synthesizeSpeech(_ chapter: Chapter,
                           story: Story,
                           voice: Voice,
-                          speechSpeed: SpeechSpeed,
                           language: Language) async throws -> ChapterAudio {
 
         let synthesizer: SPXSpeechSynthesizer
@@ -75,7 +73,6 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
             //    after possibly moving the chunk to the *previous* timestamp.
             let finalWord = self.processSpeechMarks(rawText,
                                                     wordTimestamps: &wordTimestamps,
-                                                    story: story,
                                                     language: language)
 
             // 3. Check for sentence markers (if you use them to increment sentenceIndex).
@@ -106,7 +103,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
         }
 
         // Generate the SSML and speak it
-        let ssml = createSpeechSsml(chapter: chapter, voice: voice, speechSpeed: speechSpeed)
+        let ssml = createSpeechSsml(chapter: chapter, voice: voice)
 
         do {
             let result = try synthesizer.speakSsml(ssml)
@@ -132,7 +129,6 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
     /// The leftover (post-even mark) in `chunkBuffer` becomes the final word for this boundary event.
     private func processSpeechMarks(_ text: String,
                                     wordTimestamps: inout [WordTimeStampData],
-                                    story: Story,
                                     language: Language) -> String {
 
         // Convert speech characters into a Set for quick membership checks
@@ -211,8 +207,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
     // MARK: - SSML Generation
 
     private func createSpeechSsml(chapter: Chapter,
-                                  voice: Voice,
-                                  speechSpeed: SpeechSpeed) -> String {
+                                  voice: Voice) -> String {
         let baseUrl = "http://www.w3.org/2001"
 
         var ssml = """

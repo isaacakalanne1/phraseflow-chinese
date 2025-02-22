@@ -12,7 +12,6 @@ protocol FlowTaleEnvironmentProtocol {
     func synthesizeSpeech(for chapter: Chapter,
                           story: Story,
                           voice: Voice,
-                          speechSpeed: SpeechSpeed,
                           language: Language) async throws -> ChapterAudio
     func getProducts() async throws -> [Product]
     func generateStory(story: Story) async throws -> String
@@ -25,7 +24,6 @@ protocol FlowTaleEnvironmentProtocol {
 
     // Stories & Chapters
     func saveStory(_ story: Story) throws
-    func loadStory(by id: UUID) throws -> Story
     func loadAllStories() throws -> [Story]
     func unsaveStory(_ story: Story) throws
 
@@ -60,12 +58,10 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     func synthesizeSpeech(for chapter: Chapter,
                           story: Story,
                           voice: Voice,
-                          speechSpeed: SpeechSpeed,
                           language: Language) async throws -> ChapterAudio {
         try await repository.synthesizeSpeech(chapter,
                                               story: story,
                                               voice: voice,
-                                              speechSpeed: speechSpeed,
                                               language: language)
     }
 
@@ -85,10 +81,6 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
 
     func saveStory(_ story: Story) throws {
         try dataStore.saveStory(story)
-    }
-
-    func loadStory(by id: UUID) throws -> Story {
-        try dataStore.loadStory(by: id)
     }
 
     func loadAllStories() throws -> [Story] {

@@ -105,7 +105,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         }
         newState.viewState.isDefining = false
     case .synthesizeAudio:
-        newState.viewState.playButtonDisplayType = .loading
         newState.viewState.loadingState = .generatingSpeech
     case .onSynthesizedAudio(var data, var newStory, let isForced):
         if !isForced {
@@ -113,7 +112,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         }
         newState.definitionState.currentDefinition = nil
         newState.viewState.chapterViewId = UUID()
-        newState.viewState.playButtonDisplayType = .normal
         newState.viewState.loadingState = .complete
         newState.viewState.contentTab = .reader
 
@@ -128,8 +126,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         let player = data.data.createAVPlayer()
         newState.audioState.audioPlayer = player ?? AVPlayer()
         newState.viewState.readerDisplayType = .normal
-    case .failedToSynthesizeAudio:
-        newState.viewState.playButtonDisplayType = .normal
     case .updateShowDefinition(let isShowing):
         newState.settingsState.isShowingDefinition = isShowing
     case .updateShowEnglish(let isShowing):
@@ -238,10 +234,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
                 }
             }
         }
-    case .setSubscriptionSheetShowing(let isShowing, let sheetType):
+    case .setSubscriptionSheetShowing(let isShowing):
         newState.viewState.readerDisplayType = .normal
         newState.viewState.isShowingSubscriptionSheet = isShowing
-        newState.viewState.subscriptionSheetType = sheetType
     case .showSnackBar(let type):
         if let url = type.sound.fileURL,
            let player = try? AVAudioPlayer(contentsOf: url) {
@@ -309,8 +304,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.isShowingFreeLimitExplanation = isShowing
     case .hasReachedFreeTrialLimit:
         newState.subscriptionState.hasReachedFreeTrialLimit = true
-    case .hasReachedDailyLimit:
-        newState.subscriptionState.hasReachedDailyLimit = true
     case .onDailyChapterLimitReached(let nextAvailable):
         newState.subscriptionState.nextAvailableDescription = nextAvailable
     case .saveStoryAndSettings,
@@ -348,7 +341,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .loadChapters,
             .failedToLoadChapters,
             .failedToPrepareStudyWord,
-            .checkFreeTrialLimit:
+            .checkFreeTrialLimit,
+            .failedToSynthesizeAudio,
+            .hasReachedDailyLimit:
         break
     }
 

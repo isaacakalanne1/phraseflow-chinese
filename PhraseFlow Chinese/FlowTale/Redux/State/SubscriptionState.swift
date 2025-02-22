@@ -34,6 +34,5 @@ struct SubscriptionState {
     var purchasedProductIDs = Set<String>()
 
     var hasReachedFreeTrialLimit = false
-    var hasReachedDailyLimit = false
     var nextAvailableDescription = ""
 }

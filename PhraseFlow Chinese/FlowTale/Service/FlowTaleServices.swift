@@ -22,7 +22,6 @@ struct WordDefinition: Codable, Equatable, Hashable {
 enum FlowTaleServicesError: Error {
     case generalError
     case invalidJSON
-    case failedToGetChapter
     case failedToGetDeviceLanguage
     case failedToGetResponseData
     case failedToEncodeJson
@@ -186,10 +185,6 @@ protocol FlowTaleServicesProtocol {
                           chapter: Chapter,
                           story: Story,
                           deviceLanguage: Language?) async throws -> [Definition]
-    func fetchDefinition(of character: String,
-                         withinContextOf sentence: Sentence,
-                         story: Story,
-                         deviceLanguage: Language?) async throws -> String
     func generateImage(with prompt: String) async throws -> Data
     func moderateText(_ text: String) async throws -> ModerationResponse
 }
@@ -363,42 +358,6 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
           }
 
         return finalDefinitions
-    }
-
-    func fetchDefinition(of character: String,
-                         withinContextOf sentence: Sentence,
-                         story: Story,
-                         deviceLanguage: Language?) async throws -> String {
-        guard let deviceLanguage else {
-            throw FlowTaleServicesError.failedToGetDeviceLanguage
-        }
-        let languageName = story.language.descriptiveEnglishName
-        let initialPrompt =
-"""
-        You are an AI assistant that provides \(deviceLanguage.displayName) definitions for characters in \(languageName) sentences. Your explanations are brief, and simple to understand.
-        You provide the pronounciation for the \(languageName) character in brackets after the \(languageName) word.
-        If the character is used as part of a larger word, you also provide the pronounciation and definition for each character in this overall word.
-        You also provide the definition of the word in the context of the overall sentence.
-        You never repeat the \(languageName) sentence, and never translate the whole of the \(languageName) sentence into English.
-"""
-        let mainPrompt =
-"""
-Provide a definition for this word: "\(character)"
-Also explain the word in the context of the sentence: "\(sentence.translation)".
-Don't define other words in the sentence.
-Write the definition in \(deviceLanguage.displayName).
-"""
-        let messages: [[String: String]] = [
-            ["role": "system", "content": initialPrompt],
-            ["role": "user", "content": mainPrompt]
-        ]
-
-        let requestBody: [String: Any] = [
-            "model": APIRequestType.openAI.modelName,
-            "messages": messages
-        ]
-
-        return try await makeRequest(type: .openAI, requestBody: requestBody)
     }
 
     func generateStory(story: Story) async throws -> String {

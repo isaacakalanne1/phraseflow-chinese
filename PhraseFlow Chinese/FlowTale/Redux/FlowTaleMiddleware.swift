@@ -67,7 +67,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
                 return .translateStory(story: story, storyString: storyString)
             }
         } catch FlowTaleDataStoreError.freeUserChapterLimitReached {
-            return .setSubscriptionSheetShowing(true, .freeLimitReached)
+            return .setSubscriptionSheetShowing(true)
         } catch FlowTaleDataStoreError.chapterCreationLimitReached(let nextAvailable) {
             return .onDailyChapterLimitReached(nextAvailable: nextAvailable)
         } catch {
@@ -135,7 +135,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             let result = try await environment.synthesizeSpeech(for: chapter,
                                                                 story: story,
                                                                 voice: voice,
-                                                                speechSpeed: state.settingsState.speechSpeed,
                                                                 language: story.language)
             return .onSynthesizedAudio(result, story, isForced: isForced)
         } catch {

@@ -37,7 +37,3 @@ enum ContentTab: CaseIterable, Equatable, Identifiable {
         }
     }
 }
-
-enum PlayButtonDisplayType {
-    case normal, loading
-}

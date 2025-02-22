@@ -12,9 +12,7 @@ enum FlowTaleDataStoreError: Error {
     case failedToCreateUrl
     case failedToSaveData
     case failedToDecodeData
-    case storyNotFound
     case chapterNotFound
-    // New: free user overall limit
     case freeUserChapterLimitReached
     case chapterCreationLimitReached(timeUntilNextAvailable: String)
 }
@@ -28,13 +26,11 @@ protocol FlowTaleDataStoreProtocol {
 
     // Definitions
     func loadDefinitions() throws -> [Definition]
-    func saveDefinition(_ definition: Definition) throws
     func saveDefinitions(_ definitions: [Definition]) throws
     func deleteDefinitions(for storyId: UUID) throws
 
     // Stories & Chapters
     func saveStory(_ story: Story) throws
-    func loadStory(by id: UUID) throws -> Story
     func loadAllStories() throws -> [Story]
 
     // Chapters
@@ -87,15 +83,6 @@ final class KeychainManager {
         return item as? Data
     }
 
-    // You can also expose a helper for removing items by key
-    func removeValue(forKey key: String) {
-        let query: [String: Any] = [
-            kSecClass as String:        kSecClassGenericPassword,
-            kSecAttrAccount as String:  key
-        ]
-        SecItemDelete(query as CFDictionary)
-    }
-
     // Basic error
     enum KeychainError: Error {
         case unhandledError(status: OSStatus)
@@ -113,9 +100,6 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
 
     // We'll use this reference:
     private let keychain = KeychainManager.shared
-
-    /// Filename used to track chapter-creation timestamps
-    private let chapterCreationLogFilename = "chapterCreationLog.json"
 
     /// Documents directory URL
     private var documentsDirectory: URL? {
@@ -207,16 +191,6 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         }
     }
 
-    func saveDefinition(_ definition: Definition) throws {
-        var allDefinitions = (try? loadDefinitions()) ?? []
-        if let index = allDefinitions.firstIndex(where: { $0.timestampData.id == definition.timestampData.id }) {
-            allDefinitions[index] = definition
-        } else {
-            allDefinitions.append(definition)
-        }
-        try saveDefinitions(allDefinitions)
-    }
-
     func saveDefinitions(_ definitions: [Definition]) throws {
         guard let fileURL = documentsDirectory?.appendingPathComponent("definitions.json") else {
             throw FlowTaleDataStoreError.failedToCreateUrl
@@ -266,22 +240,6 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         }
     }
 
-    func loadStory(by id: UUID) throws -> Story {
-        let url = try fileURL(for: id, chapterIndex: 0)
-        guard fileManager.fileExists(atPath: url.path) else {
-            throw FlowTaleDataStoreError.storyNotFound
-        }
-        let data = try Data(contentsOf: url)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        do {
-            let story = try decoder.decode(Story.self, from: data)
-            return story
-        } catch {
-            throw FlowTaleDataStoreError.failedToDecodeData
-        }
-    }
-
     func loadAllStories() throws -> [Story] {
         guard let dir = documentsDirectory else {
             throw FlowTaleDataStoreError.failedToCreateUrl
@@ -305,49 +263,6 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         }
 
         return stories
-    }
-
-    // ---------------------------------------
-    // MARK: - Daily Chapter-Creation Tracking
-    // ---------------------------------------
-    /// Loads the creation dates from disk.
-    private func loadChapterCreationDates() throws -> [Date] {
-        guard let dir = documentsDirectory else {
-            throw FlowTaleDataStoreError.failedToCreateUrl
-        }
-        let fileURL = dir.appendingPathComponent(chapterCreationLogFilename)
-
-        guard fileManager.fileExists(atPath: fileURL.path) else {
-            // If no file yet, return empty
-            return []
-        }
-
-        let data = try Data(contentsOf: fileURL)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        do {
-            return try decoder.decode([Date].self, from: data)
-        } catch {
-            // If decoding fails for any reason, you can decide to discard or throw
-            return []
-        }
-    }
-
-    /// Saves the creation dates back to disk.
-    private func saveChapterCreationDates(_ dates: [Date]) throws {
-        guard let dir = documentsDirectory else {
-            throw FlowTaleDataStoreError.failedToCreateUrl
-        }
-        let fileURL = dir.appendingPathComponent(chapterCreationLogFilename)
-
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
-        do {
-            let data = try encoder.encode(dates)
-            try data.write(to: fileURL)
-        } catch {
-            throw FlowTaleDataStoreError.failedToSaveData
-        }
     }
 
     // ---------------------------------------
@@ -457,27 +372,6 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
                 let fileURL = dir.appendingPathComponent(fileName)
                 try fileManager.removeItem(at: fileURL)
             }
-        }
-    }
-
-    // ---------------------------------------
-    // Example helper to clear data
-    // ---------------------------------------
-    func clearData(path: String) {
-        guard let documentsDirectory = documentsDirectory else {
-            return
-        }
-        let fileURL = documentsDirectory.appendingPathComponent(path)
-
-        if fileManager.fileExists(atPath: fileURL.path) {
-            do {
-                try fileManager.removeItem(at: fileURL)
-                print("Data at \(path) cleared successfully.")
-            } catch {
-                print("Failed to clear data at \(path): \(error.localizedDescription)")
-            }
-        } else {
-            print("No data found at \(path) to clear.")
         }
     }
 }

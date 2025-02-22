@@ -41,7 +41,7 @@ struct SubscriptionView: View {
                     Task {
                         store.dispatch(.purchaseSubscription(product))
                     }
-                    store.dispatch(.setSubscriptionSheetShowing(false, .manualOpen))
+                    store.dispatch(.setSubscriptionSheetShowing(false))
                 })
             }
 
@@ -50,7 +50,7 @@ struct SubscriptionView: View {
             Button {
                 Task {
                     store.dispatch(.restoreSubscriptions)
-                    store.dispatch(.setSubscriptionSheetShowing(false, .manualOpen))
+                    store.dispatch(.setSubscriptionSheetShowing(false))
                 }
             } label: {
                 Text(LocalizedString.restoreSubscription)
