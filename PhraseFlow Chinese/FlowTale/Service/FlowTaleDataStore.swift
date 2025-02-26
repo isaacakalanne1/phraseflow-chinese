@@ -30,6 +30,7 @@ protocol FlowTaleDataStoreProtocol {
     func saveDefinitions(_ definitions: [Definition]) throws
     func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws
     func deleteDefinitions(for storyId: UUID) throws
+    func cleanupOrphanedDefinitionFiles() throws
 
     // Stories & Chapters
     func saveStory(_ story: Story) throws
@@ -186,6 +187,7 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
     }
     
     // Helper method to get all definition file URLs
+    // This is kept for maintenance/debugging purposes, though we now load definitions by story ID
     private func getAllDefinitionFiles() throws -> [URL] {
         guard let dir = documentsDirectory else {
             throw FlowTaleDataStoreError.failedToCreateUrl
@@ -195,6 +197,35 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         let definitionFiles = contents.filter { $0.hasPrefix("definitions-") && $0.hasSuffix(".json") }
         
         return definitionFiles.map { dir.appendingPathComponent($0) }
+    }
+    
+    // Helper method to clean up orphaned definition files (definitions for stories that no longer exist)
+    // This could be called periodically for maintenance
+    func cleanupOrphanedDefinitionFiles() throws {
+        guard let dir = documentsDirectory else {
+            throw FlowTaleDataStoreError.failedToCreateUrl
+        }
+        
+        // Get all story IDs
+        let stories = try loadAllStories()
+        let validStoryIds = stories.map { $0.id.uuidString }
+        
+        // Get all definition files
+        let contents = try fileManager.contentsOfDirectory(atPath: dir.path)
+        let definitionFiles = contents.filter { $0.hasPrefix("definitions-") && $0.hasSuffix(".json") }
+        
+        // Find orphaned definition files
+        for fileName in definitionFiles {
+            // Extract the story ID from the filename (definitions-UUID.json)
+            let storyIdString = fileName.replacingOccurrences(of: "definitions-", with: "")
+                                       .replacingOccurrences(of: ".json", with: "")
+            
+            // If the story ID doesn't exist in our valid IDs, delete the file
+            if !validStoryIds.contains(storyIdString) {
+                let fileURL = dir.appendingPathComponent(fileName)
+                try fileManager.removeItem(at: fileURL)
+            }
+        }
     }
     
     // Load definitions for a specific story
@@ -262,19 +293,11 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
             }
         }
         
-        // Load from all story-specific definition files
-        let definitionFiles = try getAllDefinitionFiles()
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        
-        for fileURL in definitionFiles {
-            do {
-                let data = try Data(contentsOf: fileURL)
-                let definitions = try decoder.decode([Definition].self, from: data)
-                allDefinitions.append(contentsOf: definitions)
-            } catch {
-                // Skip files that fail to decode
-            }
+        // Get all saved stories and load definitions for each one
+        let stories = try loadAllStories()
+        for story in stories {
+            let storyDefinitions = try loadDefinitions(for: story.id)
+            allDefinitions.append(contentsOf: storyDefinitions)
         }
         
         return allDefinitions

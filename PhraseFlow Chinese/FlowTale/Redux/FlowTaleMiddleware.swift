@@ -124,8 +124,15 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         }
     case .deleteStory(let story):
         do {
+            // Delete definitions for this story
             try environment.deleteDefinitions(for: story.id)
+            
+            // Delete the story and its chapters
             try environment.unsaveStory(story)
+            
+            // Cleanup any orphaned definition files
+            try environment.cleanupOrphanedDefinitionFiles()
+            
             return .onDeletedStory
         } catch {
             return .failedToDeleteStory

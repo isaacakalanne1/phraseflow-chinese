@@ -23,6 +23,7 @@ protocol FlowTaleEnvironmentProtocol {
     func saveDefinitions(_ definitions: [Definition]) throws
     func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws
     func deleteDefinitions(for storyId: UUID) throws
+    func cleanupOrphanedDefinitionFiles() throws
     
     // Settings
     func loadAppSettings() throws -> SettingsState
@@ -133,6 +134,10 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
 
     func deleteDefinitions(for storyId: UUID) throws {
         try dataStore.deleteDefinitions(for: storyId)
+    }
+    
+    func cleanupOrphanedDefinitionFiles() throws {
+        try dataStore.cleanupOrphanedDefinitionFiles()
     }
 
     func loadAppSettings() throws -> SettingsState {
