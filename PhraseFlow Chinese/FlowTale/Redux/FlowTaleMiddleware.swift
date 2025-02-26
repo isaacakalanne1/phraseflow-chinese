@@ -115,6 +115,13 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         } catch {
             return .failedToLoadDefinitions
         }
+    case .loadDefinitionsForStory(let storyId):
+        do {
+            let definitions = try environment.loadDefinitions(for: storyId)
+            return .onLoadedDefinitions(definitions)
+        } catch {
+            return .failedToLoadDefinitions
+        }
     case .deleteStory(let story):
         do {
             try environment.deleteDefinitions(for: story.id)
@@ -253,7 +260,14 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return .saveDefinitions
     case .saveDefinitions:
         do {
-            try environment.saveDefinitions(state.definitionState.definitions)
+            // Group definitions by story ID for more efficient storage
+            let definitionsByStoryId = Dictionary(grouping: state.definitionState.definitions) { $0.timestampData.storyId }
+            
+            // Save each group to its own file
+            for (storyId, definitions) in definitionsByStoryId {
+                try environment.saveDefinitions(for: storyId, definitions: definitions)
+            }
+            
             return .onSavedDefinitions
         } catch {
             return .failedToSaveDefinitions

@@ -60,6 +60,7 @@ enum FlowTaleAction {
     case failedToLoadChapters
 
     case loadDefinitions
+    case loadDefinitionsForStory(UUID)
     case onLoadedDefinitions([Definition])
     case failedToLoadDefinitions
 

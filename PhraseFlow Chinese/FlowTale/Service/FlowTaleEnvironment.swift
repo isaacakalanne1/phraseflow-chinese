@@ -16,9 +16,15 @@ protocol FlowTaleEnvironmentProtocol {
     func getProducts() async throws -> [Product]
     func generateStory(story: Story) async throws -> String
     func translateStory(story: Story, storyString: String, deviceLanguage: Language?) async throws -> Story
+    
+    // Definitions
     func loadDefinitions() throws -> [Definition]
+    func loadDefinitions(for storyId: UUID) throws -> [Definition]
     func saveDefinitions(_ definitions: [Definition]) throws
+    func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws
     func deleteDefinitions(for storyId: UUID) throws
+    
+    // Settings
     func loadAppSettings() throws -> SettingsState
     func saveAppSettings(_ settings: SettingsState) throws
 
@@ -112,9 +118,17 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     func loadDefinitions() throws -> [Definition] {
         try dataStore.loadDefinitions()
     }
+    
+    func loadDefinitions(for storyId: UUID) throws -> [Definition] {
+        try dataStore.loadDefinitions(for: storyId)
+    }
 
     func saveDefinitions(_ definitions: [Definition]) throws {
         try dataStore.saveDefinitions(definitions)
+    }
+    
+    func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws {
+        try dataStore.saveDefinitions(for: storyId, definitions: definitions)
     }
 
     func deleteDefinitions(for storyId: UUID) throws {

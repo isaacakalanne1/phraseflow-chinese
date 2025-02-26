@@ -26,7 +26,9 @@ protocol FlowTaleDataStoreProtocol {
 
     // Definitions
     func loadDefinitions() throws -> [Definition]
+    func loadDefinitions(for storyId: UUID) throws -> [Definition]
     func saveDefinitions(_ definitions: [Definition]) throws
+    func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws
     func deleteDefinitions(for storyId: UUID) throws
 
     // Stories & Chapters
@@ -177,40 +179,128 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
     // ---------------------------------------
     // MARK: - Definitions
     // ---------------------------------------
-    func loadDefinitions() throws -> [Definition] {
-        guard let fileURL = documentsDirectory?.appendingPathComponent("definitions.json") else {
+    
+    // Helper method to get the file URL for story-specific definitions
+    private func definitionsFileURL(for storyId: UUID) -> URL? {
+        return documentsDirectory?.appendingPathComponent("definitions-\(storyId.uuidString).json")
+    }
+    
+    // Helper method to get all definition file URLs
+    private func getAllDefinitionFiles() throws -> [URL] {
+        guard let dir = documentsDirectory else {
             throw FlowTaleDataStoreError.failedToCreateUrl
         }
+        
+        let contents = try fileManager.contentsOfDirectory(atPath: dir.path)
+        let definitionFiles = contents.filter { $0.hasPrefix("definitions-") && $0.hasSuffix(".json") }
+        
+        return definitionFiles.map { dir.appendingPathComponent($0) }
+    }
+    
+    // Load definitions for a specific story
+    func loadDefinitions(for storyId: UUID) throws -> [Definition] {
+        guard let fileURL = definitionsFileURL(for: storyId) else {
+            throw FlowTaleDataStoreError.failedToCreateUrl
+        }
+        
+        // If the file doesn't exist yet, return an empty array
+        guard fileManager.fileExists(atPath: fileURL.path) else {
+            return []
+        }
+        
         do {
             let data = try Data(contentsOf: fileURL)
             let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
             let definitions = try decoder.decode([Definition].self, from: data)
             return definitions
         } catch {
             throw FlowTaleDataStoreError.failedToDecodeData
         }
     }
-
-    func saveDefinitions(_ definitions: [Definition]) throws {
-        guard let fileURL = documentsDirectory?.appendingPathComponent("definitions.json") else {
+    
+    // Save definitions for a specific story
+    func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws {
+        guard let fileURL = definitionsFileURL(for: storyId) else {
             throw FlowTaleDataStoreError.failedToCreateUrl
         }
+        
         let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
         do {
-            // Shuffle or not, depending on your preference
             let encodedData = try encoder.encode(definitions.shuffled())
             try encodedData.write(to: fileURL)
         } catch {
             throw FlowTaleDataStoreError.failedToSaveData
         }
     }
-
-    func deleteDefinitions(for storyId: UUID) throws {
-        let currentDefinitions = try loadDefinitions()
-        let filteredDefinitions = currentDefinitions.filter {
-            $0.timestampData.storyId != storyId
+    
+    // Load all definitions from all stories
+    func loadDefinitions() throws -> [Definition] {
+        // First, check if the legacy file exists
+        let legacyFileURL = documentsDirectory?.appendingPathComponent("definitions.json")
+        var allDefinitions: [Definition] = []
+        
+        // Load from legacy file if it exists
+        if let legacyURL = legacyFileURL, fileManager.fileExists(atPath: legacyURL.path) {
+            do {
+                let data = try Data(contentsOf: legacyURL)
+                let decoder = JSONDecoder()
+                let legacyDefinitions = try decoder.decode([Definition].self, from: data)
+                allDefinitions.append(contentsOf: legacyDefinitions)
+                
+                // Migrate legacy definitions to story-specific files
+                let definitionsByStoryId = Dictionary(grouping: legacyDefinitions) { $0.timestampData.storyId }
+                for (storyId, definitions) in definitionsByStoryId {
+                    try saveDefinitions(for: storyId, definitions: definitions)
+                }
+                
+                // Delete the legacy file after migration
+                try fileManager.removeItem(at: legacyURL)
+            } catch {
+                // If we can't read the legacy file, just continue with story-specific files
+            }
         }
-        try saveDefinitions(filteredDefinitions)
+        
+        // Load from all story-specific definition files
+        let definitionFiles = try getAllDefinitionFiles()
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        
+        for fileURL in definitionFiles {
+            do {
+                let data = try Data(contentsOf: fileURL)
+                let definitions = try decoder.decode([Definition].self, from: data)
+                allDefinitions.append(contentsOf: definitions)
+            } catch {
+                // Skip files that fail to decode
+            }
+        }
+        
+        return allDefinitions
+    }
+    
+    // Save all definitions, grouped by story ID
+    func saveDefinitions(_ definitions: [Definition]) throws {
+        // Group definitions by story ID
+        let definitionsByStoryId = Dictionary(grouping: definitions) { $0.timestampData.storyId }
+        
+        // Save each group to its own file
+        for (storyId, storyDefinitions) in definitionsByStoryId {
+            try saveDefinitions(for: storyId, definitions: storyDefinitions)
+        }
+    }
+    
+    // Delete definitions for a specific story
+    func deleteDefinitions(for storyId: UUID) throws {
+        guard let fileURL = definitionsFileURL(for: storyId) else {
+            throw FlowTaleDataStoreError.failedToCreateUrl
+        }
+        
+        // If the file exists, delete it
+        if fileManager.fileExists(atPath: fileURL.path) {
+            try fileManager.removeItem(at: fileURL)
+        }
     }
 
     // ---------------------------------------
