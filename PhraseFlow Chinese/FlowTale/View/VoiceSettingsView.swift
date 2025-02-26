@@ -27,10 +27,12 @@ struct VoiceMenu: View {
     var body: some View {
         List {
             Section {
-                let sortedVoices = store.state.storyState.currentStory?.language.voices
-                    .sorted(by: { $0.gender.title < $1.gender.title })
-                ForEach(sortedVoices ?? [],
-                        id: \.self) { voice in
+                // Get voices from either currentStory or directly from the current language setting
+                let voices = store.state.storyState.currentStory?.language.voices ?? 
+                             store.state.settingsState.language.voices
+                let sortedVoices = voices.sorted(by: { $0.gender.title < $1.gender.title })
+                
+                ForEach(sortedVoices, id: \.self) { voice in
                     let isSelectedVoice = store.state.settingsState.voice == voice
 
                     Button(action: {
