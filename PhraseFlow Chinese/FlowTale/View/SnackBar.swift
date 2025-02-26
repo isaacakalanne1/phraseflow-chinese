@@ -20,6 +20,7 @@ struct SnackBar: View {
             HStack {
                 type.iconView
                 Text(type.text)
+                    .foregroundStyle(FlowTaleColor.background)
             }
             
             // Only show loading indicators for the writing chapter snackbar
@@ -54,9 +55,10 @@ struct SnackBar: View {
             } else if store.state.viewState.loadingState.progressInt == completeState.progressInt {
                 ProgressView()
                     .scaleEffect(0.8)
+                    .tint(FlowTaleColor.background)
             } else {
                 Circle()
-                    .fill(Color.gray.opacity(0.3))
+                    .fill(FlowTaleColor.background.opacity(0.3))
                     .frame(width: 8, height: 8)
             }
         }

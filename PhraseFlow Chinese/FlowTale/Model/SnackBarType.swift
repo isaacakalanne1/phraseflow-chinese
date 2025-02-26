@@ -99,10 +99,21 @@ enum SnackBarType {
         store.dispatch(.hideSnackbar)
         switch self {
         case .storyReadyTapToRead:
-            store.dispatch(.selectTab(.reader, shouldPlaySound: true))
-        case .writingChapter,
-                .chapterReady,
-                .subscribed,
+            // Load the newest story and set it as current when tapped
+            if let newStory = store.state.storyState.savedStories.first {
+                store.dispatch(.selectTab(.reader, shouldPlaySound: true))
+                store.dispatch(.selectStoryFromSnackbar(newStory))
+            }
+        case .writingChapter:
+            // Do nothing when tapping writing chapter
+            break
+        case .chapterReady:
+            // When a chapter is ready, if there's no current story set, set the newest one
+            if store.state.storyState.currentStory == nil, 
+               let newStory = store.state.storyState.savedStories.first {
+                store.dispatch(.selectStoryFromSnackbar(newStory))
+            }
+        case .subscribed,
                 .moderatingText,
                 .passedModeration,
                 .didNotPassModeration,
@@ -141,6 +152,13 @@ enum SnackBarType {
     }
 
     var sound: AppSound {
-        isError ? .errorSnackbar : .snackbar
+        switch self {
+        case .writingChapter:
+            return .createStory
+        case _ where isError:
+            return .errorSnackbar
+        default:
+            return .snackbar
+        }
     }
 }

@@ -45,6 +45,7 @@ enum FlowTaleAction {
     case deleteCustomPrompt(String)
 
     case selectChapter(Story, chapterIndex: Int)
+    case selectStoryFromSnackbar(Story)
     case onSelectedChapter
 
     case loadStories(isAppLaunch: Bool)

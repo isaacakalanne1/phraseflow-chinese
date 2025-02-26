@@ -71,7 +71,7 @@ struct ChapterView: View {
                     store.dispatch(.playSound(.goToNextChapter))
                     store.dispatch(.goToNextChapter)
                 } else {
-                    store.dispatch(.playSound(.createNextChapter))
+//                    store.dispatch(.playSound(.createNextChapter))
                     // Show the writing chapter snackbar while creating new chapter
                     store.dispatch(.showSnackBar(.writingChapter))
                     store.dispatch(.createChapter(.existingStory(story)))

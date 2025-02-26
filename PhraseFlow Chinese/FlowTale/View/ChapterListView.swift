@@ -78,7 +78,6 @@ struct ChapterListView: View {
                     store.dispatch(.showSnackBar(.writingChapter))
                     // Create the chapter but stay on current screen
                     store.dispatch(.createChapter(.existingStory(story)))
-                    store.dispatch(.playSound(.createStory))
                 }
                 .padding()
                 // TODO: Add Settings button to change voice

@@ -107,24 +107,43 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .synthesizeAudio:
         newState.viewState.loadingState = .generatingSpeech
     case .onSynthesizedAudio(var data, var newStory, let isForced):
-        if !isForced {
-            newState.viewState.contentTab = .reader
-        }
         newState.definitionState.currentDefinition = nil
         newState.viewState.chapterViewId = UUID()
         newState.viewState.loadingState = .complete
-        newState.viewState.contentTab = .reader
-
+        
+        // For existing users, we don't set the current story
+        // They'll need to tap the snackbar to load it
+        let hasExistingStories = newState.storyState.savedStories.count > 1
+        let isNewStoryCreation = newStory.chapters.count == 1
+        
         newStory.currentPlaybackTime = 0
         newStory.currentSentenceIndex = 0
         newStory.currentChapterIndex = newStory.chapters.count - 1
         newStory.chapters[newStory.currentChapterIndex].audio = data
         newStory.chapters[newStory.currentChapterIndex].audioSpeed = newState.settingsState.speechSpeed
         newStory.chapters[newStory.currentChapterIndex].audioVoice = newState.settingsState.voice
-        newState.storyState.currentStory = newStory
-
-        let player = data.data.createAVPlayer()
-        newState.audioState.audioPlayer = player ?? AVPlayer()
+        
+        // Only set current story for new users (first story) or forced updates
+        if (isNewStoryCreation && !hasExistingStories) || isForced {
+            newState.storyState.currentStory = newStory
+            newState.viewState.contentTab = .reader
+            
+            // Set up audio player for immediate use
+            let player = data.data.createAVPlayer()
+            newState.audioState.audioPlayer = player ?? AVPlayer()
+        }
+        
+        // Show the appropriate snackbar immediately based on the type of story being created
+        if !isNewStoryCreation {
+            // For new chapters in existing stories, show the "Chapter ready" snackbar
+            newState.snackBarState.type = .chapterReady
+            newState.snackBarState.isShowing = true
+        } else if hasExistingStories {
+            // For new stories when user has other stories, show the "Story ready" snackbar
+            newState.snackBarState.type = .storyReadyTapToRead
+            newState.snackBarState.isShowing = true
+        }
+        
         newState.viewState.readerDisplayType = .normal
     case .updateShowDefinition(let isShowing):
         newState.settingsState.isShowingDefinition = isShowing
@@ -149,6 +168,28 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.settingsState.language = story.language
 
 
+        let data = newState.storyState.currentChapterAudioData
+        let player = data?.createAVPlayer()
+        newState.audioState.audioPlayer = player ?? AVPlayer()
+        
+    case .selectStoryFromSnackbar(var story):
+        // Similar to selectChapter but sets index to the latest chapter
+        newState.definitionState.currentDefinition = nil
+        story.lastUpdated = .now
+        story.currentChapterIndex = story.chapters.count - 1
+        
+        if let chapter = story.chapters[safe: story.currentChapterIndex] {
+            if let voice = chapter.audioVoice {
+                newState.settingsState.voice = voice
+            }
+            if let speed = chapter.audioSpeed {
+                newState.settingsState.speechSpeed = speed
+            }
+        }
+        
+        newState.storyState.currentStory = story
+        newState.settingsState.language = story.language
+        
         let data = newState.storyState.currentChapterAudioData
         let player = data?.createAVPlayer()
         newState.audioState.audioPlayer = player ?? AVPlayer()

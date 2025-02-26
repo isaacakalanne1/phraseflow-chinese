@@ -53,7 +53,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         }
 
     case .createChapter(let type):
-
         do {
             try environment.enforceChapterCreationLimit(subscription: state.subscriptionState.currentSubscription)
             switch type {
@@ -308,17 +307,11 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .failedToSaveStoryAndSettings
         }
     case .onSavedStoryAndSettings:
-        // After a story is successfully saved, check if this was a new story creation
-        // and the user already has other stories
-        if state.storyState.savedStories.count >= 1 {
-            // Show the "story ready" snackbar that stays for 10 seconds and allows tapping to read
-            return .loadThenShowReadySnackbar
-        }
+        // Just load stories after saving - we already show snackbars in the reducer
         return .loadStories(isAppLaunch: false)
     case .loadThenShowReadySnackbar:
         do {
-            var stories = try environment.loadAllStories()
-                .sorted(by: { $0.lastUpdated > $1.lastUpdated })
+            try environment.loadAllStories() // Refresh the stories in the environment
             return .showSnackBar(.storyReadyTapToRead)
         } catch {
             return .failedToLoadStories
@@ -524,7 +517,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .showDailyLimitExplanationScreen,
             .hasReachedFreeTrialLimit,
             .hasReachedDailyLimit,
-            .showFreeLimitExplanationScreen:
+            .showFreeLimitExplanationScreen,
+            .selectStoryFromSnackbar:
         return nil
     }
 }

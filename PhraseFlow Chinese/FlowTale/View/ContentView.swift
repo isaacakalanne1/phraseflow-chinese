@@ -170,7 +170,7 @@ struct ContentView: View {
         VStack(alignment: .trailing) {
             if store.state.snackBarState.isShowing {
                 SnackBar()
-                    .transition(.move(edge: .leading))
+                    .transition(.push(from: .leading))
             }
             Spacer()
         }
