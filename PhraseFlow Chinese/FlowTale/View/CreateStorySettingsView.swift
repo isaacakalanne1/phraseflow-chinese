@@ -164,5 +164,7 @@ struct CreateStoryButton: View {
             .foregroundColor(.white)
             .cornerRadius(10)
         }
+        // Disable button if currently writing a chapter
+        .disabled(store.state.viewState.isWritingChapter)
     }
 }

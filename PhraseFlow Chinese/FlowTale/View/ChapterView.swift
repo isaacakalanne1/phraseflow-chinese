@@ -71,12 +71,13 @@ struct ChapterView: View {
                     store.dispatch(.playSound(.goToNextChapter))
                     store.dispatch(.goToNextChapter)
                 } else {
-//                    store.dispatch(.playSound(.createNextChapter))
                     // Show the writing chapter snackbar while creating new chapter
                     store.dispatch(.showSnackBar(.writingChapter))
                     store.dispatch(.createChapter(.existingStory(story)))
                 }
             }
+            // Disable button if currently writing a chapter
+            .disabled(store.state.viewState.isWritingChapter)
             .padding()
             .background(FlowTaleColor.accent)
             .foregroundColor(.white)

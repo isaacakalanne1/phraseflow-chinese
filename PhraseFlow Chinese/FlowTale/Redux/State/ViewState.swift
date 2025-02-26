@@ -24,6 +24,9 @@ struct ViewState {
 
     var isAutoscrollEnabled = false
     var isDefining = false
+    
+    // Flag to track if a chapter is currently being written
+    var isWritingChapter = false
 
     var readerDisplayType: ReaderDisplayType
     var contentTab: ContentTab
@@ -38,6 +41,7 @@ struct ViewState {
          isShowingCustomPromptAlert: Bool = false,
          isAutoscrollEnabled: Bool = false,
          isDefining: Bool = false,
+         isWritingChapter: Bool = false,
          readerDisplayType: ReaderDisplayType = .initialising,
          contentTab: ContentTab = .reader,
          loadingState: LoadingState = .complete) {
@@ -49,6 +53,7 @@ struct ViewState {
         self.isShowingCustomPromptAlert = isShowingCustomPromptAlert
         self.isAutoscrollEnabled = isAutoscrollEnabled
         self.isDefining = isDefining
+        self.isWritingChapter = isWritingChapter
         self.readerDisplayType = readerDisplayType
         self.contentTab = contentTab
         self.loadingState = loadingState

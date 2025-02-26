@@ -92,14 +92,25 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         // First show the snackbar
         state.appAudioState.audioPlayer.play()
 
-        // Set up a task to hide the snackbar after its duration
+        // Hide the snackbar after its duration, then save the story
         if let duration = type.showDuration {
             try? await Task.sleep(for: .seconds(duration))
-            return .hideSnackbar
+            return .hideSnackbarThenSaveStoryAndSettings(story)
         }
-
-        // Then proceed with saving the story
+        // If no duration, just save directly
         return .saveStoryAndSettings(story)
+        
+    case .hideSnackbarThenSaveStoryAndSettings(_):
+        // Get the current story from state, which will have the updated chapter data
+        // This ensures we use the latest story with all modifications from the reducer
+        if let currentStory = state.storyState.currentStory {
+            return .saveStoryAndSettings(currentStory)
+        } else if let firstStory = state.storyState.savedStories.first {
+            // Fallback to the first story if current story is nil
+            return .saveStoryAndSettings(firstStory)
+        }
+        // No story to save
+        return nil
     case .loadStories(let isAppLaunch):
         do {
             var stories = try environment.loadAllStories()
@@ -170,6 +181,9 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         // Determine which type of snackbar to show based on the story
         let isNewStoryCreation = story.chapters.count == 1
         let hasExistingStories = state.storyState.savedStories.count > 1
+        
+        // We'll let the reducer handle updating the state with this story first 
+        // before we do anything else, so we don't need to pass the story along
         
         // Show appropriate snackbar first
         if !isNewStoryCreation {

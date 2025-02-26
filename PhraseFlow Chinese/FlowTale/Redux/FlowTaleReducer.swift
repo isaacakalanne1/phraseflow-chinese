@@ -111,6 +111,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.chapterViewId = UUID()
         newState.viewState.loadingState = .complete
         
+        // Reset the writing chapter flag
+        newState.viewState.isWritingChapter = false
+        
         // For existing users, we don't set the current story
         // They'll need to tap the snackbar to load it
         let hasExistingStories = newState.storyState.savedStories.count > 1
@@ -198,6 +201,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             newState.settingsState.language = language
         }
     case .createChapter(let type):
+        // Set flag to indicate a chapter is being written
+        newState.viewState.isWritingChapter = true
+        
         switch type {
         case .newStory:
             // For new stories, we've already handled this in the view with the hasExistingStories check
@@ -218,6 +224,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .failedToTranslateStory,
             .failedToGenerateImage:
         newState.viewState.readerDisplayType = .normal
+        // Also reset writing flag on failure
+        newState.viewState.isWritingChapter = false
     case .updateSentenceIndex(let index):
         newState.storyState.currentStory?.currentSentenceIndex = index
     case .playAudio(let time):
@@ -354,6 +362,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.subscriptionState.hasReachedFreeTrialLimit = true
     case .onDailyChapterLimitReached(let nextAvailable):
         newState.subscriptionState.nextAvailableDescription = nextAvailable
+    case .hideSnackbarThenSaveStoryAndSettings:
+        newState.snackBarState.isShowing = false
+            
     case .saveStoryAndSettings,
             .failedToSaveStory,
             .loadStories,

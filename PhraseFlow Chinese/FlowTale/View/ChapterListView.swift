@@ -79,6 +79,8 @@ struct ChapterListView: View {
                     // Create the chapter but stay on current screen
                     store.dispatch(.createChapter(.existingStory(story)))
                 }
+                // Disable button if currently writing a chapter
+                .disabled(store.state.viewState.isWritingChapter)
                 .padding()
                 // TODO: Add Settings button to change voice
             }
