@@ -284,7 +284,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .setSubscriptionSheetShowing(let isShowing):
         newState.viewState.readerDisplayType = .normal
         newState.viewState.isShowingSubscriptionSheet = isShowing
-    case .showSnackBar(let type):
+    case .showSnackBar(let type),
+          .showSnackBarThenSaveStory(let type, _):
         if let url = type.sound.fileURL,
            let player = try? AVAudioPlayer(contentsOf: url) {
             player.volume = 0.7

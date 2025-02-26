@@ -87,6 +87,19 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .hideSnackbar
         }
         return nil
+        
+    case .showSnackBarThenSaveStory(let type, let story):
+        // First show the snackbar
+        state.appAudioState.audioPlayer.play()
+
+        // Set up a task to hide the snackbar after its duration
+        if let duration = type.showDuration {
+            try? await Task.sleep(for: .seconds(duration))
+            return .hideSnackbar
+        }
+
+        // Then proceed with saving the story
+        return .saveStoryAndSettings(story)
     case .loadStories(let isAppLaunch):
         do {
             var stories = try environment.loadAllStories()
@@ -153,11 +166,22 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         } catch {
             return .failedToSynthesizeAudio
         }
-    case .onSynthesizedAudio:
-        if let story = state.storyState.currentStory {
+    case .onSynthesizedAudio(_, let story, _):
+        // Determine which type of snackbar to show based on the story
+        let isNewStoryCreation = story.chapters.count == 1
+        let hasExistingStories = state.storyState.savedStories.count > 1
+        
+        // Show appropriate snackbar first
+        if !isNewStoryCreation {
+            // For new chapters in existing stories
+            return .showSnackBarThenSaveStory(.chapterReady, story)
+        } else if hasExistingStories {
+            // For new stories when user has other stories
+            return .showSnackBarThenSaveStory(.storyReadyTapToRead, story)
+        } else {
+            // Default case - just save story
             return .saveStoryAndSettings(story)
         }
-        return nil
     case .playAudio(let timestamp):
         if let timestamp {
             let myTime = CMTime(seconds: timestamp, preferredTimescale: 60000)
