@@ -16,9 +16,22 @@ struct SnackBar: View {
     }
 
     var body: some View {
-        HStack {
-            type.iconView
-            Text(type.text)
+        VStack(spacing: 8) {
+            HStack {
+                type.iconView
+                Text(type.text)
+            }
+            
+            // Only show loading indicators for the writing chapter snackbar
+            if case .writingChapter = type {
+                HStack(spacing: 10) {
+                    progressView(checkIfComplete: .writing)
+                    progressView(checkIfComplete: .translating)
+                    progressView(checkIfComplete: .generatingImage)
+                    progressView(checkIfComplete: .generatingSpeech)
+                }
+                .padding(.top, 4)
+            }
         }
         .padding()
         .frame(maxWidth: .infinity)
@@ -31,5 +44,22 @@ struct SnackBar: View {
         .onTapGesture {
             type.action(store: store)
         }
+    }
+    
+    @ViewBuilder
+    func progressView(checkIfComplete completeState: LoadingState) -> some View {
+        Group {
+            if store.state.viewState.loadingState.progressInt > completeState.progressInt {
+                Text("✅")
+            } else if store.state.viewState.loadingState.progressInt == completeState.progressInt {
+                ProgressView()
+                    .scaleEffect(0.8)
+            } else {
+                Circle()
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(width: 8, height: 8)
+            }
+        }
+        .frame(width: 20, height: 20)
     }
 }
