@@ -308,7 +308,21 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .failedToSaveStoryAndSettings
         }
     case .onSavedStoryAndSettings:
+        // After a story is successfully saved, check if this was a new story creation
+        // and the user already has other stories
+        if state.storyState.savedStories.count >= 1 {
+            // Show the "story ready" snackbar that stays for 10 seconds and allows tapping to read
+            return .loadThenShowReadySnackbar
+        }
         return .loadStories(isAppLaunch: false)
+    case .loadThenShowReadySnackbar:
+        do {
+            var stories = try environment.loadAllStories()
+                .sorted(by: { $0.lastUpdated > $1.lastUpdated })
+            return .showSnackBar(.storyReadyTapToRead)
+        } catch {
+            return .failedToLoadStories
+        }
     case .setMusicVolume(let volume):
         state.musicAudioState.audioPlayer.setVolume(volume.float, fadeDuration: 0.2)
         return nil

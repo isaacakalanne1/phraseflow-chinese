@@ -11,6 +11,7 @@ enum SnackBarType {
     case welcomeBack
     case writingChapter
     case chapterReady
+    case storyReadyTapToRead
     case deletedCustomStory
     case subscribed
     case failedToWriteChapter
@@ -28,6 +29,8 @@ enum SnackBarType {
             LocalizedString.writingChapter
         case .chapterReady:
             LocalizedString.chapterReady
+        case .storyReadyTapToRead:
+            LocalizedString.storyReadyTapToRead
         case .failedToWriteChapter:
             LocalizedString.snackbarFailedWriteChapter
         case .couldNotModerateText:
@@ -51,6 +54,8 @@ enum SnackBarType {
         switch self {
         case .writingChapter:
             nil
+        case .storyReadyTapToRead:
+            10.0
         case .chapterReady,
                 .failedToWriteChapter,
                 .subscribed,
@@ -75,6 +80,7 @@ enum SnackBarType {
                 .dailyChapterLimitReached:
             emoji = "⌛"
         case .chapterReady,
+                .storyReadyTapToRead,
                 .subscribed,
                 .passedModeration,
                 .deletedCustomStory:
@@ -92,6 +98,8 @@ enum SnackBarType {
     func action(store: FlowTaleStore) {
         store.dispatch(.hideSnackbar)
         switch self {
+        case .storyReadyTapToRead:
+            store.dispatch(.selectTab(.reader, shouldPlaySound: true))
         case .writingChapter,
                 .chapterReady,
                 .subscribed,
@@ -118,7 +126,8 @@ enum SnackBarType {
                 .passedModeration,
                 .welcomeBack,
                 .deletedCustomStory,
-                .dailyChapterLimitReached:
+                .dailyChapterLimitReached,
+                .storyReadyTapToRead:
             return false
         case .failedToWriteChapter,
                 .didNotPassModeration,

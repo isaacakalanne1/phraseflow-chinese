@@ -143,6 +143,7 @@ public enum LocalizedString {
   public static let story = LocalizedString.tr("Localizable", "story")
   public static let storyDidNotMeetPolicies = LocalizedString.tr("Localizable", "story_did_not_meet_policies")
   public static let storyDidNotPassModeration = LocalizedString.tr("Localizable", "story_did_not_pass_moderation")
+  public static let storyReadyTapToRead = LocalizedString.tr("Localizable", "story_ready_tap_to_read")
   public static let storySettings = LocalizedString.tr("Localizable", "story_settings")
   public static let studied = LocalizedString.tr("Localizable", "studied")
   public static let studyContextPrefix = LocalizedString.tr("Localizable", "study_context_prefix")

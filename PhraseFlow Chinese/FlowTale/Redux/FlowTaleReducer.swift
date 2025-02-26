@@ -343,7 +343,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .failedToPrepareStudyWord,
             .checkFreeTrialLimit,
             .failedToSynthesizeAudio,
-            .hasReachedDailyLimit:
+            .hasReachedDailyLimit,
+            .loadThenShowReadySnackbar,
+            .loadDefinitionsForStory:
         break
     }
 

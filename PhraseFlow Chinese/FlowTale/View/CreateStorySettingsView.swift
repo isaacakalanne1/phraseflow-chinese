@@ -140,8 +140,19 @@ struct CreateStoryButton: View {
     var body: some View {
         Button {
             store.dispatch(.playSound(.createStory))
-            store.dispatch(.selectTab(.reader, shouldPlaySound: false))
-            store.dispatch(.createChapter(.newStory))
+            
+            // Check if user has existing stories
+            let hasExistingStories = !store.state.storyState.savedStories.isEmpty
+            
+            if hasExistingStories {
+                // For existing users, show a snackbar with loading and stay on current view
+                store.dispatch(.showSnackBar(.writingChapter))
+                store.dispatch(.createChapter(.newStory))
+            } else {
+                // For new users, use the original flow with full screen loading
+                store.dispatch(.selectTab(.reader, shouldPlaySound: false))
+                store.dispatch(.createChapter(.newStory))
+            }
         } label: {
             HStack(spacing: 5) {
                 DifficultyView(difficulty: store.state.settingsState.difficulty, color: FlowTaleColor.primary)

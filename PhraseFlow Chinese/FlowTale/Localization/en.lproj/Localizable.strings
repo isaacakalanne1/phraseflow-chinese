@@ -339,6 +339,9 @@
 // Snackbar text telling the user the chapter is ready
 "chapter_ready" = "Chapter ready.";
 
+// Snackbar text telling the user the story is ready and to tap to read it
+"story_ready_tap_to_read" = "Story ready. Tap here to read it.";
+
 // Snackbar text telling the user the chapter failed to be written, and they can tap to retry
 "failed_write_chapter" = "Failed to write chapter. Tap to retry.";
 

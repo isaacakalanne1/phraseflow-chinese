@@ -34,7 +34,7 @@ enum SystemImage {
         case .pause:
             "pause.circle.fill"
         case .gear(let isSelected):
-            "gearshape\(isSelected ? ".fill" : ".2")"
+            "gearshape\(isSelected ? ".2.fill" : "")"
         case .pencil(let isSelected):
             isSelected ? "pencil.and.outline" : "square.and.pencil"
         case .play:

@@ -36,6 +36,7 @@ enum FlowTaleAction {
     case saveStoryAndSettings(Story)
     case onSavedStoryAndSettings
     case failedToSaveStoryAndSettings
+    case loadThenShowReadySnackbar
 
     case deleteStory(Story)
     case onDeletedStory
