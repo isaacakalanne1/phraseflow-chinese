@@ -74,7 +74,9 @@ struct ChapterListView: View {
                 .frame(maxHeight: .infinity)
 
                 PrimaryButton(title: LocalizedString.newChapter) {
-                    store.dispatch(.selectTab(.reader, shouldPlaySound: false))
+                    // Show the writing chapter snackbar instead of redirecting to reader tab
+                    store.dispatch(.showSnackBar(.writingChapter))
+                    // Create the chapter but stay on current screen
                     store.dispatch(.createChapter(.existingStory(story)))
                     store.dispatch(.playSound(.createStory))
                 }

@@ -159,13 +159,19 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .createChapter(let type):
         switch type {
         case .newStory:
-            break
+            // For new stories, we've already handled this in the view with the hasExistingStories check
+            let hasExistingStories = !newState.storyState.savedStories.isEmpty
+            if !hasExistingStories {
+                // For new users with no stories, use the full screen loading view
+                newState.viewState.readerDisplayType = .loading
+            }
         case .existingStory(let story):
             if let voice = story.chapters.last?.audioVoice {
                 newState.settingsState.voice = voice
             }
+            // For existing stories (adding new chapter), we should not go to loading view
+            // The snackbar will show the loading state instead
         }
-        newState.viewState.readerDisplayType = .loading
         newState.viewState.loadingState = .writing
     case .failedToCreateChapter,
             .failedToTranslateStory,
