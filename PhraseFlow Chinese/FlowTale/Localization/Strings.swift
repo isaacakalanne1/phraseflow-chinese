@@ -177,6 +177,7 @@ public enum LocalizedString {
   public static let voiceAlvaro = LocalizedString.tr("Localizable", "voice_alvaro")
   public static let voiceAmala = LocalizedString.tr("Localizable", "voice_amala")
   public static let voiceAnanya = LocalizedString.tr("Localizable", "voice_ananya")
+  public static let voiceAndrew = LocalizedString.tr("Localizable", "voice_andrew")
   public static let voiceAva = LocalizedString.tr("Localizable", "voice_ava")
   public static let voiceConrad = LocalizedString.tr("Localizable", "voice_conrad")
   public static let voiceDariya = LocalizedString.tr("Localizable", "voice_dariya")

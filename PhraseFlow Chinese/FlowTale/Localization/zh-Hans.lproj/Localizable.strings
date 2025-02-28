@@ -222,6 +222,9 @@
 // Ava voice button title
 "voice_ava" = "艾娃";
 
+// Andrew voice button title
+"voice_andrew" = "安德鲁";
+
 // Ananya Hindi voice button title
 "voice_ananya" = "阿娜尼亚";
 
