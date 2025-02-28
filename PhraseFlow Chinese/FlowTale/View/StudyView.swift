@@ -82,10 +82,8 @@ struct StudyView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(LocalizedString.studyNavTitle)
         .onAppear {
-            if !isWordDefinitionView {
-                index = 0
-                updateDefinition()
-            }
+            index = 0
+            updateDefinition()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding()
@@ -209,8 +207,8 @@ struct StudyView: View {
                     .font(.system(size: 20, weight: .light))
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .scaleEffect(x: 1, y: isPronounciationShown ? 1 : 0, anchor: .top)
-            .opacity(isPronounciationShown ? 1 : 0)
+            .scaleEffect(x: 1, y: isWordDefinitionView || isPronounciationShown ? 1 : 0, anchor: .top)
+            .opacity(isWordDefinitionView || isPronounciationShown ? 1 : 0)
             Text(LocalizedString.definition)
                 .greyBackground()
             Group {

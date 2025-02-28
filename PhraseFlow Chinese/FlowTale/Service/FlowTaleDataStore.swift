@@ -259,7 +259,8 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         do {
-            let encodedData = try encoder.encode(definitions.shuffled())
+            // Don't shuffle the definitions when saving - this preserves their state 
+            let encodedData = try encoder.encode(definitions)
             try encodedData.write(to: fileURL)
         } catch {
             throw FlowTaleDataStoreError.failedToSaveData

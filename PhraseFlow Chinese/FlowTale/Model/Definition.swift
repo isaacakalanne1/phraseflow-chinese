@@ -15,14 +15,16 @@ struct Definition: Codable, Equatable, Hashable {
     var detail: WordDefinition
     var definition: String
     var language: Language
-
+    var hasBeenSeen: Bool
+    
     init(creationDate: Date,
          studiedDates: [Date] = [],
          timestampData: WordTimeStampData,
          sentence: Sentence,
          detail: WordDefinition,
          definition: String,
-         language: Language) {
+         language: Language,
+         hasBeenSeen: Bool = false) {
         self.creationDate = creationDate
         self.studiedDates = studiedDates
         self.timestampData = timestampData
@@ -30,6 +32,7 @@ struct Definition: Codable, Equatable, Hashable {
         self.detail = detail
         self.definition = definition
         self.language = language
+        self.hasBeenSeen = hasBeenSeen
     }
 
     init(from decoder: any Decoder) throws {
@@ -41,6 +44,7 @@ struct Definition: Codable, Equatable, Hashable {
         self.definition = try container.decode(String.self, forKey: .definition)
         self.detail = try container.decode(WordDefinition.self, forKey: .detail)
         self.language = try container.decode(Language.self, forKey: .language)
+        self.hasBeenSeen = (try? container.decode(Bool.self, forKey: .hasBeenSeen)) ?? false
     }
 }
 

@@ -88,18 +88,28 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .defineCharacter(let wordTimeStampData, let shouldForce):
         newState.definitionState.tappedWord = wordTimeStampData
         newState.viewState.isDefining = true
-    case .onDefinedCharacter(let definition):
+    case .onDefinedCharacter(var definition):
+        // Mark the definition as seen
+        definition.hasBeenSeen = true
+        definition.creationDate = .now
+
         newState.definitionState.currentDefinition = definition
         newState.definitionState.definitions.removeAll(where: {
             $0.timestampData == definition.timestampData && $0.sentence == definition.sentence
         })
         newState.definitionState.definitions.append(definition)
         newState.viewState.isDefining = false
-    case .onDefinedSentence(let definitions, let tappedDefinition):
+    case .onDefinedSentence(var definitions, var tappedDefinition):
+        tappedDefinition.hasBeenSeen = true
+        tappedDefinition.creationDate = .now
+        definitions.removeAll(where: {
+            $0.timestampData == tappedDefinition.timestampData
+        })
+        definitions.append(tappedDefinition)
         newState.definitionState.currentDefinition = tappedDefinition
         for definition in definitions {
             newState.definitionState.definitions.removeAll(where: {
-                $0.timestampData == definition.timestampData && $0.sentence == definition.sentence
+                $0 == definition
             })
             newState.definitionState.definitions.append(definition)
         }
@@ -272,7 +282,11 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .updateLanguage(let language):
         newState.settingsState.language = language
     case .onLoadedDefinitions(let definitions):
-        newState.definitionState.definitions = definitions.shuffled()
+        // Debug - log the state of definitions being loaded
+        print("Loading \(definitions.count) definitions")
+        print("Definitions with hasBeenSeen=true: \(definitions.filter { $0.hasBeenSeen }.count)")
+        
+        newState.definitionState.definitions = definitions
     case .onDeletedStory:
         newState.viewState.storyListViewId = UUID()
     case .onFetchedSubscriptions(let subscriptions):
@@ -309,8 +323,10 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.audioState.audioPlayer = AVPlayer()
         newState.settingsState.language = story.language
     case .updateStudiedWord(var definition):
+        // Add the current date to studied dates
         definition.studiedDates.append(.now)
-        var allDefinitions = newState.definitionState.definitions
+
+        // Update the definition in the list
         if let index = newState.definitionState.definitions.firstIndex(where: { $0.timestampData == definition.timestampData }) {
             newState.definitionState.definitions.replaceSubrange(index...index, with: [definition])
         } else {

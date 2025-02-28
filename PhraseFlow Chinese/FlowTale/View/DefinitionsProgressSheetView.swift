@@ -14,12 +14,14 @@ struct DefinitionsProgressSheetView: View {
     var body: some View {
         let definitions = store.state.definitionState.definitions
             .filter {
-                $0.language == store.state.storyState.currentStory?.language
+                $0.language == store.state.storyState.currentStory?.language &&
+                !$0.timestampData.word.trimmingCharacters(in: CharacterSet.punctuationCharacters).isEmpty &&
+                $0.hasBeenSeen
             }
-
-        let filteredDefinitions = removeDuplicates(from: definitions)
             .sorted(by: { $0.creationDate > $1.creationDate })
-            .filter({ !$0.timestampData.word.trimmingCharacters(in: CharacterSet.punctuationCharacters).isEmpty })
+
+            
+        let filteredDefinitions = removeDuplicates(from: definitions)
 
         TabView(selection: $selectedTab) {
             sheetContent(isCreations: true,
@@ -37,6 +39,9 @@ struct DefinitionsProgressSheetView: View {
             .tag(1)
         }
         .onChange(of: selectedTab) {
+            // Debug - print the state of definitions to diagnose the issue
+            print("Total definitions: \(definitions.count)")
+            print("Definitions with hasBeenSeen=true: \(definitions.filter { $0.hasBeenSeen }.count)")
             store.dispatch(.playSound(.actionButtonPress))
         }
     }
