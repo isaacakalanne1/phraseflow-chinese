@@ -30,9 +30,12 @@ func sentenceSchema(originalLanguage: Language,
                 "type": "object",
                 "properties": [
                     originalLanguage.schemaKey: ["type": "string"],
-                    translationLanguage.schemaKey: ["type": "string"]
+                    "\(translationLanguage.schemaKey)Translation": ["type": "string"]
                 ],
-                "required": [originalLanguage.schemaKey, translationLanguage.schemaKey],
+                "required": [
+                    originalLanguage.schemaKey,
+                    "\(translationLanguage.schemaKey)Translation"
+                ],
                 "additionalProperties": false
             ]
         ]

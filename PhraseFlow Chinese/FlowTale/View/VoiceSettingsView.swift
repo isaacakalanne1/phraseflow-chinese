@@ -49,6 +49,12 @@ struct VoiceMenu: View {
                     }
                     .listRowBackground(isSelectedVoice ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
                 }
+                .onAppear {
+                    if store.state.storyState.currentStory == nil,
+                       let voice = voices.first {
+                        store.dispatch(.selectVoice(voice))
+                    }
+                }
             } header: {
                 Text(LocalizedString.voiceMenuHeader)
             }

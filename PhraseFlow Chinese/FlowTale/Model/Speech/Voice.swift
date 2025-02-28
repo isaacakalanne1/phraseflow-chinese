@@ -134,6 +134,46 @@ enum Voice: String, Codable, CaseIterable, Equatable {
         }
     }
 
+    var language: Language {
+        switch self {
+        case .xiaoxiao,
+                .yunjian:
+                .mandarinChinese
+        case .denise,
+                .henri:
+                .french
+        case .mayu,
+                .keita:
+                .japanese
+        case .sunHi,
+                .hyunsu:
+                .korean
+        case .dariya,
+                .dmitry:
+                .russian
+        case .elvira,
+                .alvaro:
+                .spanish
+        case .fatima,
+                .hamdan:
+                .arabicGulf
+        case .raquel,
+                .duarte:
+                .europeanPortuguese
+        case .thalita,
+                .donato:
+                .brazilianPortuguese
+        case .ava:
+                .english
+        case .ananya,
+                .aarav:
+                .hindi
+        case .amala,
+                .conrad:
+                .german
+        }
+    }
+
     var gender: Gender {
         switch self {
         case .xiaoxiao,

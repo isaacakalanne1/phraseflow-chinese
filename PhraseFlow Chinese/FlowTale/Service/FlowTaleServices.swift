@@ -213,7 +213,7 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
                 switch lastKey.stringValue {
                 case deviceLanguage?.schemaKey:
                     return AnyKey(stringValue: "original")!
-                case story.language.schemaKey:
+                case "\(story.language.schemaKey)Translation":
                     return AnyKey(stringValue: "translation")!
                 case "briefLatestStorySummaryIn\(deviceLanguage?.key ?? "English")":
                     return AnyKey(stringValue: "briefLatestStorySummary")!

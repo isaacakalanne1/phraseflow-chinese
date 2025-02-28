@@ -27,7 +27,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
     private let speechCharacters = ["“", "”", "«", "»", "「", "」", "\"", "''"]
     let subscriptionKey = "Fp11D0CAMjjAcf03VNqe2IsKfqycenIKcrAm4uGV8RSiaqMX15NWJQQJ99AKACYeBjFXJ3w3AAAYACOG6Orb"
     let region = "eastus"
-    let sentenceMarker = "✓"
+    let sentenceMarker = "[][]"
 
     /// Keep track of how many speech marks we've encountered so far (odd/even).
     private var speechMarkCounter: Int = 0
@@ -211,7 +211,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
         let baseUrl = "http://www.w3.org/2001"
 
         var ssml = """
-<speak version="1.0" xmlns="\(baseUrl)/10/synthesis" xmlns:mstts="\(baseUrl)/mstts" xml:lang="zh-CN">
+<speak version="1.0" xmlns="\(baseUrl)/10/synthesis" xmlns:mstts="\(baseUrl)/mstts" xml:lang="\(voice.language.speechCode)">
 <voice name="\(voice.speechSynthesisVoiceName)">
 """
 

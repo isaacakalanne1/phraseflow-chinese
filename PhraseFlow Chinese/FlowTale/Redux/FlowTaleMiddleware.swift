@@ -186,16 +186,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         // before we do anything else, so we don't need to pass the story along
         
         // Show appropriate snackbar first
-        if !isNewStoryCreation {
-            // For new chapters in existing stories
-            return .showSnackBarThenSaveStory(.chapterReady, story)
-        } else if hasExistingStories {
-            // For new stories when user has other stories
-            return .showSnackBarThenSaveStory(.storyReadyTapToRead, story)
-        } else {
-            // Default case - just save story
-            return .saveStoryAndSettings(story)
-        }
+        return .showSnackBarThenSaveStory(.chapterReady, story)
     case .playAudio(let timestamp):
         if let timestamp {
             let myTime = CMTime(seconds: timestamp, preferredTimescale: 60000)
