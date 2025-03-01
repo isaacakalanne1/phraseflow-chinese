@@ -66,11 +66,20 @@ struct DefinitionsChartView: View {
             
             // Add a final data point for "Now" to ensure we use the full chart width
             if let lastDataPoint = dailyCumulativeCount.last, dailyCumulativeCount.count > 0 {
+                // Create a date with the actual current hour
+                let calendar = Calendar.current
                 let now = Date()
+                let nowComponents = calendar.dateComponents([.year, .month, .day, .hour], from: now)
+                let nowWithCurrentHour = calendar.date(from: DateComponents(
+                    year: nowComponents.year,
+                    month: nowComponents.month,
+                    day: nowComponents.day,
+                    hour: nowComponents.hour
+                )) ?? now
                 
-                // Create a point at the exact "Now" position
+                // Create a point at current hour today
                 LineMark(
-                    x: .value("Date", now),
+                    x: .value("Date", nowWithCurrentHour),
                     y: .value((isCreations ? "Saved Definitions" : "Studied Words"),
                              (isCreations ? lastDataPoint.cumulativeCreations : lastDataPoint.cumulativeStudied))
                 )
@@ -81,7 +90,7 @@ struct DefinitionsChartView: View {
                 
                 // Add the area fill
                 AreaMark(
-                    x: .value("Date", now),
+                    x: .value("Date", nowWithCurrentHour),
                     y: .value((isCreations ? "Saved Definitions" : "Studied Words"),
                              (isCreations ? lastDataPoint.cumulativeCreations : lastDataPoint.cumulativeStudied))
                 )
@@ -91,7 +100,7 @@ struct DefinitionsChartView: View {
                 
                 // Add a special point that marks "Now" with a symbol
                 PointMark(
-                    x: .value("Date", now),
+                    x: .value("Date", nowWithCurrentHour),
                     y: .value((isCreations ? "Saved Definitions" : "Studied Words"),
                              (isCreations ? lastDataPoint.cumulativeCreations : lastDataPoint.cumulativeStudied))
                 )
@@ -113,7 +122,6 @@ struct DefinitionsChartView: View {
                 }
             }
         }
-        // -- Adjust the Y-axis domain to show everything
         .chartYScale(domain: 0...yMax)
         
         // -- Set the X-axis domain to include extra space at the right
@@ -131,15 +139,24 @@ struct DefinitionsChartView: View {
 
         // -- Format the X-axis with all date grid lines and a "Now" label
         .chartXAxis {
-            // First add the automatic axis marks for all dates
-            AxisMarks(values: .automatic) { value in
+            // Use built-in stride for daily marks
+            AxisMarks(values: .stride(by: .day)) { value in
                 AxisGridLine()
                 AxisValueLabel(format: .dateTime.day().month(.abbreviated))
             }
             
-            // Then add a special mark just for "Now"
+            // Then add a special mark just for "Now" (at current hour)
+            let calendar = Calendar.current
             let now = Date()
-            AxisMarks(values: [now]) { _ in
+            let nowComponents = calendar.dateComponents([.year, .month, .day, .hour], from: now)
+            let nowWithCurrentHour = calendar.date(from: DateComponents(
+                year: nowComponents.year,
+                month: nowComponents.month,
+                day: nowComponents.day,
+                hour: nowComponents.hour
+            )) ?? now
+            
+            AxisMarks(values: [nowWithCurrentHour]) { _ in
                 // No need for another grid line
                 // Just the "Now" label
                 AxisValueLabel {

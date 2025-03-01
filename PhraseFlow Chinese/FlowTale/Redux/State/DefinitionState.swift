@@ -55,13 +55,29 @@ extension DefinitionState {
         var studiedCountsByDay: [Date: Int] = [:]
 
         for def in definitions {
-            // Creation
-            let creationDay = calendar.startOfDay(for: def.creationDate)
+            // Creation - use start of day for consistent positioning
+            let creationDateComponents = calendar.dateComponents([.year, .month, .day], from: def.creationDate)
+            // Create a date at the start of the day
+            let creationDay = calendar.date(from: DateComponents(
+                year: creationDateComponents.year,
+                month: creationDateComponents.month,
+                day: creationDateComponents.day,
+                hour: 0
+            )) ?? calendar.startOfDay(for: def.creationDate)
+            
             creationCountsByDay[creationDay, default: 0] += 1
 
-            // Studied
+            // Studied - also use start of day for consistent positioning
             for studyDate in def.studiedDates {
-                let studyDay = calendar.startOfDay(for: studyDate)
+                let studyDateComponents = calendar.dateComponents([.year, .month, .day], from: studyDate)
+                // Create a date at the start of the day
+                let studyDay = calendar.date(from: DateComponents(
+                    year: studyDateComponents.year,
+                    month: studyDateComponents.month,
+                    day: studyDateComponents.day,
+                    hour: 0
+                )) ?? calendar.startOfDay(for: studyDate)
+                
                 studiedCountsByDay[studyDay, default: 0] += 1
             }
         }
@@ -87,11 +103,22 @@ extension DefinitionState {
             )
         }
 
-        // 4) (Optional) Insert a day-before entry so the chart can start at 0
+        // 4) Insert a day-before entry so the chart can start at 0
+        // Use a time at noon the day before the first date
         if let earliestDay = sortedDays.first {
-            if let dayBeforeEarliest = calendar.date(byAdding: .day, value: -1, to: earliestDay) {
+            let components = calendar.dateComponents([.year, .month, .day], from: earliestDay)
+            if let dayBeforeComponents = calendar.date(from: components),
+               let dayBeforeEarliest = calendar.date(byAdding: .day, value: -1, to: dayBeforeComponents) {
+                // Create a date at the start of the day before
+                let dayBeforeStart = calendar.date(from: DateComponents(
+                    year: calendar.component(.year, from: dayBeforeEarliest),
+                    month: calendar.component(.month, from: dayBeforeEarliest),
+                    day: calendar.component(.day, from: dayBeforeEarliest),
+                    hour: 0
+                )) ?? dayBeforeEarliest
+                
                 let zeroStats = DailyCreationAndStudyStats(
-                    date: dayBeforeEarliest,
+                    date: dayBeforeStart,
                     cumulativeCreations: 0,
                     cumulativeStudied: 0
                 )
