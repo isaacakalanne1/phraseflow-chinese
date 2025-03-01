@@ -16,7 +16,8 @@ struct DefinitionState {
         definitions
             .filter {
                 $0.language == language &&
-                !$0.timestampData.word.trimmingCharacters(in: CharacterSet.punctuationCharacters).isEmpty
+                !$0.timestampData.word.trimmingCharacters(in: CharacterSet.punctuationCharacters).isEmpty &&
+                $0.hasBeenSeen
             }
             .sorted(by: { $0.creationDate > $1.creationDate })
     }
@@ -76,7 +77,8 @@ extension DefinitionState {
                 hour: 0
             )) ?? calendar.date(byAdding: .day, value: 1, to: creationDay) ?? creationDay
             
-            // Only include days before today in the historical cumulative data
+            // Always shift definitions to the NEXT day, but exclude today's data from historical cumulative
+            // This ensures definitions from 28th appear on the date point for the 29th
             if !calendar.isDate(creationDay, inSameDayAs: todayStart) {
                 creationCountsByDay[shiftedCreationDay, default: 0] += 1
             }
@@ -100,7 +102,8 @@ extension DefinitionState {
                     hour: 0
                 )) ?? calendar.date(byAdding: .day, value: 1, to: studyDay) ?? studyDay
                 
-                // Only include days before today in the historical cumulative data
+                // Always shift to the NEXT day, but exclude today's data from historical cumulative
+                // This ensures studied words from 28th appear on the date point for the 29th
                 if !calendar.isDate(studyDay, inSameDayAs: todayStart) {
                     studiedCountsByDay[shiftedStudyDay, default: 0] += 1
                 }
