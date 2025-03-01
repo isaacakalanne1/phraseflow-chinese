@@ -394,6 +394,7 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
 Format the following story into JSON. Translate each English sentence into \(deviceLanguage == .english ? "" : "\(deviceLanguage.descriptiveEnglishName) and ") \(story.language.descriptiveEnglishName).
 Ensure each sentence entry is for an individual sentence.
 Translate the whole sentence, including names and places.
+In the \(story.language.descriptiveEnglishName) text, write numbers in \(story.language.descriptiveEnglishName). Chinese numbers are written using Chinese characters, French numbers are written in their full text form (un, deux, trois), etc. 
 This is chapter \(story.chapters.count + 1)
 In the briefLatestStorySummary section of the JSON, don't mention "In chapter X", "In this chapter", or anything similar to this.
 """
