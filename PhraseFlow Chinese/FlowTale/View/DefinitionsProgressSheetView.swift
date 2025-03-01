@@ -12,15 +12,8 @@ struct DefinitionsProgressSheetView: View {
     @State var selectedTab = 0
 
     var body: some View {
-        let definitions = store.state.definitionState.definitions
-            .filter {
-                $0.language == store.state.storyState.currentStory?.language &&
-                !$0.timestampData.word.trimmingCharacters(in: CharacterSet.punctuationCharacters).isEmpty &&
-                $0.hasBeenSeen
-            }
-            .sorted(by: { $0.creationDate > $1.creationDate })
-
-            
+        let language = store.state.storyState.currentStory?.language
+        let definitions = store.state.definitionState.studyDefinitions(language: language)
         let filteredDefinitions = removeDuplicates(from: definitions)
 
         TabView(selection: $selectedTab) {

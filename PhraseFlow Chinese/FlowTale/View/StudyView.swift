@@ -11,11 +11,8 @@ struct StudyView: View {
     @EnvironmentObject var store: FlowTaleStore
 
     var studyWords: [Definition] {
-        store.state.definitionState.definitions
-            .filter({
-                $0.language == store.state.storyState.currentStory?.language &&
-                !$0.timestampData.word.trimmingCharacters(in: CharacterSet.punctuationCharacters).isEmpty
-            })
+        let language = store.state.storyState.currentStory?.language
+        return store.state.definitionState.studyDefinitions(language: language)
     }
 
     var specificWord: Definition? = nil

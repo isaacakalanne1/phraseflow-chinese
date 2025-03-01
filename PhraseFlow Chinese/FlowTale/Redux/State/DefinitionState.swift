@@ -12,6 +12,16 @@ struct DefinitionState {
     var currentDefinition: Definition?
     var definitions: [Definition]
 
+    func studyDefinitions(language: Language?) -> [Definition] {
+        definitions
+            .filter {
+                $0.language == language &&
+                !$0.timestampData.word.trimmingCharacters(in: CharacterSet.punctuationCharacters).isEmpty &&
+                $0.hasBeenSeen
+            }
+            .sorted(by: { $0.creationDate > $1.creationDate })
+    }
+
     init(tappedWord: WordTimeStampData? = nil,
          currentDefinition: Definition? = nil,
          definitions: [Definition] = []) {
