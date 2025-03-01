@@ -436,7 +436,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .hasReachedDailyLimit,
             .loadThenShowReadySnackbar,
             .loadDefinitionsForStory,
-            .pauseStudyAudio:
+            .pauseStudyAudio,
+            .onFinishedLoadedStories:
         break
     }
 

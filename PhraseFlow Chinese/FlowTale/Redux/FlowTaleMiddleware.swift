@@ -240,7 +240,11 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
 
         try? await Task.sleep(for: .seconds(endWord.time + endWord.duration - startWord.time))
 
-        return .updateStudyAudioPlaying(false)
+        if let duration = state.studyState.audioPlayer.currentItem?.duration.seconds,
+           duration >= (endWord.time + endWord.duration - startWord.time) {
+            return .updateStudyAudioPlaying(false)
+        }
+        return nil
 
     case .pauseStudyAudio:
         state.studyState.audioPlayer.pause()
@@ -517,10 +521,13 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     case .selectTab(_, let shouldPlaySound):
         return shouldPlaySound ? .playSound(.actionButtonPress) : nil
     case .onLoadedStories(let stories, let isAppLaunch):
-        if isAppLaunch,
-           let story = stories.first,
+        // If current story no longer exists (deleted) and there are other stories, 
+        // load chapters for the first story to ensure proper setup
+        return .onFinishedLoadedStories
+    case .onFinishedLoadedStories:
+        if let story = state.storyState.currentStory,
            story.chapters.isEmpty {
-            return .loadChapters(story, isAppLaunch: isAppLaunch)
+            return .loadChapters(story, isAppLaunch: false)
         }
         return nil
     case .onLoadedChapters(let story, let chapters, let isAppLaunch):

@@ -52,6 +52,7 @@ enum FlowTaleAction {
 
     case loadStories(isAppLaunch: Bool)
     case onLoadedStories([Story], isAppLaunch: Bool)
+    case onFinishedLoadedStories
     case failedToLoadStories
 
     // 1) Request to load chapters for a specific story
