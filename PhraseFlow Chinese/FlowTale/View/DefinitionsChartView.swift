@@ -173,9 +173,7 @@ struct DefinitionsChartView: View {
             // Show formatted dates with ordinals and month where appropriate
             AxisMarks(values: .stride(by: .day, count: stride)) { value in
                 if let date = value.as(Date.self) {
-                    // Skip today/tomorrow (handled separately)
-                    if !calendar.isDate(date, inSameDayAs: today) && 
-                       !calendar.isDate(date, inSameDayAs: tomorrow) {
+                    // Process ALL dates with the same logic including today/tomorrow
                         
                         let day = calendar.component(.day, from: date)
                         let month = calendar.component(.month, from: date)
@@ -219,7 +217,6 @@ struct DefinitionsChartView: View {
                                     .foregroundColor(.secondary)
                             }
                         }
-                    }
                 }
             }
             
