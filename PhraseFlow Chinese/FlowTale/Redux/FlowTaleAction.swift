@@ -41,7 +41,7 @@ enum FlowTaleAction {
     case showSnackBarThenSaveStory(SnackBarType, Story)
 
     case deleteStory(Story)
-    case onDeletedStory
+    case onDeletedStory(UUID)
     case failedToDeleteStory
 
     case deleteCustomPrompt(String)

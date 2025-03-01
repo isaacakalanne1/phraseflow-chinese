@@ -111,6 +111,9 @@ struct StudyView: View {
     }
 
     func goToNextDefinition() {
+        if let definition = currentDefinition {
+            store.dispatch(.updateStudiedWord(definition))
+        }
         index = (index + 1) % studyWords.count
         store.dispatch(.playSound(.nextStudyWord))
         updateDefinition()
@@ -121,7 +124,6 @@ struct StudyView: View {
         isDefinitionShown = false
         // Audio playing state is now managed by the store
         if let definition = currentDefinition {
-            store.dispatch(.updateStudiedWord(definition))
             store.dispatch(.updateStudyChapter(nil))
             store.dispatch(.prepareToPlayStudyWord(definition))
             // Make sure audio is paused and state is reset when changing words

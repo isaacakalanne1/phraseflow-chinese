@@ -26,12 +26,22 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             newState.viewState.readerDisplayType = .normal
         }
 
-        if newState.storyState.currentStory == nil,
-           let currentStory = stories.first {
-            newState.storyState.currentStory = currentStory
-            let data = newState.storyState.currentChapterAudioData
-            let player = data?.createAVPlayer()
-            newState.audioState.audioPlayer = player ?? AVPlayer()
+        // Setup the current story in these cases:
+        // 1. If there is no current story (nil)
+        // 2. If the current story no longer exists in the saved stories (i.e. was deleted)
+        if newState.storyState.currentStory == nil || 
+           !stories.contains(where: { $0.id == newState.storyState.currentStory?.id }) {
+            if let firstStory = stories.first {
+                // Make the first story the current one
+                newState.storyState.currentStory = firstStory
+                let data = newState.storyState.currentChapterAudioData
+                let player = data?.createAVPlayer()
+                newState.audioState.audioPlayer = player ?? AVPlayer()
+            } else {
+                // No stories left
+                newState.storyState.currentStory = nil
+                newState.audioState.audioPlayer = AVPlayer()
+            }
         }
     case .onLoadedChapters(let story, let chapters, _):
         // 1) Find this story in savedStories (or currentStory)
@@ -289,7 +299,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         print("Definitions with hasBeenSeen=true: \(definitions.filter { $0.hasBeenSeen }.count)")
         
         newState.definitionState.definitions = definitions
-    case .onDeletedStory:
+    case .onDeletedStory(_):
+        // Just regenerate the view ID - the actual story selection logic is now in onLoadedStories
         newState.viewState.storyListViewId = UUID()
     case .onFetchedSubscriptions(let subscriptions):
         newState.subscriptionState.products = subscriptions
