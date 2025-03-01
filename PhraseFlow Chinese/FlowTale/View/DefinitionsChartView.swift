@@ -77,11 +77,19 @@ struct DefinitionsChartView: View {
                     hour: nowComponents.hour
                 )) ?? now
                 
+                // Get the today's activity from the definition state
+                let todayCreations = store.state.definitionState.dailyCreationCount(from: definitions)
+                let todayStudied = store.state.definitionState.dailyStudiedCount(from: definitions)
+                
+                // Use the last data point's values plus today's count
+                let nowCumulativeCreations = (lastDataPoint.cumulativeCreations + (isCreations ? todayCreations : 0))
+                let nowCumulativeStudied = (lastDataPoint.cumulativeStudied + (!isCreations ? todayStudied : 0))
+                
                 // Create a point at current hour today
                 LineMark(
                     x: .value("Date", nowWithCurrentHour),
                     y: .value((isCreations ? "Saved Definitions" : "Studied Words"),
-                             (isCreations ? lastDataPoint.cumulativeCreations : lastDataPoint.cumulativeStudied))
+                             (isCreations ? nowCumulativeCreations : nowCumulativeStudied))
                 )
                 .interpolationMethod(.linear)
                 .foregroundStyle(
@@ -92,7 +100,7 @@ struct DefinitionsChartView: View {
                 AreaMark(
                     x: .value("Date", nowWithCurrentHour),
                     y: .value((isCreations ? "Saved Definitions" : "Studied Words"),
-                             (isCreations ? lastDataPoint.cumulativeCreations : lastDataPoint.cumulativeStudied))
+                             (isCreations ? nowCumulativeCreations : nowCumulativeStudied))
                 )
                 .foregroundStyle(
                     FlowTaleColor.accent.opacity(0.2).gradient
@@ -102,7 +110,7 @@ struct DefinitionsChartView: View {
                 PointMark(
                     x: .value("Date", nowWithCurrentHour),
                     y: .value((isCreations ? "Saved Definitions" : "Studied Words"),
-                             (isCreations ? lastDataPoint.cumulativeCreations : lastDataPoint.cumulativeStudied))
+                             (isCreations ? nowCumulativeCreations : nowCumulativeStudied))
                 )
                 .symbolSize(100) // Make it visible
                 .foregroundStyle(FlowTaleColor.accent)

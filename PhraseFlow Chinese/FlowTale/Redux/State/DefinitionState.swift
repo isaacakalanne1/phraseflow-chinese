@@ -49,15 +49,17 @@ extension DefinitionState {
         guard !definitions.isEmpty else { return [] }
 
         let calendar = Calendar.current
-
+        let now = Date()
+        let todayStart = calendar.startOfDay(for: now)
+        
         // 1) Tally creation & study events by day
         var creationCountsByDay: [Date: Int] = [:]
         var studiedCountsByDay: [Date: Int] = [:]
+        var todayCreations = 0
+        var todayStudied = 0
 
         for def in definitions {
-            // Creation - use start of day for consistent positioning
             let creationDateComponents = calendar.dateComponents([.year, .month, .day], from: def.creationDate)
-            // Create a date at the start of the day
             let creationDay = calendar.date(from: DateComponents(
                 year: creationDateComponents.year,
                 month: creationDateComponents.month,
@@ -65,12 +67,17 @@ extension DefinitionState {
                 hour: 0
             )) ?? calendar.startOfDay(for: def.creationDate)
             
-            creationCountsByDay[creationDay, default: 0] += 1
+            // Check if this definition was created today
+            if calendar.isDate(creationDay, inSameDayAs: todayStart) {
+                todayCreations += 1
+            } else {
+                // Add to historical data for past days
+                creationCountsByDay[creationDay, default: 0] += 1
+            }
 
-            // Studied - also use start of day for consistent positioning
+            // Process study dates
             for studyDate in def.studiedDates {
                 let studyDateComponents = calendar.dateComponents([.year, .month, .day], from: studyDate)
-                // Create a date at the start of the day
                 let studyDay = calendar.date(from: DateComponents(
                     year: studyDateComponents.year,
                     month: studyDateComponents.month,
@@ -78,22 +85,28 @@ extension DefinitionState {
                     hour: 0
                 )) ?? calendar.startOfDay(for: studyDate)
                 
-                studiedCountsByDay[studyDay, default: 0] += 1
+                // Check if this definition was studied today
+                if calendar.isDate(studyDay, inSameDayAs: todayStart) {
+                    todayStudied += 1
+                } else {
+                    // Add to historical data for past days
+                    studiedCountsByDay[studyDay, default: 0] += 1
+                }
             }
         }
 
-        // 2) Combine all days (creation + study)
+        // 2) Combine all days (creation + study) - excluding today
         let allDays = Set(creationCountsByDay.keys)
             .union(studiedCountsByDay.keys)
         let sortedDays = allDays.sorted()
 
-        // 3) Build cumulative totals
+        // 3) Build cumulative totals for past days
         var results: [DailyCreationAndStudyStats] = []
         var runningCreations = 0
-        var runningStudied   = 0
+        var runningStudied = 0
         for day in sortedDays {
             runningCreations += creationCountsByDay[day] ?? 0
-            runningStudied   += studiedCountsByDay[day]   ?? 0
+            runningStudied += studiedCountsByDay[day] ?? 0
             results.append(
                 DailyCreationAndStudyStats(
                     date: day,
@@ -127,5 +140,35 @@ extension DefinitionState {
         }
 
         return results
+    }
+    
+    /// Returns the count of definitions created today
+    func dailyCreationCount(from definitions: [Definition]) -> Int {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        
+        return definitions.filter { definition in
+            let creationDay = calendar.startOfDay(for: definition.creationDate)
+            return calendar.isDate(creationDay, inSameDayAs: today)
+        }.count
+    }
+    
+    /// Returns the count of definitions studied today
+    func dailyStudiedCount(from definitions: [Definition]) -> Int {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        
+        var count = 0
+        for definition in definitions {
+            for studyDate in definition.studiedDates {
+                let studyDay = calendar.startOfDay(for: studyDate)
+                if calendar.isDate(studyDay, inSameDayAs: today) {
+                    count += 1
+                    break // Count each definition only once per day
+                }
+            }
+        }
+        
+        return count
     }
 }
