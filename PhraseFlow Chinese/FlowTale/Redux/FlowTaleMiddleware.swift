@@ -226,13 +226,21 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         await state.studyState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
         state.studyState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: definition.timestampData.time + definition.timestampData.duration, preferredTimescale: 60000)
         state.studyState.audioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
+
         return nil
     case .playStudySentence(let startWord, let endWord):
         let myTime = CMTime(seconds: startWord.time, preferredTimescale: 60000)
         await state.studyState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
         state.studyState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: endWord.time + endWord.duration, preferredTimescale: 60000)
         state.studyState.audioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
-        return nil
+
+        try? await Task.sleep(for: .seconds(endWord.time + endWord.duration - startWord.time))
+
+        return .updateStudyAudioPlaying(false)
+
+    case .pauseStudyAudio:
+        state.studyState.audioPlayer.pause()
+        return .updateStudyAudioPlaying(false)
     case .playSound:
         if state.settingsState.shouldPlaySound {
             state.appAudioState.audioPlayer.play()
@@ -551,7 +559,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .hasReachedFreeTrialLimit,
             .hasReachedDailyLimit,
             .showFreeLimitExplanationScreen,
-            .selectStoryFromSnackbar:
+            .selectStoryFromSnackbar,
+            .updateStudyAudioPlaying:
         return nil
     }
 }

@@ -122,10 +122,13 @@ struct StudyView: View {
     func updateDefinition() {
         isPronounciationShown = false
         isDefinitionShown = false
+        // Audio playing state is now managed by the store
         if let definition = currentDefinition {
             store.dispatch(.updateStudiedWord(definition))
             store.dispatch(.updateStudyChapter(nil))
             store.dispatch(.prepareToPlayStudyWord(definition))
+            // Make sure audio is paused and state is reset when changing words
+            store.dispatch(.pauseStudyAudio)
         }
     }
 
@@ -239,13 +242,21 @@ struct StudyView: View {
                         .font(.system(size: 30, weight: .light))
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                // Single button that toggles between play and stop
                 Button {
-                    if let startWord = timestampData?.first,
-                       let endWord = timestampData?.last {
-                        store.dispatch(.playStudySentence(startWord: startWord, endWord: endWord))
+                    if store.state.studyState.isAudioPlaying {
+                        // If playing, pause the audio
+                        store.dispatch(.pauseStudyAudio)
+                    } else {
+                        // If not playing, start playback
+                        if let startWord = timestampData?.first,
+                           let endWord = timestampData?.last {
+                            store.dispatch(.playStudySentence(startWord: startWord, endWord: endWord))
+                        }
                     }
                 } label: {
-                    SystemImageView(.speaker)
+                    // Show play icon when not playing, stop icon when playing
+                    SystemImageView(store.state.studyState.isAudioPlaying ? .stop : .play)
                 }
             }
             Text(LocalizedString.translation)

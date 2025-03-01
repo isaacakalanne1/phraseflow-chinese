@@ -57,9 +57,11 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         return newState
     case .updateStudyChapter(let chapter):
         newState.studyState.currentChapter = chapter
-    case .playStudyWord,
-            .playStudySentence:
+    case .playStudyWord:
         newState.studyState.audioPlayer = newState.studyState.currentChapter?.audio.data.createAVPlayer() ?? AVPlayer()
+    case .playStudySentence:
+        newState.studyState.audioPlayer = newState.studyState.currentChapter?.audio.data.createAVPlayer() ?? AVPlayer()
+        newState.studyState.isAudioPlaying = true
     case .playSound(let sound):
         if let url = sound.fileURL,
            let player = try? AVAudioPlayer(contentsOf: url) {
@@ -380,6 +382,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.subscriptionState.nextAvailableDescription = nextAvailable
     case .hideSnackbarThenSaveStoryAndSettings:
         newState.snackBarState.isShowing = false
+    case .updateStudyAudioPlaying(let isPlaying):
+        newState.studyState.isAudioPlaying = isPlaying
             
     case .saveStoryAndSettings,
             .failedToSaveStory,
@@ -420,7 +424,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .failedToSynthesizeAudio,
             .hasReachedDailyLimit,
             .loadThenShowReadySnackbar,
-            .loadDefinitionsForStory:
+            .loadDefinitionsForStory,
+            .pauseStudyAudio:
         break
     }
 

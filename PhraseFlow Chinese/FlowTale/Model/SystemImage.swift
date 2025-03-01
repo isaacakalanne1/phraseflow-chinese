@@ -14,6 +14,7 @@ enum SystemImage {
          gear(isSelected: Bool),
          pencil(isSelected: Bool),
          play,
+         stop,
          list(isSelected: Bool),
          ellipsis,
          arrowDown,
@@ -39,6 +40,8 @@ enum SystemImage {
             isSelected ? "pencil.and.outline" : "square.and.pencil"
         case .play:
             "play.circle.fill"
+        case .stop:
+            "stop.circle.fill"
         case .list(let isSelected):
             isSelected ? "doc.text.magnifyingglass" : "list.bullet.rectangle.portrait"
         case .ellipsis:

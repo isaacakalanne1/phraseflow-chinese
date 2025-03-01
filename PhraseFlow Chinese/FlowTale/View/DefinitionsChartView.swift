@@ -63,6 +63,33 @@ struct DefinitionsChartView: View {
                     FlowTaleColor.accent.opacity(0.2).gradient
                 )
             }
+            
+            // If we have data, add a final data point for "Now" with the current count
+            // This ensures the line extends to the current date
+            if let lastDataPoint = dailyCumulativeCount.last, dailyCumulativeCount.count > 0 {
+                let now = Date()
+                // Only add if the last point isn't already today
+                if Calendar.current.isDateInToday(lastDataPoint.date) == false {
+                    LineMark(
+                        x: .value("Date", now),
+                        y: .value((isCreations ? "Saved Definitions" : "Studied Words"),
+                                 (isCreations ? lastDataPoint.cumulativeCreations : lastDataPoint.cumulativeStudied))
+                    )
+                    .interpolationMethod(.linear)
+                    .foregroundStyle(
+                        FlowTaleColor.accent
+                    )
+                    
+                    AreaMark(
+                        x: .value("Date", now),
+                        y: .value((isCreations ? "Saved Definitions" : "Studied Words"),
+                                 (isCreations ? lastDataPoint.cumulativeCreations : lastDataPoint.cumulativeStudied))
+                    )
+                    .foregroundStyle(
+                        FlowTaleColor.accent.opacity(0.2).gradient
+                    )
+                }
+            }
 
             // -- Draw each upcoming checkpoint with a dashed line
             ForEach(upcomingCheckpoints, id: \.value) { checkpoint in
@@ -80,16 +107,40 @@ struct DefinitionsChartView: View {
         }
         // -- Adjust the Y-axis domain to show everything
         .chartYScale(domain: 0...yMax)
+        
+        // -- Set the X-axis domain to go from earliest date to now
+//        .chartXScale(domain: 
+//            (dailyCumulativeCount.first?.date ?? Date())...Date()
+//        )
 
         // -- Axis Labels
 //        .chartXAxisLabel("Date", position: .bottom, alignment: .center)
 //        .chartYAxisLabel("Learned words", position: .leading)
 
-        // -- Format the X-axis
+        // -- Format the X-axis with only two labels: first date and "Now"
         .chartXAxis {
-            AxisMarks(values: .automatic) { value in
+            // Custom axis marks for just first and last dates
+            AxisMarks(preset: .aligned, position: .bottom, values: .init(arrayLiteral: 
+                      // First date in dataset (or use a default if empty)
+                      dailyCumulativeCount.first?.date ?? Date(), 
+                      // Current date for "Now" label
+                      Date())) { value in
+                
+                // Always show grid lines
                 AxisGridLine()
-                AxisValueLabel(format: .dateTime.day().month(.abbreviated))
+                
+                // Only show labels for first and current date
+                if let date = value.as(Date.self) {
+                    if date.timeIntervalSince1970 == (dailyCumulativeCount.first?.date ?? Date()).timeIntervalSince1970 {
+                        // First date - format it properly
+                        AxisValueLabel(format: .dateTime.day().month(.abbreviated))
+                    } else if date.timeIntervalSinceNow.magnitude < 86400 { // Within a day of now
+                        // Current date - show "Now"
+                        AxisValueLabel {
+                            Text("Now")
+                        }
+                    }
+                }
             }
         }
 
