@@ -166,7 +166,7 @@ struct DefinitionsChartView: View {
             let stride = daysCount > 30 ? 7 : (daysCount > 14 ? 3 : (daysCount > 7 ? 2 : 1))
             
             // Show grid lines for all days
-            AxisMarks(values: .stride(by: .day)) { _ in
+            AxisMarks(values: .stride(by: .day, count: stride)) { _ in
                 AxisGridLine()
             }
             
@@ -176,28 +176,21 @@ struct DefinitionsChartView: View {
                     // Don't show day numbers for today/tomorrow (handled below)
                     if !calendar.isDate(date, inSameDayAs: today) && 
                        !calendar.isDate(date, inSameDayAs: tomorrow) {
-                        AxisValueLabel(format: .dateTime.day())
+                        AxisValueLabel(format: .dateTime.day(.ordinalOfDayInMonth))
                     }
                 }
             }
             
-            // Show month names at the first day of each month
-            AxisMarks(values: .stride(by: .month)) { value in
-                if let date = value.as(Date.self) {
-                    let dayOfMonth = calendar.component(.day, from: date)
-                    if dayOfMonth == 1 {
-                        AxisValueLabel(format: .dateTime.month(.abbreviated))
-                    }
-                }
-            }
-            
-            // Show the "Now" marker at current hour
+            // Show the "Now" marker at current hour, with left alignment
             AxisMarks(values: [nowWithCurrentHour]) { _ in
-                AxisValueLabel {
+                // Use an annotation positioned to the left of the mark instead of a standard label
+                AxisValueLabel(anchor: .leading, horizontalSpacing: 0) {
                     Text("Now")
                         .font(.caption)
                         .fontWeight(.bold)
                         .foregroundColor(FlowTaleColor.accent)
+                        .fixedSize()
+                        .padding(.trailing, 10) // Add padding to shift left
                 }
             }
         }
