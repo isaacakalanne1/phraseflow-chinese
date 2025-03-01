@@ -68,7 +68,13 @@ extension DefinitionState {
             )) ?? calendar.startOfDay(for: def.creationDate)
             
             // Shift the date to the NEXT day (1st → 2nd, 2nd → 3rd, etc.)
-            let shiftedCreationDay = calendar.date(byAdding: .day, value: 1, to: creationDay) ?? creationDay
+            // Use midnight of the next day for consistency
+            let shiftedCreationDay = calendar.date(from: DateComponents(
+                year: creationDateComponents.year,
+                month: creationDateComponents.month,
+                day: creationDateComponents.day! + 1,  // Add one day directly to the component
+                hour: 0
+            )) ?? calendar.date(byAdding: .day, value: 1, to: creationDay) ?? creationDay
             
             // Only include days before today in the historical cumulative data
             if !calendar.isDate(creationDay, inSameDayAs: todayStart) {
@@ -86,7 +92,13 @@ extension DefinitionState {
                 )) ?? calendar.startOfDay(for: studyDate)
                 
                 // Shift the date to the NEXT day (1st → 2nd, 2nd → 3rd, etc.)
-                let shiftedStudyDay = calendar.date(byAdding: .day, value: 1, to: studyDay) ?? studyDay
+                // Use midnight of the next day for consistency
+                let shiftedStudyDay = calendar.date(from: DateComponents(
+                    year: studyDateComponents.year,
+                    month: studyDateComponents.month,
+                    day: studyDateComponents.day! + 1,  // Add one day directly to the component
+                    hour: 0
+                )) ?? calendar.date(byAdding: .day, value: 1, to: studyDay) ?? studyDay
                 
                 // Only include days before today in the historical cumulative data
                 if !calendar.isDate(studyDay, inSameDayAs: todayStart) {

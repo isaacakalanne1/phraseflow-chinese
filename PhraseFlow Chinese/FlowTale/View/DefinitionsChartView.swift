@@ -166,24 +166,69 @@ struct DefinitionsChartView: View {
             let stride = daysCount > 30 ? 7 : (daysCount > 14 ? 3 : (daysCount > 7 ? 2 : 1))
             
             // Show grid lines for all days
-            AxisMarks(values: .stride(by: .day, count: stride)) { _ in
-                AxisGridLine()
-            }
+//            AxisMarks(values: .stride(by: .day)) { _ in
+//                AxisGridLine()
+//            }
             
-            // Show day numbers at calculated intervals
+            // Show formatted dates with ordinals and month where appropriate
             AxisMarks(values: .stride(by: .day, count: stride)) { value in
                 if let date = value.as(Date.self) {
-                    // Don't show day numbers for today/tomorrow (handled below)
+                    // Skip today/tomorrow (handled separately)
                     if !calendar.isDate(date, inSameDayAs: today) && 
                        !calendar.isDate(date, inSameDayAs: tomorrow) {
-                        AxisValueLabel(format: .dateTime.day(.ordinalOfDayInMonth))
+                        
+                        let day = calendar.component(.day, from: date)
+                        let month = calendar.component(.month, from: date)
+                        let year = calendar.component(.year, from: date)
+                        
+                        // Check if we need to show month/year
+                        let prevDate = calendar.date(byAdding: .day, value: -stride, to: date)
+                        let prevMonth = prevDate.map { calendar.component(.month, from: $0) } ?? 0 
+                        let prevYear = prevDate.map { calendar.component(.year, from: $0) } ?? 0
+                        
+                        // Month changed or this is first date shown
+                        let showMonthName = month != prevMonth || prevDate == nil
+                        // Year changed or this is first date shown
+                        let showYear = year != prevYear || prevDate == nil
+                                             
+                        AxisValueLabel {
+                            if showYear {
+                                // Show full date with year: "2nd Feb 2024"
+                                Text("\(date, format: .dateTime.day()) \(date, format: .dateTime.month(.abbreviated)) \(year)")
+                                    .font(.caption)
+                            } else if showMonthName {
+                                // Show date with month: "2nd Feb"
+                                Text("\(date, format: .dateTime.day()) \(date, format: .dateTime.month(.abbreviated))")
+                                    .font(.caption)
+                            } else {
+                                // Just show day: "2nd"
+                                Text("\(date, format: .dateTime.day())")
+                                    .font(.caption)
+                            }
+                        }
                     }
                 }
             }
             
-            // Show the "Now" marker at current hour, with left alignment
+            // Show special markers for today and tomorrow
+            AxisMarks(values: [today]) { _ in
+                AxisValueLabel {
+                    Text("Today")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            }
+            
+            AxisMarks(values: [tomorrow]) { _ in
+                AxisValueLabel {
+                    Text("Tomorrow")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            }
+            
+            // Show the "Now" marker at current hour with left alignment
             AxisMarks(values: [nowWithCurrentHour]) { _ in
-                // Use an annotation positioned to the left of the mark instead of a standard label
                 AxisValueLabel(anchor: .leading, horizontalSpacing: 0) {
                     Text("Now")
                         .font(.caption)
