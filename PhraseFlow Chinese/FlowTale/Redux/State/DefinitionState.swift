@@ -16,7 +16,8 @@ struct DefinitionState {
         definitions
             .filter {
                 $0.language == language &&
-                !$0.timestampData.word.trimmingCharacters(in: CharacterSet.punctuationCharacters).isEmpty
+                !$0.timestampData.word.trimmingCharacters(in: CharacterSet.punctuationCharacters).isEmpty &&
+                $0.hasBeenSeen
             }
             .sorted(by: { $0.creationDate > $1.creationDate })
     }

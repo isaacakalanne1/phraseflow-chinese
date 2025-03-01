@@ -163,7 +163,7 @@ struct DefinitionsChartView: View {
             // Show day numbers at appropriate intervals
             let startDate = dailyCumulativeCount.first?.date ?? now
             let daysCount = calendar.dateComponents([.day], from: startDate, to: now).day ?? 0
-            let stride = daysCount > 30 ? 7 : (daysCount > 14 ? 3 : (daysCount > 7 ? 2 : 1))
+            let stride = getOptimalStride(daysInRange: daysCount)
             
             // Show grid lines for all days
 //            AxisMarks(values: .stride(by: .day)) { _ in
@@ -186,24 +186,37 @@ struct DefinitionsChartView: View {
                         let prevMonth = prevDate.map { calendar.component(.month, from: $0) } ?? 0 
                         let prevYear = prevDate.map { calendar.component(.year, from: $0) } ?? 0
                         
-                        // Month changed or this is first date shown
-                        let showMonthName = month != prevMonth || prevDate == nil
-                        // Year changed or this is first date shown
-                        let showYear = year != prevYear || prevDate == nil
+                        // Is this the first date on the axis?
+                        let isFirstDateOnAxis = calendar.isDate(date, inSameDayAs: startDate)
+                        
+                        // Check if the date range spans multiple years
+                        let endYear = calendar.component(.year, from: now)
+                        let startYear = calendar.component(.year, from: startDate)
+                        let hasMultipleYears = startYear != endYear
+                        
+                        // Show month if it's the first label, month changed, or no previous date
+                        let showMonthName = isFirstDateOnAxis || month != prevMonth || prevDate == nil
+                        
+                        // Only show year if multiple years exist in the range AND
+                        // (it's the first label OR year changed OR no previous date)
+                        let showYear = hasMultipleYears && (isFirstDateOnAxis || year != prevYear || prevDate == nil)
                                              
                         AxisValueLabel {
                             if showYear {
                                 // Show full date with year: "2nd Feb 2024"
                                 Text("\(date, format: .dateTime.day()) \(date, format: .dateTime.month(.abbreviated)) \(year)")
                                     .font(.caption)
+                                    .foregroundColor(.secondary)
                             } else if showMonthName {
-                                // Show date with month: "2nd Feb"
+                                // Show date with month: "2nd Feb" 
                                 Text("\(date, format: .dateTime.day()) \(date, format: .dateTime.month(.abbreviated))")
                                     .font(.caption)
+                                    .foregroundColor(.secondary)
                             } else {
                                 // Just show day: "2nd"
                                 Text("\(date, format: .dateTime.day())")
                                     .font(.caption)
+                                    .foregroundColor(.secondary)
                             }
                         }
                     }
@@ -231,6 +244,26 @@ struct DefinitionsChartView: View {
         .padding()
     }
 
+    // MARK: - Helper Methods
+    
+    /// Returns the optimal day stride based on the number of days in the date range
+    private func getOptimalStride(daysInRange: Int) -> Int {
+        switch daysInRange {
+        case 0...7:
+            return 1        // Daily: 1, 2, 3, 4...
+        case 8...14:
+            return 2        // Every 2 days: 2, 4, 6...
+        case 15...30:
+            return 3        // Every 3 days: 3, 6, 9...
+        case 31...90:
+            return 7        // Weekly: 7, 14, 21...
+        case 91...365:
+            return 30       // Monthly: 30, 60, 90...
+        default:
+            return 180      // Every 6 months for very long ranges
+        }
+    }
+    
     // MARK: - Next Two Checkpoints Logic
     /// Returns up to two upcoming checkpoints based on the user's current maxCount.
     ///
