@@ -64,7 +64,7 @@ struct DefinitionsChartView: View {
                 )
             }
             
-            // Add a final data point for "Now" to ensure we use the full chart width
+            // Add a final data point for "Now" to ensure we use the full chart width and include today's activity
             if let lastDataPoint = dailyCumulativeCount.last, dailyCumulativeCount.count > 0 {
                 // Create a date with the actual current hour
                 let calendar = Calendar.current
@@ -77,15 +77,15 @@ struct DefinitionsChartView: View {
                     hour: nowComponents.hour
                 )) ?? now
                 
-                // Get the today's activity from the definition state
+                // Get ALL definitions for today (not just those created since midnight)
                 let todayCreations = store.state.definitionState.dailyCreationCount(from: definitions)
                 let todayStudied = store.state.definitionState.dailyStudiedCount(from: definitions)
                 
-                // Use the last data point's values plus today's count
-                let nowCumulativeCreations = (lastDataPoint.cumulativeCreations + (isCreations ? todayCreations : 0))
-                let nowCumulativeStudied = (lastDataPoint.cumulativeStudied + (!isCreations ? todayStudied : 0))
+                // For the "Now" point, show all cumulative data including today's activity
+                let nowCumulativeCreations = lastDataPoint.cumulativeCreations + (isCreations ? todayCreations : 0)
+                let nowCumulativeStudied = lastDataPoint.cumulativeStudied + (!isCreations ? todayStudied : 0)
                 
-                // Create a point at current hour today
+                // Create a line connecting to the "Now" point
                 LineMark(
                     x: .value("Date", nowWithCurrentHour),
                     y: .value((isCreations ? "Saved Definitions" : "Studied Words"),
@@ -137,25 +137,21 @@ struct DefinitionsChartView: View {
             // Start at the first date (or today if no data)
             (dailyCumulativeCount.first?.date ?? Date())
             ...
-            // End with extra space (now + 2 days) to ensure "Now" label is visible
-            Date().addingTimeInterval(172800) // Add 48 hours for spacing
+            // End with extra space (now + 2 days) to ensure "Now" label is visible and provides space for "next day data"
+            Date().addingTimeInterval(259200) // Add 72 hours (3 days) for spacing
         )
 
         // -- Axis Labels
 //        .chartXAxisLabel("Date", position: .bottom, alignment: .center)
 //        .chartYAxisLabel("Learned words", position: .leading)
 
-        // -- Format the X-axis with all date grid lines and a "Now" label
+        // -- Format the X-axis with all date grid lines and special labels
         .chartXAxis {
-            // Use built-in stride for daily marks
-            AxisMarks(values: .stride(by: .day)) { value in
-                AxisGridLine()
-                AxisValueLabel(format: .dateTime.day().month(.abbreviated))
-            }
-            
-            // Then add a special mark just for "Now" (at current hour)
+            // Calendar setup
             let calendar = Calendar.current
             let now = Date()
+            let today = calendar.startOfDay(for: now)
+            let tomorrow = calendar.date(byAdding: .day, value: 1, to: today) ?? today
             let nowComponents = calendar.dateComponents([.year, .month, .day, .hour], from: now)
             let nowWithCurrentHour = calendar.date(from: DateComponents(
                 year: nowComponents.year,
@@ -164,9 +160,39 @@ struct DefinitionsChartView: View {
                 hour: nowComponents.hour
             )) ?? now
             
+            // Show day numbers at appropriate intervals
+            let startDate = dailyCumulativeCount.first?.date ?? now
+            let daysCount = calendar.dateComponents([.day], from: startDate, to: now).day ?? 0
+            let stride = daysCount > 30 ? 7 : (daysCount > 14 ? 3 : (daysCount > 7 ? 2 : 1))
+            
+            // Show grid lines for all days
+            AxisMarks(values: .stride(by: .day)) { _ in
+                AxisGridLine()
+            }
+            
+            // Show day numbers at calculated intervals
+            AxisMarks(values: .stride(by: .day, count: stride)) { value in
+                if let date = value.as(Date.self) {
+                    // Don't show day numbers for today/tomorrow (handled below)
+                    if !calendar.isDate(date, inSameDayAs: today) && 
+                       !calendar.isDate(date, inSameDayAs: tomorrow) {
+                        AxisValueLabel(format: .dateTime.day())
+                    }
+                }
+            }
+            
+            // Show month names at the first day of each month
+            AxisMarks(values: .stride(by: .month)) { value in
+                if let date = value.as(Date.self) {
+                    let dayOfMonth = calendar.component(.day, from: date)
+                    if dayOfMonth == 1 {
+                        AxisValueLabel(format: .dateTime.month(.abbreviated))
+                    }
+                }
+            }
+            
+            // Show the "Now" marker at current hour
             AxisMarks(values: [nowWithCurrentHour]) { _ in
-                // No need for another grid line
-                // Just the "Now" label
                 AxisValueLabel {
                     Text("Now")
                         .font(.caption)

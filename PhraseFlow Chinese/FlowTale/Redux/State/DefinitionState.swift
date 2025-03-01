@@ -16,8 +16,7 @@ struct DefinitionState {
         definitions
             .filter {
                 $0.language == language &&
-                !$0.timestampData.word.trimmingCharacters(in: CharacterSet.punctuationCharacters).isEmpty &&
-                $0.hasBeenSeen
+                !$0.timestampData.word.trimmingCharacters(in: CharacterSet.punctuationCharacters).isEmpty
             }
             .sorted(by: { $0.creationDate > $1.creationDate })
     }
@@ -55,8 +54,9 @@ extension DefinitionState {
         // 1) Tally creation & study events by day
         var creationCountsByDay: [Date: Int] = [:]
         var studiedCountsByDay: [Date: Int] = [:]
-        var todayCreations = 0
-        var todayStudied = 0
+        
+        // We won't track today's data here - those will be handled
+        // directly in the chart view with the "Now" point
 
         for def in definitions {
             let creationDateComponents = calendar.dateComponents([.year, .month, .day], from: def.creationDate)
@@ -67,12 +67,12 @@ extension DefinitionState {
                 hour: 0
             )) ?? calendar.startOfDay(for: def.creationDate)
             
-            // Check if this definition was created today
-            if calendar.isDate(creationDay, inSameDayAs: todayStart) {
-                todayCreations += 1
-            } else {
-                // Add to historical data for past days
-                creationCountsByDay[creationDay, default: 0] += 1
+            // Shift the date to the NEXT day (1st → 2nd, 2nd → 3rd, etc.)
+            let shiftedCreationDay = calendar.date(byAdding: .day, value: 1, to: creationDay) ?? creationDay
+            
+            // Only include days before today in the historical cumulative data
+            if !calendar.isDate(creationDay, inSameDayAs: todayStart) {
+                creationCountsByDay[shiftedCreationDay, default: 0] += 1
             }
 
             // Process study dates
@@ -85,12 +85,12 @@ extension DefinitionState {
                     hour: 0
                 )) ?? calendar.startOfDay(for: studyDate)
                 
-                // Check if this definition was studied today
-                if calendar.isDate(studyDay, inSameDayAs: todayStart) {
-                    todayStudied += 1
-                } else {
-                    // Add to historical data for past days
-                    studiedCountsByDay[studyDay, default: 0] += 1
+                // Shift the date to the NEXT day (1st → 2nd, 2nd → 3rd, etc.)
+                let shiftedStudyDay = calendar.date(byAdding: .day, value: 1, to: studyDay) ?? studyDay
+                
+                // Only include days before today in the historical cumulative data
+                if !calendar.isDate(studyDay, inSameDayAs: todayStart) {
+                    studiedCountsByDay[shiftedStudyDay, default: 0] += 1
                 }
             }
         }
