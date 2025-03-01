@@ -32,9 +32,6 @@ struct DefinitionsProgressSheetView: View {
             .tag(1)
         }
         .onChange(of: selectedTab) {
-            // Debug - print the state of definitions to diagnose the issue
-            print("Total definitions: \(definitions.count)")
-            print("Definitions with hasBeenSeen=true: \(definitions.filter { $0.hasBeenSeen }.count)")
             store.dispatch(.playSound(.actionButtonPress))
         }
     }
