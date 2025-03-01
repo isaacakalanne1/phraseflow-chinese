@@ -210,23 +210,6 @@ struct DefinitionsChartView: View {
                 }
             }
             
-            // Show special markers for today and tomorrow
-            AxisMarks(values: [today]) { _ in
-                AxisValueLabel {
-                    Text("Today")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-            }
-            
-            AxisMarks(values: [tomorrow]) { _ in
-                AxisValueLabel {
-                    Text("Tomorrow")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-            }
-            
             // Show the "Now" marker at current hour with left alignment
             AxisMarks(values: [nowWithCurrentHour]) { _ in
                 AxisValueLabel(anchor: .leading, horizontalSpacing: 0) {
