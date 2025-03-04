@@ -12,7 +12,7 @@ struct StoryInfoView: View {
 
     var body: some View {
         HStack {
-            DifficultyView(difficulty: story.difficulty)
+            DifficultyView(difficulty: story.difficulty, isSelected: true)
             Text(story.language.flagEmoji)
         }
     }

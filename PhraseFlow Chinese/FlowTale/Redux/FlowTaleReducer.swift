@@ -98,7 +98,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             newState.audioState.audioPlayer.rate = speed.playRate
         }
     case .defineCharacter(let wordTimeStampData, let shouldForce):
-        newState.definitionState.tappedWord = wordTimeStampData
         newState.viewState.isDefining = true
     case .onDefinedCharacter(var definition):
         // Mark the definition as seen

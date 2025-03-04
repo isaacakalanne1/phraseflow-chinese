@@ -8,7 +8,6 @@
 import Foundation
 
 struct DefinitionState {
-    var tappedWord: WordTimeStampData?
     var currentDefinition: Definition?
     var definitions: [Definition]
 
@@ -22,10 +21,8 @@ struct DefinitionState {
             .sorted(by: { $0.creationDate > $1.creationDate })
     }
 
-    init(tappedWord: WordTimeStampData? = nil,
-         currentDefinition: Definition? = nil,
+    init(currentDefinition: Definition? = nil,
          definitions: [Definition] = []) {
-        self.tappedWord = tappedWord
         self.currentDefinition = currentDefinition
         self.definitions = definitions
     }

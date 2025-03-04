@@ -15,7 +15,7 @@ struct CharacterView: View {
     let word: WordTimeStampData
 
     var isTappedWord: Bool {
-        store.state.currentTappedWord == word
+        store.state.definitionState.currentDefinition?.timestampData == word
     }
 
     var body: some View {

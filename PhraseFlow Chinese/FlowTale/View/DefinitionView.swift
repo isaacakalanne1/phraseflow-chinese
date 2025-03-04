@@ -12,7 +12,7 @@ struct DefinitionView: View {
 
     var body: some View {
         VStack(spacing: 5) {
-            Text(LocalizedString.definitionOf(store.state.definitionState.tappedWord?.word ?? "..."))
+            Text(LocalizedString.definitionOf(store.state.definitionState.currentDefinition?.timestampData.word ?? "..."))
                 .greyBackground()
             HStack {
                 if store.state.viewState.isDefining {
@@ -32,29 +32,30 @@ struct DefinitionView: View {
                                     }
                                     Text(LocalizedString.studyContextPrefix + definition.detail.definitionInContextOfSentence)
                                 }
+                                .frame(maxWidth: .infinity,
+                                       maxHeight: .infinity,
+                                       alignment: .topLeading)
+                            }
+                            VStack {
+                                Button {
+                                    store.dispatch(.playWord(definition.timestampData, story: store.state.storyState.currentStory))
+                                } label: {
+                                    SystemImageView(.speaker)
+                                }
+                                Button {
+                                    store.dispatch(.defineCharacter(definition.timestampData, shouldForce: true))
+                                } label: {
+                                    SystemImageView(._repeat)
+                                }
                             }
                         } else {
                             Text(LocalizedString.tapAWordToDefineIt)
+                                .frame(maxWidth: .infinity,
+                                       maxHeight: .infinity,
+                                       alignment: .topLeading)
                         }
                     }
                     .foregroundColor(FlowTaleColor.primary)
-                    .frame(maxWidth: .infinity,
-                           maxHeight: .infinity,
-                           alignment: .topLeading)
-                    if let word = store.state.definitionState.tappedWord {
-                        VStack {
-                            Button {
-                                store.dispatch(.playWord(word, story: store.state.storyState.currentStory))
-                            } label: {
-                                SystemImageView(.speaker)
-                            }
-                            Button {
-                                store.dispatch(.defineCharacter(word, shouldForce: true))
-                            } label: {
-                                SystemImageView(._repeat)
-                            }
-                        }
-                    }
                 }
             }
         }
