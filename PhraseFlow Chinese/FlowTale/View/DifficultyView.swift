@@ -10,12 +10,15 @@ import SwiftUI
 struct DifficultyView: View {
     let difficulty: Difficulty
     let color: Color
+    let isSelected: Bool
     private let starSize: CGFloat = 10
 
     init(difficulty: Difficulty,
-         color: Color = FlowTaleColor.accent) {
+         color: Color = FlowTaleColor.accent,
+         isSelected: Bool = false) {
         self.difficulty = difficulty
         self.color = color
+        self.isSelected = isSelected
     }
 
     var body: some View {
@@ -23,18 +26,18 @@ struct DifficultyView: View {
             HStack(spacing: 2) {
                 SystemImageView(difficulty.index >= 0 ? .starFilled : .star,
                                 size: starSize,
-                                color: color)
+                                isSelected: isSelected)
                 SystemImageView(difficulty.index >= 1 ? .starFilled : .star,
                                 size: starSize,
-                                color: color)
+                                isSelected: isSelected)
             }
             HStack(spacing: 2) {
                 SystemImageView(difficulty.index >= 2 ? .starFilled : .star,
                                 size: starSize,
-                                color: color)
+                                isSelected: isSelected)
                 SystemImageView(difficulty.index >= 3 ? .starFilled : .star,
                                 size: starSize,
-                                color: color)
+                                isSelected: isSelected)
             }
         }
     }

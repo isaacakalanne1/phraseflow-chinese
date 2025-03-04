@@ -43,7 +43,7 @@ struct ChapterListView: View {
                         Text(story.title)
                             .font(.system(size: 20, weight: .medium))
                         Spacer()
-                        DifficultyView(difficulty: story.difficulty)
+                        DifficultyView(difficulty: story.difficulty, isSelected: true)
                         Text(story.difficulty.title.uppercased())
                             .font(.system(size: 15, weight: .ultraLight))
                     }

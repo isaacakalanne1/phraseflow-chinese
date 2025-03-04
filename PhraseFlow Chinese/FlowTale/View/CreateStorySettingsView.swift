@@ -34,7 +34,7 @@ struct CreateStorySettingsView: View {
                                 .fontWeight(.light)
                                 .foregroundStyle(FlowTaleColor.primary)
                             Spacer()
-                            SystemImageView(.chevronRight, size: 20, color: FlowTaleColor.secondary)
+                            SystemImageView(.chevronRight, size: 20, isSelected: false)
                         }
                     }
                 } header: {
@@ -52,7 +52,7 @@ struct CreateStorySettingsView: View {
                                 .fontWeight(.light)
                                 .foregroundStyle(FlowTaleColor.primary)
                             Spacer()
-                            SystemImageView(.chevronRight, size: 20, color: FlowTaleColor.secondary)
+                            SystemImageView(.chevronRight, size: 20, isSelected: false)
                         }
                     }
                 } header: {
@@ -70,7 +70,7 @@ struct CreateStorySettingsView: View {
                                 .foregroundStyle(FlowTaleColor.primary)
                                 .lineLimit(1)
                             Spacer()
-                            SystemImageView(.chevronRight, size: 20, color: FlowTaleColor.secondary)
+                            SystemImageView(.chevronRight, size: 20, isSelected: false)
                         }
                     }
                 } header: {
@@ -88,7 +88,7 @@ struct CreateStorySettingsView: View {
                                 .foregroundStyle(FlowTaleColor.primary)
                                 .lineLimit(1)
                             Spacer()
-                            SystemImageView(.chevronRight, size: 20, color: FlowTaleColor.secondary)
+                            SystemImageView(.chevronRight, size: 20, isSelected: false)
                         }
                     }
                 } header: {

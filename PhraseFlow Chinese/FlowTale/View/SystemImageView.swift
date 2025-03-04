@@ -11,21 +11,30 @@ struct SystemImageView: View {
 
     private let systemImage: SystemImage
     private let size: CGFloat
-    private let color: Color
+    private let isSelected: Bool
 
     init(_ systemImage: SystemImage,
          size: CGFloat = 40,
-         color: Color = FlowTaleColor.accent) {
+         isSelected: Bool = true) {
         self.systemImage = systemImage
         self.size = size
-        self.color = color
+        self.isSelected = isSelected
     }
 
     var body: some View {
+        let baseColor = isSelected ? FlowTaleColor.accent : FlowTaleColor.primary
+        let bottomColor = isSelected ?
+            FlowTaleColor.accent.opacity(0.7) // Accent with opacity for selected (simulates black overlay)
+        : FlowTaleColor.primary.opacity(0.7) // Darker version for non-selected
+
         Image(systemName: systemImage.systemName)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: size, height: size)
-            .foregroundStyle(color)
+            .foregroundStyle(LinearGradient(
+                gradient: Gradient(colors: [baseColor, bottomColor]),
+                startPoint: .top,
+                endPoint: .bottom
+            ))
     }
 }
