@@ -47,32 +47,53 @@ struct LanguageMenu: View {
                                 }
                             }) {
                                 VStack {
-                                    Group {
-                                        if let thumbnail = language.thumbnail {
-                                            Image(uiImage: thumbnail)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-                                        } else {
-                                            // Fallback if thumbnail is nil
-                                            ZStack {
-                                                Color.gray.opacity(0.3)
-                                                Text(language.flagEmoji)
-                                                    .font(.system(size: 40))
+                                    ZStack {
+                                        Group {
+                                            if let thumbnail = language.thumbnail {
+                                                Image(uiImage: thumbnail)
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fill)
+                                            } else {
+                                                // Fallback if thumbnail is nil
+                                                ZStack {
+                                                    Color.gray.opacity(0.3)
+                                                    Text(language.flagEmoji)
+                                                        .font(.system(size: 40))
+                                                }
                                             }
                                         }
+
+                                        // Gradient overlay
+                                        LinearGradient(
+                                            gradient: Gradient(
+                                                stops: [
+                                                    .init(color: Color.black.opacity(0), location: 0.5),
+                                                    .init(color: Color.black.opacity(1), location: 1.0)
+                                                ]
+                                            ),
+                                            startPoint: .top,
+                                            endPoint: .bottom
+                                        )
+
+                                        // Voice name on top of the gradient
+                                        VStack {
+                                            Spacer()
+                                            Text(language.displayName)
+                                                .fontWeight(isSelectedLanguage ? .bold : .regular)
+                                                .foregroundStyle(isSelectedLanguage ? FlowTaleColor.accent : Color.white)
+                                                .padding(.bottom, 8)
+                                                .padding(.horizontal, 8)
+                                        }
                                     }
-                                    .cornerRadius(12)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 12)
-                                            .stroke(isSelectedLanguage ? FlowTaleColor.accent : Color.clear, lineWidth: 3)
+                                            .stroke(isSelectedLanguage ? FlowTaleColor.accent : Color.clear, lineWidth: 6)
                                     )
-
-                                    Text(language.displayName)
-                                        .fontWeight(isSelectedLanguage ? .bold : .regular)
-                                        .foregroundColor(isSelectedLanguage ? FlowTaleColor.accent : FlowTaleColor.primary)
+                                    .cornerRadius(12)
                                 }
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 8)
+    //                            .background(isSelectedVoice ? FlowTaleColor.secondary.opacity(0.3) : Color.clear)
                                 .cornerRadius(12)
                             }
                         }

@@ -52,36 +52,52 @@ struct VoiceMenu: View {
                                 }
                             }) {
                                 VStack {
-                                    Group {
-                                        if let thumbnail = voice.thumbnail {
-                                            Image(uiImage: thumbnail)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-    //                                            .frame(width: 100, height: 100)
-                                        } else {
-                                            // Fallback if thumbnail is nil
-                                            ZStack {
-                                                Color.gray.opacity(0.3)
-                                                Text(voice.gender.emoji)
-                                                    .font(.system(size: 40))
+                                    ZStack {
+                                        Group {
+                                            if let thumbnail = voice.thumbnail {
+                                                Image(uiImage: thumbnail)
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fill)
+                                            } else {
+                                                // Fallback if thumbnail is nil
+                                                ZStack {
+                                                    Color.gray.opacity(0.3)
+                                                    Text(voice.gender.emoji)
+                                                        .font(.system(size: 40))
+                                                }
                                             }
-    //                                        .frame(width: 100, height: 100)
+                                        }
+                                        
+                                        // Gradient overlay
+                                        LinearGradient(
+                                            gradient: Gradient(
+                                                stops: [
+                                                    .init(color: Color.black.opacity(0), location: 0.5),
+                                                    .init(color: Color.black.opacity(1), location: 1.0)
+                                                ]
+                                            ),
+                                            startPoint: .top,
+                                            endPoint: .bottom
+                                        )
+                                        
+                                        // Voice name on top of the gradient
+                                        VStack {
+                                            Spacer()
+                                            Text(voice.title)
+                                                .fontWeight(isSelectedVoice ? .bold : .regular)
+                                                .foregroundStyle(isSelectedVoice ? FlowTaleColor.accent : Color.white)
+                                                .padding(.bottom, 8)
+                                                .padding(.horizontal, 8)
                                         }
                                     }
-                                    .cornerRadius(12)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 12)
-                                            .stroke(isSelectedVoice ? FlowTaleColor.accent : Color.clear, lineWidth: 3)
+                                            .stroke(isSelectedVoice ? FlowTaleColor.accent : Color.clear, lineWidth: 6)
                                     )
-
-                                    Text(voice.title)
-                                        .fontWeight(isSelectedVoice ? .bold : .regular)
-                                        .foregroundColor(isSelectedVoice ? FlowTaleColor.accent : FlowTaleColor.primary)
+                                    .cornerRadius(12)
                                 }
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 8)
-    //                            .background(isSelectedVoice ? FlowTaleColor.secondary.opacity(0.3) : Color.clear)
-                                .cornerRadius(12)
                             }
                         }
                     }
@@ -93,10 +109,12 @@ struct VoiceMenu: View {
                         }
                     }
                 } header: {
-                    Text(LocalizedString.voiceMenuHeader)
+                    Text(LocalizedString.voiceMenuHeader.uppercased())
+                        .font(.footnote)
                 }
             }
         }
+        .padding()
         .navigationTitle(LocalizedString.voice)
         .background(FlowTaleColor.background)
     }
