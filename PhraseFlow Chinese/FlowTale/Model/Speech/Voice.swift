@@ -5,7 +5,7 @@
 //  Created by iakalann on 04/11/2024.
 //
 
-import Foundation
+import SwiftUI
 
 enum Voice: String, Codable, CaseIterable, Equatable {
     case xiaoxiao, // Chinese
@@ -137,6 +137,10 @@ enum Voice: String, Codable, CaseIterable, Equatable {
         case .conrad:
             "de-DE-ConradNeural"
         }
+    }
+
+    var thumbnail: UIImage? {
+        UIImage(named: "thumbnail-\(rawValue)")
     }
 
     var language: Language {
