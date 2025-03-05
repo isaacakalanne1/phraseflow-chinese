@@ -114,7 +114,6 @@ struct SubscriptionView: View {
                     ZStack {
                         Color.black.opacity(0.5)
                         ProgressView()
-                            .frame(width: 60, height: 60)
                             .tint(FlowTaleColor.primary)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
