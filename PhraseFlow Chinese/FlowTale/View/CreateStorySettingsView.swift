@@ -21,6 +21,7 @@ struct CreateStorySettingsView: View {
         let currentDifficulty = store.state.settingsState.difficulty
         let currentLanguage = store.state.settingsState.language
         let currentStorySetting = store.state.settingsState.storySetting
+        let currentVoice = store.state.settingsState.voice
 
         VStack {
             List {
@@ -30,7 +31,20 @@ struct CreateStorySettingsView: View {
                         store.dispatch(.playSound(.openStorySettings))
                     } label: {
                         HStack {
-                            Text(currentLanguage.flagEmoji + " " + currentLanguage.displayName)
+                            Group {
+                                if let thumbnail = currentLanguage.thumbnail {
+                                    Image(uiImage: thumbnail)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: 50)
+                                } else {
+                                    Text(currentLanguage.flagEmoji)
+                                        .font(.system(size: 20))
+                                        .frame(width: 30, height: 30)
+                                }
+                            }
+                            .cornerRadius(10)
+                            Text(currentLanguage.displayName)
                                 .fontWeight(.light)
                                 .foregroundStyle(FlowTaleColor.primary)
                             Spacer()
@@ -82,26 +96,28 @@ struct CreateStorySettingsView: View {
                         isShowingVoiceSettings = true
                         store.dispatch(.playSound(.openStorySettings))
                     } label: {
-                        HStack {
-                            Group {
-                                if let thumbnail = store.state.settingsState.voice.thumbnail {
-                                    Image(uiImage: thumbnail)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(height: 50)
-                                } else {
-                                    Text(store.state.settingsState.voice.gender.emoji)
-                                        .font(.system(size: 20))
-                                        .frame(width: 30, height: 30)
+                        ZStack {
+                            HStack {
+                                Group {
+                                    if let thumbnail = currentVoice.thumbnail {
+                                        Image(uiImage: thumbnail)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height: 50)
+                                    } else {
+                                        Text(currentVoice.gender.emoji)
+                                            .font(.system(size: 20))
+                                            .frame(width: 30, height: 30)
+                                    }
                                 }
+                                .cornerRadius(10)
+                                Text(currentVoice.title)
+                                    .fontWeight(.light)
+                                    .foregroundStyle(FlowTaleColor.primary)
+                                    .lineLimit(1)
+                                Spacer()
+                                SystemImageView(.chevronRight, size: 20, isSelected: false)
                             }
-                            .cornerRadius(10)
-                            Text(store.state.settingsState.voice.title)
-                                .fontWeight(.light)
-                                .foregroundStyle(FlowTaleColor.primary)
-                                .lineLimit(1)
-                            Spacer()
-                            SystemImageView(.chevronRight, size: 20, isSelected: false)
                         }
                     }
                 } header: {

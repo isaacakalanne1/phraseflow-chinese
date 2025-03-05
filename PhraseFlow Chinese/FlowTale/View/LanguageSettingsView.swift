@@ -27,26 +27,63 @@ struct LanguageMenu: View {
     var shouldDismissOnSelect = false
 
     var body: some View {
-        List {
-            Section {
-                ForEach(Language.allCases, id: \.self) { language in
-                    Button {
-                        store.dispatch(.playSound(.changeSettings))
-                        store.dispatch(.updateLanguage(language))
-                        if shouldDismissOnSelect {
-                            dismiss()
+        ScrollView {
+            VStack(alignment: .leading) {
+                Section {
+                    LazyVGrid(columns: [
+                        GridItem(.flexible()),
+                        GridItem(.flexible())
+                    ], spacing: 8) {
+                        ForEach(Language.allCases, id: \.self) { language in
+                            let isSelectedLanguage = store.state.settingsState.language == language
+
+                            Button(action: {
+                                withAnimation(.easeInOut) {
+                                    store.dispatch(.playSound(.changeSettings))
+                                    store.dispatch(.updateLanguage(language))
+                                    if shouldDismissOnSelect {
+                                        dismiss()
+                                    }
+                                }
+                            }) {
+                                VStack {
+                                    Group {
+                                        if let thumbnail = language.thumbnail {
+                                            Image(uiImage: thumbnail)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                        } else {
+                                            // Fallback if thumbnail is nil
+                                            ZStack {
+                                                Color.gray.opacity(0.3)
+                                                Text(language.flagEmoji)
+                                                    .font(.system(size: 40))
+                                            }
+                                        }
+                                    }
+                                    .cornerRadius(12)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .stroke(isSelectedLanguage ? FlowTaleColor.accent : Color.clear, lineWidth: 3)
+                                    )
+
+                                    Text(language.displayName)
+                                        .fontWeight(isSelectedLanguage ? .bold : .regular)
+                                        .foregroundColor(isSelectedLanguage ? FlowTaleColor.accent : FlowTaleColor.primary)
+                                }
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 8)
+                                .cornerRadius(12)
+                            }
                         }
-                    } label: {
-                        Text(language.flagEmoji + " " + language.displayName)
-                            .fontWeight(store.state.settingsState.language == language ? .medium : .light)
-                            .foregroundStyle(store.state.settingsState.language == language ? FlowTaleColor.accent : FlowTaleColor.primary)
                     }
-                    .listRowBackground(store.state.settingsState.language == language ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
+                } header: {
+                    Text(LocalizedString.whichLanguageLearn.uppercased())
+                        .font(.footnote)
                 }
-            } header: {
-                Text(LocalizedString.whichLanguageLearn)
             }
         }
+        .padding()
         .navigationTitle(LocalizedString.language)
         .background(FlowTaleColor.background)
         .scrollContentBackground(.hidden)

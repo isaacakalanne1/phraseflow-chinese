@@ -21,6 +21,10 @@ enum Language: String, Codable, CaseIterable {
          russian,
          german
 
+    var thumbnail: UIImage? {
+        return UIImage(named: "thumbnail-\(rawValue)")
+    }
+
     var descriptiveEnglishName: String {
         switch self {
         case .brazilianPortuguese:
