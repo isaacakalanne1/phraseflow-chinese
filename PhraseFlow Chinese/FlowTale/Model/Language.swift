@@ -202,7 +202,8 @@ enum Language: String, Codable, CaseIterable {
             [.thalita,
              .donato]
         case .english:
-            [.ava]
+            [.ava,
+             .andrew]
         case .hindi:
             [.ananya,
              .aarav]

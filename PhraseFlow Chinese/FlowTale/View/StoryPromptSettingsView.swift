@@ -23,6 +23,8 @@ struct StoryPromptOnboardingView: View {
 
 struct StoryPromptMenu: View {
     @EnvironmentObject var store: FlowTaleStore
+    @Environment(\.dismiss) var dismiss
+    var shouldDismissOnSelect = false
 
     var body: some View {
         let isRandomPromptSelected = store.state.settingsState.storySetting == .random
@@ -55,6 +57,9 @@ struct StoryPromptMenu: View {
                 Button {
                     store.dispatch(.playSound(.changeSettings))
                     store.dispatch(.updateStorySetting(.random))
+                    if shouldDismissOnSelect {
+                        dismiss()
+                    }
                 } label: {
                     Text(LocalizedString.random)
                         .fontWeight(isRandomPromptSelected ? .medium : .light)
@@ -68,6 +73,9 @@ struct StoryPromptMenu: View {
                     Button {
                         store.dispatch(.playSound(.changeSettings))
                         store.dispatch(.updateStorySetting(.customPrompt(prompt)))
+                        if shouldDismissOnSelect {
+                            dismiss()
+                        }
                     } label: {
                         Text(prompt.capitalized)
                             .fontWeight(isSelectedPrompt ? .medium : .light)
@@ -113,7 +121,7 @@ struct StoryPromptSettingsView: View {
 
     var body: some View {
         VStack {
-            StoryPromptMenu()
+            StoryPromptMenu(shouldDismissOnSelect: true)
 
             PrimaryButton(title: LocalizedString.done) {
                 dismiss()

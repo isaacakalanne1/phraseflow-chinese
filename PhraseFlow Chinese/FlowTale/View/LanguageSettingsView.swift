@@ -23,6 +23,8 @@ struct LanguageOnboardingView: View {
 
 struct LanguageMenu: View {
     @EnvironmentObject var store: FlowTaleStore
+    @Environment(\.dismiss) var dismiss
+    var shouldDismissOnSelect = false
 
     var body: some View {
         List {
@@ -31,6 +33,9 @@ struct LanguageMenu: View {
                     Button {
                         store.dispatch(.playSound(.changeSettings))
                         store.dispatch(.updateLanguage(language))
+                        if shouldDismissOnSelect {
+                            dismiss()
+                        }
                     } label: {
                         Text(language.flagEmoji + " " + language.displayName)
                             .fontWeight(store.state.settingsState.language == language ? .medium : .light)
@@ -53,7 +58,7 @@ struct LanguageSettingsView: View {
 
     var body: some View {
         VStack {
-            LanguageMenu()
+            LanguageMenu(shouldDismissOnSelect: true)
 
             PrimaryButton(title: LocalizedString.done) {
                 dismiss()

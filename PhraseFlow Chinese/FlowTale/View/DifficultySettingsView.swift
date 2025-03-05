@@ -23,6 +23,8 @@ struct DifficultyOnboardingView: View {
 
 struct DifficultyMenu: View {
     @EnvironmentObject var store: FlowTaleStore
+    @Environment(\.dismiss) var dismiss
+    var shouldDismissOnSelect = false
 
     var body: some View {
         List {
@@ -31,6 +33,9 @@ struct DifficultyMenu: View {
                     Button {
                         store.dispatch(.playSound(.changeSettings))
                         store.dispatch(.updateDifficulty(difficulty))
+                        if shouldDismissOnSelect {
+                            dismiss()
+                        }
                     } label: {
                         HStack {
                             DifficultyView(difficulty: difficulty)
@@ -56,7 +61,7 @@ struct DifficultySettingsView: View {
 
     var body: some View {
         VStack {
-            DifficultyMenu()
+            DifficultyMenu(shouldDismissOnSelect: true)
 
             PrimaryButton(title: LocalizedString.done) {
                 dismiss()

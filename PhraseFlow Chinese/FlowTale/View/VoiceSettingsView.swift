@@ -23,6 +23,8 @@ struct VoiceOnboardingView: View {
 
 struct VoiceMenu: View {
     @EnvironmentObject var store: FlowTaleStore
+    @Environment(\.dismiss) var dismiss
+    var shouldDismissOnSelect = false
 
     var body: some View {
         ScrollView {
@@ -48,6 +50,9 @@ struct VoiceMenu: View {
                             withAnimation(.easeInOut) {
                                 store.dispatch(.playSound(.changeSettings))
                                 store.dispatch(.selectVoice(voice))
+                                if shouldDismissOnSelect {
+                                    dismiss()
+                                }
                             }
                         }) {
                             VStack {
@@ -103,7 +108,7 @@ struct VoiceSettingsView: View {
 
     var body: some View {
         VStack {
-            VoiceMenu()
+            VoiceMenu(shouldDismissOnSelect: true)
 
             PrimaryButton(title: LocalizedString.done) {
                 dismiss()

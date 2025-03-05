@@ -83,7 +83,20 @@ struct CreateStorySettingsView: View {
                         store.dispatch(.playSound(.openStorySettings))
                     } label: {
                         HStack {
-                            Text(store.state.settingsState.voice.gender.emoji + " " + store.state.settingsState.voice.title)
+                            Group {
+                                if let thumbnail = store.state.settingsState.voice.thumbnail {
+                                    Image(uiImage: thumbnail)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: 50)
+                                } else {
+                                    Text(store.state.settingsState.voice.gender.emoji)
+                                        .font(.system(size: 20))
+                                        .frame(width: 30, height: 30)
+                                }
+                            }
+                            .cornerRadius(10)
+                            Text(store.state.settingsState.voice.title)
                                 .fontWeight(.light)
                                 .foregroundStyle(FlowTaleColor.primary)
                                 .lineLimit(1)
