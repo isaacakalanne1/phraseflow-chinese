@@ -96,28 +96,26 @@ struct CreateStorySettingsView: View {
                         isShowingVoiceSettings = true
                         store.dispatch(.playSound(.openStorySettings))
                     } label: {
-                        ZStack {
-                            HStack {
-                                Group {
-                                    if let thumbnail = currentVoice.thumbnail {
-                                        Image(uiImage: thumbnail)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(height: 50)
-                                    } else {
-                                        Text(currentVoice.gender.emoji)
-                                            .font(.system(size: 20))
-                                            .frame(width: 30, height: 30)
-                                    }
+                        HStack {
+                            Group {
+                                if let thumbnail = currentVoice.thumbnail {
+                                    Image(uiImage: thumbnail)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: 50)
+                                } else {
+                                    Text(currentVoice.gender.emoji)
+                                        .font(.system(size: 20))
+                                        .frame(width: 30, height: 30)
                                 }
-                                .cornerRadius(10)
-                                Text(currentVoice.title)
-                                    .fontWeight(.light)
-                                    .foregroundStyle(FlowTaleColor.primary)
-                                    .lineLimit(1)
-                                Spacer()
-                                SystemImageView(.chevronRight, size: 20, isSelected: false)
                             }
+                            .cornerRadius(10)
+                            Text(currentVoice.title)
+                                .fontWeight(.light)
+                                .foregroundStyle(FlowTaleColor.primary)
+                                .lineLimit(1)
+                            Spacer()
+                            SystemImageView(.chevronRight, size: 20, isSelected: false)
                         }
                     }
                 } header: {
