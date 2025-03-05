@@ -61,8 +61,6 @@ struct SettingsView: View {
                         .fontWeight(.light)
                     Toggle(LocalizedString.translation, isOn: showEnglish)
                         .fontWeight(.light)
-                    Toggle(LocalizedString.settingsDarkMode, isOn: isDarkMode)
-                        .fontWeight(.light)
                 } header: {
                     Text(LocalizedString.settingsAppearance)
                 }

@@ -44,7 +44,16 @@ struct ReaderView: View {
             }
         })
         .padding(10)
-        .background(FlowTaleColor.background)
+        .background {
+            if let uiImage = UIImage(named: "Background") {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .overlay {
+                        FlowTaleColor.background.opacity(0.9)
+                    }
+            }
+        }
     }
 
     // MARK: - Audio Button
