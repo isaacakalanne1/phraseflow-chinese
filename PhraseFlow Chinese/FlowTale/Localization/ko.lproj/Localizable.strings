@@ -557,5 +557,8 @@
 // Title informing the user that they are currently on a free trial of the app
 "free_trial" = "무료 평가판";
 
+// The current time marker in the definitions chart
+"now" = "지금";
+
 // Snackbar text telling the user the story is ready and to tap to read it
 "story_ready_tap_to_read" = "스토리가 준비되었습니다. 읽으려면 여기를 탭하세요.";

@@ -223,7 +223,7 @@ struct DefinitionsChartView: View {
             // Show the "Now" marker at current hour with left alignment
             AxisMarks(values: [nowWithCurrentHour]) { _ in
                 AxisValueLabel(anchor: .leading, horizontalSpacing: 0) {
-                    Text("Now")
+                    Text(LocalizedString.now)
                         .font(.caption)
                         .fontWeight(.bold)
                         .foregroundColor(FlowTaleColor.accent)

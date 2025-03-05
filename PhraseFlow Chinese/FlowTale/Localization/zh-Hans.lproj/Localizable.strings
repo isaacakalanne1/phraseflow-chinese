@@ -557,5 +557,8 @@
 // Title informing the user that they are currently on a free trial of the app
 "free_trial" = "免费试用";
 
+// The current time marker in the definitions chart
+"now" = "现在";
+
 // Snackbar text telling the user the story is ready and to tap to read it
 "story_ready_tap_to_read" = "故事已准备好。点击此处阅读。";

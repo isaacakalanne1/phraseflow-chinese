@@ -559,3 +559,6 @@
 
 // Title informing the user that they are currently on a free trial of the app
 "free_trial" = "Free trial";
+
+// The current time marker in the definitions chart
+"now" = "Now";

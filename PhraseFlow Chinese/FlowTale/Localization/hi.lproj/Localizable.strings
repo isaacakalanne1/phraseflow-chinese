@@ -557,5 +557,8 @@
 // Title informing the user that they are currently on a free trial of the app
 "free_trial" = "नि:शुल्क परीक्षण";
 
+// The current time marker in the definitions chart
+"now" = "अभी";
+
 // Snackbar text telling the user the story is ready and to tap to read it
 "story_ready_tap_to_read" = "कहानी तैयार है। इसे पढ़ने के लिए यहां टैप करें।";

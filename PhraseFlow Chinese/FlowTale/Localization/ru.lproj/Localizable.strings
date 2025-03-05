@@ -557,5 +557,8 @@
 // Title informing the user that they are currently on a free trial of the app
 "free_trial" = "Бесплатная пробная версия";
 
+// The current time marker in the definitions chart
+"now" = "Сейчас";
+
 // Snackbar text telling the user the story is ready and to tap to read it
 "story_ready_tap_to_read" = "История готова. Нажмите здесь, чтобы прочитать.";
