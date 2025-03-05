@@ -48,6 +48,7 @@ struct SubscriptionView: View {
             }
 
             SubscriptionOption(title: LocalizedString.free, detail: LocalizedString.subscriptionFreeChaptersDetail(4), product: nil, action: { })
+                .disabled(true)
 
             Button {
                 Task {
