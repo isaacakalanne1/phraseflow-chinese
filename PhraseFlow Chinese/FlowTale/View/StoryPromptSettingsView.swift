@@ -77,7 +77,9 @@ struct StoryPromptMenu: View {
                             dismiss()
                         }
                     } label: {
-                        Text(prompt.capitalized)
+                        let firstLetter = prompt.prefix(1).capitalized
+                        let remainingLetters = prompt.dropFirst()
+                        Text(firstLetter + remainingLetters)
                             .fontWeight(isSelectedPrompt ? .medium : .light)
                             .foregroundStyle(isSelectedPrompt ? FlowTaleColor.accent : FlowTaleColor.primary)
                     }
