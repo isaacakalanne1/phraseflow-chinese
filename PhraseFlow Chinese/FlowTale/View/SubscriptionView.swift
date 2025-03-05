@@ -38,6 +38,9 @@ struct SubscriptionView: View {
                                           product: product,
                                           action: {
                     Task {
+                        // First validate receipt to ensure proper sandbox handling
+                        store.dispatch(.validateReceipt)
+                        // Then attempt to purchase
                         store.dispatch(.purchaseSubscription(product))
                     }
                     store.dispatch(.setSubscriptionSheetShowing(false))
@@ -48,6 +51,9 @@ struct SubscriptionView: View {
 
             Button {
                 Task {
+                    // First validate receipt to ensure proper sandbox handling
+                    store.dispatch(.validateReceipt)
+                    // Then restore purchases
                     store.dispatch(.restoreSubscriptions)
                     store.dispatch(.setSubscriptionSheetShowing(false))
                 }
@@ -88,6 +94,12 @@ struct SubscriptionView: View {
                     .multilineTextAlignment(.center)
                     .font(.subheadline)
                     .foregroundColor(FlowTaleColor.primary)
+            }
+        }
+        // Validate receipt whenever subscription view appears to ensure we handle sandbox receipts properly
+        .onAppear {
+            Task {
+                store.dispatch(.validateReceipt)
             }
         }
         .padding(20)

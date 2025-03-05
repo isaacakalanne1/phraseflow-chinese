@@ -137,6 +137,8 @@ enum FlowTaleAction {
     case updatePurchasedProducts([VerificationResult<Transaction>], isOnLaunch: Bool)
 
     case observeTransactionUpdates
+    case validateReceipt
+    case onValidatedReceipt
 
     case setSubscriptionSheetShowing(Bool)
 

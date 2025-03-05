@@ -45,6 +45,7 @@ protocol FlowTaleEnvironmentProtocol {
                           story: Story,
                           deviceLanguage: Language?) async throws -> [Definition]
     func purchase(_ product: Product) async throws
+    func validateReceipt()
     func generateImage(with prompt: String) async throws -> Data
     func moderateText(_ text: String) async throws -> ModerationResponse
     func enforceChapterCreationLimit(subscription: SubscriptionLevel?) throws
@@ -158,6 +159,10 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
 
     func purchase(_ product: Product) async throws {
         try await repository.purchase(product)
+    }
+    
+    func validateReceipt() {
+        repository.validateAppStoreReceipt()
     }
 
     func generateImage(with prompt: String) async throws -> Data {

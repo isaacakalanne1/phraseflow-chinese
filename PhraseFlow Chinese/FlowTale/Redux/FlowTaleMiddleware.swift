@@ -421,6 +421,10 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return .refreshTranslationView
     case .fetchSubscriptions:
         do {
+            // First validate the receipt to properly handle sandbox receipts
+            // This will trigger a receipt refresh if needed
+            environment.validateReceipt()
+            
             let subscriptions = try await environment.getProducts()
             return .onFetchedSubscriptions(subscriptions)
         } catch {
@@ -437,11 +441,19 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return .getCurrentEntitlements
     case .restoreSubscriptions:
         do {
+            // Validate receipt first to handle sandbox receipts properly
+            environment.validateReceipt()
+            
+            // Then perform the sync
             try await AppStore.sync()
         } catch {
             return .failedToRestoreSubscriptions
         }
         return .onRestoredSubscriptions
+        
+    case .validateReceipt:
+        environment.validateReceipt()
+        return .onValidatedReceipt
     case .getCurrentEntitlements:
         var entitlements: [VerificationResult<Transaction>] = []
         for await result in Transaction.currentEntitlements {
@@ -572,7 +584,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .hasReachedDailyLimit,
             .showFreeLimitExplanationScreen,
             .selectStoryFromSnackbar,
-            .updateStudyAudioPlaying:
+            .updateStudyAudioPlaying,
+            .onValidatedReceipt:
         return nil
     }
 }

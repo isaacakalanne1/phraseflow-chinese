@@ -423,6 +423,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .onRestoredSubscriptions,
             .failedToRestoreSubscriptions,
             .observeTransactionUpdates,
+            .validateReceipt,
+            .onValidatedReceipt,
             .onGeneratedImage,
             .moderateText,
             .failedToModerateText,
