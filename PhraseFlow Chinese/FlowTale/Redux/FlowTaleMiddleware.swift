@@ -324,7 +324,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .failedToSaveDefinitions
         }
     case .onSavedDefinitions:
-        return .refreshDefinitionView
+        return .loadDefinitions
     case .selectChapter:
         return .onSelectedChapter
     case .onSelectedChapter:
@@ -534,6 +534,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return isAppLaunch ? .showSnackBar(.welcomeBack) : nil
     case .deleteCustomPrompt:
         return .showSnackBar(.deletedCustomStory)
+    case .onLoadedDefinitions:
+        return .refreshDefinitionView
     case .failedToLoadStories,
             .failedToSaveStory,
             .failedToDefineCharacter,
@@ -545,7 +547,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .failedToSaveAppSettings,
             .failedToLoadAppSettings,
             .refreshTranslationView,
-            .onLoadedDefinitions,
             .failedToLoadDefinitions,
             .failedToSaveDefinitions,
             .failedToSaveStoryAndSettings,

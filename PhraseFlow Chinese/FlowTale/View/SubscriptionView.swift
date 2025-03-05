@@ -13,7 +13,6 @@ struct SubscriptionView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            let product = store.state.subscriptionState.products?.first
             Spacer()
             Text(store.state.subscriptionState.isSubscribed ? LocalizedString.manageSubscription : LocalizedString.subscribe)
                 .font(.title)
