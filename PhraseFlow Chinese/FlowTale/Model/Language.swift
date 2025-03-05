@@ -184,7 +184,7 @@ enum Language: String, Codable, CaseIterable {
             [.mayu,
              .keita]
         case .korean:
-            [.sunHi,
+            [.sunhi,
              .hyunsu]
         case .russian:
             [.dariya,

@@ -14,7 +14,7 @@ enum Voice: String, Codable, CaseIterable, Equatable {
          henri,
          mayu, // Japanese
          keita,
-         sunHi, // Korean
+         sunhi, // Korean
          hyunsu,
          dariya, // Russian
          dmitry,
@@ -47,7 +47,7 @@ enum Voice: String, Codable, CaseIterable, Equatable {
             LocalizedString.voiceMayu
         case .keita:
             LocalizedString.voiceKeita
-        case .sunHi:
+        case .sunhi:
             LocalizedString.voiceSunHi
         case .hyunsu:
             LocalizedString.voiceHyunSu
@@ -100,7 +100,7 @@ enum Voice: String, Codable, CaseIterable, Equatable {
             "ja-JP-MayuNeural"
         case .keita:
             "ja-JP-KeitaNeural"
-        case .sunHi:
+        case .sunhi:
             "ko-KR-SunHiNeural"
         case .hyunsu:
             "ko-KR-HyunsuNeural"
@@ -154,7 +154,7 @@ enum Voice: String, Codable, CaseIterable, Equatable {
         case .mayu,
                 .keita:
                 .japanese
-        case .sunHi,
+        case .sunhi,
                 .hyunsu:
                 .korean
         case .dariya,
@@ -189,7 +189,7 @@ enum Voice: String, Codable, CaseIterable, Equatable {
         case .xiaoxiao,
                 .denise,
                 .mayu,
-                .sunHi,
+                .sunhi,
                 .dariya,
                 .elvira,
                 .fatima,
