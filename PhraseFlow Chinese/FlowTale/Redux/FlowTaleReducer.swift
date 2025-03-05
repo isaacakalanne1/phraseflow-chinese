@@ -394,7 +394,13 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.snackBarState.isShowing = false
     case .updateStudyAudioPlaying(let isPlaying):
         newState.studyState.isAudioPlaying = isPlaying
-            
+    case .updateIsSubscriptionPurchaseLoading(let isLoading):
+        newState.subscriptionState.isLoadingSubscriptionPurchase = isLoading
+    case .purchaseSubscription:
+        newState.subscriptionState.isLoadingSubscriptionPurchase = true
+    case .onPurchasedSubscription,
+            .failedToPurchaseSubscription:
+        newState.subscriptionState.isLoadingSubscriptionPurchase = false
     case .saveStoryAndSettings,
             .failedToSaveStory,
             .loadStories,
@@ -415,9 +421,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .failedToSaveStoryAndSettings,
             .fetchSubscriptions,
             .failedToFetchSubscriptions,
-            .purchaseSubscription,
-            .onPurchasedSubscription,
-            .failedToPurchaseSubscription,
             .getCurrentEntitlements,
             .restoreSubscriptions,
             .onRestoredSubscriptions,

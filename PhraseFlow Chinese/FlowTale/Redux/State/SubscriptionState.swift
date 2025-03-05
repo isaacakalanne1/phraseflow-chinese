@@ -9,6 +9,7 @@ import Foundation
 import StoreKit
 
 struct SubscriptionState {
+    var isLoadingSubscriptionPurchase = false
     var currentSubscription: SubscriptionLevel? {
 //        #if DEBUG
 //            .max

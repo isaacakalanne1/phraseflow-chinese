@@ -108,6 +108,19 @@ struct SubscriptionView: View {
         .background(FlowTaleColor.background)
         .navigationTitle(LocalizedString.subscribe)
         .navigationBarTitleDisplayMode(.inline)
+        .overlay(content: {
+            Group {
+                if store.state.subscriptionState.isLoadingSubscriptionPurchase {
+                    ZStack {
+                        Color.black.opacity(0.5)
+                        ProgressView()
+                            .frame(width: 60, height: 60)
+                            .tint(FlowTaleColor.primary)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+            }
+        })
     }
 }
 

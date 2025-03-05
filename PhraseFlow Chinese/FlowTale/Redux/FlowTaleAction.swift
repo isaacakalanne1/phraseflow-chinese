@@ -129,6 +129,8 @@ enum FlowTaleAction {
     case onPurchasedSubscription
     case failedToPurchaseSubscription
 
+    case updateIsSubscriptionPurchaseLoading(Bool)
+
     case restoreSubscriptions
     case onRestoredSubscriptions
     case failedToRestoreSubscriptions

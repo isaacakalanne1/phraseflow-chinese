@@ -585,7 +585,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .showFreeLimitExplanationScreen,
             .selectStoryFromSnackbar,
             .updateStudyAudioPlaying,
-            .onValidatedReceipt:
+            .onValidatedReceipt,
+            .updateIsSubscriptionPurchaseLoading:
         return nil
     }
 }
