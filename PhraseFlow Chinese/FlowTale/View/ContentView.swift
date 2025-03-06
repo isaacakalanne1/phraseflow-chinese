@@ -89,24 +89,19 @@ struct ContentView: View {
         case .reader:
             if store.state.viewState.readerDisplayType == .loading {
                 LoadingView()
-            } else if let _ = store.state.storyState.currentStory {
-                if let chapter = store.state.storyState.currentChapter {
-                    NavigationStack {
-                        ReaderView(chapter: chapter)
-                            .navigationDestination(
-                                isPresented: isShowingDailyLimitExplanationScreen
-                            ) {
-                                DailyLimitExplanationView()
-                            }
-                            .navigationDestination(
-                                isPresented: isShowingFreeLimitExplanationScreen
-                            ) {
-                                FreeLimitExplanationView()
-                            }
-                    }
-                } else {
-                    ProgressView()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else if let chapter = store.state.storyState.currentChapter {
+                NavigationStack {
+                    ReaderView(chapter: chapter)
+                        .navigationDestination(
+                            isPresented: isShowingDailyLimitExplanationScreen
+                        ) {
+                            DailyLimitExplanationView()
+                        }
+                        .navigationDestination(
+                            isPresented: isShowingFreeLimitExplanationScreen
+                        ) {
+                            FreeLimitExplanationView()
+                        }
                 }
             } else {
                 // If no currentStory or no chapters, show Onboarding

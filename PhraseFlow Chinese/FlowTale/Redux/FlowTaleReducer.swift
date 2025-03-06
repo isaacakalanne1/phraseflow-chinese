@@ -40,6 +40,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             } else {
                 // No stories left
                 newState.storyState.currentStory = nil
+                newState.viewState.contentTab = .reader
                 newState.audioState.audioPlayer = AVPlayer()
             }
         }
@@ -303,7 +304,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         print("Definitions with hasBeenSeen=true: \(definitions.filter { $0.hasBeenSeen }.count)")
         
         newState.definitionState.definitions = definitions
-    case .onDeletedStory(_):
+    case .onDeletedStory:
         // Just regenerate the view ID - the actual story selection logic is now in onLoadedStories
         newState.viewState.storyListViewId = UUID()
     case .onFetchedSubscriptions(let subscriptions):

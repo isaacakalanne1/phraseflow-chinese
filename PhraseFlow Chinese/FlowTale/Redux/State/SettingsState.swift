@@ -68,7 +68,7 @@ struct SettingsState: Codable {
 
     init(isShowingDefinition: Bool = true,
          isShowingEnglish: Bool = true,
-         isPlayingMusic: Bool = false,
+         isPlayingMusic: Bool = true,
          voice: Voice = .xiaoxiao,
          speechSpeed: SpeechSpeed = .normal,
          difficulty: Difficulty = .beginner,
