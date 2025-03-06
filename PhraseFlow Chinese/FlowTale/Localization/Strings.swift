@@ -212,6 +212,7 @@ public enum LocalizedString {
   public static let writingChapter = LocalizedString.tr("Localizable", "writing_chapter")
   public static let writingNewChapter = LocalizedString.tr("Localizable", "writing_new_chapter")
   public static let now = LocalizedString.tr("Localizable", "now")
+  public static let create = LocalizedString.tr("Localizable", "create")
 }
 
 extension LocalizedString {

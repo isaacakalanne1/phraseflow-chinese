@@ -560,5 +560,8 @@
 // The current time marker in the definitions chart
 "now" = "现在";
 
+// Create button text for creating a story
+"create" = "创建";
+
 // Snackbar text telling the user the story is ready and to tap to read it
 "story_ready_tap_to_read" = "故事已准备好。点击此处阅读。";

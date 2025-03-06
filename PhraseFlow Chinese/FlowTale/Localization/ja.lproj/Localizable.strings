@@ -560,5 +560,8 @@
 // The current time marker in the definitions chart
 "now" = "今";
 
+// Create button text for creating a story
+"create" = "作成";
+
 // Snackbar text telling the user the story is ready and to tap to read it
 "story_ready_tap_to_read" = "ストーリーの準備ができました。ここをタップして読む。";

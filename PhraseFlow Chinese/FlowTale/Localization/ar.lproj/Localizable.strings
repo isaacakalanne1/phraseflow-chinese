@@ -560,5 +560,8 @@
 // The current time marker in the definitions chart
 "now" = "الآن";
 
+// Create button text for creating a story
+"create" = "إنشاء";
+
 // Snackbar text telling the user the story is ready and to tap to read it
 "story_ready_tap_to_read" = "القصة جاهزة. انقر هنا لقراءتها.";

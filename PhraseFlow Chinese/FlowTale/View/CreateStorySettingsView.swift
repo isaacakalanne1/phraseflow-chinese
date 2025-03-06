@@ -214,7 +214,7 @@ struct CreateStoryButton: View {
                 }
                 
                 // Button content
-                Text("CREATE")
+                Text(LocalizedString.create)
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity)
