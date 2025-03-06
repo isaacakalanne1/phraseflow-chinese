@@ -203,13 +203,14 @@ struct CreateStoryButton: View {
                     let player = AVPlayer(url: url)
                     VideoBackgroundView(player: player)
                         .frame(height: 70)
-                        .cornerRadius(10)
                         .onAppear {
                             player.play()
                         }
                         .overlay {
-                            FlowTaleColor.accent.opacity(0.8)
+                            FlowTaleColor.accent.opacity(0.6)
                         }
+                        .cornerRadius(10)
+                        .scaleEffect(x: -1, y: 1)
                 }
                 
                 // Button content
