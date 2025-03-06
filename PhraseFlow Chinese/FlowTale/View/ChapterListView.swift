@@ -96,8 +96,8 @@ struct ChapterListView: View {
                 }
             }
         } else {
-            // If no story found in store, show something like:
-            Text("Story not found.")
+            // If no story found in store, show message
+            Text(LocalizedString.chapterListStoryNotFound)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(FlowTaleColor.background)
         }

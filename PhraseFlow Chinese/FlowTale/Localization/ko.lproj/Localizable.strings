@@ -563,5 +563,17 @@
 // Create button text for creating a story
 "create" = "만들기";
 
+// Chart axis label for date
+"chart_date" = "날짜";
+
+// Chart label for checkpoint levels
+"chart_checkpoint" = "체크포인트";
+
+// Chart label for saved definitions data
+"chart_saved_definitions" = "저장된 정의";
+
+// Chart label for studied words data
+"chart_studied_words" = "학습한 단어";
+
 // Snackbar text telling the user the story is ready and to tap to read it
 "story_ready_tap_to_read" = "스토리가 준비되었습니다. 읽으려면 여기를 탭하세요.";

@@ -563,5 +563,17 @@
 // Create button text for creating a story
 "create" = "बनाएँ";
 
+// Chart axis label for date
+"chart_date" = "तारीख";
+
+// Chart label for checkpoint levels
+"chart_checkpoint" = "चेकपॉइंट";
+
+// Chart label for saved definitions data
+"chart_saved_definitions" = "सहेजी गई परिभाषाएँ";
+
+// Chart label for studied words data
+"chart_studied_words" = "अध्ययन किए गए शब्द";
+
 // Snackbar text telling the user the story is ready and to tap to read it
 "story_ready_tap_to_read" = "कहानी तैयार है। इसे पढ़ने के लिए यहां टैप करें।";

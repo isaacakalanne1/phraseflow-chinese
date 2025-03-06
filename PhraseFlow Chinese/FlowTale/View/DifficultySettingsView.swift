@@ -14,7 +14,7 @@ struct DifficultyOnboardingView: View {
             NavigationLink {
                 StoryPromptOnboardingView()
             } label: {
-                PrimaryButton(title: "Next")
+                PrimaryButton(title: LocalizedString.next)
             }
         }
         .background(FlowTaleColor.background)

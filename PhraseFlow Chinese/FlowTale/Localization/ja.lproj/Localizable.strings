@@ -563,5 +563,17 @@
 // Create button text for creating a story
 "create" = "作成";
 
+// Chart axis label for date
+"chart_date" = "日付";
+
+// Chart label for checkpoint levels
+"chart_checkpoint" = "チェックポイント";
+
+// Chart label for saved definitions data
+"chart_saved_definitions" = "保存された定義";
+
+// Chart label for studied words data
+"chart_studied_words" = "学習した単語";
+
 // Snackbar text telling the user the story is ready and to tap to read it
 "story_ready_tap_to_read" = "ストーリーの準備ができました。ここをタップして読む。";

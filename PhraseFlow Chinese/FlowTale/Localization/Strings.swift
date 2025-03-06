@@ -213,6 +213,10 @@ public enum LocalizedString {
   public static let writingNewChapter = LocalizedString.tr("Localizable", "writing_new_chapter")
   public static let now = LocalizedString.tr("Localizable", "now")
   public static let create = LocalizedString.tr("Localizable", "create")
+  public static let chartCheckpoint = LocalizedString.tr("Localizable", "chart_checkpoint")
+  public static let chartDate = LocalizedString.tr("Localizable", "chart_date")
+  public static let chartSavedDefinitions = LocalizedString.tr("Localizable", "chart_saved_definitions")
+  public static let chartStudiedWords = LocalizedString.tr("Localizable", "chart_studied_words")
 }
 
 extension LocalizedString {

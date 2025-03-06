@@ -563,5 +563,17 @@
 // Create button text for creating a story
 "create" = "СОЗДАТЬ";
 
+// Chart axis label for date
+"chart_date" = "Дата";
+
+// Chart label for checkpoint levels
+"chart_checkpoint" = "Контрольная точка";
+
+// Chart label for saved definitions data
+"chart_saved_definitions" = "Сохраненные определения";
+
+// Chart label for studied words data
+"chart_studied_words" = "Изученные слова";
+
 // Snackbar text telling the user the story is ready and to tap to read it
 "story_ready_tap_to_read" = "История готова. Нажмите здесь, чтобы прочитать.";

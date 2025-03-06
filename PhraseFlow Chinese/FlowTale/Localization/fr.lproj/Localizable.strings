@@ -563,5 +563,17 @@
 // Create button text for creating a story
 "create" = "CRÉER";
 
+// Chart axis label for date
+"chart_date" = "Date";
+
+// Chart label for checkpoint levels
+"chart_checkpoint" = "Point de Contrôle";
+
+// Chart label for saved definitions data
+"chart_saved_definitions" = "Définitions Enregistrées";
+
+// Chart label for studied words data
+"chart_studied_words" = "Mots Étudiés";
+
 // Snackbar text telling the user the story is ready and to tap to read it
 "story_ready_tap_to_read" = "Histoire prête. Touchez ici pour la lire.";

@@ -44,8 +44,8 @@ struct DefinitionsChartView: View {
             // -- Plot the dailyCumulativeCount data
             ForEach(dailyCumulativeCount, id: \.date) { dataPoint in
                 LineMark(
-                    x: .value("Date", dataPoint.date),
-                    y: .value((isCreations ? "Saved Definitions" : "Studied Words"),
+                    x: .value(LocalizedString.chartDate, dataPoint.date),
+                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords),
                               (isCreations ? dataPoint.cumulativeCreations : dataPoint.cumulativeStudied))
                 )
                 .interpolationMethod(.linear)
@@ -55,8 +55,8 @@ struct DefinitionsChartView: View {
 
                 // -- Add a light fill under the line
                 AreaMark(
-                    x: .value("Date", dataPoint.date),
-                    y: .value((isCreations ? "Saved Definitions" : "Studied Words"),
+                    x: .value(LocalizedString.chartDate, dataPoint.date),
+                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords),
                               (isCreations ? dataPoint.cumulativeCreations : dataPoint.cumulativeStudied))
                 )
                 .foregroundStyle(
@@ -87,8 +87,8 @@ struct DefinitionsChartView: View {
                 
                 // Create a line connecting to the "Now" point
                 LineMark(
-                    x: .value("Date", nowWithCurrentHour),
-                    y: .value((isCreations ? "Saved Definitions" : "Studied Words"),
+                    x: .value(LocalizedString.chartDate, nowWithCurrentHour),
+                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords),
                              (isCreations ? nowCumulativeCreations : nowCumulativeStudied))
                 )
                 .interpolationMethod(.linear)
@@ -98,8 +98,8 @@ struct DefinitionsChartView: View {
                 
                 // Add the area fill
                 AreaMark(
-                    x: .value("Date", nowWithCurrentHour),
-                    y: .value((isCreations ? "Saved Definitions" : "Studied Words"),
+                    x: .value(LocalizedString.chartDate, nowWithCurrentHour),
+                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords),
                              (isCreations ? nowCumulativeCreations : nowCumulativeStudied))
                 )
                 .foregroundStyle(
@@ -108,8 +108,8 @@ struct DefinitionsChartView: View {
                 
                 // Add a special point that marks "Now" with a symbol
                 PointMark(
-                    x: .value("Date", nowWithCurrentHour),
-                    y: .value((isCreations ? "Saved Definitions" : "Studied Words"),
+                    x: .value(LocalizedString.chartDate, nowWithCurrentHour),
+                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords),
                              (isCreations ? nowCumulativeCreations : nowCumulativeStudied))
                 )
                 .symbolSize(100) // Make it visible
@@ -119,7 +119,7 @@ struct DefinitionsChartView: View {
             // -- Draw each upcoming checkpoint with a dashed line
             ForEach(upcomingCheckpoints, id: \.value) { checkpoint in
                 RuleMark(
-                    y: .value("Checkpoint", checkpoint.value)
+                    y: .value(LocalizedString.chartCheckpoint, checkpoint.value)
                 )
                 .lineStyle(StrokeStyle(lineWidth: 1, dash: [5])) // dotted line
                 .foregroundStyle(FlowTaleColor.secondary)
