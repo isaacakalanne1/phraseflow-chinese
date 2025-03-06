@@ -12,9 +12,15 @@ struct ActionButtonsView: View {
 
     var body: some View {
 
-        let tabs = ContentTab.allCases
+        var tabs = ContentTab.allCases
+        if store.state.definitionState.definitions.isEmpty,
+           let studyIndex = tabs.firstIndex(of: .study),
+           let progressIndex = tabs.firstIndex(of: .progress) {
+            tabs.remove(at: studyIndex)
+            tabs.remove(at: progressIndex)
+        }
 
-        VStack(alignment: .center) {
+        return VStack(alignment: .center) {
             HStack(spacing: 12) {
                 ForEach(tabs) { tab in
                     let isSelected = store.state.viewState.contentTab == tab

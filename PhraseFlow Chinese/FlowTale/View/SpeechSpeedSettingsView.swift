@@ -7,16 +7,6 @@
 
 import SwiftUI
 
-struct SpeechSpeedOnboardingView: View {
-    var body: some View {
-        VStack {
-            SpeechSpeedMenu()
-            CreateStoryButton()
-        }
-        .background(FlowTaleColor.background)
-    }
-}
-
 struct SpeechSpeedMenu: View {
     @EnvironmentObject var store: FlowTaleStore
 

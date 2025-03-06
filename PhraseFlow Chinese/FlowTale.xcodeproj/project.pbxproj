@@ -102,7 +102,6 @@
 		BBE990B92D29BD9C00FAD3FB /* BackButtonPress.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990B82D29BD9C00FAD3FB /* BackButtonPress.mp3 */; };
 		BBE990BD2D29C56D00FAD3FB /* MusicAudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE990BC2D29C56D00FAD3FB /* MusicAudioState.swift */; };
 		BBE990C12D29C59C00FAD3FB /* MusicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE990C02D29C59C00FAD3FB /* MusicType.swift */; };
-		BBE990C72D29D9F000FAD3FB /* Whispers of an Open Book.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990C62D29D9F000FAD3FB /* Whispers of an Open Book.mp3 */; };
 		BBE990CB2D29EF5E00FAD3FB /* OpenStory.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990CA2D29EF5E00FAD3FB /* OpenStory.mp3 */; };
 		BBE990D32D29F36C00FAD3FB /* ChangeSettings.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990D22D29F36C00FAD3FB /* ChangeSettings.mp3 */; };
 		BBE990D92D29FB6100FAD3FB /* ActionButtonPress.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990D82D29FB6100FAD3FB /* ActionButtonPress.mp3 */; };
@@ -254,7 +253,6 @@
 		BBE990B82D29BD9C00FAD3FB /* BackButtonPress.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BackButtonPress.mp3; sourceTree = "<group>"; };
 		BBE990BC2D29C56D00FAD3FB /* MusicAudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicAudioState.swift; sourceTree = "<group>"; };
 		BBE990C02D29C59C00FAD3FB /* MusicType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicType.swift; sourceTree = "<group>"; };
-		BBE990C62D29D9F000FAD3FB /* Whispers of an Open Book.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Whispers of an Open Book.mp3"; sourceTree = "<group>"; };
 		BBE990CA2D29EF5E00FAD3FB /* OpenStory.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = OpenStory.mp3; sourceTree = "<group>"; };
 		BBE990D22D29F36C00FAD3FB /* ChangeSettings.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ChangeSettings.mp3; sourceTree = "<group>"; };
 		BBE990D82D29FB6100FAD3FB /* ActionButtonPress.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ActionButtonPress.mp3; sourceTree = "<group>"; };
@@ -562,7 +560,6 @@
 				BBE990D82D29FB6100FAD3FB /* ActionButtonPress.mp3 */,
 				BBE990B82D29BD9C00FAD3FB /* BackButtonPress.mp3 */,
 				BBE990DC2D29FE0200FAD3FB /* Whispers of Tranquility.mp3 */,
-				BBE990C62D29D9F000FAD3FB /* Whispers of an Open Book.mp3 */,
 				BBB1B7BB2D79CEB00023147B /* Whispers of the Forest.mp3 */,
 				BBB1B7C02D79E2AB0023147B /* Whispers of the Enchanted Grove.mp3 */,
 				BBE990CA2D29EF5E00FAD3FB /* OpenStory.mp3 */,
@@ -721,7 +718,6 @@
 				BBE990E32D2AB31300FAD3FB /* ErrorSnackbar.mp3 in Resources */,
 				BB9B8B5D2D3461C900752993 /* CreateStory.mp3 in Resources */,
 				BBF618862D42E63D00CA3229 /* GoToNextChapter.mp3 in Resources */,
-				BBE990C72D29D9F000FAD3FB /* Whispers of an Open Book.mp3 in Resources */,
 				BBB1B7B72D79B3120023147B /* ButtonBackground.mp4 in Resources */,
 				BBE990D32D29F36C00FAD3FB /* ChangeSettings.mp3 in Resources */,
 				BBB6EF2E2C8C86290079D135 /* Preview Assets.xcassets in Resources */,

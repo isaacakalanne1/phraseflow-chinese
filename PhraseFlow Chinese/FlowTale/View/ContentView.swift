@@ -218,7 +218,7 @@ enum MusicVolume {
     var float: Float {
         switch self {
         case .normal:
-            0.6
+            0.5
         case .quiet:
             0.15
         }

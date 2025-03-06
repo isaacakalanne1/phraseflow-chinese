@@ -94,7 +94,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .stopMusic:
         newState.settingsState.isPlayingMusic = false
         newState.musicAudioState.audioPlayer.stop()
-        newState.musicAudioState.currentMusicType = .whispersOfAnOpenBook
+        newState.musicAudioState.currentMusicType = .whispersOfTheForest
     case .failedToLoadStories:
         newState.viewState.readerDisplayType = .normal
     case .updateSpeechSpeed(let speed):

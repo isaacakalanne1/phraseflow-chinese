@@ -20,7 +20,7 @@ struct MusicAudioState {
     }
 
     init(audioPlayer: AVAudioPlayer = AVAudioPlayer(),
-         currentMusicType: MusicType = .whispersOfAnOpenBook) {
+         currentMusicType: MusicType = .whispersOfTheForest) {
         self.audioPlayer = audioPlayer
         self.currentMusicType = currentMusicType
     }

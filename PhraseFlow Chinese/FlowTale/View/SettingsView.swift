@@ -32,7 +32,7 @@ struct SettingsView: View {
         } set: { newValue in
             store.dispatch(.playSound(.togglePress))
             if newValue {
-                store.dispatch(.playMusic(.whispersOfTranquility))
+                store.dispatch(.playMusic(.whispersOfTheForest))
             } else {
                 store.dispatch(.stopMusic)
             }

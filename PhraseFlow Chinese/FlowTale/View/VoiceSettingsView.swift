@@ -11,11 +11,7 @@ struct VoiceOnboardingView: View {
     var body: some View {
         VStack {
             VoiceMenu()
-            NavigationLink {
-                SpeechSpeedOnboardingView()
-            } label: {
-                PrimaryButton(title: LocalizedString.next)
-            }
+            CreateStoryButton()
         }
         .background(FlowTaleColor.background)
     }
