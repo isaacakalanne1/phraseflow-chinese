@@ -7,19 +7,22 @@
 
 import Foundation
 
-enum MusicType {
-    case whispersOfAnOpenBook, whispersOfTranquility, whispersOfTheForest
+enum MusicType: String, CaseIterable {
+    case whispersOfTranquility = "Whispers of Tranquility" 
+    case whispersOfTheForest = "Whispers of the Forest"
+    case whispersOfAnOpenBook = "Whispers of an Open Book"
 
     var fileURL: URL? {
-        let fileName: String
-        switch self {
-        case .whispersOfAnOpenBook:
-            fileName = "Whispers of an Open Book"
-        case .whispersOfTranquility:
-            fileName = "Whispers of Tranquility"
-        case .whispersOfTheForest:
-            fileName = "Whispers of the Forest"
+        return Bundle.main.url(forResource: self.rawValue, withExtension: "mp3")
+    }
+    
+    static func next(after current: MusicType) -> MusicType {
+        let allCases = MusicType.allCases
+        guard let currentIndex = allCases.firstIndex(where: { $0 == current }),
+              currentIndex + 1 < allCases.count else {
+            // If it's the last one or not found, return the first one
+            return allCases.first!
         }
-        return Bundle.main.url(forResource: fileName, withExtension: "mp3")
+        return allCases[currentIndex + 1]
     }
 }

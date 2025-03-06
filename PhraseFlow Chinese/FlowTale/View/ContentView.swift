@@ -181,7 +181,8 @@ struct ContentView: View {
     // MARK: - Timer
     func startTimer() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            if store.state.audioState.audioPlayer.rate != 0 {
+            // Handle music volume changes based on audio playback
+            if store.state.audioState.audioPlayer.rate != 0 || store.state.studyState.audioPlayer.rate != 0 {
                 if store.state.musicAudioState.volume == .normal {
                     store.dispatch(.setMusicVolume(.quiet))
                 }
@@ -190,9 +191,22 @@ struct ContentView: View {
                     store.dispatch(.setMusicVolume(.normal))
                 }
             }
+            
+            // Update play time for audio state
             if store.state.audioState.isPlayingAudio {
                 store.dispatch(.updatePlayTime)
             }
+            
+            // Check if music needs to be advanced to next track
+            if store.state.settingsState.isPlayingMusic,
+               store.state.musicAudioState.isNearEndOfTrack {
+                // Music has finished - play next track
+                let currentMusic = store.state.musicAudioState.currentMusicType
+                let nextMusic = MusicType.next(after: currentMusic)
+                store.dispatch(.playMusic(nextMusic))
+            }
+            
+            // Continue timer
             startTimer()
         }
     }

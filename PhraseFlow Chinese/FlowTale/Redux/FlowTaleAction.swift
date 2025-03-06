@@ -156,6 +156,7 @@ enum FlowTaleAction {
 
     case playSound(AppSound)
     case playMusic(MusicType)
+    case musicTrackFinished(MusicType)
     case stopMusic
 
     case updateCustomPrompt(String)

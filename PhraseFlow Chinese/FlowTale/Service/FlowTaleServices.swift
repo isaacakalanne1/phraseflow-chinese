@@ -190,7 +190,6 @@ protocol FlowTaleServicesProtocol {
 }
 
 final class FlowTaleServices: FlowTaleServicesProtocol {
-
     private let baseURL = "https://queue.fal.run/fal-ai/flux"
     private let apiKey = ProcessInfo.processInfo.environment["FAL_KEY"] ?? "e1f58875-fe36-4a31-ad34-badb6bbd0409:4645ce9820c0b75b3cbe1b0d9c324306"
     private let session = URLSession.shared

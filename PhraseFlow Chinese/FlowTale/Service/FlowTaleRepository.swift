@@ -291,7 +291,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
     func purchase(_ product: Product) async throws {
         do {
             // First, validate the receipt to ensure we're properly handling sandbox receipts
-            try await validateAppStoreReceipt()
+            validateAppStoreReceipt()
             
             // Then attempt to purchase the product
             let result = try await product.purchase()

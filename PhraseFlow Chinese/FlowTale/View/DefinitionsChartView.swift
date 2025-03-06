@@ -151,7 +151,6 @@ struct DefinitionsChartView: View {
             let calendar = Calendar.current
             let now = Date()
             let today = calendar.startOfDay(for: now)
-            let tomorrow = calendar.date(byAdding: .day, value: 1, to: today) ?? today
             let nowComponents = calendar.dateComponents([.year, .month, .day, .hour], from: now)
             let nowWithCurrentHour = calendar.date(from: DateComponents(
                 year: nowComponents.year,
@@ -175,7 +174,6 @@ struct DefinitionsChartView: View {
                 if let date = value.as(Date.self) {
                     // Process ALL dates with the same logic including today/tomorrow
                         
-                        let day = calendar.component(.day, from: date)
                         let month = calendar.component(.month, from: date)
                         let year = calendar.component(.year, from: date)
                         

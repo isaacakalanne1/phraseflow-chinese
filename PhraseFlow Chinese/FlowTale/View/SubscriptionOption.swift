@@ -21,7 +21,7 @@ struct SubscriptionOption: View {
     }
 
     var backgroundColor: Color {
-        if let prod = product {
+        if let _ = product {
             if isUserCurrentSubscription {
                 return FlowTaleColor.primary
             } else {
@@ -33,7 +33,7 @@ struct SubscriptionOption: View {
     }
 
     var foregroundColor: Color {
-        if let prod = product {
+        if let _ = product {
             if isUserCurrentSubscription {
                 return FlowTaleColor.accent
             } else {

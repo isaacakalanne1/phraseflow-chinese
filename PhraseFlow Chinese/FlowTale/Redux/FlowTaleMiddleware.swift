@@ -256,12 +256,17 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return nil
     case .playMusic:
         state.musicAudioState.audioPlayer.play()
+        
         if let story = state.storyState.currentStory {
             return .saveStoryAndSettings(story)
         }
         return nil
+        
+    case .musicTrackFinished(let nextMusicType):
+        // Play the next track in the music rotation
+        return .playMusic(nextMusicType)
+        
     case .stopMusic:
-        state.musicAudioState.audioPlayer.stop()
         if let story = state.storyState.currentStory {
             return .saveStoryAndSettings(story)
         }
@@ -499,7 +504,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return .saveDefinitions
     case .onLoadedAppSettings:
         if state.settingsState.isPlayingMusic {
-            return .playMusic(.whispersOfTheForest)
+            return .playMusic(.whispersOfTranquility)
         }
         return nil
     case .updateStorySetting(let setting):

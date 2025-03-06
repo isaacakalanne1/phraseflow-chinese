@@ -80,9 +80,12 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         }
     case .playMusic(let music):
         if let url = music.fileURL,
-        let player = try? AVAudioPlayer(contentsOf: url) {
-            player.numberOfLoops = -1
-            player.volume = 0.7
+           let player = try? AVAudioPlayer(contentsOf: url) {
+            player.numberOfLoops = 0
+//            player.rate = 10
+//            player.enableRate = true
+            player.volume = MusicVolume.normal.float
+            newState.musicAudioState.currentMusicType = music
             newState.musicAudioState.audioPlayer = player
             newState.settingsState.isPlayingMusic = true
         }
@@ -90,6 +93,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.musicAudioState.volume = volume
     case .stopMusic:
         newState.settingsState.isPlayingMusic = false
+        newState.musicAudioState.audioPlayer.stop()
+        newState.musicAudioState.currentMusicType = .whispersOfAnOpenBook
     case .failedToLoadStories:
         newState.viewState.readerDisplayType = .normal
     case .updateSpeechSpeed(let speed):
@@ -441,7 +446,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .loadThenShowReadySnackbar,
             .loadDefinitionsForStory,
             .pauseStudyAudio,
-            .onFinishedLoadedStories:
+            .onFinishedLoadedStories,
+            .musicTrackFinished:
         break
     }
 
