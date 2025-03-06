@@ -8,7 +8,7 @@
 import Foundation
 
 enum MusicType {
-    case whispersOfAnOpenBook, whispersOfTranquility
+    case whispersOfAnOpenBook, whispersOfTranquility, whispersOfTheForest
 
     var fileURL: URL? {
         let fileName: String
@@ -17,6 +17,8 @@ enum MusicType {
             fileName = "Whispers of an Open Book"
         case .whispersOfTranquility:
             fileName = "Whispers of Tranquility"
+        case .whispersOfTheForest:
+            fileName = "Whispers of the Forest"
         }
         return Bundle.main.url(forResource: fileName, withExtension: "mp3")
     }

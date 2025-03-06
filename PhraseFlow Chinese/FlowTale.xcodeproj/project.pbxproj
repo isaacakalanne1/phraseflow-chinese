@@ -74,6 +74,7 @@
 		BBAE07DB2D14BE0B00DA95CD /* SystemImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07DA2D14BE0B00DA95CD /* SystemImageView.swift */; };
 		BBAE07DD2D14BE3000DA95CD /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07DC2D14BE3000DA95CD /* SystemImage.swift */; };
 		BBB1B7B72D79B3120023147B /* ButtonBackground.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7B62D79B3120023147B /* ButtonBackground.mp4 */; };
+		BBB1B7BC2D79CEB00023147B /* Whispers of the Forest.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7BB2D79CEB00023147B /* Whispers of the Forest.mp3 */; };
 		BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -221,6 +222,7 @@
 		BBAE07DA2D14BE0B00DA95CD /* SystemImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImageView.swift; sourceTree = "<group>"; };
 		BBAE07DC2D14BE3000DA95CD /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
 		BBB1B7B62D79B3120023147B /* ButtonBackground.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ButtonBackground.mp4; sourceTree = "<group>"; };
+		BBB1B7BB2D79CEB00023147B /* Whispers of the Forest.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Whispers of the Forest.mp3"; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* FlowTale.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowTale.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -559,6 +561,7 @@
 				BBE990B82D29BD9C00FAD3FB /* BackButtonPress.mp3 */,
 				BBE990DC2D29FE0200FAD3FB /* Whispers of Tranquility.mp3 */,
 				BBE990C62D29D9F000FAD3FB /* Whispers of an Open Book.mp3 */,
+				BBB1B7BB2D79CEB00023147B /* Whispers of the Forest.mp3 */,
 				BBE990CA2D29EF5E00FAD3FB /* OpenStory.mp3 */,
 				BBE990E02D2AB26300FAD3FB /* Snackbar.mp3 */,
 				BBE990E22D2AB31200FAD3FB /* ErrorSnackbar.mp3 */,
@@ -724,6 +727,7 @@
 				BBE990B32D29BBFD00FAD3FB /* TogglePress.mp3 in Resources */,
 				BBF618842D42E43E00CA3229 /* CreateNextChapter.mp3 in Resources */,
 				BBE990D92D29FB6100FAD3FB /* ActionButtonPress.mp3 in Resources */,
+				BBB1B7BC2D79CEB00023147B /* Whispers of the Forest.mp3 in Resources */,
 				BBE990CB2D29EF5E00FAD3FB /* OpenStory.mp3 in Resources */,
 				BBF618822D42E06800CA3229 /* PreviousStudyWord.mp3 in Resources */,
 				BBF6188C2D43A54200CA3229 /* OpenStorySettings.mp3 in Resources */,

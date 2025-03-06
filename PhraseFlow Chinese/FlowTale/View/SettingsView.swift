@@ -32,17 +32,10 @@ struct SettingsView: View {
         } set: { newValue in
             store.dispatch(.playSound(.togglePress))
             if newValue {
-                store.dispatch(.playMusic(.whispersOfAnOpenBook))
+                store.dispatch(.playMusic(.whispersOfTheForest))
             } else {
                 store.dispatch(.stopMusic)
             }
-        }
-
-        let isDarkMode: Binding<Bool> = .init {
-            (store.state.settingsState.appColorScheme?.colorScheme ?? colorScheme) == .dark
-        } set: { newValue in
-            store.dispatch(.playSound(.togglePress))
-            store.dispatch(.updateColorScheme(newValue ? .dark : .light))
         }
 
         let shouldPlayButtonSounds: Binding<Bool> = .init {

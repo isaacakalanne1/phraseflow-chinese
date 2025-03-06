@@ -499,7 +499,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return .saveDefinitions
     case .onLoadedAppSettings:
         if state.settingsState.isPlayingMusic {
-            return .playMusic(.whispersOfAnOpenBook)
+            return .playMusic(.whispersOfTheForest)
         }
         return nil
     case .updateStorySetting(let setting):
