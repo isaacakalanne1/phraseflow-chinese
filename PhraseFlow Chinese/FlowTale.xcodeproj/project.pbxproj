@@ -73,6 +73,7 @@
 		BBAE07D92D14BD6D00DA95CD /* AIStatementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07D82D14BD6D00DA95CD /* AIStatementView.swift */; };
 		BBAE07DB2D14BE0B00DA95CD /* SystemImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07DA2D14BE0B00DA95CD /* SystemImageView.swift */; };
 		BBAE07DD2D14BE3000DA95CD /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07DC2D14BE3000DA95CD /* SystemImage.swift */; };
+		BBB1B7B72D79B3120023147B /* ButtonBackground.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7B62D79B3120023147B /* ButtonBackground.mp4 */; };
 		BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -219,6 +220,7 @@
 		BBAE07D82D14BD6D00DA95CD /* AIStatementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIStatementView.swift; sourceTree = "<group>"; };
 		BBAE07DA2D14BE0B00DA95CD /* SystemImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImageView.swift; sourceTree = "<group>"; };
 		BBAE07DC2D14BE3000DA95CD /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
+		BBB1B7B62D79B3120023147B /* ButtonBackground.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ButtonBackground.mp4; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* FlowTale.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowTale.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -409,9 +411,17 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
+		BBB1B7B82D79B3150023147B /* VIdeo */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = VIdeo;
+			sourceTree = "<group>";
+		};
 		BBB6EF1A2C8C86240079D135 = {
 			isa = PBXGroup;
 			children = (
+				BBB1B7B62D79B3120023147B /* ButtonBackground.mp4 */,
 				BBB6EF252C8C86240079D135 /* FlowTale */,
 				BBB6EF362C8C862A0079D135 /* FlowTaleTests */,
 				BBB6EF402C8C862A0079D135 /* FlowTaleUITests */,
@@ -434,6 +444,7 @@
 		BBB6EF252C8C86240079D135 /* FlowTale */ = {
 			isa = PBXGroup;
 			children = (
+				BBB1B7B82D79B3150023147B /* VIdeo */,
 				BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */,
 				BBE990B12D29BBF000FAD3FB /* Sound */,
 				BB84E0A32CF3EC4200520F5E /* Localization */,
@@ -704,6 +715,7 @@
 				BB9B8B5D2D3461C900752993 /* CreateStory.mp3 in Resources */,
 				BBF618862D42E63D00CA3229 /* GoToNextChapter.mp3 in Resources */,
 				BBE990C72D29D9F000FAD3FB /* Whispers of an Open Book.mp3 in Resources */,
+				BBB1B7B72D79B3120023147B /* ButtonBackground.mp4 in Resources */,
 				BBE990D32D29F36C00FAD3FB /* ChangeSettings.mp3 in Resources */,
 				BBB6EF2E2C8C86290079D135 /* Preview Assets.xcassets in Resources */,
 				BBE990E52D2AB3D100FAD3FB /* CloseSheet.mp3 in Resources */,
