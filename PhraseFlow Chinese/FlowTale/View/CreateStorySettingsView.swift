@@ -214,15 +214,12 @@ struct CreateStoryButton: View {
                 }
                 
                 // Button content
-                HStack(spacing: 5) {
-                    DifficultyView(difficulty: store.state.settingsState.difficulty, color: .white)
-                    Text(store.state.settingsState.language.flagEmoji + " " + LocalizedString.newStory)
-                        .fontWeight(.semibold)
-                }
-                .background(Color.clear)
-                .frame(maxWidth: .infinity)
-                .frame(height: 70)
-                .foregroundColor(.white)
+                Text("CREATE")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 70)
+                    .foregroundColor(.white)
             }
         }
         // Disable button if currently writing a chapter
