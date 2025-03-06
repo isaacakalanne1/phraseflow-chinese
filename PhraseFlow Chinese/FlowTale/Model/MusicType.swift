@@ -10,7 +10,7 @@ import Foundation
 enum MusicType: String, CaseIterable {
     case whispersOfTranquility = "Whispers of Tranquility" 
     case whispersOfTheForest = "Whispers of the Forest"
-    case whispersOfAnOpenBook = "Whispers of an Open Book"
+    case whispersOfTheEnchantedGrove = "Whispers of the Enchanted Grove"
 
     var fileURL: URL? {
         return Bundle.main.url(forResource: self.rawValue, withExtension: "mp3")

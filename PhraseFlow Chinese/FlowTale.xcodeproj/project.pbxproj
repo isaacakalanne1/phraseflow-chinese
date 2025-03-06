@@ -75,6 +75,7 @@
 		BBAE07DD2D14BE3000DA95CD /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07DC2D14BE3000DA95CD /* SystemImage.swift */; };
 		BBB1B7B72D79B3120023147B /* ButtonBackground.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7B62D79B3120023147B /* ButtonBackground.mp4 */; };
 		BBB1B7BC2D79CEB00023147B /* Whispers of the Forest.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7BB2D79CEB00023147B /* Whispers of the Forest.mp3 */; };
+		BBB1B7C12D79E2AB0023147B /* Whispers of the Enchanted Grove.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7C02D79E2AB0023147B /* Whispers of the Enchanted Grove.mp3 */; };
 		BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -223,6 +224,7 @@
 		BBAE07DC2D14BE3000DA95CD /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
 		BBB1B7B62D79B3120023147B /* ButtonBackground.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ButtonBackground.mp4; sourceTree = "<group>"; };
 		BBB1B7BB2D79CEB00023147B /* Whispers of the Forest.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Whispers of the Forest.mp3"; sourceTree = "<group>"; };
+		BBB1B7C02D79E2AB0023147B /* Whispers of the Enchanted Grove.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Whispers of the Enchanted Grove.mp3"; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* FlowTale.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowTale.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -413,17 +415,17 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
-		BBB1B7B82D79B3150023147B /* VIdeo */ = {
+		BBB1B7BF2D79DD320023147B /* Video */ = {
 			isa = PBXGroup;
 			children = (
+				BBB1B7B62D79B3120023147B /* ButtonBackground.mp4 */,
 			);
-			path = VIdeo;
+			path = Video;
 			sourceTree = "<group>";
 		};
 		BBB6EF1A2C8C86240079D135 = {
 			isa = PBXGroup;
 			children = (
-				BBB1B7B62D79B3120023147B /* ButtonBackground.mp4 */,
 				BBB6EF252C8C86240079D135 /* FlowTale */,
 				BBB6EF362C8C862A0079D135 /* FlowTaleTests */,
 				BBB6EF402C8C862A0079D135 /* FlowTaleUITests */,
@@ -446,7 +448,7 @@
 		BBB6EF252C8C86240079D135 /* FlowTale */ = {
 			isa = PBXGroup;
 			children = (
-				BBB1B7B82D79B3150023147B /* VIdeo */,
+				BBB1B7BF2D79DD320023147B /* Video */,
 				BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */,
 				BBE990B12D29BBF000FAD3FB /* Sound */,
 				BB84E0A32CF3EC4200520F5E /* Localization */,
@@ -562,6 +564,7 @@
 				BBE990DC2D29FE0200FAD3FB /* Whispers of Tranquility.mp3 */,
 				BBE990C62D29D9F000FAD3FB /* Whispers of an Open Book.mp3 */,
 				BBB1B7BB2D79CEB00023147B /* Whispers of the Forest.mp3 */,
+				BBB1B7C02D79E2AB0023147B /* Whispers of the Enchanted Grove.mp3 */,
 				BBE990CA2D29EF5E00FAD3FB /* OpenStory.mp3 */,
 				BBE990E02D2AB26300FAD3FB /* Snackbar.mp3 */,
 				BBE990E22D2AB31200FAD3FB /* ErrorSnackbar.mp3 */,
@@ -712,6 +715,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBB1B7C12D79E2AB0023147B /* Whispers of the Enchanted Grove.mp3 in Resources */,
 				BBE990DB2D29FC7700FAD3FB /* OpenChapter.mp3 in Resources */,
 				BBE990DD2D29FE0200FAD3FB /* Whispers of Tranquility.mp3 in Resources */,
 				BBE990E32D2AB31300FAD3FB /* ErrorSnackbar.mp3 in Resources */,
