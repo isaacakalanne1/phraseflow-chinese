@@ -41,55 +41,82 @@ struct StoryPromptMenu: View {
             store.dispatch(.updateCustomPrompt(newValue))
         }
 
-        List {
-            Section {
-
-                Button {
-                    store.dispatch(.updateIsShowingCustomPromptAlert(true))
-                } label: {
-                    //
-                    Text(LocalizedString.customStory)
-                        .fontWeight(.light)
-                        .foregroundStyle(FlowTaleColor.primary)
-                }
-                .listRowBackground(Color(uiColor: UIColor.secondarySystemGroupedBackground))
-
-                Button {
-                    store.dispatch(.playSound(.changeSettings))
-                    store.dispatch(.updateStorySetting(.random))
-                    if shouldDismissOnSelect {
-                        dismiss()
-                    }
-                } label: {
-                    Text(LocalizedString.random)
-                        .fontWeight(isRandomPromptSelected ? .medium : .light)
-                        .foregroundStyle(isRandomPromptSelected ? FlowTaleColor.accent : FlowTaleColor.primary)
-                }
-                .listRowBackground(isRandomPromptSelected ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
-
-                ForEach(store.state.settingsState.customPrompts, id: \.self) { prompt in
-                    let isSelectedPrompt = store.state.settingsState.storySetting == .customPrompt(prompt)
-
-                    Button {
-                        store.dispatch(.playSound(.changeSettings))
-                        store.dispatch(.updateStorySetting(.customPrompt(prompt)))
-                        if shouldDismissOnSelect {
-                            dismiss()
+        ScrollView {
+            VStack(alignment: .leading) {
+                Section {
+                    LazyVGrid(columns: [
+                        GridItem(.flexible()),
+                        GridItem(.flexible())
+                    ], spacing: 8) {
+                        // Create Custom Story Button
+                        ImageSelectionButton(
+                            title: LocalizedString.customStory,
+                            image: UIImage(named: "StoryPrompt-Create"),
+                            fallbackText: "✏️",
+                            isSelected: false,
+                            action: {
+                                withAnimation(.easeInOut) {
+                                    store.dispatch(.playSound(.changeSettings))
+                                    store.dispatch(.updateIsShowingCustomPromptAlert(true))
+                                }
+                            }
+                        )
+                        
+                        // Random Story Button
+                        ImageSelectionButton(
+                            title: LocalizedString.random,
+                            image: UIImage(named: "StoryPrompt-Random"),
+                            fallbackText: "🎲",
+                            isSelected: isRandomPromptSelected,
+                            action: {
+                                withAnimation(.easeInOut) {
+                                    store.dispatch(.playSound(.changeSettings))
+                                    store.dispatch(.updateStorySetting(.random))
+                                    if shouldDismissOnSelect {
+                                        dismiss()
+                                    }
+                                }
+                            }
+                        )
+                        
+                        // Previously Created Custom Stories
+                        ForEach(store.state.settingsState.customPrompts, id: \.self) { prompt in
+                            let isSelectedPrompt = store.state.settingsState.storySetting == .customPrompt(prompt)
+                            let firstLetter = prompt.prefix(1).capitalized
+                            let remainingLetters = prompt.dropFirst()
+                            let displayPrompt = firstLetter + remainingLetters
+                            
+                            ImageSelectionButton(
+                                title: displayPrompt.count > 20 ? displayPrompt.prefix(17) + "..." : displayPrompt,
+                                image: UIImage(named: "StoryPrompt-Custom"),
+                                fallbackText: "📝",
+                                isSelected: isSelectedPrompt,
+                                action: {
+                                    withAnimation(.easeInOut) {
+                                        store.dispatch(.playSound(.changeSettings))
+                                        store.dispatch(.updateStorySetting(.customPrompt(prompt)))
+                                        if shouldDismissOnSelect {
+                                            dismiss()
+                                        }
+                                    }
+                                }
+                            )
+                            .contextMenu {
+                                Button(role: .destructive) {
+                                    store.dispatch(.deleteCustomPrompt(prompt))
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
                         }
-                    } label: {
-                        let firstLetter = prompt.prefix(1).capitalized
-                        let remainingLetters = prompt.dropFirst()
-                        Text(firstLetter + remainingLetters)
-                            .fontWeight(isSelectedPrompt ? .medium : .light)
-                            .foregroundStyle(isSelectedPrompt ? FlowTaleColor.accent : FlowTaleColor.primary)
                     }
-                    .listRowBackground(isSelectedPrompt ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
+                } header: {
+                    Text(LocalizedString.howStoryStart.uppercased())
+                        .font(.footnote)
                 }
-                .onDelete(perform: delete)
-            } header: {
-                Text(LocalizedString.howStoryStart)
             }
         }
+        .padding()
         .navigationTitle(LocalizedString.story)
         .background(FlowTaleColor.background)
         .scrollContentBackground(.hidden)
