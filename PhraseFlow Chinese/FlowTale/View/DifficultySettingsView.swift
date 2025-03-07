@@ -27,29 +27,40 @@ struct DifficultyMenu: View {
     var shouldDismissOnSelect = false
 
     var body: some View {
-        List {
-            Section {
-                ForEach(Difficulty.allCases, id: \.self) { difficulty in
-                    Button {
-                        store.dispatch(.playSound(.changeSettings))
-                        store.dispatch(.updateDifficulty(difficulty))
-                        if shouldDismissOnSelect {
-                            dismiss()
-                        }
-                    } label: {
-                        HStack {
-                            DifficultyView(difficulty: difficulty)
-                            Text(difficulty.title)
-                                .fontWeight(store.state.settingsState.difficulty == difficulty ? .medium : .light)
-                                .foregroundStyle(store.state.settingsState.difficulty == difficulty ? FlowTaleColor.accent : FlowTaleColor.primary)
+        ScrollView {
+            VStack(alignment: .leading) {
+                Section {
+                    LazyVGrid(columns: [
+                        GridItem(.flexible()),
+                        GridItem(.flexible())
+                    ], spacing: 8) {
+                        ForEach(Difficulty.allCases, id: \.self) { difficulty in
+                            let isSelectedDifficulty = store.state.settingsState.difficulty == difficulty
+                            
+                            ImageSelectionButton(
+                                title: difficulty.title,
+                                image: difficulty.thumbnail,
+                                fallbackText: difficulty.emoji,
+                                isSelected: isSelectedDifficulty,
+                                action: {
+                                    withAnimation(.easeInOut) {
+                                        store.dispatch(.playSound(.changeSettings))
+                                        store.dispatch(.updateDifficulty(difficulty))
+                                        if shouldDismissOnSelect {
+                                            dismiss()
+                                        }
+                                    }
+                                }
+                            )
                         }
                     }
-                    .listRowBackground(store.state.settingsState.difficulty == difficulty ? FlowTaleColor.secondary : Color(uiColor: UIColor.secondarySystemGroupedBackground))
+                } header: {
+                    Text(LocalizedString.howDifficultStory.uppercased())
+                        .font(.footnote)
                 }
-            } header: {
-                Text(LocalizedString.howDifficultStory)
             }
         }
+        .padding()
         .navigationTitle(LocalizedString.difficulty)
         .background(FlowTaleColor.background)
         .scrollContentBackground(.hidden)
