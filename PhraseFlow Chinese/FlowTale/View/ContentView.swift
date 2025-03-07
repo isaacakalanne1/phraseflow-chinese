@@ -117,16 +117,7 @@ struct ContentView: View {
                 }
             }
 
-        case .create:
-            NavigationStack {
-                CreateStorySettingsView()
-                    .navigationDestination(
-                        isPresented: isShowingDailyLimitExplanationScreen
-                    ) {
-                        DailyLimitExplanationView()
-                    }
-                    .background(FlowTaleColor.background)
-            }
+        // Create tab has been removed
 
         case .storyList:
             NavigationStack {

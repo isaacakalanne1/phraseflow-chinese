@@ -165,7 +165,6 @@ struct CreateStoryButton: View {
     
     var body: some View {
         MainButton(title: LocalizedString.newStory.uppercased()) {
-            store.dispatch(.playSound(.largeBoom))
 
             // Check if user has existing stories
             let hasExistingStories = !store.state.storyState.savedStories.isEmpty
@@ -176,6 +175,7 @@ struct CreateStoryButton: View {
                 store.dispatch(.createChapter(.newStory))
             } else {
                 // For new users, use the original flow with full screen loading
+                store.dispatch(.playSound(.largeBoom))
                 store.dispatch(.selectTab(.reader, shouldPlaySound: false))
                 store.dispatch(.createChapter(.newStory))
             }

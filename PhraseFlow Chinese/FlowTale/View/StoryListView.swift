@@ -9,9 +9,9 @@ import SwiftUI
 
 struct StoryListView: View {
     @EnvironmentObject var store: FlowTaleStore
+    @State private var showCreateStorySettings = false
 
     var body: some View {
-
         NavigationStack {
             VStack {
                 List {
@@ -54,6 +54,20 @@ struct StoryListView: View {
                         Text(LocalizedString.stories)
                     }
                 }
+                
+                // New Story button at the bottom
+                PrimaryButton(
+                    icon: {
+                        Image(systemName: "plus")
+                            .font(.headline)
+                    },
+                    title: LocalizedString.createStory
+                ) {
+                    showCreateStorySettings = true
+                    store.dispatch(.playSound(.actionButtonPress))
+                }
+                .padding(.horizontal)
+                .padding(.bottom)
             }
             .toolbar(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
@@ -61,6 +75,10 @@ struct StoryListView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(FlowTaleColor.background)
             .scrollContentBackground(.hidden)
+            .navigationDestination(isPresented: $showCreateStorySettings) {
+                CreateStorySettingsView()
+                    .background(FlowTaleColor.background)
+            }
         }
         .id(store.state.viewState.storyListViewId)
     }
