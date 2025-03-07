@@ -8,16 +8,22 @@
 import SwiftUI
 
 struct LanguageOnboardingView: View {
+    @EnvironmentObject var store: FlowTaleStore
+    @State private var navigateToDifficulty = false
+    
     var body: some View {
         VStack {
             LanguageMenu()
-            NavigationLink {
-                DifficultyOnboardingView()
-            } label: {
-                PrimaryButton(title: LocalizedString.next)
+            
+            PrimaryButton(title: LocalizedString.next) {
+                store.dispatch(.playSound(.actionButtonPress))
+                navigateToDifficulty = true
             }
         }
         .background(FlowTaleColor.background)
+        .navigationDestination(isPresented: $navigateToDifficulty) {
+            DifficultyOnboardingView()
+        }
     }
 }
 

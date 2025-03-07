@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct VoiceOnboardingView: View {
+    @EnvironmentObject var store: FlowTaleStore
+    
     var body: some View {
         VStack {
             VoiceMenu()
             CreateStoryButton()
+                .padding()
         }
         .background(FlowTaleColor.background)
     }

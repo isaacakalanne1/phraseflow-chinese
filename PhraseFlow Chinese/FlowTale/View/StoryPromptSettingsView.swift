@@ -8,16 +8,22 @@
 import SwiftUI
 
 struct StoryPromptOnboardingView: View {
+    @EnvironmentObject var store: FlowTaleStore
+    @State private var navigateToVoice = false
+    
     var body: some View {
         VStack {
             StoryPromptMenu()
-            NavigationLink {
-                VoiceOnboardingView()
-            } label: {
-                PrimaryButton(title: "Next")
+            
+            PrimaryButton(title: LocalizedString.next) {
+                store.dispatch(.playSound(.actionButtonPress))
+                navigateToVoice = true
             }
         }
         .background(FlowTaleColor.background)
+        .navigationDestination(isPresented: $navigateToVoice) {
+            VoiceOnboardingView()
+        }
     }
 }
 

@@ -8,16 +8,22 @@
 import SwiftUI
 
 struct DifficultyOnboardingView: View {
+    @EnvironmentObject var store: FlowTaleStore
+    @State private var navigateToStoryPrompt = false
+    
     var body: some View {
         VStack {
             DifficultyMenu()
-            NavigationLink {
-                StoryPromptOnboardingView()
-            } label: {
-                PrimaryButton(title: LocalizedString.next)
+            
+            PrimaryButton(title: LocalizedString.next) {
+                store.dispatch(.playSound(.actionButtonPress))
+                navigateToStoryPrompt = true
             }
         }
         .background(FlowTaleColor.background)
+        .navigationDestination(isPresented: $navigateToStoryPrompt) {
+            StoryPromptOnboardingView()
+        }
     }
 }
 
