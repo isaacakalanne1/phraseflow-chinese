@@ -21,10 +21,11 @@ struct ChapterView: View {
                     guard let newWord = store.state.currentSpokenWord else { return }
                     scrollToCurrentWord(newWord, proxy: proxy)
                 }
-                .onChange(of: store.state.currentSpokenWord) { newWord in
-                    guard let newWord = newWord else { return }
+                .onChange(of: store.state.currentSpokenWord, { oldWord, newWord in
+                    guard let newWord = newWord,
+                          oldWord?.sentenceIndex != newWord.sentenceIndex else { return }
                     scrollToCurrentWord(newWord, proxy: proxy)
-                }
+                })
                 .onAppear {
                     guard let newWord = store.state.currentSpokenWord else { return }
                     scrollToCurrentWord(newWord, proxy: proxy, isForced: true)

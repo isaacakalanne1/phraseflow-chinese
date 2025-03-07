@@ -51,8 +51,8 @@ struct StoryPromptMenu: View {
             VStack(alignment: .leading) {
                 Section {
                     LazyVGrid(columns: [
-                        GridItem(.flexible()),
-                        GridItem(.flexible())
+                        GridItem(.flexible(minimum: 0, maximum: UIScreen.main.bounds.width / 2 - 16)),
+                        GridItem(.flexible(minimum: 0, maximum: UIScreen.main.bounds.width / 2 - 16))
                     ], spacing: 8) {
                         // Random Story Button
                         ImageSelectionButton(

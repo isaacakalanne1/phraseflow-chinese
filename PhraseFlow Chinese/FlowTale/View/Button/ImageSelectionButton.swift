@@ -76,6 +76,8 @@ struct ImageSelectionButton: View {
                             .fontWeight(isSelected ? .bold : .regular)
                             .foregroundStyle(isSelected ? FlowTaleColor.accent : Color.white)
                             .multilineTextAlignment(.center)
+                            .lineLimit(5)
+                            .truncationMode(.tail)
                             .padding(12)
                     } else {
                         // Text at the bottom
@@ -84,6 +86,8 @@ struct ImageSelectionButton: View {
                             Text(title)
                                 .fontWeight(isSelected ? .bold : .regular)
                                 .foregroundStyle(isSelected ? FlowTaleColor.accent : Color.white)
+                                .lineLimit(5)
+                                .truncationMode(.tail)
                                 .padding(.bottom, 8)
                                 .padding(.horizontal, 8)
                         }

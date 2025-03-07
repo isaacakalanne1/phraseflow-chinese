@@ -38,6 +38,7 @@ struct LanguageMenu: View {
                 Section {
                     LazyVGrid(columns: [
                         GridItem(.flexible()),
+                        GridItem(.flexible()),
                         GridItem(.flexible())
                     ], spacing: 8) {
                         ForEach(Language.allCases, id: \.self) { language in
