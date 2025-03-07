@@ -294,7 +294,13 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .updateDifficulty(let difficulty):
         newState.settingsState.difficulty = difficulty
     case .updateLanguage(let language):
-        newState.settingsState.language = language
+        if language != newState.settingsState.language {
+            newState.settingsState.language = language
+            
+            if let voice = language.voices.first {
+                newState.settingsState.voice = voice
+            }
+        }
     case .onLoadedDefinitions(let definitions):
         // Debug - log the state of definitions being loaded
         print("Loading \(definitions.count) definitions")

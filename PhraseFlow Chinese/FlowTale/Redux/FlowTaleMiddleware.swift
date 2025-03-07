@@ -395,13 +395,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         } else {
             return nil
         }
-    case .updateLanguage(let language):
-        if let voice = language.voices.first,
-           language != state.settingsState.language {
-            return .selectVoice(voice)
-        }
-        return .saveAppSettings
     case .selectVoice,
+            .updateLanguage,
             .updateSpeechSpeed,
             .updateShowDefinition,
             .updateShowEnglish,
