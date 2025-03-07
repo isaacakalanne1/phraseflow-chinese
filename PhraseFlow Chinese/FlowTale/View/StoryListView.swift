@@ -75,10 +75,8 @@ struct StoryListView: View {
             .background(FlowTaleColor.background)
             .scrollContentBackground(.hidden)
             .navigationDestination(isPresented: $showCreateStorySettings) {
-                NavigationStack {
-                    CreateStorySettingsView()
-                        .background(FlowTaleColor.background)
-                }
+                CreateStorySettingsView()
+                    .background(FlowTaleColor.background)
             }
         }
         .id(store.state.viewState.storyListViewId)
