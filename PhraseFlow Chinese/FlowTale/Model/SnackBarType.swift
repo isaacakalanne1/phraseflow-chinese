@@ -154,7 +154,8 @@ enum SnackBarType {
     var sound: AppSound {
         switch self {
         case .writingChapter:
-            return .createStory
+//            return .createStory
+            return .largeBoom
         case _ where isError:
             return .errorSnackbar
         default:

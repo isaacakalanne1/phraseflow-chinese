@@ -165,7 +165,7 @@ struct CreateStoryButton: View {
     
     var body: some View {
         MainButton(title: LocalizedString.create) {
-            store.dispatch(.playSound(.createStory))
+            store.dispatch(.playSound(.largeBoom))
 
             // Check if user has existing stories
             let hasExistingStories = !store.state.storyState.savedStories.isEmpty

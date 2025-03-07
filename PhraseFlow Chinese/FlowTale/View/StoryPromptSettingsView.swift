@@ -48,20 +48,6 @@ struct StoryPromptMenu: View {
                         GridItem(.flexible()),
                         GridItem(.flexible())
                     ], spacing: 8) {
-                        // Create Custom Story Button
-                        ImageSelectionButton(
-                            title: LocalizedString.customStory,
-                            image: UIImage(named: "StoryPrompt-Create"),
-                            fallbackText: "✏️",
-                            isSelected: false,
-                            action: {
-                                withAnimation(.easeInOut) {
-                                    store.dispatch(.playSound(.changeSettings))
-                                    store.dispatch(.updateIsShowingCustomPromptAlert(true))
-                                }
-                            }
-                        )
-                        
                         // Random Story Button
                         ImageSelectionButton(
                             title: LocalizedString.random,
@@ -75,6 +61,20 @@ struct StoryPromptMenu: View {
                                     if shouldDismissOnSelect {
                                         dismiss()
                                     }
+                                }
+                            }
+                        )
+                        
+                        // Create Custom Story Button
+                        ImageSelectionButton(
+                            title: LocalizedString.customStory,
+                            image: UIImage(named: "StoryPrompt-Create"),
+                            fallbackText: "✏️",
+                            isSelected: false,
+                            action: {
+                                withAnimation(.easeInOut) {
+                                    store.dispatch(.playSound(.changeSettings))
+                                    store.dispatch(.updateIsShowingCustomPromptAlert(true))
                                 }
                             }
                         )

@@ -78,6 +78,8 @@
 		BBB1B7C12D79E2AB0023147B /* Whispers of the Enchanted Grove.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7C02D79E2AB0023147B /* Whispers of the Enchanted Grove.mp3 */; };
 		BBB1B7C32D7AFF550023147B /* LargeHorns.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7C22D7AFF550023147B /* LargeHorns.mp3 */; };
 		BBB1B7C52D7B04050023147B /* ImageSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB1B7C42D7B04050023147B /* ImageSelectionButton.swift */; };
+		BBB1B7C72D7B13D00023147B /* LargeBoom.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7C62D7B13D00023147B /* LargeBoom.mp3 */; };
+		BBB1B7C92D7B15330023147B /* ChunkyHit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7C82D7B15330023147B /* ChunkyHit.mp3 */; };
 		BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -111,7 +113,6 @@
 		BBE990DD2D29FE0200FAD3FB /* Whispers of Tranquility.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990DC2D29FE0200FAD3FB /* Whispers of Tranquility.mp3 */; };
 		BBE990E12D2AB26300FAD3FB /* Snackbar.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E02D2AB26300FAD3FB /* Snackbar.mp3 */; };
 		BBE990E32D2AB31300FAD3FB /* ErrorSnackbar.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E22D2AB31200FAD3FB /* ErrorSnackbar.mp3 */; };
-		BBE990E52D2AB3D100FAD3FB /* CloseSheet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E42D2AB3D100FAD3FB /* CloseSheet.mp3 */; };
 		BBE990E72D2ABE8B00FAD3FB /* ProgressUpdate.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */; };
 		BBF6187E2D42DE6D00CA3229 /* NextStudyWord.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF6187D2D42DE6C00CA3229 /* NextStudyWord.mp3 */; };
 		BBF618822D42E06800CA3229 /* PreviousStudyWord.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618812D42E06800CA3229 /* PreviousStudyWord.mp3 */; };
@@ -228,6 +229,8 @@
 		BBB1B7C02D79E2AB0023147B /* Whispers of the Enchanted Grove.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Whispers of the Enchanted Grove.mp3"; sourceTree = "<group>"; };
 		BBB1B7C22D7AFF550023147B /* LargeHorns.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = LargeHorns.mp3; sourceTree = "<group>"; };
 		BBB1B7C42D7B04050023147B /* ImageSelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionButton.swift; sourceTree = "<group>"; };
+		BBB1B7C62D7B13D00023147B /* LargeBoom.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = LargeBoom.mp3; sourceTree = "<group>"; };
+		BBB1B7C82D7B15330023147B /* ChunkyHit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ChunkyHit.mp3; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* FlowTale.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowTale.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -264,7 +267,6 @@
 		BBE990DC2D29FE0200FAD3FB /* Whispers of Tranquility.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Whispers of Tranquility.mp3"; sourceTree = "<group>"; };
 		BBE990E02D2AB26300FAD3FB /* Snackbar.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Snackbar.mp3; sourceTree = "<group>"; };
 		BBE990E22D2AB31200FAD3FB /* ErrorSnackbar.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ErrorSnackbar.mp3; sourceTree = "<group>"; };
-		BBE990E42D2AB3D100FAD3FB /* CloseSheet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CloseSheet.mp3; sourceTree = "<group>"; };
 		BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ProgressUpdate.mp3; sourceTree = "<group>"; };
 		BBF6187D2D42DE6C00CA3229 /* NextStudyWord.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = NextStudyWord.mp3; sourceTree = "<group>"; };
 		BBF618812D42E06800CA3229 /* PreviousStudyWord.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PreviousStudyWord.mp3; sourceTree = "<group>"; };
@@ -559,6 +561,8 @@
 		BBE990B12D29BBF000FAD3FB /* Sound */ = {
 			isa = PBXGroup;
 			children = (
+				BBB1B7C82D7B15330023147B /* ChunkyHit.mp3 */,
+				BBB1B7C62D7B13D00023147B /* LargeBoom.mp3 */,
 				BBB1B7C22D7AFF550023147B /* LargeHorns.mp3 */,
 				BBE990B22D29BBFD00FAD3FB /* TogglePress.mp3 */,
 				BBE990D22D29F36C00FAD3FB /* ChangeSettings.mp3 */,
@@ -571,7 +575,6 @@
 				BBE990CA2D29EF5E00FAD3FB /* OpenStory.mp3 */,
 				BBE990E02D2AB26300FAD3FB /* Snackbar.mp3 */,
 				BBE990E22D2AB31200FAD3FB /* ErrorSnackbar.mp3 */,
-				BBE990E42D2AB3D100FAD3FB /* CloseSheet.mp3 */,
 				BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */,
 				BBF6188B2D43A54200CA3229 /* OpenStorySettings.mp3 */,
 				BB9B8B5C2D3461C900752993 /* CreateStory.mp3 */,
@@ -728,11 +731,12 @@
 				BBB1B7B72D79B3120023147B /* ButtonBackground.mp4 in Resources */,
 				BBE990D32D29F36C00FAD3FB /* ChangeSettings.mp3 in Resources */,
 				BBB6EF2E2C8C86290079D135 /* Preview Assets.xcassets in Resources */,
-				BBE990E52D2AB3D100FAD3FB /* CloseSheet.mp3 in Resources */,
 				BB84E0A62CF3EC8600520F5E /* Localizable.strings in Resources */,
 				BBE990E72D2ABE8B00FAD3FB /* ProgressUpdate.mp3 in Resources */,
+				BBB1B7C92D7B15330023147B /* ChunkyHit.mp3 in Resources */,
 				BBE990B32D29BBFD00FAD3FB /* TogglePress.mp3 in Resources */,
 				BBF618842D42E43E00CA3229 /* CreateNextChapter.mp3 in Resources */,
+				BBB1B7C72D7B13D00023147B /* LargeBoom.mp3 in Resources */,
 				BBE990D92D29FB6100FAD3FB /* ActionButtonPress.mp3 in Resources */,
 				BBB1B7BC2D79CEB00023147B /* Whispers of the Forest.mp3 in Resources */,
 				BBE990CB2D29EF5E00FAD3FB /* OpenStory.mp3 in Resources */,
