@@ -87,10 +87,11 @@ struct StoryPromptMenu: View {
                             let displayPrompt = firstLetter + remainingLetters
                             
                             ImageSelectionButton(
-                                title: displayPrompt.count > 20 ? displayPrompt.prefix(17) + "..." : displayPrompt,
+                                title: displayPrompt,
                                 image: UIImage(named: "StoryPrompt-Custom"),
                                 fallbackText: "📝",
                                 isSelected: isSelectedPrompt,
+                                useFullButtonText: true,
                                 action: {
                                     withAnimation(.easeInOut) {
                                         store.dispatch(.playSound(.changeSettings))
