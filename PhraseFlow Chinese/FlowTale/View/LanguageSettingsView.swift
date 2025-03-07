@@ -16,7 +16,6 @@ struct LanguageOnboardingView: View {
             LanguageMenu()
             
             PrimaryButton(title: LocalizedString.next) {
-                store.dispatch(.playSound(.actionButtonPress))
                 navigateToDifficulty = true
             }
         }

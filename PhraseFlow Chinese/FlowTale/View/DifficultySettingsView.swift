@@ -16,7 +16,6 @@ struct DifficultyOnboardingView: View {
             DifficultyMenu()
             
             PrimaryButton(title: LocalizedString.next) {
-                store.dispatch(.playSound(.actionButtonPress))
                 navigateToStoryPrompt = true
             }
         }

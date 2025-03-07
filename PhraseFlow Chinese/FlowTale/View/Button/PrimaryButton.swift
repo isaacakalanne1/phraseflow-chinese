@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct PrimaryButton<Content: View>: View {
+    @EnvironmentObject var store: FlowTaleStore
+    
     @ViewBuilder let icon: Content
     let title: String
     let action: (() -> Void)?
@@ -23,6 +25,7 @@ struct PrimaryButton<Content: View>: View {
     var body: some View {
         if let act = action {
             Button {
+                store.dispatch(.playSound(.actionButtonPress))
                 act()
             } label: {
                 HStack(spacing: 5) {

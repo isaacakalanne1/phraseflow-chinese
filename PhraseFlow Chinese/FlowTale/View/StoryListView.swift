@@ -64,7 +64,6 @@ struct StoryListView: View {
                     title: LocalizedString.createStory
                 ) {
                     showCreateStorySettings = true
-                    store.dispatch(.playSound(.actionButtonPress))
                 }
                 .padding(.horizontal)
                 .padding(.bottom)

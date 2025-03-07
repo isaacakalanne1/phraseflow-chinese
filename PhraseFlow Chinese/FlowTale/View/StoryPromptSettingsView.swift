@@ -16,7 +16,6 @@ struct StoryPromptOnboardingView: View {
             StoryPromptMenu()
             
             PrimaryButton(title: LocalizedString.next) {
-                store.dispatch(.playSound(.actionButtonPress))
                 navigateToVoice = true
             }
         }
