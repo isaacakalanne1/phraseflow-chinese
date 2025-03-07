@@ -163,7 +163,7 @@ struct CreateStorySettingsView: View {
 
     @ViewBuilder
     var backgroundView: some View {
-        if let uiImage = UIImage(named: "CreateStoryBackground") {
+        if let uiImage = UIImage(named: "ForestBackground") {
             Image(uiImage: uiImage)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
@@ -181,12 +181,12 @@ struct CreateStoryButton: View {
     @State private var player: AVPlayer?
     
     var body: some View {
-        Button {
+        MainButton(title: LocalizedString.create) {
             store.dispatch(.playSound(.createStory))
-            
+
             // Check if user has existing stories
             let hasExistingStories = !store.state.storyState.savedStories.isEmpty
-            
+
             if hasExistingStories {
                 // For existing users, show a snackbar with loading and stay on current view
                 store.dispatch(.showSnackBar(.writingChapter))
@@ -196,6 +196,18 @@ struct CreateStoryButton: View {
                 store.dispatch(.selectTab(.reader, shouldPlaySound: false))
                 store.dispatch(.createChapter(.newStory))
             }
+        }
+        // Disable button if currently writing a chapter
+        .disabled(store.state.viewState.isWritingChapter)
+    }
+}
+
+struct MainButton: View {
+    let title: String
+    let action: () -> Void
+    var body: some View {
+        Button {
+            action()
         } label: {
             ZStack {
                 // Video background
@@ -212,9 +224,9 @@ struct CreateStoryButton: View {
                         .cornerRadius(10)
                         .scaleEffect(x: -1, y: 1)
                 }
-                
+
                 // Button content
-                Text(LocalizedString.create)
+                Text(title)
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity)
@@ -222,8 +234,6 @@ struct CreateStoryButton: View {
                     .foregroundColor(.white)
             }
         }
-        // Disable button if currently writing a chapter
-        .disabled(store.state.viewState.isWritingChapter)
     }
 }
 

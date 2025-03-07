@@ -76,6 +76,7 @@
 		BBB1B7B72D79B3120023147B /* ButtonBackground.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7B62D79B3120023147B /* ButtonBackground.mp4 */; };
 		BBB1B7BC2D79CEB00023147B /* Whispers of the Forest.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7BB2D79CEB00023147B /* Whispers of the Forest.mp3 */; };
 		BBB1B7C12D79E2AB0023147B /* Whispers of the Enchanted Grove.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7C02D79E2AB0023147B /* Whispers of the Enchanted Grove.mp3 */; };
+		BBB1B7C32D7AFF550023147B /* LargeHorns.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7C22D7AFF550023147B /* LargeHorns.mp3 */; };
 		BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -224,6 +225,7 @@
 		BBB1B7B62D79B3120023147B /* ButtonBackground.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ButtonBackground.mp4; sourceTree = "<group>"; };
 		BBB1B7BB2D79CEB00023147B /* Whispers of the Forest.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Whispers of the Forest.mp3"; sourceTree = "<group>"; };
 		BBB1B7C02D79E2AB0023147B /* Whispers of the Enchanted Grove.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Whispers of the Enchanted Grove.mp3"; sourceTree = "<group>"; };
+		BBB1B7C22D7AFF550023147B /* LargeHorns.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = LargeHorns.mp3; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* FlowTale.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowTale.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -554,6 +556,7 @@
 		BBE990B12D29BBF000FAD3FB /* Sound */ = {
 			isa = PBXGroup;
 			children = (
+				BBB1B7C22D7AFF550023147B /* LargeHorns.mp3 */,
 				BBE990B22D29BBFD00FAD3FB /* TogglePress.mp3 */,
 				BBE990D22D29F36C00FAD3FB /* ChangeSettings.mp3 */,
 				BBE990DA2D29FC7700FAD3FB /* OpenChapter.mp3 */,
@@ -712,6 +715,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBB1B7C32D7AFF550023147B /* LargeHorns.mp3 in Resources */,
 				BBB1B7C12D79E2AB0023147B /* Whispers of the Enchanted Grove.mp3 in Resources */,
 				BBE990DB2D29FC7700FAD3FB /* OpenChapter.mp3 in Resources */,
 				BBE990DD2D29FE0200FAD3FB /* Whispers of Tranquility.mp3 in Resources */,

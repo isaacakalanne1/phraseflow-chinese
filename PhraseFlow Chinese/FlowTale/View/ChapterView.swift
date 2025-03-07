@@ -64,7 +64,7 @@ struct ChapterView: View {
                 .frame(maxWidth: .infinity, alignment: story.language.alignment)
             }
 
-            Button(LocalizedString.nextChapter) {
+            MainButton(title: LocalizedString.next.uppercased()) {
                 let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
                 if doesNextChapterExist {
                     store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
@@ -78,10 +78,6 @@ struct ChapterView: View {
             }
             // Disable button if currently writing a chapter
             .disabled(store.state.viewState.isWritingChapter)
-            .padding()
-            .background(FlowTaleColor.accent)
-            .foregroundColor(.white)
-            .cornerRadius(10)
         }
         .id(store.state.viewState.chapterViewId)
 
