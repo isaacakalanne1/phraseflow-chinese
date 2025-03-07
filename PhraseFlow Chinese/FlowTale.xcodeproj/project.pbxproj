@@ -80,6 +80,7 @@
 		BBB1B7C52D7B04050023147B /* ImageSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB1B7C42D7B04050023147B /* ImageSelectionButton.swift */; };
 		BBB1B7C72D7B13D00023147B /* LargeBoom.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7C62D7B13D00023147B /* LargeBoom.mp3 */; };
 		BBB1B7C92D7B15330023147B /* ChunkyHit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7C82D7B15330023147B /* ChunkyHit.mp3 */; };
+		BBB1B7CC2D7B34EB0023147B /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB1B7CB2D7B34EB0023147B /* MainButton.swift */; };
 		BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -231,6 +232,7 @@
 		BBB1B7C42D7B04050023147B /* ImageSelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionButton.swift; sourceTree = "<group>"; };
 		BBB1B7C62D7B13D00023147B /* LargeBoom.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = LargeBoom.mp3; sourceTree = "<group>"; };
 		BBB1B7C82D7B15330023147B /* ChunkyHit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ChunkyHit.mp3; sourceTree = "<group>"; };
+		BBB1B7CB2D7B34EB0023147B /* MainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButton.swift; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* FlowTale.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowTale.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -427,6 +429,16 @@
 			path = Video;
 			sourceTree = "<group>";
 		};
+		BBB1B7CA2D7B34D40023147B /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				BBB1B7CB2D7B34EB0023147B /* MainButton.swift */,
+				BBB1B7C42D7B04050023147B /* ImageSelectionButton.swift */,
+				BB9C21922D3ACE05004C7689 /* PrimaryButton.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
 		BBB6EF1A2C8C86240079D135 = {
 			isa = PBXGroup;
 			children = (
@@ -519,6 +531,7 @@
 		BBB6EF562C8C87540079D135 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BBB1B7CA2D7B34D40023147B /* Button */,
 				BBB6EF282C8C86240079D135 /* ContentView.swift */,
 				BBE636C42CCC0CDD00873E68 /* DefinitionView.swift */,
 				BBE636C62CCC0E1200873E68 /* EnglishSentenceView.swift */,
@@ -531,7 +544,6 @@
 				BBE636C22CCC0BE900873E68 /* CharacterView.swift */,
 				BB7B6D972D1E0D070030344A /* StoryInfoView.swift */,
 				BB7B6DA12D1F3B680030344A /* DifficultyView.swift */,
-				BBB1B7C42D7B04050023147B /* ImageSelectionButton.swift */,
 				BBE636D02CCD77BB00873E68 /* FlowLayout.swift */,
 				BBAE07DA2D14BE0B00DA95CD /* SystemImageView.swift */,
 				BBF618872D42F7C300CA3229 /* VoiceSettingsView.swift */,
@@ -541,7 +553,6 @@
 				BB4EDB232C91902100699E7D /* SettingsView.swift */,
 				BBE16F212CC2769C00A7EF1F /* StoryListView.swift */,
 				BB7B6D9B2D1F30BC0030344A /* SnackBar.swift */,
-				BB9C21922D3ACE05004C7689 /* PrimaryButton.swift */,
 				BB7B6D952D1DF0990030344A /* StudyView.swift */,
 				BB4E6BF92D246EC0002B5CBA /* LoadingView.swift */,
 				BB6DD0982D39BAF400EF6AF9 /* DifficultySettingsView.swift */,
@@ -822,6 +833,7 @@
 				BBF618882D42F7C300CA3229 /* VoiceSettingsView.swift in Sources */,
 				BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */,
 				BB84E0AD2CF4952700520F5E /* strings-enum.stencil in Sources */,
+				BBB1B7CC2D7B34EB0023147B /* MainButton.swift in Sources */,
 				BB7B6D9C2D1F30BC0030344A /* SnackBar.swift in Sources */,
 				BB6572CE2CD12A9200AC5981 /* ChapterResponse.swift in Sources */,
 				BBAE07DD2D14BE3000DA95CD /* SystemImage.swift in Sources */,
@@ -1085,7 +1097,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 44;
 				DEVELOPMENT_ASSET_PATHS = "\"FlowTale/Preview Content\"";
 				DEVELOPMENT_TEAM = NGW7S9DH6U;
 				ENABLE_PREVIEWS = YES;
@@ -1100,7 +1112,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.smileydudelimitedapps.PhraseFlow-Chinese";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1119,7 +1131,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 44;
 				DEVELOPMENT_ASSET_PATHS = "\"FlowTale/Preview Content\"";
 				DEVELOPMENT_TEAM = NGW7S9DH6U;
 				ENABLE_PREVIEWS = YES;
@@ -1134,7 +1146,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.smileydudelimitedapps.PhraseFlow-Chinese";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

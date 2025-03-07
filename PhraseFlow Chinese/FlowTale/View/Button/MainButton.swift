@@ -1,0 +1,49 @@
+//
+//  MainButton.swift
+//  FlowTale
+//
+//  Created by iakalann on 07/03/2025.
+//
+
+import SwiftUI
+
+struct MainButton: View {
+    let title: String
+    let action: () -> Void
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            ZStack {
+                // Video background
+                if let url = Bundle.main.url(forResource: "ButtonBackground", withExtension: "mp4") {
+                    let player = AVPlayer(url: url)
+                    VideoBackgroundView(player: player)
+                        .frame(height: 70)
+                        .onAppear {
+                            player.play()
+                        }
+                        .overlay {
+                            FlowTaleColor.accent.opacity(0.6)
+                        }
+                        .cornerRadius(10)
+                        .scaleEffect(x: -1, y: 1)
+                }
+
+                // Button content
+                Text(title)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 70)
+                    .foregroundColor(.white)
+            }
+        }
+    }
+}
+
+#Preview {
+    MainButton(title: "Title") {
+        
+    }
+}
