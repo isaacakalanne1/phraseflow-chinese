@@ -5,7 +5,7 @@
 //  Created by iakalann on 17/10/2024.
 //
 
-import Foundation
+import SwiftUI
 
 enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
     case beginner, intermediate, advanced, expert
@@ -25,6 +25,10 @@ enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
         case .expert:
             3
         }
+    }
+
+    var thumbnail: UIImage? {
+        UIImage(named: "difficulty-\(rawValue)")
     }
 
     var title: String {

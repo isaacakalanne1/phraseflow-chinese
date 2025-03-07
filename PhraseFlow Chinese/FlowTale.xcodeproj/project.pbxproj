@@ -77,6 +77,7 @@
 		BBB1B7BC2D79CEB00023147B /* Whispers of the Forest.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7BB2D79CEB00023147B /* Whispers of the Forest.mp3 */; };
 		BBB1B7C12D79E2AB0023147B /* Whispers of the Enchanted Grove.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7C02D79E2AB0023147B /* Whispers of the Enchanted Grove.mp3 */; };
 		BBB1B7C32D7AFF550023147B /* LargeHorns.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7C22D7AFF550023147B /* LargeHorns.mp3 */; };
+		BBB1B7C52D7B04050023147B /* ImageSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB1B7C42D7B04050023147B /* ImageSelectionButton.swift */; };
 		BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -226,6 +227,7 @@
 		BBB1B7BB2D79CEB00023147B /* Whispers of the Forest.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Whispers of the Forest.mp3"; sourceTree = "<group>"; };
 		BBB1B7C02D79E2AB0023147B /* Whispers of the Enchanted Grove.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Whispers of the Enchanted Grove.mp3"; sourceTree = "<group>"; };
 		BBB1B7C22D7AFF550023147B /* LargeHorns.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = LargeHorns.mp3; sourceTree = "<group>"; };
+		BBB1B7C42D7B04050023147B /* ImageSelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionButton.swift; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* FlowTale.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowTale.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -527,6 +529,7 @@
 				BBE636C22CCC0BE900873E68 /* CharacterView.swift */,
 				BB7B6D972D1E0D070030344A /* StoryInfoView.swift */,
 				BB7B6DA12D1F3B680030344A /* DifficultyView.swift */,
+				BBB1B7C42D7B04050023147B /* ImageSelectionButton.swift */,
 				BBE636D02CCD77BB00873E68 /* FlowLayout.swift */,
 				BBAE07DA2D14BE0B00DA95CD /* SystemImageView.swift */,
 				BBF618872D42F7C300CA3229 /* VoiceSettingsView.swift */,
@@ -856,6 +859,7 @@
 				BBE990B52D29BC2200FAD3FB /* AppAudioState.swift in Sources */,
 				BB7B6D962D1DF0990030344A /* StudyView.swift in Sources */,
 				BB7B6DA02D1F316E0030344A /* SnackBarType.swift in Sources */,
+				BBB1B7C52D7B04050023147B /* ImageSelectionButton.swift in Sources */,
 				BBAE07CF2D0C768000DA95CD /* AnyKey.swift in Sources */,
 				BB45C56B2D4A7C4000B3705A /* FreeLimitExplanationView.swift in Sources */,
 				BB4EDB102C90CA4900699E7D /* FlowTaleSubscriber.swift in Sources */,

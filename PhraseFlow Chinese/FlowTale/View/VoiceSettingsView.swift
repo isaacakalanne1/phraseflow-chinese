@@ -37,67 +37,24 @@ struct VoiceMenu: View {
                     ], spacing: 8) {
                         ForEach(sortedVoices, id: \.self) { voice in
                             let isSelectedVoice = store.state.settingsState.voice == voice
-
-                            Button(action: {
-                                withAnimation(.easeInOut) {
-                                    store.dispatch(.playSound(.changeSettings))
-                                    store.dispatch(.selectVoice(voice))
-                                    if shouldDismissOnSelect {
-                                        dismiss()
-                                    }
-                                }
-                            }) {
-                                VStack {
-                                    ZStack {
-                                        Group {
-                                            if let thumbnail = voice.thumbnail {
-                                                Image(uiImage: thumbnail)
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fill)
-                                            } else {
-                                                // Fallback if thumbnail is nil
-                                                ZStack {
-                                                    Color.gray.opacity(0.3)
-                                                    Text(voice.gender.emoji)
-                                                        .font(.system(size: 40))
-                                                }
-                                            }
-                                        }
-                                        
-                                        // Gradient overlay
-                                        LinearGradient(
-                                            gradient: Gradient(
-                                                stops: [
-                                                    .init(color: Color.black.opacity(0), location: 0.5),
-                                                    .init(color: Color.black.opacity(1), location: 1.0)
-                                                ]
-                                            ),
-                                            startPoint: .top,
-                                            endPoint: .bottom
-                                        )
-                                        
-                                        // Voice name on top of the gradient
-                                        VStack {
-                                            Spacer()
-                                            Text(voice.title)
-                                                .fontWeight(isSelectedVoice ? .bold : .regular)
-                                                .foregroundStyle(isSelectedVoice ? FlowTaleColor.accent : Color.white)
-                                                .padding(.bottom, 8)
-                                                .padding(.horizontal, 8)
+                            
+                            ImageSelectionButton(
+                                title: voice.title,
+                                image: voice.thumbnail,
+                                fallbackText: voice.gender.emoji,
+                                isSelected: isSelectedVoice,
+                                action: {
+                                    withAnimation(.easeInOut) {
+                                        store.dispatch(.playSound(.changeSettings))
+                                        store.dispatch(.selectVoice(voice))
+                                        if shouldDismissOnSelect {
+                                            dismiss()
                                         }
                                     }
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 12)
-                                            .stroke(isSelectedVoice ? FlowTaleColor.accent : Color.clear, lineWidth: 6)
-                                    )
-                                    .cornerRadius(12)
                                 }
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 8)
-                            }
+                            )
                         }
                     }
-                    .padding()
                     .onAppear {
                         if store.state.storyState.currentStory == nil,
                            let voice = voices.first {

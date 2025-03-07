@@ -163,7 +163,7 @@ struct CreateStorySettingsView: View {
 
     @ViewBuilder
     var backgroundView: some View {
-        if let uiImage = UIImage(named: "ForestBackground") {
+        if let uiImage = UIImage(named: "CreateStoryBackground") {
             Image(uiImage: uiImage)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
