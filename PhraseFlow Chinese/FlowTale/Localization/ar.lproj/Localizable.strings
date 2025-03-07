@@ -225,8 +225,12 @@
 
 // Andrew voice button title
 "voice_andrew" = "أندرو";
-"voice_ada" = "آدا";
-"voice_ollie" = "أولي";
+
+// Sonia voice button title
+"voice_sonia" = "سونيا";
+
+// Ryan voice button title
+"voice_ryan" = "رايان";
 
 // Ananya Hindi voice button title
 "voice_ananya" = "أنانيا";

@@ -78,9 +78,9 @@ enum Voice: String, Codable, CaseIterable, Equatable {
         case .andrew:
             LocalizedString.voiceAndrew
         case .sonia:
-            LocalizedString.voiceAda
+            LocalizedString.voiceSonia
         case .ryan:
-            LocalizedString.voiceOllie
+            LocalizedString.voiceRyan
         case .ananya:
             LocalizedString.voiceAnanya
         case .aarav:
