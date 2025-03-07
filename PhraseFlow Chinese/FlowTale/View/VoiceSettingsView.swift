@@ -11,10 +11,11 @@ struct VoiceOnboardingView: View {
     @EnvironmentObject var store: FlowTaleStore
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             VoiceMenu()
             CreateStoryButton()
-                .padding()
+                .padding(.horizontal)
+                .padding(.bottom)
         }
         .background(FlowTaleColor.background)
     }
@@ -80,13 +81,14 @@ struct VoiceSettingsView: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             VoiceMenu(shouldDismissOnSelect: true)
 
             PrimaryButton(title: LocalizedString.done) {
                 dismiss()
             }
-            .padding()
+            .padding(.horizontal)
+            .padding(.bottom)
         }
         .background(FlowTaleColor.background)
     }

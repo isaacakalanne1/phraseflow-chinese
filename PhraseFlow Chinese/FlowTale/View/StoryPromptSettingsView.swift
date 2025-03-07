@@ -12,12 +12,14 @@ struct StoryPromptOnboardingView: View {
     @State private var navigateToVoice = false
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             StoryPromptMenu()
             
             PrimaryButton(title: LocalizedString.next) {
                 navigateToVoice = true
             }
+            .padding(.horizontal)
+            .padding(.bottom)
         }
         .background(FlowTaleColor.background)
         .navigationDestination(isPresented: $navigateToVoice) {
@@ -155,13 +157,14 @@ struct StoryPromptSettingsView: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             StoryPromptMenu(shouldDismissOnSelect: true)
 
             PrimaryButton(title: LocalizedString.done) {
                 dismiss()
             }
-            .padding()
+            .padding(.horizontal)
+            .padding(.bottom)
         }
         .background(FlowTaleColor.background)
         // Attach the alert:

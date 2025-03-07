@@ -12,12 +12,14 @@ struct LanguageOnboardingView: View {
     @State private var navigateToDifficulty = false
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             LanguageMenu()
             
             PrimaryButton(title: LocalizedString.next) {
                 navigateToDifficulty = true
             }
+            .padding(.horizontal)
+            .padding(.bottom)
         }
         .background(FlowTaleColor.background)
         .navigationDestination(isPresented: $navigateToDifficulty) {
@@ -77,13 +79,14 @@ struct LanguageSettingsView: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             LanguageMenu(shouldDismissOnSelect: true)
 
             PrimaryButton(title: LocalizedString.done) {
                 dismiss()
             }
-            .padding()
+            .padding(.horizontal)
+            .padding(.bottom)
         }
         .background(FlowTaleColor.background)
     }

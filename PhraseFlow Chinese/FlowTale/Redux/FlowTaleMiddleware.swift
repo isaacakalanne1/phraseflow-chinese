@@ -537,7 +537,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     case .failedToModerateText:
         return .showSnackBar(.didNotPassModeration)
     case .selectTab(_, let shouldPlaySound):
-        return shouldPlaySound ? .playSound(.actionButtonPress) : nil
+        return shouldPlaySound ? .playSound(.tabPress) : nil
     case .onLoadedStories(let stories, let isAppLaunch):
         // If current story no longer exists (deleted) and there are other stories, 
         // load chapters for the first story to ensure proper setup

@@ -12,12 +12,14 @@ struct DifficultyOnboardingView: View {
     @State private var navigateToStoryPrompt = false
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             DifficultyMenu()
             
             PrimaryButton(title: LocalizedString.next) {
                 navigateToStoryPrompt = true
             }
+            .padding(.horizontal)
+            .padding(.bottom)
         }
         .background(FlowTaleColor.background)
         .navigationDestination(isPresented: $navigateToStoryPrompt) {
@@ -76,13 +78,14 @@ struct DifficultySettingsView: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             DifficultyMenu(shouldDismissOnSelect: true)
 
             PrimaryButton(title: LocalizedString.done) {
                 dismiss()
             }
-            .padding()
+            .padding(.horizontal)
+            .padding(.bottom)
         }
         .background(FlowTaleColor.background)
     }
