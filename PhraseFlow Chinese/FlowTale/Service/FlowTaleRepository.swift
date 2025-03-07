@@ -30,6 +30,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
     private let speechCharacters = ["“", "”", "«", "»", "「", "」", "\"", "''"]
     let subscriptionKey = "Fp11D0CAMjjAcf03VNqe2IsKfqycenIKcrAm4uGV8RSiaqMX15NWJQQJ99AKACYeBjFXJ3w3AAAYACOG6Orb"
     let region = "eastus"
+    let sentenceMarker = "❂"
 
     /// Keep track of how many speech marks we've encountered so far (odd/even).
     private var speechMarkCounter: Int = 0
@@ -55,107 +56,20 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
         // We'll increment this each time we add a WordTimeStampData entry.
         var index = -1
 
-        // Keep track of sentence boundaries
+        // Keep track of "sentence" boundaries if you rely on `sentenceMarker`.
         var sentenceIndex = -1
-        
-        // Create a queue and semaphore for synchronizing the event handlers
-        let syncQueue = DispatchQueue(label: "com.flowtale.synthesis.sync")
-        let semaphore = DispatchSemaphore(value: 1)
-        
-        // Use a single dictionary to track audio offset to sentence index mapping
-        var audioOffsetToSentenceIndex: [UInt64: Int] = [:]
 
         // Reset the speech mark counter each time we start a new synthesis
         speechMarkCounter = 0
-        
-        // Listen for bookmark events that indicate sentence boundaries
-        synthesizer.addBookmarkReachedEventHandler { (synthesizer, event) in
-            semaphore.wait()
-            defer { semaphore.signal() }
-            
-            let mark = event.text
-            
-            // Handle boundary markers
-            if mark.hasPrefix("sentence-boundary-") {
-                // These are just boundary markers, don't change the sentence index
-                // They help create clean separation between sentences
-                return
-            }
-            // Handle actual sentence markers
-            else if mark.hasPrefix("sentence-"),
-                    let indexString = mark.split(separator: "-").last,
-                    let index = Int(indexString) {
-                // Store the sentence index with its audio offset
-                syncQueue.sync {
-                    audioOffsetToSentenceIndex[event.audioOffset] = index
-                    sentenceIndex = index
-                }
-            }
-        }
 
         synthesizer.addSynthesisWordBoundaryEventHandler { (synthesizer, event) in
-            semaphore.wait()
-            defer { semaphore.signal() }
-            
             let audioTimeInSeconds = Double(event.audioOffset) / 10_000_000.0
-            var currentSentenceIndex = sentenceIndex
-            
-            // Check if we have a new sentence index for this audio offset
-            syncQueue.sync {
-                // Find the closest earlier audio offset that has a sentence index
-                // This handles cases where the word boundary event happens slightly after the bookmark
-                var closestOffset: UInt64 = 0
-                var closestSentenceIndex = -1
-                
-                // First, look for exact matches
-                if let exactSentenceIndex = audioOffsetToSentenceIndex[UInt64(event.audioOffset)] {
-                    currentSentenceIndex = exactSentenceIndex
-                } else {
-                    // Then, look for the closest preceding offset with language-specific adjustments
-                    
-                    // For Chinese, we need a tighter window to prevent incorrect sentence assignments
-                    let isChineseOrJapanese = language == .mandarinChinese || language == .japanese
-                    
-                    // Much smaller buffer for Chinese to prevent early word shifting
-                    let offsetBuffer: UInt64 = isChineseOrJapanese ? 500_000 : 5_000_000 // 50ms for Chinese/Japanese, 500ms for others
-                    
-                    // Get all boundaries sorted by time
-                    let sortedBoundaries = audioOffsetToSentenceIndex.sorted { $0.key < $1.key }
-                    var boundaryToUse: (UInt64, Int)? = nil
-                    
-                    for (i, (offset, sentIndex)) in sortedBoundaries.enumerated() {
-                        // For Chinese/Japanese: Find the exact boundary this word belongs to
-                        if isChineseOrJapanese {
-                            // If we're after this boundary but before the next one, use this sentence
-                            if offset <= UInt64(event.audioOffset) {
-                                if i == sortedBoundaries.count - 1 || UInt64(event.audioOffset) < sortedBoundaries[i+1].key {
-                                    boundaryToUse = (offset, sentIndex)
-                                }
-                            }
-                        } 
-                        // For other languages: Use the buffer approach
-                        else if offset <= UInt64(event.audioOffset) + offsetBuffer && offset > closestOffset {
-                            closestOffset = offset
-                            closestSentenceIndex = sentIndex
-                        }
-                    }
-                    
-                    // For Chinese/Japanese: Assign based on nearest boundary
-                    if isChineseOrJapanese && boundaryToUse != nil {
-                        closestSentenceIndex = boundaryToUse!.1
-                    }
-                    
-                    if closestSentenceIndex >= 0 {
-                        currentSentenceIndex = closestSentenceIndex
-                    }
-                }
-            }
 
             // 1. Remove typical artifacts like newlines/spaces,
             //    but do NOT remove speech characters, because we need to detect them properly.
             let rawText = self.removeSynthesisArtifacts(from: event.text,
                                                         language: language,
-                                                        isFirstWordInSentence: false,
+                                                        isFirstWordInSentence: event.text.contains(self.sentenceMarker),
                                                         removeSpeechMarks: false)
 
             // 2. Process the text to handle the odd/even speech mark logic.
@@ -165,8 +79,12 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
                                                     wordTimestamps: &wordTimestamps,
                                                     language: language)
 
-            // 3. Use the finalWord as is - sentence indices now come from our mapping
-            let cleanedWord = finalWord
+            // 3. Check for sentence markers (if you use them to increment sentenceIndex).
+            var cleanedWord = finalWord
+            if cleanedWord.contains(self.sentenceMarker) {
+                sentenceIndex += 1
+                cleanedWord = cleanedWord.replacingOccurrences(of: self.sentenceMarker, with: "")
+            }
 
             // 4. Update the previous timestamp's duration before adding a new one
             if var previousTimestamp = wordTimestamps[safe: index] {
@@ -174,7 +92,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
                 wordTimestamps[index] = previousTimestamp
             }
 
-            // 5. Add the new timestamp with the correct sentence index
+            // 5. Add the new timestamp
             let newTimestamp = WordTimeStampData(
                 id: UUID(),
                 storyId: story.id,
@@ -182,7 +100,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
                 word: cleanedWord,
                 time: audioTimeInSeconds,
                 duration: event.duration,
-                sentenceIndex: currentSentenceIndex
+                sentenceIndex: sentenceIndex
             )
             wordTimestamps.append(newTimestamp)
             index += 1
@@ -311,41 +229,10 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
 <voice name="\(voice.speechSynthesisVoiceName)">
 """
 
-        // Add a special boundary marker before the first sentence
-//        ssml.append("<bookmark mark=\"sentence-boundary-start\"/>")
-        
-        for (index, sentence) in chapter.sentences.enumerated() {
-            // Add newline for readability
-            ssml.append("\n")
-            
-            // For Chinese/Japanese - use sentence tags for better handling
-            if voice.language == .mandarinChinese || voice.language == .japanese {
-                // First place the bookmark marker
-                ssml.append("<bookmark mark=\"sentence-\(index)\"/>")
-                
-                // Then wrap in sentence tag with clear boundaries
-                ssml.append("<s>")
-                ssml.append(sentence.translation)
-                ssml.append("</s>")
-            } else {
-                // For other languages - continue using paragraph tags
-                ssml.append("<bookmark mark=\"sentence-\(index)\"/>")
-                ssml.append("<p>")
-                ssml.append(sentence.translation)
-                ssml.append("</p>")
-            }
-            
-            // Add a clearer boundary marker between sentences
-            if index < chapter.sentences.count - 1 {
-                // Longer break for Chinese/Japanese to ensure clear separation
-                let breakTime = (voice.language == .mandarinChinese || voice.language == .japanese) ? "250ms" : "250ms"
-                ssml.append("<break time=\"\(breakTime)\"/>")
-//                ssml.append("<bookmark mark=\"sentence-boundary-\(index+1)\"/>")
-            }
+        for sentence in chapter.sentences {
+            ssml.append("\n\(sentence.translation)")
         }
-        
-        // Add a final boundary marker
-//        ssml.append("<bookmark mark=\"sentence-boundary-end\"/>")
+
         ssml.append("</voice></speak>")
         return ssml
     }
