@@ -125,6 +125,7 @@ struct ContentView: View {
                     ) {
                         DailyLimitExplanationView()
                     }
+                    .background(FlowTaleColor.background)
             }
 
         case .storyList:

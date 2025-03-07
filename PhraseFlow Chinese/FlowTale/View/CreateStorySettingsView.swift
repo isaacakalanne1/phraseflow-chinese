@@ -23,117 +23,100 @@ struct CreateStorySettingsView: View {
         let currentLanguage = store.state.settingsState.language
         let currentStorySetting = store.state.settingsState.storySetting
         let currentVoice = store.state.settingsState.voice
+        
+        // Story Prompt variables
+        let promptImage: UIImage?
+        let promptDisplayText: String
+        let promptFallbackText: String
+        
+        switch currentStorySetting {
+        case .random:
+            promptImage = UIImage(named: "StoryPrompt-Random")
+            promptDisplayText = LocalizedString.random
+            promptFallbackText = "🎲"
+        case .customPrompt(let prompt):
+            promptImage = UIImage(named: "StoryPrompt-Custom")
+            let firstLetter = prompt.prefix(1).capitalized
+            let remainingLetters = prompt.dropFirst()
+            promptDisplayText = firstLetter + remainingLetters
+            promptFallbackText = "📝"
+        }
 
-        VStack {
-            List {
-                Section {
-                    Button {
-                        isShowingLanguageSettings = true
-                        store.dispatch(.playSound(.openStorySettings))
-                    } label: {
-                        HStack {
-                            Group {
-                                if let thumbnail = currentLanguage.thumbnail {
-                                    Image(uiImage: thumbnail)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(height: 50)
-                                } else {
-                                    Text(currentLanguage.flagEmoji)
-                                        .font(.system(size: 20))
-                                        .frame(width: 30, height: 30)
+        return VStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    LazyVGrid(columns: [
+                        GridItem(.flexible()),
+                        GridItem(.flexible())
+                    ], spacing: 12) {
+                        // Language Button
+                        VStack(spacing: 2) {
+                            ImageSelectionButton(
+                                title: currentLanguage.displayName,
+                                image: currentLanguage.thumbnail,
+                                fallbackText: currentLanguage.flagEmoji,
+                                isSelected: false,
+                                action: {
+                                    isShowingLanguageSettings = true
+                                    store.dispatch(.playSound(.openStorySettings))
                                 }
-                            }
-                            .cornerRadius(10)
-                            Text(currentLanguage.displayName)
-                                .fontWeight(.light)
-                                .foregroundStyle(FlowTaleColor.primary)
-                            Spacer()
-                            SystemImageView(.chevronRight, size: 20, isSelected: false)
+                            )
                         }
-                    }
-                } header: {
-                    Text(LocalizedString.language)
-                }
-                
-                Section {
-                    Button {
-                        isShowingDifficultySettings = true
-                        store.dispatch(.playSound(.openStorySettings))
-                    } label: {
-                        HStack {
-                            DifficultyView(difficulty: currentDifficulty)
-                            Text(currentDifficulty.title)
-                                .fontWeight(.light)
-                                .foregroundStyle(FlowTaleColor.primary)
-                            Spacer()
-                            SystemImageView(.chevronRight, size: 20, isSelected: false)
-                        }
-                    }
-                } header: {
-                    Text(LocalizedString.difficulty)
-                }
-
-                Section {
-                    Button {
-                        isShowingPromptSettings = true
-                        store.dispatch(.playSound(.openStorySettings))
-                    } label: {
-                        HStack {
-                            Text(currentStorySetting.emoji + " " + currentStorySetting.title)
-                                .fontWeight(.light)
-                                .foregroundStyle(FlowTaleColor.primary)
-                                .lineLimit(1)
-                            Spacer()
-                            SystemImageView(.chevronRight, size: 20, isSelected: false)
-                        }
-                    }
-                } header: {
-                    Text(LocalizedString.story)
-                }
-
-                Section {
-                    Button {
-                        isShowingVoiceSettings = true
-                        store.dispatch(.playSound(.openStorySettings))
-                    } label: {
-                        HStack {
-                            Group {
-                                if let thumbnail = currentVoice.thumbnail {
-                                    Image(uiImage: thumbnail)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(height: 50)
-                                } else {
-                                    Text(currentVoice.gender.emoji)
-                                        .font(.system(size: 20))
-                                        .frame(width: 30, height: 30)
+                        
+                        // Difficulty Button
+                        VStack(spacing: 2) {
+                            ImageSelectionButton(
+                                title: currentDifficulty.title,
+                                image: currentDifficulty.thumbnail,
+                                fallbackText: currentDifficulty.emoji,
+                                isSelected: false,
+                                action: {
+                                    isShowingDifficultySettings = true
+                                    store.dispatch(.playSound(.openStorySettings))
                                 }
-                            }
-                            .cornerRadius(10)
-                            Text(currentVoice.title)
-                                .fontWeight(.light)
-                                .foregroundStyle(FlowTaleColor.primary)
-                                .lineLimit(1)
-                            Spacer()
-                            SystemImageView(.chevronRight, size: 20, isSelected: false)
+                            )
+                        }
+                        
+                        // Story Prompt Button
+                        VStack(spacing: 2) {
+                            ImageSelectionButton(
+                                title: promptDisplayText,
+                                image: promptImage,
+                                fallbackText: promptFallbackText,
+                                isSelected: false,
+                                useFullButtonText: promptDisplayText.count > 20,
+                                action: {
+                                    isShowingPromptSettings = true
+                                    store.dispatch(.playSound(.openStorySettings))
+                                }
+                            )
+                        }
+                        
+                        // Voice Button
+                        VStack(spacing: 2) {
+                            ImageSelectionButton(
+                                title: currentVoice.title,
+                                image: currentVoice.thumbnail,
+                                fallbackText: currentVoice.gender.emoji,
+                                isSelected: false,
+                                action: {
+                                    isShowingVoiceSettings = true
+                                    store.dispatch(.playSound(.openStorySettings))
+                                }
+                            )
                         }
                     }
-                } header: {
-                    Text(LocalizedString.voice)
+                    .padding(.horizontal)
                 }
-
             }
             .frame(maxHeight: .infinity)
-            .scrollBounceBehavior(.basedOnSize)
 
             CreateStoryButton()
                 .frame(maxWidth: .infinity)
                 .padding([.horizontal, .bottom])
         }
-        .navigationTitle(LocalizedString.createStory)
         .background(backgroundView)
-        .scrollContentBackground(.hidden)
+        .navigationTitle(LocalizedString.createStory)
         .navigationDestination(
             isPresented: $isShowingLanguageSettings
         ) {
