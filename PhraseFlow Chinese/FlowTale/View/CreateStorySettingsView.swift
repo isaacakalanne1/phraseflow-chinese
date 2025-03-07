@@ -161,7 +161,6 @@ struct CreateStorySettingsView: View {
 
 struct CreateStoryButton: View {
     @EnvironmentObject var store: FlowTaleStore
-    @State private var player: AVPlayer?
     
     var body: some View {
         MainButton(title: LocalizedString.newStory.uppercased()) {

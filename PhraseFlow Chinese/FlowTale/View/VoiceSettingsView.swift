@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct VoiceOnboardingView: View {
-    @EnvironmentObject var store: FlowTaleStore
     
     var body: some View {
         VStack(spacing: 0) {

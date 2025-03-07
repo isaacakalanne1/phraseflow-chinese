@@ -256,7 +256,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .updateSentenceIndex(let index):
         newState.storyState.currentStory?.currentSentenceIndex = index
     case .playAudio(let time):
-        newState.currentTappedWord = nil
         newState.definitionState.currentDefinition = nil
         newState.audioState.isPlayingAudio = true
         if let wordTime = time {
@@ -272,7 +271,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         }
     case .selectWord(let word):
         newState.storyState.currentStory?.currentPlaybackTime = word.time
-        newState.currentTappedWord = word
     case .goToNextChapter:
         var newStory = newState.storyState.currentStory
         newStory?.currentChapterIndex += 1
@@ -283,7 +281,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.storyState.currentStory?.currentSentenceIndex = 0
         let chapter = newState.storyState.currentChapter
         newState.storyState.currentStory?.currentPlaybackTime = chapter?.audio.timestamps.first?.time ?? 0.1
-        newState.currentTappedWord = nil
     case .refreshChapterView:
         newState.viewState.chapterViewId = UUID()
     case .refreshDefinitionView:

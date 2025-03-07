@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var store: FlowTaleStore
-    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
 

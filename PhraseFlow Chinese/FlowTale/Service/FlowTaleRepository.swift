@@ -23,8 +23,6 @@ protocol FlowTaleRepositoryProtocol {
 
 enum FlowTaleRepositoryError: Error {
     case failedToPurchaseSubscription
-    case receiptMissing
-    case receiptInvalid(String)
 }
 
 class FlowTaleRepository: FlowTaleRepositoryProtocol {
@@ -323,15 +321,6 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
             request.start()
             return
         }
-    }
-    
-    /// Computes a SHA-1 hash of the provided data
-    private func sha1(data: Data) -> Data {
-        var hash = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
-        data.withUnsafeBytes {
-            _ = CC_SHA1($0.baseAddress, CC_LONG(data.count), &hash)
-        }
-        return Data(hash)
     }
 }
 

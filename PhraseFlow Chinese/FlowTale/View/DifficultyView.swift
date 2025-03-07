@@ -9,15 +9,12 @@ import SwiftUI
 
 struct DifficultyView: View {
     let difficulty: Difficulty
-    let color: Color
     let isSelected: Bool
     private let starSize: CGFloat = 10
 
     init(difficulty: Difficulty,
-         color: Color = FlowTaleColor.accent,
          isSelected: Bool = false) {
         self.difficulty = difficulty
-        self.color = color
         self.isSelected = isSelected
     }
 

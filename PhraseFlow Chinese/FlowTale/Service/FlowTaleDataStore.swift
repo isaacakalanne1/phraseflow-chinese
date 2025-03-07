@@ -27,7 +27,6 @@ protocol FlowTaleDataStoreProtocol {
     // Definitions
     func loadDefinitions() throws -> [Definition]
     func loadDefinitions(for storyId: UUID) throws -> [Definition]
-    func saveDefinitions(_ definitions: [Definition]) throws
     func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws
     func deleteDefinitions(for storyId: UUID) throws
     func cleanupOrphanedDefinitionFiles() throws
@@ -302,17 +301,6 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         }
         
         return allDefinitions
-    }
-    
-    // Save all definitions, grouped by story ID
-    func saveDefinitions(_ definitions: [Definition]) throws {
-        // Group definitions by story ID
-        let definitionsByStoryId = Dictionary(grouping: definitions) { $0.timestampData.storyId }
-        
-        // Save each group to its own file
-        for (storyId, storyDefinitions) in definitionsByStoryId {
-            try saveDefinitions(for: storyId, definitions: storyDefinitions)
-        }
     }
     
     // Delete definitions for a specific story

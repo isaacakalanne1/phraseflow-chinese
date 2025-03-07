@@ -21,8 +21,6 @@ struct FlowTaleState {
     var locale: Locale
     var moderationResponse: ModerationResponse?
 
-    var currentTappedWord: WordTimeStampData?
-
     var currentSpokenWord: WordTimeStampData? {
         guard let playbackTime = storyState.currentStory?.currentPlaybackTime else {
             return nil

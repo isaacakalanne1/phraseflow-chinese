@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct StoryPromptOnboardingView: View {
-    @EnvironmentObject var store: FlowTaleStore
     @State private var navigateToVoice = false
     
     var body: some View {

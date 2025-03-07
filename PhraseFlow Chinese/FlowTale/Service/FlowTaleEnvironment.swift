@@ -20,7 +20,6 @@ protocol FlowTaleEnvironmentProtocol {
     // Definitions
     func loadDefinitions() throws -> [Definition]
     func loadDefinitions(for storyId: UUID) throws -> [Definition]
-    func saveDefinitions(_ definitions: [Definition]) throws
     func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws
     func deleteDefinitions(for storyId: UUID) throws
     func cleanupOrphanedDefinitionFiles() throws
@@ -123,10 +122,6 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     
     func loadDefinitions(for storyId: UUID) throws -> [Definition] {
         try dataStore.loadDefinitions(for: storyId)
-    }
-
-    func saveDefinitions(_ definitions: [Definition]) throws {
-        try dataStore.saveDefinitions(definitions)
     }
     
     func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws {
