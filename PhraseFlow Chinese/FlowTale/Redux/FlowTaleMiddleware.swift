@@ -237,11 +237,13 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         await state.studyState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
         state.studyState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: endWord.time + endWord.duration, preferredTimescale: 60000)
         state.studyState.audioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
+        let playLength = endWord.time + endWord.duration - startWord.time
+        let speedModifiedPlayLength = playLength / Double(state.settingsState.speechSpeed.playRate)
 
-        try? await Task.sleep(for: .seconds(endWord.time + endWord.duration - startWord.time))
+        try? await Task.sleep(for: .seconds(speedModifiedPlayLength))
 
         if let duration = state.studyState.audioPlayer.currentItem?.duration.seconds,
-           duration >= (endWord.time + endWord.duration - startWord.time) {
+           duration >= playLength {
             return .updateStudyAudioPlaying(false)
         }
         return nil
