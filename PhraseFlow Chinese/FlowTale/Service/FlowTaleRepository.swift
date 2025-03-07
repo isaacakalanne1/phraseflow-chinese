@@ -27,7 +27,7 @@ enum FlowTaleRepositoryError: Error {
 
 class FlowTaleRepository: FlowTaleRepositoryProtocol {
 
-    private let speechCharacters = ["“", "”", "«", "»", "「", "」", "\"", "''"]
+    private let speechCharacters = ["\"", "«", "»", "「", "」", "\"", "''"]
     let subscriptionKey = "Fp11D0CAMjjAcf03VNqe2IsKfqycenIKcrAm4uGV8RSiaqMX15NWJQQJ99AKACYeBjFXJ3w3AAAYACOG6Orb"
     let region = "eastus"
     let sentenceMarker = "[]"
@@ -56,9 +56,22 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
         // We'll increment this each time we add a WordTimeStampData entry.
         var index = -1
 
-        // Keep track of "sentence" boundaries if you rely on `sentenceMarker`.
-        var sentenceIndex = -1
-
+        // Start with first sentence (index 0), but initialize at 0 so our 0-indexing works correctly
+        var currentSentenceIndex = 0
+        
+        // Track sentence text for more reliable detection
+        let sentences = chapter.sentences.map { $0.translation }
+        
+        // Keep track of accumulated text to determine sentence boundaries
+        var accumulatedText = ""
+        
+        // Track if we've found a real word in the current sentence
+        // This helps identify the proper start of each sentence
+        var hasFoundRealWordInCurrentSentence = false
+        
+        // Special first sentence detection
+        var isFirstRealWordInStream = true
+        
         // Reset the speech mark counter each time we start a new synthesis
         speechMarkCounter = 0
 
@@ -78,20 +91,73 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
                                                     wordTimestamps: &wordTimestamps,
                                                     language: language)
 
-            // 3. Check for sentence markers (if you use them to increment sentenceIndex).
+            // 3. Keep track of accumulated text to determine sentence boundaries
             var cleanedWord = finalWord
-            if cleanedWord.contains(self.sentenceMarker) {
-                sentenceIndex += 1
-                cleanedWord = cleanedWord.replacingOccurrences(of: self.sentenceMarker, with: "")
-            }
+            
+            // Remove any potential sentenceMarker artifacts that might be present
+            cleanedWord = cleanedWord.replacingOccurrences(of: self.sentenceMarker, with: "")
+            
+            // Check if this is a real word (not just whitespace or punctuation)
+            let trimmedWord = cleanedWord.trimmingCharacters(in: .whitespacesAndNewlines)
+            let containsRealContent = !trimmedWord.isEmpty && !trimmedWord.allSatisfy { $0.isPunctuation }
 
+            // Mark the beginning of real content in the sentence
+            if containsRealContent {
+                if !hasFoundRealWordInCurrentSentence {
+                    hasFoundRealWordInCurrentSentence = true
+                }
+                
+                // Handle very first word with special care
+                if isFirstRealWordInStream {
+                    isFirstRealWordInStream = false
+                    // Forces first real word to start at sentence 0
+                    currentSentenceIndex = 0
+                }
+            }
+            
+            // Update accumulated text with the current word
+            accumulatedText += cleanedWord
+            
             // 4. Update the previous timestamp's duration before adding a new one
             if var previousTimestamp = wordTimestamps[safe: index] {
                 previousTimestamp.duration = audioTimeInSeconds - previousTimestamp.time
                 wordTimestamps[index] = previousTimestamp
             }
+            
+            // 5. Determine sentence index using a more reliable approach
+            // Check if we've completed a sentence by looking for sentence terminating punctuation
+            let sentenceTerminators = [".", "?", "!", "。", "？", "！", "…", ";", ":", "；", "："]
+            // Use the already defined trimmedWord from above
+            let lastChar = trimmedWord.last
+            
+            // Look for end of sentence punctuation
+            let mightBeEndOfSentence = lastChar.map { char in 
+                sentenceTerminators.contains(String(char))
+            } ?? false
+            
+            // Store the current sentence index for this word before potentially updating it
+            // For the first real word, ensure we start with sentence index 0
+            let wordSentenceIndex = hasFoundRealWordInCurrentSentence ? currentSentenceIndex : 0
+            
+            // If we might be at the end of a sentence, check accumulated text against sentence content
+            if mightBeEndOfSentence && currentSentenceIndex < sentences.count {
+                // Check if accumulated text contains a substantial part of the current sentence
+                // This helps avoid false positives from periods in abbreviations, etc.
+                let currentSentence = sentences[currentSentenceIndex]
+                let normalizedSentence = self.normalizeForComparison(currentSentence)
+                let normalizedAccumulated = self.normalizeForComparison(accumulatedText)
+                
+                // If we've accumulated most of the sentence text, move to next sentence
+                if normalizedAccumulated.contains(normalizedSentence) || 
+                   self.textSimilarityScore(normalizedAccumulated, normalizedSentence) > 0.7 {
+                    // This word with punctuation belongs to the current sentence
+                    currentSentenceIndex += 1
+                    accumulatedText = "" // Reset accumulated text for next sentence
+                    hasFoundRealWordInCurrentSentence = false // Reset for the next sentence
+                }
+            }
 
-            // 5. Add the new timestamp
+            // 6. Add the new timestamp with the current sentence index
             let newTimestamp = WordTimeStampData(
                 id: UUID(),
                 storyId: story.id,
@@ -99,12 +165,15 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
                 word: cleanedWord,
                 time: audioTimeInSeconds,
                 duration: event.duration,
-                sentenceIndex: sentenceIndex
+                sentenceIndex: wordSentenceIndex // Use the sentence index we determined before advancing
             )
             wordTimestamps.append(newTimestamp)
             index += 1
         }
 
+        // For debugging - dump sentence count
+        print("Processing \(sentences.count) sentences")
+        
         // Generate the SSML and speak it
         let ssml = createSpeechSsml(chapter: chapter, voice: voice)
 
@@ -169,14 +238,13 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
 
         // If you really want to remove quotes from the leftover chunk, you'd set `removeSpeechMarks: true`.
         // But since we want to keep them, we pass `false`.
-        let finalWord = removeSynthesisArtifacts(from: chunkBuffer, language: language, removeSpeechMarks: false)
-        return finalWord
+        return chunkBuffer
     }
 
     // MARK: - Artifact Removal
 
     /// Cleans up typical TTS artifacts (e.g. newlines, big spaces).
-    /// If `removeSpeechMarks` is `true`, we also remove speech quotes. By default, it’s `false` here,
+    /// If `removeSpeechMarks` is `true`, we also remove speech quotes. By default, it's `false` here,
     /// ensuring we do NOT strip out odd-numbered quotes from the leftover chunk.
     private func removeSynthesisArtifacts(from text: String,
                                           language: Language?,
@@ -200,8 +268,15 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
         case .mandarinChinese, .japanese:
             word = word.replacingOccurrences(of: " ", with: "")
         default:
-            // For non-CJK languages, add a trailing space so words don’t run together
-            word += " "
+            // For non-CJK languages, only add a space if the word doesn't end with punctuation
+            let trimmed = word.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !trimmed.isEmpty {
+                let lastChar = trimmed.last!
+                let isPunctuation = CharacterSet(charactersIn: ".,;:!?。，；：！？…").contains(lastChar.unicodeScalars.first!)
+                if !isPunctuation {
+                    word = " " + word
+                }
+            }
         }
 
         return word
@@ -219,7 +294,8 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
 """
 
         for sentence in chapter.sentences {
-            ssml.append(" \(sentenceMarker) \(sentence.translation)")
+            // Use proper punctuation for clear sentence boundaries instead of markers
+            ssml.append(" \(sentence.translation) ")
         }
 
         ssml.append("</voice></speak>")
@@ -234,6 +310,40 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
         speechConfig.setSpeechSynthesisOutputFormat(.riff16Khz16BitMonoPcm)
         speechConfig.speechSynthesisVoiceName = voice.speechSynthesisVoiceName
         return speechConfig
+    }
+    
+    // Helper method to normalize text for comparison
+    private func normalizeForComparison(_ text: String) -> String {
+        let normalizedText = text
+            .lowercased()
+            .replacingOccurrences(of: self.sentenceMarker, with: "")
+            .replacingOccurrences(of: "\n", with: " ")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        // Remove all punctuation and multiple spaces
+        let punctuationCharacters = CharacterSet.punctuationCharacters
+        let components = normalizedText.components(separatedBy: punctuationCharacters)
+        let textWithoutPunctuation = components.joined(separator: " ")
+        let words = textWithoutPunctuation.components(separatedBy: .whitespacesAndNewlines)
+        let filteredWords = words.filter { !$0.isEmpty }
+        
+        return filteredWords.joined(separator: " ")
+    }
+    
+    // Calculate similarity between two texts using a basic approach
+    private func textSimilarityScore(_ text1: String, _ text2: String) -> Double {
+        // Split both texts into sets of words
+        let words1 = Set(text1.components(separatedBy: .whitespacesAndNewlines).filter { !$0.isEmpty })
+        let words2 = Set(text2.components(separatedBy: .whitespacesAndNewlines).filter { !$0.isEmpty })
+        
+        // Calculate Jaccard similarity: intersection divided by union
+        if words1.isEmpty && words2.isEmpty { return 1.0 }
+        if words1.isEmpty || words2.isEmpty { return 0.0 }
+        
+        let intersection = words1.intersection(words2).count
+        let union = words1.union(words2).count
+        
+        return Double(intersection) / Double(union)
     }
 
     // MARK: - StoreKit Purchases (unchanged)
@@ -283,4 +393,3 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
         }
     }
 }
-
