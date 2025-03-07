@@ -184,7 +184,7 @@ enum Voice: String, Codable, CaseIterable, Equatable {
                 .brazilianPortuguese
         case .ava,
                 .andrew:
-                .englishUS
+                .english
         case .ada,
                 .ollie:
                 .englishUK

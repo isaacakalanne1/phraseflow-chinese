@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum Language: String, Codable, CaseIterable {
-    case englishUS,
+    case english,
          englishUK,
          mandarinChinese,
          spanish,
@@ -36,7 +36,7 @@ enum Language: String, Codable, CaseIterable {
             "Chinese (Mandarin)"
         case .arabicGulf:
             "Arabic (Gulf Arabic)"
-        case .englishUS:
+        case .english:
             "US English"
         case .englishUK:
             "UK English"
@@ -71,7 +71,7 @@ enum Language: String, Codable, CaseIterable {
             LocalizedString.spanish
         case .french:
             LocalizedString.french
-        case .englishUS:
+        case .english:
             LocalizedString.englishUS
         case .englishUK:
             LocalizedString.englishUK
@@ -102,7 +102,7 @@ enum Language: String, Codable, CaseIterable {
             "pt-PT"
         case .brazilianPortuguese:
             "pt-BR"
-        case .englishUS:
+        case .english:
             "en-US"
         case .englishUK:
             "en-GB"
@@ -132,7 +132,7 @@ enum Language: String, Codable, CaseIterable {
         case .europeanPortuguese,
                 .brazilianPortuguese:
             "pt"
-        case .englishUS,
+        case .english,
              .englishUK:
             "en"
         case .hindi:
@@ -168,7 +168,7 @@ enum Language: String, Codable, CaseIterable {
             ["pt"]
         case .brazilianPortuguese:
             ["br"]
-        case .englishUS:
+        case .english:
             ["us"]
         case .englishUK:
             ["gb"]
@@ -181,7 +181,7 @@ enum Language: String, Codable, CaseIterable {
 
     var schemaKey: String {
         switch self {
-        case .englishUS, .englishUK:
+        case .english, .englishUK:
             rawValue
         default:
             rawValue + "Translation"
@@ -217,7 +217,7 @@ enum Language: String, Codable, CaseIterable {
         case .brazilianPortuguese:
             [.thalita,
              .donato]
-        case .englishUS:
+        case .english:
             [.ava,
              .andrew]
         case .englishUK:
