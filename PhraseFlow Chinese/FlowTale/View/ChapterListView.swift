@@ -73,7 +73,7 @@ struct ChapterListView: View {
                 }
                 .frame(maxHeight: .infinity)
 
-                PrimaryButton(title: LocalizedString.newChapter) {
+                MainButton(title: LocalizedString.newChapter.uppercased()) {
                     // Show the writing chapter snackbar instead of redirecting to reader tab
                     store.dispatch(.showSnackBar(.writingChapter))
                     // Create the chapter but stay on current screen

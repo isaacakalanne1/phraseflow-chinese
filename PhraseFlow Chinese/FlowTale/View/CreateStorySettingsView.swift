@@ -164,7 +164,7 @@ struct CreateStoryButton: View {
     @State private var player: AVPlayer?
     
     var body: some View {
-        MainButton(title: LocalizedString.create) {
+        MainButton(title: LocalizedString.newStory.uppercased()) {
             store.dispatch(.playSound(.largeBoom))
 
             // Check if user has existing stories

@@ -64,7 +64,7 @@ struct ChapterView: View {
                 .frame(maxWidth: .infinity, alignment: story.language.alignment)
             }
 
-            MainButton(title: LocalizedString.next.uppercased()) {
+            MainButton(title: LocalizedString.newChapter.uppercased()) {
                 let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
                 if doesNextChapterExist {
                     store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
