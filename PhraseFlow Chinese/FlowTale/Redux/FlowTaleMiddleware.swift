@@ -551,6 +551,11 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return .showSnackBar(.deletedCustomStory)
     case .onLoadedDefinitions:
         return .refreshDefinitionView
+    case .setSubscriptionSheetShowing(let isShowing):
+        if isShowing {
+            return .hideSnackbar
+        }
+        return nil
     case .failedToLoadStories,
             .failedToSaveStory,
             .failedToDefineCharacter,
@@ -571,7 +576,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .failedToPurchaseSubscription,
             .onRestoredSubscriptions,
             .failedToRestoreSubscriptions,
-            .setSubscriptionSheetShowing,
             .updateAutoScrollEnabled,
             .hideSnackbar,
             .updateCustomPrompt,

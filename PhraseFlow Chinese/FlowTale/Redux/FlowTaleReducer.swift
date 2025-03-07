@@ -327,6 +327,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .setSubscriptionSheetShowing(let isShowing):
         newState.viewState.readerDisplayType = .normal
         newState.viewState.isShowingSubscriptionSheet = isShowing
+        if isShowing {
+            newState.viewState.isWritingChapter = false
+        }
     case .showSnackBar(let type),
           .showSnackBarThenSaveStory(let type, _):
         if let url = type.sound.fileURL,

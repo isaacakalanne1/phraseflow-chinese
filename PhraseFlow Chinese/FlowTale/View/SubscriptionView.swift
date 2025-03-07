@@ -43,7 +43,6 @@ struct SubscriptionView: View {
                         // Then attempt to purchase
                         store.dispatch(.purchaseSubscription(product))
                     }
-                    store.dispatch(.setSubscriptionSheetShowing(false))
                 })
             }
 
@@ -56,7 +55,6 @@ struct SubscriptionView: View {
                     store.dispatch(.validateReceipt)
                     // Then restore purchases
                     store.dispatch(.restoreSubscriptions)
-                    store.dispatch(.setSubscriptionSheetShowing(false))
                 }
             } label: {
                 Text(LocalizedString.restoreSubscription)
