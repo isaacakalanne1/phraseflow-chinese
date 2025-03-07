@@ -14,7 +14,7 @@ final class FlowTaleStateTests: XCTestCase {
 
     func testDeviceLanguage_english() {
         // Given
-        let language = Language.english
+        let language = Language.englishUS
 
         // When
         let state = FlowTaleState(locale: language.locale)
@@ -24,7 +24,7 @@ final class FlowTaleStateTests: XCTestCase {
             XCTFail("Should have found a device language")
             return
         }
-        XCTAssertEqual(deviceLanguage, .english)
+        XCTAssertEqual(deviceLanguage, .englishUS)
     }
 
     func testDeviceLanguage_french() {

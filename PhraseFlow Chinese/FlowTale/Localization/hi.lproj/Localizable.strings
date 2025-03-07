@@ -211,7 +211,8 @@
 "defining" = "परिभाषा दी जा रही है...";
 
 // English language name
-"english" = "अंग्रेज़ी";
+"english_us" = "अंग्रेज़ी (यूएस)";
+"english_uk" = "अंग्रेज़ी (यूके)";
 
 // Hindi language name
 "hindi" = "हिंदी";
@@ -224,6 +225,8 @@
 
 // Andrew voice button title
 "voice_andrew" = "एंड्रयू";
+"voice_ada" = "एडा";
+"voice_ollie" = "ओली";
 
 // Ananya Hindi voice button title
 "voice_ananya" = "अनन्या";

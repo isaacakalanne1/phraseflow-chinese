@@ -390,7 +390,7 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
             throw FlowTaleServicesError.failedToGetDeviceLanguage
         }
         let jsonPrompt = """
-Format the following story into JSON. Translate each English sentence into \(deviceLanguage == .english ? "" : "\(deviceLanguage.descriptiveEnglishName) and ") \(story.language.descriptiveEnglishName).
+Format the following story into JSON. Translate each English sentence into \(deviceLanguage == .englishUS || deviceLanguage == .englishUK ? "" : "\(deviceLanguage.descriptiveEnglishName) and ") \(story.language.descriptiveEnglishName).
 Ensure each sentence entry is for an individual sentence.
 Translate the whole sentence, including names and places.
 In the \(story.language.descriptiveEnglishName) text, write numbers in \(story.language.descriptiveEnglishName). Chinese numbers are written using Chinese characters, French numbers are written in their full text form (un, deux, trois), etc. 

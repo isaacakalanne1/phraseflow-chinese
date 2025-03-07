@@ -210,8 +210,11 @@
 // Defining text while user is fetching the definition of a word
 "defining" = "Defining...";
 
-// English language name
-"english" = "English";
+// English US language name
+"english_us" = "English (US)";
+
+// English UK language name
+"english_uk" = "English (UK)";
 
 // Hindi language name
 "hindi" = "Hindi";
@@ -224,6 +227,12 @@
 
 // Andrew voice button title
 "voice_andrew" = "Andrew";
+
+// Ada voice button title
+"voice_ada" = "Ada";
+
+// Ollie voice button title
+"voice_ollie" = "Ollie";
 
 // Ananya Hindi voice button title
 "voice_ananya" = "Ananya";

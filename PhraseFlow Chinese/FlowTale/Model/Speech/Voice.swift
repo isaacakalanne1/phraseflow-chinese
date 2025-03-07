@@ -28,6 +28,8 @@ enum Voice: String, Codable, CaseIterable, Equatable {
          donato,
          ava, // English (US)
          andrew,
+         ada, // English (UK)
+         ollie,
          ananya, // Hindi
          aarav,
          amala, // German
@@ -75,6 +77,10 @@ enum Voice: String, Codable, CaseIterable, Equatable {
             LocalizedString.voiceAva
         case .andrew:
             LocalizedString.voiceAndrew
+        case .ada:
+            LocalizedString.voiceAda
+        case .ollie:
+            LocalizedString.voiceOllie
         case .ananya:
             LocalizedString.voiceAnanya
         case .aarav:
@@ -128,6 +134,10 @@ enum Voice: String, Codable, CaseIterable, Equatable {
             "en-US-AvaNeural"
         case .andrew:
             "en-US-AndrewNeural"
+        case .ada:
+            "en-GB-AdaMultilingualNeural"
+        case .ollie:
+            "en-GB-OllieMultilingualNeural"
         case .ananya:
             "hi-IN-AnanyaNeural"
         case .aarav:
@@ -174,7 +184,10 @@ enum Voice: String, Codable, CaseIterable, Equatable {
                 .brazilianPortuguese
         case .ava,
                 .andrew:
-                .english
+                .englishUS
+        case .ada,
+                .ollie:
+                .englishUK
         case .ananya,
                 .aarav:
                 .hindi
@@ -196,6 +209,7 @@ enum Voice: String, Codable, CaseIterable, Equatable {
                 .raquel,
                 .thalita,
                 .ava,
+                .ada,
                 .ananya,
                 .amala:
                 .female
@@ -209,6 +223,7 @@ enum Voice: String, Codable, CaseIterable, Equatable {
                 .duarte,
                 .donato,
                 .andrew,
+                .ollie,
                 .aarav,
                 .conrad:
                 .male

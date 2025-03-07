@@ -211,7 +211,8 @@
 "defining" = "Definiendo...";
 
 // English language name
-"english" = "Inglés";
+"english_us" = "Inglés (EE.UU.)";
+"english_uk" = "Inglés (Reino Unido)";
 
 // Hindi language name
 "hindi" = "Hindi";
@@ -224,6 +225,8 @@
 
 // Andrew voice button title
 "voice_andrew" = "Andrew";
+"voice_ada" = "Ada";
+"voice_ollie" = "Ollie";
 
 // Ananya Hindi voice button title
 "voice_ananya" = "Ananya";

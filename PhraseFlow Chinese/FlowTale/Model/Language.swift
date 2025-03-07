@@ -8,7 +8,8 @@
 import SwiftUI
 
 enum Language: String, Codable, CaseIterable {
-    case english,
+    case englishUS,
+         englishUK,
          mandarinChinese,
          spanish,
          french,
@@ -35,6 +36,10 @@ enum Language: String, Codable, CaseIterable {
             "Chinese (Mandarin)"
         case .arabicGulf:
             "Arabic (Gulf Arabic)"
+        case .englishUS:
+            "US English"
+        case .englishUK:
+            "UK English"
         default:
             rawValue.capitalized
         }
@@ -66,8 +71,10 @@ enum Language: String, Codable, CaseIterable {
             LocalizedString.spanish
         case .french:
             LocalizedString.french
-        case .english:
-            LocalizedString.english
+        case .englishUS:
+            LocalizedString.englishUS
+        case .englishUK:
+            LocalizedString.englishUK
         case .hindi:
             LocalizedString.hindi
         case .german:
@@ -95,8 +102,10 @@ enum Language: String, Codable, CaseIterable {
             "pt-PT"
         case .brazilianPortuguese:
             "pt-BR"
-        case .english:
+        case .englishUS:
             "en-US"
+        case .englishUK:
+            "en-GB"
         case .hindi:
             "hi-IN"
         case .german:
@@ -123,7 +132,8 @@ enum Language: String, Codable, CaseIterable {
         case .europeanPortuguese,
                 .brazilianPortuguese:
             "pt"
-        case .english:
+        case .englishUS,
+             .englishUK:
             "en"
         case .hindi:
             "hi"
@@ -158,8 +168,10 @@ enum Language: String, Codable, CaseIterable {
             ["pt"]
         case .brazilianPortuguese:
             ["br"]
-        case .english:
+        case .englishUS:
             ["us"]
+        case .englishUK:
+            ["gb"]
         case .hindi:
             ["in"]
         case .german:
@@ -169,7 +181,7 @@ enum Language: String, Codable, CaseIterable {
 
     var schemaKey: String {
         switch self {
-        case .english:
+        case .englishUS, .englishUK:
             rawValue
         default:
             rawValue + "Translation"
@@ -205,9 +217,12 @@ enum Language: String, Codable, CaseIterable {
         case .brazilianPortuguese:
             [.thalita,
              .donato]
-        case .english:
+        case .englishUS:
             [.ava,
              .andrew]
+        case .englishUK:
+            [.ada,
+             .ollie]
         case .hindi:
             [.ananya,
              .aarav]
