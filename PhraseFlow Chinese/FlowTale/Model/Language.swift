@@ -221,8 +221,8 @@ enum Language: String, Codable, CaseIterable {
             [.ava,
              .andrew]
         case .englishUK:
-            [.ada,
-             .ollie]
+            [.sonia,
+             .ryan]
         case .hindi:
             [.ananya,
              .aarav]

@@ -30,7 +30,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
     private let speechCharacters = ["“", "”", "«", "»", "「", "」", "\"", "''"]
     let subscriptionKey = "Fp11D0CAMjjAcf03VNqe2IsKfqycenIKcrAm4uGV8RSiaqMX15NWJQQJ99AKACYeBjFXJ3w3AAAYACOG6Orb"
     let region = "eastus"
-    let sentenceMarker = "❂"
+    let sentenceMarker = "[][]"
 
     /// Keep track of how many speech marks we've encountered so far (odd/even).
     private var speechMarkCounter: Int = 0
@@ -230,7 +230,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
 """
 
         for sentence in chapter.sentences {
-            ssml.append("\n\(sentence.translation)")
+            ssml.append("\(sentenceMarker)\(sentence.translation)")
         }
 
         ssml.append("</voice></speak>")

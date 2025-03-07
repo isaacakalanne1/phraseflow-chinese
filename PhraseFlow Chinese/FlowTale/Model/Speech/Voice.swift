@@ -28,8 +28,8 @@ enum Voice: String, Codable, CaseIterable, Equatable {
          donato,
          ava, // English (US)
          andrew,
-         ada, // English (UK)
-         ollie,
+         sonia, // English (UK)
+         ryan,
          ananya, // Hindi
          aarav,
          amala, // German
@@ -77,9 +77,9 @@ enum Voice: String, Codable, CaseIterable, Equatable {
             LocalizedString.voiceAva
         case .andrew:
             LocalizedString.voiceAndrew
-        case .ada:
+        case .sonia:
             LocalizedString.voiceAda
-        case .ollie:
+        case .ryan:
             LocalizedString.voiceOllie
         case .ananya:
             LocalizedString.voiceAnanya
@@ -134,10 +134,10 @@ enum Voice: String, Codable, CaseIterable, Equatable {
             "en-US-AvaNeural"
         case .andrew:
             "en-US-AndrewNeural"
-        case .ada:
-            "en-GB-AdaMultilingualNeural"
-        case .ollie:
-            "en-GB-OllieMultilingualNeural"
+        case .sonia:
+            "en-GB-SoniaNeural"
+        case .ryan:
+            "en-GB-RyanNeural"
         case .ananya:
             "hi-IN-AnanyaNeural"
         case .aarav:
@@ -185,8 +185,8 @@ enum Voice: String, Codable, CaseIterable, Equatable {
         case .ava,
                 .andrew:
                 .english
-        case .ada,
-                .ollie:
+        case .sonia,
+                .ryan:
                 .englishUK
         case .ananya,
                 .aarav:
@@ -209,7 +209,7 @@ enum Voice: String, Codable, CaseIterable, Equatable {
                 .raquel,
                 .thalita,
                 .ava,
-                .ada,
+                .sonia,
                 .ananya,
                 .amala:
                 .female
@@ -223,7 +223,7 @@ enum Voice: String, Codable, CaseIterable, Equatable {
                 .duarte,
                 .donato,
                 .andrew,
-                .ollie,
+                .ryan,
                 .aarav,
                 .conrad:
                 .male
