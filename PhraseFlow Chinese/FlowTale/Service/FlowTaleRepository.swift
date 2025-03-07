@@ -30,7 +30,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
     private let speechCharacters = ["“", "”", "«", "»", "「", "」", "\"", "''"]
     let subscriptionKey = "Fp11D0CAMjjAcf03VNqe2IsKfqycenIKcrAm4uGV8RSiaqMX15NWJQQJ99AKACYeBjFXJ3w3AAAYACOG6Orb"
     let region = "eastus"
-    let sentenceMarker = "[][]"
+    let sentenceMarker = "[]"
 
     /// Keep track of how many speech marks we've encountered so far (odd/even).
     private var speechMarkCounter: Int = 0
@@ -219,52 +219,12 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
 """
 
         for sentence in chapter.sentences {
-            for (index, section) in splitSpeechAndNonSpeech(from: sentence.translation).enumerated() {
-                ssml.append("\(index == 0 ? sentenceMarker : "")\(section)")
-            }
+            ssml.append(" \(sentenceMarker) \(sentence.translation)")
         }
 
         ssml.append("</voice></speak>")
         return ssml
     }
-
-    /// Splits "He said, “Hello”" into something like: ["He said, ", "“Hello”"]
-    /// so we can generate different SSML for speech vs. non-speech segments.
-    private func splitSpeechAndNonSpeech(from text: String) -> [String] {
-        var results: [String] = []
-        var currentText = ""
-        var isInSpeech = false
-
-        for character in text {
-            if speechCharacters.contains(String(character)) {
-                if isInSpeech {
-                    // End of speech part, include the closing quotation mark in this segment
-                    currentText.append(character)
-                    results.append(currentText)
-                    currentText = ""
-                } else {
-                    // Non-speech part ends; start of speech part
-                    if !currentText.isEmpty {
-                        results.append(currentText)
-                        currentText = ""
-                    }
-                    // Start with the opening quotation mark
-                    currentText.append(character)
-                }
-                isInSpeech.toggle()
-            } else {
-                currentText.append(character)
-            }
-        }
-
-        // Add remaining text if there's anything left after the last mark
-        if !currentText.isEmpty {
-            results.append(currentText)
-        }
-
-        return results
-    }
-
     // MARK: - Speech Configuration
 
     private func createSpeechConfig(voice: Voice) throws -> SPXSpeechConfiguration {
