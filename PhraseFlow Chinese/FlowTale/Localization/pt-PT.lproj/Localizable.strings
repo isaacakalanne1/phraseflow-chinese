@@ -546,7 +546,7 @@
 "subscription_free_trial_limit_question" = "Porque é que existe um limite de teste gratuito?";
 
 // Format for showing the chapter limit per day (with a placeholder for the number of chapters)
-"subscription_chapters_per_day" = "Criar %d capítulos por dia";
+"subscription_chapters_per_day" = "Criar %d capítulos todos os dias";
 
 // Detail text for the free subscription option
 "subscription_free_chapters_detail" = "%d capítulos gratuitos";
