@@ -321,6 +321,9 @@
 // Title for screen presenting the user with the option of subscribing
 "subscribe" = "Subscribe";
 
+// Title for the Progress tab showing vocabulary progress
+"progress" = "Progress";
+
 // Title telling user the number of chapters they can create per story
 "chapters_per_story" = "%@ chapters per story";
 

@@ -221,6 +221,7 @@ public enum LocalizedString {
   public static let chartSavedDefinitions = LocalizedString.tr("Localizable", "chart_saved_definitions")
   public static let chartStudiedWords = LocalizedString.tr("Localizable", "chart_studied_words")
   public static let deviceVolumeZero = LocalizedString.tr("Localizable", "device_volume_zero")
+  public static let progress = LocalizedString.tr("Localizable", "progress")
 }
 
 extension LocalizedString {

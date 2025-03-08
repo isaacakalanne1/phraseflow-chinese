@@ -70,7 +70,7 @@ struct StoryListView: View {
             }
             .toolbar(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle(LocalizedString.chooseStory)
+            .navigationTitle(ContentTab.storyList.title)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(FlowTaleColor.background)
             .scrollContentBackground(.hidden)

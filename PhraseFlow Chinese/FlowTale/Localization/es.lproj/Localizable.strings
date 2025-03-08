@@ -321,6 +321,9 @@
 // Title telling user they can create unlimited chapters per story
 "unlimited_chapters" = "Capítulos ilimitados";
 
+// Title for the Progress tab showing vocabulary progress
+"progress" = "Progreso";
+
 // Button title the user can tap to restore their app subscription
 "restore_subscription" = "Restaurar suscripción";
 

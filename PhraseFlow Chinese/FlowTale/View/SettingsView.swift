@@ -66,7 +66,7 @@ struct SettingsView: View {
                 }
             }
         }
-        .navigationTitle(LocalizedString.settings)
+        .navigationTitle(ContentTab.settings.title)
         .navigationBarTitleDisplayMode(.inline)
         .background(FlowTaleColor.background)
         .scrollContentBackground(.hidden)

@@ -321,6 +321,9 @@
 // Title telling user they can create unlimited chapters per story
 "unlimited_chapters" = "असीमित अध्याय";
 
+// Title for the Progress tab showing vocabulary progress
+"progress" = "प्रगति";
+
 // Button title the user can tap to restore their app subscription
 "restore_subscription" = "सदस्यता पुनर्स्थापित करें";
 

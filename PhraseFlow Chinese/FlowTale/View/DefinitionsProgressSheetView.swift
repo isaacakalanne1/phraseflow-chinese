@@ -73,7 +73,7 @@ struct DefinitionsProgressSheetView: View {
                     }
                 }
                 .frame(maxHeight: .infinity)
-                .navigationTitle("Progress")
+                .navigationTitle(ContentTab.progress.title)
                 .navigationBarTitleDisplayMode(.inline)
                 .background(FlowTaleColor.background)
                 .scrollContentBackground(.hidden)

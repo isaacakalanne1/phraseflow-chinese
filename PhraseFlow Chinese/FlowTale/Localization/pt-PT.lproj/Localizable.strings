@@ -566,6 +566,9 @@
 // Create button text for creating a story
 "create" = "CRIAR";
 
+// Title for the Progress tab showing vocabulary progress
+"progress" = "Progresso";
+
 // Snackbar text telling the user the story is ready and to tap to read it
 "story_ready_tap_to_read" = "História pronta. Toque aqui para lê-la.";
 

@@ -321,6 +321,9 @@
 // Title telling user they can create unlimited chapters per story
 "unlimited_chapters" = "무제한 챕터";
 
+// Title for the Progress tab showing vocabulary progress
+"progress" = "진행 상황";
+
 // Button title the user can tap to restore their app subscription
 "restore_subscription" = "구독 복원";
 

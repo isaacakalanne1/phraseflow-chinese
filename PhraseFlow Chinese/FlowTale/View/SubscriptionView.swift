@@ -104,7 +104,7 @@ struct SubscriptionView: View {
         .padding(20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(FlowTaleColor.background)
-        .navigationTitle(LocalizedString.subscribe)
+        .navigationTitle(ContentTab.subscribe.title)
         .navigationBarTitleDisplayMode(.inline)
         .overlay(content: {
             Group {
