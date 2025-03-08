@@ -549,7 +549,7 @@
 "subscription_free_trial_limit_question" = "왜 무료 체험 한도가 있나요?";
 
 // Format for showing the chapter limit per day (with a placeholder for the number of chapters)
-"subscription_chapters_per_day" = "매일 %d개의 장을 생성하기";
+"subscription_chapters_per_day" = "하루에 %d개의 장을 생성하기";
 
 // Detail text for the free subscription option
 "subscription_free_chapters_detail" = "무료 챕터 %d개";

@@ -553,7 +553,7 @@
 "subscription_free_trial_limit_question" = "ليش فيه حد للتجربة المجانية؟";
 
 // Format for showing the chapter limit per day (with a placeholder for the number of chapters)
-"subscription_chapters_per_day" = "إنشاء %d فصول كل يوم";
+"subscription_chapters_per_day" = "إنشاء %d فصول في اليوم";
 
 // Detail text for the free subscription option
 "subscription_free_chapters_detail" = "%d فصول مجانية";
