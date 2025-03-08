@@ -14,12 +14,8 @@ struct ActionButtonsView: View {
 
         var tabs = ContentTab.allCases
         if store.state.definitionState.definitions.isEmpty,
-           let studyIndex = tabs.firstIndex(of: .study) {
-            tabs.remove(at: studyIndex)
-
-            if let progressIndex = tabs.firstIndex(of: .progress) {
-                tabs.remove(at: progressIndex)
-            }
+           let progressIndex = tabs.firstIndex(of: .progress) {
+            tabs.remove(at: progressIndex)
         }
 
         return VStack(alignment: .center) {

@@ -127,11 +127,6 @@ struct ContentView: View {
                     }
             }
 
-        case .study:
-            NavigationStack {
-                StudyView()
-            }
-
         case .progress:
             NavigationStack {
                 DefinitionsProgressSheetView()

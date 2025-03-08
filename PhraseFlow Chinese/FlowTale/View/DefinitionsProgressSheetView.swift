@@ -67,13 +67,13 @@ struct DefinitionsProgressSheetView: View {
                             }
                         }
                     } header: {
-                        Text(LocalizedString.allWords)
+                        Text(isCreations ?
+                             LocalizedString.wordsSaved("\(definitions.count)") :
+                                LocalizedString.wordsStudied("\(definitions.reduce(0, { $0 + $1.studiedDates.count }))"))
                     }
                 }
                 .frame(maxHeight: .infinity)
-                .navigationTitle(isCreations ?
-                                 LocalizedString.wordsSaved("\(definitions.count)") :
-                                    LocalizedString.wordsStudied("\(definitions.reduce(0, { $0 + $1.studiedDates.count }))"))
+                .navigationTitle("Progress")
                 .navigationBarTitleDisplayMode(.inline)
                 .background(FlowTaleColor.background)
                 .scrollContentBackground(.hidden)
