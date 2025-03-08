@@ -580,3 +580,6 @@
 
 // Snackbar text telling the user the story is ready and to tap to read it
 "story_ready_tap_to_read" = "스토리가 준비되었습니다. 읽으려면 여기를 탭하세요.";
+
+// Alert message for when device volume is zero
+"device_volume_zero" = "오디오를 들으려면 볼륨을 높이세요";

@@ -584,3 +584,6 @@
 
 // Snackbar text telling the user the story is ready and to tap to read it
 "story_ready_tap_to_read" = "القصة جاهزة. انقر هنا لقراءتها.";
+
+// Alert message for when device volume is zero
+"device_volume_zero" = "قم بزيادة مستوى الصوت لسماع الصوت";

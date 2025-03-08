@@ -580,3 +580,6 @@
 
 // Snackbar text telling the user the story is ready and to tap to read it
 "story_ready_tap_to_read" = "Geschichte fertig. Hier tippen, um sie zu lesen.";
+
+// Alert message for when device volume is zero
+"device_volume_zero" = "Erhöhen Sie die Lautstärke, um Audio zu hören";
