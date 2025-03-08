@@ -33,8 +33,8 @@ struct SubscriptionView: View {
                 } else {
                     chapterLimitString = product.displayName
                 }
-                return SubscriptionOption(title: chapterLimitString,
-                                          detail: LocalizedString.pricePerMonth(product.displayPrice),
+                return SubscriptionOption(title: LocalizedString.pricePerMonth(product.displayPrice),
+                                          detail: chapterLimitString,
                                           product: product,
                                           action: {
                     Task {
