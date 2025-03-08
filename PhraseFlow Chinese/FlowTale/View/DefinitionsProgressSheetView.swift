@@ -35,18 +35,18 @@ struct DefinitionsProgressSheetView: View {
                 .tag(1)
             }
             
-            NavigationLink(destination: StudyView(), isActive: $navigateToStudyView) {
-                EmptyView()
-            }
-            
             PrimaryButton(title: LocalizedString.studyNavTitle) {
-                store.dispatch(.playSound(.actionButtonPress))
                 navigateToStudyView = true
             }
+            .padding()
         }
         .onChange(of: selectedTab) {
             store.dispatch(.playSound(.actionButtonPress))
         }
+        .navigationDestination(isPresented: $navigateToStudyView) {
+            StudyView()
+        }
+        .background(FlowTaleColor.background)
     }
 
     @ViewBuilder
