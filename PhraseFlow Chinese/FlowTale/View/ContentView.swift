@@ -36,9 +36,7 @@ struct ContentView: View {
                      .normal:
                     ZStack(alignment: .topTrailing) {
                         mainContent()
-                        if store.state.storyState.currentChapter != nil {
-                            overlayView()
-                        }
+                        overlayView()
                     }
                 }
             }

@@ -146,6 +146,7 @@ enum FlowTaleAction {
 
     case showSnackBar(SnackBarType)
     case hideSnackbar
+    case checkDeviceVolumeZero
 
     case generateImage(passage: String, Story)
     case onGeneratedImage(Data, Story)

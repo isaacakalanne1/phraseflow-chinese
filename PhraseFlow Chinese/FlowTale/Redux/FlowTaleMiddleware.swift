@@ -9,6 +9,7 @@ import Foundation
 import ReduxKit
 import AVKit
 import StoreKit
+import AVFoundation
 
 typealias FlowTaleMiddlewareType = Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol>
 let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
@@ -422,6 +423,21 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         }
     case .updateSentenceIndex:
         return .refreshTranslationView
+        
+    case .checkDeviceVolumeZero:
+        // Check if the device is in silent mode using audio session
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setActive(true)
+            // In iOS, outputVolume of 0 indicates silent mode
+            let isSilent = audioSession.outputVolume == 0.0
+            if isSilent {
+                return .showSnackBar(.deviceVolumeZero)
+            }
+        } catch {
+            print("Failed to check silent mode: \(error)")
+        }
+        return nil
     case .fetchSubscriptions:
         do {
             // First validate the receipt to properly handle sandbox receipts

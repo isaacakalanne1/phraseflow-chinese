@@ -27,6 +27,9 @@ struct ChapterView: View {
                     scrollToCurrentWord(newWord, proxy: proxy)
                 })
                 .onAppear {
+                    // Check for silent mode when the chapter view appears
+                    store.dispatch(.checkDeviceVolumeZero)
+                    
                     guard let newWord = store.state.currentSpokenWord else { return }
                     scrollToCurrentWord(newWord, proxy: proxy, isForced: true)
                 }

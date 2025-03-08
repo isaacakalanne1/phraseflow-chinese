@@ -20,6 +20,7 @@ enum SnackBarType {
     case couldNotModerateText
     case didNotPassModeration
     case dailyChapterLimitReached(nextAvailable: String)
+    case deviceVolumeZero
 
     var text: String {
         switch self {
@@ -47,6 +48,8 @@ enum SnackBarType {
             LocalizedString.deletedCustomStory
         case .dailyChapterLimitReached(let nextAvailable):
             LocalizedString.snackbarDailyChapterLimitReached(nextAvailable)
+        case .deviceVolumeZero:
+            LocalizedString.deviceVolumeZero
         }
     }
 
@@ -68,6 +71,8 @@ enum SnackBarType {
             2.5
         case .dailyChapterLimitReached:
             4
+        case .deviceVolumeZero:
+            5.0
         }
     }
 
@@ -91,6 +96,8 @@ enum SnackBarType {
                 .couldNotModerateText,
                 .failedToWriteChapter:
             emoji = "⚠️"
+        case .deviceVolumeZero:
+            emoji = "🔇"
         }
         return Text(emoji)
     }
@@ -119,7 +126,8 @@ enum SnackBarType {
                 .didNotPassModeration,
                 .welcomeBack,
                 .deletedCustomStory,
-                .failedToWriteChapter:
+                .failedToWriteChapter,
+                .deviceVolumeZero:
             break
         case .couldNotModerateText:
             store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))
@@ -138,7 +146,8 @@ enum SnackBarType {
                 .welcomeBack,
                 .deletedCustomStory,
                 .dailyChapterLimitReached,
-                .storyReadyTapToRead:
+                .storyReadyTapToRead,
+                .deviceVolumeZero:
             return false
         case .failedToWriteChapter,
                 .didNotPassModeration,

@@ -586,3 +586,6 @@
 
 // Chart label for studied words data
 "chart_studied_words" = "Studied Words";
+
+// Alert message for when device volume is zero
+"device_volume_zero" = "Increase your volume to hear audio";

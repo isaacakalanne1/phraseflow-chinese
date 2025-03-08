@@ -454,7 +454,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .loadDefinitionsForStory,
             .pauseStudyAudio,
             .onFinishedLoadedStories,
-            .musicTrackFinished:
+            .musicTrackFinished,
+            .checkDeviceVolumeZero:
         break
     }
 

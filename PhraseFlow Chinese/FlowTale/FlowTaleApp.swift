@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVKit
 
 @main
 struct FlowTaleApp: App {
@@ -32,6 +33,7 @@ struct FlowTaleApp: App {
                 .environmentObject(store)
                 .onAppear {
                     UIApplication.shared.isIdleTimerDisabled = true
+                    try? AVAudioSession.sharedInstance().setCategory(.playback)
                     store.dispatch(.loadAppSettings)
                     store.dispatch(.loadStories(isAppLaunch: true))
                     store.dispatch(.loadDefinitions)
@@ -39,6 +41,7 @@ struct FlowTaleApp: App {
                     store.dispatch(.getCurrentEntitlements)
                     store.dispatch(.observeTransactionUpdates)
                     store.dispatch(.checkFreeTrialLimit)
+                    store.dispatch(.checkDeviceVolumeZero)
                 }
         }
     }

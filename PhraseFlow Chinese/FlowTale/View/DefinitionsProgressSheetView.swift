@@ -11,25 +11,38 @@ struct DefinitionsProgressSheetView: View {
     @EnvironmentObject var store: FlowTaleStore
     @State var selectedTab = 0
 
+    @State private var navigateToStudyView = false
+    
     var body: some View {
         let language = store.state.storyState.currentStory?.language
         let definitions = store.state.definitionState.studyDefinitions(language: language)
         let filteredDefinitions = removeDuplicates(from: definitions)
 
-        TabView(selection: $selectedTab) {
-            sheetContent(isCreations: true,
-                         definitions: filteredDefinitions)
-            .tabItem {
-                Label(LocalizedString.saved, systemImage: "folder.fill")
-            }
-            .tag(0)
+        VStack {
+            TabView(selection: $selectedTab) {
+                sheetContent(isCreations: true,
+                             definitions: filteredDefinitions)
+                .tabItem {
+                    Label(LocalizedString.saved, systemImage: "folder.fill")
+                }
+                .tag(0)
 
-            sheetContent(isCreations: false,
-                         definitions: filteredDefinitions.filter({ !$0.studiedDates.isEmpty }))
-            .tabItem {
-                Label(LocalizedString.studied, systemImage: "eyeglasses")
+                sheetContent(isCreations: false,
+                             definitions: filteredDefinitions.filter({ !$0.studiedDates.isEmpty }))
+                .tabItem {
+                    Label(LocalizedString.studied, systemImage: "eyeglasses")
+                }
+                .tag(1)
             }
-            .tag(1)
+            
+            NavigationLink(destination: StudyView(), isActive: $navigateToStudyView) {
+                EmptyView()
+            }
+            
+            PrimaryButton(title: LocalizedString.studyNavTitle) {
+                store.dispatch(.playSound(.actionButtonPress))
+                navigateToStudyView = true
+            }
         }
         .onChange(of: selectedTab) {
             store.dispatch(.playSound(.actionButtonPress))

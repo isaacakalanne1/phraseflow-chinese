@@ -38,6 +38,10 @@ struct StudyView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .scrollBounceBehavior(.basedOnSize)
                     .scrollIndicators(.hidden)
+                    .onAppear {
+                        // Check if device is in silent mode when study view appears
+                        store.dispatch(.checkDeviceVolumeZero)
+                    }
                     HStack {
                         if !isWordDefinitionView {
                             Button {

@@ -24,6 +24,10 @@ struct ReaderView: View {
             }
             ChapterHeaderView(chapter: chapter)
             ChapterView(chapter: chapter)
+                .onAppear {
+                    // Check if device is in silent mode when reader view appears
+                    store.dispatch(.checkDeviceVolumeZero)
+                }
         }
         .overlay(content: {
             VStack(alignment: .trailing) {
