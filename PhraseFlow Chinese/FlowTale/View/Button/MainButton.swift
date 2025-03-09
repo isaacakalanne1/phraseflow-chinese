@@ -19,11 +19,8 @@ struct MainButton: View {
                 // Video background
                 if let url = Bundle.main.url(forResource: "ButtonBackground", withExtension: "mp4") {
                     let player = AVPlayer(url: url)
-                    VideoBackgroundView(player: player)
+                    VideoBackgroundView(player: player, autoPlay: true)
                         .frame(height: 70)
-                        .onAppear {
-                            player.play()
-                        }
                         .overlay {
                             FlowTaleColor.accent.opacity(0.6)
                         }

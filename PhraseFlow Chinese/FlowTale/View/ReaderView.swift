@@ -29,10 +29,10 @@ struct ReaderView: View {
                     // Check if device is in silent mode when reader view appears
                     store.dispatch(.checkDeviceVolumeZero)
                 }
-                .id(chapterViewId)
                 .onChange(of: store.state.storyState.currentChapter) { oldValue, newValue in
-                    chapterViewId = UUID()
+                    store.dispatch(.refreshChapterView)
                 }
+                .id(store.state.viewState.chapterViewId)
         }
         .overlay(content: {
             VStack(alignment: .trailing) {

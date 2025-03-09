@@ -186,9 +186,16 @@ struct CreateStoryButton: View {
 
 struct VideoBackgroundView: UIViewControllerRepresentable {
     var player: AVPlayer
+    var autoPlay: Bool
+    
+    init(player: AVPlayer, autoPlay: Bool = false) {
+        self.player = player
+        self.autoPlay = autoPlay
+    }
     
     class Coordinator: NSObject {
         var parent: VideoBackgroundView
+        var readyToPlayObserver: Any?
         
         init(_ parent: VideoBackgroundView) {
             self.parent = parent
@@ -198,6 +205,24 @@ struct VideoBackgroundView: UIViewControllerRepresentable {
         @objc func playerItemDidReachEnd(notification: Notification) {
             parent.player.seek(to: CMTime.zero)
             parent.player.play()
+        }
+        
+        func setupReadyObserver() {
+            if let currentItem = parent.player.currentItem {
+                readyToPlayObserver = currentItem.observe(\.status, options: [.new, .initial]) { [weak self] (item, _) in
+                    guard self?.parent.autoPlay == true else { return }
+                    
+                    if item.status == .readyToPlay {
+                        self?.parent.player.play()
+                        
+                        // Remove observer once we've started playing
+                        if let observer = self?.readyToPlayObserver {
+                            self?.readyToPlayObserver = nil
+                            NotificationCenter.default.removeObserver(observer)
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -216,6 +241,9 @@ struct VideoBackgroundView: UIViewControllerRepresentable {
         
         // Configure player for looping
         player.actionAtItemEnd = .none
+        
+        // Setup ready observer to start playing when ready
+        context.coordinator.setupReadyObserver()
         
         // Add observer for video end to loop
         NotificationCenter.default.addObserver(
@@ -245,7 +273,11 @@ struct VideoBackgroundView: UIViewControllerRepresentable {
     }
     
     static func dismantleUIViewController(_ controller: AVPlayerViewController, coordinator: Coordinator) {
-        // Remove observer when view is destroyed
+        // Remove observers when view is destroyed
+        if let observer = coordinator.readyToPlayObserver {
+            coordinator.readyToPlayObserver = nil
+        }
+        
         NotificationCenter.default.removeObserver(
             coordinator,
             name: .AVPlayerItemDidPlayToEndTime,

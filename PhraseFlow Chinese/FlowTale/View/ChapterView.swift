@@ -17,7 +17,7 @@ struct ChapterView: View {
         if let story = store.state.storyState.currentStory {
             ScrollViewReader { proxy in
                 // Use simultaneousGesture so the ScrollView can still scroll normally
-                scrollView(story: story)
+                scrollView(story: story, proxy: proxy)
                 // 2) Whenever the highlighted word changes, scroll if auto-scroll is still enabled
                 .onChange(of: store.state.viewState.isAutoscrollEnabled) {
                     guard let newWord = store.state.currentSpokenWord else { return }
@@ -28,14 +28,6 @@ struct ChapterView: View {
                           oldWord?.sentenceIndex != newWord.sentenceIndex else { return }
                     scrollToCurrentWord(newWord, proxy: proxy)
                 })
-                .onAppear {
-                    opacity = 1
-                    // Check for silent mode when the chapter view appears
-                    store.dispatch(.checkDeviceVolumeZero)
-                    
-                    guard let newWord = store.state.currentSpokenWord else { return }
-                    scrollToCurrentWord(newWord, proxy: proxy, isForced: true)
-                }
             }
         }
     }
@@ -52,7 +44,7 @@ struct ChapterView: View {
     }
 
     @ViewBuilder
-    func scrollView(story: Story) -> some View {
+    func scrollView(story: Story, proxy: ScrollViewProxy) -> some View {
         ScrollView(.vertical) {
             ForEach(0...(chapter.audio.timestamps.last?.sentenceIndex ?? 0),
                     id: \.self) { sentenceIdx in
@@ -89,8 +81,14 @@ struct ChapterView: View {
             // Disable button if currently writing a chapter
             .disabled(store.state.viewState.isWritingChapter)
         }
-        .id(store.state.viewState.chapterViewId)
+        .onAppear {
+            opacity = 1
+            // Check for silent mode when the chapter view appears
+            store.dispatch(.checkDeviceVolumeZero)
 
+            guard let newWord = store.state.currentSpokenWord else { return }
+            scrollToCurrentWord(newWord, proxy: proxy, isForced: true)
+        }
         .simultaneousGesture(
             DragGesture()
                 .onChanged { _ in
