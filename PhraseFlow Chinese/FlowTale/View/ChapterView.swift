@@ -11,6 +11,8 @@ struct ChapterView: View {
     @EnvironmentObject var store: FlowTaleStore
     let chapter: Chapter
 
+    @State var opacity: Double = 0
+
     var body: some View {
         if let story = store.state.storyState.currentStory {
             ScrollViewReader { proxy in
@@ -27,6 +29,7 @@ struct ChapterView: View {
                     scrollToCurrentWord(newWord, proxy: proxy)
                 })
                 .onAppear {
+                    opacity = 1
                     // Check for silent mode when the chapter view appears
                     store.dispatch(.checkDeviceVolumeZero)
                     
@@ -63,6 +66,9 @@ struct ChapterView: View {
                         )
                         // Give each word a unique ID so we can scroll to it
                         .id(word.id)
+                        .opacity(opacity)
+                        .animation(.easeInOut.delay( Double(index) * 0.02 ),
+                                   value: opacity)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: story.language.alignment)

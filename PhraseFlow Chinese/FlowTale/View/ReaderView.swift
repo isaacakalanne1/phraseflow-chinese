@@ -10,6 +10,7 @@ import SwiftUI
 struct ReaderView: View {
     @EnvironmentObject var store: FlowTaleStore
     let chapter: Chapter
+    @State var chapterViewId = UUID()
 
     var body: some View {
         VStack(spacing: 10) {
@@ -27,6 +28,10 @@ struct ReaderView: View {
                 .onAppear {
                     // Check if device is in silent mode when reader view appears
                     store.dispatch(.checkDeviceVolumeZero)
+                }
+                .id(chapterViewId)
+                .onChange(of: store.state.storyState.currentChapter) { oldValue, newValue in
+                    chapterViewId = UUID()
                 }
         }
         .overlay(content: {

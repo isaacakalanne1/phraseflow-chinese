@@ -205,7 +205,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
             let trimmed = word.trimmingCharacters(in: .whitespacesAndNewlines)
             if !trimmed.isEmpty {
                 let lastChar = trimmed.last!
-                let isPunctuation = CharacterSet(charactersIn: ".,;:!?。，；：！？…").contains(lastChar.unicodeScalars.first!)
+                let isPunctuation = CharacterSet(charactersIn: ".,;:!?。，；：！？…").contains(lastChar.unicodeScalars.first!) && trimmed.count == 1
                 if !isPunctuation,
                    !isFirstWordInSentence {
                     word = " " + word

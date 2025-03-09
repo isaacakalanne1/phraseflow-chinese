@@ -7,13 +7,57 @@
 
 import SwiftUI
 
+struct ShimmerEffectText: View {
+    let text: String
+    @State private var phase: CGFloat = 0
+    
+    var body: some View {
+        ZStack {
+            // Base text
+            Text(text)
+                .font(.largeTitle.bold())
+                .foregroundColor(FlowTaleColor.primary)
+            
+            // Shimmer overlay
+            Text(text)
+                .font(.largeTitle.bold())
+                .foregroundStyle(
+                    .linearGradient(
+                        colors: [
+                            .clear,
+                            FlowTaleColor.accent.opacity(0.1),
+                            FlowTaleColor.accent.opacity(0.8),
+                            FlowTaleColor.accent.opacity(0.1),
+                            .clear
+                        ],
+                        startPoint: UnitPoint(x: phase - 0.5, y: 0.5),
+                        endPoint: UnitPoint(x: phase + 1.5, y: 0.5)
+                    )
+                )
+        }
+        .onAppear {
+            withAnimation(
+                .linear(duration: 2.5)
+                .repeatForever(autoreverses: false)
+            ) {
+                phase = 1.0
+            }
+        }
+    }
+}
+
 struct StoryListView: View {
     @EnvironmentObject var store: FlowTaleStore
     @State private var showCreateStorySettings = false
-
+    
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 16) {
+                // Title with shimmer effect
+                ShimmerEffectText(text: ContentTab.storyList.title)
+                    .padding(.top, 16)
+                    .padding(.bottom, 8)
+                
                 List {
                     Section {
                         ForEach(store.state.storyState.savedStories.filter { $0.isShown }, id: \.self) { story in
@@ -54,6 +98,7 @@ struct StoryListView: View {
                         Text(LocalizedString.stories)
                     }
                 }
+                .listStyle(.insetGrouped)
                 
                 // New Story button at the bottom
                 PrimaryButton(
@@ -68,9 +113,7 @@ struct StoryListView: View {
                 .padding(.horizontal)
                 .padding(.bottom)
             }
-            .toolbar(.visible, for: .navigationBar)
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle(ContentTab.storyList.title)
+            .toolbar(.hidden, for: .navigationBar)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(FlowTaleColor.background)
             .scrollContentBackground(.hidden)

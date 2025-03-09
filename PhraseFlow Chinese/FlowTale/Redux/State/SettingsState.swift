@@ -76,7 +76,7 @@ struct SettingsState: Codable {
          customPrompt: String = "",
          storySetting: StorySetting = .random,
          customPrompts: [String] = [],
-         colorScheme: FlowTaleColorScheme? = nil,
+         colorScheme: FlowTaleColorScheme = .dark,
          shouldPlaySound: Bool = true,
          confirmedCustomPrompt: String = "") {
         self.isShowingDefinition = isShowingDefinition
@@ -108,7 +108,7 @@ struct SettingsState: Codable {
         self.confirmedCustomPrompt = try container.decode(String.self, forKey: .confirmedCustomPrompt)
         self.customPrompts = try container.decode([String].self, forKey: .customPrompts)
         
-        self.appColorScheme = try? container.decode(FlowTaleColorScheme?.self, forKey: .appColorScheme)
+        self.appColorScheme = (try? container.decode(FlowTaleColorScheme?.self, forKey: .appColorScheme)) ?? .dark
         self.shouldPlaySound = (try? container.decode(Bool.self, forKey: .shouldPlaySound)) ?? true
     }
 }
