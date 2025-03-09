@@ -275,6 +275,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .selectWord(let word):
         newState.storyState.currentStory?.currentPlaybackTime = word.time
     case .goToNextChapter:
+        newState.viewState.chapterViewId = UUID()
         var newStory = newState.storyState.currentStory
         newStory?.currentChapterIndex += 1
         newState.storyState.currentStory = newStory
