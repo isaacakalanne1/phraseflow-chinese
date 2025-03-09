@@ -59,6 +59,7 @@ struct LanguageMenu: View {
                                     }
                                 }
                             )
+                            .disabled(store.state.viewState.isWritingChapter)
                         }
                     }
                 } header: {

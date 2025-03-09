@@ -70,7 +70,8 @@ struct StoryPromptMenu: View {
                                 }
                             }
                         )
-                        
+                        .disabled(store.state.viewState.isWritingChapter)
+
                         // Create Custom Story Button
                         ImageSelectionButton(
                             title: LocalizedString.customStory,
@@ -84,7 +85,8 @@ struct StoryPromptMenu: View {
                                 }
                             }
                         )
-                        
+                        .disabled(store.state.viewState.isWritingChapter)
+
                         // Previously Created Custom Stories
                         ForEach(store.state.settingsState.customPrompts, id: \.self) { prompt in
                             let isSelectedPrompt = store.state.settingsState.storySetting == .customPrompt(prompt)
@@ -108,6 +110,7 @@ struct StoryPromptMenu: View {
                                     }
                                 }
                             )
+                            .disabled(store.state.viewState.isWritingChapter)
                             .contextMenu {
                                 Button(role: .destructive) {
                                     store.dispatch(.deleteCustomPrompt(prompt))
@@ -115,6 +118,14 @@ struct StoryPromptMenu: View {
                                     Label("Delete", systemImage: "trash")
                                 }
                             }
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
+                                Button(role: .destructive) {
+                                    store.dispatch(.deleteCustomPrompt(prompt))
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                        .tint(FlowTaleColor.error)
+                                }
+                            })
                         }
                     }
                 } header: {

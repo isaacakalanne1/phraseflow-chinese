@@ -58,6 +58,7 @@ struct DifficultyMenu: View {
                                     }
                                 }
                             )
+                            .disabled(store.state.viewState.isWritingChapter)
                         }
                     }
                 } header: {

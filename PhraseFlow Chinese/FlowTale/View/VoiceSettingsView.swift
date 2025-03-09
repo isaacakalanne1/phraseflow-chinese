@@ -56,12 +56,7 @@ struct VoiceMenu: View {
                                     }
                                 }
                             )
-                        }
-                    }
-                    .onAppear {
-                        if store.state.storyState.currentStory == nil,
-                           let voice = voices.first {
-                            store.dispatch(.selectVoice(voice))
+                            .disabled(store.state.viewState.isWritingChapter)
                         }
                     }
                 } header: {

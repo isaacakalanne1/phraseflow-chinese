@@ -83,8 +83,13 @@ struct StoryListView: View {
     }
 
     func delete(at offsets: IndexSet) {
+        // Get only visible stories
+        let visibleStories = store.state.storyState.savedStories.filter { $0.isShown }
+        
+        // Get the story from the visible stories array using the offset
         guard let index = offsets.first,
-              let story = store.state.storyState.savedStories[safe: index] else { return }
+              let story = visibleStories[safe: index] else { return }
+        
         store.dispatch(.deleteStory(story))
     }
 
