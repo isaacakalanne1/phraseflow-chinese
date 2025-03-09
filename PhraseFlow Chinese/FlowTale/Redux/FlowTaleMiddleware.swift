@@ -567,7 +567,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     case .onLoadedChapters(let story, let chapters, let isAppLaunch):
         return isAppLaunch ? .showSnackBar(.welcomeBack) : nil
     case .deleteCustomPrompt:
-        return .showSnackBar(.deletedCustomStory)
+        return .saveAppSettings
     case .onLoadedDefinitions:
         return .refreshDefinitionView
     case .setSubscriptionSheetShowing(let isShowing):
