@@ -395,6 +395,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.contentTab = tab
     case .deleteCustomPrompt(let prompt):
         newState.settingsState.customPrompts.removeAll(where: { $0 == prompt })
+        if newState.settingsState.storySetting == .customPrompt(prompt) {
+            newState.settingsState.storySetting = .random
+        }
     case .onModeratedText(let response, _):
         newState.moderationResponse = response
     case .didNotPassModeration:
