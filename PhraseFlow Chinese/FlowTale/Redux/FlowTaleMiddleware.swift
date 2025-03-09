@@ -329,6 +329,11 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         } catch {
             return .failedToSaveDefinitions
         }
+    case .deleteDefinition:
+        // After updating the definition in the state, save the changes
+        return .saveDefinitions
+    case .onDeletedDefinition:
+        return .loadDefinitions
     case .onSavedDefinitions:
         return .loadDefinitions
     case .selectChapter:

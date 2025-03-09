@@ -174,6 +174,9 @@ enum FlowTaleAction {
     case updateIsShowingCustomPromptAlert(Bool)
     case selectTab(ContentTab, shouldPlaySound: Bool)
 
+    case deleteDefinition(Definition)
+    case onDeletedDefinition
+    
     case checkFreeTrialLimit
     case hasReachedFreeTrialLimit
     case hasReachedDailyLimit

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum SnackBarType {
+enum SnackBarType: Equatable {
     case welcomeBack
     case writingChapter
     case chapterReady

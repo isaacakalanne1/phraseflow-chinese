@@ -592,3 +592,6 @@
 
 // Alert message for when device volume is zero
 "device_volume_zero" = "Increase your volume to hear audio";
+
+// Remove action label
+"remove" = "Remove";

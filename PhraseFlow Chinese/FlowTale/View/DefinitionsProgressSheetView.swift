@@ -9,39 +9,86 @@ import SwiftUI
 
 struct DefinitionsProgressSheetView: View {
     @EnvironmentObject var store: FlowTaleStore
-    @State var selectedTab = 0
-
+    @State private var showingCreations = true
     @State private var navigateToStudyView = false
     
     var body: some View {
         let language = store.state.storyState.currentStory?.language
         let definitions = store.state.definitionState.studyDefinitions(language: language)
         let filteredDefinitions = removeDuplicates(from: definitions)
+        let studiedDefinitions = filteredDefinitions.filter({ !$0.studiedDates.isEmpty })
 
         VStack {
-            TabView(selection: $selectedTab) {
-                sheetContent(isCreations: true,
-                             definitions: filteredDefinitions)
-                .tabItem {
-                    Label(LocalizedString.saved, systemImage: "folder.fill")
-                }
-                .tag(0)
-
-                sheetContent(isCreations: false,
-                             definitions: filteredDefinitions.filter({ !$0.studiedDates.isEmpty }))
-                .tabItem {
-                    Label(LocalizedString.studied, systemImage: "eyeglasses")
-                }
-                .tag(1)
+            if showingCreations {
+                sheetContent(isCreations: true, definitions: filteredDefinitions)
+            } else {
+                sheetContent(isCreations: false, definitions: studiedDefinitions)
             }
             
-            PrimaryButton(title: LocalizedString.studyNavTitle) {
-                navigateToStudyView = true
+            Spacer()
+            
+            HStack {
+                // Custom tab selector
+                ZStack {
+                    Capsule()
+                        .fill(FlowTaleColor.background)
+                        .overlay(
+                            Capsule()
+                                .strokeBorder(FlowTaleColor.secondary, lineWidth: 1)
+                        )
+                        .frame(height: 60)
+                    
+                    HStack(spacing: 4) {
+                        // Saved tab
+                        Button(action: {
+                            if !showingCreations {
+                                withAnimation {
+                                    showingCreations = true
+                                    store.dispatch(.playSound(.actionButtonPress))
+                                }
+                            }
+                        }) {
+                            Text(LocalizedString.saved)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 14)
+                                .background(
+                                    Capsule()
+                                        .fill(showingCreations ? FlowTaleColor.primary : Color.clear)
+                                )
+                                .foregroundStyle(showingCreations ? FlowTaleColor.background : FlowTaleColor.primary)
+                        }
+                        
+                        // Studied tab
+                        Button(action: {
+                            if showingCreations {
+                                withAnimation {
+                                    showingCreations = false
+                                    store.dispatch(.playSound(.actionButtonPress))
+                                }
+                            }
+                        }) {
+                            Text(LocalizedString.studied)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 14)
+                                .background(
+                                    Capsule()
+                                        .fill(!showingCreations ? FlowTaleColor.primary : Color.clear)
+                                )
+                                .foregroundStyle(!showingCreations ? FlowTaleColor.background : FlowTaleColor.primary)
+                        }
+                    }
+                }
+                .padding(.leading)
+                
+                Spacer()
+                
+                // Practice button
+                PrimaryButton(title: LocalizedString.studyNavTitle) {
+                    navigateToStudyView = true
+                }
+                .padding(.trailing)
             }
-            .padding()
-        }
-        .onChange(of: selectedTab) {
-            store.dispatch(.playSound(.actionButtonPress))
+            .padding(.bottom)
         }
         .navigationDestination(isPresented: $navigateToStudyView) {
             StudyView()
@@ -55,6 +102,7 @@ struct DefinitionsProgressSheetView: View {
             VStack {
                 DefinitionsChartView(definitions: definitions, isCreations: isCreations)
                     .frame(height: 300)
+                
                 List {
                     Section {
                         ForEach(definitions, id: \.self) { definition in
@@ -65,6 +113,15 @@ struct DefinitionsProgressSheetView: View {
                                     .fontWeight(.light)
                                     .foregroundStyle(FlowTaleColor.primary)
                             }
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
+                                Button(role: .destructive) {
+                                    store.dispatch(.deleteDefinition(definition))
+                                    store.dispatch(.playSound(.actionButtonPress))
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                        .tint(FlowTaleColor.error)
+                                }
+                            })
                         }
                     } header: {
                         Text(isCreations ?
@@ -72,7 +129,7 @@ struct DefinitionsProgressSheetView: View {
                                 LocalizedString.wordsStudied("\(definitions.reduce(0, { $0 + $1.studiedDates.count }))"))
                     }
                 }
-                .frame(maxHeight: .infinity)
+                .listStyle(.insetGrouped)
                 .navigationTitle(ContentTab.progress.title)
                 .navigationBarTitleDisplayMode(.inline)
                 .background(FlowTaleColor.background)

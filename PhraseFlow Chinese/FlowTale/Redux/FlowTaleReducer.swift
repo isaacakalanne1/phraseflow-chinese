@@ -310,6 +310,13 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         print("Definitions with hasBeenSeen=true: \(definitions.filter { $0.hasBeenSeen }.count)")
         
         newState.definitionState.definitions = definitions
+    case .deleteDefinition(let definition):
+        var updatedDefinition = definition
+        updatedDefinition.hasBeenSeen = false
+        newState.definitionState.definitions.removeAll(where: { 
+            $0.timestampData == definition.timestampData && $0.sentence == definition.sentence 
+        })
+        newState.definitionState.definitions.append(updatedDefinition)
     case .onDeletedStory:
         // Just regenerate the view ID - the actual story selection logic is now in onLoadedStories
         newState.viewState.storyListViewId = UUID()
@@ -458,7 +465,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .pauseStudyAudio,
             .onFinishedLoadedStories,
             .musicTrackFinished,
-            .checkDeviceVolumeZero:
+            .checkDeviceVolumeZero,
+            .onDeletedDefinition:
         break
     }
 
