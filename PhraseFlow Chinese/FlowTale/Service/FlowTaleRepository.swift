@@ -229,7 +229,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
 """
 
         for sentence in chapter.sentences {
-            ssml.append("\(sentenceMarker) \(sentence.translation) ")
+            ssml.append("\(sentenceMarker)\(sentence.translation) ")
         }
 
         ssml.append("</voice></speak>")
