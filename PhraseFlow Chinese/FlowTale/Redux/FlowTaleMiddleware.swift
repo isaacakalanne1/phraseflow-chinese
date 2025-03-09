@@ -148,24 +148,22 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         }
     case .deleteStory(let story):
         do {
-            // Store the story ID before deleting
+            // Store the story ID
             let storyId = story.id
             
-            // Delete definitions for this story
-            try environment.deleteDefinitions(for: storyId)
+            // Mark the story as hidden instead of deleting it
+            var updatedStory = story
+            updatedStory.isShown = false
             
-            // Delete the story and its chapters
-            try environment.unsaveStory(story)
+            // Save the updated story
+            try environment.saveStory(updatedStory)
             
-            // Cleanup any orphaned definition files
-            try environment.cleanupOrphanedDefinitionFiles()
-            
-            // Pass the deleted story ID
+            // Pass the hidden story ID
             return .onDeletedStory(storyId)
         } catch {
             return .failedToDeleteStory
         }
-    case .onDeletedStory(_):
+    case .onDeletedStory:
         return .loadStories(isAppLaunch: false)
     case .synthesizeAudio(let chapter, let story, let voice, let isForced):
         if chapter.audioVoice == state.settingsState.voice,

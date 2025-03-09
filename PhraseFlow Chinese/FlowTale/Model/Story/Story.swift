@@ -26,7 +26,8 @@ struct Story: Codable, Equatable, Hashable {
     var lastUpdated: Date
     var storyPrompt: String
     var imageData: Data?
-
+    var isShown: Bool = true
+    
     var coverArt: UIImage? {
         if let data = imageData {
             return UIImage(data: data)
@@ -44,7 +45,8 @@ struct Story: Codable, Equatable, Hashable {
          currentChapterIndex: Int = 0,
          currentSentenceIndex: Int = 0,
          currentPlaybackTime: Double = 0,
-         lastUpdated: Date = .now) {
+         lastUpdated: Date = .now,
+         isShown: Bool = true) {
         self.id = UUID()
         self.briefLatestStorySummary = briefLatestStorySummary
         self.difficulty = difficulty
@@ -57,6 +59,7 @@ struct Story: Codable, Equatable, Hashable {
         self.lastUpdated = lastUpdated
         self.storyPrompt = storyPrompt
         self.imageData = imageData
+        self.isShown = isShown
     }
 
     // Custom decoder to assign default values
@@ -74,5 +77,6 @@ struct Story: Codable, Equatable, Hashable {
         self.lastUpdated              = (try? container.decode(Date.self, forKey: .lastUpdated)) ?? .now
         self.storyPrompt              = (try? container.decode(String.self, forKey: .storyPrompt)) ?? ""
         self.imageData                = try? container.decode(Data.self, forKey: .imageData)
+        self.isShown                  = (try? container.decode(Bool.self, forKey: .isShown)) ?? true
     }
 }

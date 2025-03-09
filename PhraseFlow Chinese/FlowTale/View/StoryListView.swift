@@ -16,7 +16,7 @@ struct StoryListView: View {
             VStack {
                 List {
                     Section {
-                        ForEach(store.state.storyState.savedStories, id: \.self) { story in
+                        ForEach(store.state.storyState.savedStories.filter { $0.isShown }, id: \.self) { story in
                             NavigationLink(destination: ChapterListView(storyId: story.id)) {
                                 VStack(alignment: .leading, content: {
                                     HStack {
