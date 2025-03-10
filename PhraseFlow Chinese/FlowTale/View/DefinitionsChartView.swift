@@ -64,53 +64,92 @@ struct DefinitionsChartView: View {
                 )
             }
             
-            // Add a final data point for "Now" to ensure we use the full chart width and include today's activity
-            if let lastDataPoint = dailyCumulativeCount.last, dailyCumulativeCount.count > 0 {
-                // Create a date with the actual current hour
-                let calendar = Calendar.current
-                let now = Date()
-                let nowComponents = calendar.dateComponents([.year, .month, .day, .hour], from: now)
-                let nowWithCurrentHour = calendar.date(from: DateComponents(
-                    year: nowComponents.year,
-                    month: nowComponents.month,
-                    day: nowComponents.day,
-                    hour: nowComponents.hour
-                )) ?? now
+            // Create dates for "now" and "start of day"
+            let calendar = Calendar.current
+            let now = Date()
+            let nowComponents = calendar.dateComponents([.year, .month, .day, .hour], from: now)
+            let nowWithCurrentHour = calendar.date(from: DateComponents(
+                year: nowComponents.year,
+                month: nowComponents.month,
+                day: nowComponents.day,
+                hour: nowComponents.hour
+            )) ?? now
+            
+            // Get the start of today
+            let todayStart = calendar.startOfDay(for: now)
+            
+            // Get counts for today
+            let todayCreations = store.state.definitionState.dailyCreationCount(from: definitions)
+            let todayStudied = store.state.definitionState.dailyStudiedCount(from: definitions)
+            
+            if dailyCumulativeCount.isEmpty {
+                // Case 1: No historical data points - just show today's data with a point at start of day
                 
-                // Get ALL definitions for today (not just those created since midnight)
-                let todayCreations = store.state.definitionState.dailyCreationCount(from: definitions)
-                let todayStudied = store.state.definitionState.dailyStudiedCount(from: definitions)
+                // Add a point at the start of the day with value 0
+                LineMark(
+                    x: .value(LocalizedString.chartDate, todayStart),
+                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords), 0)
+                )
+                .interpolationMethod(.linear)
+                .foregroundStyle(FlowTaleColor.accent)
                 
-                // For the "Now" point, show all cumulative data including today's activity
+                AreaMark(
+                    x: .value(LocalizedString.chartDate, todayStart),
+                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords), 0)
+                )
+                .foregroundStyle(FlowTaleColor.accent.opacity(0.2).gradient)
+                
+                // Add the "Now" point with today's count
+                let nowValue = isCreations ? todayCreations : todayStudied
+                
+                LineMark(
+                    x: .value(LocalizedString.chartDate, nowWithCurrentHour),
+                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords), nowValue)
+                )
+                .interpolationMethod(.linear)
+                .foregroundStyle(FlowTaleColor.accent)
+                
+                AreaMark(
+                    x: .value(LocalizedString.chartDate, nowWithCurrentHour),
+                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords), nowValue)
+                )
+                .foregroundStyle(FlowTaleColor.accent.opacity(0.2).gradient)
+                
+                // Symbol for the "Now" point
+                PointMark(
+                    x: .value(LocalizedString.chartDate, nowWithCurrentHour),
+                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords), nowValue)
+                )
+                .symbolSize(100)
+                .foregroundStyle(FlowTaleColor.accent)
+                
+            } else if let lastDataPoint = dailyCumulativeCount.last {
+                // Case 2: We have historical data points plus today's data
+                
+                // Calculate cumulative values including today's data
                 let nowCumulativeCreations = lastDataPoint.cumulativeCreations + (isCreations ? todayCreations : 0)
                 let nowCumulativeStudied = lastDataPoint.cumulativeStudied + (!isCreations ? todayStudied : 0)
+                let nowValue = isCreations ? nowCumulativeCreations : nowCumulativeStudied
                 
                 // Create a line connecting to the "Now" point
                 LineMark(
                     x: .value(LocalizedString.chartDate, nowWithCurrentHour),
-                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords),
-                             (isCreations ? nowCumulativeCreations : nowCumulativeStudied))
+                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords), nowValue)
                 )
                 .interpolationMethod(.linear)
-                .foregroundStyle(
-                    FlowTaleColor.accent
-                )
+                .foregroundStyle(FlowTaleColor.accent)
                 
                 // Add the area fill
                 AreaMark(
                     x: .value(LocalizedString.chartDate, nowWithCurrentHour),
-                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords),
-                             (isCreations ? nowCumulativeCreations : nowCumulativeStudied))
+                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords), nowValue)
                 )
-                .foregroundStyle(
-                    FlowTaleColor.accent.opacity(0.2).gradient
-                )
+                .foregroundStyle(FlowTaleColor.accent.opacity(0.2).gradient)
                 
                 // Add a special point that marks "Now" with a symbol
                 PointMark(
                     x: .value(LocalizedString.chartDate, nowWithCurrentHour),
-                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords),
-                             (isCreations ? nowCumulativeCreations : nowCumulativeStudied))
+                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords), nowValue)
                 )
                 .symbolSize(100) // Make it visible
                 .foregroundStyle(FlowTaleColor.accent)
@@ -133,13 +172,29 @@ struct DefinitionsChartView: View {
         .chartYScale(domain: 0...yMax)
         
         // -- Set the X-axis domain to include extra space at the right
-        .chartXScale(domain: 
-            // Start at the first date (or today if no data)
-            (dailyCumulativeCount.first?.date ?? Date())
-            ...
-            // End with extra space (now + 2 days) to ensure "Now" label is visible and provides space for "next day data"
-            Date().addingTimeInterval(259200) // Add 72 hours (3 days) for spacing
-        )
+        .chartXScale(domain: {
+            let calendar = Calendar.current
+            let now = Date()
+            let todayStart = calendar.startOfDay(for: now)
+            
+            // Start date options:
+            // 1. If we have historical data points, use the first date
+            // 2. If no historical data but we have the "Now" point only, use start of today
+            // 3. Default fallback to today's date
+            let startDate: Date
+            if let firstDate = dailyCumulativeCount.first?.date {
+                // Use the first historical data point
+                startDate = firstDate
+            } else {
+                // For the single "Now" point case, use start of today
+                startDate = todayStart
+            }
+            
+            // End with extra space to ensure "Now" label is visible
+            let endDate = Date().addingTimeInterval(259200) // Add 72 hours (3 days) for spacing
+            
+            return startDate...endDate
+        }())
 
         // -- Axis Labels
 //        .chartXAxisLabel("Date", position: .bottom, alignment: .center)
