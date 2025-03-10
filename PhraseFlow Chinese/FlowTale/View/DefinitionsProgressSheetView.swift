@@ -11,12 +11,16 @@ struct DefinitionsProgressSheetView: View {
     @EnvironmentObject var store: FlowTaleStore
     @State private var showingCreations = true
     @State private var navigateToStudyView = false
+    @State private var showLanguageSelector = false
     
     var body: some View {
-        let language = store.state.storyState.currentStory?.language
-        let definitions = store.state.definitionState.studyDefinitions(language: language)
+        let filterLanguage = store.state.settingsState.language
+        let definitions = store.state.definitionState.studyDefinitions(language: filterLanguage)
         let filteredDefinitions = removeDuplicates(from: definitions)
         let studiedDefinitions = filteredDefinitions.filter({ !$0.studiedDates.isEmpty })
+        
+        let languageIcon = filterLanguage.flagEmoji
+        let languageName = filterLanguage.displayName
 
         VStack {
             if showingCreations {
@@ -26,6 +30,34 @@ struct DefinitionsProgressSheetView: View {
             }
             
             Spacer()
+            
+            // Language Selector Button
+            Button {
+                showLanguageSelector = true
+            } label: {
+                HStack {
+                    Text(languageIcon)
+                        .font(.title2)
+                    Text(languageName)
+                        .font(.subheadline)
+                        .foregroundColor(FlowTaleColor.primary)
+                    Image(systemName: "chevron.down")
+                        .font(.caption)
+                        .foregroundColor(FlowTaleColor.primary)
+                }
+                .padding(.vertical, 8)
+                .padding(.horizontal, 12)
+                .background(
+                    Capsule()
+                        .fill(FlowTaleColor.background)
+                        .overlay(
+                            Capsule()
+                                .strokeBorder(FlowTaleColor.secondary, lineWidth: 1)
+                        )
+                )
+            }
+            .padding(.horizontal)
+            .padding(.bottom, 8)
             
             HStack {
                 // Custom tab selector
@@ -92,6 +124,9 @@ struct DefinitionsProgressSheetView: View {
         }
         .navigationDestination(isPresented: $navigateToStudyView) {
             StudyView()
+        }
+        .navigationDestination(isPresented: $showLanguageSelector) {
+            LanguageSettingsView()
         }
         .background(FlowTaleColor.background)
     }
