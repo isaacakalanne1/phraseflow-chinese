@@ -22,105 +22,70 @@ struct DefinitionsProgressSheetView: View {
         let languageIcon = filterLanguage.flagEmoji
         let languageName = filterLanguage.displayName
 
-        VStack {
+        VStack(spacing: 0) {
+            // Main content area
             if showingCreations {
                 sheetContent(isCreations: true, definitions: filteredDefinitions)
             } else {
                 sheetContent(isCreations: false, definitions: studiedDefinitions)
             }
             
-            Spacer()
-            
-            // Language Selector Button
-            Button {
-                showLanguageSelector = true
-            } label: {
+            // Bottom control area
+            VStack(spacing: 16) {
+                // Top row: Tabs and Language selector
                 HStack {
-                    Text(languageIcon)
-                        .font(.title2)
-                    Text(languageName)
-                        .font(.subheadline)
-                        .foregroundColor(FlowTaleColor.primary)
-                    Image(systemName: "chevron.down")
-                        .font(.caption)
-                        .foregroundColor(FlowTaleColor.primary)
-                }
-                .padding(.vertical, 8)
-                .padding(.horizontal, 12)
-                .background(
-                    Capsule()
-                        .fill(FlowTaleColor.background)
-                        .overlay(
-                            Capsule()
-                                .strokeBorder(FlowTaleColor.secondary, lineWidth: 1)
-                        )
-                )
-            }
-            .padding(.horizontal)
-            .padding(.bottom, 8)
-            
-            HStack {
-                // Custom tab selector
-                ZStack {
-                    Capsule()
-                        .fill(FlowTaleColor.background)
-                        .overlay(
-                            Capsule()
-                                .strokeBorder(FlowTaleColor.secondary, lineWidth: 1)
-                        )
-                        .frame(height: 60)
+                    // Segmented control
+                    Picker("", selection: $showingCreations) {
+                        Text(LocalizedString.saved).tag(true)
+                        Text(LocalizedString.studied).tag(false)
+                    }
+                    .pickerStyle(.segmented)
+                    .onChange(of: showingCreations) { _ in
+                        store.dispatch(.playSound(.actionButtonPress))
+                    }
                     
-                    HStack(spacing: 4) {
-                        // Saved tab
-                        Button(action: {
-                            if !showingCreations {
-                                withAnimation {
-                                    showingCreations = true
-                                    store.dispatch(.playSound(.actionButtonPress))
-                                }
-                            }
-                        }) {
-                            Text(LocalizedString.saved)
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 14)
-                                .background(
-                                    Capsule()
-                                        .fill(showingCreations ? FlowTaleColor.primary : Color.clear)
-                                )
-                                .foregroundStyle(showingCreations ? FlowTaleColor.background : FlowTaleColor.primary)
+                    Spacer()
+                    
+                    // Language selector
+                    Button {
+                        showLanguageSelector = true
+                    } label: {
+                        HStack(spacing: 6) {
+                            Text(languageIcon)
+                                .font(.system(size: 16))
+                            Text(languageName)
+                                .font(.footnote)
+                                .fontWeight(.medium)
+                                .lineLimit(1)
+                            Image(systemName: "chevron.down")
+                                .font(.caption2)
                         }
-                        
-                        // Studied tab
-                        Button(action: {
-                            if showingCreations {
-                                withAnimation {
-                                    showingCreations = false
-                                    store.dispatch(.playSound(.actionButtonPress))
-                                }
-                            }
-                        }) {
-                            Text(LocalizedString.studied)
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 14)
-                                .background(
+                        .foregroundColor(FlowTaleColor.primary)
+                        .padding(.vertical, 6)
+                        .padding(.horizontal, 10)
+                        .background(
+                            Capsule()
+                                .fill(FlowTaleColor.background)
+                                .overlay(
                                     Capsule()
-                                        .fill(!showingCreations ? FlowTaleColor.primary : Color.clear)
+                                        .strokeBorder(FlowTaleColor.secondary, lineWidth: 1)
                                 )
-                                .foregroundStyle(!showingCreations ? FlowTaleColor.background : FlowTaleColor.primary)
-                        }
+                        )
                     }
                 }
-                .padding(.leading)
-                
-                Spacer()
                 
                 // Practice button
                 PrimaryButton(title: LocalizedString.studyNavTitle) {
                     navigateToStudyView = true
                 }
-                .padding(.trailing)
             }
-            .padding(.bottom)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .background(
+                Rectangle()
+                    .fill(FlowTaleColor.background)
+                    .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: -2)
+            )
         }
         .navigationDestination(isPresented: $navigateToStudyView) {
             StudyView()
