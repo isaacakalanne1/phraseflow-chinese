@@ -40,8 +40,8 @@ struct DefinitionsProgressSheetView: View {
                         Text(LocalizedString.studied).tag(false)
                     }
                     .pickerStyle(.segmented)
-                    .onChange(of: showingCreations) { _ in
-                        store.dispatch(.playSound(.actionButtonPress))
+                    .onChange(of: showingCreations) { _, _ in
+                        store.dispatch(.playSound(.togglePress))
                     }
                     
                     Spacer()

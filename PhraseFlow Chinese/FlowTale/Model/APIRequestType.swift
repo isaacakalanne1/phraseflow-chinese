@@ -41,7 +41,7 @@ enum APIRequestType {
             case .metaLlama:
                 return "meta-llama/llama-3.3-70b-instruct"
             case .geminiFlash:
-                return "google/gemini-flash-1.5-8b"
+                return "google/gemini-2.0-flash-001"
             case .euryaleLlama:
                 return "eva-unit-01/eva-llama-3.33-70b"
             }
