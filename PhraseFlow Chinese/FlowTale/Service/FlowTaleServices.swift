@@ -410,7 +410,7 @@ In the briefLatestStorySummary section of the JSON, don't mention "In chapter X"
                                                         translationLanguage: story.language,
                                                         shouldCreateTitle: shouldCreateTitle)
 
-        return try await makeRequest(type: .openAI, requestBody: requestBody)
+        return try await makeRequest(type: .openRouter(.geminiFlash), requestBody: requestBody)
     }
 
     private func makeRequest(type: APIRequestType, requestBody: [String: Any]) async throws -> String {
