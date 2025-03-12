@@ -21,9 +21,7 @@ enum FlowTaleAction {
     case showFreeLimitExplanationScreen(isShowing: Bool)
     case showDailyLimitExplanationScreen(isShowing: Bool)
 
-    case translateStory(story: Story, storyString: String)
-    case onTranslatedStory(story: Story)
-    case failedToTranslateStory
+    case onCreatedChapter(story: Story)
 
     case didNotPassModeration
     case dismissFailedModerationAlert

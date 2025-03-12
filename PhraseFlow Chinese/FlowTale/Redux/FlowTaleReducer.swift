@@ -16,8 +16,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     switch action {
     case .onLoadedAppSettings(let settings):
         newState.settingsState = settings
-    case .translateStory:
-        newState.viewState.loadingState = .translating
     case .generateImage:
         newState.viewState.loadingState = .generatingImage
     case .onLoadedStories(let stories, let isAppLaunch):
@@ -251,7 +249,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         }
         newState.viewState.loadingState = .writing
     case .failedToCreateChapter,
-            .failedToTranslateStory,
             .failedToGenerateImage:
         newState.viewState.readerDisplayType = .normal
         // Also reset writing flag on failure
@@ -360,7 +357,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.snackBarState.isShowing = false
     case .failedToDefineCharacter:
         newState.viewState.isDefining = false
-    case .onTranslatedStory(let story):
+    case .onCreatedChapter(let story):
         newState.audioState.audioPlayer = AVPlayer()
         newState.settingsState.language = story.language
     case .updateStudiedWord(var definition):

@@ -14,16 +14,7 @@ import AVFoundation
 typealias FlowTaleMiddlewareType = Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol>
 let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     switch action {
-    case .translateStory(let story, let storyString):
-        do {
-            let story = try await environment.translateStory(story: story,
-                                                             storyString: storyString,
-                                                             deviceLanguage: state.deviceLanguage)
-            return .onTranslatedStory(story: story)
-        } catch {
-            return .failedToTranslateStory
-        }
-    case .onTranslatedStory(let story):
+    case .onCreatedChapter(let story):
         if story.imageData == nil,
            let passage = story.chapters.first?.passage {
              return .generateImage(passage: passage, story)
@@ -56,16 +47,17 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     case .createChapter(let type):
         do {
             try environment.enforceChapterCreationLimit(subscription: state.subscriptionState.currentSubscription)
+            let story: Story
             switch type {
             case .newStory:
-                let story = state.createNewStory()
-                let storyString = try await environment.generateStory(story: story)
-                return .translateStory(story: story, storyString: storyString)
-            case .existingStory(let st):
-                let story = st
-                let storyString = try await environment.generateStory(story: story)
-                return .translateStory(story: story, storyString: storyString)
+                let newStory = state.createNewStory()
+                story = try await environment.generateStory(story: newStory,
+                                                            deviceLanguage: state.deviceLanguage)
+            case .existingStory(let existingStory):
+                story = try await environment.generateStory(story: existingStory,
+                                                            deviceLanguage: state.deviceLanguage)
             }
+            return .onCreatedChapter(story: story)
         } catch FlowTaleDataStoreError.freeUserChapterLimitReached {
             return .setSubscriptionSheetShowing(true)
         } catch FlowTaleDataStoreError.chapterCreationLimitReached(let nextAvailable) {
@@ -78,7 +70,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return .showSnackBar(.dailyChapterLimitReached(nextAvailable: nextAvailable))
 
     case .failedToCreateChapter,
-            .failedToTranslateStory,
             .failedToGenerateImage:
         return .showSnackBar(.failedToWriteChapter)
     case .showSnackBar(let type):

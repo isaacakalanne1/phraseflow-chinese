@@ -176,10 +176,8 @@ struct CategoryResult: Identifiable {
 
 
 protocol FlowTaleServicesProtocol {
-    func generateStory(story: Story) async throws -> String
-    func translateStory(story: Story,
-                        storyString: String,
-                        deviceLanguage: Language?) async throws -> Story
+    func generateStory(story: Story,
+                       deviceLanguage: Language?) async throws -> Story
     func fetchDefinitions(for sentenceIndex: Int,
                           in sentence: Sentence,
                           chapter: Chapter,
@@ -194,14 +192,11 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
     private let apiKey = ProcessInfo.processInfo.environment["FAL_KEY"] ?? "e1f58875-fe36-4a31-ad34-badb6bbd0409:4645ce9820c0b75b3cbe1b0d9c324306"
     private let session = URLSession.shared
 
-    func translateStory(story: Story,
-                        storyString: String,
-                        deviceLanguage: Language?) async throws -> Story {
+    func generateStory(story: Story,
+                       deviceLanguage: Language?) async throws -> Story {
         do {
-            let jsonString = try await convertToJson(story: story,
-                                                     storyString: storyString,
-                                                     shouldCreateTitle: story.title.isEmpty,
-                                                     deviceLanguage: deviceLanguage)
+            let jsonString = try await generateStoryRequest(story: story,
+                                                            deviceLanguage: deviceLanguage)
             guard let jsonData = jsonString.data(using: .utf8) else {
                 throw FlowTaleServicesError.failedToGetResponseData
             }
@@ -234,10 +229,11 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
                     return Sentence(translation: translation, english: $0.original)
                 }
             )
+            let passage = sentences.reduce("", { $0 + $1.original })
             let chapter = Chapter(title: chapterResponse.chapterNumberAndTitle ?? "",
                                   sentences: sentences,
                                   audio: .init(timestamps: [], data: Data()),
-                                  passage: storyString)
+                                  passage: passage)
 
             var story = story
             if story.chapters.isEmpty {
@@ -359,33 +355,8 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
         return finalDefinitions
     }
 
-    func generateStory(story: Story) async throws -> String {
-        let model: APIRequestType = .openRouter(.metaLlama)
-        var requestBody: [String: Any] = [
-            "model": model.modelName,
-        ]
-
-        var messages: [[String: String]] = []
-        let maxChaptersInHistory = 20
-
-        let firstChapterDescription = story.chapters.count < maxChaptersInHistory ? "first chapter" : "Chapter \((story.chapters.count + 1) - maxChaptersInHistory)"
-        let initialPrompt = "Write an incredible \(firstChapterDescription) of a novel in English with complex, three-dimensional characters set in \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"
-
-        messages.append(["role": "user", "content": initialPrompt])
-        for chapter in story.chapters.suffix(20) {
-            messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
-            messages.append(["role": "user", "content": "Write an incredible next chapter of the novel in English with complex, three-dimensional characters. \(story.difficulty.vocabularyPrompt)"])
-        }
-
-        requestBody["messages"] = messages
-
-        return try await makeRequest(type: model, requestBody: requestBody)
-    }
-
-    private func convertToJson(story: Story,
-                               storyString: String,
-                               shouldCreateTitle: Bool,
-                               deviceLanguage: Language?) async throws -> String {
+    private func generateStoryRequest(story: Story,
+                                      deviceLanguage: Language?) async throws -> String {
         guard let deviceLanguage else {
             throw FlowTaleServicesError.failedToGetDeviceLanguage
         }
@@ -397,18 +368,25 @@ In the \(story.language.descriptiveEnglishName) text, write numbers in \(story.l
 This is chapter \(story.chapters.count + 1)
 In the briefLatestStorySummary section of the JSON, don't mention "In chapter X", "In this chapter", or anything similar to this.
 """
+        let maxChaptersInHistory = 20
+
+        let firstChapterDescription = story.chapters.count < maxChaptersInHistory ? "first chapter" : "Chapter \((story.chapters.count + 1) - maxChaptersInHistory)"
+        let initialPrompt = "Write an incredible \(firstChapterDescription) of a novel with complex, three-dimensional characters set in \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"
         var requestBody: [String: Any] = [
             "model": "gpt-4o-mini-2024-07-18",
         ]
 
-        let messages: [[String: String]] = [
-            ["role": "system", "content": jsonPrompt],
-            ["role": "user", "content": storyString]
-        ]
+        var messages: [[String: String]] = []
+
+        messages.append(["role": "user", "content": initialPrompt])
+        for chapter in story.chapters.suffix(20) {
+            messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
+            messages.append(["role": "user", "content": "Write an incredible next chapter of the novel with complex, three-dimensional characters. \(story.difficulty.vocabularyPrompt)"])
+        }
         requestBody["messages"] = messages
         requestBody["response_format"] = sentenceSchema(originalLanguage: deviceLanguage,
                                                         translationLanguage: story.language,
-                                                        shouldCreateTitle: shouldCreateTitle)
+                                                        shouldCreateTitle: story.title.isEmpty)
 
         return try await makeRequest(type: .openRouter(.geminiFlash), requestBody: requestBody)
     }

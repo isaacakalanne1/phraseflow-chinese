@@ -15,7 +15,6 @@ struct LoadingView: View {
             Text(LocalizedString.writingNewChapter)
             HStack {
                 progressView(checkIfComplete: .writing)
-                progressView(checkIfComplete: .translating)
                 progressView(checkIfComplete: .generatingImage)
                 progressView(checkIfComplete: .generatingSpeech)
             }

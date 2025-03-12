@@ -27,7 +27,6 @@ struct SnackBar: View {
             if case .writingChapter = type {
                 HStack(spacing: 10) {
                     progressView(checkIfComplete: .writing)
-                    progressView(checkIfComplete: .translating)
                     progressView(checkIfComplete: .generatingImage)
                     progressView(checkIfComplete: .generatingSpeech)
                 }
