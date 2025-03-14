@@ -95,7 +95,10 @@ Use simple words and medium length sentences, for someone who is learning the la
             prompt = ""
         }
         if self != .expert {
-            prompt.append("Use words very repetitively, to allow the user to learn them.")
+            let extraPrompt = """
+Use words very repetitively, to allow the user to learn them.
+"""
+            prompt.append(extraPrompt)
         }
         return prompt
     }

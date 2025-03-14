@@ -195,6 +195,9 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
     func generateStory(story: Story,
                        deviceLanguage: Language?) async throws -> Story {
         do {
+            guard let deviceLanguage else {
+                throw FlowTaleServicesError.failedToGetDeviceLanguage
+            }
             let jsonString = try await generateStoryRequest(story: story,
                                                             deviceLanguage: deviceLanguage)
             guard let jsonData = jsonString.data(using: .utf8) else {
@@ -205,15 +208,15 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
                 let lastKey = keys.last!
                 guard lastKey.intValue == nil else { return lastKey }
                 switch lastKey.stringValue {
-                case deviceLanguage?.schemaKey:
+                case "\(deviceLanguage.schemaKey)Translation":
                     return AnyKey(stringValue: "original")!
-                case "\(story.language.schemaKey)Translation":
+                case story.language.schemaKey:
                     return AnyKey(stringValue: "translation")!
-                case "briefLatestStorySummaryIn\(deviceLanguage?.key ?? "English")":
+                case "briefLatestStorySummaryIn\(deviceLanguage.key)":
                     return AnyKey(stringValue: "briefLatestStorySummary")!
-                case "chapterNumberAndTitleIn\(deviceLanguage?.key ?? "English")":
+                case "chapterNumberAndTitleIn\(deviceLanguage.key)":
                     return AnyKey(stringValue: "chapterNumberAndTitle")!
-                case "titleOfNovelIn\(deviceLanguage?.key ?? "English")":
+                case "titleOfNovelIn\(deviceLanguage.key)":
                     return AnyKey(stringValue: "titleOfNovel")!
                 default:
                     return AnyKey(stringValue: lastKey.stringValue)!
@@ -370,6 +373,7 @@ Write an incredible \(firstChapterDescription) of a novel in \(story.language.de
 
 \(story.difficulty.vocabularyPrompt).
 Use \(story.language.descriptiveEnglishName) names for characters, places, etc, unless specified otherwise in the story setting below.
+Don't include pronounciation, pinyin, etc. Only write the pure \(story.language.descriptiveEnglishName) and \(deviceLanguage.descriptiveEnglishName).
 
 This is the story setting:
 \(story.storyPrompt). 
