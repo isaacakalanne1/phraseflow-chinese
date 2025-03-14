@@ -360,20 +360,18 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
         guard let deviceLanguage else {
             throw FlowTaleServicesError.failedToGetDeviceLanguage
         }
-        let jsonPrompt = """
-Format the following story into JSON. Translate each English sentence into \(deviceLanguage == .english || deviceLanguage == .englishUK ? "" : "\(deviceLanguage.descriptiveEnglishName) and ") \(story.language.descriptiveEnglishName).
-Ensure each sentence entry is for an individual sentence.
-Translate the whole sentence, including names and places.
-In the \(story.language.descriptiveEnglishName) text, write numbers in \(story.language.descriptiveEnglishName). Chinese numbers are written using Chinese characters, French numbers are written in their full text form (un, deux, trois), etc. 
-This is chapter \(story.chapters.count + 1)
-In the briefLatestStorySummary section of the JSON, don't mention "In chapter X", "In this chapter", or anything similar to this.
-"""
         let maxChaptersInHistory = 20
 
         let firstChapterDescription = story.chapters.count < maxChaptersInHistory ? "first chapter" : "Chapter \((story.chapters.count + 1) - maxChaptersInHistory)"
-        let initialPrompt = "Write an incredible \(firstChapterDescription) of a novel with complex, three-dimensional characters set in \(story.storyPrompt). \(story.difficulty.vocabularyPrompt)"
+        let initialPrompt = """
+Write an incredible \(firstChapterDescription) of a novel with complex, three-dimensional characters.
+\(story.difficulty.vocabularyPrompt).
+In the formatted JSON, ensure each sentence entry is for an individual sentence.
+This is the story setting: \(story.storyPrompt).
+Use \(story.language.descriptiveEnglishName) names for characters, places, etc, unless specified otherwise in the story setting above. 
+"""
         var requestBody: [String: Any] = [
-            "model": "gpt-4o-mini-2024-07-18",
+            "model": APIRequestType.openRouter(.gpt_4o_Mini).modelName,
         ]
 
         var messages: [[String: String]] = []
@@ -388,7 +386,7 @@ In the briefLatestStorySummary section of the JSON, don't mention "In chapter X"
                                                         translationLanguage: story.language,
                                                         shouldCreateTitle: story.title.isEmpty)
 
-        return try await makeRequest(type: .openRouter(.geminiFlash), requestBody: requestBody)
+        return try await makeRequest(type: .openRouter(.gpt_4o_Mini), requestBody: requestBody)
     }
 
     private func makeRequest(type: APIRequestType, requestBody: [String: Any]) async throws -> String {
