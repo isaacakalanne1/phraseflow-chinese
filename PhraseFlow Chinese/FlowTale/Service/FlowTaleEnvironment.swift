@@ -47,6 +47,8 @@ protocol FlowTaleEnvironmentProtocol {
     func generateImage(with prompt: String) async throws -> Data
     func moderateText(_ text: String) async throws -> ModerationResponse
     func enforceChapterCreationLimit(subscription: SubscriptionLevel?) throws
+
+    func loadDefaultBundleStories(forLanguage language: Language?) -> [Story]
 }
 
 struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
@@ -167,4 +169,7 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         try dataStore.trackChapterCreation(subscription: subscription)
     }
 
+    func loadDefaultBundleStories(forLanguage language: Language? = nil) -> [Story] {
+        repository.loadDefaultBundleStories(forLanguage: language)
+    }
 }

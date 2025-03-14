@@ -10,59 +10,8 @@ import ReduxKit
 import AVKit
 import StoreKit
 import AVFoundation
-import SwiftUI
 
 typealias FlowTaleMiddlewareType = Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol>
-
-// Helper function to load default stories from bundle
-private func loadDefaultBundleStories(forLanguage language: Language? = nil) -> [Story] {
-    let fileManager = FileManager.default
-    
-    // Returns URL for the app's bundle directory
-    guard let bundleURL = Bundle.main.resourceURL else {
-        return []
-    }
-    
-    // Look for files that match our default story naming pattern
-    do {
-        let bundleContents = try fileManager.contentsOfDirectory(at: bundleURL, includingPropertiesForKeys: nil)
-        let defaultStoryFiles = bundleContents.filter { 
-            $0.lastPathComponent.hasPrefix("default_story_") && 
-            $0.pathExtension == "json" 
-        }
-        
-        var defaultStories: [Story] = []
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        
-        for fileURL in defaultStoryFiles {
-            do {
-                let data = try Data(contentsOf: fileURL)
-                var story = try decoder.decode(Story.self, from: data)
-                
-                // Mark as default story
-                story.isDefaultStory = true
-                
-                // If a specific language is requested, only include stories in that language
-                if let language = language {
-                    if story.language == language {
-                        defaultStories.append(story)
-                    }
-                } else {
-                    // If no language is specified, include all default stories
-                    defaultStories.append(story)
-                }
-            } catch {
-                print("Failed to decode default story at \(fileURL): \(error)")
-            }
-        }
-        
-        return defaultStories
-    } catch {
-        print("Failed to read bundle directory: \(error)")
-        return []
-    }
-}
 
 let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     switch action {
@@ -158,8 +107,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         
     case .loadDefaultStory(let language):
         // Load default stories for the specified language
-        let defaultStories = loadDefaultBundleStories(forLanguage: language)
-        
+        let defaultStories = environment.loadDefaultBundleStories(forLanguage: language)
+
         // If we found a default story for this language, return it
         if let defaultStory = defaultStories.first {
             // Save the default story to the data store
@@ -218,8 +167,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             // Add default stories if the user doesn't have any stories yet
             if isAppLaunch && stories.isEmpty {
                 // Load default stories from the app bundle (all languages)
-                let defaultStories = loadDefaultBundleStories()
-                
+                let defaultStories = environment.loadDefaultBundleStories(forLanguage: nil)
+
                 // If we found any default stories, add them and save them to the data store
                 if !defaultStories.isEmpty {
                     for defaultStory in defaultStories {
@@ -733,7 +682,11 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .selectStoryFromSnackbar,
             .updateStudyAudioPlaying,
             .onValidatedReceipt,
-            .updateIsSubscriptionPurchaseLoading:
+            .updateIsSubscriptionPurchaseLoading,
+            .onSavedAsDefaultStory,
+            .failedToSaveAsDefaultStory,
+            .onLoadedDefaultStory,
+            .failedToLoadDefaultStory:
         return nil
     }
 }

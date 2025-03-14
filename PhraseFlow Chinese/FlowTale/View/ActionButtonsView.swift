@@ -20,6 +20,11 @@ struct ActionButtonsView: View {
 
         return VStack(alignment: .center) {
             HStack(spacing: 12) {
+                Button("Save") {
+                    if let story = store.state.storyState.currentStory {
+                        store.dispatch(.saveAsDefaultStory(story))
+                    }
+                }
                 ForEach(tabs) { tab in
                     let isSelected = store.state.viewState.contentTab == tab
                     VStack(spacing: 4) {
