@@ -366,11 +366,14 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
         let firstChapterDescription = story.chapters.count < maxChaptersInHistory ? "first chapter" : "Chapter \((story.chapters.count + 1) - maxChaptersInHistory)"
         let initialPrompt = """
 Write an incredible \(firstChapterDescription) of a novel with complex, three-dimensional characters.
+
+In the \(story.language.descriptiveEnglishName) section of the JSON, only write \(story.language.descriptiveEnglishName).
+In the \(deviceLanguage.descriptiveEnglishName) section of the JSON, only write \(deviceLanguage.descriptiveEnglishName).
 \(story.difficulty.vocabularyPrompt).
-Split each sentence into an individualentry in the formatted JSON.
-Keep the translations to the associated section of the JSON, for \(story.language.descriptiveEnglishName) and \(deviceLanguage.descriptiveEnglishName).
-This is the story setting: \(story.storyPrompt).
-Use \(story.language.descriptiveEnglishName) names for characters, places, etc, unless specified otherwise in the story setting above. 
+
+Use \(story.language.descriptiveEnglishName) names for characters, places, etc, unless specified otherwise in the story setting above.
+
+This is the story setting: \(story.storyPrompt). 
 """
         var requestBody: [String: Any] = [
             "model": model.modelName
