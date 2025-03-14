@@ -357,6 +357,7 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
 
     private func generateStoryRequest(story: Story,
                                       deviceLanguage: Language?) async throws -> String {
+        let model = APIRequestType.openRouter(.geminiFlash)
         guard let deviceLanguage else {
             throw FlowTaleServicesError.failedToGetDeviceLanguage
         }
@@ -366,12 +367,13 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
         let initialPrompt = """
 Write an incredible \(firstChapterDescription) of a novel with complex, three-dimensional characters.
 \(story.difficulty.vocabularyPrompt).
-In the formatted JSON, ensure each sentence entry is for an individual sentence.
+Split each sentence into an individualentry in the formatted JSON.
+Keep the translations to the associated section of the JSON, for \(story.language.descriptiveEnglishName) and \(deviceLanguage.descriptiveEnglishName).
 This is the story setting: \(story.storyPrompt).
 Use \(story.language.descriptiveEnglishName) names for characters, places, etc, unless specified otherwise in the story setting above. 
 """
         var requestBody: [String: Any] = [
-            "model": APIRequestType.openRouter(.gpt_4o_Mini).modelName,
+            "model": model.modelName
         ]
 
         var messages: [[String: String]] = []
@@ -386,7 +388,7 @@ Use \(story.language.descriptiveEnglishName) names for characters, places, etc, 
                                                         translationLanguage: story.language,
                                                         shouldCreateTitle: story.title.isEmpty)
 
-        return try await makeRequest(type: .openRouter(.gpt_4o_Mini), requestBody: requestBody)
+        return try await makeRequest(type: model, requestBody: requestBody)
     }
 
     private func makeRequest(type: APIRequestType, requestBody: [String: Any]) async throws -> String {
