@@ -4,7 +4,7 @@ This document explains how to create and include default example stories in your
 
 ## Using Default Stories
 
-There are two ways default stories can be used in the app:
+There are three ways to interact with default stories in the app:
 
 1. **Automatic loading for new users**: When a new user launches the app for the first time and has no stories, any default stories in the app bundle will be automatically loaded.
 
@@ -15,7 +15,17 @@ There are two ways default stories can be used in the app:
 store.dispatch(.loadDefaultStory(language: .mandarinChinese))
 ```
 
-This allows you to provide instant content for users who want to try a new language without waiting for story generation.
+3. **Deleting default stories**: You can delete default stories from the documents directory:
+
+```swift
+// Delete default stories for a specific language
+store.dispatch(.deleteDefaultStories(language: .mandarinChinese))
+
+// Delete ALL default stories
+store.dispatch(.deleteDefaultStories(language: nil))
+```
+
+This allows you to provide instant content for users who want to try a new language without waiting for story generation, and also manage the default stories in your development environment.
 
 ## Creating Default Stories
 

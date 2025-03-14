@@ -23,6 +23,7 @@ enum SnackBarType: Equatable {
     case deviceVolumeZero
     case loadedDefaultStory
     case savedAsDefaultStory
+    case deletedDefaultStories
 
     var text: String {
         switch self {
@@ -56,6 +57,8 @@ enum SnackBarType: Equatable {
             "Default story loaded" // This should be localized in your strings file
         case .savedAsDefaultStory:
             "Story saved as default template" // This should be localized in your strings file
+        case .deletedDefaultStories:
+            "Default stories deleted" // This should be localized in your strings file
         }
     }
 
@@ -75,7 +78,8 @@ enum SnackBarType: Equatable {
                 .welcomeBack,
                 .deletedCustomStory,
                 .loadedDefaultStory,
-                .savedAsDefaultStory:
+                .savedAsDefaultStory,
+                .deletedDefaultStories:
             2.5
         case .dailyChapterLimitReached:
             4
@@ -108,6 +112,8 @@ enum SnackBarType: Equatable {
             emoji = "⚠️"
         case .deviceVolumeZero:
             emoji = "🔇"
+        case .deletedDefaultStories:
+            emoji = "🗑️"
         }
         return Text(emoji)
     }
@@ -139,7 +145,8 @@ enum SnackBarType: Equatable {
                 .failedToWriteChapter,
                 .deviceVolumeZero,
                 .loadedDefaultStory,
-                .savedAsDefaultStory:
+                .savedAsDefaultStory,
+                .deletedDefaultStories:
             break
         case .couldNotModerateText:
             store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))
@@ -161,7 +168,8 @@ enum SnackBarType: Equatable {
                 .storyReadyTapToRead,
                 .deviceVolumeZero,
                 .loadedDefaultStory,
-                .savedAsDefaultStory:
+                .savedAsDefaultStory,
+                .deletedDefaultStories:
             return false
         case .failedToWriteChapter,
                 .didNotPassModeration,

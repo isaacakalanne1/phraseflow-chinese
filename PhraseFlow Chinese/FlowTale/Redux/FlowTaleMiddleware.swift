@@ -159,6 +159,71 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             print("⚠️ Failed to save default story: \(error.localizedDescription)")
             return .failedToSaveAsDefaultStory
         }
+        
+    case .loadDefaultStory(let language):
+        // Load default stories for the specified language
+        let defaultStories = environment.loadDefaultBundleStories(forLanguage: language)
+        
+        // If we found a default story for this language, return it
+        if let defaultStory = defaultStories.first {
+            // Save the default story to the data store
+            do {
+                try environment.saveStory(defaultStory)
+                
+                // Save each chapter
+                for (index, chapter) in defaultStory.chapters.enumerated() {
+                    try environment.saveChapter(chapter, storyId: defaultStory.id, chapterIndex: index + 1)
+                }
+                
+                return .onLoadedDefaultStory(defaultStory)
+            } catch {
+                return .failedToLoadDefaultStory
+            }
+        } else {
+            // No default story found for this language
+            return .failedToLoadDefaultStory
+        }
+        
+    case .deleteDefaultStories(let language):
+        // Get documents directory
+        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("⚠️ Failed to get documents directory")
+            return .failedToDeleteDefaultStories
+        }
+        
+        do {
+            // Get all files in the documents directory
+            let fileManager = FileManager.default
+            let files = try fileManager.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil)
+            
+            // Filter for default story files
+            let defaultStoryFiles = files.filter { fileURL in
+                let filename = fileURL.lastPathComponent
+                if language == nil {
+                    // If no language specified, match all default story files
+                    return filename.hasPrefix("default_story_") && filename.hasSuffix(".json")
+                } else {
+                    // If language specified, only match files for that language
+                    let languageKey = language!.key.lowercased()
+                    return filename.hasPrefix("default_story_\(languageKey)_") && filename.hasSuffix(".json")
+                }
+            }
+            
+            // Delete each matching file
+            if !defaultStoryFiles.isEmpty {
+                for fileURL in defaultStoryFiles {
+                    try fileManager.removeItem(at: fileURL)
+                    print("🗑️ Deleted default story: \(fileURL.lastPathComponent)")
+                }
+                return .onDeletedDefaultStories
+            } else {
+                print("ℹ️ No default stories found to delete")
+                return .onDeletedDefaultStories // Still return success even if no files found
+            }
+        } catch {
+            print("⚠️ Failed to delete default stories: \(error.localizedDescription)")
+            return .failedToDeleteDefaultStories
+        }
     case .loadStories(let isAppLaunch):
         do {
             var stories = try environment.loadAllStories()
@@ -645,6 +710,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .hideSnackbar
         }
         return nil
+    case .onDeletedDefaultStories:
+        return .showSnackBar(.deletedDefaultStories)
     case .failedToLoadStories,
             .failedToSaveStory,
             .failedToDefineCharacter,
@@ -686,7 +753,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .onSavedAsDefaultStory,
             .failedToSaveAsDefaultStory,
             .onLoadedDefaultStory,
-            .failedToLoadDefaultStory:
+            .failedToLoadDefaultStory,
+            .failedToDeleteDefaultStories:
         return nil
     }
 }
