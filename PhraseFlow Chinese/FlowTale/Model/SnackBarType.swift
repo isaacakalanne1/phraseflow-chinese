@@ -21,6 +21,7 @@ enum SnackBarType: Equatable {
     case didNotPassModeration
     case dailyChapterLimitReached(nextAvailable: String)
     case deviceVolumeZero
+    case loadedDefaultStory
 
     var text: String {
         switch self {
@@ -50,6 +51,8 @@ enum SnackBarType: Equatable {
             LocalizedString.snackbarDailyChapterLimitReached(nextAvailable)
         case .deviceVolumeZero:
             LocalizedString.deviceVolumeZero
+        case .loadedDefaultStory:
+            "Default story loaded" // This should be localized in your strings file
         }
     }
 
@@ -67,7 +70,8 @@ enum SnackBarType: Equatable {
                 .didNotPassModeration,
                 .couldNotModerateText,
                 .welcomeBack,
-                .deletedCustomStory:
+                .deletedCustomStory,
+                .loadedDefaultStory:
             2.5
         case .dailyChapterLimitReached:
             4
@@ -88,7 +92,8 @@ enum SnackBarType: Equatable {
                 .storyReadyTapToRead,
                 .subscribed,
                 .passedModeration,
-                .deletedCustomStory:
+                .deletedCustomStory,
+                .loadedDefaultStory:
             emoji = "✅"
         case .welcomeBack:
             emoji = "🔥"
@@ -127,7 +132,8 @@ enum SnackBarType: Equatable {
                 .welcomeBack,
                 .deletedCustomStory,
                 .failedToWriteChapter,
-                .deviceVolumeZero:
+                .deviceVolumeZero,
+                .loadedDefaultStory:
             break
         case .couldNotModerateText:
             store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))
@@ -147,7 +153,8 @@ enum SnackBarType: Equatable {
                 .deletedCustomStory,
                 .dailyChapterLimitReached,
                 .storyReadyTapToRead,
-                .deviceVolumeZero:
+                .deviceVolumeZero,
+                .loadedDefaultStory:
             return false
         case .failedToWriteChapter,
                 .didNotPassModeration,

@@ -15,7 +15,7 @@ import SwiftUI
 typealias FlowTaleMiddlewareType = Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol>
 
 // Helper function to load default stories from bundle
-private func loadDefaultBundleStories() -> [Story] {
+private func loadDefaultBundleStories(forLanguage language: Language? = nil) -> [Story] {
     let fileManager = FileManager.default
     
     // Returns URL for the app's bundle directory
@@ -39,9 +39,19 @@ private func loadDefaultBundleStories() -> [Story] {
             do {
                 let data = try Data(contentsOf: fileURL)
                 var story = try decoder.decode(Story.self, from: data)
+                
                 // Mark as default story
                 story.isDefaultStory = true
-                defaultStories.append(story)
+                
+                // If a specific language is requested, only include stories in that language
+                if let language = language {
+                    if story.language == language {
+                        defaultStories.append(story)
+                    }
+                } else {
+                    // If no language is specified, include all default stories
+                    defaultStories.append(story)
+                }
             } catch {
                 print("Failed to decode default story at \(fileURL): \(error)")
             }
@@ -145,6 +155,30 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         }
         // No story to save
         return nil
+        
+    case .loadDefaultStory(let language):
+        // Load default stories for the specified language
+        let defaultStories = loadDefaultBundleStories(forLanguage: language)
+        
+        // If we found a default story for this language, return it
+        if let defaultStory = defaultStories.first {
+            // Save the default story to the data store
+            do {
+                try environment.saveStory(defaultStory)
+                
+                // Save each chapter
+                for (index, chapter) in defaultStory.chapters.enumerated() {
+                    try environment.saveChapter(chapter, storyId: defaultStory.id, chapterIndex: index + 1)
+                }
+                
+                return .onLoadedDefaultStory(defaultStory)
+            } catch {
+                return .failedToLoadDefaultStory
+            }
+        } else {
+            // No default story found for this language
+            return .failedToLoadDefaultStory
+        }
     case .loadStories(let isAppLaunch):
         do {
             var stories = try environment.loadAllStories()
@@ -152,7 +186,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
                 
             // Add default stories if the user doesn't have any stories yet
             if isAppLaunch && stories.isEmpty {
-                // Load default stories from the app bundle
+                // Load default stories from the app bundle (all languages)
                 let defaultStories = loadDefaultBundleStories()
                 
                 // If we found any default stories, add them and save them to the data store

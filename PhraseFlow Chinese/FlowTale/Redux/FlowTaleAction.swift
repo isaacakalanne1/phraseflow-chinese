@@ -157,7 +157,11 @@ enum FlowTaleAction {
     case playMusic(MusicType)
     case musicTrackFinished(MusicType)
     case stopMusic
-
+    
+    case loadDefaultStory(language: Language)
+    case onLoadedDefaultStory(Story)
+    case failedToLoadDefaultStory
+    
     case updateCustomPrompt(String)
     case updateColorScheme(FlowTaleColorScheme)
     case updateShouldPlaySound(Bool)

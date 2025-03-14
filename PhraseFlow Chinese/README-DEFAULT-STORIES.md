@@ -2,6 +2,21 @@
 
 This document explains how to create and include default example stories in your app, which will be automatically loaded for new users.
 
+## Using Default Stories
+
+There are two ways default stories can be used in the app:
+
+1. **Automatic loading for new users**: When a new user launches the app for the first time and has no stories, any default stories in the app bundle will be automatically loaded.
+
+2. **On-demand loading by language**: You can load a default story for a specific language at any time by dispatching an action:
+
+```swift
+// Load a default story for a specific language
+store.dispatch(.loadDefaultStory(language: .mandarinChinese))
+```
+
+This allows you to provide instant content for users who want to try a new language without waiting for story generation.
+
 ## Creating Default Stories
 
 1. First, generate a story in the app that you'd like to use as a default story
