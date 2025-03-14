@@ -182,9 +182,9 @@ enum Language: String, Codable, CaseIterable {
     var schemaKey: String {
         switch self {
         case .english, .englishUK:
-            rawValue
+            rawValue + "Only"
         default:
-            rawValue + "Translation"
+            rawValue + "Only"
         }
     }
 
