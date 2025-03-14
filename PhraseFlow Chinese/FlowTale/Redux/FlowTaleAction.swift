@@ -161,6 +161,9 @@ enum FlowTaleAction {
     case loadDefaultStory(language: Language)
     case onLoadedDefaultStory(Story)
     case failedToLoadDefaultStory
+    case saveAsDefaultStory(Story)
+    case onSavedAsDefaultStory(URL)
+    case failedToSaveAsDefaultStory
     
     case updateCustomPrompt(String)
     case updateColorScheme(FlowTaleColorScheme)

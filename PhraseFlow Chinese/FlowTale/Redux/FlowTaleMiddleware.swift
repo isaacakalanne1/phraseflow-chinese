@@ -179,6 +179,37 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             // No default story found for this language
             return .failedToLoadDefaultStory
         }
+        
+    case .saveAsDefaultStory(let story):
+        // Create a copy of the story and mark it as a default story
+        var storyCopy = story
+        storyCopy.isDefaultStory = true
+        
+        // Create a unique filename based on the language and date
+        let languageKey = storyCopy.language.key.lowercased()
+        let filename = "default_story_\(languageKey)_\(storyCopy.id.uuidString).json"
+        
+        // Save to the documents directory for easy access
+        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("⚠️ Failed to get documents directory")
+            return .failedToSaveAsDefaultStory
+        }
+        
+        let docsURL = documentsDirectory.appendingPathComponent(filename)
+        
+        // Encode the story
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        do {
+            let data = try encoder.encode(storyCopy)
+            try data.write(to: docsURL)
+            print("✅ Default story saved to: \(docsURL.path)")
+            print("Copy this file to your project's resources to include it in the app bundle")
+            return .onSavedAsDefaultStory(docsURL)
+        } catch {
+            print("⚠️ Failed to save default story: \(error.localizedDescription)")
+            return .failedToSaveAsDefaultStory
+        }
     case .loadStories(let isAppLaunch):
         do {
             var stories = try environment.loadAllStories()

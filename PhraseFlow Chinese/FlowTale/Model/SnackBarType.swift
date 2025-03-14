@@ -22,6 +22,7 @@ enum SnackBarType: Equatable {
     case dailyChapterLimitReached(nextAvailable: String)
     case deviceVolumeZero
     case loadedDefaultStory
+    case savedAsDefaultStory
 
     var text: String {
         switch self {
@@ -53,6 +54,8 @@ enum SnackBarType: Equatable {
             LocalizedString.deviceVolumeZero
         case .loadedDefaultStory:
             "Default story loaded" // This should be localized in your strings file
+        case .savedAsDefaultStory:
+            "Story saved as default template" // This should be localized in your strings file
         }
     }
 
@@ -71,7 +74,8 @@ enum SnackBarType: Equatable {
                 .couldNotModerateText,
                 .welcomeBack,
                 .deletedCustomStory,
-                .loadedDefaultStory:
+                .loadedDefaultStory,
+                .savedAsDefaultStory:
             2.5
         case .dailyChapterLimitReached:
             4
@@ -93,7 +97,8 @@ enum SnackBarType: Equatable {
                 .subscribed,
                 .passedModeration,
                 .deletedCustomStory,
-                .loadedDefaultStory:
+                .loadedDefaultStory,
+                .savedAsDefaultStory:
             emoji = "✅"
         case .welcomeBack:
             emoji = "🔥"
@@ -133,7 +138,8 @@ enum SnackBarType: Equatable {
                 .deletedCustomStory,
                 .failedToWriteChapter,
                 .deviceVolumeZero,
-                .loadedDefaultStory:
+                .loadedDefaultStory,
+                .savedAsDefaultStory:
             break
         case .couldNotModerateText:
             store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))
@@ -154,7 +160,8 @@ enum SnackBarType: Equatable {
                 .dailyChapterLimitReached,
                 .storyReadyTapToRead,
                 .deviceVolumeZero,
-                .loadedDefaultStory:
+                .loadedDefaultStory,
+                .savedAsDefaultStory:
             return false
         case .failedToWriteChapter,
                 .didNotPassModeration,

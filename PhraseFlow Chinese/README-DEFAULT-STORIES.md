@@ -19,25 +19,43 @@ This allows you to provide instant content for users who want to try a new langu
 
 ## Creating Default Stories
 
-1. First, generate a story in the app that you'd like to use as a default story
-2. Once the story has been generated and you're happy with it, open the Xcode debugger console
-3. Assuming your main ViewController has the store as an environment object, run one of these in the debugger console:
+There are two ways to create default stories:
+
+### Method 1: Using the app UI (easier)
+
+You can save any story directly from the app:
+
+1. Generate a story in the app that you want to use as a default
+2. When you're happy with the story, dispatch the save action:
 
 ```swift
-// Option 1: Get the store and save current story (simplest approach)
+// Save the current story as a default
+if let currentStory = store.state.storyState.currentStory {
+    store.dispatch(.saveAsDefaultStory(currentStory))
+}
+```
+
+This will save the story to your Documents directory and show a success message.
+
+### Method 2: Using the debugger (alternative)
+
+1. First, generate a story in the app that you'd like to use as a default story
+2. Once the story has been generated and you're happy with it, open the Xcode debugger console
+3. Run one of these commands in the debugger console:
+
+```swift
+// Option 1: Get the store and save current story
 let store = UIApplication.shared.windows.first?.rootViewController?.environmentObject(FlowTaleStore.self).wrappedValue
-if let url = store?.saveCurrentStoryAsDefault() {
-    print("Story saved to: \(url.path)")
+if let currentStory = store?.state.storyState.currentStory {
+    store?.dispatch(.saveAsDefaultStory(currentStory))
 }
 
 // Option 2: Another way to access the store from ContentView
 if let contentView = UIApplication.shared.windows.first?.rootViewController?.view as? ContentView,
-   let url = contentView.store.saveCurrentStoryAsDefault() {
-    print("Story saved to: \(url.path)")
+   let currentStory = contentView.store.state.storyState.currentStory {
+    contentView.store.dispatch(.saveAsDefaultStory(currentStory))
 }
 ```
-
-4. This will save the story to your Documents directory and print the path in the console
 
 ## Adding Default Stories to Your App
 

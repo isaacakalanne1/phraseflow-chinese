@@ -447,11 +447,27 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         // Show success snackbar
         newState.snackBarState.type = .loadedDefaultStory
         newState.snackBarState.isShowing = true
+        
     case .loadDefaultStory:
         // Just processing in middleware
         break
+        
     case .failedToLoadDefaultStory:
         // Show some error state
+        newState.snackBarState.type = .failedToWriteChapter
+        newState.snackBarState.isShowing = true
+        
+    case .onSavedAsDefaultStory:
+        // Show success snackbar
+        newState.snackBarState.type = .savedAsDefaultStory
+        newState.snackBarState.isShowing = true
+        
+    case .saveAsDefaultStory:
+        // Just processing in middleware
+        break
+        
+    case .failedToSaveAsDefaultStory:
+        // Show error state
         newState.snackBarState.type = .failedToWriteChapter
         newState.snackBarState.isShowing = true
     case .saveStoryAndSettings,
