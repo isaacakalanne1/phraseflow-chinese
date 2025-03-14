@@ -288,6 +288,7 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
         The user sees a translation: "\(sentence.translation)".
         Define each of the following words in the context of the above sentence:
         "\(wordsToDefine.joined(separator: "\", \""))"
+        For the definitionInContextOfSentence part of the JSON, define the word in the context of the sentence.
         """
 
         let messages: [[String: String]] = [
@@ -366,9 +367,12 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
         let firstChapterDescription = story.chapters.count < maxChaptersInHistory ? "first chapter" : "Chapter \((story.chapters.count + 1) - maxChaptersInHistory)"
         let initialPrompt = """
 Write an incredible \(firstChapterDescription) of a novel in \(story.language.descriptiveEnglishName) with complex, three-dimensional characters.
-\(story.difficulty.vocabularyPrompt).
 
-This is the story setting: \(story.storyPrompt). 
+\(story.difficulty.vocabularyPrompt).
+Use \(story.language.descriptiveEnglishName) names for characters, places, etc, unless specified otherwise in the story setting below.
+
+This is the story setting:
+\(story.storyPrompt). 
 """
         var requestBody: [String: Any] = [
             "model": model.modelName
