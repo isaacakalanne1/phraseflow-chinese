@@ -260,6 +260,7 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
                           story: Story,
                           deviceLanguage: Language?) async throws -> [Definition]
     {
+        let model = APIRequestType.openRouter(.geminiFlash)
         // 1. Ensure we have a device language
         guard let deviceLanguage else {
             throw FlowTaleServicesError.failedToGetDeviceLanguage
@@ -280,7 +281,6 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
 
         let initialPrompt = """
         You are an AI assistant that provides \(deviceLanguage.displayName) definitions for words in \(languageName) sentences.
-        Your explanations are brief and simple.
         """
 
         let mainPrompt = """
@@ -297,7 +297,7 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
 
         // 4. Make your request body
         let requestBody: [String: Any] = [
-            "model": APIRequestType.openAI.modelName,
+            "model": model.modelName,
             "messages": messages,
             "response_format": definitionSchema(),
             // If you're using function-calling:
@@ -305,7 +305,7 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
         ]
 
         // 5. Execute the request -> get JSON string back
-        let jsonString = try await makeRequest(type: .openAI, requestBody: requestBody)
+        let jsonString = try await makeRequest(type: model, requestBody: requestBody)
 
         // 6. Decode into a temporary struct that holds "words"
         //    (We can define a small container for convenience.)
