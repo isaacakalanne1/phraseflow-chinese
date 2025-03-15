@@ -32,6 +32,7 @@ struct ViewState {
     var contentTab: ContentTab
 
     var loadingState: LoadingState
+    var shouldShowImageSpinner = false
 
     init(definitionViewId: UUID = UUID(),
          chapterViewId: UUID = UUID(),
@@ -44,7 +45,8 @@ struct ViewState {
          isWritingChapter: Bool = false,
          readerDisplayType: ReaderDisplayType = .initialising,
          contentTab: ContentTab = .reader,
-         loadingState: LoadingState = .complete) {
+         loadingState: LoadingState = .complete,
+         shouldShowImageSpinner: Bool = false) {
         self.definitionViewId = definitionViewId
         self.chapterViewId = chapterViewId
         self.translationViewId = translationViewId
@@ -57,5 +59,6 @@ struct ViewState {
         self.readerDisplayType = readerDisplayType
         self.contentTab = contentTab
         self.loadingState = loadingState
+        self.shouldShowImageSpinner = shouldShowImageSpinner
     }
 }

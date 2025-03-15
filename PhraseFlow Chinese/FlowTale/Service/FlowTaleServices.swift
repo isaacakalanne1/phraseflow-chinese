@@ -373,7 +373,7 @@ Write an incredible \(firstChapterDescription) of a novel in \(story.language.de
 
 \(story.difficulty.vocabularyPrompt).
 Use \(story.language.descriptiveEnglishName) names for characters, places, etc, unless specified otherwise in the story setting below.
-Don't include pronounciation, pinyin, etc. Only write the pure \(story.language.descriptiveEnglishName) and \(deviceLanguage.descriptiveEnglishName).
+Never, under any circumstances, include pronounciation or pinyin in brackets. Only write the pure \(story.language.descriptiveEnglishName) and \(deviceLanguage.descriptiveEnglishName).
 
 This is the story setting:
 \(story.storyPrompt). 

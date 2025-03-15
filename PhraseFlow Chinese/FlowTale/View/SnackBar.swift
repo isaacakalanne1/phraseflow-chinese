@@ -27,7 +27,9 @@ struct SnackBar: View {
             if case .writingChapter = type {
                 HStack(spacing: 10) {
                     progressView(checkIfComplete: .writing)
-                    progressView(checkIfComplete: .generatingImage)
+                    if store.state.viewState.shouldShowImageSpinner {
+                        progressView(checkIfComplete: .generatingImage)
+                    }
                     progressView(checkIfComplete: .generatingSpeech)
                 }
                 .padding(.top, 4)

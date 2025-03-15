@@ -80,6 +80,7 @@ The phrases should still be gramatically correct sentences, but simply be very s
 Use an extremely limited vocabulary.
 
 """
+            // Test: Use short, simple sentences and repetitive language.
         case .intermediate:
             prompt = """
 Use basic, simple words and short sentences, for someone who has started learning the language, but is at intermediate level, and has basic knowledge of the language.

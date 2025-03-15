@@ -231,7 +231,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .createChapter(let type):
         // Set flag to indicate a chapter is being written
         newState.viewState.isWritingChapter = true
-        
+
         switch type {
         case .newStory:
             // For new stories, we've already handled this in the view with the hasExistingStories check
@@ -240,10 +240,12 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
                 // For new users with no stories, use the full screen loading view
                 newState.viewState.readerDisplayType = .loading
             }
+            newState.viewState.shouldShowImageSpinner = true
         case .existingStory(let story):
             if let voice = story.chapters.last?.audioVoice {
                 newState.settingsState.voice = voice
             }
+            newState.viewState.shouldShowImageSpinner = story.imageData == nil
             // For existing stories (adding new chapter), we should not go to loading view
             // The snackbar will show the loading state instead
         }
