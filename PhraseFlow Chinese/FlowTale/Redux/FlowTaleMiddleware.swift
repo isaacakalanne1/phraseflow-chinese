@@ -13,6 +13,26 @@ import AVFoundation
 
 typealias FlowTaleMiddlewareType = Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol>
 
+/// Checks if the playback is at or near the end of the audio
+/// Used to determine if we should loop back to the start when play is tapped
+private func isPlaybackAtEnd(_ state: FlowTaleState) -> Bool {
+    // Get current time
+    let currentTime = state.audioState.audioPlayer.currentTime().seconds
+    
+    // Get the timestamp of the last word
+    guard let lastWordTime = state.storyState.currentChapter?.audio.timestamps.last?.time,
+          let lastWordDuration = state.storyState.currentChapter?.audio.timestamps.last?.duration else {
+        return false
+    }
+    
+    // Consider the end as being after the last word's timestamp plus its duration
+    // Add a small buffer (0.5 seconds) to account for minor timing differences
+    let endTime = lastWordTime + lastWordDuration - 0.5
+    
+    // Return true if current time is at or past the end time
+    return currentTime >= endTime
+}
+
 let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     switch action {
     case .onCreatedChapter(let story):
@@ -326,18 +346,22 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         // Show appropriate snackbar first
         return .showSnackBarThenSaveStory(.chapterReady, story)
     case .playAudio(let timestamp):
-        if let timestamp {
+        // Check if playback is at or near the end
+        let isAtEnd = isPlaybackAtEnd(state)
+        
+        if isAtEnd {
+            await state.audioState.audioPlayer.seek(to: CMTime(seconds: 0, preferredTimescale: 60000), toleranceBefore: .zero, toleranceAfter: .zero)
+            print("Looping back to start because play button was tapped at the end")
+        } else if let timestamp {
+            // If timestamp is provided, use it to seek
             let myTime = CMTime(seconds: timestamp, preferredTimescale: 60000)
             await state.audioState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
-        } else {
-            let time = state.audioState.audioPlayer.currentTime().seconds
-            if let lastWordTime = state.storyState.currentChapter?.audio.timestamps.last?.time,
-               time > lastWordTime {
-                await state.audioState.audioPlayer.seek(to: CMTime(seconds: 0, preferredTimescale: 60000), toleranceBefore: .zero, toleranceAfter: .zero)
-            }
         }
+        
+        // Set the end time to infinity and start playback
         state.audioState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: .infinity, preferredTimescale: 1)
         state.audioState.audioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
+        
         if let story = state.storyState.currentStory {
             return .saveStoryAndSettings(story)
         }
@@ -521,6 +545,17 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         }
         if let story = state.storyState.currentStory {
             return .saveStoryAndSettings(story)
+        }
+        return nil
+        
+    case .updatePlayTime:
+        let time = state.audioState.audioPlayer.currentTime().seconds
+        if let lastWordTime = state.storyState.currentChapter?.audio.timestamps.last?.time,
+           let lastWordDuration = state.storyState.currentChapter?.audio.timestamps.last?.duration,
+           time > lastWordTime + lastWordDuration {
+            // Audio has reached the end naturally (not from user tapping play)
+            // Just pause it instead of looping
+            return .pauseAudio
         }
         return nil
     case .goToNextChapter:
