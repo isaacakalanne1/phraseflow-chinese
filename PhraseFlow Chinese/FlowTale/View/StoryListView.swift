@@ -60,7 +60,7 @@ struct StoryListView: View {
                 
                 List {
                     Section {
-                        ForEach(store.state.storyState.savedStories.filter { $0.isShown }, id: \.self) { story in
+                        ForEach(store.state.storyState.savedStories, id: \.self) { story in
                             NavigationLink(destination: ChapterListView(storyId: story.id)) {
                                 VStack(alignment: .leading, content: {
                                     HStack {
@@ -127,7 +127,7 @@ struct StoryListView: View {
 
     func delete(at offsets: IndexSet) {
         // Get only visible stories
-        let visibleStories = store.state.storyState.savedStories.filter { $0.isShown }
+        let visibleStories = store.state.storyState.savedStories
         
         // Get the story from the visible stories array using the offset
         guard let index = offsets.first,

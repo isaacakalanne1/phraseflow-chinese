@@ -23,18 +23,15 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         if isAppLaunch {
             newState.viewState.readerDisplayType = .normal
         }
-
-        // Filter visible stories
-        let visibleStories = stories.filter { $0.isShown }
         
         // Setup the current story in these cases:
         // 1. If there is no current story (nil)
         // 2. If the current story no longer exists in the saved stories (i.e. was deleted or hidden)
         if newState.storyState.currentStory == nil || 
-           !visibleStories.contains(where: { $0.id == newState.storyState.currentStory?.id }) {
-            if let firstVisibleStory = visibleStories.first {
+           !stories.contains(where: { $0.id == newState.storyState.currentStory?.id }) {
+            if let firstStory = stories.first {
                 // Make the first visible story the current one
-                newState.storyState.currentStory = firstVisibleStory
+                newState.storyState.currentStory = firstStory
                 let data = newState.storyState.currentChapterAudioData
                 let player = data?.createAVPlayer()
                 newState.audioState.audioPlayer = player ?? AVPlayer()

@@ -61,6 +61,7 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         self.service = FlowTaleServices()
         self.dataStore = FlowTaleDataStore()
         self.repository = FlowTaleRepository()
+        try? cleanupOrphanedDefinitionFiles()
     }
 
     func synthesizeSpeech(for chapter: Chapter,

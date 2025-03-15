@@ -303,18 +303,10 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         }
     case .deleteStory(let story):
         do {
-            // Store the story ID
-            let storyId = story.id
-            
-            // Mark the story as hidden instead of deleting it
-            var updatedStory = story
-            updatedStory.isShown = false
-            
-            // Save the updated story
-            try environment.saveStory(updatedStory)
-            
+            try environment.unsaveStory(story)
+
             // Pass the hidden story ID
-            return .onDeletedStory(storyId)
+            return .onDeletedStory(story.id)
         } catch {
             return .failedToDeleteStory
         }
