@@ -15,7 +15,7 @@ struct CharacterView: View {
     let word: WordTimeStampData
 
     var isTappedWord: Bool {
-        store.state.definitionState.currentDefinition?.timestampData == word
+        store.state.definitionState.currentWord?.id == word.id
     }
 
     var body: some View {
@@ -27,15 +27,31 @@ struct CharacterView: View {
                 .background {
                     if isTappedWord {
                         FlowTaleColor.wordHighlight
-                    } else if store.state.storyState.currentStory?.currentSentenceIndex == word.sentenceIndex {
-                        FlowTaleColor.highlight
+                    } else {
+                        // Find if this word is in the current sentence
+                        let currentSentenceIndex = store.state.storyState.currentStory?.currentSentenceIndex ?? 0
+                        if let chapter = store.state.storyState.currentChapter,
+                           currentSentenceIndex < chapter.sentences.count,
+                           chapter.sentences[currentSentenceIndex].wordTimestamps.contains(where: { $0.id == word.id }) {
+                            FlowTaleColor.highlight
+                        }
                     }
                 }
         }
         .onTapGesture {
             if !store.state.viewState.isDefining {
                 store.dispatch(.updateAutoScrollEnabled(isEnabled: false))
-                store.dispatch(.updateSentenceIndex(word.sentenceIndex))
+                
+                // Find which sentence contains this word
+                if let chapter = store.state.storyState.currentChapter {
+                    for (sentenceIndex, sentence) in chapter.sentences.enumerated() {
+                        if sentence.wordTimestamps.contains(where: { $0.id == word.id }) {
+                            store.dispatch(.updateSentenceIndex(sentenceIndex))
+                            break
+                        }
+                    }
+                }
+                
                 store.dispatch(.selectWord(word))
                 if store.state.settingsState.isShowingDefinition {
                     store.dispatch(.defineCharacter(word, shouldForce: false))

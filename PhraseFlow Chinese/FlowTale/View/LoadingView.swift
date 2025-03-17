@@ -26,7 +26,7 @@ struct LoadingView: View {
     @ViewBuilder
     func progressView(checkIfComplete completeState: LoadingState) -> some View {
         Group {
-            if store.state.viewState.loadingState.progressInt > completeState.progressInt {
+            if case .loading(let loadingState) = store.state.storyState.readerDisplayType,  loadingState.progressInt > completeState.progressInt {
                 Text("✅")
             } else {
                 ProgressView()

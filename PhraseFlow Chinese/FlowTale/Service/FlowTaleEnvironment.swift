@@ -12,16 +12,9 @@ protocol FlowTaleEnvironmentProtocol {
     func synthesizeSpeech(for chapter: Chapter,
                           story: Story,
                           voice: Voice,
-                          language: Language) async throws -> ChapterAudio
+                          language: Language) async throws -> Chapter
     func getProducts() async throws -> [Product]
     func generateStory(story: Story, deviceLanguage: Language?) async throws -> Story
-
-    // Definitions
-    func loadDefinitions() throws -> [Definition]
-    func loadDefinitions(for storyId: UUID) throws -> [Definition]
-    func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws
-    func deleteDefinitions(for storyId: UUID) throws
-    func cleanupOrphanedDefinitionFiles() throws
     
     // Settings
     func loadAppSettings() throws -> SettingsState
@@ -61,13 +54,12 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         self.service = FlowTaleServices()
         self.dataStore = FlowTaleDataStore()
         self.repository = FlowTaleRepository()
-        try? cleanupOrphanedDefinitionFiles()
     }
 
     func synthesizeSpeech(for chapter: Chapter,
                           story: Story,
                           voice: Voice,
-                          language: Language) async throws -> ChapterAudio {
+                          language: Language) async throws -> Chapter {
         try await repository.synthesizeSpeech(chapter,
                                               story: story,
                                               voice: voice,
@@ -112,26 +104,6 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
 
     func unsaveStory(_ story: Story) throws {
         try dataStore.unsaveStory(story)
-    }
-
-    func loadDefinitions() throws -> [Definition] {
-        try dataStore.loadDefinitions()
-    }
-    
-    func loadDefinitions(for storyId: UUID) throws -> [Definition] {
-        try dataStore.loadDefinitions(for: storyId)
-    }
-    
-    func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws {
-        try dataStore.saveDefinitions(for: storyId, definitions: definitions)
-    }
-
-    func deleteDefinitions(for storyId: UUID) throws {
-        try dataStore.deleteDefinitions(for: storyId)
-    }
-    
-    func cleanupOrphanedDefinitionFiles() throws {
-        try dataStore.cleanupOrphanedDefinitionFiles()
     }
 
     func loadAppSettings() throws -> SettingsState {

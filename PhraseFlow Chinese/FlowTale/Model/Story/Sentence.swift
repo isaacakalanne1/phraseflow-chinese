@@ -8,13 +8,35 @@
 import Foundation
 
 struct Sentence: Codable, Equatable, Hashable {
-    let translation: String
+    var id: UUID
+    var chapterId: UUID
+    var chapterIndex: Int
+    var translation: String
     let original: String
+    var wordTimestamps: [WordTimeStampData]
 
-    init(translation: String,
-         english: String) {
+    init(chapterId: UUID,
+         chapterIndex: Int,
+         translation: String,
+         original: String,
+         wordTimestamps: [WordTimeStampData] = []) {
+        self.id = UUID()
+        self.chapterId = chapterId
+        self.chapterIndex = chapterIndex
         self.translation = translation
-        self.original = english
+        self.original = original
+        self.wordTimestamps = wordTimestamps
+        self.chapterId = UUID()
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = (try? container.decode(UUID.self, forKey: .translation)) ?? UUID()
+        self.chapterId = (try? container.decode(UUID.self, forKey: .translation)) ?? UUID()
+        self.chapterIndex = (try? container.decode(Int.self, forKey: .chapterIndex)) ?? 0
+        self.translation = try container.decode(String.self, forKey: .translation)
+        self.original = try container.decode(String.self, forKey: .original)
+        self.wordTimestamps = (try? container.decode([WordTimeStampData].self, forKey: .wordTimestamps)) ?? []
     }
 }
 

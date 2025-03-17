@@ -10,17 +10,23 @@ import Charts
 
 // MARK: - Main View
 struct DefinitionsChartView: View {
-    @EnvironmentObject var store: FlowTaleStore  // Replace with your own logic
+    @EnvironmentObject var store: FlowTaleStore
+    
+    // We still need the definitions for some validation logic
     let definitions: [Definition]
+    
+    // These values come directly from WordTimeStampData
+    let chartData: [DailyCreationAndStudyStats]
+    let todayCreationCount: Int
+    let todayStudiedCount: Int
+    
     let isCreations: Bool
 
     var body: some View {
-        // 1) Compute dailyCumulativeCount. You might do this in your store or here:
-        // Example: let dailyCumulativeCount = makeDailyCumulativeCount(from: definitions)
-        // But in your code, you said you have:
-        let dailyCumulativeCount = store.state.definitionState.dailyCreationAndStudyCumulative(from: definitions)
+        // Use the chartData passed directly from DefinitionsProgressView
+        let dailyCumulativeCount = chartData
 
-        // 2) Get the maximum cumulative count
+        // Get the maximum cumulative count
         let maxCount = dailyCumulativeCount
             .map { isCreations ? $0.cumulativeCreations : $0.cumulativeStudied }
             .max() ?? 0
@@ -78,9 +84,9 @@ struct DefinitionsChartView: View {
             // Get the start of today
             let todayStart = calendar.startOfDay(for: now)
             
-            // Get counts for today
-            let todayCreations = store.state.definitionState.dailyCreationCount(from: definitions)
-            let todayStudied = store.state.definitionState.dailyStudiedCount(from: definitions)
+            // Use the todayCreations and todayStudied counts passed directly to the view
+            let todayCreations = todayCreationCount
+            let todayStudied = todayStudiedCount
             
             if dailyCumulativeCount.isEmpty {
                 // Case 1: No historical data points - just show today's data with a point at start of day

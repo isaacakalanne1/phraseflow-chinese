@@ -20,14 +20,14 @@ struct ChapterView: View {
                 scrollView(story: story, proxy: proxy)
                 // 2) Whenever the highlighted word changes, scroll if auto-scroll is still enabled
                 .onChange(of: store.state.viewState.isAutoscrollEnabled) {
-                    guard let newWord = store.state.currentSpokenWord else { return }
+                    guard let newWord = store.state.storyState.currentSpokenWord else { return }
                     scrollToCurrentWord(newWord, proxy: proxy)
                 }
-                .onChange(of: store.state.currentSpokenWord, { oldWord, newWord in
-                    guard let newWord = newWord,
-                          oldWord?.sentenceIndex != newWord.sentenceIndex else { return }
-                    scrollToCurrentWord(newWord, proxy: proxy)
-                })
+                .onChange(of: store.state.storyState.currentSpokenWord) {
+                    if let word = store.state.storyState.currentSpokenWord {
+                        scrollToCurrentWord(word, proxy: proxy)
+                    }
+                }
             }
         }
     }
@@ -46,14 +46,13 @@ struct ChapterView: View {
     @ViewBuilder
     func scrollView(story: Story, proxy: ScrollViewProxy) -> some View {
         ScrollView(.vertical) {
-            ForEach(0...(chapter.audio.timestamps.last?.sentenceIndex ?? 0),
-                    id: \.self) { sentenceIdx in
-                let sentenceWords = chapter.audio.timestamps.filter({ $0.sentenceIndex == sentenceIdx })
+            ForEach(Array(chapter.sentences.enumerated()), id: \.offset) { sentenceIdx, sentence in
+                let sentenceWords = sentence.wordTimestamps
 
                 FlowLayout(spacing: 0, language: story.language) {
                     ForEach(Array(sentenceWords.enumerated()), id: \.offset) { index, word in
                         CharacterView(
-                            isHighlighted: word == store.state.currentSpokenWord,
+                            isHighlighted: word == store.state.storyState.currentSpokenWord,
                             word: word
                         )
                         // Give each word a unique ID so we can scroll to it
@@ -71,22 +70,19 @@ struct ChapterView: View {
                 if doesNextChapterExist {
                     store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
                     store.dispatch(.playSound(.goToNextChapter))
-                    store.dispatch(.goToNextChapter)
                 } else {
-                    // Show the writing chapter snackbar while creating new chapter
-                    store.dispatch(.showSnackBar(.writingChapter))
-                    store.dispatch(.createChapter(.existingStory(story)))
+                    store.dispatch(.snackBarAction(.showSnackBar(.writingChapter)))
                 }
+                let storyAction: StoryAction = doesNextChapterExist ? .goToNextChapter : .createChapter(.existingStory(story))
+                store.dispatch(.storyAction(storyAction))
             }
-            // Disable button if currently writing a chapter
-            .disabled(store.state.viewState.isWritingChapter)
+            .disabled(store.state.storyState.isCreatingChapter)
         }
         .onAppear {
             opacity = 1
-            // Check for silent mode when the chapter view appears
             store.dispatch(.checkDeviceVolumeZero)
 
-            guard let newWord = store.state.currentSpokenWord else { return }
+            guard let newWord = store.state.storyState.currentSpokenWord else { return }
             scrollToCurrentWord(newWord, proxy: proxy, isForced: true)
         }
         .simultaneousGesture(

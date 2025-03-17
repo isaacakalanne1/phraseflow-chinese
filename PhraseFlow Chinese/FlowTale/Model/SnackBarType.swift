@@ -119,13 +119,13 @@ enum SnackBarType: Equatable {
     }
 
     func action(store: FlowTaleStore) {
-        store.dispatch(.hideSnackbar)
+        store.dispatch(.snackBarAction(.hideSnackbar))
         switch self {
         case .storyReadyTapToRead:
             // Load the newest story and set it as current when tapped
             if let newStory = store.state.storyState.savedStories.first {
                 store.dispatch(.selectTab(.reader, shouldPlaySound: true))
-                store.dispatch(.selectStoryFromSnackbar(newStory))
+                store.dispatch(.storyAction(.selectStoryFromSnackbar(newStory)))
             }
         case .writingChapter:
             // Do nothing when tapping writing chapter
@@ -134,7 +134,7 @@ enum SnackBarType: Equatable {
             // When a chapter is ready, if there's no current story set, set the newest one
             if store.state.storyState.currentStory == nil, 
                let newStory = store.state.storyState.savedStories.first {
-                store.dispatch(.selectStoryFromSnackbar(newStory))
+                store.dispatch(.storyAction(.selectStoryFromSnackbar(newStory)))
             }
         case .subscribed,
                 .moderatingText,

@@ -7,26 +7,6 @@
 
 import SwiftUI
 
-struct StoryPromptOnboardingView: View {
-    @State private var navigateToVoice = false
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            StoryPromptMenu()
-            
-            PrimaryButton(title: LocalizedString.next) {
-                navigateToVoice = true
-            }
-            .padding(.horizontal)
-            .padding(.bottom)
-        }
-        .background(FlowTaleColor.background)
-        .navigationDestination(isPresented: $navigateToVoice) {
-            VoiceOnboardingView()
-        }
-    }
-}
-
 struct StoryPromptMenu: View {
     @EnvironmentObject var store: FlowTaleStore
     @Environment(\.dismiss) var dismiss
@@ -70,7 +50,7 @@ struct StoryPromptMenu: View {
                                 }
                             }
                         )
-                        .disabled(store.state.viewState.isWritingChapter)
+                        .disabled(store.state.storyState.isCreatingChapter)
 
                         // Create Custom Story Button
                         ImageSelectionButton(
@@ -85,7 +65,7 @@ struct StoryPromptMenu: View {
                                 }
                             }
                         )
-                        .disabled(store.state.viewState.isWritingChapter)
+                        .disabled(store.state.storyState.isCreatingChapter)
 
                         // Previously Created Custom Stories
                         ForEach(store.state.settingsState.customPrompts, id: \.self) { prompt in
@@ -110,7 +90,7 @@ struct StoryPromptMenu: View {
                                     }
                                 }
                             )
-                            .disabled(store.state.viewState.isWritingChapter)
+                            .disabled(store.state.storyState.isCreatingChapter)
                             .contextMenu {
                                 Button(role: .destructive) {
                                     store.dispatch(.deleteCustomPrompt(prompt))
@@ -150,7 +130,7 @@ struct StoryPromptMenu: View {
     }
 
     private func submitCustomPrompt() {
-        store.dispatch(.showSnackBar(.moderatingText))
+        store.dispatch(.snackBarAction(.showSnackBar(.moderatingText)))
         store.dispatch(.updateIsShowingCustomPromptAlert(false))
         store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))
     }

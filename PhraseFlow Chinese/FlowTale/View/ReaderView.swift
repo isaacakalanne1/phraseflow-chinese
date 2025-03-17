@@ -66,8 +66,8 @@ struct ReaderView: View {
     @ViewBuilder
     func audioButton(chapter: Chapter) -> some View {
         let buttonSize: CGFloat = 50
-        if store.state.viewState.readerDisplayType == .normal {
-            if store.state.audioState.isPlayingAudio == true {
+        if store.state.storyState.readerDisplayType == .normal {
+            if store.state.storyState.isPlayingAudio == true {
                 Button {
                     store.dispatch(.pauseAudio)
                 } label: {
@@ -75,8 +75,9 @@ struct ReaderView: View {
                 }
             } else {
                 Button {
-                    let timestamps = chapter.audio.timestamps
-                    let currentSpokenWord = store.state.currentSpokenWord ?? timestamps.first
+                    // Flatten timestamps from all sentences
+                    let timestamps = chapter.sentences.flatMap { $0.wordTimestamps }
+                    let currentSpokenWord = store.state.storyState.currentSpokenWord ?? timestamps.first
                     store.dispatch(.playAudio(time: currentSpokenWord?.time))
                     store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
                 } label: {
