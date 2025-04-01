@@ -11,11 +11,14 @@ struct ChapterListView: View {
     @EnvironmentObject var store: FlowTaleStore
     let storyId: UUID
 
+    // A computed property that looks up the current story from the store.
+    // If it's not found, this can be nil (or handle accordingly).
     private var story: Story? {
         store.state.storyState.savedStories.first(where: { $0.id == storyId })
     }
 
     var body: some View {
+        // We can unwrap the story or show an error/empty view if not found
         if let story = story {
             VStack(spacing: 5) {
                 GeometryReader { proxy in
@@ -49,6 +52,7 @@ struct ChapterListView: View {
                 }
                 .padding()
 
+                // MARK: - Show Spinner if We're Loading & No Chapters Yet
                 List {
                     Section {
                         ForEach(Array(story.chapters.reversed().enumerated()), id: \.offset) { (index, chapter) in
@@ -56,7 +60,7 @@ struct ChapterListView: View {
                                 withAnimation(.easeInOut) {
                                     store.dispatch(.playSound(.openChapter))
                                     let chapterIndex = story.chapters.count - 1 - index
-                                    store.dispatch(.storyAction(.selectChapter(story, chapterIndex: chapterIndex)))
+                                    store.dispatch(.selectChapter(story, chapterIndex: chapterIndex))
                                 }
                             } label: {
                                 Text(chapter.title)
@@ -70,10 +74,13 @@ struct ChapterListView: View {
                 .frame(maxHeight: .infinity)
 
                 MainButton(title: LocalizedString.newChapter.uppercased()) {
-                    store.dispatch(.snackBarAction(.showSnackBar(.writingChapter)))
-                    store.dispatch(.storyAction(.createChapter(.existingStory(story))))
+                    // Show the writing chapter snackbar instead of redirecting to reader tab
+                    store.dispatch(.showSnackBar(.writingChapter))
+                    // Create the chapter but stay on current screen
+                    store.dispatch(.createChapter(.existingStory(story)))
                 }
-                .disabled(store.state.storyState.isCreatingChapter)
+                // Disable button if currently writing a chapter
+                .disabled(store.state.viewState.isWritingChapter)
                 .padding()
                 // TODO: Add Settings button to change voice
             }
@@ -83,11 +90,13 @@ struct ChapterListView: View {
             .onAppear {
                 store.dispatch(.playSound(.openStory))
 
+                // If the chapters are empty, start loading
                 if story.chapters.isEmpty {
-                    store.dispatch(.storyAction(.loadChapters(story, isAppLaunch: false)))
+                    store.dispatch(.loadChapters(story, isAppLaunch: false))
                 }
             }
         } else {
+            // If no story found in store, show message
             Text(LocalizedString.chapterListStoryNotFound)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(FlowTaleColor.background)

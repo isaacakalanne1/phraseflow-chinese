@@ -27,7 +27,7 @@ struct ContentView: View {
                     .foregroundStyle(FlowTaleColor.primary)
             }
             Group {
-                switch store.state.storyState.readerDisplayType {
+                switch store.state.viewState.readerDisplayType {
                 case .initialising:
                     ProgressView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -40,7 +40,7 @@ struct ContentView: View {
                     }
                 }
             }
-            if store.state.storyState.readerDisplayType != .initialising,
+            if store.state.viewState.readerDisplayType != .loading,
                store.state.storyState.currentChapter != nil {
                 Divider()
                     .padding(.horizontal, 10)
@@ -56,10 +56,9 @@ struct ContentView: View {
                 .presentationDragIndicator(.hidden)
                 .presentationDetents([.fraction(0.8)])
         }
-        .onChange(of: store.state.storyState.readerDisplayType) { oldValue, newValue in
-            if case .loading(let loadingState) = newValue,
-               loadingState != .complete,
-               loadingState != .writing {
+        .onChange(of: store.state.viewState.loadingState) { oldValue, newValue in
+            if newValue != .complete,
+               newValue != .writing {
                 store.dispatch(.playSound(.progressUpdate))
             }
         }
@@ -86,22 +85,26 @@ struct ContentView: View {
 
         switch store.state.viewState.contentTab {
         case .reader:
-            if case .loading = store.state.storyState.readerDisplayType {
+            if store.state.viewState.readerDisplayType == .loading {
                 LoadingView()
-            } else if let _ = store.state.storyState.currentStory,
-                      let chapter = store.state.storyState.currentChapter {
-                NavigationStack {
-                    ReaderView(chapter: chapter)
-                        .navigationDestination(
-                            isPresented: isShowingDailyLimitExplanationScreen
-                        ) {
-                            DailyLimitExplanationView()
-                        }
-                        .navigationDestination(
-                            isPresented: isShowingFreeLimitExplanationScreen
-                        ) {
-                            FreeLimitExplanationView()
-                        }
+            } else if let _ = store.state.storyState.currentStory {
+                if let chapter = store.state.storyState.currentChapter {
+                    NavigationStack {
+                        ReaderView(chapter: chapter)
+                            .navigationDestination(
+                                isPresented: isShowingDailyLimitExplanationScreen
+                            ) {
+                                DailyLimitExplanationView()
+                            }
+                            .navigationDestination(
+                                isPresented: isShowingFreeLimitExplanationScreen
+                            ) {
+                                FreeLimitExplanationView()
+                            }
+                    }
+                } else {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             } else {
                 // If no currentStory or no chapters, show Onboarding
@@ -126,7 +129,7 @@ struct ContentView: View {
 
         case .progress:
             NavigationStack {
-                DefinitionsProgressView()
+                DefinitionsProgressSheetView()
             }
 
         case .subscribe:
@@ -163,7 +166,8 @@ struct ContentView: View {
     // MARK: - Timer
     func startTimer() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            if store.state.storyState.audioPlayer.rate != 0 || store.state.studyState.audioPlayer.rate != 0 {
+            // Handle music volume changes based on audio playback
+            if store.state.audioState.audioPlayer.rate != 0 || store.state.studyState.audioPlayer.rate != 0 {
                 if store.state.musicAudioState.volume == .normal {
                     store.dispatch(.setMusicVolume(.quiet))
                 }
@@ -172,19 +176,36 @@ struct ContentView: View {
                     store.dispatch(.setMusicVolume(.normal))
                 }
             }
-
-            if store.state.storyState.isPlayingAudio {
+            
+            // Update play time for audio state
+            if store.state.audioState.isPlayingAudio {
                 store.dispatch(.updatePlayTime)
             }
-
+            
+            // Check if music needs to be advanced to next track
             if store.state.settingsState.isPlayingMusic,
                store.state.musicAudioState.isNearEndOfTrack {
+                // Music has finished - play next track
                 let currentMusic = store.state.musicAudioState.currentMusicType
                 let nextMusic = MusicType.next(after: currentMusic)
                 store.dispatch(.playMusic(nextMusic))
             }
-
+            
+            // Continue timer
             startTimer()
+        }
+    }
+}
+
+enum MusicVolume {
+    case normal, quiet
+
+    var float: Float {
+        switch self {
+        case .normal:
+            0.5
+        case .quiet:
+            0.15
         }
     }
 }

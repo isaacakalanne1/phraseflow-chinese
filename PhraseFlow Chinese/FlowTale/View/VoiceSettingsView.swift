@@ -7,6 +7,19 @@
 
 import SwiftUI
 
+struct VoiceOnboardingView: View {
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            VoiceMenu()
+            CreateStoryButton()
+                .padding(.horizontal)
+                .padding(.bottom)
+        }
+        .background(FlowTaleColor.background)
+    }
+}
+
 struct VoiceMenu: View {
     @EnvironmentObject var store: FlowTaleStore
     @Environment(\.dismiss) var dismiss
@@ -43,7 +56,7 @@ struct VoiceMenu: View {
                                     }
                                 }
                             )
-                            .disabled(store.state.storyState.isCreatingChapter)
+                            .disabled(store.state.viewState.isWritingChapter)
                         }
                     }
                 } header: {

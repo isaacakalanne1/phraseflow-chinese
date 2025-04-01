@@ -8,13 +8,29 @@
 import Foundation
 
 struct DefinitionState {
-    var currentWord: WordTimeStampData?
-    var studySentences: [Sentence] = []
+    var currentDefinition: Definition?
+    var definitions: [Definition]
 
-    init(currentWord: WordTimeStampData? = nil, studySentences: [Sentence] = []) {
-        self.currentWord = currentWord
-        self.studySentences = studySentences
+    func studyDefinitions(language: Language?) -> [Definition] {
+        definitions
+            .filter {
+                $0.language == language &&
+                !$0.timestampData.word.trimmingCharacters(in: CharacterSet.punctuationCharacters).isEmpty &&
+                $0.hasBeenSeen
+            }
+            .sorted(by: { $0.creationDate > $1.creationDate })
     }
+
+    init(currentDefinition: Definition? = nil,
+         definitions: [Definition] = []) {
+        self.currentDefinition = currentDefinition
+        self.definitions = definitions
+    }
+
+    func definition(timestampData: WordTimeStampData, in sentence: Sentence) -> Definition? {
+        definitions.first(where: { $0.timestampData == timestampData && $0.sentence == sentence })
+    }
+
 }
 
 struct DailyCreationAndStudyStats: Identifiable {

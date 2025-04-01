@@ -14,11 +14,16 @@ struct LanguageOnboardingView: View {
         VStack(spacing: 0) {
             LanguageMenu()
             
-            CreateStoryButton()
-                .padding(.horizontal)
-                .padding(.bottom)
+            PrimaryButton(title: LocalizedString.next) {
+                navigateToDifficulty = true
+            }
+            .padding(.horizontal)
+            .padding(.bottom)
         }
         .background(FlowTaleColor.background)
+        .navigationDestination(isPresented: $navigateToDifficulty) {
+            DifficultyOnboardingView()
+        }
     }
 }
 
@@ -54,7 +59,7 @@ struct LanguageMenu: View {
                                     }
                                 }
                             )
-                            .disabled(store.state.storyState.isCreatingChapter)
+                            .disabled(store.state.viewState.isWritingChapter)
                         }
                     }
                 } header: {

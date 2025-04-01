@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ChapterAudio: Codable, Equatable, Hashable {
+    let timestamps: [WordTimeStampData]
     let data: Data
 }
 

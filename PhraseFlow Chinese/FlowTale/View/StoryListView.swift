@@ -133,7 +133,7 @@ struct StoryListView: View {
         guard let index = offsets.first,
               let story = visibleStories[safe: index] else { return }
         
-        store.dispatch(.storyAction(.deleteStory(story)))
+        store.dispatch(.deleteStory(story))
     }
 
 }

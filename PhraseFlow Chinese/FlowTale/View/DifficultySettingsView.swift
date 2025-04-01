@@ -7,6 +7,26 @@
 
 import SwiftUI
 
+struct DifficultyOnboardingView: View {
+    @State private var navigateToStoryPrompt = false
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            DifficultyMenu()
+            
+            PrimaryButton(title: LocalizedString.next) {
+                navigateToStoryPrompt = true
+            }
+            .padding(.horizontal)
+            .padding(.bottom)
+        }
+        .background(FlowTaleColor.background)
+        .navigationDestination(isPresented: $navigateToStoryPrompt) {
+            StoryPromptOnboardingView()
+        }
+    }
+}
+
 struct DifficultyMenu: View {
     @EnvironmentObject var store: FlowTaleStore
     @Environment(\.dismiss) var dismiss
@@ -38,7 +58,7 @@ struct DifficultyMenu: View {
                                     }
                                 }
                             )
-                            .disabled(store.state.storyState.isCreatingChapter)
+                            .disabled(store.state.viewState.isWritingChapter)
                         }
                     }
                 } header: {

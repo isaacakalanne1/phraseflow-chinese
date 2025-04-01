@@ -7,45 +7,39 @@
 
 import Foundation
 
-// Forward declaration for Definition struct (defined in Definition.swift)
-
 struct WordTimeStampData: Codable, Equatable, Hashable {
     let id: UUID
     let storyId: UUID
-    let sentenceId: UUID
+    let chapterIndex: Int
     var word: String
     let time: Double
     var duration: Double
-    var definition: Definition?
-    var hasBeenSeen: Bool = false
+    var sentenceIndex: Int
 
     init(id: UUID,
          storyId: UUID,
-         sentenceId: UUID,
+         chapterIndex: Int,
          word: String,
          time: Double,
          duration: Double,
-         definition: Definition? = nil,
-         hasBeenSeen: Bool = false) {
+         sentenceIndex: Int) {
         self.id = id
         self.storyId = storyId
-        self.sentenceId = sentenceId
+        self.chapterIndex = chapterIndex
         self.word = word
         self.time = time
         self.duration = duration
-        self.definition = definition
-        self.hasBeenSeen = hasBeenSeen
+        self.sentenceIndex = sentenceIndex
     }
 
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = (try? container.decode(UUID.self, forKey: .id)) ?? UUID()
         self.storyId = (try? container.decode(UUID.self, forKey: .storyId)) ?? UUID()
-        self.sentenceId = (try? container.decode(UUID.self, forKey: .sentenceId)) ?? UUID()
+        self.chapterIndex = (try? container.decode(Int.self, forKey: .chapterIndex)) ?? 0
         self.word = try container.decode(String.self, forKey: .word)
         self.time = try container.decode(Double.self, forKey: .time)
         self.duration = try container.decode(Double.self, forKey: .duration)
-        self.definition = try? container.decodeIfPresent(Definition.self, forKey: .definition)
-        self.hasBeenSeen = (try? container.decode(Bool.self, forKey: .hasBeenSeen)) ?? false
+        self.sentenceIndex = try container.decode(Int.self, forKey: .sentenceIndex)
     }
 }

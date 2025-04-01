@@ -12,7 +12,7 @@ struct DefinitionView: View {
 
     var body: some View {
         VStack(spacing: 5) {
-            Text(LocalizedString.definitionOf(store.state.definitionState.currentWord?.word ?? "..."))
+            Text(LocalizedString.definitionOf(store.state.definitionState.currentDefinition?.timestampData.word ?? "..."))
                 .greyBackground()
             HStack {
                 if store.state.viewState.isDefining {
@@ -22,15 +22,15 @@ struct DefinitionView: View {
                                alignment: .center)
                 } else {
                     Group {
-                        if let word = store.state.definitionState.currentWord {
+                        if let definition = store.state.definitionState.currentDefinition {
                             ScrollView(.vertical) {
                                 VStack(alignment: .leading) {
                                     HStack(alignment: .top) {
-                                        Text(LocalizedString.studyDefinitionPrefix + (word.definition?.detail.definition ?? ""))
+                                        Text(LocalizedString.studyDefinitionPrefix + definition.detail.definition)
                                             .frame(maxWidth: .infinity, alignment: .leading)
-                                        Text(LocalizedString.studyPronunciationPrefix + (word.definition?.detail.pronunciation ?? ""))
+                                        Text(LocalizedString.studyPronunciationPrefix + definition.detail.pronunciation)
                                     }
-                                    Text(LocalizedString.studyContextPrefix + (word.definition?.detail.definitionInContextOfSentence ?? ""))
+                                    Text(LocalizedString.studyContextPrefix + definition.detail.definitionInContextOfSentence)
                                 }
                                 .frame(maxWidth: .infinity,
                                        maxHeight: .infinity,
@@ -38,12 +38,12 @@ struct DefinitionView: View {
                             }
                             VStack {
                                 Button {
-                                    store.dispatch(.playWord(word, story: store.state.storyState.currentStory))
+                                    store.dispatch(.playWord(definition.timestampData, story: store.state.storyState.currentStory))
                                 } label: {
                                     SystemImageView(.speaker)
                                 }
                                 Button {
-                                    store.dispatch(.defineCharacter(word, shouldForce: true))
+                                    store.dispatch(.defineCharacter(definition.timestampData, shouldForce: true))
                                 } label: {
                                     SystemImageView(._repeat)
                                 }

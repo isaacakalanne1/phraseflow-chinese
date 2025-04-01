@@ -170,16 +170,17 @@ struct CreateStoryButton: View {
 
             if hasExistingStories {
                 // For existing users, show a snackbar with loading and stay on current view
-                store.dispatch(.snackBarAction(.showSnackBar(.writingChapter)))
-                store.dispatch(.storyAction(.createChapter(.newStory)))
+                store.dispatch(.showSnackBar(.writingChapter))
+                store.dispatch(.createChapter(.newStory))
             } else {
                 // For new users, use the original flow with full screen loading
                 store.dispatch(.playSound(.largeBoom))
                 store.dispatch(.selectTab(.reader, shouldPlaySound: false))
-                store.dispatch(.storyAction(.createChapter(.newStory)))
+                store.dispatch(.createChapter(.newStory))
             }
         }
-        .disabled(store.state.storyState.isCreatingChapter)
+        // Disable button if currently writing a chapter
+        .disabled(store.state.viewState.isWritingChapter)
     }
 }
 

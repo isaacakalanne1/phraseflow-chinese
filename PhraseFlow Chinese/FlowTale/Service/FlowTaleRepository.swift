@@ -15,7 +15,7 @@ protocol FlowTaleRepositoryProtocol {
     func synthesizeSpeech(_ chapter: Chapter,
                           story: Story,
                           voice: Voice,
-                          language: Language) async throws -> Chapter
+                          language: Language) async throws -> ChapterAudio
     func getProducts() async throws -> [Product]
     func purchase(_ product: Product) async throws
     func validateAppStoreReceipt()
@@ -41,7 +41,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
     func synthesizeSpeech(_ chapter: Chapter,
                           story: Story,
                           voice: Voice,
-                          language: Language) async throws -> Chapter {
+                          language: Language) async throws -> ChapterAudio {
 
         let synthesizer: SPXSpeechSynthesizer
         do {
@@ -59,8 +59,6 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
 
         // Keep track of "sentence" boundaries if you rely on `sentenceMarker`.
         var sentenceIndex = -1
-
-        var updatedChapter = chapter
 
         // Reset the speech mark counter each time we start a new synthesis
         speechMarkCounter = 0
@@ -85,13 +83,8 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
             // 3. Check for sentence markers (if you use them to increment sentenceIndex).
             var cleanedWord = finalWord
             if cleanedWord.contains(self.sentenceMarker) {
-                cleanedWord = cleanedWord.replacingOccurrences(of: self.sentenceMarker, with: "")
-                if sentenceIndex >= 0,
-                   updatedChapter.sentences.count > sentenceIndex {
-                    updatedChapter.sentences[sentenceIndex].wordTimestamps = wordTimestamps
-                    wordTimestamps = []
-                }
                 sentenceIndex += 1
+                cleanedWord = cleanedWord.replacingOccurrences(of: self.sentenceMarker, with: "")
             }
 
             // 4. Update the previous timestamp's duration before adding a new one
@@ -100,15 +93,15 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
                 wordTimestamps[index] = previousTimestamp
             }
 
-            // 5. Add the new timestamp (sentenceIndex stored in the outer var will be used later for grouping)
-            let sentenceId = chapter.sentences[safe: sentenceIndex].map({ $0.id }) ?? UUID()
+            // 5. Add the new timestamp
             let newTimestamp = WordTimeStampData(
                 id: UUID(),
                 storyId: story.id,
-                sentenceId: sentenceId,
+                chapterIndex: story.currentChapterIndex,
                 word: cleanedWord,
                 time: audioTimeInSeconds,
-                duration: event.duration
+                duration: event.duration,
+                sentenceIndex: sentenceIndex
             )
             wordTimestamps.append(newTimestamp)
             index += 1
@@ -126,9 +119,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
                 throw NSError(domain: "SpeechSynthesis", code: -1, userInfo: [NSLocalizedDescriptionKey: errorDetails])
             }
 
-            updatedChapter.audioData = audioData
-
-            return updatedChapter
+            return ChapterAudio(timestamps: wordTimestamps, data: audioData)
         } catch {
             throw error
         }
@@ -228,24 +219,6 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
         return word
     }
 
-    // MARK: - Helpers
-    
-    /// Determines the sentence index for a timestamp based on sentence markers in the word sequence
-    private func getSentenceIndex(for wordIndex: Int, in timestamps: [WordTimeStampData]) -> Int {
-        // For each word that contains a sentence marker, we increment the sentence index
-        // So we need to count how many words with markers appear before this word
-        var sentenceCount = 0
-        
-        for i in 0..<wordIndex {
-            let word = timestamps[i].word
-            if word.contains(sentenceMarker) {
-                sentenceCount += 1
-            }
-        }
-        
-        return sentenceCount
-    }
-    
     // MARK: - SSML Generation
 
     private func createSpeechSsml(chapter: Chapter,

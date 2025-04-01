@@ -11,9 +11,16 @@ struct ActionButtonsView: View {
     @EnvironmentObject var store: FlowTaleStore
 
     var body: some View {
-        VStack(alignment: .center) {
+
+        var tabs = ContentTab.allCases
+        if store.state.definitionState.definitions.isEmpty,
+           let progressIndex = tabs.firstIndex(of: .progress) {
+            tabs.remove(at: progressIndex)
+        }
+
+        return VStack(alignment: .center) {
             HStack(spacing: 12) {
-                ForEach(ContentTab.allCases) { tab in
+                ForEach(tabs) { tab in
                     let isSelected = store.state.viewState.contentTab == tab
                     VStack(spacing: 4) {
                         ActionButton(systemImage: tab.image(isSelected: isSelected),

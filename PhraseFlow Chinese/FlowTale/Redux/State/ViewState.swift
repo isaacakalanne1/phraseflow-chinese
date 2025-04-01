@@ -24,8 +24,15 @@ struct ViewState {
 
     var isAutoscrollEnabled = false
     var isDefining = false
+    
+    // Flag to track if a chapter is currently being written
+    var isWritingChapter = false
 
+    var readerDisplayType: ReaderDisplayType
     var contentTab: ContentTab
+
+    var loadingState: LoadingState
+    var shouldShowImageSpinner = false
 
     init(definitionViewId: UUID = UUID(),
          chapterViewId: UUID = UUID(),
@@ -35,8 +42,11 @@ struct ViewState {
          isShowingCustomPromptAlert: Bool = false,
          isAutoscrollEnabled: Bool = false,
          isDefining: Bool = false,
+         isWritingChapter: Bool = false,
          readerDisplayType: ReaderDisplayType = .initialising,
-         contentTab: ContentTab = .reader) {
+         contentTab: ContentTab = .reader,
+         loadingState: LoadingState = .complete,
+         shouldShowImageSpinner: Bool = false) {
         self.definitionViewId = definitionViewId
         self.chapterViewId = chapterViewId
         self.translationViewId = translationViewId
@@ -45,6 +55,10 @@ struct ViewState {
         self.isShowingCustomPromptAlert = isShowingCustomPromptAlert
         self.isAutoscrollEnabled = isAutoscrollEnabled
         self.isDefining = isDefining
+        self.isWritingChapter = isWritingChapter
+        self.readerDisplayType = readerDisplayType
         self.contentTab = contentTab
+        self.loadingState = loadingState
+        self.shouldShowImageSpinner = shouldShowImageSpinner
     }
 }

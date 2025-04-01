@@ -10,15 +10,6 @@ import Foundation
 enum CreateChapterType {
     case newStory
     case existingStory(Story)
-
-    var story: Story? {
-        switch self {
-        case .existingStory(let story):
-            return story
-        case .newStory:
-            return nil
-        }
-    }
 }
 
 struct WordDefinition: Codable, Equatable, Hashable {
@@ -36,7 +27,6 @@ enum FlowTaleServicesError: Error {
     case failedToEncodeJson
     case failedToDecodeJson
     case failedToDecodeSentences
-    case invalidSentenceIndex
 }
 
 enum FluxImageError: Error {
@@ -233,22 +223,19 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
                 }
             })
             let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
-            let chapterId = UUID()
             let sentences = chapterResponse.sentences.map(
                 {
-                    var sentence = $0
+                    var translation = $0.translation
                     if story.language == .mandarinChinese {
-                        sentence.translation = sentence.translation.replacingOccurrences(of: " ", with: "")
+                        translation = translation.replacingOccurrences(of: " ", with: "")
                     }
-                    sentence.chapterId = chapterId
-                    sentence.chapterIndex = story.chapters.count
-                    return sentence
+                    return Sentence(translation: translation, english: $0.original)
                 }
             )
             let passage = sentences.reduce("", { $0 + $1.original })
-            let chapter = Chapter(id: chapterId,
-                                  title: chapterResponse.chapterNumberAndTitle ?? "",
+            let chapter = Chapter(title: chapterResponse.chapterNumberAndTitle ?? "",
                                   sentences: sentences,
+                                  audio: .init(timestamps: [], data: Data()),
                                   passage: passage)
 
             var story = story
@@ -282,12 +269,9 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
             throw FlowTaleServicesError.failedToGetDeviceLanguage
         }
 
-        // Make sure sentenceIndex is within bounds
-        guard sentenceIndex < chapter.sentences.count else {
-            throw FlowTaleServicesError.invalidSentenceIndex
+        let matchingTimestamps = chapter.audio.timestamps.filter {
+            $0.sentenceIndex == sentenceIndex
         }
-        
-        let matchingTimestamps = chapter.sentences[sentenceIndex].wordTimestamps
 
         guard !matchingTimestamps.isEmpty else {
             // No words found for that sentence
@@ -356,10 +340,18 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
         let finalDefinitions: [Definition] = zip(matchingTimestamps.prefix(minCount),
                                                  wordDefinitions.prefix(minCount))
           .map { (timeStamp, wordDef) -> Definition in
+              let fullDefinitionText = """
+              🗣️ \(wordDef.pronunciation)
+              ✏️ \(wordDef.definition)
+              🌎 \(wordDef.definitionInContextOfSentence)
+              """
               return Definition(
                   creationDate: Date(),
                   studiedDates: [],
+                  timestampData: timeStamp,
+                  sentence: sentence,
                   detail: wordDef,
+                  definition: fullDefinitionText,
                   language: story.language
               )
           }

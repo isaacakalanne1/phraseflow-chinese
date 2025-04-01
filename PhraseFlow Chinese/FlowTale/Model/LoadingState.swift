@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum LoadingState: Equatable {
+enum LoadingState {
     case complete, writing, generatingImage, generatingSpeech
 
     var progressInt: Int {

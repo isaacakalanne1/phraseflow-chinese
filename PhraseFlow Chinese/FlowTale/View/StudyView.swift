@@ -10,30 +10,30 @@ import SwiftUI
 struct StudyView: View {
     @EnvironmentObject var store: FlowTaleStore
 
-    var studyWords: [StudyWord]
-
-    init(studyWords: [StudyWord]) {
-        self.studyWords = studyWords
+    var studyWords: [Definition] {
+        let language = store.state.storyState.currentStory?.language
+        return store.state.definitionState.studyDefinitions(language: language)
     }
 
+    var specificWord: Definition? = nil
+    var isWordDefinitionView: Bool {
+        specificWord != nil
+    }
     @State var index: Int = 0
     @State var isPronounciationShown: Bool = false
     @State var isDefinitionShown: Bool = false
 
-    var currentWord: StudyWord? {
+    var currentDefinition: Definition? {
         studyWords[safe: index]
     }
 
-    var isWordDefinitionView: Bool {
-        studyWords.count <= 1
-    }
-
     var body: some View {
-        Group {
-            if let currentWord {
+        let displayedDefinition = specificWord ?? currentDefinition
+        return Group {
+            if let definition = displayedDefinition {
                 VStack {
                     ScrollView {
-                        wordView(word: currentWord)
+                        wordView(definition: definition)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .scrollBounceBehavior(.basedOnSize)
@@ -42,11 +42,10 @@ struct StudyView: View {
                         // Check if device is in silent mode when study view appears
                         store.dispatch(.checkDeviceVolumeZero)
                     }
-                    // Navigation controls for browsing words
-                    if studyWords.count > 1 {
-                        HStack {
+                    HStack {
+                        if !isWordDefinitionView {
                             Button {
-                                goToPreviousDefinition(currentWord: currentWord)
+                                goToPreviousDefinition()
                             } label: {
                                 Text(LocalizedString.previous)
                                     .frame(maxWidth: .infinity)
@@ -57,9 +56,9 @@ struct StudyView: View {
                             }
                             Button {
                                 if isDefinitionShown {
-                                    goToNextDefinition(currentWord: currentWord)
+                                    goToNextDefinition()
                                 } else {
-                                    store.dispatch(.studyAction(.playStudyWord(currentWord.timestamp)))
+                                    store.dispatch(.playStudyWord(definition))
                                     withAnimation {
                                         isPronounciationShown = true
                                         isDefinitionShown = true
@@ -74,20 +73,19 @@ struct StudyView: View {
                                     .cornerRadius(10)
                             }
                         }
-                        .frame(maxWidth: .infinity, alignment: .bottom)
                     }
-                }
-                .onAppear {
-                    index = 0
-                    updateDefinition(currentWord: currentWord)
+                    .frame(maxWidth: .infinity, alignment: .bottom)
                 }
             } else {
-                // Case 3: No words available
                 Text(LocalizedString.noSavedWords + "\n" + LocalizedString.tapWordToStudy)
             }
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(LocalizedString.studyNavTitle)
+        .onAppear {
+            index = 0
+            updateDefinition()
+        }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding()
         .background(FlowTaleColor.background)
@@ -106,29 +104,35 @@ struct StudyView: View {
         }
     }
 
-    func goToPreviousDefinition(currentWord: StudyWord) {
+    func goToPreviousDefinition() {
         if index - 1 < 0 {
             index = studyWords.count - 1
         } else {
             index -= 1
         }
         store.dispatch(.playSound(.previousStudyWord))
-        updateDefinition(currentWord: currentWord)
+        updateDefinition()
     }
 
-    func goToNextDefinition(currentWord: StudyWord) {
-        store.dispatch(.updateStudiedWord(currentWord.timestamp, currentWord.sentence))
+    func goToNextDefinition() {
+        if let definition = currentDefinition {
+            store.dispatch(.updateStudiedWord(definition))
+        }
         index = (index + 1) % studyWords.count
         store.dispatch(.playSound(.nextStudyWord))
-        updateDefinition(currentWord: currentWord)
+        updateDefinition()
     }
 
-    func updateDefinition(currentWord: StudyWord) {
-        isPronounciationShown = studyWords.count <= 1
-        isDefinitionShown = studyWords.count <= 1
-        store.dispatch(.studyAction(.updateStudyChapter(nil)))
-        store.dispatch(.studyAction(.prepareToPlayStudyWord(currentWord.timestamp, currentWord.sentence)))
-        store.dispatch(.studyAction(.pauseStudyAudio))
+    func updateDefinition() {
+        isPronounciationShown = false
+        isDefinitionShown = false
+        // Audio playing state is now managed by the store
+        if let definition = currentDefinition {
+            store.dispatch(.updateStudyChapter(nil))
+            store.dispatch(.prepareToPlayStudyWord(definition))
+            // Make sure audio is paused and state is reset when changing words
+            store.dispatch(.pauseStudyAudio)
+        }
     }
 
     /// Returns an AttributedString derived from `baseString`,
@@ -169,12 +173,12 @@ struct StudyView: View {
         return attributed
     }
 
-    func wordView(word: StudyWord) -> some View {
-
-        // Calculate character count for highlighting
+    func wordView(definition: Definition) -> some View {
+        let chapter = store.state.studyState.currentChapter
+        let timestampData = chapter?.audio.timestamps.filter({ $0.sentenceIndex == definition.timestampData.sentenceIndex })
         var characterCount: Int? = nil
-        for data in word.sentence.wordTimestamps {
-            if data == word.timestamp {
+        for data in timestampData ?? [] {
+            if data == definition.timestampData {
                 if characterCount == nil {
                     characterCount = 0
                 }
@@ -186,18 +190,17 @@ struct StudyView: View {
                 characterCount? += data.word.count
             }
         }
-        
-        let baseString = word.sentence.translation
+        let baseString = definition.sentence.translation
 
         return VStack(alignment: .leading) {
             ZStack {
-                Text(word.timestamp.word)
+                Text(definition.timestampData.word)
                     .font(.system(size: 60, weight: .light))
                     .frame(maxWidth: .infinity, alignment: .center)
                 HStack {
                     Spacer()
                     Button {
-                        store.dispatch(.studyAction(.playStudyWord(word.timestamp)))
+                        store.dispatch(.playStudyWord(definition))
                     } label: {
                         SystemImageView(.speaker)
                     }
@@ -206,7 +209,7 @@ struct StudyView: View {
             Text(LocalizedString.studyPronunciationLabel)
                 .greyBackground()
             VStack {
-                Text(LocalizedString.studyPronunciationPrefix + (word.timestamp.definition?.detail.pronunciation ?? ""))
+                Text(LocalizedString.studyPronunciationPrefix + definition.detail.pronunciation)
                     .font(.system(size: 20, weight: .light))
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -215,11 +218,11 @@ struct StudyView: View {
             Text(LocalizedString.definition)
                 .greyBackground()
             Group {
-                Text(LocalizedString.studyDefinitionPrefix + (word.timestamp.definition?.detail.definition ?? ""))
+                Text(LocalizedString.studyDefinitionPrefix + definition.detail.definition)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.system(size: 20, weight: .light))
                 Divider()
-                Text(LocalizedString.studyContextPrefix + (word.timestamp.definition?.detail.definitionInContextOfSentence ?? ""))
+                Text(LocalizedString.studyContextPrefix + definition.detail.definitionInContextOfSentence)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .scaleEffect(x: 1, y: isWordDefinitionView || isDefinitionShown ? 1 : 0, anchor: .top)
                     .font(.system(size: 20, weight: .light))
@@ -231,33 +234,37 @@ struct StudyView: View {
             HStack {
                 if let count = characterCount,
                    count >= 0,
-                   count + word.timestamp.word.count <= baseString.count,
-                   let highlighted = boldSubstring(in: baseString, at: count, length: word.timestamp.word.count) {
+                   count + definition.timestampData.word.count <= baseString.count,
+                   let highlighted = boldSubstring(in: baseString, at: count, length: definition.timestampData.word.count) {
                     // In SwiftUI, just show it:
                     Text(highlighted)
                         .font(.system(size: 30, weight: .light))
                         .frame(maxWidth: .infinity, alignment: .leading)
                 } else {
-                    Text(word.sentence.translation)
+                    Text(definition.sentence.translation)
                         .font(.system(size: 30, weight: .light))
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                // Single button that toggles between play and stop
                 Button {
                     if store.state.studyState.isAudioPlaying {
-                        store.dispatch(.studyAction(.pauseStudyAudio))
+                        // If playing, pause the audio
+                        store.dispatch(.pauseStudyAudio)
                     } else {
-                        if let startWord = word.sentence.wordTimestamps.first,
-                           let endWord = word.sentence.wordTimestamps.last {
-                            store.dispatch(.studyAction(.playStudySentence(startWord: startWord, endWord: endWord)))
+                        // If not playing, start playback
+                        if let startWord = timestampData?.first,
+                           let endWord = timestampData?.last {
+                            store.dispatch(.playStudySentence(startWord: startWord, endWord: endWord))
                         }
                     }
                 } label: {
+                    // Show play icon when not playing, stop icon when playing
                     SystemImageView(store.state.studyState.isAudioPlaying ? .stop : .play)
                 }
             }
             Text(LocalizedString.translation)
                 .greyBackground()
-            Text(word.sentence.original)
+            Text(definition.sentence.original)
                 .font(.system(size: 20, weight: .light))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .opacity(isWordDefinitionView || isDefinitionShown ? 1 : 0)
