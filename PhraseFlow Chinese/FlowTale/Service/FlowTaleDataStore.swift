@@ -30,6 +30,11 @@ protocol FlowTaleDataStoreProtocol {
     func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws
     func deleteDefinitions(for storyId: UUID) throws
     func cleanupOrphanedDefinitionFiles() throws
+    
+    // Sentence Audio 
+    func saveSentenceAudio(_ audioData: Data, id: UUID) throws
+    func loadSentenceAudio(id: UUID) throws -> Data
+    func cleanupOrphanedSentenceAudioFiles() throws
 
     // Stories & Chapters
     func saveStory(_ story: Story) throws
@@ -225,6 +230,72 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
                 try fileManager.removeItem(at: fileURL)
             }
         }
+        
+        print("Successfully cleaned up orphaned definition files")
+    }
+    
+    // MARK: - Sentence Audio Methods
+    
+    // Helper method to get the file URL for sentence audio
+    private func sentenceAudioFileURL(id: UUID) -> URL? {
+        return documentsDirectory?.appendingPathComponent("sentence-audio-\(id.uuidString).m4a")
+    }
+    
+    // Save sentence audio data
+    func saveSentenceAudio(_ audioData: Data, id: UUID) throws {
+        guard let fileURL = sentenceAudioFileURL(id: id) else {
+            throw FlowTaleDataStoreError.failedToCreateUrl
+        }
+        
+        do {
+            try audioData.write(to: fileURL)
+            print("Successfully saved sentence audio: \(id.uuidString)")
+        } catch {
+            throw FlowTaleDataStoreError.failedToSaveData
+        }
+    }
+    
+    // Load sentence audio data
+    func loadSentenceAudio(id: UUID) throws -> Data {
+        guard let fileURL = sentenceAudioFileURL(id: id) else {
+            throw FlowTaleDataStoreError.failedToCreateUrl
+        }
+        
+        do {
+            return try Data(contentsOf: fileURL)
+        } catch {
+            throw FlowTaleDataStoreError.failedToDecodeData
+        }
+    }
+    
+    // Clean up orphaned sentence audio files
+    func cleanupOrphanedSentenceAudioFiles() throws {
+        guard let dir = documentsDirectory else {
+            throw FlowTaleDataStoreError.failedToCreateUrl
+        }
+        
+        // Get all definition files to extract sentenceIds
+        let definitions = try loadDefinitions()
+        let validSentenceIds = definitions.compactMap { $0.sentenceId?.uuidString }
+        
+        // Get all sentence audio files
+        let contents = try fileManager.contentsOfDirectory(atPath: dir.path)
+        let audioFiles = contents.filter { $0.hasPrefix("sentence-audio-") && $0.hasSuffix(".m4a") }
+        
+        // Find orphaned audio files
+        for fileName in audioFiles {
+            // Extract the ID from the filename (sentence-audio-UUID.m4a)
+            let idString = fileName.replacingOccurrences(of: "sentence-audio-", with: "")
+                                  .replacingOccurrences(of: ".m4a", with: "")
+            
+            // If the ID doesn't exist in our valid IDs, delete the file
+            if !validSentenceIds.contains(idString) {
+                let fileURL = dir.appendingPathComponent(fileName)
+                try fileManager.removeItem(at: fileURL)
+            }
+        }
+        
+        print("Successfully cleaned up orphaned sentence audio files")
     }
     
     // Load definitions for a specific story

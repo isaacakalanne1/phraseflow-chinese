@@ -23,6 +23,11 @@ protocol FlowTaleEnvironmentProtocol {
     func deleteDefinitions(for storyId: UUID) throws
     func cleanupOrphanedDefinitionFiles() throws
     
+    // Sentence Audio
+    func saveSentenceAudio(_ audioData: Data, id: UUID) throws
+    func loadSentenceAudio(id: UUID) throws -> Data
+    func cleanupOrphanedSentenceAudioFiles() throws
+    
     // Settings
     func loadAppSettings() throws -> SettingsState
     func saveAppSettings(_ settings: SettingsState) throws
@@ -62,6 +67,10 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         self.dataStore = FlowTaleDataStore()
         self.repository = FlowTaleRepository()
         try? cleanupOrphanedDefinitionFiles()
+        try? cleanupOrphanedSentenceAudioFiles()
+        
+        // Log status
+        print("FlowTaleEnvironment initialized")
     }
 
     func synthesizeSpeech(for chapter: Chapter,
@@ -132,6 +141,20 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     
     func cleanupOrphanedDefinitionFiles() throws {
         try dataStore.cleanupOrphanedDefinitionFiles()
+    }
+    
+    // MARK: - Sentence Audio
+    
+    func saveSentenceAudio(_ audioData: Data, id: UUID) throws {
+        try dataStore.saveSentenceAudio(audioData, id: id)
+    }
+    
+    func loadSentenceAudio(id: UUID) throws -> Data {
+        try dataStore.loadSentenceAudio(id: id)
+    }
+    
+    func cleanupOrphanedSentenceAudioFiles() throws {
+        try dataStore.cleanupOrphanedSentenceAudioFiles()
     }
 
     func loadAppSettings() throws -> SettingsState {

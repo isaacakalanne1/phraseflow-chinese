@@ -466,11 +466,86 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     case .onDefinedSentence:
         return .saveDefinitions
     case .onDefinedCharacter(var definition):
-        if let audio = await state.storyState.currentChapter?.audio.data.extractAudioSegment(startTime: definition.timestampData.time, duration: definition.timestampData.duration) {
-            print("Here!!")
-        } else {
-            print("Not yet!")
+        // Create a copy of the definition to modify it
+        var updatedDefinition = definition
+        
+        // Only try to extract sentence audio if there's no sentenceId yet
+        if updatedDefinition.sentenceId == nil {
+            guard let chapterAudio = state.storyState.currentChapter?.audio.data else {
+                print("No audio available for extraction")
+                return .saveDefinitions
+            }
+            
+            // Get the start time for the first word in the sentence
+            let sentenceIndex = updatedDefinition.timestampData.sentenceIndex
+            guard let sentence = state.storyState.currentSentence,
+                  let firstWord = state.storyState.currentChapter?.audio.timestamps
+                    .filter({ $0.sentenceIndex == sentenceIndex })
+                    .sorted(by: { $0.time < $1.time })
+                    .first,
+                  let lastWord = state.storyState.currentChapter?.audio.timestamps
+                    .filter({ $0.sentenceIndex == sentenceIndex })
+                    .sorted(by: { $0.time < $1.time })
+                    .last else {
+                print("Could not find sentence bounds")
+                return .saveDefinitions
+            }
+            
+            // Calculate sentence duration
+            let startTime = firstWord.time
+            let totalDuration = lastWord.time + lastWord.duration - startTime
+            
+            // Use a background queue for audio extraction to avoid blocking UI
+            let userInitiatedQueue = DispatchQueue.global(qos: .userInitiated)
+            let extractionGroup = DispatchGroup()
+            var extractedAudio: Data? = nil
+            
+            // Enter the group before starting the extraction
+            extractionGroup.enter()
+            
+            // Run the extraction on a high priority queue to avoid QoS inversion
+            userInitiatedQueue.async {
+                extractedAudio = AudioExtractor.shared.extractAudioSegment(
+                    from: chapterAudio, 
+                    startTime: startTime, 
+                    duration: totalDuration
+                )
+                extractionGroup.leave()
+            }
+            
+            // Wait for extraction to complete with timeout
+            let extractionResult = extractionGroup.wait(timeout: .now() + 10.0)
+            if extractionResult == .timedOut {
+                print("Audio extraction timed out")
+                return .saveDefinitions
+            }
+            
+            // Get the extracted audio
+            let sentenceAudio = extractedAudio
+            
+            if let sentenceAudio = sentenceAudio {
+                // Generate a new UUID for this sentence audio
+                let sentenceId = UUID()
+                
+                // Save the extracted audio
+                do {
+                    try environment.saveSentenceAudio(sentenceAudio, id: sentenceId)
+                    
+                    // Update the definition with the sentenceId
+                    updatedDefinition.sentenceId = sentenceId
+                    
+                    print("Successfully extracted and saved sentence audio for ID: \(sentenceId)")
+                    
+                    // Return an update action to be processed by the reducer
+                    return .updateDefinition(updatedDefinition)
+                } catch {
+                    print("Failed to save sentence audio: \(error)")
+                }
+            } else {
+                print("Failed to extract sentence audio, will try again later")
+            }
         }
+        
         return .saveDefinitions
     case .saveDefinitions:
         do {
@@ -787,7 +862,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .failedToSaveAsDefaultStory,
             .onLoadedDefaultStory,
             .failedToLoadDefaultStory,
-            .failedToDeleteDefaultStories:
+            .failedToDeleteDefaultStories,
+            .updateDefinition:
         return nil
     }
 }

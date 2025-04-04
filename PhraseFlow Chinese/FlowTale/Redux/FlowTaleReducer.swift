@@ -314,6 +314,12 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             $0.timestampData == definition.timestampData && $0.sentence == definition.sentence 
         })
         newState.definitionState.definitions.append(updatedDefinition)
+    case .updateDefinition(let definition):
+        // Replace the definition with the updated one
+        newState.definitionState.definitions.removeAll(where: { 
+            $0.timestampData == definition.timestampData && $0.sentence == definition.sentence 
+        })
+        newState.definitionState.definitions.append(definition)
     case .onDeletedStory(let storyId):
         // If the deleted story was the current story, set current story to nil
         if newState.storyState.currentStory?.id == storyId {
