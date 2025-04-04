@@ -463,8 +463,14 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         } catch {
             return .failedToDefineCharacter
         }
-    case .onDefinedSentence,
-            .onDefinedCharacter:
+    case .onDefinedSentence:
+        return .saveDefinitions
+    case .onDefinedCharacter(var definition):
+        if let audio = await state.storyState.currentChapter?.audio.data.extractAudioSegment(startTime: definition.timestampData.time, duration: definition.timestampData.duration) {
+            print("Here!!")
+        } else {
+            print("Not yet!")
+        }
         return .saveDefinitions
     case .saveDefinitions:
         do {

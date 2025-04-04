@@ -42,3 +42,58 @@ extension Data {
         }
     }
 }
+
+extension Data {
+    /// Extracts an audio segment using async/await.
+    func extractAudioSegment(startTime: TimeInterval,
+                             duration: TimeInterval,
+                             outputFileType: AVFileType = .m4a) async -> Data? {
+        // Write the audio data to a temporary file.
+        let inputURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("inputAudio.m4a")
+        do {
+            try self.write(to: inputURL)
+        } catch {
+            print("Failed to write audio data: \(error)")
+            return nil
+        }
+
+        let asset = AVAsset(url: inputURL)
+
+        // Create export session.
+        guard let exportSession = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetPassthrough) else {
+            print("Failed to create export session")
+            return nil
+        }
+
+        // Define the output URL.
+        let outputURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("trimmedSegment.m4a")
+        try? FileManager.default.removeItem(at: outputURL)
+
+        exportSession.outputURL = outputURL
+        exportSession.outputFileType = outputFileType
+
+        // Define the time range to export.
+        let start = CMTime(seconds: startTime, preferredTimescale: 600)
+        let segmentDuration = CMTime(seconds: duration, preferredTimescale: 600)
+        exportSession.timeRange = CMTimeRange(start: start, duration: segmentDuration)
+
+        // Use a continuation to await the export.
+        let segmentData: Data? = await withCheckedContinuation { continuation in
+            exportSession.exportAsynchronously {
+                switch exportSession.status {
+                case .completed:
+                    if let data = try? Data(contentsOf: outputURL) {
+                        continuation.resume(returning: data)
+                    } else {
+                        print("Could not read trimmed segment data")
+                        continuation.resume(returning: nil)
+                    }
+                default:
+                    print("Export failed: \(String(describing: exportSession.error))")
+                    continuation.resume(returning: nil)
+                }
+            }
+        }
+        return segmentData
+    }
+}
