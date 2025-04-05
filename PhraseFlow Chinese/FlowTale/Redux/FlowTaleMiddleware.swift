@@ -463,62 +463,47 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         } catch {
             return .failedToDefineCharacter
         }
-    case .onDefinedSentence:
-        return .saveDefinitions
-    case .onDefinedCharacter(var definition):
-        
-        if definition.sentenceId == nil {
-            guard let chapterAudio = state.storyState.currentChapter?.audio.data else {
-                print("No audio available for extraction")
-                return .saveDefinitions
-            }
-
-            let sentenceIndex = definition.timestampData.sentenceIndex
-            guard let sentence = state.storyState.currentSentence,
-                  let firstWord = state.storyState.currentChapter?.audio.timestamps
-                    .filter({ $0.sentenceIndex == sentenceIndex })
-                    .sorted(by: { $0.time < $1.time })
-                    .first,
-                  let lastWord = state.storyState.currentChapter?.audio.timestamps
-                    .filter({ $0.sentenceIndex == sentenceIndex })
-                    .sorted(by: { $0.time < $1.time })
-                    .last else {
-                print("Could not find sentence bounds")
-                return .saveDefinitions
-            }
-
-            let startTime = firstWord.time
-            let totalDuration = lastWord.time + lastWord.duration - startTime
-
-            guard var extractedAudio = AudioExtractor.shared.extractAudioSegment(
-                from: state.audioState.audioPlayer,
-                startTime: definition.timestampData.time,
-                duration: definition.timestampData.duration
-            ),
-                  let sentenceAudio = AudioExtractor.shared.extractAudioSegment(
-                      from: state.audioState.audioPlayer,
-                      startTime: startTime,
-                      duration: totalDuration
-                  ) else {
-                return .saveDefinitions
-            }
-
-            let sentenceId = UUID()
-
-            do {
-                try environment.saveSentenceAudio(sentenceAudio, id: sentenceId)
-
-                definition.sentenceId = sentenceId
-                definition.audioData = extractedAudio
-
-                print("Successfully extracted and saved sentence audio for ID: \(sentenceId)")
-
-                return .updateDefinition(definition)
-            } catch {
-                return .saveDefinitions
-            }
+    case .onDefinedSentence(let definitions, var tappedDefinition):
+        guard let firstWord = definitions.first?.timestampData,
+              let lastWord = definitions.last?.timestampData else {
+            print("Could not find sentence bounds")
+            return .saveDefinitions
         }
-        
+
+        let startTime = firstWord.time
+        let totalDuration = lastWord.time + lastWord.duration - startTime
+
+        guard let sentenceAudio = AudioExtractor.shared.extractAudioSegment(
+            from: state.audioState.audioPlayer,
+            startTime: firstWord.time,
+            duration: lastWord.time + lastWord.duration
+        ) else {
+            return .saveDefinitions
+        }
+
+        let sentenceId = UUID()
+
+        do {
+            try environment.saveSentenceAudio(sentenceAudio, id: sentenceId)
+
+            tappedDefinition.sentenceId = sentenceId
+
+            print("Successfully extracted and saved sentence audio for ID: \(sentenceId)")
+
+            return .onDefinedCharacter(tappedDefinition)
+        } catch {
+            return .saveDefinitions
+        }
+    case .onDefinedCharacter(var definition):
+        if definition.audioData == nil,
+           let extractedAudio = AudioExtractor.shared.extractAudioSegment(
+               from: state.audioState.audioPlayer,
+               startTime: definition.timestampData.time,
+               duration: definition.timestampData.duration
+           ) {
+            definition.audioData = extractedAudio
+            return .updateDefinition(definition)
+        }
         return .saveDefinitions
     case .saveDefinitions:
         do {
