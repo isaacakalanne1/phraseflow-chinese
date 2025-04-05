@@ -71,7 +71,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .onPreparedStudySentence(let data):
         newState.studyState.sentenceAudioPlayer = data.createAVPlayer(fileExtension: "m4a") ?? AVPlayer()
     case .playStudySentence:
-        newState.studyState.isAudioPlaying = true
+        break // TODO: Fix needing to tap word twice to see it appea rin definitions list
+//        newState.studyState.isAudioPlaying = true
     case .playSound(let sound):
         if let url = sound.fileURL,
            let player = try? AVAudioPlayer(contentsOf: url) {
@@ -108,6 +109,14 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         // Mark the definition as seen
         definition.hasBeenSeen = true
         definition.creationDate = .now
+        if definition.audioData == nil,
+           let extractedAudio = AudioExtractor.shared.extractAudioSegment(
+               from: state.audioState.audioPlayer,
+               startTime: definition.timestampData.time,
+               duration: definition.timestampData.duration
+           ) {
+            definition.audioData = extractedAudio
+        }
 
         newState.definitionState.currentDefinition = definition
         newState.definitionState.definitions.removeAll(where: {
@@ -115,7 +124,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         })
         newState.definitionState.definitions.append(definition)
         newState.viewState.isDefining = false
-    case .onDefinedSentence(var definitions, var tappedDefinition):
+    case .onDefinedSentence(_, var definitions, var tappedDefinition):
         tappedDefinition.hasBeenSeen = true
         tappedDefinition.creationDate = .now
         definitions.removeAll(where: {

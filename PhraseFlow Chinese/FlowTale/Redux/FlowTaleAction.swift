@@ -92,7 +92,7 @@ enum FlowTaleAction {
     case pauseStudyAudio
     case updateStudyAudioPlaying(Bool)
     case onDefinedCharacter(Definition)
-    case onDefinedSentence([Definition], tappedDefinition: Definition)
+    case onDefinedSentence(Sentence, [Definition], tappedDefinition: Definition)
     case failedToDefineCharacter
     case saveDefinitions
     case onSavedDefinitions

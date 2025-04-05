@@ -229,7 +229,9 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
                     if story.language == .mandarinChinese {
                         translation = translation.replacingOccurrences(of: " ", with: "")
                     }
-                    return Sentence(translation: translation, english: $0.original)
+                    return Sentence(id: UUID(),
+                                    translation: translation,
+                                    english: $0.original)
                 }
             )
             let passage = sentences.reduce("", { $0 + $1.original })

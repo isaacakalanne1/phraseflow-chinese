@@ -453,13 +453,13 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             )
 
             if let tappedDefinition = fetchedDefinitions.first(where: { $0.timestampData == timeStampData }) {
-                return .onDefinedSentence(fetchedDefinitions, tappedDefinition: tappedDefinition)
+                return .onDefinedSentence(sentence, fetchedDefinitions, tappedDefinition: tappedDefinition)
             }
             return .failedToDefineCharacter
         } catch {
             return .failedToDefineCharacter
         }
-    case .onDefinedSentence(let definitions, var tappedDefinition):
+    case .onDefinedSentence(let sentence, let definitions, var tappedDefinition):
         guard let firstWord = definitions.first?.timestampData,
               let lastWord = definitions.last?.timestampData else {
             print("Could not find sentence bounds")
@@ -477,29 +477,18 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .saveDefinitions
         }
 
-        let sentenceId = tappedDefinition.sentenceId
-
         do {
-            try environment.saveSentenceAudio(sentenceAudio, id: sentenceId)
+            try environment.saveSentenceAudio(sentenceAudio, id: sentence.id)
 
-            tappedDefinition.sentenceId = sentenceId
+            tappedDefinition.sentenceId = sentence.id
 
-            print("Successfully extracted and saved sentence audio for ID: \(sentenceId)")
+            print("Successfully extracted and saved sentence audio for ID: \(sentence.id)")
 
             return .onDefinedCharacter(tappedDefinition)
         } catch {
             return .saveDefinitions
         }
-    case .onDefinedCharacter(var definition):
-        if definition.audioData == nil,
-           let extractedAudio = AudioExtractor.shared.extractAudioSegment(
-               from: state.audioState.audioPlayer,
-               startTime: definition.timestampData.time,
-               duration: definition.timestampData.duration
-           ) {
-            definition.audioData = extractedAudio
-            return .updateDefinition(definition)
-        }
+    case .onDefinedCharacter:
         return .saveDefinitions
     case .saveDefinitions:
         do {
