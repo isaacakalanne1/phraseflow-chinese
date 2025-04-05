@@ -417,7 +417,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .dismissFailedModerationAlert:
         newState.viewState.isShowingModerationFailedAlert = false
     case .showModerationDetails:
-        // We'll dismiss the alert (if it's open) and show the details screen.
         newState.viewState.isShowingModerationFailedAlert = false
         newState.viewState.isShowingModerationDetails = true
     case .updateIsShowingModerationDetails(let isShowing):
@@ -481,8 +480,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .checkFreeTrialLimit,
             .failedToSynthesizeAudio,
             .hasReachedDailyLimit,
-            .loadThenShowReadySnackbar,
-            .loadDefinitionsForStory,
             .pauseStudyAudio,
             .onFinishedLoadedStories,
             .musicTrackFinished,

@@ -16,18 +16,14 @@ protocol FlowTaleEnvironmentProtocol {
     func getProducts() async throws -> [Product]
     func generateStory(story: Story, deviceLanguage: Language?) async throws -> Story
 
-    // Definitions
     func loadDefinitions() throws -> [Definition]
-    func loadDefinitions(for storyId: UUID) throws -> [Definition]
     func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws
     func deleteDefinitions(for storyId: UUID) throws
     func cleanupOrphanedDefinitionFiles() throws
-    
-    // Sentence Audio
+
     func saveSentenceAudio(_ audioData: Data, id: UUID) throws
     func loadSentenceAudio(id: UUID) throws -> Data
-    
-    // Settings
+
     func loadAppSettings() throws -> SettingsState
     func saveAppSettings(_ settings: SettingsState) throws
 
@@ -65,9 +61,6 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         self.repository = FlowTaleRepository()
         try? cleanupOrphanedDefinitionFiles()
         try? cleanupOrphanedSentenceAudioFiles()
-        
-        // Log status
-        print("FlowTaleEnvironment initialized")
     }
 
     func synthesizeSpeech(for chapter: Chapter,
@@ -122,10 +115,6 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
 
     func loadDefinitions() throws -> [Definition] {
         try dataStore.loadDefinitions()
-    }
-    
-    func loadDefinitions(for storyId: UUID) throws -> [Definition] {
-        try dataStore.loadDefinitions(for: storyId)
     }
     
     func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws {

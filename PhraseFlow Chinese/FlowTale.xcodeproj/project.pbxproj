@@ -116,6 +116,7 @@
 		BBE990E12D2AB26300FAD3FB /* Snackbar.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E02D2AB26300FAD3FB /* Snackbar.mp3 */; };
 		BBE990E32D2AB31300FAD3FB /* ErrorSnackbar.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E22D2AB31200FAD3FB /* ErrorSnackbar.mp3 */; };
 		BBE990E72D2ABE8B00FAD3FB /* ProgressUpdate.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */; };
+		BBEF63512DA1EB5600F93ECC /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF63502DA1EB5300F93ECC /* KeychainManager.swift */; };
 		BBF6187E2D42DE6D00CA3229 /* NextStudyWord.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF6187D2D42DE6C00CA3229 /* NextStudyWord.mp3 */; };
 		BBF618822D42E06800CA3229 /* PreviousStudyWord.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618812D42E06800CA3229 /* PreviousStudyWord.mp3 */; };
 		BBF618842D42E43E00CA3229 /* CreateNextChapter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618832D42E43E00CA3229 /* CreateNextChapter.mp3 */; };
@@ -272,6 +273,7 @@
 		BBE990E02D2AB26300FAD3FB /* Snackbar.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Snackbar.mp3; sourceTree = "<group>"; };
 		BBE990E22D2AB31200FAD3FB /* ErrorSnackbar.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ErrorSnackbar.mp3; sourceTree = "<group>"; };
 		BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ProgressUpdate.mp3; sourceTree = "<group>"; };
+		BBEF63502DA1EB5300F93ECC /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		BBF6187D2D42DE6C00CA3229 /* NextStudyWord.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = NextStudyWord.mp3; sourceTree = "<group>"; };
 		BBF618812D42E06800CA3229 /* PreviousStudyWord.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PreviousStudyWord.mp3; sourceTree = "<group>"; };
 		BBF618832D42E43E00CA3229 /* CreateNextChapter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CreateNextChapter.mp3; sourceTree = "<group>"; };
@@ -382,6 +384,7 @@
 				BB4EDB162C90D20300699E7D /* FlowTaleServices.swift */,
 				BB4EDB142C90CF7400699E7D /* FlowTaleDataStore.swift */,
 				BB4EDB1C2C90DFDD00699E7D /* FlowTaleRepository.swift */,
+				BBEF63502DA1EB5300F93ECC /* KeychainManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -857,6 +860,7 @@
 				BB4E6BF82D246AEF002B5CBA /* LoadingState.swift in Sources */,
 				BB4EDB072C90C8CA00699E7D /* FlowTaleAction.swift in Sources */,
 				BBE636BF2CC98B2B00873E68 /* WordTimeStampData.swift in Sources */,
+				BBEF63512DA1EB5600F93ECC /* KeychainManager.swift in Sources */,
 				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FlowTaleDataStore.swift in Sources */,
 				BB45C5692D4A785C00B3705A /* DailyLimitExplanationView.swift in Sources */,

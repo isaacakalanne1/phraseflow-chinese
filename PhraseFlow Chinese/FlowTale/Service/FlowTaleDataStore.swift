@@ -26,7 +26,6 @@ protocol FlowTaleDataStoreProtocol {
 
     // Definitions
     func loadDefinitions() throws -> [Definition]
-    func loadDefinitions(for storyId: UUID) throws -> [Definition]
     func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws
     func deleteDefinitions(for storyId: UUID) throws
     func cleanupOrphanedDefinitionFiles() throws
@@ -50,52 +49,6 @@ protocol FlowTaleDataStoreProtocol {
 
     func trackChapterCreation(subscription: SubscriptionLevel?) throws
 }
-
-final class KeychainManager {
-
-    static let shared = KeychainManager()
-
-    private init() {}
-
-    // Store data in keychain
-    func setData(_ data: Data, forKey key: String) throws {
-        let query: [String: Any] = [
-            kSecClass as String:            kSecClassGenericPassword,
-            kSecAttrAccount as String:      key,
-            kSecValueData as String:        data
-        ]
-
-        // Remove any existing item first
-        SecItemDelete(query as CFDictionary)
-
-        let status = SecItemAdd(query as CFDictionary, nil)
-        guard status == errSecSuccess else {
-            throw KeychainError.unhandledError(status: status)
-        }
-    }
-
-    // Retrieve data from keychain
-    func getData(forKey key: String) -> Data? {
-        let query: [String: Any] = [
-            kSecClass as String:            kSecClassGenericPassword,
-            kSecAttrAccount as String:      key,
-            kSecReturnData as String:       true,
-            kSecMatchLimit as String:       kSecMatchLimitOne
-        ]
-
-        var item: AnyObject?
-        let status = SecItemCopyMatching(query as CFDictionary, &item)
-
-        guard status == errSecSuccess else { return nil }
-        return item as? Data
-    }
-
-    // Basic error
-    enum KeychainError: Error {
-        case unhandledError(status: OSStatus)
-    }
-}
-
 
 class FlowTaleDataStore: FlowTaleDataStoreProtocol {
 
@@ -135,13 +88,12 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         try keychain.setData(data, forKey: kDailyCreationKey)
     }
 
-    // MARK: - Free-user total usage in Keychain
     private func loadFreeUserChapterCount() -> Int {
         guard let data = keychain.getData(forKey: kFreeUserTotalKey),
               !data.isEmpty,
               let stringVal = String(data: data, encoding: .utf8),
               let intVal = Int(stringVal) else {
-            return 0 // If not found or parse fails, default to 0
+            return 0
         }
         return intVal
     }
@@ -297,30 +249,7 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         
         print("Successfully cleaned up orphaned sentence audio files")
     }
-    
-    // Load definitions for a specific story
-    func loadDefinitions(for storyId: UUID) throws -> [Definition] {
-        guard let fileURL = definitionsFileURL(for: storyId) else {
-            throw FlowTaleDataStoreError.failedToCreateUrl
-        }
-        
-        // If the file doesn't exist yet, return an empty array
-        guard fileManager.fileExists(atPath: fileURL.path) else {
-            return []
-        }
-        
-        do {
-            let data = try Data(contentsOf: fileURL)
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .iso8601
-            let definitions = try decoder.decode([Definition].self, from: data)
-            return definitions
-        } catch {
-            throw FlowTaleDataStoreError.failedToDecodeData
-        }
-    }
-    
-    // Save definitions for a specific story
+
     func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws {
         guard let fileURL = definitionsFileURL(for: storyId) else {
             throw FlowTaleDataStoreError.failedToCreateUrl

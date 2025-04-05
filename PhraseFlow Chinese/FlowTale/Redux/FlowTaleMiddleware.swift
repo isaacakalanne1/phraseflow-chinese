@@ -148,13 +148,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         } catch {
             return .failedToLoadDefinitions
         }
-    case .loadDefinitionsForStory(let storyId):
-        do {
-            let definitions = try environment.loadDefinitions(for: storyId)
-            return .onLoadedDefinitions(definitions)
-        } catch {
-            return .failedToLoadDefinitions
-        }
     case .deleteStory(let story):
         do {
             try environment.unsaveStory(story)
@@ -281,21 +274,18 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return nil
     case .defineCharacter(let timeStampData, let shouldForce):
         do {
-            guard let sentence = state.storyState.currentSentence else {
-                return .failedToDefineCharacter
-            }
-            
-            if let definition = state.definitionState.definition(timestampData: timeStampData, in: sentence),
-               !shouldForce {
-                return .onDefinedCharacter(definition)
-            }
-
-            guard let story = state.storyState.currentStory,
+            guard let sentence = state.storyState.currentSentence,
+                  let story = state.storyState.currentStory,
                   let chapter  = state.storyState.currentChapter,
                   let deviceLanguage = state.deviceLanguage,
                   let currentSentence = state.storyState.currentSentence,
                   let sentenceIndex = state.storyState.currentStory?.currentSentenceIndex else {
                 return .failedToDefineCharacter
+            }
+
+            if let definition = state.definitionState.definition(timestampData: timeStampData, in: sentence),
+               !shouldForce {
+                return .onDefinedCharacter(definition)
             }
 
             let fetchedDefinitions = try await environment.fetchDefinitions(
@@ -362,37 +352,20 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     case .onSelectedChapter:
         return .selectTab(.reader, shouldPlaySound: false)
     case .saveStoryAndSettings(var story):
-        // (Optional) Some code that modifies `story.chapters` as you do now.
-        // e.g. removing big audio data from older chapters or whatever else.
-
         do {
-            // 1) Save each chapter individually.
             for (index, chapter) in story.chapters.enumerated() {
-                // Chapter indexes typically start at 1, since 0 is the main story
                 try environment.saveChapter(chapter, storyId: story.id, chapterIndex: index + 1)
             }
 
-            // 2) Save the main story. (Chapters array is not persisted to JSON.)
             try environment.saveStory(story)
-
-            // 3) Save updated settings.
             try environment.saveAppSettings(state.settingsState)
 
-            // Return success action to update state.
             return .onSavedStoryAndSettings
         } catch {
             return .failedToSaveStoryAndSettings
         }
     case .onSavedStoryAndSettings:
-        // Just load stories after saving - we already show snackbars in the reducer
         return .loadStories(isAppLaunch: false)
-    case .loadThenShowReadySnackbar:
-        do {
-            try environment.loadAllStories() // Refresh the stories in the environment
-            return .showSnackBar(.storyReadyTapToRead)
-        } catch {
-            return .failedToLoadStories
-        }
     case .setMusicVolume(let volume):
         state.musicAudioState.audioPlayer.setVolume(volume.float, fadeDuration: 0.2)
         return nil
@@ -415,8 +388,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         if let lastWordTime = state.storyState.currentChapter?.audio.timestamps.last?.time,
            let lastWordDuration = state.storyState.currentChapter?.audio.timestamps.last?.duration,
            time > lastWordTime + lastWordDuration {
-            // Audio has reached the end naturally (not from user tapping play)
-            // Just pause it instead of looping
             return .pauseAudio
         }
         return nil
@@ -425,14 +396,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .saveStoryAndSettings(story)
         }
         return nil
-    case .updatePlayTime:
-        let time = state.audioState.audioPlayer.currentTime().seconds
-        if let lastWordTime = state.storyState.currentChapter?.audio.timestamps.last?.time,
-           time > lastWordTime {
-            return .pauseAudio
-        } else {
-            return nil
-        }
     case .selectVoice,
             .updateLanguage,
             .updateSpeechSpeed,
@@ -458,27 +421,17 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         }
     case .updateSentenceIndex:
         return .refreshTranslationView
-        
     case .checkDeviceVolumeZero:
-        // Check if the device is in silent mode using audio session
         let audioSession = AVAudioSession.sharedInstance()
         do {
             try audioSession.setActive(true)
-            // In iOS, outputVolume of 0 indicates silent mode
-            let isSilent = audioSession.outputVolume == 0.0
-            if isSilent {
-                return .showSnackBar(.deviceVolumeZero)
-            }
         } catch {
-            print("Failed to check silent mode: \(error)")
+            return nil
         }
-        return nil
+        return audioSession.outputVolume == 0.0 ? .showSnackBar(.deviceVolumeZero) : nil
     case .fetchSubscriptions:
+        environment.validateReceipt()
         do {
-            // First validate the receipt to properly handle sandbox receipts
-            // This will trigger a receipt refresh if needed
-            environment.validateReceipt()
-            
             let subscriptions = try await environment.getProducts()
             return .onFetchedSubscriptions(subscriptions)
         } catch {
@@ -494,11 +447,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     case .onPurchasedSubscription:
         return .getCurrentEntitlements
     case .restoreSubscriptions:
+        environment.validateReceipt()
         do {
-            // Validate receipt first to handle sandbox receipts properly
-            environment.validateReceipt()
-            
-            // Then perform the sync
             try await AppStore.sync()
         } catch {
             return .failedToRestoreSubscriptions
@@ -562,11 +512,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return nil
         case .customPrompt(let prompt):
             let isNewPrompt = !state.settingsState.customPrompts.contains(prompt)
-            if isNewPrompt {
-                return .moderateText(prompt)
-            } else {
-                return nil
-            }
+            return isNewPrompt ? .moderateText(prompt) : nil
         }
     case .moderateText(let prompt):
         do {
@@ -580,15 +526,12 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     case .passedModeration:
         try? environment.saveAppSettings(state.settingsState)
         return .showSnackBar(.passedModeration)
-    case .didNotPassModeration:
-        return .showSnackBar(.didNotPassModeration)
-    case .failedToModerateText:
+    case .didNotPassModeration,
+            .failedToModerateText:
         return .showSnackBar(.didNotPassModeration)
     case .selectTab(_, let shouldPlaySound):
         return shouldPlaySound ? .playSound(.tabPress) : nil
     case .onLoadedStories(let stories, let isAppLaunch):
-        // If current story no longer exists (deleted) and there are other stories, 
-        // load chapters for the first story to ensure proper setup
         return .onFinishedLoadedStories
     case .onFinishedLoadedStories:
         if let story = state.storyState.currentStory,
