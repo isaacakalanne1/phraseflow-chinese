@@ -276,7 +276,7 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         
         // Get all definition files to extract sentenceIds
         let definitions = try loadDefinitions()
-        let validSentenceIds = definitions.compactMap { $0.sentenceId?.uuidString }
+        let validSentenceIds = definitions.compactMap { $0.sentenceId.uuidString }
         
         // Get all sentence audio files
         let contents = try fileManager.contentsOfDirectory(atPath: dir.path)

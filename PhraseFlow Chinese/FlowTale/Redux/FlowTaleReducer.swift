@@ -68,8 +68,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.studyState.currentChapter = chapter
     case .playStudyWord(let definition):
         newState.studyState.audioPlayer = definition.audioData?.createAVPlayer(fileExtension: "m4a") ?? AVPlayer()
+    case .onPreparedStudySentence(let data):
+        newState.studyState.sentenceAudioPlayer = data.createAVPlayer(fileExtension: "m4a") ?? AVPlayer()
     case .playStudySentence:
-        newState.studyState.audioPlayer = newState.studyState.currentChapter?.audio.data.createAVPlayer() ?? AVPlayer()
         newState.studyState.isAudioPlaying = true
     case .playSound(let sound):
         if let url = sound.fileURL,
@@ -532,7 +533,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .musicTrackFinished,
             .checkDeviceVolumeZero,
             .onDeletedDefinition,
-            .prepareToPlayStudyWord:
+            .prepareToPlayStudyWord,
+            .prepareToPlayStudySentence,
+            .failedToPrepareStudySentence:
         break
     }
 

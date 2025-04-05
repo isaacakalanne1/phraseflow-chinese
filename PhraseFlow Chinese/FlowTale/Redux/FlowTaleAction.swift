@@ -85,6 +85,9 @@ enum FlowTaleAction {
     case prepareToPlayStudyWord(Definition)
     case failedToPrepareStudyWord
     case playStudyWord(Definition)
+    case prepareToPlayStudySentence(Definition)
+    case failedToPrepareStudySentence
+    case onPreparedStudySentence(Data)
     case playStudySentence(startWord: WordTimeStampData, endWord: WordTimeStampData)
     case pauseStudyAudio
     case updateStudyAudioPlaying(Bool)

@@ -382,20 +382,16 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         state.studyState.audioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
 
         return nil
-    case .playStudySentence(let startWord, let endWord):
-        let myTime = CMTime(seconds: startWord.time, preferredTimescale: 60000)
-        await state.studyState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
-        state.studyState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: endWord.time + endWord.duration, preferredTimescale: 60000)
-        state.studyState.audioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
-        let playLength = endWord.time + endWord.duration - startWord.time
-        let speedModifiedPlayLength = playLength / Double(state.settingsState.speechSpeed.playRate)
-
-        try? await Task.sleep(for: .seconds(speedModifiedPlayLength))
-
-        if let duration = state.studyState.audioPlayer.currentItem?.duration.seconds,
-           duration >= playLength {
-            return .updateStudyAudioPlaying(false)
+    case .prepareToPlayStudySentence(let definition):
+        if let audioData = try? environment.loadSentenceAudio(id: definition.sentenceId) {
+            return .onPreparedStudySentence(audioData)
+        } else {
+            return .failedToPrepareStudySentence
         }
+    case .playStudySentence:
+        let myTime = CMTime(seconds: 0, preferredTimescale: 60000)
+        await state.studyState.sentenceAudioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
+        state.studyState.sentenceAudioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
         return nil
 
     case .pauseStudyAudio:
@@ -476,12 +472,12 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         guard let sentenceAudio = AudioExtractor.shared.extractAudioSegment(
             from: state.audioState.audioPlayer,
             startTime: firstWord.time,
-            duration: lastWord.time + lastWord.duration
+            duration: lastWord.time + lastWord.duration - firstWord.time
         ) else {
             return .saveDefinitions
         }
 
-        let sentenceId = UUID()
+        let sentenceId = tappedDefinition.sentenceId
 
         do {
             try environment.saveSentenceAudio(sentenceAudio, id: sentenceId)
@@ -822,7 +818,9 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .failedToSaveAsDefaultStory,
             .onLoadedDefaultStory,
             .failedToLoadDefaultStory,
-            .failedToDeleteDefaultStories:
+            .failedToDeleteDefaultStories,
+            .failedToPrepareStudySentence,
+            .onPreparedStudySentence:
         return nil
     }
 }

@@ -130,6 +130,7 @@ struct StudyView: View {
         if let definition = currentDefinition {
             store.dispatch(.updateStudyChapter(nil))
             store.dispatch(.prepareToPlayStudyWord(definition))
+            store.dispatch(.prepareToPlayStudySentence(definition))
             // Make sure audio is paused and state is reset when changing words
             store.dispatch(.pauseStudyAudio)
         }
