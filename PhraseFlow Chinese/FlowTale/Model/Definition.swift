@@ -17,7 +17,8 @@ struct Definition: Codable, Equatable, Hashable {
     var language: Language
     var hasBeenSeen: Bool
     var sentenceId: UUID?  // ID for the extracted sentence audio
-    
+    var audioData: Data?
+
     init(creationDate: Date,
          studiedDates: [Date] = [],
          timestampData: WordTimeStampData,
@@ -26,7 +27,8 @@ struct Definition: Codable, Equatable, Hashable {
          definition: String,
          language: Language,
          hasBeenSeen: Bool = false,
-         sentenceId: UUID? = nil) {
+         sentenceId: UUID? = nil,
+         audioData: Data? = nil) {
         self.creationDate = creationDate
         self.studiedDates = studiedDates
         self.timestampData = timestampData
@@ -36,6 +38,7 @@ struct Definition: Codable, Equatable, Hashable {
         self.language = language
         self.hasBeenSeen = hasBeenSeen
         self.sentenceId = sentenceId
+        self.audioData = audioData
     }
 
     init(from decoder: any Decoder) throws {
@@ -49,6 +52,7 @@ struct Definition: Codable, Equatable, Hashable {
         self.language = try container.decode(Language.self, forKey: .language)
         self.hasBeenSeen = (try? container.decode(Bool.self, forKey: .hasBeenSeen)) ?? false
         self.sentenceId = try? container.decode(UUID?.self, forKey: .sentenceId)
+        self.audioData = try? container.decode(Data.self, forKey: .audioData)
     }
 }
 

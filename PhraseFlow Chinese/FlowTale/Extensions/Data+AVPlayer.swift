@@ -56,21 +56,23 @@ class AudioExtractor {
     ///   - startTime: Start time in seconds
     ///   - duration: Duration of the segment in seconds
     /// - Returns: Audio data for the specified segment or nil if extraction fails
-    func extractAudioSegment(from audioData: Data, startTime: Double, duration: Double) -> Data? {
+    func extractAudioSegment(from player: AVPlayer, startTime: Double, duration: Double) -> Data? {
         // Basic validation
-        guard startTime >= 0, duration > 0 else {
+        guard startTime >= 0,
+              duration > 0 else {
             print("Invalid parameters: startTime must be >= 0 and duration must be > 0")
             return nil
         }
-        
+        guard let asset = player.currentItem?.asset  else {
+            print("Couldn't get asset")
+            return nil
+        }
+
         // For very short segments, return nil to avoid extraction overhead
         if duration < 0.1 {
             print("Duration too short for extraction: \(duration) seconds")
             return nil
         }
-        
-        // Log extraction attempt
-        print("Extracting audio segment: startTime=\(startTime), duration=\(duration), dataSize=\(audioData.count)")
         
         // Create a simpler, reliable implementation with m4a output format
         let tempDirectory = FileManager.default.temporaryDirectory
@@ -80,12 +82,6 @@ class AudioExtractor {
         let outputURL = tempDirectory.appendingPathComponent(outputFileName)
         
         do {
-            // Write input data to file
-            try audioData.write(to: sourceURL)
-            
-            // Create asset
-            let asset = AVURLAsset(url: sourceURL)
-            
             // Create export session
             guard let exportSession = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetAppleM4A) else {
                 print("Failed to create export session")

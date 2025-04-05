@@ -376,9 +376,9 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .failedToPrepareStudyWord
         }
     case .playStudyWord(let definition):
-        let myTime = CMTime(seconds: definition.timestampData.time, preferredTimescale: 60000)
+        let myTime = CMTime(seconds: 0, preferredTimescale: 60000)
         await state.studyState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
-        state.studyState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: definition.timestampData.time + definition.timestampData.duration, preferredTimescale: 60000)
+        state.studyState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: definition.timestampData.duration, preferredTimescale: 60000)
         state.studyState.audioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
 
         return nil
@@ -466,18 +466,14 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
     case .onDefinedSentence:
         return .saveDefinitions
     case .onDefinedCharacter(var definition):
-        // Create a copy of the definition to modify it
-        var updatedDefinition = definition
         
-        // Only try to extract sentence audio if there's no sentenceId yet
-        if updatedDefinition.sentenceId == nil {
+        if definition.sentenceId == nil {
             guard let chapterAudio = state.storyState.currentChapter?.audio.data else {
                 print("No audio available for extraction")
                 return .saveDefinitions
             }
-            
-            // Get the start time for the first word in the sentence
-            let sentenceIndex = updatedDefinition.timestampData.sentenceIndex
+
+            let sentenceIndex = definition.timestampData.sentenceIndex
             guard let sentence = state.storyState.currentSentence,
                   let firstWord = state.storyState.currentChapter?.audio.timestamps
                     .filter({ $0.sentenceIndex == sentenceIndex })
@@ -490,59 +486,36 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
                 print("Could not find sentence bounds")
                 return .saveDefinitions
             }
-            
-            // Calculate sentence duration
+
             let startTime = firstWord.time
             let totalDuration = lastWord.time + lastWord.duration - startTime
-            
-            // Use a background queue for audio extraction to avoid blocking UI
-            let userInitiatedQueue = DispatchQueue.global(qos: .userInitiated)
-            let extractionGroup = DispatchGroup()
-            var extractedAudio: Data? = nil
-            
-            // Enter the group before starting the extraction
-            extractionGroup.enter()
-            
-            // Run the extraction on a high priority queue to avoid QoS inversion
-            userInitiatedQueue.async {
-                extractedAudio = AudioExtractor.shared.extractAudioSegment(
-                    from: chapterAudio, 
-                    startTime: startTime, 
-                    duration: totalDuration
-                )
-                extractionGroup.leave()
-            }
-            
-            // Wait for extraction to complete with timeout
-            let extractionResult = extractionGroup.wait(timeout: .now() + 10.0)
-            if extractionResult == .timedOut {
-                print("Audio extraction timed out")
+
+            guard var extractedAudio = AudioExtractor.shared.extractAudioSegment(
+                from: state.audioState.audioPlayer,
+                startTime: definition.timestampData.time,
+                duration: definition.timestampData.duration
+            ),
+                  let sentenceAudio = AudioExtractor.shared.extractAudioSegment(
+                      from: state.audioState.audioPlayer,
+                      startTime: startTime,
+                      duration: totalDuration
+                  ) else {
                 return .saveDefinitions
             }
-            
-            // Get the extracted audio
-            let sentenceAudio = extractedAudio
-            
-            if let sentenceAudio = sentenceAudio {
-                // Generate a new UUID for this sentence audio
-                let sentenceId = UUID()
-                
-                // Save the extracted audio
-                do {
-                    try environment.saveSentenceAudio(sentenceAudio, id: sentenceId)
-                    
-                    // Update the definition with the sentenceId
-                    updatedDefinition.sentenceId = sentenceId
-                    
-                    print("Successfully extracted and saved sentence audio for ID: \(sentenceId)")
-                    
-                    // Return an update action to be processed by the reducer
-                    return .updateDefinition(updatedDefinition)
-                } catch {
-                    print("Failed to save sentence audio: \(error)")
-                }
-            } else {
-                print("Failed to extract sentence audio, will try again later")
+
+            let sentenceId = UUID()
+
+            do {
+                try environment.saveSentenceAudio(sentenceAudio, id: sentenceId)
+
+                definition.sentenceId = sentenceId
+                definition.audioData = extractedAudio
+
+                print("Successfully extracted and saved sentence audio for ID: \(sentenceId)")
+
+                return .updateDefinition(definition)
+            } catch {
+                return .saveDefinitions
             }
         }
         
@@ -820,6 +793,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return nil
     case .onDeletedDefaultStories:
         return .showSnackBar(.deletedDefaultStories)
+    case .updateDefinition:
+        return .saveDefinitions
     case .failedToLoadStories,
             .failedToSaveStory,
             .failedToDefineCharacter,
@@ -862,8 +837,7 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .failedToSaveAsDefaultStory,
             .onLoadedDefaultStory,
             .failedToLoadDefaultStory,
-            .failedToDeleteDefaultStories,
-            .updateDefinition:
+            .failedToDeleteDefaultStories:
         return nil
     }
 }
