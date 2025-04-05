@@ -174,7 +174,6 @@ enum FlowTaleAction {
     case selectTab(ContentTab, shouldPlaySound: Bool)
 
     case deleteDefinition(Definition)
-    case updateDefinition(Definition)
     case onDeletedDefinition
     
     case checkFreeTrialLimit

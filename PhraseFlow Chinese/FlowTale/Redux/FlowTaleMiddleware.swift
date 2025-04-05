@@ -550,8 +550,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .hideSnackbar
         }
         return nil
-    case .updateDefinition:
-        return .saveDefinitions
     case .failedToLoadStories,
             .failedToSaveStory,
             .failedToDefineCharacter,

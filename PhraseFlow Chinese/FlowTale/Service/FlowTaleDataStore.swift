@@ -88,12 +88,13 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         try keychain.setData(data, forKey: kDailyCreationKey)
     }
 
+    // MARK: - Free-user total usage in Keychain
     private func loadFreeUserChapterCount() -> Int {
         guard let data = keychain.getData(forKey: kFreeUserTotalKey),
               !data.isEmpty,
               let stringVal = String(data: data, encoding: .utf8),
               let intVal = Int(stringVal) else {
-            return 0
+            return 0 // If not found or parse fails, default to 0
         }
         return intVal
     }
@@ -250,6 +251,28 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         print("Successfully cleaned up orphaned sentence audio files")
     }
 
+    func loadDefinitions(for storyId: UUID) throws -> [Definition] {
+        guard let fileURL = definitionsFileURL(for: storyId) else {
+            throw FlowTaleDataStoreError.failedToCreateUrl
+        }
+        
+        // If the file doesn't exist yet, return an empty array
+        guard fileManager.fileExists(atPath: fileURL.path) else {
+            return []
+        }
+        
+        do {
+            let data = try Data(contentsOf: fileURL)
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            let definitions = try decoder.decode([Definition].self, from: data)
+            return definitions
+        } catch {
+            throw FlowTaleDataStoreError.failedToDecodeData
+        }
+    }
+    
+    // Save definitions for a specific story
     func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws {
         guard let fileURL = definitionsFileURL(for: storyId) else {
             throw FlowTaleDataStoreError.failedToCreateUrl
