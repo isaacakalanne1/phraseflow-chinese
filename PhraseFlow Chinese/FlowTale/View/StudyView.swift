@@ -58,7 +58,7 @@ struct StudyView: View {
                                 if isDefinitionShown {
                                     goToNextDefinition()
                                 } else {
-                                    store.dispatch(.playStudyWord(definition))
+                                    store.dispatch(.studyAction(.playStudyWord(definition)))
                                     withAnimation {
                                         isPronounciationShown = true
                                         isDefinitionShown = true
@@ -129,10 +129,10 @@ struct StudyView: View {
         // Audio playing state is now managed by the store
         if let definition = currentDefinition {
             store.dispatch(.updateStudyChapter(nil))
-            store.dispatch(.prepareToPlayStudyWord(definition))
-            store.dispatch(.prepareToPlayStudySentence(definition))
+            store.dispatch(.studyAction(.prepareToPlayStudyWord(definition)))
+            store.dispatch(.studyAction(.prepareToPlayStudySentence(definition)))
             // Make sure audio is paused and state is reset when changing words
-            store.dispatch(.pauseStudyAudio)
+            store.dispatch(.studyAction(.pauseStudyAudio))
         }
     }
 
@@ -201,7 +201,7 @@ struct StudyView: View {
                 HStack {
                     Spacer()
                     Button {
-                        store.dispatch(.playStudyWord(definition))
+                        store.dispatch(.studyAction(.playStudyWord(definition)))
                     } label: {
                         SystemImageView(.speaker)
                     }
@@ -246,16 +246,13 @@ struct StudyView: View {
                         .font(.system(size: 30, weight: .light))
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                // Single button that toggles between play and stop
                 Button {
                     if store.state.studyState.isAudioPlaying {
-                        // If playing, pause the audio
-                        store.dispatch(.pauseStudyAudio)
+                        store.dispatch(.studyAction(.pauseStudyAudio))
                     } else {
-                        // If not playing, start playback
                         if let startWord = timestampData?.first,
                            let endWord = timestampData?.last {
-                            store.dispatch(.playStudySentence(startWord: startWord, endWord: endWord))
+                            store.dispatch(.studyAction(.playStudySentence(startWord: startWord, endWord: endWord)))
                         }
                     }
                 } label: {

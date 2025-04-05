@@ -14,6 +14,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     var newState = state
 
     switch action {
+    case .studyAction(let studyAction):
+        newState.studyState = studyReducer(state.studyState, studyAction)
     case .onLoadedAppSettings(let settings):
         newState.settingsState = settings
     case .generateImage:
@@ -42,12 +44,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         }
 
         return newState
-    case .updateStudyChapter(let chapter):
+    case .updateStudyChapter(let chapter): // TODO: Delete
         newState.studyState.currentChapter = chapter
-    case .playStudyWord(let definition):
-        newState.studyState.audioPlayer = definition.audioData?.createAVPlayer(fileExtension: "m4a") ?? AVPlayer()
-    case .onPreparedStudySentence(let data):
-        newState.studyState.sentenceAudioPlayer = data.createAVPlayer(fileExtension: "m4a") ?? AVPlayer()
+    
     case .playSound(let sound):
         if let url = sound.fileURL,
            let player = try? AVAudioPlayer(contentsOf: url) {
@@ -215,10 +214,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
 
         switch type {
         case .newStory:
-            let hasExistingStories = !newState.storyState.savedStories.isEmpty
-            if !hasExistingStories {
-                newState.viewState.readerDisplayType = .loading
-            }
             newState.viewState.shouldShowImageSpinner = true
         case .existingStory(let story):
             if let voice = story.chapters.last?.audioVoice {
@@ -391,8 +386,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.subscriptionState.nextAvailableDescription = nextAvailable
     case .hideSnackbarThenSaveStoryAndSettings:
         newState.snackBarState.isShowing = false
-    case .updateStudyAudioPlaying(let isPlaying):
-        newState.studyState.isAudioPlaying = isPlaying
     case .updateIsSubscriptionPurchaseLoading(let isLoading):
         newState.subscriptionState.isLoadingSubscriptionPurchase = isLoading
     case .purchaseSubscription:
@@ -432,19 +425,13 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .failedToModerateText,
             .loadChapters,
             .failedToLoadChapters,
-            .failedToPrepareStudyWord,
             .checkFreeTrialLimit,
             .failedToSynthesizeAudio,
             .hasReachedDailyLimit,
-            .pauseStudyAudio,
             .onFinishedLoadedStories,
             .musicTrackFinished,
             .checkDeviceVolumeZero,
-            .onDeletedDefinition,
-            .prepareToPlayStudyWord,
-            .prepareToPlayStudySentence,
-            .failedToPrepareStudySentence,
-            .playStudySentence:
+            .onDeletedDefinition:
         break
     }
 

@@ -9,7 +9,20 @@ import Foundation
 import AVKit
 import StoreKit
 
+enum StudyAction {
+    case prepareToPlayStudyWord(Definition)
+    case failedToPrepareStudyWord
+    case playStudyWord(Definition)
+    case prepareToPlayStudySentence(Definition)
+    case failedToPrepareStudySentence
+    case onPreparedStudySentence(Data)
+    case playStudySentence(startWord: WordTimeStampData, endWord: WordTimeStampData)
+    case pauseStudyAudio
+    case updateStudyAudioPlaying(Bool)
+}
+
 enum FlowTaleAction {
+    case studyAction(StudyAction)
     case updateAutoScrollEnabled(isEnabled: Bool)
     case updateSentenceIndex(Int)
 
@@ -80,15 +93,6 @@ enum FlowTaleAction {
 
     case defineCharacter(WordTimeStampData, shouldForce: Bool)
     case playWord(WordTimeStampData, story: Story?)
-    case prepareToPlayStudyWord(Definition)
-    case failedToPrepareStudyWord
-    case playStudyWord(Definition)
-    case prepareToPlayStudySentence(Definition)
-    case failedToPrepareStudySentence
-    case onPreparedStudySentence(Data)
-    case playStudySentence(startWord: WordTimeStampData, endWord: WordTimeStampData)
-    case pauseStudyAudio
-    case updateStudyAudioPlaying(Bool)
     case onDefinedCharacter(Definition)
     case onDefinedSentence(Sentence, [Definition], tappedDefinition: Definition)
     case failedToDefineCharacter

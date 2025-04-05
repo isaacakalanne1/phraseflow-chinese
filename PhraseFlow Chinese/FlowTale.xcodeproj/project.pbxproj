@@ -118,6 +118,8 @@
 		BBE990E72D2ABE8B00FAD3FB /* ProgressUpdate.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */; };
 		BBEF63512DA1EB5600F93ECC /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF63502DA1EB5300F93ECC /* KeychainManager.swift */; };
 		BBEF63532DA1F80800F93ECC /* MusicVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF63522DA1F80400F93ECC /* MusicVolume.swift */; };
+		BBEF63572DA1F89F00F93ECC /* StudyReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF63562DA1F89B00F93ECC /* StudyReducer.swift */; };
+		BBEF63592DA1F99900F93ECC /* StudyMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF63582DA1F99700F93ECC /* StudyMiddleware.swift */; };
 		BBF6187E2D42DE6D00CA3229 /* NextStudyWord.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF6187D2D42DE6C00CA3229 /* NextStudyWord.mp3 */; };
 		BBF618822D42E06800CA3229 /* PreviousStudyWord.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618812D42E06800CA3229 /* PreviousStudyWord.mp3 */; };
 		BBF618842D42E43E00CA3229 /* CreateNextChapter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618832D42E43E00CA3229 /* CreateNextChapter.mp3 */; };
@@ -276,6 +278,8 @@
 		BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ProgressUpdate.mp3; sourceTree = "<group>"; };
 		BBEF63502DA1EB5300F93ECC /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		BBEF63522DA1F80400F93ECC /* MusicVolume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicVolume.swift; sourceTree = "<group>"; };
+		BBEF63562DA1F89B00F93ECC /* StudyReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyReducer.swift; sourceTree = "<group>"; };
+		BBEF63582DA1F99700F93ECC /* StudyMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMiddleware.swift; sourceTree = "<group>"; };
 		BBF6187D2D42DE6C00CA3229 /* NextStudyWord.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = NextStudyWord.mp3; sourceTree = "<group>"; };
 		BBF618812D42E06800CA3229 /* PreviousStudyWord.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PreviousStudyWord.mp3; sourceTree = "<group>"; };
 		BBF618832D42E43E00CA3229 /* CreateNextChapter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CreateNextChapter.mp3; sourceTree = "<group>"; };
@@ -370,8 +374,8 @@
 			isa = PBXGroup;
 			children = (
 				BB4EDB062C90C8CA00699E7D /* FlowTaleAction.swift */,
-				BB4EDB0B2C90C9A100699E7D /* FlowTaleReducer.swift */,
-				BB4EDB0D2C90CA0300699E7D /* FlowTaleMiddleware.swift */,
+				BBEF63542DA1F87E00F93ECC /* Middleware */,
+				BBEF63552DA1F88700F93ECC /* Reducer */,
 				BB1994CB2CE904C600D61E54 /* State */,
 				BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */,
 				BB4EDB0F2C90CA4900699E7D /* FlowTaleSubscriber.swift */,
@@ -606,6 +610,24 @@
 			path = Sound;
 			sourceTree = "<group>";
 		};
+		BBEF63542DA1F87E00F93ECC /* Middleware */ = {
+			isa = PBXGroup;
+			children = (
+				BB4EDB0D2C90CA0300699E7D /* FlowTaleMiddleware.swift */,
+				BBEF63582DA1F99700F93ECC /* StudyMiddleware.swift */,
+			);
+			path = Middleware;
+			sourceTree = "<group>";
+		};
+		BBEF63552DA1F88700F93ECC /* Reducer */ = {
+			isa = PBXGroup;
+			children = (
+				BB4EDB0B2C90C9A100699E7D /* FlowTaleReducer.swift */,
+				BBEF63562DA1F89B00F93ECC /* StudyReducer.swift */,
+			);
+			path = Reducer;
+			sourceTree = "<group>";
+		};
 		D2708F9BEB6EBF9B4147F685 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -834,6 +856,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBEF63572DA1F89F00F93ECC /* StudyReducer.swift in Sources */,
 				BBE636C52CCC0CDD00873E68 /* DefinitionView.swift in Sources */,
 				BBAE07D92D14BD6D00DA95CD /* AIStatementView.swift in Sources */,
 				BBEF63532DA1F80800F93ECC /* MusicVolume.swift in Sources */,
@@ -844,6 +867,7 @@
 				BBF618882D42F7C300CA3229 /* VoiceSettingsView.swift in Sources */,
 				BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */,
 				BB84E0AD2CF4952700520F5E /* strings-enum.stencil in Sources */,
+				BBEF63592DA1F99900F93ECC /* StudyMiddleware.swift in Sources */,
 				BBB1B7CC2D7B34EB0023147B /* MainButton.swift in Sources */,
 				BB7B6D9C2D1F30BC0030344A /* SnackBar.swift in Sources */,
 				BB6572CE2CD12A9200AC5981 /* ChapterResponse.swift in Sources */,

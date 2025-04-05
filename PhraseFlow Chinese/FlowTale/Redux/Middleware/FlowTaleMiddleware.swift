@@ -11,8 +11,6 @@ import AVKit
 import StoreKit
 import AVFoundation
 
-typealias FlowTaleMiddlewareType = Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol>
-
 /// Checks if the playback is at or near the end of the audio
 /// Used to determine if we should loop back to the start when play is tapped
 private func isPlaybackAtEnd(_ state: FlowTaleState) -> Bool {
@@ -33,8 +31,10 @@ private func isPlaybackAtEnd(_ state: FlowTaleState) -> Bool {
     return currentTime >= endTime
 }
 
-let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
+let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol> = { state, action, environment in
     switch action {
+    case .studyAction(let studyAction):
+        return await studyMiddleware(state, .studyAction(studyAction), environment)
     case .onCreatedChapter(let story):
         if story.imageData == nil,
            let passage = story.chapters.first?.passage {
@@ -214,36 +214,6 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             return .saveStoryAndSettings(story)
         }
         return nil
-    case .prepareToPlayStudyWord(let definition):
-        do {
-            let chapter = try environment.loadChapter(storyId: definition.timestampData.storyId,
-                                                      chapterIndex: definition.timestampData.chapterIndex)
-            return .updateStudyChapter(chapter)
-        } catch {
-            return .failedToPrepareStudyWord
-        }
-    case .playStudyWord(let definition):
-        let myTime = CMTime(seconds: 0, preferredTimescale: 60000)
-        await state.studyState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
-        state.studyState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: definition.timestampData.duration, preferredTimescale: 60000)
-        state.studyState.audioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
-
-        return nil
-    case .prepareToPlayStudySentence(let definition):
-        if let audioData = try? environment.loadSentenceAudio(id: definition.sentenceId) {
-            return .onPreparedStudySentence(audioData)
-        } else {
-            return .failedToPrepareStudySentence
-        }
-    case .playStudySentence:
-        let myTime = CMTime(seconds: 0, preferredTimescale: 60000)
-        await state.studyState.sentenceAudioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
-        state.studyState.sentenceAudioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
-        return nil
-
-    case .pauseStudyAudio:
-        state.studyState.audioPlayer.pause()
-        return .updateStudyAudioPlaying(false)
     case .playSound:
         if state.settingsState.shouldPlaySound {
             state.appAudioState.audioPlayer.play()
@@ -575,17 +545,13 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
             .showModerationDetails,
             .updateIsShowingModerationDetails,
             .updateStudyChapter,
-            .failedToPrepareStudyWord,
             .showDailyLimitExplanationScreen,
             .hasReachedFreeTrialLimit,
             .hasReachedDailyLimit,
             .showFreeLimitExplanationScreen,
             .selectStoryFromSnackbar,
-            .updateStudyAudioPlaying,
             .onValidatedReceipt,
-            .updateIsSubscriptionPurchaseLoading,
-            .failedToPrepareStudySentence,
-            .onPreparedStudySentence:
+            .updateIsSubscriptionPurchaseLoading:
         return nil
     }
 }
