@@ -10,7 +10,6 @@ import SwiftUI
 struct ReaderView: View {
     @EnvironmentObject var store: FlowTaleStore
     let chapter: Chapter
-    @State var chapterViewId = UUID()
 
     var body: some View {
         VStack(spacing: 10) {

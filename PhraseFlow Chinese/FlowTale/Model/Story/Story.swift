@@ -12,11 +12,6 @@ struct ChapterAudio: Codable, Equatable, Hashable {
     let data: Data
 }
 
-// This protocol will be used to create JSON encodable default stories
-protocol DefaultStory {
-    func encodeForStorage() -> Data?
-}
-
 struct Story: Codable, Equatable, Hashable {
     var id: UUID
     var briefLatestStorySummary: String
@@ -31,7 +26,6 @@ struct Story: Codable, Equatable, Hashable {
     var lastUpdated: Date
     var storyPrompt: String
     var imageData: Data?
-    var isDefaultStory: Bool = false
     
     var coverArt: UIImage? {
         if let data = imageData {
@@ -50,8 +44,7 @@ struct Story: Codable, Equatable, Hashable {
          currentChapterIndex: Int = 0,
          currentSentenceIndex: Int = 0,
          currentPlaybackTime: Double = 0,
-         lastUpdated: Date = .now,
-         isDefaultStory: Bool = false) {
+         lastUpdated: Date = .now) {
         self.id = UUID()
         self.briefLatestStorySummary = briefLatestStorySummary
         self.difficulty = difficulty
@@ -64,7 +57,6 @@ struct Story: Codable, Equatable, Hashable {
         self.lastUpdated = lastUpdated
         self.storyPrompt = storyPrompt
         self.imageData = imageData
-        self.isDefaultStory = isDefaultStory
     }
 
     // Custom decoder to assign default values
@@ -82,6 +74,5 @@ struct Story: Codable, Equatable, Hashable {
         self.lastUpdated              = (try? container.decode(Date.self, forKey: .lastUpdated)) ?? .now
         self.storyPrompt              = (try? container.decode(String.self, forKey: .storyPrompt)) ?? ""
         self.imageData                = try? container.decode(Data.self, forKey: .imageData)
-        self.isDefaultStory           = (try? container.decode(Bool.self, forKey: .isDefaultStory)) ?? false
     }
 }

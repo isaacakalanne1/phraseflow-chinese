@@ -21,9 +21,6 @@ enum SnackBarType: Equatable {
     case didNotPassModeration
     case dailyChapterLimitReached(nextAvailable: String)
     case deviceVolumeZero
-    case loadedDefaultStory
-    case savedAsDefaultStory
-    case deletedDefaultStories
 
     var text: String {
         switch self {
@@ -53,12 +50,6 @@ enum SnackBarType: Equatable {
             LocalizedString.snackbarDailyChapterLimitReached(nextAvailable)
         case .deviceVolumeZero:
             LocalizedString.deviceVolumeZero
-        case .loadedDefaultStory:
-            "Default story loaded" // This should be localized in your strings file
-        case .savedAsDefaultStory:
-            "Story saved as default template" // This should be localized in your strings file
-        case .deletedDefaultStories:
-            "Default stories deleted" // This should be localized in your strings file
         }
     }
 
@@ -76,10 +67,7 @@ enum SnackBarType: Equatable {
                 .didNotPassModeration,
                 .couldNotModerateText,
                 .welcomeBack,
-                .deletedCustomStory,
-                .loadedDefaultStory,
-                .savedAsDefaultStory,
-                .deletedDefaultStories:
+                .deletedCustomStory:
             2.5
         case .dailyChapterLimitReached:
             4
@@ -100,9 +88,7 @@ enum SnackBarType: Equatable {
                 .storyReadyTapToRead,
                 .subscribed,
                 .passedModeration,
-                .deletedCustomStory,
-                .loadedDefaultStory,
-                .savedAsDefaultStory:
+                .deletedCustomStory:
             emoji = "✅"
         case .welcomeBack:
             emoji = "🔥"
@@ -112,8 +98,6 @@ enum SnackBarType: Equatable {
             emoji = "⚠️"
         case .deviceVolumeZero:
             emoji = "🔇"
-        case .deletedDefaultStories:
-            emoji = "🗑️"
         }
         return Text(emoji)
     }
@@ -143,10 +127,7 @@ enum SnackBarType: Equatable {
                 .welcomeBack,
                 .deletedCustomStory,
                 .failedToWriteChapter,
-                .deviceVolumeZero,
-                .loadedDefaultStory,
-                .savedAsDefaultStory,
-                .deletedDefaultStories:
+                .deviceVolumeZero:
             break
         case .couldNotModerateText:
             store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))
@@ -166,10 +147,7 @@ enum SnackBarType: Equatable {
                 .deletedCustomStory,
                 .dailyChapterLimitReached,
                 .storyReadyTapToRead,
-                .deviceVolumeZero,
-                .loadedDefaultStory,
-                .savedAsDefaultStory,
-                .deletedDefaultStories:
+                .deviceVolumeZero:
             return false
         case .failedToWriteChapter,
                 .didNotPassModeration,

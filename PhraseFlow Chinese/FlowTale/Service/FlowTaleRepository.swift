@@ -19,7 +19,6 @@ protocol FlowTaleRepositoryProtocol {
     func getProducts() async throws -> [Product]
     func purchase(_ product: Product) async throws
     func validateAppStoreReceipt()
-    func loadDefaultBundleStories(forLanguage language: Language?) -> [Story]
 }
 
 enum FlowTaleRepositoryError: Error {
@@ -291,56 +290,6 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
             let request = SKReceiptRefreshRequest()
             request.start()
             return
-        }
-    }
-
-    // Helper function to load default stories from bundle
-    func loadDefaultBundleStories(forLanguage language: Language?) -> [Story] {
-        let fileManager = FileManager.default
-
-        // Returns URL for the app's bundle directory
-        guard let bundleURL = Bundle.main.resourceURL else {
-            return []
-        }
-
-        // Look for files that match our default story naming pattern
-        do {
-            let bundleContents = try fileManager.contentsOfDirectory(at: bundleURL, includingPropertiesForKeys: nil)
-            let defaultStoryFiles = bundleContents.filter {
-                $0.lastPathComponent.hasPrefix("default_story_") &&
-                $0.pathExtension == "json"
-            }
-
-            var defaultStories: [Story] = []
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .iso8601
-
-            for fileURL in defaultStoryFiles {
-                do {
-                    let data = try Data(contentsOf: fileURL)
-                    var story = try decoder.decode(Story.self, from: data)
-
-                    // Mark as default story
-                    story.isDefaultStory = true
-
-                    // If a specific language is requested, only include stories in that language
-                    if let language = language {
-                        if story.language == language {
-                            defaultStories.append(story)
-                        }
-                    } else {
-                        // If no language is specified, include all default stories
-                        defaultStories.append(story)
-                    }
-                } catch {
-                    print("Failed to decode default story at \(fileURL): \(error)")
-                }
-            }
-
-            return defaultStories
-        } catch {
-            print("Failed to read bundle directory: \(error)")
-            return []
         }
     }
 }

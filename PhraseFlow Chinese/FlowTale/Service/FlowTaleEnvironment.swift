@@ -26,7 +26,6 @@ protocol FlowTaleEnvironmentProtocol {
     // Sentence Audio
     func saveSentenceAudio(_ audioData: Data, id: UUID) throws
     func loadSentenceAudio(id: UUID) throws -> Data
-    func cleanupOrphanedSentenceAudioFiles() throws
     
     // Settings
     func loadAppSettings() throws -> SettingsState
@@ -52,8 +51,6 @@ protocol FlowTaleEnvironmentProtocol {
     func generateImage(with prompt: String) async throws -> Data
     func moderateText(_ text: String) async throws -> ModerationResponse
     func enforceChapterCreationLimit(subscription: SubscriptionLevel?) throws
-
-    func loadDefaultBundleStories(forLanguage language: Language?) -> [Story]
 }
 
 struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
@@ -191,9 +188,5 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
 
     func enforceChapterCreationLimit(subscription: SubscriptionLevel?) throws {
         try dataStore.trackChapterCreation(subscription: subscription)
-    }
-
-    func loadDefaultBundleStories(forLanguage language: Language? = nil) -> [Story] {
-        repository.loadDefaultBundleStories(forLanguage: language)
     }
 }

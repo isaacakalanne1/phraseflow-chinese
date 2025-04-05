@@ -445,60 +445,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .onPurchasedSubscription,
             .failedToPurchaseSubscription:
         newState.subscriptionState.isLoadingSubscriptionPurchase = false
-    case .onLoadedDefaultStory(let story):
-        // If we successfully loaded a default story, add it to our saved stories
-        // and select it as the current story
-        if !newState.storyState.savedStories.contains(where: { $0.id == story.id }) {
-            newState.storyState.savedStories.append(story)
-        }
-        newState.storyState.currentStory = story
-        newState.viewState.contentTab = .reader
-        
-        // Set up audio player
-        let data = story.chapters.first?.audio
-        let player = data?.data.createAVPlayer()
-        newState.audioState.audioPlayer = player ?? AVPlayer()
-        
-        // Show success snackbar
-        newState.snackBarState.type = .loadedDefaultStory
-        newState.snackBarState.isShowing = true
-        
-    case .loadDefaultStory:
-        // Just processing in middleware
-        break
-        
-    case .failedToLoadDefaultStory:
-        // Show some error state
-        newState.snackBarState.type = .failedToWriteChapter
-        newState.snackBarState.isShowing = true
-        
-    case .onSavedAsDefaultStory:
-        // Show success snackbar
-        newState.snackBarState.type = .savedAsDefaultStory
-        newState.snackBarState.isShowing = true
-        
-    case .saveAsDefaultStory:
-        // Just processing in middleware
-        break
-        
-    case .failedToSaveAsDefaultStory:
-        // Show error state
-        newState.snackBarState.type = .failedToWriteChapter
-        newState.snackBarState.isShowing = true
-        
-    case .onDeletedDefaultStories:
-        // Show success snackbar
-        newState.snackBarState.type = .deletedDefaultStories
-        newState.snackBarState.isShowing = true
-        
-    case .deleteDefaultStories:
-        // Just processing in middleware
-        break
-        
-    case .failedToDeleteDefaultStories:
-        // Show error state
-        newState.snackBarState.type = .failedToWriteChapter
-        newState.snackBarState.isShowing = true
     case .saveStoryAndSettings,
             .failedToSaveStory,
             .loadStories,
