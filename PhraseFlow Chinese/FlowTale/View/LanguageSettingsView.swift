@@ -14,16 +14,11 @@ struct LanguageOnboardingView: View {
         VStack(spacing: 0) {
             LanguageMenu()
             
-            PrimaryButton(title: LocalizedString.next) {
-                navigateToDifficulty = true
-            }
-            .padding(.horizontal)
-            .padding(.bottom)
+            CreateStoryButton()
+                .padding(.horizontal)
+                .padding(.bottom)
         }
         .background(FlowTaleColor.background)
-        .navigationDestination(isPresented: $navigateToDifficulty) {
-            DifficultyOnboardingView()
-        }
     }
 }
 

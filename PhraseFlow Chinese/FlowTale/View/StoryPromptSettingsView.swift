@@ -7,26 +7,6 @@
 
 import SwiftUI
 
-struct StoryPromptOnboardingView: View {
-    @State private var navigateToVoice = false
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            StoryPromptMenu()
-            
-            PrimaryButton(title: LocalizedString.next) {
-                navigateToVoice = true
-            }
-            .padding(.horizontal)
-            .padding(.bottom)
-        }
-        .background(FlowTaleColor.background)
-        .navigationDestination(isPresented: $navigateToVoice) {
-            VoiceOnboardingView()
-        }
-    }
-}
-
 struct StoryPromptMenu: View {
     @EnvironmentObject var store: FlowTaleStore
     @Environment(\.dismiss) var dismiss

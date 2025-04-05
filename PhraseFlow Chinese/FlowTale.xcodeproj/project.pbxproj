@@ -117,6 +117,7 @@
 		BBE990E32D2AB31300FAD3FB /* ErrorSnackbar.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E22D2AB31200FAD3FB /* ErrorSnackbar.mp3 */; };
 		BBE990E72D2ABE8B00FAD3FB /* ProgressUpdate.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */; };
 		BBEF63512DA1EB5600F93ECC /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF63502DA1EB5300F93ECC /* KeychainManager.swift */; };
+		BBEF63532DA1F80800F93ECC /* MusicVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF63522DA1F80400F93ECC /* MusicVolume.swift */; };
 		BBF6187E2D42DE6D00CA3229 /* NextStudyWord.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF6187D2D42DE6C00CA3229 /* NextStudyWord.mp3 */; };
 		BBF618822D42E06800CA3229 /* PreviousStudyWord.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618812D42E06800CA3229 /* PreviousStudyWord.mp3 */; };
 		BBF618842D42E43E00CA3229 /* CreateNextChapter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618832D42E43E00CA3229 /* CreateNextChapter.mp3 */; };
@@ -274,6 +275,7 @@
 		BBE990E22D2AB31200FAD3FB /* ErrorSnackbar.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ErrorSnackbar.mp3; sourceTree = "<group>"; };
 		BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ProgressUpdate.mp3; sourceTree = "<group>"; };
 		BBEF63502DA1EB5300F93ECC /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		BBEF63522DA1F80400F93ECC /* MusicVolume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicVolume.swift; sourceTree = "<group>"; };
 		BBF6187D2D42DE6C00CA3229 /* NextStudyWord.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = NextStudyWord.mp3; sourceTree = "<group>"; };
 		BBF618812D42E06800CA3229 /* PreviousStudyWord.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PreviousStudyWord.mp3; sourceTree = "<group>"; };
 		BBF618832D42E43E00CA3229 /* CreateNextChapter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CreateNextChapter.mp3; sourceTree = "<group>"; };
@@ -518,6 +520,7 @@
 				BB1994C62CE8DC2100D61E54 /* Speech */,
 				BB0854862CB42C7100F1661B /* Story */,
 				BB4EDB2A2C91B35D00699E7D /* Definition.swift */,
+				BBEF63522DA1F80400F93ECC /* MusicVolume.swift */,
 				BBE990B62D29BC5500FAD3FB /* AppSound.swift */,
 				BBE990C02D29C59C00FAD3FB /* MusicType.swift */,
 				BB4E6BF72D246AEF002B5CBA /* LoadingState.swift */,
@@ -833,6 +836,7 @@
 			files = (
 				BBE636C52CCC0CDD00873E68 /* DefinitionView.swift in Sources */,
 				BBAE07D92D14BD6D00DA95CD /* AIStatementView.swift in Sources */,
+				BBEF63532DA1F80800F93ECC /* MusicVolume.swift in Sources */,
 				BB6572D42CD3932300AC5981 /* View+GreyBackground.swift in Sources */,
 				BB7B6DA22D1F3B680030344A /* DifficultyView.swift in Sources */,
 				BBE636D12CCD77BC00873E68 /* FlowLayout.swift in Sources */,

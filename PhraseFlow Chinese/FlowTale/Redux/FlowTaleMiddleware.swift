@@ -331,12 +331,8 @@ let flowTaleMiddleware: FlowTaleMiddlewareType = { state, action, environment in
         return .saveDefinitions
     case .saveDefinitions:
         do {
-            let definitionsByStoryId = Dictionary(grouping: state.definitionState.definitions) { $0.timestampData.storyId }
-
-            for (storyId, definitions) in definitionsByStoryId {
-                try environment.saveDefinitions(for: storyId, definitions: definitions)
-            }
-            
+            // Just save all definitions at once
+            try environment.saveDefinitions(state.definitionState.definitions)
             return .onSavedDefinitions
         } catch {
             return .failedToSaveDefinitions

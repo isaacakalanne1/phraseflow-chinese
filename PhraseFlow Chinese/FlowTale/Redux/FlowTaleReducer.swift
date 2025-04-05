@@ -20,42 +20,20 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.loadingState = .generatingImage
     case .onLoadedStories(let stories, let isAppLaunch):
         newState.storyState.savedStories = stories
-        if isAppLaunch {
-            newState.viewState.readerDisplayType = .normal
-        }
-        
-        // Setup the current story in these cases:
-        // 1. If there is no current story (nil)
-        // 2. If the current story no longer exists in the saved stories (i.e. was deleted or hidden)
-        if newState.storyState.currentStory == nil || 
+        newState.viewState.readerDisplayType = .normal
+        if newState.storyState.currentStory == nil ||
            !stories.contains(where: { $0.id == newState.storyState.currentStory?.id }) {
-            if let firstStory = stories.first {
-                // Make the first visible story the current one
-                newState.storyState.currentStory = firstStory
-                let data = newState.storyState.currentChapterAudioData
-                let player = data?.createAVPlayer()
-                newState.audioState.audioPlayer = player ?? AVPlayer()
-            } else {
-                // No visible stories left
-                newState.storyState.currentStory = nil
-                newState.viewState.contentTab = .reader
-                newState.audioState.audioPlayer = AVPlayer()
-            }
+            newState.storyState.currentStory = stories.first
+            let data = newState.storyState.currentChapterAudioData
+            let player = data?.createAVPlayer()
+            newState.audioState.audioPlayer = player ?? AVPlayer()
         }
     case .onLoadedChapters(let story, let chapters, _):
-        // 1) Find this story in savedStories (or currentStory)
-        //    We’ll do both, depending on how your app organizes it.
-
-        // Example: update in savedStories
         if let index = newState.storyState.savedStories.firstIndex(where: { $0.id == story.id }) {
             var updatedStory = newState.storyState.savedStories[index]
-            // 2) Merge the newly loaded chapters into the story object
             updatedStory.chapters = chapters
-            // 3) Update the array
             newState.storyState.savedStories[index] = updatedStory
         }
-
-        // If you also keep a `currentStory`, and it's the same story, update that too:
         if newState.storyState.currentStory?.id == story.id {
             newState.storyState.currentStory?.chapters = chapters
             let data = newState.storyState.currentChapterAudioData
@@ -70,9 +48,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.studyState.audioPlayer = definition.audioData?.createAVPlayer(fileExtension: "m4a") ?? AVPlayer()
     case .onPreparedStudySentence(let data):
         newState.studyState.sentenceAudioPlayer = data.createAVPlayer(fileExtension: "m4a") ?? AVPlayer()
-    case .playStudySentence:
-        break // TODO: Fix needing to tap word twice to see it appea rin definitions list
-//        newState.studyState.isAudioPlaying = true
     case .playSound(let sound):
         if let url = sound.fileURL,
            let player = try? AVAudioPlayer(contentsOf: url) {
@@ -236,15 +211,12 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             newState.settingsState.language = language
         }
     case .createChapter(let type):
-        // Set flag to indicate a chapter is being written
         newState.viewState.isWritingChapter = true
 
         switch type {
         case .newStory:
-            // For new stories, we've already handled this in the view with the hasExistingStories check
             let hasExistingStories = !newState.storyState.savedStories.isEmpty
             if !hasExistingStories {
-                // For new users with no stories, use the full screen loading view
                 newState.viewState.readerDisplayType = .loading
             }
             newState.viewState.shouldShowImageSpinner = true
@@ -253,14 +225,11 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
                 newState.settingsState.voice = voice
             }
             newState.viewState.shouldShowImageSpinner = story.imageData == nil
-            // For existing stories (adding new chapter), we should not go to loading view
-            // The snackbar will show the loading state instead
         }
         newState.viewState.loadingState = .writing
     case .failedToCreateChapter,
             .failedToGenerateImage:
         newState.viewState.readerDisplayType = .normal
-        // Also reset writing flag on failure
         newState.viewState.isWritingChapter = false
     case .updateSentenceIndex(let index):
         newState.storyState.currentStory?.currentSentenceIndex = index
@@ -306,16 +275,13 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .updateLanguage(let language):
         if language != newState.settingsState.language {
             newState.settingsState.language = language
-            
             if let voice = language.voices.first {
                 newState.settingsState.voice = voice
             }
         }
     case .onLoadedDefinitions(let definitions):
-        // Debug - log the state of definitions being loaded
         print("Loading \(definitions.count) definitions")
         print("Definitions with hasBeenSeen=true: \(definitions.filter { $0.hasBeenSeen }.count)")
-        
         newState.definitionState.definitions = definitions
     case .deleteDefinition(let definition):
         var updatedDefinition = definition
@@ -329,7 +295,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             newState.storyState.currentStory = nil
             newState.viewState.contentTab = .storyList
         }
-//        newState.viewState.storyListViewId = UUID()
     case .onFetchedSubscriptions(let subscriptions):
         newState.subscriptionState.products = subscriptions
     case .updatePurchasedProducts(let entitlements, _):
@@ -478,7 +443,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .onDeletedDefinition,
             .prepareToPlayStudyWord,
             .prepareToPlayStudySentence,
-            .failedToPrepareStudySentence:
+            .failedToPrepareStudySentence,
+            .playStudySentence:
         break
     }
 

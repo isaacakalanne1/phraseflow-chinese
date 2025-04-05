@@ -8,7 +8,7 @@
 import Foundation
 
 enum ReaderDisplayType {
-    case normal, loading, initialising
+    case normal, initialising
 }
 
 enum ContentTab: CaseIterable, Equatable, Identifiable {

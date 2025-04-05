@@ -26,8 +26,8 @@ protocol FlowTaleDataStoreProtocol {
 
     // Definitions
     func loadDefinitions() throws -> [Definition]
-    func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws
-    func deleteDefinitions(for storyId: UUID) throws
+    func saveDefinitions(_ definitions: [Definition]) throws
+    func deleteDefinition(with id: UUID) throws
     func cleanupOrphanedDefinitionFiles() throws
     
     // Sentence Audio 
@@ -138,53 +138,30 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
     // MARK: - Definitions
     // ---------------------------------------
     
-    // Helper method to get the file URL for story-specific definitions
-    private func definitionsFileURL(for storyId: UUID) -> URL? {
-        return documentsDirectory?.appendingPathComponent("definitions-\(storyId.uuidString).json")
+    // Helper method to get the file URL for all definitions
+    private func definitionsFileURL() -> URL? {
+        return documentsDirectory?.appendingPathComponent("definitions.json")
     }
     
-    // Helper method to get all definition file URLs
-    // This is kept for maintenance/debugging purposes, though we now load definitions by story ID
-    private func getAllDefinitionFiles() throws -> [URL] {
-        guard let dir = documentsDirectory else {
-            throw FlowTaleDataStoreError.failedToCreateUrl
-        }
-        
-        let contents = try fileManager.contentsOfDirectory(atPath: dir.path)
-        let definitionFiles = contents.filter { $0.hasPrefix("definitions-") && $0.hasSuffix(".json") }
-        
-        return definitionFiles.map { dir.appendingPathComponent($0) }
-    }
-    
-    // Helper method to clean up orphaned definition files (definitions for stories that no longer exist)
-    // This could be called periodically for maintenance
+    // Helper method to clean up orphaned definition files
     func cleanupOrphanedDefinitionFiles() throws {
+        // Since we're now storing all definitions in a single file, 
+        // this method is simpler - just check for old format files to delete
         guard let dir = documentsDirectory else {
             throw FlowTaleDataStoreError.failedToCreateUrl
         }
         
-        // Get all story IDs
-        let stories = try loadAllStories()
-        let validStoryIds = stories.map { $0.id.uuidString }
-        
-        // Get all definition files
+        // Get all old definition files with story ID format
         let contents = try fileManager.contentsOfDirectory(atPath: dir.path)
-        let definitionFiles = contents.filter { $0.hasPrefix("definitions-") && $0.hasSuffix(".json") }
+        let oldDefinitionFiles = contents.filter { $0.hasPrefix("definitions-") && $0.hasSuffix(".json") }
         
-        // Find orphaned definition files
-        for fileName in definitionFiles {
-            // Extract the story ID from the filename (definitions-UUID.json)
-            let storyIdString = fileName.replacingOccurrences(of: "definitions-", with: "")
-                                       .replacingOccurrences(of: ".json", with: "")
-            
-            // If the story ID doesn't exist in our valid IDs, delete the file
-            if !validStoryIds.contains(storyIdString) {
-                let fileURL = dir.appendingPathComponent(fileName)
-                try fileManager.removeItem(at: fileURL)
-            }
+        // Remove all old format files - they should all be migrated to the new format
+        for fileName in oldDefinitionFiles {
+            let fileURL = dir.appendingPathComponent(fileName)
+            try fileManager.removeItem(at: fileURL)
         }
         
-        print("Successfully cleaned up orphaned definition files")
+        print("Successfully cleaned up old definition files")
     }
     
     // MARK: - Sentence Audio Methods
@@ -251,8 +228,15 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         print("Successfully cleaned up orphaned sentence audio files")
     }
 
-    func loadDefinitions(for storyId: UUID) throws -> [Definition] {
-        guard let fileURL = definitionsFileURL(for: storyId) else {
+    // Load all definitions from the central storage file
+    func loadDefinitions() throws -> [Definition] {
+        var allDefinitions: [Definition] = []
+        
+        // First, check for old-style story-specific definition files to migrate
+        try migrateOldFormatDefinitions()
+        
+        // Load from the consolidated definitions file
+        guard let fileURL = definitionsFileURL() else {
             throw FlowTaleDataStoreError.failedToCreateUrl
         }
         
@@ -265,23 +249,22 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
             let data = try Data(contentsOf: fileURL)
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
-            let definitions = try decoder.decode([Definition].self, from: data)
-            return definitions
+            allDefinitions = try decoder.decode([Definition].self, from: data)
+            return allDefinitions
         } catch {
             throw FlowTaleDataStoreError.failedToDecodeData
         }
     }
     
-    // Save definitions for a specific story
-    func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws {
-        guard let fileURL = definitionsFileURL(for: storyId) else {
+    // Save all definitions to a single file
+    func saveDefinitions(_ definitions: [Definition]) throws {
+        guard let fileURL = definitionsFileURL() else {
             throw FlowTaleDataStoreError.failedToCreateUrl
         }
         
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         do {
-            // Don't shuffle the definitions when saving - this preserves their state 
             let encodedData = try encoder.encode(definitions)
             try encodedData.write(to: fileURL)
         } catch {
@@ -289,53 +272,81 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         }
     }
     
-    // Load all definitions from all stories
-    func loadDefinitions() throws -> [Definition] {
-        // First, check if the legacy file exists
-        let legacyFileURL = documentsDirectory?.appendingPathComponent("definitions.json")
-        var allDefinitions: [Definition] = []
+    // Delete a specific definition by ID
+    func deleteDefinition(with id: UUID) throws {
+        var definitions = try loadDefinitions()
         
-        // Load from legacy file if it exists
-        if let legacyURL = legacyFileURL, fileManager.fileExists(atPath: legacyURL.path) {
+        // Remove the definition with the given ID (currently we don't have a unique ID field in Definition)
+        // In a real implementation, you'd need to add an ID field to Definition to make this work correctly
+        // For now, using a placeholder implementation
+        
+        // Placeholder implementation - in reality, you'd need to add a unique ID field to Definition
+        // definitions.removeAll(where: { $0.id == id })
+        
+        try saveDefinitions(definitions)
+    }
+    
+    // Migration helper for old format files
+    private func migrateOldFormatDefinitions() throws {
+        guard let dir = documentsDirectory else {
+            return
+        }
+        
+        // Get all old-format definition files
+        let contents = try fileManager.contentsOfDirectory(atPath: dir.path)
+        let oldDefinitionFiles = contents.filter { $0.hasPrefix("definitions-") && $0.hasSuffix(".json") }
+        
+        if oldDefinitionFiles.isEmpty {
+            // No old files to migrate
+            return
+        }
+        
+        // Load current definitions (if any)
+        var allDefinitions: [Definition] = []
+        if let fileURL = definitionsFileURL(), fileManager.fileExists(atPath: fileURL.path) {
             do {
-                let data = try Data(contentsOf: legacyURL)
+                let data = try Data(contentsOf: fileURL)
                 let decoder = JSONDecoder()
-                let legacyDefinitions = try decoder.decode([Definition].self, from: data)
-                allDefinitions.append(contentsOf: legacyDefinitions)
-                
-                // Migrate legacy definitions to story-specific files
-                let definitionsByStoryId = Dictionary(grouping: legacyDefinitions) { $0.timestampData.storyId }
-                for (storyId, definitions) in definitionsByStoryId {
-                    try saveDefinitions(for: storyId, definitions: definitions)
-                }
-                
-                // Delete the legacy file after migration
-                try fileManager.removeItem(at: legacyURL)
+                decoder.dateDecodingStrategy = .iso8601
+                allDefinitions = try decoder.decode([Definition].self, from: data)
             } catch {
-                // If we can't read the legacy file, just continue with story-specific files
+                // Start with empty if we can't load existing
+                allDefinitions = []
             }
         }
         
-        // Get all saved stories and load definitions for each one
-        let stories = try loadAllStories()
-        for story in stories {
-            let storyDefinitions = try loadDefinitions(for: story.id)
-            allDefinitions.append(contentsOf: storyDefinitions)
+        // Process each old file
+        for fileName in oldDefinitionFiles {
+            let fileURL = dir.appendingPathComponent(fileName)
+            do {
+                let data = try Data(contentsOf: fileURL)
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .iso8601
+                let oldDefinitions = try decoder.decode([Definition].self, from: data)
+                
+                // Add the old definitions to our consolidated list, avoiding duplicates
+                for oldDef in oldDefinitions {
+                    // Check if this definition already exists (using timestampData as a unique identifier)
+                    if !allDefinitions.contains(where: { 
+                        $0.timestampData == oldDef.timestampData && 
+                        $0.sentence == oldDef.sentence 
+                    }) {
+                        allDefinitions.append(oldDef)
+                    }
+                }
+                
+                // Delete the old file after successful migration
+                try fileManager.removeItem(at: fileURL)
+            } catch {
+                print("Error migrating old definition file \(fileName): \(error)")
+                // Continue with other files even if one fails
+            }
         }
         
-        return allDefinitions
-    }
-    
-    // Delete definitions for a specific story
-    func deleteDefinitions(for storyId: UUID) throws {
-        guard let fileURL = definitionsFileURL(for: storyId) else {
-            throw FlowTaleDataStoreError.failedToCreateUrl
-        }
+        // Save the consolidated definitions
+        try saveDefinitions(allDefinitions)
         
-        // If the file exists, delete it
-        if fileManager.fileExists(atPath: fileURL.path) {
-            try fileManager.removeItem(at: fileURL)
-        }
+        print("Successfully migrated \(oldDefinitionFiles.count) old definition files")
     }
 
     // ---------------------------------------

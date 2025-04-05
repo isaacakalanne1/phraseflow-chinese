@@ -32,16 +32,14 @@ struct ContentView: View {
                     ProgressView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-                case .loading,
-                     .normal:
+                case .normal:
                     ZStack(alignment: .topTrailing) {
                         mainContent()
                         overlayView()
                     }
                 }
             }
-            if store.state.viewState.readerDisplayType != .loading,
-               store.state.storyState.currentChapter != nil {
+            if !store.state.storyState.savedStories.isEmpty {
                 Divider()
                     .padding(.horizontal, 10)
                 ActionButtonsView()
@@ -85,9 +83,7 @@ struct ContentView: View {
 
         switch store.state.viewState.contentTab {
         case .reader:
-            if store.state.viewState.readerDisplayType == .loading {
-                LoadingView()
-            } else if let _ = store.state.storyState.currentStory {
+            if let _ = store.state.storyState.currentStory {
                 if let chapter = store.state.storyState.currentChapter {
                     NavigationStack {
                         ReaderView(chapter: chapter)
@@ -107,15 +103,10 @@ struct ContentView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             } else {
-                // If no currentStory or no chapters, show Onboarding
-                // (This is the scenario where we haven't loaded
-                // or don't have any stories yet.)
                 NavigationStack {
                     LanguageOnboardingView()
                 }
             }
-
-        // Create tab has been removed
 
         case .storyList:
             NavigationStack {
@@ -149,7 +140,6 @@ struct ContentView: View {
         }
     }
 
-    // MARK: - Overlay
     @ViewBuilder
     private func overlayView() -> some View {
         VStack(alignment: .trailing) {
@@ -162,11 +152,8 @@ struct ContentView: View {
         .animation(.easeInOut, value: store.state.snackBarState.isShowing)
     }
 
-
-    // MARK: - Timer
     func startTimer() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            // Handle music volume changes based on audio playback
             if store.state.audioState.audioPlayer.rate != 0 || store.state.studyState.audioPlayer.rate != 0 {
                 if store.state.musicAudioState.volume == .normal {
                     store.dispatch(.setMusicVolume(.quiet))
@@ -182,30 +169,14 @@ struct ContentView: View {
                 store.dispatch(.updatePlayTime)
             }
             
-            // Check if music needs to be advanced to next track
             if store.state.settingsState.isPlayingMusic,
                store.state.musicAudioState.isNearEndOfTrack {
-                // Music has finished - play next track
                 let currentMusic = store.state.musicAudioState.currentMusicType
                 let nextMusic = MusicType.next(after: currentMusic)
                 store.dispatch(.playMusic(nextMusic))
             }
-            
-            // Continue timer
+
             startTimer()
-        }
-    }
-}
-
-enum MusicVolume {
-    case normal, quiet
-
-    var float: Float {
-        switch self {
-        case .normal:
-            0.5
-        case .quiet:
-            0.15
         }
     }
 }

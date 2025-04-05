@@ -17,12 +17,13 @@ protocol FlowTaleEnvironmentProtocol {
     func generateStory(story: Story, deviceLanguage: Language?) async throws -> Story
 
     func loadDefinitions() throws -> [Definition]
-    func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws
-    func deleteDefinitions(for storyId: UUID) throws
+    func saveDefinitions(_ definitions: [Definition]) throws
+    func deleteDefinition(with id: UUID) throws
     func cleanupOrphanedDefinitionFiles() throws
 
     func saveSentenceAudio(_ audioData: Data, id: UUID) throws
     func loadSentenceAudio(id: UUID) throws -> Data
+    func cleanupOrphanedSentenceAudioFiles() throws
 
     func loadAppSettings() throws -> SettingsState
     func saveAppSettings(_ settings: SettingsState) throws
@@ -117,12 +118,12 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         try dataStore.loadDefinitions()
     }
     
-    func saveDefinitions(for storyId: UUID, definitions: [Definition]) throws {
-        try dataStore.saveDefinitions(for: storyId, definitions: definitions)
+    func saveDefinitions(_ definitions: [Definition]) throws {
+        try dataStore.saveDefinitions(definitions)
     }
 
-    func deleteDefinitions(for storyId: UUID) throws {
-        try dataStore.deleteDefinitions(for: storyId)
+    func deleteDefinition(with id: UUID) throws {
+        try dataStore.deleteDefinition(with: id)
     }
     
     func cleanupOrphanedDefinitionFiles() throws {
