@@ -66,8 +66,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         return newState
     case .updateStudyChapter(let chapter):
         newState.studyState.currentChapter = chapter
-    case .playStudyWord(let definition):
-        newState.studyState.audioPlayer = definition.audioData?.createAVPlayer() ?? AVPlayer()
+    case .prepareToPlayStudyWord(let definition):
+        newState.studyState.audioPlayer = definition.audioData?.createAVPlayer(fileExtension: "m4a") ?? AVPlayer()
     case .playStudySentence:
         newState.studyState.audioPlayer = newState.studyState.currentChapter?.audio.data.createAVPlayer() ?? AVPlayer()
         newState.studyState.isAudioPlaying = true
@@ -519,7 +519,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .onGeneratedImage,
             .moderateText,
             .failedToModerateText,
-            .prepareToPlayStudyWord,
             .loadChapters,
             .failedToLoadChapters,
             .failedToPrepareStudyWord,
@@ -532,7 +531,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .onFinishedLoadedStories,
             .musicTrackFinished,
             .checkDeviceVolumeZero,
-            .onDeletedDefinition:
+            .onDeletedDefinition,
+            .playStudyWord:
         break
     }
 
