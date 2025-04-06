@@ -23,7 +23,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .generateImage:
         newState.viewState.loadingState = .generatingImage
     case .onLoadedStories(let stories, let isAppLaunch):
-        newState.storyState.savedStories = stories
+        newState.storyState.savedStories = stories // TODO: Fix needing to tap definitions twice to get definition
         newState.viewState.readerDisplayType = .normal
         if newState.storyState.currentStory == nil ||
            !stories.contains(where: { $0.id == newState.storyState.currentStory?.id }) {
@@ -78,7 +78,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .defineCharacter(let wordTimeStampData, let shouldForce):
         newState.viewState.isDefining = true
     case .onDefinedCharacter(var definition):
-        // Mark the definition as seen
         definition.hasBeenSeen = true
         definition.creationDate = .now
         if definition.audioData == nil,
@@ -91,45 +90,17 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         }
 
         newState.definitionState.currentDefinition = definition
-        // First check for an existing definition with the same identifying characteristics
-        if let existingIndex = newState.definitionState.definitions.firstIndex(where: {
-            $0.timestampData == definition.timestampData && $0.sentence == definition.sentence
-        }) {
-            // If found, preserve the id of the existing definition
-            definition.id = newState.definitionState.definitions[existingIndex].id
-            // Remove the existing definition
-            newState.definitionState.definitions.remove(at: existingIndex)
-        }
-        // Add the updated definition
+        newState.definitionState.definitions.removeAll(where: { $0.id == definition.id })
         newState.definitionState.definitions.append(definition)
         newState.viewState.isDefining = false
     case .onDefinedSentence(_, var definitions, var tappedDefinition):
         tappedDefinition.hasBeenSeen = true
         tappedDefinition.creationDate = .now
-
-        if let tappedIndex = definitions.firstIndex(where: {
-            $0.timestampData == tappedDefinition.timestampData
-        }) {
-            tappedDefinition.id = definitions[tappedIndex].id
-            definitions[tappedIndex] = tappedDefinition
-        } else {
-            definitions.append(tappedDefinition)
-        }
         
         newState.definitionState.currentDefinition = tappedDefinition
+        newState.definitionState.definitions.removeAll(where: { $0.id == tappedDefinition.id })
+        newState.definitionState.definitions.append(tappedDefinition)
 
-        for var definition in definitions {
-            if let existingIndex = newState.definitionState.definitions.firstIndex(where: {
-                $0.id == definition.id || 
-                ($0.timestampData == definition.timestampData && $0.sentence == definition.sentence)
-            }) {
-                definition.id = newState.definitionState.definitions[existingIndex].id
-                newState.definitionState.definitions[existingIndex] = definition
-            } else {
-                newState.definitionState.definitions.append(definition)
-            }
-        }
-        
         newState.viewState.isDefining = false
     case .synthesizeAudio:
         newState.viewState.loadingState = .generatingSpeech

@@ -239,7 +239,7 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return nil
     case .defineCharacter(let timeStampData, let shouldForce):
         do {
-            guard let sentence = state.storyState.currentSentence,
+            guard let sentence = state.storyState.currentChapter?.sentences.first(where: { $0.timestamps.contains(where: { $0.id == timeStampData.id }) }),
                   let story = state.storyState.currentStory,
                   let deviceLanguage = state.deviceLanguage else {
                 return .failedToDefineCharacter
@@ -293,12 +293,11 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return .saveDefinitions
     case .saveDefinitions:
         do {
-            // Just save all definitions at once
             try environment.saveDefinitions(state.definitionState.definitions)
-            return .onSavedDefinitions
         } catch {
             return .failedToSaveDefinitions
         }
+        return .onSavedDefinitions
     case .deleteDefinition(let definition):
         do {
             // Delete the definition using its unique id
