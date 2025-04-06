@@ -12,14 +12,6 @@ let studyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
     switch action {
     case .studyAction(let studyAction):
         switch studyAction {
-        case .prepareToPlayStudyWord(let definition):
-            do {
-                let chapter = try environment.loadChapter(storyId: definition.timestampData.storyId,
-                                                          chapterIndex: definition.timestampData.chapterIndex)
-                return .updateStudyChapter(chapter)
-            } catch {
-                return .studyAction(.failedToPrepareStudyWord)
-            }
         case .playStudyWord(let definition):
             let myTime = CMTime(seconds: 0, preferredTimescale: 60000)
             await state.studyState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)

@@ -10,13 +10,12 @@ import AVKit
 import StoreKit
 
 enum StudyAction {
-    case prepareToPlayStudyWord(Definition)
     case failedToPrepareStudyWord
     case playStudyWord(Definition)
     case prepareToPlayStudySentence(Definition)
     case failedToPrepareStudySentence
     case onPreparedStudySentence(Data)
-    case playStudySentence(startWord: WordTimeStampData, endWord: WordTimeStampData)
+    case playStudySentence
     case pauseStudyAudio
     case updateStudyAudioPlaying(Bool)
 }
@@ -102,7 +101,6 @@ enum FlowTaleAction {
 
     case updateShowDefinition(Bool)
     case updateShowEnglish(Bool)
-    case updateStudyChapter(Chapter?)
 
     case updateSpeechSpeed(SpeechSpeed)
     case updateDifficulty(Difficulty)

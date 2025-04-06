@@ -18,8 +18,7 @@ let studyReducer: Reducer<StudyState, StudyAction> = { state, action in
         newState.sentenceAudioPlayer = data.createAVPlayer(fileExtension: "m4a") ?? AVPlayer()
     case .updateStudyAudioPlaying(let isPlaying):
         newState.isAudioPlaying = isPlaying
-    case .prepareToPlayStudyWord,
-            .failedToPrepareStudyWord,
+    case .failedToPrepareStudyWord,
             .prepareToPlayStudySentence,
             .failedToPrepareStudySentence,
             .playStudySentence,

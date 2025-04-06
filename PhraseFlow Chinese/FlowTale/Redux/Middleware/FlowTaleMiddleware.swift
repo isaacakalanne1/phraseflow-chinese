@@ -544,7 +544,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             .dismissFailedModerationAlert,
             .showModerationDetails,
             .updateIsShowingModerationDetails,
-            .updateStudyChapter,
             .showDailyLimitExplanationScreen,
             .hasReachedFreeTrialLimit,
             .hasReachedDailyLimit,

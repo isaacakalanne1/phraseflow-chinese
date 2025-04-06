@@ -128,10 +128,7 @@ struct StudyView: View {
         isDefinitionShown = false
         // Audio playing state is now managed by the store
         if let definition = currentDefinition {
-            store.dispatch(.updateStudyChapter(nil))
-            store.dispatch(.studyAction(.prepareToPlayStudyWord(definition)))
             store.dispatch(.studyAction(.prepareToPlayStudySentence(definition)))
-            // Make sure audio is paused and state is reset when changing words
             store.dispatch(.studyAction(.pauseStudyAudio))
         }
     }
@@ -175,22 +172,7 @@ struct StudyView: View {
     }
 
     func wordView(definition: Definition) -> some View {
-        let chapter = store.state.studyState.currentChapter
-        let timestampData = chapter?.audio.timestamps.filter({ $0.sentenceIndex == definition.timestampData.sentenceIndex })
-        var characterCount: Int? = nil
-        for data in timestampData ?? [] {
-            if data == definition.timestampData {
-                if characterCount == nil {
-                    characterCount = 0
-                }
-                break
-            } else {
-                if characterCount == nil {
-                    characterCount = 0
-                }
-                characterCount? += data.word.count
-            }
-        }
+        let characterCount = definition.sentence.original.count
         let baseString = definition.sentence.translation
 
         return VStack(alignment: .leading) {
@@ -233,10 +215,9 @@ struct StudyView: View {
             Text(LocalizedString.sentence)
                 .greyBackground()
             HStack {
-                if let count = characterCount,
-                   count >= 0,
-                   count + definition.timestampData.word.count <= baseString.count,
-                   let highlighted = boldSubstring(in: baseString, at: count, length: definition.timestampData.word.count) {
+                if characterCount >= 0,
+                   characterCount + definition.timestampData.word.count <= baseString.count,
+                   let highlighted = boldSubstring(in: baseString, at: characterCount, length: definition.timestampData.word.count) {
                     // In SwiftUI, just show it:
                     Text(highlighted)
                         .font(.system(size: 30, weight: .light))
@@ -250,13 +231,9 @@ struct StudyView: View {
                     if store.state.studyState.isAudioPlaying {
                         store.dispatch(.studyAction(.pauseStudyAudio))
                     } else {
-                        if let startWord = timestampData?.first,
-                           let endWord = timestampData?.last {
-                            store.dispatch(.studyAction(.playStudySentence(startWord: startWord, endWord: endWord)))
-                        }
+                        store.dispatch(.studyAction(.playStudySentence))
                     }
                 } label: {
-                    // Show play icon when not playing, stop icon when playing
                     SystemImageView(store.state.studyState.isAudioPlaying ? .stop : .play)
                 }
             }

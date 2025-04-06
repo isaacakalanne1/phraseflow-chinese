@@ -44,9 +44,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         }
 
         return newState
-    case .updateStudyChapter(let chapter): // TODO: Delete
-        newState.studyState.currentChapter = chapter
-    
     case .playSound(let sound):
         if let url = sound.fileURL,
            let player = try? AVAudioPlayer(contentsOf: url) {
