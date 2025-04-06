@@ -100,8 +100,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
                 chapterIndex: story.currentChapterIndex,
                 word: cleanedWord,
                 time: audioTimeInSeconds,
-                duration: event.duration,
-                sentenceIndex: sentenceIndex
+                duration: event.duration
             )
             wordTimestamps.append(newTimestamp)
             index += 1

@@ -11,7 +11,8 @@ struct CharacterView: View {
     @EnvironmentObject var store: FlowTaleStore
 
     let isHighlighted: Bool
-    
+    let isCurrentSentence: Bool
+
     let word: WordTimeStampData
 
     var isTappedWord: Bool {
@@ -27,7 +28,7 @@ struct CharacterView: View {
                 .background {
                     if isTappedWord {
                         FlowTaleColor.wordHighlight
-                    } else if store.state.storyState.currentStory?.currentSentenceIndex == word.sentenceIndex {
+                    } else if isCurrentSentence {
                         FlowTaleColor.highlight
                     }
                 }
@@ -35,7 +36,6 @@ struct CharacterView: View {
         .onTapGesture {
             if !store.state.viewState.isDefining {
                 store.dispatch(.updateAutoScrollEnabled(isEnabled: false))
-                store.dispatch(.updateSentenceIndex(word.sentenceIndex))
                 store.dispatch(.selectWord(word))
                 if store.state.settingsState.isShowingDefinition {
                     store.dispatch(.defineCharacter(word, shouldForce: false))

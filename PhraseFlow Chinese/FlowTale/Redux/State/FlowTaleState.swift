@@ -21,13 +21,6 @@ struct FlowTaleState {
     var locale: Locale
     var moderationResponse: ModerationResponse?
 
-    var currentSpokenWord: WordTimeStampData? {
-        guard let playbackTime = storyState.currentStory?.currentPlaybackTime else {
-            return nil
-        }
-        return storyState.currentSentence?.timestamps.last(where: { playbackTime >= $0.time })
-    }
-
     func createNewStory() -> Story {
         return Story(difficulty: settingsState.difficulty,
                      language: settingsState.language,

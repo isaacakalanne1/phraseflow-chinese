@@ -243,8 +243,7 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
                   let story = state.storyState.currentStory,
                   let chapter  = state.storyState.currentChapter,
                   let deviceLanguage = state.deviceLanguage,
-                  let currentSentence = state.storyState.currentSentence,
-                  let sentenceIndex = state.storyState.currentStory?.currentSentenceIndex else {
+                  let currentSentence = state.storyState.currentSentence else {
                 return .failedToDefineCharacter
             }
 
@@ -380,8 +379,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         } catch {
             return .failedToLoadAppSettings
         }
-    case .updateSentenceIndex:
-        return .refreshTranslationView
     case .checkDeviceVolumeZero:
         let audioSession = AVAudioSession.sharedInstance()
         do {

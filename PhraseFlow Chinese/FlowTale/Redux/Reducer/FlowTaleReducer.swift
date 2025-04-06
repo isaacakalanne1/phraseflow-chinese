@@ -126,7 +126,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         let isNewStoryCreation = newStory.chapters.count == 1
         
         newStory.currentPlaybackTime = 0
-        newStory.currentSentenceIndex = 0
         newStory.currentChapterIndex = newStory.chapters.count - 1
         newStory.chapters[newStory.currentChapterIndex] = chapter
         newStory.chapters[newStory.currentChapterIndex].audioSpeed = newState.settingsState.speechSpeed
@@ -221,8 +220,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .failedToGenerateImage:
         newState.viewState.readerDisplayType = .normal
         newState.viewState.isWritingChapter = false
-    case .updateSentenceIndex(let index):
-        newState.storyState.currentStory?.currentSentenceIndex = index
     case .playAudio(let time):
         newState.definitionState.currentDefinition = nil
         newState.audioState.isPlayingAudio = true
@@ -234,9 +231,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .updatePlayTime:
         newState.storyState.currentStory?.currentPlaybackTime = newState.audioState.audioPlayer.currentTime().seconds
         newState.storyState.currentStory?.currentPlaybackTime = newState.audioState.audioPlayer.currentTime().seconds
-        if let index = newState.currentSpokenWord?.sentenceIndex {
-            newState.storyState.currentStory?.currentSentenceIndex = index
-        }
     case .selectWord(let word):
         newState.storyState.currentStory?.currentPlaybackTime = word.time
     case .goToNextChapter:
@@ -247,7 +241,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         let data = newState.storyState.currentChapterAudioData
         let player = data?.createAVPlayer()
         newState.audioState.audioPlayer = player ?? AVPlayer()
-        newState.storyState.currentStory?.currentSentenceIndex = 0
         let sentence = newState.storyState.currentSentence
         newState.storyState.currentStory?.currentPlaybackTime = sentence?.timestamps.first?.time ?? 0.1
     case .refreshChapterView:

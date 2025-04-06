@@ -14,22 +14,19 @@ struct WordTimeStampData: Codable, Equatable, Hashable {
     var word: String
     let time: Double
     var duration: Double
-    var sentenceIndex: Int
 
     init(id: UUID,
          storyId: UUID,
          chapterIndex: Int,
          word: String,
          time: Double,
-         duration: Double,
-         sentenceIndex: Int) {
+         duration: Double) {
         self.id = id
         self.storyId = storyId
         self.chapterIndex = chapterIndex
         self.word = word
         self.time = time
         self.duration = duration
-        self.sentenceIndex = sentenceIndex
     }
 
     init(from decoder: any Decoder) throws {
@@ -40,6 +37,5 @@ struct WordTimeStampData: Codable, Equatable, Hashable {
         self.word = try container.decode(String.self, forKey: .word)
         self.time = try container.decode(Double.self, forKey: .time)
         self.duration = try container.decode(Double.self, forKey: .duration)
-        self.sentenceIndex = try container.decode(Int.self, forKey: .sentenceIndex)
     }
 }

@@ -24,11 +24,15 @@ struct StoryState {
         return story.chapters[safe: story.currentChapterIndex]
     }
 
-    var currentSentence: Sentence? {
-        guard let sentenceIndex = currentStory?.currentSentenceIndex else {
+    var currentSpokenWord: WordTimeStampData? {
+        guard let playbackTime = currentStory?.currentPlaybackTime else {
             return nil
         }
-        return currentChapter?.sentences[safe: sentenceIndex]
+        return currentChapter?.sentences.flatMap({ $0.timestamps}).last(where: { playbackTime >= $0.time })
+    }
+
+    var currentSentence: Sentence? {
+        return currentChapter?.sentences.first(where: { $0.timestamps.contains(where: { $0 == currentSpokenWord }) })
     }
 
     var currentChapterAudioData: Data? {

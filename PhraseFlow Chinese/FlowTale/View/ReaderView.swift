@@ -75,7 +75,7 @@ struct ReaderView: View {
             } else {
                 Button {
                     let timestamps = store.state.storyState.currentSentence?.timestamps ?? []
-                    let currentSpokenWord = store.state.currentSpokenWord ?? timestamps.first
+                    let currentSpokenWord = store.state.storyState.currentSpokenWord ?? timestamps.first
                     store.dispatch(.playAudio(time: currentSpokenWord?.time))
                     store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
                 } label: {
