@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct LanguageOnboardingView: View {
-    @State private var navigateToDifficulty = false
     
     var body: some View {
         VStack(spacing: 0) {

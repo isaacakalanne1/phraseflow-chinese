@@ -179,7 +179,6 @@ protocol FlowTaleServicesProtocol {
     func generateStory(story: Story,
                        deviceLanguage: Language?) async throws -> Story
     func fetchDefinitions(in sentence: Sentence,
-                          chapter: Chapter,
                           story: Story,
                           deviceLanguage: Language?) async throws -> [Definition]
     func generateImage(with prompt: String) async throws -> Data
@@ -259,7 +258,6 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
     }
 
     func fetchDefinitions(in sentence: Sentence,
-                          chapter: Chapter,
                           story: Story,
                           deviceLanguage: Language?) async throws -> [Definition]
     {

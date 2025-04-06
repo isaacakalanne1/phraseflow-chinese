@@ -98,14 +98,6 @@ struct StoryPromptMenu: View {
                                     Label("Delete", systemImage: "trash")
                                 }
                             }
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
-                                Button(role: .destructive) {
-                                    store.dispatch(.deleteCustomPrompt(prompt))
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                        .tint(FlowTaleColor.error)
-                                }
-                            })
                         }
                     }
                 } header: {
@@ -133,12 +125,6 @@ struct StoryPromptMenu: View {
         store.dispatch(.showSnackBar(.moderatingText))
         store.dispatch(.updateIsShowingCustomPromptAlert(false))
         store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))
-    }
-
-    func delete(at offsets: IndexSet) {
-        guard let index = offsets.first,
-              let prompt = store.state.settingsState.customPrompts[safe: index] else { return }
-        store.dispatch(.deleteCustomPrompt(prompt))
     }
 }
 

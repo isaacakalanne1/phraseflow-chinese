@@ -19,11 +19,9 @@ protocol FlowTaleEnvironmentProtocol {
     func loadDefinitions() throws -> [Definition]
     func saveDefinitions(_ definitions: [Definition]) throws
     func deleteDefinition(with id: UUID) throws
-    func cleanupOrphanedDefinitionFiles() throws
 
     func saveSentenceAudio(_ audioData: Data, id: UUID) throws
     func loadSentenceAudio(id: UUID) throws -> Data
-    func cleanupOrphanedSentenceAudioFiles() throws
 
     func loadAppSettings() throws -> SettingsState
     func saveAppSettings(_ settings: SettingsState) throws
@@ -38,7 +36,6 @@ protocol FlowTaleEnvironmentProtocol {
     func loadAllChapters(for storyId: UUID) throws -> [Chapter]
 
     func fetchDefinitions(in sentence: Sentence,
-                          chapter: Chapter,
                           story: Story,
                           deviceLanguage: Language?) async throws -> [Definition]
     func purchase(_ product: Product) async throws
@@ -96,10 +93,6 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         try dataStore.saveChapter(chapter, storyId: storyId, chapterIndex: chapterIndex)
     }
 
-    func loadChapter(storyId: UUID, chapterIndex: Int) throws -> Chapter {
-        try dataStore.loadChapter(storyId: storyId, chapterIndex: chapterIndex)
-    }
-
     func loadAllChapters(for storyId: UUID) throws -> [Chapter] {
         try dataStore.loadAllChapters(for: storyId)
     }
@@ -147,11 +140,9 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     }
 
     func fetchDefinitions(in sentence: Sentence,
-                          chapter: Chapter,
                           story: Story,
                           deviceLanguage: Language?) async throws -> [Definition] {
         try await service.fetchDefinitions(in: sentence,
-                                           chapter: chapter,
                                            story: story,
                                            deviceLanguage: deviceLanguage)
     }

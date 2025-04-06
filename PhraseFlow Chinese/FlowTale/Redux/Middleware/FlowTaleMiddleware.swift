@@ -241,9 +241,7 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         do {
             guard let sentence = state.storyState.currentSentence,
                   let story = state.storyState.currentStory,
-                  let chapter  = state.storyState.currentChapter,
-                  let deviceLanguage = state.deviceLanguage,
-                  let currentSentence = state.storyState.currentSentence else {
+                  let deviceLanguage = state.deviceLanguage else {
                 return .failedToDefineCharacter
             }
 
@@ -253,16 +251,17 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             }
 
             let fetchedDefinitions = try await environment.fetchDefinitions(
-                in: currentSentence,
-                chapter: chapter,
+                in: sentence,
                 story: story,
                 deviceLanguage: deviceLanguage
             )
 
-            if let tappedDefinition = fetchedDefinitions.first(where: { $0.timestampData == timeStampData }) {
-                return .onDefinedSentence(sentence, fetchedDefinitions, tappedDefinition: tappedDefinition)
+            guard let tappedDefinition = fetchedDefinitions.first(where: { $0.timestampData == timeStampData }) else {
+                return .failedToDefineCharacter
             }
-            return .failedToDefineCharacter
+
+            return .onDefinedSentence(sentence, fetchedDefinitions, tappedDefinition: tappedDefinition)
+
         } catch {
             return .failedToDefineCharacter
         }

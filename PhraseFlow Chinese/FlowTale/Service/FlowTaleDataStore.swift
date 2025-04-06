@@ -12,7 +12,6 @@ enum FlowTaleDataStoreError: Error {
     case failedToCreateUrl
     case failedToSaveData
     case failedToDecodeData
-    case chapterNotFound
     case freeUserChapterLimitReached
     case chapterCreationLimitReached(timeUntilNextAvailable: String)
 }
@@ -41,7 +40,6 @@ protocol FlowTaleDataStoreProtocol {
 
     // Chapters
     func saveChapter(_ chapter: Chapter, storyId: UUID, chapterIndex: Int) throws
-    func loadChapter(storyId: UUID, chapterIndex: Int) throws -> Chapter
     func loadAllChapters(for storyId: UUID) throws -> [Chapter]
 
     // Remove entire story (and its chapters) from disk
@@ -423,21 +421,6 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
             try data.write(to: url)
         } catch {
             throw FlowTaleDataStoreError.failedToSaveData
-        }
-    }
-
-    func loadChapter(storyId: UUID, chapterIndex: Int) throws -> Chapter {
-        let url = try fileURL(for: storyId, chapterIndex: chapterIndex + 1)
-        guard fileManager.fileExists(atPath: url.path) else {
-            throw FlowTaleDataStoreError.chapterNotFound
-        }
-        let data = try Data(contentsOf: url)
-        let decoder = JSONDecoder()
-        do {
-            let chapter = try decoder.decode(Chapter.self, from: data)
-            return chapter
-        } catch {
-            throw FlowTaleDataStoreError.failedToDecodeData
         }
     }
 
