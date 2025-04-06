@@ -75,8 +75,10 @@ struct DefinitionsProgressSheetView: View {
                 }
                 
                 // Practice button
-                PrimaryButton(title: LocalizedString.studyNavTitle) {
-                    navigateToStudyView = true
+                if filteredDefinitions.count > 1 {
+                    PrimaryButton(title: LocalizedString.studyNavTitle) {
+                        navigateToStudyView = true
+                    }
                 }
             }
             .padding(.horizontal, 16)
@@ -88,7 +90,8 @@ struct DefinitionsProgressSheetView: View {
             )
         }
         .navigationDestination(isPresented: $navigateToStudyView) {
-            StudyView()
+            let language = store.state.storyState.currentStory?.language
+            StudyView(studyWords: store.state.definitionState.studyDefinitions(language: language))
         }
         .navigationDestination(isPresented: $showLanguageSelector) {
             LanguageSettingsView()
@@ -107,7 +110,7 @@ struct DefinitionsProgressSheetView: View {
                     Section {
                         ForEach(definitions, id: \.self) { definition in
                             NavigationLink {
-                                StudyView(specificWord: definition)
+                                StudyView(studyWords: [definition])
                             } label: {
                                 Text(definition.timestampData.word)
                                     .fontWeight(.light)

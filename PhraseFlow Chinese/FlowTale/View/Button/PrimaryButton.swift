@@ -12,20 +12,25 @@ struct PrimaryButton<Content: View>: View {
     
     @ViewBuilder let icon: Content
     let title: String
+    let shouldPlaySound: Bool
     let action: (() -> Void)?
 
     init(@ViewBuilder icon: () -> Content = { EmptyView() },
          title: String,
+         shouldPlaySound: Bool = true,
          action: (() -> Void)? = nil) {
         self.icon = icon()
         self.title = title
+        self.shouldPlaySound = shouldPlaySound
         self.action = action
     }
 
     var body: some View {
         if let act = action {
             Button {
-                store.dispatch(.playSound(.actionButtonPress))
+                if shouldPlaySound {
+                    store.dispatch(.playSound(.actionButtonPress))
+                }
                 act()
             } label: {
                 HStack(spacing: 5) {

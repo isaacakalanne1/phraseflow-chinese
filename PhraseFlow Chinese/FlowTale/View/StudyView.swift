@@ -10,52 +10,43 @@ import SwiftUI
 struct StudyView: View {
     @EnvironmentObject var store: FlowTaleStore
 
-    var studyWords: [Definition] {
-        let language = store.state.storyState.currentStory?.language
-        return store.state.definitionState.studyDefinitions(language: language)
-    }
+    var studyWords: [Definition]
 
-    var displayedDefinition: Definition? {
-        specificWord ?? currentDefinition
-    }
-
-    var specificWord: Definition? = nil
-    var isWordDefinitionView: Bool {
-        specificWord != nil
-    }
-    @State var index: Int = 0
     @State var isPronounciationShown: Bool = false
     @State var isDefinitionShown: Bool = false
 
+    @State var index: Int = 0
     var currentDefinition: Definition? {
         studyWords[safe: index]
     }
 
+    var isWordDefinitionView: Bool {
+        studyWords.count == 1
+    }
+
     var body: some View {
-        return Group {
-            if let definition = displayedDefinition {
-                VStack {
-                    ScrollView {
-                        wordView(definition: definition)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .scrollBounceBehavior(.basedOnSize)
-                    .scrollIndicators(.hidden)
-                    .onTapGesture {
-                        withAnimation {
-                            if !isPronounciationShown {
-                                isPronounciationShown = true
-                            } else if !isDefinitionShown {
-                                isDefinitionShown = true
-                            } else {
-                                isPronounciationShown = false
-                                isDefinitionShown = false
-                            }
+        VStack {
+            if let definition = currentDefinition {
+                ScrollView {
+                    wordView(definition: definition)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .scrollBounceBehavior(.basedOnSize)
+                .scrollIndicators(.hidden)
+                .onTapGesture {
+                    withAnimation {
+                        if !isPronounciationShown {
+                            isPronounciationShown = true
+                        } else if !isDefinitionShown {
+                            isDefinitionShown = true
+                        } else {
+                            isPronounciationShown = false
+                            isDefinitionShown = false
                         }
                     }
-                    buttons(definition: definition)
-                        .frame(maxWidth: .infinity, alignment: .bottom)
                 }
+                buttons(definition: definition)
+                    .frame(maxWidth: .infinity, alignment: .bottom)
             }
         }
         .navigationTitle(LocalizedString.studyNavTitle)
@@ -71,34 +62,24 @@ struct StudyView: View {
     func buttons(definition: Definition) -> some View {
         HStack {
             if !isWordDefinitionView {
-                Button {
+                PrimaryButton(title: LocalizedString.previous, shouldPlaySound: false) {
                     goToPreviousDefinition()
-                } label: {
-                    Text(LocalizedString.previous)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(FlowTaleColor.accent)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
                 }
-                Button {
-                    if isDefinitionShown {
-                        goToNextDefinition()
-                    } else {
-                        store.dispatch(.studyAction(.playStudyWord(definition)))
-                        withAnimation {
-                            isPronounciationShown = true
-                            isDefinitionShown = true
-                        }
-                    }
-                } label: {
-                    Text(isDefinitionShown ? LocalizedString.next : LocalizedString.reveal)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(FlowTaleColor.accent)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                PrimaryButton(title: isDefinitionShown ? LocalizedString.next : LocalizedString.reveal, shouldPlaySound: false) {
+                    nextTapped(definition: definition)
                 }
+            }
+        }
+    }
+
+    private func nextTapped(definition: Definition) {
+        if isDefinitionShown {
+            goToNextDefinition()
+        } else {
+            store.dispatch(.studyAction(.playStudyWord(definition)))
+            withAnimation {
+                isPronounciationShown = true
+                isDefinitionShown = true
             }
         }
     }
@@ -114,7 +95,7 @@ struct StudyView: View {
     }
 
     func goToNextDefinition() {
-        if let definition = displayedDefinition {
+        if let definition = currentDefinition {
             store.dispatch(.updateStudiedWord(definition))
         }
         index = (index + 1) % studyWords.count
@@ -125,7 +106,7 @@ struct StudyView: View {
     func updateDefinition() {
         isPronounciationShown = false
         isDefinitionShown = false
-        if let definition = specificWord ?? currentDefinition {
+        if let definition = currentDefinition {
             store.dispatch(.studyAction(.prepareToPlayStudySentence(definition)))
             store.dispatch(.studyAction(.pauseStudyAudio))
         }
