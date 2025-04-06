@@ -46,12 +46,10 @@ struct ChapterView: View {
     @ViewBuilder
     func scrollView(story: Story, proxy: ScrollViewProxy) -> some View {
         ScrollView(.vertical) {
-            ForEach(0...(chapter.audio.timestamps.last?.sentenceIndex ?? 0),
-                    id: \.self) { sentenceIdx in
-                let sentenceWords = chapter.audio.timestamps.filter({ $0.sentenceIndex == sentenceIdx })
+            ForEach(chapter.sentences, id: \.self) { sentence in
 
                 FlowLayout(spacing: 0, language: story.language) {
-                    ForEach(Array(sentenceWords.enumerated()), id: \.offset) { index, word in
+                    ForEach(Array(sentence.timestamps.enumerated()), id: \.offset) { index, word in
                         CharacterView(
                             isHighlighted: word == store.state.currentSpokenWord,
                             word: word

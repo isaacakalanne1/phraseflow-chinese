@@ -81,7 +81,7 @@ enum FlowTaleAction {
                          story: Story,
                          voice: Voice,
                          isForced: Bool)
-    case onSynthesizedAudio(ChapterAudio,
+    case onSynthesizedAudio(Chapter,
                             Story,
                             isForced: Bool)
     case playAudio(time: Double?)

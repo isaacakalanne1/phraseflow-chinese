@@ -178,8 +178,7 @@ struct CategoryResult: Identifiable {
 protocol FlowTaleServicesProtocol {
     func generateStory(story: Story,
                        deviceLanguage: Language?) async throws -> Story
-    func fetchDefinitions(for sentenceIndex: Int,
-                          in sentence: Sentence,
+    func fetchDefinitions(in sentence: Sentence,
                           chapter: Chapter,
                           story: Story,
                           deviceLanguage: Language?) async throws -> [Definition]
@@ -237,7 +236,7 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
             let passage = sentences.reduce("", { $0 + $1.original })
             let chapter = Chapter(title: chapterResponse.chapterNumberAndTitle ?? "",
                                   sentences: sentences,
-                                  audio: .init(timestamps: [], data: Data()),
+                                  audio: .init(data: Data()),
                                   passage: passage)
 
             var story = story
@@ -259,8 +258,7 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
         }
     }
 
-    func fetchDefinitions(for sentenceIndex: Int,
-                          in sentence: Sentence,
+    func fetchDefinitions(in sentence: Sentence,
                           chapter: Chapter,
                           story: Story,
                           deviceLanguage: Language?) async throws -> [Definition]
@@ -271,18 +269,16 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
             throw FlowTaleServicesError.failedToGetDeviceLanguage
         }
 
-        let matchingTimestamps = chapter.audio.timestamps.filter {
-            $0.sentenceIndex == sentenceIndex
-        }
+        let timestamps = sentence.timestamps
 
-        guard !matchingTimestamps.isEmpty else {
+        guard !timestamps.isEmpty else {
             // No words found for that sentence
             return []
         }
 
         // 3. Build prompts
         let languageName = story.language.descriptiveEnglishName
-        let wordsToDefine = matchingTimestamps.map { $0.word }
+        let wordsToDefine = timestamps.map { $0.word }
 
         let initialPrompt = """
         You are an AI assistant that provides \(deviceLanguage.displayName) definitions for words in \(languageName) sentences.
@@ -333,13 +329,13 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
 
         // Just to be safe, ensure counts match (in case the user typed repeated words).
         // If there's a mismatch, handle accordingly; here we just take the min.
-        let minCount = min(matchingTimestamps.count, wordDefinitions.count)
+        let minCount = min(timestamps.count, wordDefinitions.count)
 
         // 8. Map each WordDefinition to your existing Definition structure
         //    We’ll store everything in the `definition` property, combining
         //    the base definition, context, and pronunciation, but you can do
         //    whatever you prefer.
-        let finalDefinitions: [Definition] = zip(matchingTimestamps.prefix(minCount),
+        let finalDefinitions: [Definition] = zip(timestamps.prefix(minCount),
                                                  wordDefinitions.prefix(minCount))
           .map { (timeStamp, wordDef) -> Definition in
               let fullDefinitionText = """

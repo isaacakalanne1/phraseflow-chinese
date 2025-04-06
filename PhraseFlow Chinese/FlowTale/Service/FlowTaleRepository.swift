@@ -15,7 +15,7 @@ protocol FlowTaleRepositoryProtocol {
     func synthesizeSpeech(_ chapter: Chapter,
                           story: Story,
                           voice: Voice,
-                          language: Language) async throws -> ChapterAudio
+                          language: Language) async throws -> Chapter
     func getProducts() async throws -> [Product]
     func purchase(_ product: Product) async throws
     func validateAppStoreReceipt()
@@ -40,7 +40,8 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
     func synthesizeSpeech(_ chapter: Chapter,
                           story: Story,
                           voice: Voice,
-                          language: Language) async throws -> ChapterAudio {
+                          language: Language) async throws -> Chapter {
+        var newChapter = chapter
 
         let synthesizer: SPXSpeechSynthesizer
         do {
@@ -104,6 +105,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
             )
             wordTimestamps.append(newTimestamp)
             index += 1
+            newChapter.sentences[sentenceIndex].timestamps.append(newTimestamp)
         }
 
         // Generate the SSML and speak it
@@ -118,7 +120,8 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
                 throw NSError(domain: "SpeechSynthesis", code: -1, userInfo: [NSLocalizedDescriptionKey: errorDetails])
             }
 
-            return ChapterAudio(timestamps: wordTimestamps, data: audioData)
+            newChapter.audio = ChapterAudio(data: audioData)
+            return newChapter
         } catch {
             throw error
         }

@@ -11,13 +11,16 @@ struct Sentence: Codable, Equatable, Hashable {
     let id: UUID
     let translation: String
     let original: String
+    var timestamps: [WordTimeStampData]
 
     init(id: UUID,
          translation: String,
-         english: String) {
+         english: String,
+         timestamps: [WordTimeStampData] = []) {
         self.id = id
         self.translation = translation
         self.original = english
+        self.timestamps = timestamps
     }
 
     init(from decoder: any Decoder) throws {
@@ -25,6 +28,7 @@ struct Sentence: Codable, Equatable, Hashable {
         self.id = (try? container.decode(UUID.self, forKey: .id)) ?? UUID()
         self.translation = try container.decode(String.self, forKey: .translation)
         self.original = try container.decode(String.self, forKey: .original)
+        self.timestamps = (try? container.decode([WordTimeStampData].self, forKey: .timestamps)) ?? []
     }
 }
 

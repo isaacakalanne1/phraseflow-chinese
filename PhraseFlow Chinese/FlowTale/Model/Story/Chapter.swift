@@ -35,7 +35,7 @@ struct Chapter: Codable, Equatable, Hashable {
         self.sentences = try container.decode([Sentence].self, forKey: .sentences)
         self.audioVoice = try container.decodeIfPresent(Voice.self, forKey: .audioVoice)
         self.audioSpeed = try container.decodeIfPresent(SpeechSpeed.self, forKey: .audioSpeed)
-        self.audio = (try? container.decode(ChapterAudio.self, forKey: .audio)) ?? ChapterAudio(timestamps: [], data: Data())
+        self.audio = (try? container.decode(ChapterAudio.self, forKey: .audio)) ?? ChapterAudio(data: Data())
         let newLine = """
 
 

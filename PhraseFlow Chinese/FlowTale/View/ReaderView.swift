@@ -74,7 +74,7 @@ struct ReaderView: View {
                 }
             } else {
                 Button {
-                    let timestamps = chapter.audio.timestamps
+                    let timestamps = store.state.storyState.currentSentence?.timestamps ?? []
                     let currentSpokenWord = store.state.currentSpokenWord ?? timestamps.first
                     store.dispatch(.playAudio(time: currentSpokenWord?.time))
                     store.dispatch(.updateAutoScrollEnabled(isEnabled: true))

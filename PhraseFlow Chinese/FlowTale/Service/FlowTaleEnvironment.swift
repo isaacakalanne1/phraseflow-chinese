@@ -12,7 +12,7 @@ protocol FlowTaleEnvironmentProtocol {
     func synthesizeSpeech(for chapter: Chapter,
                           story: Story,
                           voice: Voice,
-                          language: Language) async throws -> ChapterAudio
+                          language: Language) async throws -> Chapter
     func getProducts() async throws -> [Product]
     func generateStory(story: Story, deviceLanguage: Language?) async throws -> Story
 
@@ -38,8 +38,7 @@ protocol FlowTaleEnvironmentProtocol {
     func loadChapter(storyId: UUID, chapterIndex: Int) throws -> Chapter
     func loadAllChapters(for storyId: UUID) throws -> [Chapter]
 
-    func fetchDefinitions(for sentenceIndex: Int,
-                          in sentence: Sentence,
+    func fetchDefinitions(in sentence: Sentence,
                           chapter: Chapter,
                           story: Story,
                           deviceLanguage: Language?) async throws -> [Definition]
@@ -67,7 +66,7 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     func synthesizeSpeech(for chapter: Chapter,
                           story: Story,
                           voice: Voice,
-                          language: Language) async throws -> ChapterAudio {
+                          language: Language) async throws -> Chapter {
         try await repository.synthesizeSpeech(chapter,
                                               story: story,
                                               voice: voice,
@@ -148,13 +147,11 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         try dataStore.loadAppSettings()
     }
 
-    func fetchDefinitions(for sentenceIndex: Int,
-                          in sentence: Sentence,
+    func fetchDefinitions(in sentence: Sentence,
                           chapter: Chapter,
                           story: Story,
                           deviceLanguage: Language?) async throws -> [Definition] {
-        try await service.fetchDefinitions(for: sentenceIndex,
-                                           in: sentence,
+        try await service.fetchDefinitions(in: sentence,
                                            chapter: chapter,
                                            story: story,
                                            deviceLanguage: deviceLanguage)

@@ -14,20 +14,15 @@ import AVFoundation
 /// Checks if the playback is at or near the end of the audio
 /// Used to determine if we should loop back to the start when play is tapped
 private func isPlaybackAtEnd(_ state: FlowTaleState) -> Bool {
-    // Get current time
     let currentTime = state.audioState.audioPlayer.currentTime().seconds
-    
-    // Get the timestamp of the last word
-    guard let lastWordTime = state.storyState.currentChapter?.audio.timestamps.last?.time,
-          let lastWordDuration = state.storyState.currentChapter?.audio.timestamps.last?.duration else {
+
+    guard let lastSentence = state.storyState.currentChapter?.sentences.last,
+          let lastWordTime = lastSentence.timestamps.last?.time,
+          let lastWordDuration = lastSentence.timestamps.last?.duration else {
         return false
     }
-    
-    // Consider the end as being after the last word's timestamp plus its duration
-    // Add a small buffer (0.5 seconds) to account for minor timing differences
     let endTime = lastWordTime + lastWordDuration - 0.5
     
-    // Return true if current time is at or past the end time
     return currentTime >= endTime
 }
 
@@ -166,11 +161,11 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             return .playAudio(time: nil)
         }
         do {
-            let result = try await environment.synthesizeSpeech(for: chapter,
+            let chapter = try await environment.synthesizeSpeech(for: chapter,
                                                                 story: story,
                                                                 voice: voice,
                                                                 language: story.language)
-            return .onSynthesizedAudio(result, story, isForced: isForced)
+            return .onSynthesizedAudio(chapter, story, isForced: isForced)
         } catch {
             return .failedToSynthesizeAudio
         }
@@ -259,7 +254,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             }
 
             let fetchedDefinitions = try await environment.fetchDefinitions(
-                for: sentenceIndex,
                 in: currentSentence,
                 chapter: chapter,
                 story: story,
@@ -351,8 +345,9 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         
     case .updatePlayTime:
         let time = state.audioState.audioPlayer.currentTime().seconds
-        if let lastWordTime = state.storyState.currentChapter?.audio.timestamps.last?.time,
-           let lastWordDuration = state.storyState.currentChapter?.audio.timestamps.last?.duration,
+        if let lastSentence = state.storyState.currentChapter?.sentences.last,
+           let lastWordTime = lastSentence.timestamps.last?.time,
+           let lastWordDuration = lastSentence.timestamps.last?.duration,
            time > lastWordTime + lastWordDuration {
             return .pauseAudio
         }

@@ -112,7 +112,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.isDefining = false
     case .synthesizeAudio:
         newState.viewState.loadingState = .generatingSpeech
-    case .onSynthesizedAudio(var data, var newStory, let isForced):
+    case .onSynthesizedAudio(var chapter, var newStory, let isForced):
         newState.definitionState.currentDefinition = nil
         newState.viewState.chapterViewId = UUID()
         newState.viewState.loadingState = .complete
@@ -128,17 +128,15 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newStory.currentPlaybackTime = 0
         newStory.currentSentenceIndex = 0
         newStory.currentChapterIndex = newStory.chapters.count - 1
-        newStory.chapters[newStory.currentChapterIndex].audio = data
+        newStory.chapters[newStory.currentChapterIndex] = chapter
         newStory.chapters[newStory.currentChapterIndex].audioSpeed = newState.settingsState.speechSpeed
         newStory.chapters[newStory.currentChapterIndex].audioVoice = newState.settingsState.voice
         
-        // Only set current story for new users (first story) or forced updates
         if (isNewStoryCreation && !hasExistingStories) || isForced {
             newState.storyState.currentStory = newStory
             newState.viewState.contentTab = .reader
-            
-            // Set up audio player for immediate use
-            let player = data.data.createAVPlayer()
+
+            let player = chapter.audio.data.createAVPlayer()
             newState.audioState.audioPlayer = player ?? AVPlayer()
         }
         
@@ -250,8 +248,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         let player = data?.createAVPlayer()
         newState.audioState.audioPlayer = player ?? AVPlayer()
         newState.storyState.currentStory?.currentSentenceIndex = 0
-        let chapter = newState.storyState.currentChapter
-        newState.storyState.currentStory?.currentPlaybackTime = chapter?.audio.timestamps.first?.time ?? 0.1
+        let sentence = newState.storyState.currentSentence
+        newState.storyState.currentStory?.currentPlaybackTime = sentence?.timestamps.first?.time ?? 0.1
     case .refreshChapterView:
         newState.viewState.chapterViewId = UUID()
     case .refreshDefinitionView:

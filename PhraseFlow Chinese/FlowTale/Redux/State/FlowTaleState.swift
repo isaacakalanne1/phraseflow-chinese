@@ -25,7 +25,7 @@ struct FlowTaleState {
         guard let playbackTime = storyState.currentStory?.currentPlaybackTime else {
             return nil
         }
-        return storyState.currentChapter?.audio.timestamps.last(where: { playbackTime >= $0.time })
+        return storyState.currentSentence?.timestamps.last(where: { playbackTime >= $0.time })
     }
 
     func createNewStory() -> Story {
