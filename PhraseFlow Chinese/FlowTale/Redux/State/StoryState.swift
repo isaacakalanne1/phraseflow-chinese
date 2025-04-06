@@ -15,7 +15,6 @@ struct StoryState {
          savedStories: [Story] = []) {
         self.currentStory = currentStory
         self.savedStories = savedStories
-        self.currentSentence = currentChapter?.sentences.first
     }
 
     var currentChapter: Chapter? {

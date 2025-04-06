@@ -44,8 +44,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             let player = data?.createAVPlayer()
             newState.audioState.audioPlayer = player ?? AVPlayer()
         }
-
-        return newState
+        newState.storyState.currentSentence = newState.storyState.currentChapter?.sentences.last(where: { $0.timestamps.contains(where: { story.currentPlaybackTime >= $0.time }) })
     case .playSound(let sound):
         if let url = sound.fileURL,
            let player = try? AVAudioPlayer(contentsOf: url) {
