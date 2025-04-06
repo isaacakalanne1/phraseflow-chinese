@@ -60,27 +60,6 @@ struct Definition: Codable, Equatable, Hashable {
     }
 }
 
-extension Array where Element == Definition {
-    mutating func updateOrAppend(_ definition: Definition) -> Definition {
-        var updatedDefinition = definition
-        
-        if let idIndex = firstIndex(where: { $0.id == definition.id }) {
-            updatedDefinition.id = definition.id
-            self[idIndex] = updatedDefinition
-        } 
-        else if let contentIndex = firstIndex(where: {
-            $0.timestampData == definition.timestampData && $0.sentence == definition.sentence
-        }) {
-            updatedDefinition.id = self[contentIndex].id
-            self[contentIndex] = updatedDefinition
-        } else {
-            append(updatedDefinition)
-        }
-        
-        return updatedDefinition
-    }
-}
-
 func definitionSchema() -> [String: Any] {
     let wordProperties: [String: Any] = [
         "word": ["type": "string"],

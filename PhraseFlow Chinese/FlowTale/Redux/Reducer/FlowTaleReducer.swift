@@ -28,7 +28,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         if newState.storyState.currentStory == nil ||
            !stories.contains(where: { $0.id == newState.storyState.currentStory?.id }) {
             newState.storyState.currentStory = stories.first
-            newState.audioState.audioPlayer = newState.storyState.currentChapter?.createAudioPlayer() ?? AVPlayer()
+            let data = newState.storyState.currentChapter?.audio.data
+            let player = data?.createAVPlayer()
+            newState.audioState.audioPlayer = player ?? AVPlayer()
         }
     case .onLoadedChapters(let story, let chapters, _):
         if let index = newState.storyState.savedStories.firstIndex(where: { $0.id == story.id }) {
@@ -38,7 +40,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         }
         if newState.storyState.currentStory?.id == story.id {
             newState.storyState.currentStory?.chapters = chapters
-            newState.audioState.audioPlayer = newState.storyState.currentChapter?.createAudioPlayer() ?? AVPlayer()
+            let data = newState.storyState.currentChapter?.audio.data
+            let player = data?.createAVPlayer()
+            newState.audioState.audioPlayer = player ?? AVPlayer()
         }
         newState.storyState.currentSentence = newState.storyState.currentChapter?.sentences.last(where: { $0.timestamps.contains(where: { story.currentPlaybackTime >= $0.time }) })
     case .playSound(let sound):
@@ -74,6 +78,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .defineCharacter(let wordTimeStampData, let shouldForce):
         newState.viewState.isDefining = true
     case .onDefinedCharacter(var definition):
+        // Mark the definition as seen
         definition.hasBeenSeen = true
         definition.creationDate = .now
         if definition.audioData == nil,
@@ -85,8 +90,18 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             definition.audioData = extractedAudio
         }
 
-        definition = newState.definitionState.definitions.updateOrAppend(definition)
         newState.definitionState.currentDefinition = definition
+        // First check for an existing definition with the same identifying characteristics
+        if let existingIndex = newState.definitionState.definitions.firstIndex(where: {
+            $0.timestampData == definition.timestampData && $0.sentence == definition.sentence
+        }) {
+            // If found, preserve the id of the existing definition
+            definition.id = newState.definitionState.definitions[existingIndex].id
+            // Remove the existing definition
+            newState.definitionState.definitions.remove(at: existingIndex)
+        }
+        // Add the updated definition
+        newState.definitionState.definitions.append(definition)
         newState.viewState.isDefining = false
     case .onDefinedSentence(_, var definitions, var tappedDefinition):
         tappedDefinition.hasBeenSeen = true
@@ -103,9 +118,16 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         
         newState.definitionState.currentDefinition = tappedDefinition
 
-        // Process each definition in the sentence using our helper function
         for var definition in definitions {
-            _ = updateDefinition(in: &newState.definitionState.definitions, definition: definition)
+            if let existingIndex = newState.definitionState.definitions.firstIndex(where: {
+                $0.id == definition.id || 
+                ($0.timestampData == definition.timestampData && $0.sentence == definition.sentence)
+            }) {
+                definition.id = newState.definitionState.definitions[existingIndex].id
+                newState.definitionState.definitions[existingIndex] = definition
+            } else {
+                newState.definitionState.definitions.append(definition)
+            }
         }
         
         newState.viewState.isDefining = false
@@ -130,9 +152,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         if (isNewStoryCreation && !hasExistingStories) || isForced {
             newState.storyState.currentStory = newStory
             newState.viewState.contentTab = .reader
-            
-            // Use the chapter directly since we know it has the audio data
-            newState.audioState.audioPlayer = chapter.audio.data.createAVPlayer() ?? AVPlayer()
+
+            let player = chapter.audio.data.createAVPlayer()
+            newState.audioState.audioPlayer = player ?? AVPlayer()
         }
 
         if !isNewStoryCreation {
@@ -166,8 +188,10 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.storyState.currentStory = story
         newState.settingsState.language = story.language
 
-        // Create player from chapter audio
-        newState.audioState.audioPlayer = newState.storyState.currentChapter?.createAudioPlayer() ?? AVPlayer()
+
+        let data = newState.storyState.currentChapter?.audio.data
+        let player = data?.createAVPlayer()
+        newState.audioState.audioPlayer = player ?? AVPlayer()
         
     case .selectStoryFromSnackbar(var story):
         newState.definitionState.currentDefinition = nil
@@ -186,8 +210,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.storyState.currentStory = story
         newState.settingsState.language = story.language
         
-        // Create player from chapter audio
-        newState.audioState.audioPlayer = newState.storyState.currentChapter?.createAudioPlayer() ?? AVPlayer()
+        let data = newState.storyState.currentChapter?.audio.data
+        let player = data?.createAVPlayer()
+        newState.audioState.audioPlayer = player ?? AVPlayer()
     case .onSelectedChapter:
         if let language = newState.storyState.currentStory?.language {
             newState.settingsState.language = language
@@ -226,9 +251,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         var newStory = newState.storyState.currentStory
         newStory?.currentChapterIndex += 1
         newState.storyState.currentStory = newStory
-        
-        // Create player from updated chapter audio
-        newState.audioState.audioPlayer = newState.storyState.currentChapter?.createAudioPlayer() ?? AVPlayer()
+        let data = newState.storyState.currentChapter?.audio.data
+        let player = data?.createAVPlayer()
+        newState.audioState.audioPlayer = player ?? AVPlayer()
         let sentence = newState.storyState.currentSentence
         newState.storyState.currentStory?.currentPlaybackTime = sentence?.timestamps.first?.time ?? 0.1
     case .refreshChapterView:
@@ -302,19 +327,28 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         // Add the current date to studied dates
         definition.studiedDates.append(.now)
 
-        // Update the definition in the state using our helper function
-        _ = updateDefinition(in: &newState.definitionState.definitions, definition: definition)
+        // Update the definition in the list
+        if let index = newState.definitionState.definitions.firstIndex(where: { $0.timestampData == definition.timestampData }) {
+            newState.definitionState.definitions.replaceSubrange(index...index, with: [definition])
+        } else {
+            newState.definitionState.definitions.append(definition)
+        }
     case .updateCustomPrompt(let prompt):
         newState.settingsState.customPrompt = prompt
     case .passedModeration(let prompt):
         newState.settingsState.customPrompts.append(prompt)
         newState.settingsState.storySetting = .customPrompt(prompt)
     case .updateStorySetting(let setting):
-        // Only allow valid custom prompts or the random setting
-        if case .random = setting || 
-           (case .customPrompt(let prompt) = setting && state.settingsState.customPrompts.contains(prompt)) {
+        switch setting {
+        case .random:
             newState.settingsState.storySetting = setting
+        case .customPrompt(let prompt):
+            let isExistingPrompt = state.settingsState.customPrompts.contains(prompt)
+            if isExistingPrompt {
+                newState.settingsState.storySetting = setting
+            }
         }
+        newState.settingsState.storySetting = setting
     case .updateIsShowingCustomPromptAlert(let isShowing):
         newState.viewState.isShowingCustomPromptAlert = isShowing
     case .selectTab(let tab, _):

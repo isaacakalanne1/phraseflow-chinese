@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import AVKit
 
 struct Chapter: Codable, Equatable, Hashable {
     var title: String
@@ -42,16 +41,5 @@ struct Chapter: Codable, Equatable, Hashable {
 
 """
         self.passage = (try? container.decode(String.self, forKey: .audio)) ?? sentences.reduce("") { $0 + newLine + $1.original }
-    }
-}
-
-// MARK: - Audio Player Helpers
-extension Chapter {
-    /// Creates an AVPlayer from this chapter's audio data
-    func createAudioPlayer() -> AVPlayer {
-        if let data = audio.data {
-            return data.createAVPlayer() ?? AVPlayer()
-        }
-        return AVPlayer()
     }
 }
