@@ -106,33 +106,26 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .onDefinedSentence(_, var definitions, var tappedDefinition):
         tappedDefinition.hasBeenSeen = true
         tappedDefinition.creationDate = .now
-        
-        // Update the tapped definition in the definitions array
+
         if let tappedIndex = definitions.firstIndex(where: {
             $0.timestampData == tappedDefinition.timestampData
         }) {
-            // If found in the array, preserve its id
             tappedDefinition.id = definitions[tappedIndex].id
             definitions[tappedIndex] = tappedDefinition
         } else {
-            // If not found, add it
             definitions.append(tappedDefinition)
         }
         
         newState.definitionState.currentDefinition = tappedDefinition
-        
-        // Process each definition in the sentence
+
         for var definition in definitions {
-            // Check if this definition already exists in the state
             if let existingIndex = newState.definitionState.definitions.firstIndex(where: {
                 $0.id == definition.id || 
                 ($0.timestampData == definition.timestampData && $0.sentence == definition.sentence)
             }) {
-                // If it exists, preserve the ID but update the definition
                 definition.id = newState.definitionState.definitions[existingIndex].id
                 newState.definitionState.definitions[existingIndex] = definition
             } else {
-                // If it's a new definition, just add it
                 newState.definitionState.definitions.append(definition)
             }
         }
@@ -144,12 +137,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.definitionState.currentDefinition = nil
         newState.viewState.chapterViewId = UUID()
         newState.viewState.loadingState = .complete
-        
-        // Reset the writing chapter flag
+
         newState.viewState.isWritingChapter = false
-        
-        // For existing users, we don't set the current story
-        // They'll need to tap the snackbar to load it
+
         let hasExistingStories = newState.storyState.savedStories.count > 1
         let isNewStoryCreation = newStory.chapters.count == 1
         
@@ -166,14 +156,11 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             let player = chapter.audio.data.createAVPlayer()
             newState.audioState.audioPlayer = player ?? AVPlayer()
         }
-        
-        // Show the appropriate snackbar immediately based on the type of story being created
+
         if !isNewStoryCreation {
-            // For new chapters in existing stories, show the "Chapter ready" snackbar
             newState.snackBarState.type = .chapterReady
             newState.snackBarState.isShowing = true
         } else if hasExistingStories {
-            // For new stories when user has other stories, show the "Story ready" snackbar
             newState.snackBarState.type = .storyReadyTapToRead
             newState.snackBarState.isShowing = true
         }
@@ -207,7 +194,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.audioState.audioPlayer = player ?? AVPlayer()
         
     case .selectStoryFromSnackbar(var story):
-        // Similar to selectChapter but sets index to the latest chapter
         newState.definitionState.currentDefinition = nil
         story.lastUpdated = .now
         story.currentChapterIndex = story.chapters.count - 1
