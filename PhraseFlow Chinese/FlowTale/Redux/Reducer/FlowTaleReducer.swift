@@ -28,7 +28,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         if newState.storyState.currentStory == nil ||
            !stories.contains(where: { $0.id == newState.storyState.currentStory?.id }) {
             newState.storyState.currentStory = stories.first
-            let data = newState.storyState.currentChapterAudioData
+            let data = newState.storyState.currentChapter?.audio.data
             let player = data?.createAVPlayer()
             newState.audioState.audioPlayer = player ?? AVPlayer()
         }
@@ -40,7 +40,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         }
         if newState.storyState.currentStory?.id == story.id {
             newState.storyState.currentStory?.chapters = chapters
-            let data = newState.storyState.currentChapterAudioData
+            let data = newState.storyState.currentChapter?.audio.data
             let player = data?.createAVPlayer()
             newState.audioState.audioPlayer = player ?? AVPlayer()
         }
@@ -175,7 +175,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.settingsState.language = story.language
 
 
-        let data = newState.storyState.currentChapterAudioData
+        let data = newState.storyState.currentChapter?.audio.data
         let player = data?.createAVPlayer()
         newState.audioState.audioPlayer = player ?? AVPlayer()
         
@@ -197,7 +197,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.storyState.currentStory = story
         newState.settingsState.language = story.language
         
-        let data = newState.storyState.currentChapterAudioData
+        let data = newState.storyState.currentChapter?.audio.data
         let player = data?.createAVPlayer()
         newState.audioState.audioPlayer = player ?? AVPlayer()
     case .onSelectedChapter:
@@ -238,7 +238,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         var newStory = newState.storyState.currentStory
         newStory?.currentChapterIndex += 1
         newState.storyState.currentStory = newStory
-        let data = newState.storyState.currentChapterAudioData
+        let data = newState.storyState.currentChapter?.audio.data
         let player = data?.createAVPlayer()
         newState.audioState.audioPlayer = player ?? AVPlayer()
         let sentence = newState.storyState.currentSentence

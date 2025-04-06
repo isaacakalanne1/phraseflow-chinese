@@ -24,7 +24,7 @@ struct StoryState {
         return story.chapters[safe: story.currentChapterIndex]
     }
 
-    var currentSpokenWord: WordTimeStampData? {
+    var currentSpokenWord: WordTimeStampData? { // TODO: Remove flatmap && last logic to improve performance
         guard let playbackTime = currentStory?.currentPlaybackTime else {
             return nil
         }
@@ -32,8 +32,4 @@ struct StoryState {
     }
 
     var currentSentence: Sentence?
-
-    var currentChapterAudioData: Data? {
-        currentChapter?.audio.data
-    }
 }
