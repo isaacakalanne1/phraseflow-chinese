@@ -35,7 +35,6 @@ protocol FlowTaleEnvironmentProtocol {
 
     // Chapters
     func saveChapter(_ chapter: Chapter, storyId: UUID, chapterIndex: Int) throws
-    func loadChapter(storyId: UUID, chapterIndex: Int) throws -> Chapter
     func loadAllChapters(for storyId: UUID) throws -> [Chapter]
 
     func fetchDefinitions(in sentence: Sentence,

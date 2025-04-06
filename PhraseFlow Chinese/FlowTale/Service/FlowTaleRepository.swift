@@ -77,8 +77,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
             //    This method returns what's left for the *current* timestamp
             //    after possibly moving the chunk to the *previous* timestamp.
             let finalWord = self.processSpeechMarks(rawText,
-                                                    wordTimestamps: &wordTimestamps,
-                                                    language: language)
+                                                    wordTimestamps: &wordTimestamps)
 
             // 3. Check for sentence markers (if you use them to increment sentenceIndex).
             var cleanedWord = finalWord
@@ -134,8 +133,7 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
     ///
     /// The leftover (post-even mark) in `chunkBuffer` becomes the final word for this boundary event.
     private func processSpeechMarks(_ text: String,
-                                    wordTimestamps: inout [WordTimeStampData],
-                                    language: Language) -> String {
+                                    wordTimestamps: inout [WordTimeStampData]) -> String {
 
         // Convert speech characters into a Set for quick membership checks
         let speechMarkSet = Set(speechCharacters)

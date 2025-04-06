@@ -34,7 +34,7 @@ struct ReaderView: View {
             VStack(alignment: .trailing) {
                 Spacer()
                     .frame(maxWidth: .infinity)
-                audioButton(chapter: chapter)
+                audioButton
                     .background(FlowTaleColor.background)
                     .clipShape(Circle())
                     .padding(.trailing)
@@ -61,9 +61,8 @@ struct ReaderView: View {
         }
     }
 
-    // MARK: - Audio Button
     @ViewBuilder
-    func audioButton(chapter: Chapter) -> some View {
+    var audioButton: some View {
         let buttonSize: CGFloat = 50
         if store.state.viewState.readerDisplayType == .normal {
             if store.state.audioState.isPlayingAudio == true {

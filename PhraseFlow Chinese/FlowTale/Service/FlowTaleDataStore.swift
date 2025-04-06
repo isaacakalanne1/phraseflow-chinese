@@ -12,7 +12,6 @@ enum FlowTaleDataStoreError: Error {
     case failedToCreateUrl
     case failedToSaveData
     case failedToDecodeData
-    case chapterNotFound
     case freeUserChapterLimitReached
     case chapterCreationLimitReached(timeUntilNextAvailable: String)
 }
