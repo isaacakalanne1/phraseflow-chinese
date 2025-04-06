@@ -300,8 +300,15 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         } catch {
             return .failedToSaveDefinitions
         }
-    case .deleteDefinition:
-        return .saveDefinitions
+    case .deleteDefinition(let definition):
+        do {
+            // Delete the definition using its unique id
+            try environment.deleteDefinition(with: definition.id)
+            return .onDeletedDefinition
+        } catch {
+            print("Failed to delete definition: \(error)")
+            return .failedToDeleteDefinition
+        }
     case .onDeletedDefinition:
         return .loadDefinitions
     case .onSavedDefinitions:
@@ -543,7 +550,8 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             .selectStoryFromSnackbar,
             .onValidatedReceipt,
             .updateIsSubscriptionPurchaseLoading,
-            .updateCurrentSentence:
+            .updateCurrentSentence,
+            .failedToDeleteDefinition:
         return nil
     }
 }

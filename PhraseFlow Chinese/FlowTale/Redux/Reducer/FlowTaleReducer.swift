@@ -91,25 +91,52 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         }
 
         newState.definitionState.currentDefinition = definition
-        newState.definitionState.definitions.removeAll(where: {
+        // First check for an existing definition with the same identifying characteristics
+        if let existingIndex = newState.definitionState.definitions.firstIndex(where: {
             $0.timestampData == definition.timestampData && $0.sentence == definition.sentence
-        })
+        }) {
+            // If found, preserve the id of the existing definition
+            definition.id = newState.definitionState.definitions[existingIndex].id
+            // Remove the existing definition
+            newState.definitionState.definitions.remove(at: existingIndex)
+        }
+        // Add the updated definition
         newState.definitionState.definitions.append(definition)
         newState.viewState.isDefining = false
     case .onDefinedSentence(_, var definitions, var tappedDefinition):
         tappedDefinition.hasBeenSeen = true
         tappedDefinition.creationDate = .now
-        definitions.removeAll(where: {
+        
+        // Update the tapped definition in the definitions array
+        if let tappedIndex = definitions.firstIndex(where: {
             $0.timestampData == tappedDefinition.timestampData
-        })
-        definitions.append(tappedDefinition)
-        newState.definitionState.currentDefinition = tappedDefinition
-        for definition in definitions {
-            newState.definitionState.definitions.removeAll(where: {
-                $0 == definition
-            })
-            newState.definitionState.definitions.append(definition)
+        }) {
+            // If found in the array, preserve its id
+            tappedDefinition.id = definitions[tappedIndex].id
+            definitions[tappedIndex] = tappedDefinition
+        } else {
+            // If not found, add it
+            definitions.append(tappedDefinition)
         }
+        
+        newState.definitionState.currentDefinition = tappedDefinition
+        
+        // Process each definition in the sentence
+        for var definition in definitions {
+            // Check if this definition already exists in the state
+            if let existingIndex = newState.definitionState.definitions.firstIndex(where: {
+                $0.id == definition.id || 
+                ($0.timestampData == definition.timestampData && $0.sentence == definition.sentence)
+            }) {
+                // If it exists, preserve the ID but update the definition
+                definition.id = newState.definitionState.definitions[existingIndex].id
+                newState.definitionState.definitions[existingIndex] = definition
+            } else {
+                // If it's a new definition, just add it
+                newState.definitionState.definitions.append(definition)
+            }
+        }
+        
         newState.viewState.isDefining = false
     case .synthesizeAudio:
         newState.viewState.loadingState = .generatingSpeech
@@ -267,12 +294,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         print("Definitions with hasBeenSeen=true: \(definitions.filter { $0.hasBeenSeen }.count)")
         newState.definitionState.definitions = definitions
     case .deleteDefinition(let definition):
-        var updatedDefinition = definition
-        updatedDefinition.hasBeenSeen = false
-        newState.definitionState.definitions.removeAll(where: { 
-            $0.timestampData == definition.timestampData && $0.sentence == definition.sentence 
-        })
-        newState.definitionState.definitions.append(updatedDefinition)
+        // For optimistic UI updates, immediately remove the definition by id
+        newState.definitionState.definitions.removeAll(where: { $0.id == definition.id })
     case .onDeletedStory(let storyId):
         if newState.storyState.currentStory?.id == storyId {
             newState.storyState.currentStory = nil
@@ -419,7 +442,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .onFinishedLoadedStories,
             .musicTrackFinished,
             .checkDeviceVolumeZero,
-            .onDeletedDefinition:
+            .onDeletedDefinition,
+            .failedToDeleteDefinition:
         break
     }
 

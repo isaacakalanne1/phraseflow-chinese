@@ -8,6 +8,7 @@
 import Foundation
 
 struct Definition: Codable, Equatable, Hashable {
+    var id: UUID  // Unique identifier for this definition
     var creationDate: Date
     var studiedDates: [Date]
     var timestampData: WordTimeStampData
@@ -19,7 +20,8 @@ struct Definition: Codable, Equatable, Hashable {
     var sentenceId: UUID  // ID for the extracted sentence audio
     var audioData: Data?
 
-    init(creationDate: Date,
+    init(id: UUID = UUID(),
+         creationDate: Date,
          studiedDates: [Date] = [],
          timestampData: WordTimeStampData,
          sentence: Sentence,
@@ -29,6 +31,7 @@ struct Definition: Codable, Equatable, Hashable {
          hasBeenSeen: Bool = false,
          sentenceId: UUID = UUID(),
          audioData: Data? = nil) {
+        self.id = id
         self.creationDate = creationDate
         self.studiedDates = studiedDates
         self.timestampData = timestampData
@@ -43,6 +46,7 @@ struct Definition: Codable, Equatable, Hashable {
 
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = (try? container.decode(UUID.self, forKey: .id)) ?? UUID()
         self.creationDate = try container.decode(Date.self, forKey: .creationDate)
         self.studiedDates = (try? container.decode([Date].self, forKey: .studiedDates)) ?? []
         self.timestampData = try container.decode(WordTimeStampData.self, forKey: .timestampData)

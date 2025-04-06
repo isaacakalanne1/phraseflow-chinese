@@ -177,6 +177,7 @@ enum FlowTaleAction {
 
     case deleteDefinition(Definition)
     case onDeletedDefinition
+    case failedToDeleteDefinition
     
     case checkFreeTrialLimit
     case hasReachedFreeTrialLimit

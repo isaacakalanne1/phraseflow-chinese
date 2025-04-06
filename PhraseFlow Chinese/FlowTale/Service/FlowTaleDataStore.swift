@@ -12,6 +12,7 @@ enum FlowTaleDataStoreError: Error {
     case failedToCreateUrl
     case failedToSaveData
     case failedToDecodeData
+    case chapterNotFound
     case freeUserChapterLimitReached
     case chapterCreationLimitReached(timeUntilNextAvailable: String)
 }
@@ -271,17 +272,21 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         }
     }
     
-    // Delete a specific definition by ID
+    // Delete a specific definition by id
     func deleteDefinition(with id: UUID) throws {
         var definitions = try loadDefinitions()
         
-        // Remove the definition with the given ID (currently we don't have a unique ID field in Definition)
-        // In a real implementation, you'd need to add an ID field to Definition to make this work correctly
-        // For now, using a placeholder implementation
+        // Remove the definition with the specified id
+        let initialCount = definitions.count
+        definitions.removeAll(where: { $0.id == id })
         
-        // Placeholder implementation - in reality, you'd need to add a unique ID field to Definition
-        // definitions.removeAll(where: { $0.id == id })
+        if initialCount > definitions.count {
+            print("Successfully deleted definition with id: \(id)")
+        } else {
+            print("No definition found with id: \(id)")
+        }
         
+        // Save the updated definitions list
         try saveDefinitions(definitions)
     }
     
