@@ -542,7 +542,8 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             .showFreeLimitExplanationScreen,
             .selectStoryFromSnackbar,
             .onValidatedReceipt,
-            .updateIsSubscriptionPurchaseLoading:
+            .updateIsSubscriptionPurchaseLoading,
+            .updateCurrentSentence:
         return nil
     }
 }

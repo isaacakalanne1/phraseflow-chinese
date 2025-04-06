@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct FlowLayout: Layout {
     var spacing: CGFloat = 4
     var language: Language?
@@ -47,29 +45,10 @@ struct FlowLayout: Layout {
     }
 
     func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
-        // Variables to track position
         var x: CGFloat = bounds.minX
         var y: CGFloat = bounds.minY
 
-        // Variables to track current line height
         var currentLineHeight: CGFloat = 0
-
-//        for subview in subviews {
-//            let subviewSize = subview.sizeThatFits(.unspecified)
-//            if x + subviewSize.width > bounds.maxX {
-//                // Move to next line
-//                x = bounds.minX
-//                y += currentLineHeight + spacing
-//                currentLineHeight = 0
-//            }
-//
-//            subview.place(
-//                at: CGPoint(x: x, y: y),
-//                proposal: ProposedViewSize(width: subviewSize.width, height: subviewSize.height)
-//            )
-//            x += subviewSize.width + spacing
-//            currentLineHeight = max(currentLineHeight, subviewSize.height)
-//        }
 
         if let lang = language,
            lang == .arabicGulf {

@@ -15,6 +15,7 @@ struct StoryState {
          savedStories: [Story] = []) {
         self.currentStory = currentStory
         self.savedStories = savedStories
+        self.currentSentence = currentChapter?.sentences.first
     }
 
     var currentChapter: Chapter? {
@@ -31,9 +32,7 @@ struct StoryState {
         return currentChapter?.sentences.flatMap({ $0.timestamps}).last(where: { playbackTime >= $0.time })
     }
 
-    var currentSentence: Sentence? {
-        return currentChapter?.sentences.first(where: { $0.timestamps.contains(where: { $0 == currentSpokenWord }) })
-    }
+    var currentSentence: Sentence?
 
     var currentChapterAudioData: Data? {
         currentChapter?.audio.data

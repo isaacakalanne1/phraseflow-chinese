@@ -16,6 +16,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     switch action {
     case .studyAction(let studyAction):
         newState.studyState = studyReducer(state.studyState, studyAction)
+    case .updateCurrentSentence(let sentence):
+        newState.storyState.currentSentence = sentence
     case .onLoadedAppSettings(let settings):
         newState.settingsState = settings
     case .generateImage:
@@ -229,7 +231,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .pauseAudio:
         newState.audioState.isPlayingAudio = false
     case .updatePlayTime:
-        newState.storyState.currentStory?.currentPlaybackTime = newState.audioState.audioPlayer.currentTime().seconds
         newState.storyState.currentStory?.currentPlaybackTime = newState.audioState.audioPlayer.currentTime().seconds
     case .selectWord(let word):
         newState.storyState.currentStory?.currentPlaybackTime = word.time

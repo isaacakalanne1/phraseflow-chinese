@@ -22,6 +22,7 @@ enum StudyAction {
 
 enum FlowTaleAction {
     case studyAction(StudyAction)
+    case updateCurrentSentence(Sentence)
     case updateAutoScrollEnabled(isEnabled: Bool)
 
     case createChapter(CreateChapterType)
