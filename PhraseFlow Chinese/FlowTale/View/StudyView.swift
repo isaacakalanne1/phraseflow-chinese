@@ -15,6 +15,10 @@ struct StudyView: View {
         return store.state.definitionState.studyDefinitions(language: language)
     }
 
+    var displayedDefinition: Definition? {
+        specificWord ?? currentDefinition
+    }
+
     var specificWord: Definition? = nil
     var isWordDefinitionView: Bool {
         specificWord != nil
@@ -28,7 +32,6 @@ struct StudyView: View {
     }
 
     var body: some View {
-        let displayedDefinition = specificWord ?? currentDefinition
         return Group {
             if let definition = displayedDefinition {
                 VStack {
@@ -38,67 +41,63 @@ struct StudyView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .scrollBounceBehavior(.basedOnSize)
                     .scrollIndicators(.hidden)
-                    .onAppear {
-                        // Check if device is in silent mode when study view appears
-                        store.dispatch(.checkDeviceVolumeZero)
-                    }
-                    HStack {
-                        if !isWordDefinitionView {
-                            Button {
-                                goToPreviousDefinition()
-                            } label: {
-                                Text(LocalizedString.previous)
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .background(FlowTaleColor.accent)
-                                    .foregroundColor(.white)
-                                    .cornerRadius(10)
-                            }
-                            Button {
-                                if isDefinitionShown {
-                                    goToNextDefinition()
-                                } else {
-                                    store.dispatch(.studyAction(.playStudyWord(definition)))
-                                    withAnimation {
-                                        isPronounciationShown = true
-                                        isDefinitionShown = true
-                                    }
-                                }
-                            } label: {
-                                Text(isDefinitionShown ? LocalizedString.next : LocalizedString.reveal)
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .background(FlowTaleColor.accent)
-                                    .foregroundColor(.white)
-                                    .cornerRadius(10)
+                    .onTapGesture {
+                        withAnimation {
+                            if !isPronounciationShown {
+                                isPronounciationShown = true
+                            } else if !isDefinitionShown {
+                                isDefinitionShown = true
+                            } else {
+                                isPronounciationShown = false
+                                isDefinitionShown = false
                             }
                         }
                     }
-                    .frame(maxWidth: .infinity, alignment: .bottom)
+                    buttons(definition: definition)
+                        .frame(maxWidth: .infinity, alignment: .bottom)
                 }
-            } else {
-                Text(LocalizedString.noSavedWords + "\n" + LocalizedString.tapWordToStudy)
             }
         }
-        .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(LocalizedString.studyNavTitle)
         .onAppear {
             index = 0
             updateDefinition()
+            store.dispatch(.checkDeviceVolumeZero)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding()
         .background(FlowTaleColor.background)
-        .scrollContentBackground(.hidden)
-        .onTapGesture {
-            withAnimation {
-                if !isPronounciationShown {
-                    isPronounciationShown = true
-                } else if !isDefinitionShown {
-                    isDefinitionShown = true
-                } else {
-                    isPronounciationShown = false
-                    isDefinitionShown = false
+    }
+
+    func buttons(definition: Definition) -> some View {
+        HStack {
+            if !isWordDefinitionView {
+                Button {
+                    goToPreviousDefinition()
+                } label: {
+                    Text(LocalizedString.previous)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(FlowTaleColor.accent)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                Button {
+                    if isDefinitionShown {
+                        goToNextDefinition()
+                    } else {
+                        store.dispatch(.studyAction(.playStudyWord(definition)))
+                        withAnimation {
+                            isPronounciationShown = true
+                            isDefinitionShown = true
+                        }
+                    }
+                } label: {
+                    Text(isDefinitionShown ? LocalizedString.next : LocalizedString.reveal)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(FlowTaleColor.accent)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                 }
             }
         }
@@ -115,7 +114,7 @@ struct StudyView: View {
     }
 
     func goToNextDefinition() {
-        if let definition = currentDefinition {
+        if let definition = displayedDefinition {
             store.dispatch(.updateStudiedWord(definition))
         }
         index = (index + 1) % studyWords.count
@@ -126,26 +125,16 @@ struct StudyView: View {
     func updateDefinition() {
         isPronounciationShown = false
         isDefinitionShown = false
-        // Audio playing state is now managed by the store
-        if let definition = currentDefinition {
+        if let definition = specificWord ?? currentDefinition {
             store.dispatch(.studyAction(.prepareToPlayStudySentence(definition)))
             store.dispatch(.studyAction(.pauseStudyAudio))
         }
     }
 
-    /// Returns an AttributedString derived from `baseString`,
-    /// with the substring at `characterOffset` (of `length`) in bold.
-    ///
-    /// - Parameters:
-    ///   - baseString: The full sentence/string.
-    ///   - characterOffset: The integer start position of the substring you want to highlight.
-    ///   - length: How many characters from `characterOffset` should be highlighted.
-    /// - Returns: An `AttributedString` with the specified range in bold.
     func boldSubstring(in baseString: String,
                        at characterOffset: Int,
                        length: Int) -> AttributedString?
     {
-        // 1) Make sure the substring range is valid in `baseString`
         guard characterOffset >= 0,
               length > 0,
               characterOffset + length <= baseString.count
@@ -153,18 +142,13 @@ struct StudyView: View {
             return nil
         }
 
-        // 2) Extract the exact substring we want to highlight
         let startIndex = baseString.index(baseString.startIndex, offsetBy: characterOffset)
         let endIndex   = baseString.index(startIndex, offsetBy: length)
         let substring  = baseString[startIndex..<endIndex]
 
-        // 3) Convert the entire base string to an AttributedString
         var attributed = AttributedString(baseString)
 
-        // 4) Search for that substring inside the attributed string
-        //    (This finds the first occurrence, if multiple exist)
         if let rangeInAttributed = attributed.range(of: String(substring)) {
-            // 5) Bold the found range
             attributed[rangeInAttributed].font = .system(size: 30, weight: .bold)
         }
 
