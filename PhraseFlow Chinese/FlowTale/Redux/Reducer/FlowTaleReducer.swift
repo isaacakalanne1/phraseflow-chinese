@@ -75,7 +75,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         if newState.audioState.audioPlayer.rate != 0 {
             newState.audioState.audioPlayer.rate = speed.playRate
         }
-    case .defineCharacter(let wordTimeStampData, let shouldForce):
+    case .defineSentence(let wordTimeStampData, let shouldForce):
         newState.viewState.isDefining = true
     case .onDefinedCharacter(var definition):
         definition.hasBeenSeen = true
@@ -289,7 +289,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.snackBarState.isShowing = true
     case .hideSnackbar:
         newState.snackBarState.isShowing = false
-    case .failedToDefineCharacter:
+    case .failedToDefineSentence:
         newState.viewState.isDefining = false
     case .onCreatedChapter(let story):
         newState.audioState.audioPlayer = AVPlayer()

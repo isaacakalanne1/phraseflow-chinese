@@ -38,7 +38,7 @@ struct CharacterView: View {
                 store.dispatch(.updateAutoScrollEnabled(isEnabled: false))
                 store.dispatch(.selectWord(word))
                 if store.state.settingsState.isShowingDefinition {
-                    store.dispatch(.defineCharacter(word, shouldForce: false))
+                    store.dispatch(.defineSentence(word, shouldForce: false))
                 }
             }
         }

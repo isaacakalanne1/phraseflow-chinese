@@ -17,6 +17,10 @@ struct StoryState {
         self.savedStories = savedStories
     }
 
+    func sentence(containing timestampData: WordTimeStampData) -> Sentence? {
+        currentChapter?.sentences.first(where: { $0.timestamps.contains(where: { $0.id == timestampData.id }) })
+    }
+
     var currentChapter: Chapter? {
         guard let story = currentStory else {
             return nil

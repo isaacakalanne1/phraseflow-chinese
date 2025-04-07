@@ -43,7 +43,7 @@ struct DefinitionView: View {
                                     SystemImageView(.speaker)
                                 }
                                 Button {
-                                    store.dispatch(.defineCharacter(definition.timestampData, shouldForce: true))
+                                    store.dispatch(.defineSentence(definition.timestampData, shouldForce: true))
                                 } label: {
                                     SystemImageView(._repeat)
                                 }

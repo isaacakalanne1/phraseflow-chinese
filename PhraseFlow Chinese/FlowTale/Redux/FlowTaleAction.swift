@@ -90,11 +90,11 @@ enum FlowTaleAction {
     case failedToSynthesizeAudio
     case updatePlayTime
 
-    case defineCharacter(WordTimeStampData, shouldForce: Bool)
+    case defineSentence(WordTimeStampData, shouldForce: Bool)
     case playWord(WordTimeStampData, story: Story?)
     case onDefinedCharacter(Definition)
-    case onDefinedSentence(Sentence, [Definition], tappedDefinition: Definition)
-    case failedToDefineCharacter
+    case onDefinedSentence(Sentence, [Definition], Definition)
+    case failedToDefineSentence
     case saveDefinitions
     case onSavedDefinitions
     case failedToSaveDefinitions
