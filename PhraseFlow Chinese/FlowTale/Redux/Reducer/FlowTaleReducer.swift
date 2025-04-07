@@ -98,6 +98,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         tappedDefinition.creationDate = .now
         
         newState.definitionState.currentDefinition = tappedDefinition
+        newState.definitionState.definitions.append(contentsOf: definitions)
         newState.definitionState.definitions.removeAll(where: { $0.id == tappedDefinition.id })
         newState.definitionState.definitions.append(tappedDefinition)
 

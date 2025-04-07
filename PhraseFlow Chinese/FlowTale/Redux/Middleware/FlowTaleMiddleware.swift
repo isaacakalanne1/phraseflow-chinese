@@ -229,7 +229,7 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
                 return .failedToDefineSentence
             }
 
-            if let definition = state.definitionState.definition(timestampData: timestampData, in: sentence),
+            if let definition = state.definitionState.definition(timestampData: timestampData),
                !shouldForce {
                 return .onDefinedCharacter(definition)
             }

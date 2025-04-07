@@ -27,8 +27,8 @@ struct DefinitionState {
         self.definitions = definitions
     }
 
-    func definition(timestampData: WordTimeStampData, in sentence: Sentence) -> Definition? {
-        definitions.first(where: { $0.timestampData == timestampData && $0.sentence == sentence })
+    func definition(timestampData: WordTimeStampData) -> Definition? {
+        definitions.first(where: { $0.timestampData == timestampData })
     }
 
 }
