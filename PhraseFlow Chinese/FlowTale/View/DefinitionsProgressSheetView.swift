@@ -12,13 +12,13 @@ struct DefinitionsProgressSheetView: View {
     @State private var showingCreations = true
     @State private var navigateToStudyView = false
     @State private var showLanguageSelector = false
-    
+
     var body: some View {
         let filterLanguage = store.state.settingsState.language
         let definitions = store.state.definitionState.studyDefinitions(language: filterLanguage)
         let filteredDefinitions = removeDuplicates(from: definitions)
-        let studiedDefinitions = filteredDefinitions.filter({ !$0.studiedDates.isEmpty })
-        
+        let studiedDefinitions = filteredDefinitions.filter { !$0.studiedDates.isEmpty }
+
         let languageIcon = filterLanguage.flagEmoji
         let languageName = filterLanguage.displayName
 
@@ -29,7 +29,7 @@ struct DefinitionsProgressSheetView: View {
             } else {
                 sheetContent(isCreations: false, definitions: studiedDefinitions)
             }
-            
+
             // Bottom control area
             VStack(spacing: 16) {
                 // Top row: Tabs and Language selector
@@ -43,9 +43,9 @@ struct DefinitionsProgressSheetView: View {
                     .onChange(of: showingCreations) { _, _ in
                         store.dispatch(.playSound(.togglePress))
                     }
-                    
+
                     Spacer()
-                    
+
                     // Language selector
                     Button {
                         showLanguageSelector = true
@@ -73,7 +73,7 @@ struct DefinitionsProgressSheetView: View {
                         )
                     }
                 }
-                
+
                 // Practice button
                 if filteredDefinitions.count > 1 {
                     PrimaryButton(title: LocalizedString.studyNavTitle) {
@@ -105,7 +105,7 @@ struct DefinitionsProgressSheetView: View {
             VStack {
                 DefinitionsChartView(definitions: definitions, isCreations: isCreations)
                     .frame(height: 300)
-                
+
                 List {
                     Section {
                         ForEach(definitions, id: \.self) { definition in
@@ -128,8 +128,8 @@ struct DefinitionsProgressSheetView: View {
                         }
                     } header: {
                         Text(isCreations ?
-                             LocalizedString.wordsSaved("\(definitions.count)") :
-                                LocalizedString.wordsStudied("\(definitions.reduce(0, { $0 + $1.studiedDates.count }))"))
+                            LocalizedString.wordsSaved("\(definitions.count)") :
+                            LocalizedString.wordsStudied("\(definitions.reduce(0) { $0 + $1.studiedDates.count })"))
                     }
                 }
                 .listStyle(.insetGrouped)

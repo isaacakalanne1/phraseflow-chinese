@@ -74,32 +74,13 @@ enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
         var prompt: String
         switch self {
         case .beginner:
-            prompt = """
-Write using short, simple sentences.
-The phrases should still be gramatically correct sentences, but simply be very short.
-Use an extremely limited vocabulary.
-
-"""
-            // Test: Use short, simple sentences and repetitive language.
+            prompt = "Write using simple language and simple sentences."
         case .intermediate:
-            prompt = """
-Use basic, simple words and short sentences, for someone who has started learning the language, but is at intermediate level, and has basic knowledge of the language.
-Use a limited vocabulary.
-
-"""
+            prompt = "Write using simple sentences."
         case .advanced:
-            prompt = """
-Use simple words and medium length sentences, for someone who is learning the language, but is at an advanced level, and has a great deal of vocabulary under their belt.
-
-"""
+            prompt = "Write using simple language."
         case .expert:
             prompt = ""
-        }
-        if self != .expert {
-            let extraPrompt = """
-Use words very repetitively, to allow the user to learn them.
-"""
-            prompt.append(extraPrompt)
         }
         return prompt
     }

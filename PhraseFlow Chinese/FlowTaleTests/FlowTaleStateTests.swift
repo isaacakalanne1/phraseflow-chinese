@@ -1,15 +1,14 @@
 //
-//  LanguageTests.swift
+//  FlowTaleStateTests.swift
 //  FlowTaleTests
 //
 //  Created by iakalann on 23/12/2024.
 //
 
-import XCTest
 @testable import FlowTale
+import XCTest
 
 final class FlowTaleStateTests: XCTestCase {
-
     var state: FlowTaleState!
 
     func testDeviceLanguage_english() {
@@ -176,5 +175,4 @@ final class FlowTaleStateTests: XCTestCase {
         }
         XCTAssertEqual(deviceLanguage, .spanish)
     }
-
 }

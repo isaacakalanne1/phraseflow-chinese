@@ -42,6 +42,6 @@ struct MainButton: View {
 
 #Preview {
     MainButton(title: "Title") {
-        
+        print("Button tapped!")
     }
 }

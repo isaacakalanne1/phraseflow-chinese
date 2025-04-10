@@ -130,7 +130,7 @@ enum Language: String, Codable, CaseIterable {
         case .spanish:
             "es"
         case .europeanPortuguese,
-                .brazilianPortuguese:
+             .brazilianPortuguese:
             "pt"
         case .english,
              .englishUK:
@@ -141,8 +141,6 @@ enum Language: String, Codable, CaseIterable {
             "de"
         }
     }
-
-
 
     var locale: Locale {
         Locale(identifier: speechCode)
@@ -240,7 +238,7 @@ enum Language: String, Codable, CaseIterable {
             let flag = code
                 .uppercased()
                 .unicodeScalars
-                .compactMap({ UnicodeScalar(flagBase + $0.value)?.description })
+                .compactMap { UnicodeScalar(flagBase + $0.value)?.description }
                 .joined()
             flags.append(flag)
         }
@@ -250,9 +248,23 @@ enum Language: String, Codable, CaseIterable {
     var alignment: Alignment {
         switch self {
         case .arabicGulf:
-                .trailing
+            .trailing
         default:
-                .leading
+            .leading
+        }
+    }
+}
+
+enum TranslationMode: String, CaseIterable {
+    case translate
+    case breakdown
+    
+    var displayName: String {
+        switch self {
+        case .translate:
+            return LocalizedString.translate
+        case .breakdown:
+            return LocalizedString.breakdown
         }
     }
 }

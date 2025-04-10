@@ -1,0 +1,94 @@
+//
+//  StoryCardOverlay.swift
+//  FlowTale
+//
+//  Created by iakalann on 30/05/2025.
+//
+
+import SwiftUI
+
+struct StoryCardOverlay: View {
+    let story: Story
+    
+    var body: some View {
+        // Content overlay
+        VStack(alignment: .leading, spacing: 0) {
+            Spacer()
+
+            // Bottom section with story details
+            VStack(alignment: .leading, spacing: 8) {
+                // Story title
+                Text(story.title)
+                    .font(.title2.bold())
+                    .foregroundColor(FlowTaleColor.primary)
+                    .lineLimit(2)
+                    .shadow(color: .black.opacity(0.5), radius: 1, x: 0, y: 1)
+
+                // Language and difficulty indicators
+                languageAndDifficultyIndicators
+
+                // Story summary
+                Text(story.briefLatestStorySummary)
+                    .font(.subheadline)
+                    .foregroundColor(FlowTaleColor.primary)
+                    .lineLimit(2)
+                    .shadow(color: .black, radius: 4, x: 0, y: 0)
+
+                // Chapters count
+                chaptersCount
+            }
+            .padding(16)
+        }
+    }
+    
+    private var languageAndDifficultyIndicators: some View {
+        HStack(spacing: 12) {
+            // Language indicator
+            HStack(spacing: 6) {
+                Text(story.language.flagEmoji)
+                    .font(.title3)
+
+                Text(story.language.descriptiveEnglishName)
+                    .font(.caption.weight(.medium))
+                    .foregroundColor(FlowTaleColor.primary)
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 4)
+            .background(
+                Capsule()
+                    .fill(.thinMaterial)
+                    .opacity(0.8)
+            )
+            
+            // Difficulty indicator
+            HStack(spacing: 8) {
+                DifficultyView(difficulty: story.difficulty, isSelected: true)
+
+                Text(story.difficulty.title)
+                    .font(.caption.weight(.medium))
+                    .foregroundColor(FlowTaleColor.primary)
+                    .tracking(0.5)
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 4)
+            .background(
+                Capsule()
+                    .fill(.thinMaterial)
+                    .opacity(0.8)
+            )
+        }
+    }
+    
+    private var chaptersCount: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "book.pages")
+                .font(.caption)
+                .foregroundColor(FlowTaleColor.primary)
+
+            Text("\(story.chapters.count) \(story.chapters.count == 1 ? "chapter" : "chapters")")
+                .font(.caption)
+                .foregroundColor(FlowTaleColor.primary)
+        }
+        .shadow(color: .black, radius: 4, x: 0, y: 0)
+    }
+}

@@ -20,7 +20,8 @@ struct WordTimeStampData: Codable, Equatable, Hashable {
          chapterIndex: Int,
          word: String,
          time: Double,
-         duration: Double) {
+         duration: Double)
+    {
         self.id = id
         self.storyId = storyId
         self.chapterIndex = chapterIndex
@@ -31,11 +32,11 @@ struct WordTimeStampData: Codable, Equatable, Hashable {
 
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = (try? container.decode(UUID.self, forKey: .id)) ?? UUID()
-        self.storyId = (try? container.decode(UUID.self, forKey: .storyId)) ?? UUID()
-        self.chapterIndex = (try? container.decode(Int.self, forKey: .chapterIndex)) ?? 0
-        self.word = try container.decode(String.self, forKey: .word)
-        self.time = try container.decode(Double.self, forKey: .time)
-        self.duration = try container.decode(Double.self, forKey: .duration)
+        id = (try? container.decode(UUID.self, forKey: .id)) ?? UUID()
+        storyId = (try? container.decode(UUID.self, forKey: .storyId)) ?? UUID()
+        chapterIndex = (try? container.decode(Int.self, forKey: .chapterIndex)) ?? 0
+        word = try container.decode(String.self, forKey: .word)
+        time = try container.decode(Double.self, forKey: .time)
+        duration = try container.decode(Double.self, forKey: .duration)
     }
 }

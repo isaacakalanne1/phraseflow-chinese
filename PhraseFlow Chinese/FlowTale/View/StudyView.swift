@@ -124,8 +124,8 @@ struct StudyView: View {
         }
 
         let startIndex = baseString.index(baseString.startIndex, offsetBy: characterOffset)
-        let endIndex   = baseString.index(startIndex, offsetBy: length)
-        let substring  = baseString[startIndex..<endIndex]
+        let endIndex = baseString.index(startIndex, offsetBy: length)
+        let substring = baseString[startIndex ..< endIndex]
 
         var attributed = AttributedString(baseString)
 
@@ -182,7 +182,8 @@ struct StudyView: View {
             HStack {
                 if characterCount >= 0,
                    characterCount + definition.timestampData.word.count <= baseString.count,
-                   let highlighted = boldSubstring(in: baseString, at: characterCount, length: definition.timestampData.word.count) {
+                   let highlighted = boldSubstring(in: baseString, at: characterCount, length: definition.timestampData.word.count)
+                {
                     // In SwiftUI, just show it:
                     Text(highlighted)
                         .font(.system(size: 30, weight: .light))

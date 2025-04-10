@@ -9,6 +9,12 @@
 // Translation view title
 "translation" = "Translation";
 
+// Translating in progress
+"translating" = "Translating...";
+
+// Enter text prompt for translation
+"enterText" = "Enter text to translate";
+
 // Definition View title for showing the definition of a word
 "definition_of" = "Definition: %@";
 
@@ -264,6 +270,12 @@
 // Translation title, of the "Translation" section of the study feature
 "translation" = "Translation";
 
+// Translate button text (verb)
+"translate" = "Translate";
+
+// Breakdown button text (verb)
+"breakdown" = "Breakdown";
+
 // Definition title, of the "Definition" section of the study feature
 "definition" = "Definition";
 
@@ -479,41 +491,41 @@
 // Navigation title for SpeechSpeedMenu
 "speech_speed_nav_title" = "Speech Speed";
 
-// Title when a daily limit exists (with a chapter limit placeholder)
-"daily_limit_reached_with_limit" = "You have reached your daily limit of %d chapters";
+// Title when a daily limit exists (with a character limit placeholder)
+"daily_limit_reached_with_limit" = "You have reached your daily limit of %d characters";
 
 // Fallback title when a daily limit exists but no limit is provided
-"daily_limit_reached" = "You have reached your daily limit of chapters";
+"daily_limit_reached" = "You have reached your daily limit of characters";
 
 // Section header for explaining what happened
 "daily_limit_what_happened" = "What happened?";
 
-// Explanation for reaching the daily chapter creation limit
-"daily_limit_explanation" = "You have reached your daily limit for creating chapters.";
+// Explanation for reaching the daily character creation limit
+"daily_limit_explanation" = "You have reached your daily limit for creating speech content.";
 
-// Section header for when more chapters can be created
+// Section header for when more content can be created
 "daily_limit_when_can_create_more" = "When can I create more?";
 
-// Explanation for when the user can create more chapters (with a placeholder for time description)
-"daily_limit_next_available" = "You can create more chapters in %@";
+// Explanation for when the user can create more content (with a placeholder for time description)
+"daily_limit_next_available" = "You can create more content in %@";
 
 // Section header for explaining the reason behind the daily limit
 "daily_limit_why_header" = "Why is there a daily limit?";
 
 // Explanation detailing why the daily limit is in place (with newline characters)
-"daily_limit_why" = "The text to speech AI is really expensive.\nIf we let users create infinite chapters, we would go bankrupt.\nOur daily limit gives you the most stories possible without risking us going bankrupt.";
+"daily_limit_why" = "The text to speech AI is really expensive.\nIf we let users create unlimited content, we would go bankrupt.\nOur daily limit gives you the most stories possible without risking us going bankrupt.";
 
 // Header shown when the free trial limit has been reached
 "free_trial_what_happened" = "What happened?";
 
-// Message explaining that the free trial limit for creating chapters has been reached
-"free_trial_reached_limit" = "• You have reached your free trial limit for creating chapters.";
+// Message explaining that the free trial limit for creating speech content has been reached
+"free_trial_reached_limit" = "• You have reached your free trial limit for creating speech content.";
 
 // Header asking why there is a free trial limit
 "free_trial_why_header" = "Why is there a free trial limit?";
 
 // Detailed explanation for the free trial limit (with newline characters)
-"free_trial_explanation" = "• The text to speech AI is really expensive.\n• Creating the stories themselves is actually relatively cheap. However, the text to speech AI costs around 5-10p per chapter.\n• As a result, creating just 4 chapters costs around 20-80p.\n• This doesn't sound like a big deal, but if just 50 users joined the app every day, this would cost us around $200-$600 every month.\n• Apple sends us subscription payments after around 45 days or so, and so we have to make sure we can afford the costs until the subscription payments come through.\n• We've searched far and wide, but there are no cheaper alternatives for the text to speech AI that don't suck.";
+"free_trial_explanation" = "• The text to speech AI is really expensive.\n• Creating the stories themselves is actually relatively cheap. However, the text to speech AI costs more when processing longer content.\n• As a result, creating just 4000 characters of speech costs us a significant amount.\n• This doesn't sound like a big deal, but if just 50 users joined the app every day, this would cost us around $200-$600 every month.\n• Apple sends us subscription payments after around 45 days or so, and so we have to make sure we can afford the costs until the subscription payments come through.\n• We've searched far and wide, but there are no cheaper alternatives for the text to speech AI that don't suck.";
 
 // Label for the Dark Mode toggle
 "settings_dark_mode" = "Dark Mode";
@@ -560,14 +572,20 @@
 // Format for showing the chapter limit per day (with a placeholder for the number of chapters)
 "subscription_chapters_per_day" = "Create %d chapters per day";
 
-// Detail text for the free subscription option
+// Format for showing the character limit per day (with a placeholder for the number of characters)
+"subscription_characters_per_day" = "Create up to %d characters per day";
+
+// Detail text for the free subscription option (chapter-based)
 "subscription_free_chapters_detail" = "%d free chapters";
+
+// Detail text for the free subscription option (character-based)
+"subscription_free_characters_detail" = "%d free characters";
 
 // Snackbar message when writing a chapter fails
 "snackbar_failed_write_chapter" = "Failed to write chapter";
 
-// Snackbar message when the daily chapter limit is reached, with a placeholder for the next available time
-"snackbar_daily_chapter_limit_reached" = "You can create more chapters in %@. Tap here to learn why.";
+// Snackbar message when the daily character limit is reached, with a placeholder for the next available time
+"snackbar_daily_chapter_limit_reached" = "You can create more content in %@. Tap here to learn why.";
 
 // Title informing the user that they are currently on a free trial of the app
 "free_trial" = "Free trial";
@@ -595,3 +613,21 @@
 
 // Remove action label
 "remove" = "Remove";
+
+// Button label for deleting an item
+"delete" = "Delete";
+
+// Text shown when there are no stories in the list
+"no_stories_yet" = "No stories yet";
+
+// Text encouraging users to create their first story
+"create_your_first_story" = "Create your first story to begin your language journey";
+
+// Text encouraging users to create their first chapter
+"create_your_first_chapter" = "Create your first chapter to continue your story";
+
+// Text shown when there are no chapters in the list
+"no_chapters_yet" = "No chapters yet";
+
+// Text describing your language learning journey
+"your_journey_in_language" = "Your journey in language learning";

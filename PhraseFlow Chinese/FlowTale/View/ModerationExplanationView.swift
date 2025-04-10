@@ -68,7 +68,7 @@ struct ModerationExplanationView: View {
                                 // "We accept below 80% | You scored 92%"
                                 VStack(alignment: .trailing) {
                                     Text(LocalizedString.acceptanceThresholdExplanation("\(result.thresholdPercentageString)"))
-                                         Text(LocalizedString.userScoreExplanation("\(result.scorePercentageString)"))
+                                    Text(LocalizedString.userScoreExplanation("\(result.scorePercentageString)"))
                                         .bold(!result.didPass)
                                 }
                                 .font(.footnote)

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FlowTaleColor {
+enum FlowTaleColor {
     static let primary = Color("FTPrimary")
     static let secondary = Color("FTSecondary")
     static let background = Color("FTBackground")

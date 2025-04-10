@@ -13,7 +13,8 @@ struct DifficultyView: View {
     private let starSize: CGFloat = 10
 
     init(difficulty: Difficulty,
-         isSelected: Bool = false) {
+         isSelected: Bool = false)
+    {
         self.difficulty = difficulty
         self.isSelected = isSelected
     }

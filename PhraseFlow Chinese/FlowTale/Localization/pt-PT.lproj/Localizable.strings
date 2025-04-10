@@ -258,6 +258,12 @@
 // Translation title, of the "Translation" section of the study feature
 "translation" = "Tradução";
 
+// Translate button text (verb)
+"translate" = "Traduzir";
+
+// Breakdown button text (verb)
+"breakdown" = "Análise";
+
 // Definition title, of the "Definition" section of the study feature
 "definition" = "Definição";
 
@@ -315,11 +321,11 @@
 // Title for screen presenting the user with the option of subscribing
 "subscribe" = "Subscrever";
 
-// Title telling user the number of chapters they can create per story
-"chapters_per_story" = "%@ capítulos por história";
+// Title telling user the number of characters they can create per story
+"chapters_per_story" = "%@ caracteres por história";
 
-// Title telling user they can create unlimited chapters per story
-"unlimited_chapters" = "Capítulos ilimitados";
+// Title telling user they can create unlimited characters per story
+"unlimited_chapters" = "Caracteres ilimitados";
 
 // Button title the user can tap to restore their app subscription
 "restore_subscription" = "Restaurar subscrição";
@@ -351,8 +357,8 @@
 // Snackbar text telling the user the text failed to be moderated, and they can tap to retry
 "failed_moderate_text" = "Falha ao moderar o texto. Toque para tentar novamente.";
 
-// Snackbar text telling the user their action of subscribing to the app is complete, and that unlimited chapters are now available
-"subscription_complete" = "Subscrição concluída. Capítulos ilimitados agora disponíveis.";
+// Snackbar text telling the user their action of subscribing to the app is complete, and that unlimited characters are now available
+"subscription_complete" = "Subscrição concluída. Caracteres ilimitados agora disponíveis.";
 
 // Snackbar text telling the user their custom story has been added
 "custom_story_added" = "História personalizada adicionada";
@@ -375,8 +381,8 @@
 // Title telling user to tap a word to study it
 "tap_word_to_study" = "Toque numa palavra para a estudar";
 
-// Title telling the user to subscribe now for unlimited chapters
-"subscribe_now_unlimited_chapters" = "Subscreva agora para capítulos ilimitados";
+// Title telling the user to subscribe now for unlimited characters
+"subscribe_now_unlimited_chapters" = "Subscreva agora para caracteres ilimitados";
 
 // Title telling the user that this costs no money
 "free" = "Grátis";
@@ -467,41 +473,41 @@
 // Navigation title for SpeechSpeedMenu
 "speech_speed_nav_title" = "Velocidade de Fala";
 
-// Title when a daily limit exists (with a chapter limit placeholder)
-"daily_limit_reached_with_limit" = "Chegou ao seu limite diário de %d capítulos";
+// Title when a daily limit exists (with a character limit placeholder)
+"daily_limit_reached_with_limit" = "Chegou ao seu limite diário de %d caracteres";
 
 // Fallback title when a daily limit exists but no limit is provided
-"daily_limit_reached" = "Chegou ao seu limite diário de capítulos";
+"daily_limit_reached" = "Chegou ao seu limite diário de caracteres";
 
 // Section header for explaining what happened
 "daily_limit_what_happened" = "O que aconteceu?";
 
-// Explanation for reaching the daily chapter creation limit
-"daily_limit_explanation" = "Chegou ao seu limite diário para criar capítulos.";
+// Explanation for reaching the daily character creation limit
+"daily_limit_explanation" = "Chegou ao seu limite diário para criar caracteres.";
 
-// Section header for when more chapters can be created
+// Section header for when more characters can be created
 "daily_limit_when_can_create_more" = "Quando posso criar mais?";
 
-// Explanation for when the user can create more chapters (with a placeholder for time description)
-"daily_limit_next_available" = "Pode criar mais capítulos em %@";
+// Explanation for when the user can create more characters (with a placeholder for time description)
+"daily_limit_next_available" = "Pode criar mais caracteres em %@";
 
 // Section header for explaining the reason behind the daily limit
 "daily_limit_why_header" = "Porque é que existe um limite diário?";
 
 // Explanation detailing why the daily limit is in place (with newline characters)
-"daily_limit_why" = "A inteligência artificial de texto para fala é realmente cara.\nSe permitíssemos aos utilizadores criar capítulos infinitos, iríamos à falência.\nO nosso limite diário permite-lhe ter o máximo de histórias possível sem nos arriscar à falência.";
+"daily_limit_why" = "A inteligência artificial de texto para fala é realmente cara.\nSe permitíssemos aos utilizadores criar caracteres infinitos, iríamos à falência.\nO nosso limite diário permite-lhe ter o máximo de histórias possível sem nos arriscar à falência.";
 
 // Header shown when the free trial limit has been reached
 "free_trial_what_happened" = "O que aconteceu?";
 
-// Message explaining that the free trial limit for creating chapters has been reached
-"free_trial_reached_limit" = "• Chegou ao seu limite de teste gratuito para criar capítulos.";
+// Message explaining that the free trial limit for creating characters has been reached
+"free_trial_reached_limit" = "• Chegou ao seu limite de teste gratuito para criar caracteres.";
 
 // Header asking why there is a free trial limit
 "free_trial_why_header" = "Porque é que existe um limite de teste gratuito?";
 
 // Detailed explanation for the free trial limit (with newline characters)
-"free_trial_explanation" = "• A inteligência artificial de texto para fala é realmente cara.\n• Criar as histórias em si é relativamente barato. No entanto, a inteligência artificial de texto para fala custa cerca de 5-10 cêntimos por capítulo.\n• Assim, criar apenas 4 capítulos custa cerca de 20-80 cêntimos.\n• Isto pode não parecer muito, mas se apenas 50 utilizadores se inscreverem na aplicação todos os dias, isto custaria cerca de $200-$600 por mês.\n• A Apple envia-nos os pagamentos das subscrições depois de cerca de 45 dias, pelo que temos de garantir que conseguimos suportar os custos até que os pagamentos sejam efetuados.\n• Procurámos por toda a parte, mas não existem alternativas mais baratas para a inteligência artificial de texto para fala que sejam boas.";
+"free_trial_explanation" = "• A inteligência artificial de texto para fala é realmente cara.\n• Criar as histórias em si é relativamente barato. No entanto, a inteligência artificial de texto para fala custa cerca de 5-10 cêntimos por 1000 caracteres.\n• Assim, criar apenas 4000 caracteres custa cerca de 20-80 cêntimos.\n• Isto pode não parecer muito, mas se apenas 50 utilizadores se inscreverem na aplicação todos os dias, isto custaria cerca de $200-$600 por mês.\n• A Apple envia-nos os pagamentos das subscrições depois de cerca de 45 dias, pelo que temos de garantir que conseguimos suportar os custos até que os pagamentos sejam efetuados.\n• Procurámos por toda a parte, mas não existem alternativas mais baratas para a inteligência artificial de texto para fala que sejam boas.";
 
 // Label for the Dark Mode toggle
 "settings_dark_mode" = "Modo Escuro";
@@ -540,7 +546,7 @@
 "chapter_list_longer_stories_coming_soon" = "Histórias mais longas em breve";
 
 // Message encouraging users to subscribe when not yet subscribed
-"subscription_subscribe_now" = "Subscreva agora para criar mais capítulos";
+"subscription_subscribe_now" = "Subscreva agora para criar mais caracteres";
 
 // Button title asking why there is a free trial limit
 "subscription_free_trial_limit_question" = "Porque é que existe um limite de teste gratuito?";
@@ -548,14 +554,20 @@
 // Format for showing the chapter limit per day (with a placeholder for the number of chapters)
 "subscription_chapters_per_day" = "Criar %d capítulos por dia";
 
+// Format for showing the character limit per day
+"subscription_characters_per_day" = "Criar %d caracteres por dia";
+
 // Detail text for the free subscription option
 "subscription_free_chapters_detail" = "%d capítulos gratuitos";
+
+// Detail text for the free subscription option (character-based)
+"subscription_free_characters_detail" = "%d caracteres gratuitos";
 
 // Snackbar message when writing a chapter fails
 "snackbar_failed_write_chapter" = "Falha ao escrever o capítulo";
 
-// Snackbar message when the daily chapter limit is reached, with a placeholder for the next available time
-"snackbar_daily_chapter_limit_reached" = "Pode criar mais capítulos em %@. Toque aqui para saber o porquê.";
+// Snackbar message when the daily character limit is reached, with a placeholder for the next available time
+"snackbar_daily_chapter_limit_reached" = "Pode criar mais caracteres em %@. Toque aqui para saber o porquê.";
 
 // Title informing the user that they are currently on a free trial of the app
 "free_trial" = "Avaliação gratuita";
@@ -574,3 +586,15 @@
 
 // Alert message for when device volume is zero
 "device_volume_zero" = "Aumente o volume para ouvir o áudio";
+
+// Button label for deleting an item
+"delete" = "Eliminar";
+
+// Text shown when there are no stories in the list
+"no_stories_yet" = "Ainda não há histórias";
+
+// Text encouraging users to create their first story
+"create_your_first_story" = "Crie a sua primeira história para iniciar a sua jornada linguística";
+
+// Text describing your language learning journey
+"your_journey_in_language" = "A sua jornada na aprendizagem de idiomas";

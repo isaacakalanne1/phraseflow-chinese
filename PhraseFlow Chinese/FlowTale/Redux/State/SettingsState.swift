@@ -7,50 +7,6 @@
 
 import SwiftUI
 
-enum FlowTaleColorScheme: Codable {
-    case light, dark
-
-    var colorScheme: ColorScheme {
-        switch self {
-        case .light:
-                .light
-        case .dark:
-                .dark
-        }
-    }
-}
-
-enum StorySetting: Codable, Equatable {
-    case random, customPrompt(String)
-
-    var emoji: String {
-        switch self {
-        case .random:
-            return "🎲"
-        case .customPrompt:
-            return "✏️"
-        }
-    }
-
-    var title: String {
-        switch self {
-        case .random:
-            return "Random story"
-        case .customPrompt(let prompt):
-            return "Custom story (\(prompt)"
-        }
-    }
-
-    var prompt: String {
-        switch self {
-        case .random:
-            return StoryPrompts.all.shuffled().first ?? "A medieval town"
-        case .customPrompt(let prompt):
-            return prompt
-        }
-    }
-}
-
 struct SettingsState: Codable {
     var isShowingDefinition: Bool
     var isShowingEnglish: Bool

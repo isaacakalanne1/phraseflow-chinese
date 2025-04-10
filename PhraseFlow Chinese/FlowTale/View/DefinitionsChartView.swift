@@ -5,12 +5,13 @@
 //  Created by iakalann on 28/12/2024.
 //
 
-import SwiftUI
 import Charts
+import SwiftUI
 
 // MARK: - Main View
+
 struct DefinitionsChartView: View {
-    @EnvironmentObject var store: FlowTaleStore  // Replace with your own logic
+    @EnvironmentObject var store: FlowTaleStore // Replace with your own logic
     let definitions: [Definition]
     let isCreations: Bool
 
@@ -26,7 +27,7 @@ struct DefinitionsChartView: View {
             .max() ?? 0
 
         // 3) Determine up to two "next checkpoints"
-        let upcomingCheckpoints = checkpoints(for: maxCount)  // see below
+        let upcomingCheckpoints = checkpoints(for: maxCount) // see below
         // Example result: [ (400, "Intermediate"), (1000, "Advanced") ]
 
         // 4) Calculate the Y-axis domain max
@@ -45,8 +46,8 @@ struct DefinitionsChartView: View {
             ForEach(dailyCumulativeCount, id: \.date) { dataPoint in
                 LineMark(
                     x: .value(LocalizedString.chartDate, dataPoint.date),
-                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords),
-                              (isCreations ? dataPoint.cumulativeCreations : dataPoint.cumulativeStudied))
+                    y: .value(isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords,
+                              isCreations ? dataPoint.cumulativeCreations : dataPoint.cumulativeStudied)
                 )
                 .interpolationMethod(.linear)
                 .foregroundStyle(
@@ -56,14 +57,14 @@ struct DefinitionsChartView: View {
                 // -- Add a light fill under the line
                 AreaMark(
                     x: .value(LocalizedString.chartDate, dataPoint.date),
-                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords),
-                              (isCreations ? dataPoint.cumulativeCreations : dataPoint.cumulativeStudied))
+                    y: .value(isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords,
+                              isCreations ? dataPoint.cumulativeCreations : dataPoint.cumulativeStudied)
                 )
                 .foregroundStyle(
                     FlowTaleColor.accent.opacity(0.2).gradient
                 )
             }
-            
+
             // Create dates for "now" and "start of day"
             let calendar = Calendar.current
             let now = Date()
@@ -74,82 +75,82 @@ struct DefinitionsChartView: View {
                 day: nowComponents.day,
                 hour: nowComponents.hour
             )) ?? now
-            
+
             // Get the start of today
             let todayStart = calendar.startOfDay(for: now)
-            
+
             // Get counts for today
             let todayCreations = store.state.definitionState.dailyCreationCount(from: definitions)
             let todayStudied = store.state.definitionState.dailyStudiedCount(from: definitions)
-            
+
             if dailyCumulativeCount.isEmpty {
                 // Case 1: No historical data points - just show today's data with a point at start of day
-                
+
                 // Add a point at the start of the day with value 0
                 LineMark(
                     x: .value(LocalizedString.chartDate, todayStart),
-                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords), 0)
+                    y: .value(isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords, 0)
                 )
                 .interpolationMethod(.linear)
                 .foregroundStyle(FlowTaleColor.accent)
-                
+
                 AreaMark(
                     x: .value(LocalizedString.chartDate, todayStart),
-                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords), 0)
+                    y: .value(isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords, 0)
                 )
                 .foregroundStyle(FlowTaleColor.accent.opacity(0.2).gradient)
-                
+
                 // Add the "Now" point with today's count
                 let nowValue = isCreations ? todayCreations : todayStudied
-                
+
                 LineMark(
                     x: .value(LocalizedString.chartDate, nowWithCurrentHour),
-                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords), nowValue)
+                    y: .value(isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords, nowValue)
                 )
                 .interpolationMethod(.linear)
                 .foregroundStyle(FlowTaleColor.accent)
-                
+
                 AreaMark(
                     x: .value(LocalizedString.chartDate, nowWithCurrentHour),
-                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords), nowValue)
+                    y: .value(isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords, nowValue)
                 )
                 .foregroundStyle(FlowTaleColor.accent.opacity(0.2).gradient)
-                
+
                 // Symbol for the "Now" point
                 PointMark(
                     x: .value(LocalizedString.chartDate, nowWithCurrentHour),
-                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords), nowValue)
+                    y: .value(isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords, nowValue)
                 )
                 .symbolSize(100)
                 .foregroundStyle(FlowTaleColor.accent)
-                
+
             } else if let lastDataPoint = dailyCumulativeCount.last {
                 // Case 2: We have historical data points plus today's data
-                
+
                 // Calculate cumulative values including today's data
                 let nowCumulativeCreations = lastDataPoint.cumulativeCreations + (isCreations ? todayCreations : 0)
                 let nowCumulativeStudied = lastDataPoint.cumulativeStudied + (!isCreations ? todayStudied : 0)
                 let nowValue = isCreations ? nowCumulativeCreations : nowCumulativeStudied
-                
+
                 // Create a line connecting to the "Now" point
                 LineMark(
                     x: .value(LocalizedString.chartDate, nowWithCurrentHour),
-                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords), nowValue)
+                    y: .value(isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords, nowValue)
                 )
                 .interpolationMethod(.linear)
                 .foregroundStyle(FlowTaleColor.accent)
-                
+
                 // Add the area fill
                 AreaMark(
                     x: .value(LocalizedString.chartDate, nowWithCurrentHour),
-                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords), nowValue)
+                    y: .value(isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords, nowValue)
                 )
                 .foregroundStyle(FlowTaleColor.accent.opacity(0.2).gradient)
-                
+
                 // Add a special point that marks "Now" with a symbol
                 PointMark(
                     x: .value(LocalizedString.chartDate, nowWithCurrentHour),
-                    y: .value((isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords), nowValue)
+                    y: .value(isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords, nowValue)
                 )
                 .symbolSize(100) // Make it visible
                 .foregroundStyle(FlowTaleColor.accent)
@@ -169,14 +170,13 @@ struct DefinitionsChartView: View {
                 }
             }
         }
-        .chartYScale(domain: 0...yMax)
-        
+        .chartYScale(domain: 0 ... yMax)
         // -- Set the X-axis domain to include extra space at the right
         .chartXScale(domain: {
             let calendar = Calendar.current
             let now = Date()
             let todayStart = calendar.startOfDay(for: now)
-            
+
             // Start date options:
             // 1. If we have historical data points, use the first date
             // 2. If no historical data but we have the "Now" point only, use start of today
@@ -189,11 +189,11 @@ struct DefinitionsChartView: View {
                 // For the single "Now" point case, use start of today
                 startDate = todayStart
             }
-            
+
             // End with extra space to ensure "Now" label is visible
-            let endDate = Date().addingTimeInterval(259200) // Add 72 hours (3 days) for spacing
-            
-            return startDate...endDate
+            let endDate = Date().addingTimeInterval(259_200) // Add 72 hours (3 days) for spacing
+
+            return startDate ... endDate
         }())
 
         // -- Axis Labels
@@ -205,7 +205,6 @@ struct DefinitionsChartView: View {
             // Calendar setup
             let calendar = Calendar.current
             let now = Date()
-            let today = calendar.startOfDay(for: now)
             let nowComponents = calendar.dateComponents([.year, .month, .day, .hour], from: now)
             let nowWithCurrentHour = calendar.date(from: DateComponents(
                 year: nowComponents.year,
@@ -213,66 +212,66 @@ struct DefinitionsChartView: View {
                 day: nowComponents.day,
                 hour: nowComponents.hour
             )) ?? now
-            
+
             // Show day numbers at appropriate intervals
             let startDate = dailyCumulativeCount.first?.date ?? now
             let daysCount = calendar.dateComponents([.day], from: startDate, to: now).day ?? 0
             let stride = getOptimalStride(daysInRange: daysCount)
-            
+
             // Show grid lines for all days
 //            AxisMarks(values: .stride(by: .day)) { _ in
 //                AxisGridLine()
 //            }
-            
+
             // Show formatted dates with ordinals and month where appropriate
             AxisMarks(values: .stride(by: .day, count: stride)) { value in
                 if let date = value.as(Date.self) {
                     // Process ALL dates with the same logic including today/tomorrow
-                        
-                        let month = calendar.component(.month, from: date)
-                        let year = calendar.component(.year, from: date)
-                        
-                        // Check if we need to show month/year
-                        let prevDate = calendar.date(byAdding: .day, value: -stride, to: date)
-                        let prevMonth = prevDate.map { calendar.component(.month, from: $0) } ?? 0 
-                        let prevYear = prevDate.map { calendar.component(.year, from: $0) } ?? 0
-                        
-                        // Is this the first date on the axis?
-                        let isFirstDateOnAxis = calendar.isDate(date, inSameDayAs: startDate)
-                        
-                        // Check if the date range spans multiple years
-                        let endYear = calendar.component(.year, from: now)
-                        let startYear = calendar.component(.year, from: startDate)
-                        let hasMultipleYears = startYear != endYear
-                        
-                        // Show month if it's the first label, month changed, or no previous date
-                        let showMonthName = isFirstDateOnAxis || month != prevMonth || prevDate == nil
-                        
-                        // Only show year if multiple years exist in the range AND
-                        // (it's the first label OR year changed OR no previous date)
-                        let showYear = hasMultipleYears && (isFirstDateOnAxis || year != prevYear || prevDate == nil)
-                                             
-                        AxisValueLabel {
-                            if showYear {
-                                // Show full date with year: "2nd Feb 2024"
-                                Text("\(date, format: .dateTime.day()) \(date, format: .dateTime.month(.abbreviated)) \(year)")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            } else if showMonthName {
-                                // Show date with month: "2nd Feb" 
-                                Text("\(date, format: .dateTime.day()) \(date, format: .dateTime.month(.abbreviated))")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            } else {
-                                // Just show day: "2nd"
-                                Text("\(date, format: .dateTime.day())")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
+
+                    let month = calendar.component(.month, from: date)
+                    let year = calendar.component(.year, from: date)
+
+                    // Check if we need to show month/year
+                    let prevDate = calendar.date(byAdding: .day, value: -stride, to: date)
+                    let prevMonth = prevDate.map { calendar.component(.month, from: $0) } ?? 0
+                    let prevYear = prevDate.map { calendar.component(.year, from: $0) } ?? 0
+
+                    // Is this the first date on the axis?
+                    let isFirstDateOnAxis = calendar.isDate(date, inSameDayAs: startDate)
+
+                    // Check if the date range spans multiple years
+                    let endYear = calendar.component(.year, from: now)
+                    let startYear = calendar.component(.year, from: startDate)
+                    let hasMultipleYears = startYear != endYear
+
+                    // Show month if it's the first label, month changed, or no previous date
+                    let showMonthName = isFirstDateOnAxis || month != prevMonth || prevDate == nil
+
+                    // Only show year if multiple years exist in the range AND
+                    // (it's the first label OR year changed OR no previous date)
+                    let showYear = hasMultipleYears && (isFirstDateOnAxis || year != prevYear || prevDate == nil)
+
+                    AxisValueLabel {
+                        if showYear {
+                            // Show full date with year: "2nd Feb 2024"
+                            Text("\(date, format: .dateTime.day()) \(date, format: .dateTime.month(.abbreviated)) \(year)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        } else if showMonthName {
+                            // Show date with month: "2nd Feb"
+                            Text("\(date, format: .dateTime.day()) \(date, format: .dateTime.month(.abbreviated))")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        } else {
+                            // Just show day: "2nd"
+                            Text("\(date, format: .dateTime.day())")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
                         }
+                    }
                 }
             }
-            
+
             // Show the "Now" marker at current hour with left alignment
             AxisMarks(values: [nowWithCurrentHour]) { _ in
                 AxisValueLabel(anchor: .leading, horizontalSpacing: 0) {
@@ -295,26 +294,27 @@ struct DefinitionsChartView: View {
     }
 
     // MARK: - Helper Methods
-    
+
     /// Returns the optimal day stride based on the number of days in the date range
     private func getOptimalStride(daysInRange: Int) -> Int {
         switch daysInRange {
-        case 0...7:
-            return 1        // Daily: 1, 2, 3, 4...
-        case 8...14:
-            return 2        // Every 2 days: 2, 4, 6...
-        case 15...30:
-            return 3        // Every 3 days: 3, 6, 9...
-        case 31...90:
-            return 7        // Weekly: 7, 14, 21...
-        case 91...365:
-            return 30       // Monthly: 30, 60, 90...
+        case 0 ... 7:
+            return 1 // Daily: 1, 2, 3, 4...
+        case 8 ... 14:
+            return 2 // Every 2 days: 2, 4, 6...
+        case 15 ... 30:
+            return 3 // Every 3 days: 3, 6, 9...
+        case 31 ... 90:
+            return 7 // Weekly: 7, 14, 21...
+        case 91 ... 365:
+            return 30 // Monthly: 30, 60, 90...
         default:
-            return 180      // Every 6 months for very long ranges
+            return 180 // Every 6 months for very long ranges
         }
     }
-    
+
     // MARK: - Next Two Checkpoints Logic
+
     /// Returns up to two upcoming checkpoints based on the user's current maxCount.
     ///
     /// - If maxCount < 400 => returns [ (400, "Intermediate"), (1000, "Advanced") ]
@@ -323,9 +323,9 @@ struct DefinitionsChartView: View {
     /// - If maxCount >= 2000 => returns []
     private func checkpoints(for maxCount: Int) -> [(value: Int, label: String)] {
         let allCheckpoints = [
-            (value: 400,  label: "Intermediate"),
+            (value: 400, label: "Intermediate"),
             (value: 1000, label: "Advanced"),
-            (value: 2000, label: "Expert")
+            (value: 2000, label: "Expert"),
         ]
 
         // Find the first checkpoint that is strictly above the user's max

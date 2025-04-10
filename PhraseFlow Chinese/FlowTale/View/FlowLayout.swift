@@ -11,7 +11,7 @@ struct FlowLayout: Layout {
     var spacing: CGFloat = 4
     var language: Language?
 
-    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache _: inout ()) -> CGSize {
         // Variables to track size
         var width: CGFloat = 0
         var height: CGFloat = 0
@@ -44,14 +44,15 @@ struct FlowLayout: Layout {
         return CGSize(width: width, height: height)
     }
 
-    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+    func placeSubviews(in bounds: CGRect, proposal _: ProposedViewSize, subviews: Subviews, cache _: inout ()) {
         var x: CGFloat = bounds.minX
         var y: CGFloat = bounds.minY
 
         var currentLineHeight: CGFloat = 0
 
         if let lang = language,
-           lang == .arabicGulf {
+           lang == .arabicGulf
+        {
             for subview in subviews {
                 let subviewSize = subview.sizeThatFits(.unspecified)
                 if x - subviewSize.width < bounds.minX {

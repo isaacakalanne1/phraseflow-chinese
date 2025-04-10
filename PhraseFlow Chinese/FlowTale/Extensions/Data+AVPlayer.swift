@@ -1,12 +1,12 @@
 //
-//  Data+AudioPlayer.swift
+//  Data+AVPlayer.swift
 //  FlowTale
 //
 //  Created by iakalann on 16/11/2024.
 //
 
-import AVKit
 import AVFoundation
+import AVKit
 
 extension Data {
     func createAVPlayer(fileExtension: String = "mp3") -> AVPlayer? {
@@ -17,7 +17,7 @@ extension Data {
 
         do {
             // 2. Write the audio data to the temporary file
-            try self.write(to: tempFileURL)
+            try write(to: tempFileURL)
 
             // 3. Create an AVAsset from the file URL
             let asset = AVAsset(url: tempFileURL)
@@ -47,9 +47,9 @@ extension Data {
 /// Utility functions for handling audio extraction - created as standalone functions instead of Data extensions
 class AudioExtractor {
     static let shared = AudioExtractor()
-    
+
     private init() {}
-    
+
     /// Extracts a segment of audio data based on specified time range
     /// - Parameters:
     ///   - audioData: The source audio data
@@ -59,11 +59,12 @@ class AudioExtractor {
     func extractAudioSegment(from player: AVPlayer, startTime: Double, duration: Double) -> Data? {
         // Basic validation
         guard startTime >= 0,
-              duration > 0 else {
+              duration > 0
+        else {
             print("Invalid parameters: startTime must be >= 0 and duration must be > 0")
             return nil
         }
-        guard let asset = player.currentItem?.asset  else {
+        guard let asset = player.currentItem?.asset else {
             print("Couldn't get asset")
             return nil
         }
@@ -73,14 +74,14 @@ class AudioExtractor {
             print("Duration too short for extraction: \(duration) seconds")
             return nil
         }
-        
+
         // Create a simpler, reliable implementation with m4a output format
         let tempDirectory = FileManager.default.temporaryDirectory
         let sourceFileName = UUID().uuidString + ".m4a"
         let sourceURL = tempDirectory.appendingPathComponent(sourceFileName)
         let outputFileName = UUID().uuidString + ".m4a"
         let outputURL = tempDirectory.appendingPathComponent(outputFileName)
-        
+
         do {
             // Create export session
             guard let exportSession = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetAppleM4A) else {
@@ -88,55 +89,49 @@ class AudioExtractor {
                 try? FileManager.default.removeItem(at: sourceURL)
                 return nil
             }
-            
+
             // Set output parameters
             exportSession.outputURL = outputURL
             exportSession.outputFileType = .m4a
-            
+
             // Set time range
             let startCMTime = CMTime(seconds: startTime, preferredTimescale: 1000)
             let endCMTime = CMTime(seconds: startTime + duration, preferredTimescale: 1000)
             exportSession.timeRange = CMTimeRange(start: startCMTime, end: endCMTime)
+
+            // Use RunLoop-based waiting to avoid QoS priority inversion
+            var isCompleted = false
+            var exportResult: AVAssetExportSession.Status = .unknown
             
-            // Create a dispatch group instead of a semaphore to avoid QoS inversions
-            let exportGroup = DispatchGroup()
-            
-            // We don't have direct access to the current QoS class
-            print("Setting up audio extraction with userInitiated QoS")
-            
-            // Use the same QoS for the export operation
-            let exportQueue = DispatchQueue(label: "com.flowtale.audioExtraction", qos: .userInitiated, autoreleaseFrequency: .workItem)
-            
-            // Enter the group before starting async operation
-            exportGroup.enter()
-            
-            // Use the specific queue for export
-            exportQueue.async {
-                exportSession.exportAsynchronously {
-                    exportGroup.leave()
-                }
+            exportSession.exportAsynchronously {
+                exportResult = exportSession.status
+                isCompleted = true
             }
-            
-            // Wait with timeout using the group
-            let waitResult = exportGroup.wait(timeout: .now() + 5.0)
-            
+
+            // Wait for completion using RunLoop to avoid blocking and QoS issues
+            let timeoutDate = Date().addingTimeInterval(5.0)
+            while !isCompleted && Date() < timeoutDate {
+                RunLoop.current.run(mode: .default, before: Date(timeIntervalSinceNow: 0.1))
+            }
+
             // Check for timeout
-            if waitResult == .timedOut {
+            if !isCompleted {
                 print("Audio extraction timed out")
+                exportSession.cancelExport()
                 try? FileManager.default.removeItem(at: sourceURL)
                 try? FileManager.default.removeItem(at: outputURL)
                 return nil
             }
-            
+
             // Check for completion
-            if exportSession.status == .completed {
+            if exportResult == .completed {
                 // Read the exported data
                 let extractedData = try Data(contentsOf: outputURL)
-                
+
                 // Clean up
                 try? FileManager.default.removeItem(at: sourceURL)
                 try? FileManager.default.removeItem(at: outputURL)
-                
+
                 // Return the extracted data
                 print("Successfully extracted audio segment: \(extractedData.count) bytes")
                 return extractedData
@@ -145,10 +140,10 @@ class AudioExtractor {
                 if let error = exportSession.error {
                     print("Export failed: \(error)")
                 }
-                
+
                 try? FileManager.default.removeItem(at: sourceURL)
                 try? FileManager.default.removeItem(at: outputURL)
-                
+
                 // Return nil to indicate failure
                 print("Audio extraction failed, returning nil")
                 return nil

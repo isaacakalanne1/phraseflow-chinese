@@ -11,6 +11,10 @@ struct DefinitionState {
     var currentDefinition: Definition?
     var definitions: [Definition]
 
+    var numberOfInitialSentencesToDefine: Int {
+        3
+    }
+
     func studyDefinitions(language: Language?) -> [Definition] {
         definitions
             .filter {
@@ -27,7 +31,7 @@ struct DefinitionState {
         self.definitions = definitions
     }
 
-    func definition(timestampData: WordTimeStampData) -> Definition? {
+    func definition(timestampData: WordTimeStampData?) -> Definition? {
         definitions.first(where: { $0.timestampData == timestampData })
     }
 

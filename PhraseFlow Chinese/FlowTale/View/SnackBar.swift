@@ -22,7 +22,7 @@ struct SnackBar: View {
                 Text(type.text)
                     .foregroundStyle(FlowTaleColor.background)
             }
-            
+
             // Only show loading indicators for the writing chapter snackbar
             if case .writingChapter = type {
                 HStack(spacing: 10) {
@@ -47,7 +47,7 @@ struct SnackBar: View {
             type.action(store: store)
         }
     }
-    
+
     @ViewBuilder
     func progressView(checkIfComplete completeState: LoadingState) -> some View {
         Group {

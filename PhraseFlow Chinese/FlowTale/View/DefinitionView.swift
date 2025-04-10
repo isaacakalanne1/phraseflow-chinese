@@ -9,57 +9,68 @@ import SwiftUI
 
 struct DefinitionView: View {
     @EnvironmentObject var store: FlowTaleStore
+    let definition: Definition?
 
     var body: some View {
-        VStack(spacing: 5) {
-            Text(LocalizedString.definitionOf(store.state.definitionState.currentDefinition?.timestampData.word ?? "..."))
-                .greyBackground()
-            HStack {
+        VStack(spacing: 10) {
+            if let definition {
                 if store.state.viewState.isDefining {
                     ProgressView()
-                        .frame(maxWidth: .infinity,
-                               maxHeight: .infinity,
-                               alignment: .center)
                 } else {
-                    Group {
-                        if let definition = store.state.definitionState.currentDefinition {
-                            ScrollView(.vertical) {
-                                VStack(alignment: .leading) {
-                                    HStack(alignment: .top) {
-                                        Text(LocalizedString.studyDefinitionPrefix + definition.detail.definition)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                        Text(LocalizedString.studyPronunciationPrefix + definition.detail.pronunciation)
-                                    }
-                                    Text(LocalizedString.studyContextPrefix + definition.detail.definitionInContextOfSentence)
-                                }
-                                .frame(maxWidth: .infinity,
-                                       maxHeight: .infinity,
-                                       alignment: .topLeading)
-                            }
-                            VStack {
-                                Button {
-                                    store.dispatch(.playWord(definition.timestampData, story: store.state.storyState.currentStory))
-                                } label: {
-                                    SystemImageView(.speaker)
-                                }
-                                Button {
-                                    store.dispatch(.defineSentence(definition.timestampData, shouldForce: true))
-                                } label: {
-                                    SystemImageView(._repeat)
-                                }
-                            }
-                        } else {
-                            Text(LocalizedString.tapAWordToDefineIt)
-                                .frame(maxWidth: .infinity,
-                                       maxHeight: .infinity,
-                                       alignment: .topLeading)
+                    VStack(alignment: .leading, spacing: 16) {
+                        HStack(spacing: 6) {
+                            Text(definition.timestampData.word)
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .foregroundColor(FlowTaleColor.primary)
+                            Text(definition.detail.pronunciation)
+                                .font(.body)
+                                .italic()
+                                .foregroundColor(FlowTaleColor.accent)
                         }
+
+                        Text(definition.detail.definition)
+                            .font(.body)
+                            .padding(.horizontal, 4)
+
+                        Divider()
+
+                        Text(definition.detail.definitionInContextOfSentence)
+                            .font(.body)
+                            .multilineTextAlignment(.leading)
+                            .frame(maxHeight: .infinity)
                     }
-                    .foregroundColor(FlowTaleColor.primary)
+                    .padding()
+                }
+            } else if store.state.viewState.isDefining {
+                // Loading state when no definition is available yet
+                VStack {
+                    Text("🔍 \(LocalizedString.loading)")
+                        .font(.subheadline)
+                        .foregroundColor(FlowTaleColor.secondary)
+                    ProgressView()
+                        .padding()
+                }
+            } else {
+                // No definition selected state
+                VStack {
+                    HStack(spacing: 8) {
+                        Image(systemName: "hand.tap")
+                            .font(.system(size: 24))
+                            .foregroundColor(FlowTaleColor.secondary)
+                        Text("👆")
+                            .font(.system(size: 24))
+                    }
+                    .padding(.bottom, 10)
+                    
+                    Text(LocalizedString.tapAWordToDefineIt)
+                        .font(.subheadline)
+                        .foregroundColor(FlowTaleColor.secondary)
+                        .multilineTextAlignment(.center)
                 }
             }
         }
-        .fontWeight(.light)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .id(store.state.viewState.definitionViewId)
     }
 }

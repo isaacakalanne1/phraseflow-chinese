@@ -12,75 +12,63 @@ struct ReaderView: View {
     let chapter: Chapter
 
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 16) {
             AIStatementView()
-            if store.state.settingsState.isShowingDefinition {
-                DefinitionView()
-                    .frame(height: 150)
+
+            if store.state.settingsState.isShowingDefinition || store.state.settingsState.isShowingEnglish {
+                SentenceDetailView()
             }
-            if store.state.settingsState.isShowingEnglish {
-                EnglishSentenceView()
-                    .frame(height: 120)
-            }
-            ChapterHeaderView(chapter: chapter)
-            ChapterView(chapter: chapter)
-                .onAppear {
-                    // Check if device is in silent mode when reader view appears
-                    store.dispatch(.checkDeviceVolumeZero)
-                }
-                .id(store.state.viewState.chapterViewId)
+
+            storyHeaderSection
+
+            storyContentSection
         }
-        .overlay(content: {
-            VStack(alignment: .trailing) {
-                Spacer()
-                    .frame(maxWidth: .infinity)
-                audioButton
-                    .background(FlowTaleColor.background)
-                    .clipShape(Circle())
-                    .padding(.trailing)
-                Button {
-                    store.dispatch(.updateSpeechSpeed(store.state.settingsState.speechSpeed.nextSpeed))
-                } label: {
-                    Text(store.state.settingsState.speechSpeed.text)
-                        .foregroundStyle(FlowTaleColor.primary)
-                }
-                .buttonStyle(.bordered)
-                .frame(width: 80)
-            }
-        })
         .padding(10)
-        .background {
-            if let uiImage = UIImage(named: "Background") {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .overlay {
-                        FlowTaleColor.background.opacity(0.9)
-                    }
+        .backgroundImage(type: .main)
+    }
+    
+    private var storyHeaderSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            if let story = store.state.storyState.currentStory {
+                HStack(spacing: 12) {
+                    StoryInfoView(story: story)
+                    
+                    Text(story.title)
+                        .font(.headline)
+                        .foregroundColor(FlowTaleColor.primary)
+                        .lineLimit(1)
+                }
+                
+                Text(chapter.title)
+                    .font(.subheadline)
+                    .foregroundColor(FlowTaleColor.primary.opacity(0.9))
+                    .lineLimit(2)
             }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal)
+    }
+    
+    private var storyContentSection: some View {
+        ZStack(alignment: .trailing) {
+            VStack {
+                ListOfSentencesView(chapter: chapter)
+                    .onAppear { store.dispatch(.checkDeviceVolumeZero) }
+                    .id(store.state.viewState.chapterViewId)
+                    .padding()
+            }
+            .cardBackground()
+
+            playbackControls
         }
     }
-
-    @ViewBuilder
-    var audioButton: some View {
-        let buttonSize: CGFloat = 50
-        if store.state.viewState.readerDisplayType == .normal {
-            if store.state.audioState.isPlayingAudio == true {
-                Button {
-                    store.dispatch(.pauseAudio)
-                } label: {
-                    SystemImageView(.pause, size: buttonSize)
-                }
-            } else {
-                Button {
-                    let timestamps = store.state.storyState.currentSentence?.timestamps ?? []
-                    let currentSpokenWord = store.state.storyState.currentSpokenWord ?? timestamps.first
-                    store.dispatch(.playAudio(time: currentSpokenWord?.time))
-                    store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
-                } label: {
-                    SystemImageView(.play, size: buttonSize)
-                }
-            }
+    
+    private var playbackControls: some View {
+        VStack(spacing: 12) {
+            AudioButton()
+            SpeechSpeedButton()
         }
+        .padding(20)
+        .frame(maxHeight: .infinity, alignment: .bottom)
     }
 }

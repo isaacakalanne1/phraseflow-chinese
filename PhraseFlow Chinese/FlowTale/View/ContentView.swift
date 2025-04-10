@@ -11,7 +11,6 @@ struct ContentView: View {
     @EnvironmentObject var store: FlowTaleStore
 
     var body: some View {
-
         let isShowingSubscriptionView: Binding<Bool> = .init {
             store.state.viewState.isShowingSubscriptionSheet
         } set: { newValue in
@@ -27,16 +26,11 @@ struct ContentView: View {
                     .foregroundStyle(FlowTaleColor.primary)
             }
             Group {
-                switch store.state.viewState.readerDisplayType {
-                case .initialising:
+                if store.state.viewState.isInitialisingApp {
                     ProgressView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-                case .normal:
-                    ZStack(alignment: .topTrailing) {
-                        mainContent()
-                        overlayView()
-                    }
+                } else {
+                    mainContent()
                 }
             }
             if !store.state.storyState.savedStories.isEmpty {
@@ -54,7 +48,7 @@ struct ContentView: View {
                 .presentationDragIndicator(.hidden)
                 .presentationDetents([.fraction(0.8)])
         }
-        .onChange(of: store.state.viewState.loadingState) { oldValue, newValue in
+        .onChange(of: store.state.viewState.loadingState) { _, newValue in
             if newValue != .complete,
                newValue != .writing {
                 store.dispatch(.playSound(.progressUpdate))
@@ -65,10 +59,8 @@ struct ContentView: View {
         .preferredColorScheme(.dark)
     }
 
-    // MARK: - Main Content
     @ViewBuilder
     private func mainContent() -> some View {
-
         let isShowingDailyLimitExplanationScreen: Binding<Bool> = .init {
             store.state.viewState.isShowingDailyLimitExplanation
         } set: { newValue in
@@ -81,10 +73,14 @@ struct ContentView: View {
             store.dispatch(.showFreeLimitExplanationScreen(isShowing: newValue))
         }
 
-        switch store.state.viewState.contentTab {
-        case .reader:
-            if let _ = store.state.storyState.currentStory {
-                if let chapter = store.state.storyState.currentChapter {
+        ZStack(alignment: .topTrailing) {
+            switch store.state.viewState.contentTab {
+            case .reader:
+                if store.state.storyState.savedStories.isEmpty {
+                    NavigationStack {
+                        LanguageOnboardingView()
+                    }
+                } else if let chapter = store.state.storyState.currentChapter {
                     NavigationStack {
                         ReaderView(chapter: chapter)
                             .navigationDestination(
@@ -102,46 +98,48 @@ struct ContentView: View {
                     ProgressView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-            } else {
+
+            case .storyList:
                 NavigationStack {
-                    LanguageOnboardingView()
+                    StoryListView()
+                        .navigationDestination(
+                            isPresented: isShowingDailyLimitExplanationScreen
+                        ) {
+                            DailyLimitExplanationView()
+                        }
+                }
+
+            case .progress:
+                NavigationStack {
+                    DefinitionsProgressSheetView()
+                }
+
+            case .translate:
+                NavigationStack {
+                    TranslationView()
+                }
+
+            case .subscribe:
+                NavigationStack {
+                    SubscriptionView()
+                        .navigationDestination(
+                            isPresented: isShowingFreeLimitExplanationScreen
+                        ) {
+                            FreeLimitExplanationView()
+                        }
+                }
+
+            case .settings:
+                NavigationStack {
+                    SettingsView()
                 }
             }
-
-        case .storyList:
-            NavigationStack {
-                StoryListView()
-                    .navigationDestination(
-                        isPresented: isShowingDailyLimitExplanationScreen
-                    ) {
-                        DailyLimitExplanationView()
-                    }
-            }
-
-        case .progress:
-            NavigationStack {
-                DefinitionsProgressSheetView()
-            }
-
-        case .subscribe:
-            NavigationStack {
-                SubscriptionView()
-                    .navigationDestination(
-                        isPresented: isShowingFreeLimitExplanationScreen
-                    ) {
-                        FreeLimitExplanationView()
-                    }
-            }
-
-        case .settings:
-            NavigationStack {
-                SettingsView()
-            }
+            snackbarView()
         }
     }
 
     @ViewBuilder
-    private func overlayView() -> some View {
+    private func snackbarView() -> some View {
         VStack(alignment: .trailing) {
             if store.state.snackBarState.isShowing {
                 SnackBar()
@@ -163,14 +161,15 @@ struct ContentView: View {
                     store.dispatch(.setMusicVolume(.normal))
                 }
             }
-            
+
             // Update play time for audio state
             if store.state.audioState.isPlayingAudio {
                 store.dispatch(.updatePlayTime)
             }
-            
+
             if store.state.settingsState.isPlayingMusic,
-               store.state.musicAudioState.isNearEndOfTrack {
+               store.state.musicAudioState.isNearEndOfTrack
+            {
                 let currentMusic = store.state.musicAudioState.currentMusicType
                 let nextMusic = MusicType.next(after: currentMusic)
                 store.dispatch(.playMusic(nextMusic))

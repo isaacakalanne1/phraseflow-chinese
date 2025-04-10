@@ -22,7 +22,7 @@ struct Story: Codable, Equatable, Hashable {
     var currentChapterIndex = 0
     var currentPlaybackTime: Double = 0
     var lastUpdated: Date
-    var storyPrompt: String
+    var storyPrompt: String?
     var imageData: Data?
     
     var coverArt: UIImage? {
@@ -33,11 +33,11 @@ struct Story: Codable, Equatable, Hashable {
     }
 
     init(briefLatestStorySummary: String = "",
-         difficulty: Difficulty,
+         difficulty: Difficulty = .beginner,
          language: Language,
          title: String = "",
          chapters: [Chapter] = [],
-         storyPrompt: String,
+         storyPrompt: String? = nil,
          imageData: Data? = nil,
          currentChapterIndex: Int = 0,
          currentPlaybackTime: Double = 0,

@@ -8,7 +8,6 @@
 import Foundation
 
 final class KeychainManager {
-
     static let shared = KeychainManager()
 
     private init() {}
@@ -16,9 +15,9 @@ final class KeychainManager {
     // Store data in keychain
     func setData(_ data: Data, forKey key: String) throws {
         let query: [String: Any] = [
-            kSecClass as String:            kSecClassGenericPassword,
-            kSecAttrAccount as String:      key,
-            kSecValueData as String:        data
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: key,
+            kSecValueData as String: data,
         ]
 
         // Remove any existing item first
@@ -33,10 +32,10 @@ final class KeychainManager {
     // Retrieve data from keychain
     func getData(forKey key: String) -> Data? {
         let query: [String: Any] = [
-            kSecClass as String:            kSecClassGenericPassword,
-            kSecAttrAccount as String:      key,
-            kSecReturnData as String:       true,
-            kSecMatchLimit as String:       kSecMatchLimitOne
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: key,
+            kSecReturnData as String: true,
+            kSecMatchLimit as String: kSecMatchLimitOne,
         ]
 
         var item: AnyObject?

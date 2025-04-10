@@ -11,7 +11,6 @@ enum SnackBarType: Equatable {
     case welcomeBack
     case writingChapter
     case chapterReady
-    case storyReadyTapToRead
     case deletedCustomStory
     case subscribed
     case failedToWriteChapter
@@ -30,8 +29,6 @@ enum SnackBarType: Equatable {
             LocalizedString.writingChapter
         case .chapterReady:
             LocalizedString.chapterReady
-        case .storyReadyTapToRead:
-            LocalizedString.storyReadyTapToRead
         case .failedToWriteChapter:
             LocalizedString.snackbarFailedWriteChapter
         case .couldNotModerateText:
@@ -46,7 +43,7 @@ enum SnackBarType: Equatable {
             LocalizedString.storyDidNotMeetPolicies
         case .deletedCustomStory:
             LocalizedString.deletedCustomStory
-        case .dailyChapterLimitReached(let nextAvailable):
+        case let .dailyChapterLimitReached(nextAvailable):
             LocalizedString.snackbarDailyChapterLimitReached(nextAvailable)
         case .deviceVolumeZero:
             LocalizedString.deviceVolumeZero
@@ -57,22 +54,12 @@ enum SnackBarType: Equatable {
         switch self {
         case .writingChapter:
             nil
-        case .storyReadyTapToRead:
-            10.0
-        case .chapterReady,
-                .failedToWriteChapter,
-                .subscribed,
-                .moderatingText,
-                .passedModeration,
-                .didNotPassModeration,
-                .couldNotModerateText,
-                .welcomeBack,
-                .deletedCustomStory:
-            2.5
         case .dailyChapterLimitReached:
             4
         case .deviceVolumeZero:
             5.0
+        default:
+            2.5
         }
     }
 
@@ -82,19 +69,18 @@ enum SnackBarType: Equatable {
         case .writingChapter:
             emoji = "✏️"
         case .moderatingText,
-                .dailyChapterLimitReached:
+             .dailyChapterLimitReached:
             emoji = "⌛"
         case .chapterReady,
-                .storyReadyTapToRead,
-                .subscribed,
-                .passedModeration,
-                .deletedCustomStory:
+             .subscribed,
+             .passedModeration,
+             .deletedCustomStory:
             emoji = "✅"
         case .welcomeBack:
             emoji = "🔥"
         case .didNotPassModeration,
-                .couldNotModerateText,
-                .failedToWriteChapter:
+             .couldNotModerateText,
+             .failedToWriteChapter:
             emoji = "⚠️"
         case .deviceVolumeZero:
             emoji = "🔇"
@@ -105,54 +91,23 @@ enum SnackBarType: Equatable {
     func action(store: FlowTaleStore) {
         store.dispatch(.hideSnackbar)
         switch self {
-        case .storyReadyTapToRead:
-            // Load the newest story and set it as current when tapped
-            if let newStory = store.state.storyState.savedStories.first {
-                store.dispatch(.selectTab(.reader, shouldPlaySound: true))
-                store.dispatch(.selectStoryFromSnackbar(newStory))
-            }
-        case .writingChapter:
-            // Do nothing when tapping writing chapter
-            break
-        case .chapterReady:
-            // When a chapter is ready, if there's no current story set, set the newest one
-            if store.state.storyState.currentStory == nil, 
-               let newStory = store.state.storyState.savedStories.first {
-                store.dispatch(.selectStoryFromSnackbar(newStory))
-            }
-        case .subscribed,
-                .moderatingText,
-                .passedModeration,
-                .didNotPassModeration,
-                .welcomeBack,
-                .deletedCustomStory,
-                .failedToWriteChapter,
-                .deviceVolumeZero:
-            break
         case .couldNotModerateText:
             store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))
         case .dailyChapterLimitReached:
             store.dispatch(.showDailyLimitExplanationScreen(isShowing: true))
+        default:
+            break
         }
     }
 
     var isError: Bool {
         switch self {
-        case .writingChapter,
-                .chapterReady,
-                .subscribed,
-                .moderatingText,
-                .passedModeration,
-                .welcomeBack,
-                .deletedCustomStory,
-                .dailyChapterLimitReached,
-                .storyReadyTapToRead,
-                .deviceVolumeZero:
-            return false
         case .failedToWriteChapter,
-                .didNotPassModeration,
-                .couldNotModerateText:
+             .didNotPassModeration,
+             .couldNotModerateText:
             return true
+        default:
+            return false
         }
     }
 
@@ -163,7 +118,6 @@ enum SnackBarType: Equatable {
     var sound: AppSound {
         switch self {
         case .writingChapter:
-//            return .createStory
             return .largeBoom
         case _ where isError:
             return .errorSnackbar

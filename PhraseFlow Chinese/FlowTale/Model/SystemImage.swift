@@ -24,7 +24,9 @@ enum SystemImage {
          book(isSelected: Bool),
          chartLine(isSelected: Bool),
          plus(isSelected: Bool),
-         chevronRight
+         chevronRight,
+         translate(isSelected: Bool),
+         xmark
 
     var systemName: String {
         switch self {
@@ -33,35 +35,39 @@ enum SystemImage {
         case .speaker:
             "speaker.circle.fill"
         case .pause:
-            "pause.circle.fill"
-        case .gear(let isSelected):
+            "pause.fill"
+        case let .gear(isSelected):
             "gearshape\(isSelected ? ".2.fill" : "")"
-        case .pencil(let isSelected):
+        case let .pencil(isSelected):
             isSelected ? "pencil.and.outline" : "square.and.pencil"
         case .play:
-            "play.circle.fill"
+            "play.fill"
         case .stop:
             "stop.circle.fill"
-        case .list(let isSelected):
+        case let .list(isSelected):
             isSelected ? "doc.text.magnifyingglass" : "list.bullet.rectangle.portrait"
         case .ellipsis:
             "ellipsis.circle"
         case .arrowDown:
             "arrow.down.to.line.circle.fill"
-        case .heart(let isSelected):
+        case let .heart(isSelected):
             "suit.heart\(isSelected ? ".fill" : "")"
         case .starFilled:
             "star.fill"
         case .star:
             "star"
-        case .book(let isSelected):
+        case let .book(isSelected):
             "book\(isSelected ? ".fill" : ".closed")"
-        case .chartLine(let isSelected):
+        case let .chartLine(isSelected):
             isSelected ? "chart.line.uptrend.xyaxis" : "chart.xyaxis.line"
-        case .plus(let isSelected):
+        case let .plus(isSelected):
             isSelected ? "plus.message.fill" : "plus.circle"
         case .chevronRight:
             "chevron.right.square.fill"
+        case let .translate(isSelected):
+            isSelected ? "character.bubble.fill" : "character.bubble"
+        case .xmark:
+            "xmark.circle.fill"
         }
     }
 }

@@ -13,11 +13,8 @@ let studyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
     case .studyAction(let studyAction):
         switch studyAction {
         case .playStudyWord(let definition):
-            let myTime = CMTime(seconds: 0, preferredTimescale: 60000)
-            await state.studyState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
-            state.studyState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: definition.timestampData.duration, preferredTimescale: 60000)
-            state.studyState.audioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
-
+            await state.studyState.audioPlayer.playAudio(toSeconds: definition.timestampData.duration,
+                                                         playRate: state.settingsState.speechSpeed.playRate)
             return nil
         case .prepareToPlayStudySentence(let definition):
             if let audioData = try? environment.loadSentenceAudio(id: definition.sentenceId) {
@@ -26,9 +23,7 @@ let studyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
                 return .studyAction(.failedToPrepareStudySentence)
             }
         case .playStudySentence:
-            let myTime = CMTime(seconds: 0, preferredTimescale: 60000)
-            await state.studyState.sentenceAudioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
-            state.studyState.sentenceAudioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
+            await state.studyState.sentenceAudioPlayer.playAudio(playRate: state.settingsState.speechSpeed.playRate)
             return nil
         case .pauseStudyAudio:
             state.studyState.audioPlayer.pause()

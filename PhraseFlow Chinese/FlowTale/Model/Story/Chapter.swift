@@ -11,20 +11,17 @@ struct Chapter: Codable, Equatable, Hashable {
     var title: String
     var sentences: [Sentence]
     var audioVoice: Voice?
-    var audioSpeed: SpeechSpeed?
     var audio: ChapterAudio
     var passage: String
 
     init(title: String,
          sentences: [Sentence],
          audioVoice: Voice? = nil,
-         audioSpeed: SpeechSpeed? = nil,
          audio: ChapterAudio,
          passage: String) {
         self.title = title
         self.sentences = sentences
         self.audioVoice = audioVoice
-        self.audioSpeed = audioSpeed
         self.audio = audio
         self.passage = passage
     }
@@ -34,7 +31,6 @@ struct Chapter: Codable, Equatable, Hashable {
         self.title = try container.decode(String.self, forKey: .title)
         self.sentences = try container.decode([Sentence].self, forKey: .sentences)
         self.audioVoice = try container.decodeIfPresent(Voice.self, forKey: .audioVoice)
-        self.audioSpeed = try container.decodeIfPresent(SpeechSpeed.self, forKey: .audioSpeed)
         self.audio = (try? container.decode(ChapterAudio.self, forKey: .audio)) ?? ChapterAudio(data: Data())
         let newLine = """
 

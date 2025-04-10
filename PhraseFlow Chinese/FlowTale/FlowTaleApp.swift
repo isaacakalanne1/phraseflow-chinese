@@ -5,16 +5,14 @@
 //  Created by iakalann on 07/09/2024.
 //
 
-import SwiftUI
 import AVKit
+import SwiftUI
 
 @main
 struct FlowTaleApp: App {
-
     private var store: FlowTaleStore
 
     init() {
-
         let state = FlowTaleState()
         let environment = FlowTaleEnvironment()
 

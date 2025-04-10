@@ -11,7 +11,6 @@ struct SettingsView: View {
     @EnvironmentObject var store: FlowTaleStore
 
     var body: some View {
-
         let showDefinition: Binding<Bool> = .init {
             store.state.settingsState.isShowingDefinition
         } set: { newValue in

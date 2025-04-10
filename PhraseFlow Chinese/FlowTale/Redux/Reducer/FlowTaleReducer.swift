@@ -16,15 +16,20 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     switch action {
     case .studyAction(let studyAction):
         newState.studyState = studyReducer(state.studyState, studyAction)
+        
+    case .translationAction(let translationAction):
+        newState.translationState = translationReducer(state.translationState, translationAction)
     case .updateCurrentSentence(let sentence):
         newState.storyState.currentSentence = sentence
+    case .clearCurrentDefinition:
+        newState.definitionState.currentDefinition = nil
     case .onLoadedAppSettings(let settings):
         newState.settingsState = settings
-    case .generateImage:
-        newState.viewState.loadingState = .generatingImage
+        newState.translationState.targetLanguage = settings.language
     case .onLoadedStories(let stories, let isAppLaunch):
         newState.storyState.savedStories = stories // TODO: Fix needing to tap definitions twice to get definition
-        newState.viewState.readerDisplayType = .normal
+        newState.viewState.isInitialisingApp = false
+        newState.viewState.storyListViewId = UUID()
         if newState.storyState.currentStory == nil ||
            !stories.contains(where: { $0.id == newState.storyState.currentStory?.id }) {
             newState.storyState.currentStory = stories.first
@@ -69,7 +74,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.musicAudioState.audioPlayer.stop()
         newState.musicAudioState.currentMusicType = .whispersOfTheForest
     case .failedToLoadStories:
-        newState.viewState.readerDisplayType = .normal
+        newState.viewState.isInitialisingApp = false
     case .updateSpeechSpeed(let speed):
         newState.settingsState.speechSpeed = speed
         if newState.audioState.audioPlayer.rate != 0 {
@@ -103,41 +108,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.definitionState.definitions.append(tappedDefinition)
 
         newState.viewState.isDefining = false
-    case .synthesizeAudio:
-        newState.viewState.loadingState = .generatingSpeech
-    case .onSynthesizedAudio(var chapter, var newStory, let isForced):
-        newState.definitionState.currentDefinition = nil
-        newState.viewState.chapterViewId = UUID()
-        newState.viewState.loadingState = .complete
-
-        newState.viewState.isWritingChapter = false
-
-        let hasExistingStories = newState.storyState.savedStories.count > 1
-        let isNewStoryCreation = newStory.chapters.count == 1
-        
-        newStory.currentPlaybackTime = 0
-        newStory.currentChapterIndex = newStory.chapters.count - 1
-        newStory.chapters[newStory.currentChapterIndex] = chapter
-        newStory.chapters[newStory.currentChapterIndex].audioSpeed = newState.settingsState.speechSpeed
-        newStory.chapters[newStory.currentChapterIndex].audioVoice = newState.settingsState.voice
-        
-        if (isNewStoryCreation && !hasExistingStories) || isForced {
-            newState.storyState.currentStory = newStory
-            newState.viewState.contentTab = .reader
-
-            let player = chapter.audio.data.createAVPlayer()
-            newState.audioState.audioPlayer = player ?? AVPlayer()
-        }
-
-        if !isNewStoryCreation {
-            newState.snackBarState.type = .chapterReady
-            newState.snackBarState.isShowing = true
-        } else if hasExistingStories {
-            newState.snackBarState.type = .storyReadyTapToRead
-            newState.snackBarState.isShowing = true
-        }
-        
-        newState.viewState.readerDisplayType = .normal
     case .updateShowDefinition(let isShowing):
         newState.settingsState.isShowingDefinition = isShowing
     case .updateShowEnglish(let isShowing):
@@ -145,26 +115,21 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .updateAutoScrollEnabled(let isEnabled):
         newState.viewState.isAutoscrollEnabled = isEnabled
     case .selectChapter(var story, let chapterIndex):
-        newState.definitionState.currentDefinition = nil
-        story.lastUpdated = .now
         if let chapter = story.chapters[safe: chapterIndex] {
+            newState.definitionState.currentDefinition = nil
+            story.lastUpdated = .now
+            newState.storyState.currentStory = story
+            newState.settingsState.language = story.language
+
             if let voice = chapter.audioVoice {
                 newState.settingsState.voice = voice
             }
-            if let speed = chapter.audioSpeed {
-                newState.settingsState.speechSpeed = speed
-            }
 
             story.currentChapterIndex = chapterIndex
+            let data = newState.storyState.currentChapter?.audio.data
+            newState.audioState.audioPlayer = data?.createAVPlayer() ?? AVPlayer()
         }
-        newState.storyState.currentStory = story
-        newState.settingsState.language = story.language
 
-
-        let data = newState.storyState.currentChapter?.audio.data
-        let player = data?.createAVPlayer()
-        newState.audioState.audioPlayer = player ?? AVPlayer()
-        
     case .selectStoryFromSnackbar(var story):
         newState.definitionState.currentDefinition = nil
         story.lastUpdated = .now
@@ -173,9 +138,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         if let chapter = story.chapters[safe: story.currentChapterIndex] {
             if let voice = chapter.audioVoice {
                 newState.settingsState.voice = voice
-            }
-            if let speed = chapter.audioSpeed {
-                newState.settingsState.speechSpeed = speed
             }
         }
         
@@ -202,9 +164,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             newState.viewState.shouldShowImageSpinner = story.imageData == nil
         }
         newState.viewState.loadingState = .writing
-    case .failedToCreateChapter,
-            .failedToGenerateImage:
-        newState.viewState.readerDisplayType = .normal
+    case .failedToCreateChapter:
         newState.viewState.isWritingChapter = false
     case .playAudio(let time):
         newState.definitionState.currentDefinition = nil
@@ -216,7 +176,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.audioState.isPlayingAudio = false
     case .updatePlayTime:
         newState.storyState.currentStory?.currentPlaybackTime = newState.audioState.audioPlayer.currentTime().seconds
-    case .selectWord(let word):
+    case .playWord(let word, _):
         newState.storyState.currentStory?.currentPlaybackTime = word.time
     case .goToNextChapter:
         newState.viewState.chapterViewId = UUID()
@@ -247,12 +207,25 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
                 newState.settingsState.voice = voice
             }
         }
+    case .onLoadedInitialDefinitions(let definitions):
+        // Add the initial definitions to our state
+        print("Loading \(definitions.count) initial definitions")
+        newState.definitionState.definitions.addDefinitions(definitions)
+        
+        // Mark that the chapter is ready for viewing
+        newState.viewState.loadingState = .complete
+
+        newState.viewState.isWritingChapter = false
+
+    case .loadRemainingDefinitions(_, _, _, let definitions):
+        newState.definitionState.definitions.append(contentsOf: definitions)
+        
     case .onLoadedDefinitions(let definitions):
         print("Loading \(definitions.count) definitions")
         print("Definitions with hasBeenSeen=true: \(definitions.filter { $0.hasBeenSeen }.count)")
-        newState.definitionState.definitions = definitions
+
+        newState.definitionState.definitions.addDefinitions(definitions)
     case .deleteDefinition(let definition):
-        // For optimistic UI updates, immediately remove the definition by id
         newState.definitionState.definitions.removeAll(where: { $0.id == definition.id })
     case .onDeletedStory(let storyId):
         if newState.storyState.currentStory?.id == storyId {
@@ -274,7 +247,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             }
         }
     case .setSubscriptionSheetShowing(let isShowing):
-        newState.viewState.readerDisplayType = .normal
         newState.viewState.isShowingSubscriptionSheet = isShowing
         if isShowing {
             newState.viewState.isWritingChapter = false
@@ -292,9 +264,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.snackBarState.isShowing = false
     case .failedToDefineSentence:
         newState.viewState.isDefining = false
-    case .onCreatedChapter(let story):
-        newState.audioState.audioPlayer = AVPlayer()
-        newState.settingsState.language = story.language
     case .updateStudiedWord(var definition):
         // Add the current date to studied dates
         definition.studiedDates.append(.now)
@@ -310,6 +279,23 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .passedModeration(let prompt):
         newState.settingsState.customPrompts.append(prompt)
         newState.settingsState.storySetting = .customPrompt(prompt)
+    case .onCreatedChapter(var story):
+        newState.definitionState.currentDefinition = nil
+        newState.viewState.chapterViewId = UUID()
+
+        story.currentPlaybackTime = 0
+        story.currentChapterIndex = story.chapters.count - 1
+
+        newState.storyState.currentStory = story
+        newState.storyState.currentSentence = story.chapters.last?.sentences.first
+        newState.viewState.contentTab = .reader
+
+        let player = story.chapters.last?.audio.data.createAVPlayer()
+        newState.audioState.audioPlayer = player ?? AVPlayer()
+
+        newState.snackBarState.type = .chapterReady
+        newState.snackBarState.isShowing = true
+
     case .updateStorySetting(let setting):
         switch setting {
         case .random:
@@ -362,6 +348,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .onPurchasedSubscription,
             .failedToPurchaseSubscription:
         newState.subscriptionState.isLoadingSubscriptionPurchase = false
+    case .updateLoadingState(let loadingState):
+        newState.viewState.loadingState = loadingState
     case .saveStoryAndSettings,
             .failedToSaveStory,
             .loadStories,
@@ -372,13 +360,11 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .failedToLoadAppSettings,
             .loadAppSettings,
             .saveAppSettings,
-            .playWord,
             .loadDefinitions,
             .failedToLoadDefinitions,
+            .loadInitialSentenceDefinitions,
             .saveDefinitions,
-            .onSavedDefinitions,
             .failedToSaveDefinitions,
-            .onSavedStoryAndSettings,
             .failedToSaveStoryAndSettings,
             .fetchSubscriptions,
             .failedToFetchSubscriptions,
@@ -389,18 +375,15 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .observeTransactionUpdates,
             .validateReceipt,
             .onValidatedReceipt,
-            .onGeneratedImage,
             .moderateText,
             .failedToModerateText,
             .loadChapters,
             .failedToLoadChapters,
             .checkFreeTrialLimit,
-            .failedToSynthesizeAudio,
             .hasReachedDailyLimit,
             .onFinishedLoadedStories,
             .musicTrackFinished,
             .checkDeviceVolumeZero,
-            .onDeletedDefinition,
             .failedToDeleteDefinition:
         break
     }

@@ -26,60 +26,48 @@ private func isPlaybackAtEnd(_ state: FlowTaleState) -> Bool {
     return currentTime >= endTime
 }
 
+// Combine all middleware functions
 let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol> = { state, action, environment in
+    // Handle other actions
     switch action {
+    case .translationAction(let translationAction):
+        return await translationMiddleware(state, action, environment)
     case .studyAction(let studyAction):
         return await studyMiddleware(state, .studyAction(studyAction), environment)
-    case .onCreatedChapter(let story):
-        if story.imageData == nil,
-           let passage = story.chapters.first?.passage {
-             return .generateImage(passage: passage, story)
-        } else if let chapter = story.chapters[safe: story.currentChapterIndex] {
-            return .synthesizeAudio(chapter,
-                                    story: story,
-                                    voice: state.settingsState.voice,
-                                    isForced: true)
-        }
-        return .saveStoryAndSettings(story)
     case .checkFreeTrialLimit:
-        do {
-            try environment.enforceChapterCreationLimit(subscription: state.subscriptionState.currentSubscription)
-        } catch FlowTaleDataStoreError.freeUserChapterLimitReached {
-            return .hasReachedFreeTrialLimit
-        } catch FlowTaleDataStoreError.chapterCreationLimitReached(let nextAvailable) {
-            return .hasReachedDailyLimit
-        } catch {
-            return nil
-        }
         return nil
 
     case .createChapter(let type):
         do {
-            try environment.enforceChapterCreationLimit(subscription: state.subscriptionState.currentSubscription)
-            let story: Story
-            switch type {
-            case .newStory:
-                let newStory = state.createNewStory()
-                story = try await environment.generateStory(story: newStory,
-                                                            deviceLanguage: state.deviceLanguage)
-            case .existingStory(let existingStory):
-                story = try await environment.generateStory(story: existingStory,
-                                                            deviceLanguage: state.deviceLanguage)
+            var story: Story
+            if case .existingStory(let existingStory) = type {
+                story = existingStory
+            } else {
+                story = state.createNewStory()
             }
-            return .onCreatedChapter(story: story)
-        } catch FlowTaleDataStoreError.freeUserChapterLimitReached {
+            story = try await environment.generateStory(story: story,
+                                                        voice: state.settingsState.voice,
+                                                        deviceLanguage: state.deviceLanguage,
+                                                        currentSubscription: state.subscriptionState.currentSubscription)
+            return .onCreatedChapter(story)
+        } catch FlowTaleDataStoreError.freeUserCharacterLimitReached { // TODO: Test this still works (manually throw error within create story service logic)
             return .setSubscriptionSheetShowing(true)
-        } catch FlowTaleDataStoreError.chapterCreationLimitReached(let nextAvailable) {
+        } catch FlowTaleDataStoreError.characterLimitReached(let nextAvailable) {
             return .onDailyChapterLimitReached(nextAvailable: nextAvailable)
         } catch {
             return .failedToCreateChapter
         }
 
+    case .onCreatedChapter(let story):
+        guard let chapter = story.chapters.last else {
+            return .failedToCreateChapter
+        }
+        return .loadInitialSentenceDefinitions(chapter, story, state.definitionState.numberOfInitialSentencesToDefine)
+
     case .onDailyChapterLimitReached(let nextAvailable):
         return .showSnackBar(.dailyChapterLimitReached(nextAvailable: nextAvailable))
 
-    case .failedToCreateChapter,
-            .failedToGenerateImage:
+    case .failedToCreateChapter:
         return .showSnackBar(.failedToWriteChapter)
     case .showSnackBar(let type):
         state.appAudioState.audioPlayer.play()
@@ -95,8 +83,9 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         if let duration = type.showDuration {
             try? await Task.sleep(for: .seconds(duration))
             return .hideSnackbarThenSaveStoryAndSettings(story)
+        } else {
+            return .saveStoryAndSettings(story)
         }
-        return .saveStoryAndSettings(story)
         
     case .hideSnackbarThenSaveStoryAndSettings(_):
         if let currentStory = state.storyState.currentStory {
@@ -127,6 +116,56 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         } catch {
             return .failedToLoadDefinitions
         }
+        
+    case .loadInitialSentenceDefinitions(let chapter, let story, let sentenceCount):
+        do {
+            let initialSentences = Array(chapter.sentences.prefix(sentenceCount))
+            var allDefinitions: [Definition] = []
+            
+            for sentence in initialSentences {
+                if let firstWord = sentence.timestamps.first {
+                    let definitionsForSentence = try await environment.fetchDefinitions(
+                        in: sentence,
+                        story: story,
+                        deviceLanguage: state.deviceLanguage ?? .english
+                    )
+
+                    try environment.saveDefinitions(definitionsForSentence)
+                    allDefinitions.append(contentsOf: definitionsForSentence)
+                }
+            }
+            try environment.saveStory(story)
+
+            return .onLoadedInitialDefinitions(allDefinitions)
+        } catch {
+            // If we fail here, we'll still try to show the chapter
+            return .showSnackBarThenSaveStory(.chapterReady, story)
+        }
+        
+    case .loadRemainingDefinitions(let chapter, let story, let sentenceIndex, let definitions):
+        do {
+            // Check if we've processed all sentences
+            if sentenceIndex >= chapter.sentences.count {
+                // We've processed all sentences, return action to mark definitions as complete
+                return .onLoadedDefinitions([])
+            }
+            
+            let sentence = chapter.sentences[sentenceIndex]
+            
+            let definitionsForSentence = try await environment.fetchDefinitions(
+                in: sentence,
+                story: story,
+                deviceLanguage: state.deviceLanguage ?? .english
+            )
+
+            // Save after each sentence's definitions are fetched
+            try environment.saveDefinitions(definitionsForSentence)
+
+            // Return this batch to update the state first
+            return .loadRemainingDefinitions(chapter, story, sentenceIndex: sentenceIndex + 1, previousDefinitions: definitionsForSentence)
+        } catch {
+            return .failedToLoadDefinitions
+        }
     case .deleteStory(let story):
         do {
             try environment.unsaveStory(story)
@@ -138,57 +177,24 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         }
     case .onDeletedStory:
         return .loadStories(isAppLaunch: false)
-    case .synthesizeAudio(let chapter, let story, let voice, let isForced):
-        if chapter.audioVoice == state.settingsState.voice,
-           chapter.audioSpeed == state.settingsState.speechSpeed,
-           !isForced {
-            return .playAudio(time: nil)
-        }
-        do {
-            let chapter = try await environment.synthesizeSpeech(for: chapter,
-                                                                story: story,
-                                                                voice: voice,
-                                                                language: story.language)
-            return .onSynthesizedAudio(chapter, story, isForced: isForced)
-        } catch {
-            return .failedToSynthesizeAudio
-        }
-    case .onSynthesizedAudio(_, let story, _):
-        // Determine which type of snackbar to show based on the story
-        let isNewStoryCreation = story.chapters.count == 1
-        let hasExistingStories = state.storyState.savedStories.count > 1
-        
-        // We'll let the reducer handle updating the state with this story first 
-        // before we do anything else, so we don't need to pass the story along
-        
-        // Show appropriate snackbar first
-        return .showSnackBarThenSaveStory(.chapterReady, story)
     case .playAudio(let timestamp):
-        // Check if playback is at or near the end
-        let isAtEnd = isPlaybackAtEnd(state)
-        
-        if isAtEnd {
-            await state.audioState.audioPlayer.seek(to: CMTime(seconds: 0, preferredTimescale: 60000), toleranceBefore: .zero, toleranceAfter: .zero)
-            print("Looping back to start because play button was tapped at the end")
+        let playRate = state.settingsState.speechSpeed.playRate
+
+        if isPlaybackAtEnd(state) {
+            await state.audioState.audioPlayer.playAudio(playRate: playRate)
         } else if let timestamp {
-            // If timestamp is provided, use it to seek
-            let myTime = CMTime(seconds: timestamp, preferredTimescale: 60000)
-            await state.audioState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
+            await state.audioState.audioPlayer.playAudio(fromSeconds: timestamp,
+                                                         playRate: playRate)
         }
-        
-        // Set the end time to infinity and start playback
-        state.audioState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: .infinity, preferredTimescale: 1)
-        state.audioState.audioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
         
         if let story = state.storyState.currentStory {
             return .saveStoryAndSettings(story)
         }
         return nil
     case .playWord(let word, let story):
-        let myTime = CMTime(seconds: word.time, preferredTimescale: 60000)
-        await state.audioState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
-        state.audioState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: word.time + word.duration, preferredTimescale: 60000)
-        state.audioState.audioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
+        await state.audioState.audioPlayer.playAudio(fromSeconds: word.time,
+                                                     toSeconds: word.time + word.duration,
+                                                     playRate: state.settingsState.speechSpeed.playRate)
         if let story = state.storyState.currentStory {
             return .saveStoryAndSettings(story)
         }
@@ -207,7 +213,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return nil
         
     case .musicTrackFinished(let nextMusicType):
-        // Play the next track in the music rotation
         return .playMusic(nextMusicType)
         
     case .stopMusic:
@@ -224,8 +229,7 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
     case .defineSentence(let timestampData, let shouldForce):
         do {
             guard let sentence = state.storyState.sentence(containing: timestampData),
-                  let story = state.storyState.currentStory,
-                  let deviceLanguage = state.deviceLanguage else {
+                  let story = state.storyState.currentStory else {
                 return .failedToDefineSentence
             }
 
@@ -237,7 +241,7 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             let definitionsForSentence = try await environment.fetchDefinitions(
                 in: sentence,
                 story: story,
-                deviceLanguage: deviceLanguage
+                deviceLanguage: state.deviceLanguage ?? .english
             )
 
             guard let definitionOfTappedWord = definitionsForSentence.first(where: { $0.timestampData == timestampData }) else {
@@ -283,53 +287,29 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         } catch {
             return .failedToSaveDefinitions
         }
-        return .onSavedDefinitions
+        return nil
     case .deleteDefinition(let definition):
         do {
             try environment.deleteDefinition(with: definition.id)
-            return .onDeletedDefinition
         } catch {
             return .failedToDeleteDefinition
         }
-    case .onDeletedDefinition:
-        return .loadDefinitions
-    case .onSavedDefinitions:
-        return .loadDefinitions
+        return nil
     case .selectChapter:
         return .onSelectedChapter
     case .onSelectedChapter:
         return .selectTab(.reader, shouldPlaySound: false)
     case .saveStoryAndSettings(var story):
         do {
-            for (index, chapter) in story.chapters.enumerated() {
-                try environment.saveChapter(chapter, storyId: story.id, chapterIndex: index + 1)
-            }
-
             try environment.saveStory(story)
             try environment.saveAppSettings(state.settingsState)
         } catch {
             return .failedToSaveStoryAndSettings
         }
-        return .onSavedStoryAndSettings
-    case .onSavedStoryAndSettings:
-        return .loadStories(isAppLaunch: false)
+        return nil
     case .setMusicVolume(let volume):
         state.musicAudioState.audioPlayer.setVolume(volume.float, fadeDuration: 0.2)
         return nil
-    case .selectWord(let word):
-        if state.audioState.isPlayingAudio {
-            let myTime = CMTime(seconds: word.time, preferredTimescale: 60000)
-            await state.audioState.audioPlayer.seek(to: myTime, toleranceBefore: .zero, toleranceAfter: .zero)
-            state.audioState.audioPlayer.currentItem?.forwardPlaybackEndTime = CMTime(seconds: .infinity, preferredTimescale: 60000)
-            state.audioState.audioPlayer.playImmediately(atRate: state.settingsState.speechSpeed.playRate)
-        } else {
-            return .playWord(word, story: state.storyState.currentStory)
-        }
-        if let story = state.storyState.currentStory {
-            return .saveStoryAndSettings(story)
-        }
-        return nil
-        
     case .updatePlayTime:
         let currentTime = state.audioState.audioPlayer.currentTime().seconds
         if let lastSentence = state.storyState.currentChapter?.sentences.last,
@@ -429,22 +409,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             }
         }
         return nil
-    case .generateImage(let passage, let story):
-        do {
-            let data = try await environment.generateImage(with: passage)
-            return .onGeneratedImage(data, story)
-        } catch {
-            return .failedToGenerateImage
-        }
-    case .onGeneratedImage(let data, var story):
-        story.imageData = data
-        if let chapter = story.chapters[safe: story.currentChapterIndex] {
-            return .synthesizeAudio(chapter,
-                                    story: story,
-                                    voice: state.settingsState.voice,
-                                    isForced: true)
-        }
-        return .saveStoryAndSettings(story)
     case .updateStudiedWord:
         return .saveDefinitions
     case .onLoadedAppSettings:
@@ -489,7 +453,17 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return isAppLaunch ? .showSnackBar(.welcomeBack) : nil
     case .deleteCustomPrompt:
         return .saveAppSettings
-    case .onLoadedDefinitions:
+    case .onLoadedInitialDefinitions(let definitions):
+        if let currentStory = state.storyState.currentStory,
+           let chapter = state.storyState.currentChapter {
+            return .loadRemainingDefinitions(chapter,
+                                             currentStory,
+                                             sentenceIndex: state.definitionState.numberOfInitialSentencesToDefine,
+                                             previousDefinitions: definitions)
+        }
+        return .refreshDefinitionView
+        
+    case .onLoadedDefinitions(let definitions):
         return .refreshDefinitionView
     case .setSubscriptionSheetShowing(let isShowing):
         if isShowing {
@@ -500,7 +474,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             .failedToSaveStory,
             .failedToDefineSentence,
             .onPlayedAudio,
-            .failedToSynthesizeAudio,
             .refreshChapterView,
             .refreshDefinitionView,
             .failedToDeleteStory,
@@ -532,7 +505,9 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             .onValidatedReceipt,
             .updateIsSubscriptionPurchaseLoading,
             .updateCurrentSentence,
-            .failedToDeleteDefinition:
+            .failedToDeleteDefinition,
+            .clearCurrentDefinition,
+            .updateLoadingState:
         return nil
     }
 }

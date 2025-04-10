@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd:*)",
+      "Bash(grep:*)",
+      "Bash(periphery scan:*)",
+      "Bash(swift:*)",
+      "Bash(xcodebuild:*)",
+      "Bash(rm:*)"
+    ],
+    "deny": []
+  }
+}
