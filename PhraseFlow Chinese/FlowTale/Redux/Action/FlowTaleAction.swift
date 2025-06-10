@@ -65,7 +65,7 @@ enum FlowTaleAction {
     case failedToLoadChapters
 
     case loadDefinitions
-    case loadInitialSentenceDefinitions(Chapter, Story, Int) // Load first N sentences with their definitions
+    case loadInitialSentenceDefinitions(Chapter, Story, Int)
     case onLoadedInitialDefinitions([Definition])
     case loadRemainingDefinitions(Chapter, Story, sentenceIndex: Int, previousDefinitions: [Definition])
     case onLoadedDefinitions([Definition])
