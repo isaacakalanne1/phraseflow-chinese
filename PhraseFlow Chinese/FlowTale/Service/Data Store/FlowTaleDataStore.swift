@@ -99,45 +99,28 @@ class StoryDataStore: StoryDataStoreProtocol {
         let contents = try fileManager.contentsOfDirectory(atPath: dir.path)
         let prefix = storyId.uuidString + "@"
 
-        let chapterFiles = contents
-            .filter { $0.hasPrefix(prefix) && $0.hasSuffix(".json") }
-            .filter {
-                let withoutPrefix = $0.replacingOccurrences(of: prefix, with: "")
-                let withoutSuffix = withoutPrefix.replacingOccurrences(of: ".json", with: "")
-                if let num = Int(withoutSuffix), num >= 1 {
-                    return true
-                }
-                return false
-            }
-            .sorted { lhs, rhs in
-                let leftIdx = Int(
-                    lhs.split(separator: "@")
-                        .last?
-                        .replacingOccurrences(of: ".json", with: "")
-                        ?? ""
-                ) ?? 0
-
-                let rightIdx = Int(
-                    rhs.split(separator: "@")
-                        .last?
-                        .replacingOccurrences(of: ".json", with: "")
-                        ?? ""
-                ) ?? 0
-
-                return leftIdx < rightIdx
-            }
-
-        var chapters: [Chapter] = []
-        let decoder = JSONDecoder()
-
-        for fileName in chapterFiles {
-            let fileURL = dir.appendingPathComponent(fileName)
-            let data = try Data(contentsOf: fileURL)
-            let chapter = try decoder.decode(Chapter.self, from: data)
-            chapters.append(chapter)
+        func chapterIndex(from fileName: String) -> Int? {
+            guard fileName.hasPrefix(prefix) && fileName.hasSuffix(".json") else { return nil }
+            let indexString = fileName
+                .dropFirst(prefix.count)
+                .dropLast(5)
+            return Int(indexString)
         }
 
-        return chapters
+        let chapterFiles = contents
+            .compactMap { fileName -> (String, Int)? in
+                guard let index = chapterIndex(from: fileName), index >= 1 else { return nil }
+                return (fileName, index)
+            }
+            .sorted { $0.1 < $1.1 }
+            .map { $0.0 }
+
+        let decoder = JSONDecoder()
+        return try chapterFiles.map { fileName in
+            let fileURL = dir.appendingPathComponent(fileName)
+            let data = try Data(contentsOf: fileURL)
+            return try decoder.decode(Chapter.self, from: data)
+        }
     }
 
     func unsaveStory(_ story: Story) throws {
