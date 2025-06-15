@@ -9,105 +9,89 @@ import Foundation
 
 class UserLimitsDataStore: UserLimitsDataStoreProtocol {
     private let keychain = KeychainManager.shared
-    private let kDailyCharacterUsageKey = "dailyCharacterUsageData"
-    private let kFreeUserCharacterTotalKey = "freeUserCharacterCount"
+    private let dailyUsageKey = "dailyCharacterUsageData"
+    private let freeCountKey = "freeUserCharacterCount"
+    
+    private lazy var jsonDecoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return decoder
+    }()
+    
+    private lazy var jsonEncoder: JSONEncoder = {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        return encoder
+    }()
 
     func trackSSMLCharacterUsage(characterCount: Int, subscription: SubscriptionLevel?) throws {
-        guard let subscription = subscription else {
-            try trackFreeUserCharacterUsage(characterCount)
-            return
+        if let subscription = subscription {
+            try trackSubscribedUser(characterCount, level: subscription)
+        } else {
+            try trackFreeUser(characterCount)
         }
-
-        try trackSubscribedUserCharacterUsage(characterCount, level: subscription)
     }
 
-    private func trackFreeUserCharacterUsage(_ characterCount: Int) throws {
-        let currentTotal = loadFreeUserCharacterCount()
+    private func trackFreeUser(_ count: Int) throws {
+        let current = freeUserCount
         #if DEBUG
-            let maxFree = 999_999_999_999_999_999
+        let limit = 9_999_999_999_999
         #else
-            let maxFree = 4000
+        let limit = 4000
         #endif
-
-        if currentTotal + characterCount > maxFree {
+        
+        guard current + count <= limit else {
             throw FlowTaleDataStoreError.freeUserCharacterLimitReached
         }
-
-        let newCount = currentTotal + characterCount
-        try keychain.setData(Data("\(newCount)".utf8), forKey: kFreeUserCharacterTotalKey)
+        
+        try keychain.setData(Data("\(current + count)".utf8), forKey: freeCountKey)
     }
 
-    private func trackSubscribedUserCharacterUsage(_ characterCount: Int, level: SubscriptionLevel) throws {
-        var usageRecords = try loadDailyCharacterUsage()
+    private func trackSubscribedUser(_ count: Int, level: SubscriptionLevel) throws {
         let now = Date()
-        let cutoff = now.addingTimeInterval(-24 * 60 * 60)
-
-        usageRecords = usageRecords.filter { $0.timestamp > cutoff }
-
-        let totalUsage = usageRecords.reduce(0) { $0 + $1.characterCount }
-
+        let cutoff = now.addingTimeInterval(-86400)
+        var records = dailyUsage.filter { $0.timestamp > cutoff }
+        
+        let totalUsage = records.reduce(0) { $0 + $1.characterCount }
         let limit = level.ssmlCharacterLimitPerDay
-        if totalUsage + characterCount > limit {
-            if let earliest = usageRecords.map({ $0.timestamp }).min() {
-                let nextAvailableTimeString = timeRemainingStringUntilNextAvailable(earliestTimeStamp: earliest)
-                throw FlowTaleDataStoreError.characterLimitReached(timeUntilNextAvailable: nextAvailableTimeString)
-            } else {
-                throw FlowTaleDataStoreError.characterLimitReached(timeUntilNextAvailable: "24 hours")
-            }
+        
+        guard totalUsage + count <= limit else {
+            let timeString = records.compactMap(\.timestamp).min()
+                .map(timeRemaining) ?? "24 hours"
+            throw FlowTaleDataStoreError.characterLimitReached(timeUntilNextAvailable: timeString)
         }
-
-        usageRecords.append(CharacterUsageRecord(timestamp: now, characterCount: characterCount))
-        try saveDailyCharacterUsage(usageRecords)
+        
+        records.append(CharacterUsageRecord(timestamp: now, characterCount: count))
+        try saveDailyUsage(records)
     }
 
-    private func timeRemainingStringUntilNextAvailable(earliestTimeStamp: Date) -> String {
-        let now = Date()
-        let nextAvailable = earliestTimeStamp.addingTimeInterval(24 * 60 * 60)
-
-        let interval = nextAvailable.timeIntervalSince(now)
-        guard interval > 0 else {
-            return "Now"
-        }
-
+    private func timeRemaining(from earliest: Date) -> String {
+        let interval = earliest.addingTimeInterval(86400).timeIntervalSince(Date())
+        guard interval > 0 else { return "Now" }
+        
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .full
         formatter.allowedUnits = [.day, .hour, .minute, .second]
         formatter.zeroFormattingBehavior = [.dropAll]
         formatter.calendar?.locale = .current
-
-        if let formatted = formatter.string(from: interval) {
-            return formatted
-        } else {
-            return "24 hours"
-        }
+        
+        return formatter.string(from: interval) ?? "24 hours"
     }
 
-    private func loadDailyCharacterUsage() throws -> [CharacterUsageRecord] {
-        guard let data = keychain.getData(forKey: kDailyCharacterUsageKey) else {
-            return []
-        }
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        do {
-            return try decoder.decode([CharacterUsageRecord].self, from: data)
-        } catch {
-            return []
-        }
+    private var dailyUsage: [CharacterUsageRecord] {
+        guard let data = keychain.getData(forKey: dailyUsageKey) else { return [] }
+        return (try? jsonDecoder.decode([CharacterUsageRecord].self, from: data)) ?? []
     }
 
-    private func saveDailyCharacterUsage(_ usage: [CharacterUsageRecord]) throws {
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
-        let data = try encoder.encode(usage)
-        try keychain.setData(data, forKey: kDailyCharacterUsageKey)
+    private func saveDailyUsage(_ usage: [CharacterUsageRecord]) throws {
+        let data = try jsonEncoder.encode(usage)
+        try keychain.setData(data, forKey: dailyUsageKey)
     }
 
-    private func loadFreeUserCharacterCount() -> Int {
-        guard let data = keychain.getData(forKey: kFreeUserCharacterTotalKey),
-              let stringVal = String(data: data, encoding: .utf8),
-              let intVal = Int(stringVal) else {
-            return 0
-        }
-        return intVal
+    private var freeUserCount: Int {
+        guard let data = keychain.getData(forKey: freeCountKey),
+              let string = String(data: data, encoding: .utf8),
+              let count = Int(string) else { return 0 }
+        return count
     }
 }
