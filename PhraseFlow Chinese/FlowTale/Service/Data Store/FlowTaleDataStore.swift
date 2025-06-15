@@ -96,31 +96,22 @@ class StoryDataStore: StoryDataStoreProtocol {
             throw FlowTaleDataStoreError.failedToCreateUrl
         }
 
-        let contents = try fileManager.contentsOfDirectory(atPath: dir.path)
-        let prefix = storyId.uuidString + "@"
-
-        func chapterIndex(from fileName: String) -> Int? {
-            guard fileName.hasPrefix(prefix) && fileName.hasSuffix(".json") else { return nil }
-            let indexString = fileName
-                .dropFirst(prefix.count)
-                .dropLast(5)
-            return Int(indexString)
-        }
-
-        let chapterFiles = contents
+        let prefix = "\(storyId.uuidString)@"
+        let decoder = JSONDecoder()
+        
+        return try fileManager.contentsOfDirectory(atPath: dir.path)
             .compactMap { fileName -> (String, Int)? in
-                guard let index = chapterIndex(from: fileName), index >= 1 else { return nil }
+                guard fileName.hasPrefix(prefix), fileName.hasSuffix(".json"),
+                      let index = Int(fileName.dropFirst(prefix.count).dropLast(5)),
+                      index >= 1 else { return nil }
                 return (fileName, index)
             }
             .sorted { $0.1 < $1.1 }
-            .map { $0.0 }
-
-        let decoder = JSONDecoder()
-        return try chapterFiles.map { fileName in
-            let fileURL = dir.appendingPathComponent(fileName)
-            let data = try Data(contentsOf: fileURL)
-            return try decoder.decode(Chapter.self, from: data)
-        }
+            .map { fileName, _ in
+                let fileURL = dir.appendingPathComponent(fileName)
+                let data = try Data(contentsOf: fileURL)
+                return try decoder.decode(Chapter.self, from: data)
+            }
     }
 
     func unsaveStory(_ story: Story) throws {
