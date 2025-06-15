@@ -1,0 +1,45 @@
+//
+//  RequestFactory.swift
+//  FlowTale
+//
+//  Created by iakalann on 15/06/2025.
+//
+
+import Foundation
+
+class RequestFactory {
+    static func makeRequest(type: APIRequestType, requestBody: [String: Any]) async throws -> String {
+        let request = createURLRequest(baseUrl: type.baseUrl, authKey: type.authKey)
+        var requestBody = requestBody
+        requestBody["model"] = type.modelName
+
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: requestBody) else {
+            throw FlowTaleServicesError.failedToEncodeJson
+        }
+
+        let session = createURLSession()
+
+        let (data, _) = try await session.upload(for: request, from: jsonData)
+        guard let response = try? JSONDecoder().decode(GPTResponse.self, from: data),
+              let responseString = response.choices.first?.message.content
+        else {
+            throw FlowTaleServicesError.failedToDecodeJson
+        }
+        return responseString
+    }
+
+    static func createURLRequest(baseUrl: String, authKey: String) -> URLRequest {
+        var request = URLRequest(url: URL(string: baseUrl)!)
+        request.httpMethod = "POST"
+        request.addValue("Bearer \(authKey)", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        return request
+    }
+
+    private static func createURLSession() -> URLSession {
+        let sessionConfig = URLSessionConfiguration.default
+        sessionConfig.timeoutIntervalForRequest = 1200
+        sessionConfig.timeoutIntervalForResource = 1200
+        return URLSession(configuration: sessionConfig)
+    }
+}

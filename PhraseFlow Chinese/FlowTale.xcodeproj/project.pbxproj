@@ -124,6 +124,17 @@
 		BBDA56C62DFF118D00B61F05 /* SettingsDataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56C52DFF118D00B61F05 /* SettingsDataStoreProtocol.swift */; };
 		BBDA56C82DFF12C200B61F05 /* FlowTaleRepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56C72DFF12C200B61F05 /* FlowTaleRepositoryError.swift */; };
 		BBDA56CA2DFF132D00B61F05 /* MultipleWordsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56C92DFF132D00B61F05 /* MultipleWordsResponse.swift */; };
+		BBDA56CC2DFF165500B61F05 /* CreateImageServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56CB2DFF165500B61F05 /* CreateImageServices.swift */; };
+		BBDA56CE2DFF166500B61F05 /* CreateImageServicesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56CD2DFF166500B61F05 /* CreateImageServicesProtocol.swift */; };
+		BBDA56D02DFF1A8600B61F05 /* TranslationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56CF2DFF1A8600B61F05 /* TranslationServices.swift */; };
+		BBDA56D22DFF1A9D00B61F05 /* TranslationServicesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56D12DFF1A9D00B61F05 /* TranslationServicesProtocol.swift */; };
+		BBDA56D42DFF1AB800B61F05 /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56D32DFF1AB800B61F05 /* RequestFactory.swift */; };
+		BBDA56D62DFF1C1800B61F05 /* CreateStoryServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56D52DFF1C1800B61F05 /* CreateStoryServices.swift */; };
+		BBDA56D82DFF1C2800B61F05 /* CreateStoryServicesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56D72DFF1C2800B61F05 /* CreateStoryServicesProtocol.swift */; };
+		BBDA56DA2DFF1D0A00B61F05 /* ModerationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56D92DFF1D0A00B61F05 /* ModerationServices.swift */; };
+		BBDA56DC2DFF1D1800B61F05 /* ModerationServicesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56DB2DFF1D1800B61F05 /* ModerationServicesProtocol.swift */; };
+		BBDA56DE2DFF4D5000B61F05 /* DefinitionServicesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56DD2DFF4D5000B61F05 /* DefinitionServicesProtocol.swift */; };
+		BBDA56E02DFF4D5E00B61F05 /* DefinitionServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56DF2DFF4D5E00B61F05 /* DefinitionServices.swift */; };
 		BBE16F202CC152C400A7EF1F /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */; };
 		BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F212CC2769C00A7EF1F /* StoryListView.swift */; };
 		BBE16F242CC2AFC800A7EF1F /* ChapterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */; };
@@ -333,6 +344,17 @@
 		BBDA56C52DFF118D00B61F05 /* SettingsDataStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDataStoreProtocol.swift; sourceTree = "<group>"; };
 		BBDA56C72DFF12C200B61F05 /* FlowTaleRepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleRepositoryError.swift; sourceTree = "<group>"; };
 		BBDA56C92DFF132D00B61F05 /* MultipleWordsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleWordsResponse.swift; sourceTree = "<group>"; };
+		BBDA56CB2DFF165500B61F05 /* CreateImageServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageServices.swift; sourceTree = "<group>"; };
+		BBDA56CD2DFF166500B61F05 /* CreateImageServicesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageServicesProtocol.swift; sourceTree = "<group>"; };
+		BBDA56CF2DFF1A8600B61F05 /* TranslationServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationServices.swift; sourceTree = "<group>"; };
+		BBDA56D12DFF1A9D00B61F05 /* TranslationServicesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationServicesProtocol.swift; sourceTree = "<group>"; };
+		BBDA56D32DFF1AB800B61F05 /* RequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFactory.swift; sourceTree = "<group>"; };
+		BBDA56D52DFF1C1800B61F05 /* CreateStoryServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStoryServices.swift; sourceTree = "<group>"; };
+		BBDA56D72DFF1C2800B61F05 /* CreateStoryServicesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStoryServicesProtocol.swift; sourceTree = "<group>"; };
+		BBDA56D92DFF1D0A00B61F05 /* ModerationServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationServices.swift; sourceTree = "<group>"; };
+		BBDA56DB2DFF1D1800B61F05 /* ModerationServicesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationServicesProtocol.swift; sourceTree = "<group>"; };
+		BBDA56DD2DFF4D5000B61F05 /* DefinitionServicesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionServicesProtocol.swift; sourceTree = "<group>"; };
+		BBDA56DF2DFF4D5E00B61F05 /* DefinitionServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionServices.swift; sourceTree = "<group>"; };
 		BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
 		BBE16F212CC2769C00A7EF1F /* StoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListView.swift; sourceTree = "<group>"; };
 		BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterListView.swift; sourceTree = "<group>"; };
@@ -799,6 +821,19 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		BBC2930D2DFF80F500E5686D /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				BBE521FC2DE9D83C00ADACA8 /* FlowTaleServicesProtocol.swift */,
+				BBDA56CD2DFF166500B61F05 /* CreateImageServicesProtocol.swift */,
+				BBDA56D72DFF1C2800B61F05 /* CreateStoryServicesProtocol.swift */,
+				BBDA56DD2DFF4D5000B61F05 /* DefinitionServicesProtocol.swift */,
+				BBDA56DB2DFF1D1800B61F05 /* ModerationServicesProtocol.swift */,
+				BBDA56D12DFF1A9D00B61F05 /* TranslationServicesProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		BBE521FB2DE9D82A00ADACA8 /* Environment */ = {
 			isa = PBXGroup;
 			children = (
@@ -811,8 +846,14 @@
 		BBE521FE2DE9D84400ADACA8 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				BBC2930D2DFF80F500E5686D /* Protocol */,
 				BB4EDB162C90D20300699E7D /* FlowTaleServices.swift */,
-				BBE521FC2DE9D83C00ADACA8 /* FlowTaleServicesProtocol.swift */,
+				BBDA56CB2DFF165500B61F05 /* CreateImageServices.swift */,
+				BBDA56D52DFF1C1800B61F05 /* CreateStoryServices.swift */,
+				BBDA56DF2DFF4D5E00B61F05 /* DefinitionServices.swift */,
+				BBDA56D32DFF1AB800B61F05 /* RequestFactory.swift */,
+				BBDA56D92DFF1D0A00B61F05 /* ModerationServices.swift */,
+				BBDA56CF2DFF1A8600B61F05 /* TranslationServices.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1137,9 +1178,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-FlowTale/Pods-FlowTale-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-FlowTale/Pods-FlowTale-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1173,6 +1218,7 @@
 				BB2893162DAA82E300F7ED69 /* TranslationState.swift in Sources */,
 				BB7B6D9C2D1F30BC0030344A /* SnackBar.swift in Sources */,
 				BB6572CE2CD12A9200AC5981 /* ChapterResponse.swift in Sources */,
+				BBDA56DE2DFF4D5000B61F05 /* DefinitionServicesProtocol.swift in Sources */,
 				BBAE07DD2D14BE3000DA95CD /* SystemImage.swift in Sources */,
 				BB6BD0212DB1770B00E45697 /* FlowTaleServicesError.swift in Sources */,
 				BBE636C12CCC0B5000873E68 /* ActionButtonsView.swift in Sources */,
@@ -1193,6 +1239,8 @@
 				BB7B6D982D1E0D070030344A /* StoryInfoView.swift in Sources */,
 				BB4E6BF82D246AEF002B5CBA /* LoadingState.swift in Sources */,
 				BB6BD0242DB1771B00E45697 /* WordDefinition.swift in Sources */,
+				BBDA56D82DFF1C2800B61F05 /* CreateStoryServicesProtocol.swift in Sources */,
+				BBDA56CC2DFF165500B61F05 /* CreateImageServices.swift in Sources */,
 				BBE522262DEAF48E00ADACA8 /* DeleteButton.swift in Sources */,
 				BBE522162DEA51CA00ADACA8 /* TranslationLanguageSelector.swift in Sources */,
 				BBE522172DEA51CA00ADACA8 /* TranslationInputSection.swift in Sources */,
@@ -1207,6 +1255,7 @@
 				BB4EDB152C90CF7400699E7D /* FlowTaleDataStore.swift in Sources */,
 				BBDA56CA2DFF132D00B61F05 /* MultipleWordsResponse.swift in Sources */,
 				BB45C5692D4A785C00B3705A /* DailyLimitExplanationView.swift in Sources */,
+				BBDA56D42DFF1AB800B61F05 /* RequestFactory.swift in Sources */,
 				BB7B6D9A2D1EEA3D0030344A /* StudyState.swift in Sources */,
 				BBE990C12D29C59C00FAD3FB /* MusicType.swift in Sources */,
 				BBDA56C42DFF117F00B61F05 /* SettingsDataStore.swift in Sources */,
@@ -1232,9 +1281,11 @@
 				BBE990B52D29BC2200FAD3FB /* AppAudioState.swift in Sources */,
 				BBE522002DE9D85B00ADACA8 /* FlowTaleDataStoreProtocol.swift in Sources */,
 				BB6BD01B2DB176C800E45697 /* ModerationRequest.swift in Sources */,
+				BBDA56DC2DFF1D1800B61F05 /* ModerationServicesProtocol.swift in Sources */,
 				BB7B6D962D1DF0990030344A /* StudyView.swift in Sources */,
 				BB7B6DA02D1F316E0030344A /* SnackBarType.swift in Sources */,
 				BBE5220E2DEA49FA00ADACA8 /* FlowTaleColorScheme.swift in Sources */,
+				BBDA56D02DFF1A8600B61F05 /* TranslationServices.swift in Sources */,
 				BBE521FA2DE9D81300ADACA8 /* FlowTaleEnvironmentProtocol.swift in Sources */,
 				BBB1B7C52D7B04050023147B /* ImageButton.swift in Sources */,
 				BB6BD0382DB25D3500E45697 /* SentenceDetailView.swift in Sources */,
@@ -1247,6 +1298,7 @@
 				BBFDBBEB2D203F080056C448 /* DefinitionsProgressSheetView.swift in Sources */,
 				BB6BD01E2DB176ED00E45697 /* FluxImageError.swift in Sources */,
 				BBDA56C62DFF118D00B61F05 /* SettingsDataStoreProtocol.swift in Sources */,
+				BBDA56CE2DFF166500B61F05 /* CreateImageServicesProtocol.swift in Sources */,
 				BB6DD09D2D39BCF900EF6AF9 /* StoryPromptSettingsView.swift in Sources */,
 				BBE522102DEA4A1000ADACA8 /* StorySetting.swift in Sources */,
 				BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */,
@@ -1283,12 +1335,16 @@
 				BBE16F202CC152C400A7EF1F /* Difficulty.swift in Sources */,
 				BB4EDB172C90D20300699E7D /* FlowTaleServices.swift in Sources */,
 				BB6572F72CDB991B00AC5981 /* SettingsState.swift in Sources */,
+				BBDA56E02DFF4D5E00B61F05 /* DefinitionServices.swift in Sources */,
+				BBDA56D22DFF1A9D00B61F05 /* TranslationServicesProtocol.swift in Sources */,
 				BB6BD0282DB177C200E45697 /* FlowTaleDataStoreError.swift in Sources */,
 				BB4EDB052C90C89C00699E7D /* FlowTaleState.swift in Sources */,
 				BBDA56C82DFF12C200B61F05 /* FlowTaleRepositoryError.swift in Sources */,
 				BBAE07CD2D0C765B00DA95CD /* APIRequestType.swift in Sources */,
 				BB6DD09B2D39BB9700EF6AF9 /* LanguageSettingsView.swift in Sources */,
 				BB0854852CB42C1400F1661B /* Story.swift in Sources */,
+				BBDA56D62DFF1C1800B61F05 /* CreateStoryServices.swift in Sources */,
+				BBDA56DA2DFF1D0A00B61F05 /* ModerationServices.swift in Sources */,
 				BBE636C92CCC0E8400873E68 /* ListOfSentencesView.swift in Sources */,
 				BB5062CC2DA875B50031B62B /* TranslationView.swift in Sources */,
 			);

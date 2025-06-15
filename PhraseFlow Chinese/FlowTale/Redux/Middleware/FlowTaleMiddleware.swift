@@ -26,9 +26,7 @@ private func isPlaybackAtEnd(_ state: FlowTaleState) -> Bool {
     return currentTime >= endTime
 }
 
-// Combine all middleware functions
 let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol> = { state, action, environment in
-    // Handle other actions
     switch action {
     case .translationAction(let translationAction):
         return await translationMiddleware(state, action, environment)
@@ -138,15 +136,12 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
 
             return .onLoadedInitialDefinitions(allDefinitions)
         } catch {
-            // If we fail here, we'll still try to show the chapter
             return .showSnackBarThenSaveStory(.chapterReady, story)
         }
         
     case .loadRemainingDefinitions(let chapter, let story, let sentenceIndex, let definitions):
         do {
-            // Check if we've processed all sentences
             if sentenceIndex >= chapter.sentences.count {
-                // We've processed all sentences, return action to mark definitions as complete
                 return .onLoadedDefinitions([])
             }
             
@@ -158,10 +153,8 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
                 deviceLanguage: state.deviceLanguage ?? .english
             )
 
-            // Save after each sentence's definitions are fetched
             try environment.saveDefinitions(definitionsForSentence)
 
-            // Return this batch to update the state first
             return .loadRemainingDefinitions(chapter, story, sentenceIndex: sentenceIndex + 1, previousDefinitions: definitionsForSentence)
         } catch {
             return .failedToLoadDefinitions
@@ -169,8 +162,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
     case .deleteStory(let story):
         do {
             try environment.unsaveStory(story)
-
-            // Pass the hidden story ID
             return .onDeletedStory(story.id)
         } catch {
             return .failedToDeleteStory
