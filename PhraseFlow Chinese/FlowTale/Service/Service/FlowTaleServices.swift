@@ -53,10 +53,7 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
 
     func fetchDefinitions(in sentence: Sentence?,
                           story: Story,
-                          deviceLanguage: Language) async throws -> [Definition]
-    {
-        let model = APIRequestType.openRouter(.geminiFlash)
-
+                          deviceLanguage: Language) async throws -> [Definition] {
         guard let sentence,
               !sentence.timestamps.isEmpty else {
             throw FlowTaleServicesError.failedToGetTimestamps
@@ -79,11 +76,7 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
             "response_format": definitionSchema()
         ]
 
-        let jsonString = try await makeRequest(type: model, requestBody: requestBody)
-
-        struct MultipleWordsResponse: Codable {
-            let words: [WordDefinition]
-        }
+        let jsonString = try await makeRequest(type: .openRouter(.geminiFlash), requestBody: requestBody)
 
         guard let data = jsonString.data(using: .utf8) else {
             throw FlowTaleServicesError.invalidJSON
@@ -91,27 +84,23 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
 
         let multipleWordsResponse = try JSONDecoder().decode(MultipleWordsResponse.self, from: data)
 
-        let wordDefinitions = multipleWordsResponse.words
+        let minCount = min(sentence.timestamps.count,
+                           multipleWordsResponse.words.count)
 
-        let minCount = min(sentence.timestamps.count, wordDefinitions.count)
-
-        let finalDefinitions: [Definition] = zip(sentence.timestamps.prefix(minCount),
-                                                 wordDefinitions.prefix(minCount))
-            .map { timeStamp, wordDef -> Definition in
-                return Definition(
-                    timestampData: timeStamp,
-                    sentence: sentence,
-                    detail: wordDef,
-                    language: story.language
-                )
-            }
-
-        return finalDefinitions
+        return zip(sentence.timestamps.prefix(minCount),
+                   multipleWordsResponse.words.prefix(minCount))
+        .map { timeStamp, wordDef -> Definition in
+            return Definition(
+                timestampData: timeStamp,
+                sentence: sentence,
+                detail: wordDef,
+                language: story.language
+            )
+        }
     }
 
     private func generateStoryRequest(story: Story,
-                                      deviceLanguage: Language?) async throws -> String
-    {
+                                      deviceLanguage: Language?) async throws -> String {
         guard let deviceLanguage else {
             throw FlowTaleServicesError.failedToGetDeviceLanguage
         }

@@ -122,6 +122,8 @@
 		BBDA56C22DFF10F200B61F05 /* UserLimitsDataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56C12DFF10F200B61F05 /* UserLimitsDataStoreProtocol.swift */; };
 		BBDA56C42DFF117F00B61F05 /* SettingsDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56C32DFF117F00B61F05 /* SettingsDataStore.swift */; };
 		BBDA56C62DFF118D00B61F05 /* SettingsDataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56C52DFF118D00B61F05 /* SettingsDataStoreProtocol.swift */; };
+		BBDA56C82DFF12C200B61F05 /* FlowTaleRepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56C72DFF12C200B61F05 /* FlowTaleRepositoryError.swift */; };
+		BBDA56CA2DFF132D00B61F05 /* MultipleWordsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56C92DFF132D00B61F05 /* MultipleWordsResponse.swift */; };
 		BBE16F202CC152C400A7EF1F /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */; };
 		BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F212CC2769C00A7EF1F /* StoryListView.swift */; };
 		BBE16F242CC2AFC800A7EF1F /* ChapterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */; };
@@ -329,6 +331,8 @@
 		BBDA56C12DFF10F200B61F05 /* UserLimitsDataStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLimitsDataStoreProtocol.swift; sourceTree = "<group>"; };
 		BBDA56C32DFF117F00B61F05 /* SettingsDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDataStore.swift; sourceTree = "<group>"; };
 		BBDA56C52DFF118D00B61F05 /* SettingsDataStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDataStoreProtocol.swift; sourceTree = "<group>"; };
+		BBDA56C72DFF12C200B61F05 /* FlowTaleRepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleRepositoryError.swift; sourceTree = "<group>"; };
+		BBDA56C92DFF132D00B61F05 /* MultipleWordsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleWordsResponse.swift; sourceTree = "<group>"; };
 		BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
 		BBE16F212CC2769C00A7EF1F /* StoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListView.swift; sourceTree = "<group>"; };
 		BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterListView.swift; sourceTree = "<group>"; };
@@ -551,6 +555,7 @@
 			isa = PBXGroup;
 			children = (
 				BB4EDB2A2C91B35D00699E7D /* Definition.swift */,
+				BBDA56C92DFF132D00B61F05 /* MultipleWordsResponse.swift */,
 				BB6BD0232DB1771B00E45697 /* WordDefinition.swift */,
 			);
 			path = Definition;
@@ -815,10 +820,10 @@
 		BBE522032DE9D87300ADACA8 /* Data Store */ = {
 			isa = PBXGroup;
 			children = (
-				BBDA56BB2DFF0F8200B61F05 /* DefinitionDataStore.swift */,
-				BBDA56BD2DFF0F9800B61F05 /* DefinitionDataStoreProtocol.swift */,
 				BB4EDB142C90CF7400699E7D /* FlowTaleDataStore.swift */,
 				BBE521FF2DE9D85B00ADACA8 /* FlowTaleDataStoreProtocol.swift */,
+				BBDA56BB2DFF0F8200B61F05 /* DefinitionDataStore.swift */,
+				BBDA56BD2DFF0F9800B61F05 /* DefinitionDataStoreProtocol.swift */,
 				BBDA56BF2DFF10E700B61F05 /* UserLimitsDataStore.swift */,
 				BBDA56C12DFF10F200B61F05 /* UserLimitsDataStoreProtocol.swift */,
 				BBDA56B72DFF0DF000B61F05 /* StoryDataStore.swift */,
@@ -833,6 +838,7 @@
 			isa = PBXGroup;
 			children = (
 				BB4EDB1C2C90DFDD00699E7D /* FlowTaleRepository.swift */,
+				BBDA56C72DFF12C200B61F05 /* FlowTaleRepositoryError.swift */,
 				BBE522042DE9D88F00ADACA8 /* FlowTaleRepositoryProtocol.swift */,
 			);
 			path = Repository;
@@ -1199,6 +1205,7 @@
 				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,
 				BB2893192DAAB49D00F7ED69 /* ChapterResponseDecoder.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FlowTaleDataStore.swift in Sources */,
+				BBDA56CA2DFF132D00B61F05 /* MultipleWordsResponse.swift in Sources */,
 				BB45C5692D4A785C00B3705A /* DailyLimitExplanationView.swift in Sources */,
 				BB7B6D9A2D1EEA3D0030344A /* StudyState.swift in Sources */,
 				BBE990C12D29C59C00FAD3FB /* MusicType.swift in Sources */,
@@ -1278,6 +1285,7 @@
 				BB6572F72CDB991B00AC5981 /* SettingsState.swift in Sources */,
 				BB6BD0282DB177C200E45697 /* FlowTaleDataStoreError.swift in Sources */,
 				BB4EDB052C90C89C00699E7D /* FlowTaleState.swift in Sources */,
+				BBDA56C82DFF12C200B61F05 /* FlowTaleRepositoryError.swift in Sources */,
 				BBAE07CD2D0C765B00DA95CD /* APIRequestType.swift in Sources */,
 				BB6DD09B2D39BB9700EF6AF9 /* LanguageSettingsView.swift in Sources */,
 				BB0854852CB42C1400F1661B /* Story.swift in Sources */,

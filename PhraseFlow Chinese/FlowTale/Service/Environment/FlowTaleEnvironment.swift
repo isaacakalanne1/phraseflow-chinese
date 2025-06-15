@@ -29,7 +29,6 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
                           voice: Voice,
                           language: Language) async throws -> Chapter
     {
-        // We will not track character usage here, as the middleware will handle it with the correct subscription
         let (processedChapter, _) = try await repository.synthesizeSpeech(chapter,
                                                                          story: story,
                                                                          voice: voice,
@@ -37,7 +36,6 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         return processedChapter
     }
     
-    // New function that exposes the character count for the middleware
     func synthesizeSpeechWithCharacterCount(
         _ chapter: Chapter,
         story: Story,
