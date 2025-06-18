@@ -72,10 +72,7 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
     case .selectTab(_, let shouldPlaySound):
         return shouldPlaySound ? .audioAction(.playSound(.tabPress)) : nil
     case .failedToSaveStory,
-            .refreshChapterView,
-            .refreshTranslationView,
             .failedToSaveStoryAndSettings,
-            .refreshStoryListView,
             .updateAutoScrollEnabled,
             .hideSnackbar,
             .updateCurrentSentence,

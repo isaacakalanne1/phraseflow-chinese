@@ -52,9 +52,6 @@ struct TranslationView: View {
         .onChange(of: inputText, { oldValue, newValue in
             store.dispatch(.translationAction(.updateInputText(newValue)))
         })
-        .onChange(of: store.state.viewState.translationViewId) { _, _ in
-            store.dispatch(.translationAction(.clearTranslation))
-        }
     }
 }
 

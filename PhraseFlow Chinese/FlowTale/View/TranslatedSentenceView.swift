@@ -47,6 +47,5 @@ struct TranslatedSentenceView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             }
         }
-        .id(store.state.viewState.translationViewId)
     }
 }

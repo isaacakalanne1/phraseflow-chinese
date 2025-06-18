@@ -34,25 +34,12 @@ enum FlowTaleAction {
     case failedToSaveStoryAndSettings
     case showSnackBarThenSaveStory(SnackBarType, Story)
 
-
     case selectChapter(Story, chapterIndex: Int)
     case onSelectedChapter
-
-
-    case refreshChapterView
-    case refreshTranslationView
-    case refreshStoryListView
-
 
     case showSnackBar(SnackBarType)
     case hideSnackbar
     case checkDeviceVolumeZero
-
-
-
-
-
-
     case selectTab(ContentTab, shouldPlaySound: Bool)
 
 

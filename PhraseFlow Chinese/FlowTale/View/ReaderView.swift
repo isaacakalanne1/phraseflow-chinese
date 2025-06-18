@@ -54,7 +54,6 @@ struct ReaderView: View {
             VStack {
                 ListOfSentencesView(chapter: chapter)
                     .onAppear { store.dispatch(.checkDeviceVolumeZero) }
-                    .id(store.state.viewState.chapterViewId)
                     .padding()
             }
             .cardBackground()

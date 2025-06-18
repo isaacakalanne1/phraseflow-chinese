@@ -65,12 +65,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         if let language = newState.storyState.currentStory?.language {
             newState.settingsState.language = language
         }
-    case .refreshChapterView:
-        newState.viewState.chapterViewId = UUID()
-    case .refreshTranslationView:
-        newState.viewState.translationViewId = UUID()
-    case .refreshStoryListView:
-        newState.viewState.storyListViewId = UUID()
     case .showSnackBar(let type),
           .showSnackBarThenSaveStory(let type, _):
         if let url = type.sound.fileURL,

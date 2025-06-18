@@ -40,6 +40,5 @@ struct StoryListView: View {
                 .background(FlowTaleColor.background)
         }
         .navigationBarTitleDisplayMode(.inline)
-        .id(store.state.viewState.storyListViewId)
     }
 }

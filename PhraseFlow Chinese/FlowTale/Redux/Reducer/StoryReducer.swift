@@ -16,7 +16,6 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
     case .onLoadedStories(let stories, let isAppLaunch):
         newState.storyState.savedStories = stories
         newState.viewState.isInitialisingApp = false
-        newState.viewState.storyListViewId = UUID()
         if newState.storyState.currentStory == nil ||
            !stories.contains(where: { $0.id == newState.storyState.currentStory?.id }) {
             newState.storyState.currentStory = stories.first
@@ -53,7 +52,6 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
         
     case .onCreatedChapter(var story):
         newState.definitionState.currentDefinition = nil
-        newState.viewState.chapterViewId = UUID()
 
         story.currentPlaybackTime = 0
         story.currentChapterIndex = story.chapters.count - 1
@@ -75,7 +73,6 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
         }
         
     case .goToNextChapter:
-        newState.viewState.chapterViewId = UUID()
         var newStory = newState.storyState.currentStory
         newStory?.currentChapterIndex += 1
         newState.storyState.currentStory = newStory
