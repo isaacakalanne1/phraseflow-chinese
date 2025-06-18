@@ -61,24 +61,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             let data = newState.storyState.currentChapter?.audio.data
             newState.audioState.audioPlayer = data?.createAVPlayer() ?? AVPlayer()
         }
-
-    case .selectStoryFromSnackbar(var story):
-        newState.definitionState.currentDefinition = nil
-        story.lastUpdated = .now
-        story.currentChapterIndex = story.chapters.count - 1
-        
-        if let chapter = story.chapters[safe: story.currentChapterIndex] {
-            if let voice = chapter.audioVoice {
-                newState.settingsState.voice = voice
-            }
-        }
-        
-        newState.storyState.currentStory = story
-        newState.settingsState.language = story.language
-        
-        let data = newState.storyState.currentChapter?.audio.data
-        let player = data?.createAVPlayer()
-        newState.audioState.audioPlayer = player ?? AVPlayer()
     case .onSelectedChapter:
         if let language = newState.storyState.currentStory?.language {
             newState.settingsState.language = language

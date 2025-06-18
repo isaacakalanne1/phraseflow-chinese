@@ -78,7 +78,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             .refreshStoryListView,
             .updateAutoScrollEnabled,
             .hideSnackbar,
-            .selectStoryFromSnackbar,
             .updateCurrentSentence,
             .clearCurrentDefinition,
             .updateLoadingState:

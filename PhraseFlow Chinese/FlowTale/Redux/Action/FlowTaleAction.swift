@@ -36,7 +36,6 @@ enum FlowTaleAction {
 
 
     case selectChapter(Story, chapterIndex: Int)
-    case selectStoryFromSnackbar(Story)
     case onSelectedChapter
 
 
