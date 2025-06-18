@@ -40,31 +40,15 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         
     case .userLimitAction(let userLimitAction):
         newState = userLimitReducer(state, userLimitAction)
+        
+    case .navigationAction(let navigationAction):
+        newState = navigationReducer(state, navigationAction)
     case .updateCurrentSentence(let sentence):
         newState.storyState.currentSentence = sentence
     case .clearCurrentDefinition:
         newState.definitionState.currentDefinition = nil
     case .updateAutoScrollEnabled(let isEnabled):
         newState.viewState.isAutoscrollEnabled = isEnabled
-    case .selectChapter(var story, let chapterIndex):
-        if let chapter = story.chapters[safe: chapterIndex] {
-            newState.definitionState.currentDefinition = nil
-            story.lastUpdated = .now
-            newState.storyState.currentStory = story
-            newState.settingsState.language = story.language
-
-            if let voice = chapter.audioVoice {
-                newState.settingsState.voice = voice
-            }
-
-            story.currentChapterIndex = chapterIndex
-            let data = newState.storyState.currentChapter?.audio.data
-            newState.audioState.audioPlayer = data?.createAVPlayer() ?? AVPlayer()
-        }
-    case .onSelectedChapter:
-        if let language = newState.storyState.currentStory?.language {
-            newState.settingsState.language = language
-        }
     case .showSnackBar(let type),
           .showSnackBarThenSaveStory(let type, _):
         if let url = type.sound.fileURL,
@@ -76,8 +60,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.snackBarState.isShowing = true
     case .hideSnackbar:
         newState.snackBarState.isShowing = false
-    case .selectTab(let tab, _):
-        newState.viewState.contentTab = tab
     case .hideSnackbarThenSaveStoryAndSettings:
         newState.snackBarState.isShowing = false
     case .updateLoadingState(let loadingState):

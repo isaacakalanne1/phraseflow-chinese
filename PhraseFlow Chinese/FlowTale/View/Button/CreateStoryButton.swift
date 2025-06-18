@@ -19,7 +19,7 @@ struct CreateStoryButton: View {
                 store.dispatch(.storyAction(.createChapter(.newStory)))
             } else {
                 store.dispatch(.audioAction(.playSound(.largeBoom)))
-                store.dispatch(.selectTab(.reader, shouldPlaySound: false))
+                store.dispatch(.navigationAction(.selectTab(.reader, shouldPlaySound: false)))
                 store.dispatch(.storyAction(.createChapter(.newStory)))
             }
         }

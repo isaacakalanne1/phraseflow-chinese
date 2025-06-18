@@ -31,6 +31,8 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return await moderationMiddleware(state, .moderationAction(moderationAction), environment)
     case .userLimitAction(let userLimitAction):
         return await userLimitMiddleware(state, .userLimitAction(userLimitAction), environment)
+    case .navigationAction(let navigationAction):
+        return await navigationMiddleware(state, .navigationAction(navigationAction), environment)
 
     case .showSnackBar(let type):
         state.appAudioState.audioPlayer.play()
@@ -57,10 +59,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             return .storyAction(.saveStoryAndSettings(firstStory))
         }
         return nil
-    case .selectChapter:
-        return .onSelectedChapter
-    case .onSelectedChapter:
-        return .selectTab(.reader, shouldPlaySound: false)
     case .checkDeviceVolumeZero:
         let audioSession = AVAudioSession.sharedInstance()
         do {
@@ -69,8 +67,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             return nil
         }
         return audioSession.outputVolume == 0.0 ? .showSnackBar(.deviceVolumeZero) : nil
-    case .selectTab(_, let shouldPlaySound):
-        return shouldPlaySound ? .audioAction(.playSound(.tabPress)) : nil
     case .failedToSaveStory,
             .failedToSaveStoryAndSettings,
             .updateAutoScrollEnabled,

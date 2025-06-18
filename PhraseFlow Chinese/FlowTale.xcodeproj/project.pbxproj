@@ -92,6 +92,9 @@
 		BB756CF72E0344F700365610 /* UserLimitAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CF62E0344F700365610 /* UserLimitAction.swift */; };
 		BB756CF92E0344FC00365610 /* UserLimitMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CF82E0344FC00365610 /* UserLimitMiddleware.swift */; };
 		BB756CFB2E03450500365610 /* UserLimitReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CFA2E03450500365610 /* UserLimitReducer.swift */; };
+		BB756CFD2E03476B00365610 /* NavigationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CFC2E03476B00365610 /* NavigationAction.swift */; };
+		BB756CFF2E03477000365610 /* NavigationMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CFE2E03477000365610 /* NavigationMiddleware.swift */; };
+		BB756D012E03477500365610 /* NavigationReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756D002E03477500365610 /* NavigationReducer.swift */; };
 		BB7B6D942D1ACEBF0030344A /* libPods-FlowTale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */; };
 		BB7B6D962D1DF0990030344A /* StudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D952D1DF0990030344A /* StudyView.swift */; };
 		BB7B6D982D1E0D070030344A /* StoryInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D972D1E0D070030344A /* StoryInfoView.swift */; };
@@ -319,6 +322,9 @@
 		BB756CF62E0344F700365610 /* UserLimitAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLimitAction.swift; sourceTree = "<group>"; };
 		BB756CF82E0344FC00365610 /* UserLimitMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLimitMiddleware.swift; sourceTree = "<group>"; };
 		BB756CFA2E03450500365610 /* UserLimitReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLimitReducer.swift; sourceTree = "<group>"; };
+		BB756CFC2E03476B00365610 /* NavigationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationAction.swift; sourceTree = "<group>"; };
+		BB756CFE2E03477000365610 /* NavigationMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationMiddleware.swift; sourceTree = "<group>"; };
+		BB756D002E03477500365610 /* NavigationReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationReducer.swift; sourceTree = "<group>"; };
 		BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-FlowTale.a"; path = "../../../../Library/Developer/Xcode/DerivedData/FlowTale-dzblbgdyrqlsjdggurnqsbvwzaoq/Build/Products/Debug-iphoneos/libPods-FlowTale.a"; sourceTree = "<group>"; };
 		BB7B6D952D1DF0990030344A /* StudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyView.swift; sourceTree = "<group>"; };
 		BB7B6D972D1E0D070030344A /* StoryInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryInfoView.swift; sourceTree = "<group>"; };
@@ -935,6 +941,7 @@
 				BB756CDA2E0337A700365610 /* AudioAction.swift */,
 				BB756CE22E033C4200365610 /* DefinitionAction.swift */,
 				BB756CF02E03439D00365610 /* ModerationAction.swift */,
+				BB756CFC2E03476B00365610 /* NavigationAction.swift */,
 				BB756CD42E03319A00365610 /* StoryAction.swift */,
 				BBE522082DE9D8D600ADACA8 /* StudyAction.swift */,
 				BB756CE62E033DF700365610 /* SubscriptionAction.swift */,
@@ -1003,6 +1010,7 @@
 				BB756CD82E03377600365610 /* AudioMiddleware.swift */,
 				BB756CDE2E033C2D00365610 /* DefinitionMiddleware.swift */,
 				BB756CF22E0343A400365610 /* ModerationMiddleware.swift */,
+				BB756CFE2E03477000365610 /* NavigationMiddleware.swift */,
 				BB756CD22E03318400365610 /* StoryMiddleware.swift */,
 				BBEF63582DA1F99700F93ECC /* StudyMiddleware.swift */,
 				BB756CE42E033DE900365610 /* SubscriptionMiddleware.swift */,
@@ -1020,6 +1028,7 @@
 				BB756CDC2E03383800365610 /* AudioReducer.swift */,
 				BB756CE02E033C3A00365610 /* DefinitionReducer.swift */,
 				BB756CF42E0343A900365610 /* ModerationReducer.swift */,
+				BB756D002E03477500365610 /* NavigationReducer.swift */,
 				BB756CD62E03322200365610 /* StoryReducer.swift */,
 				BBEF63562DA1F89B00F93ECC /* StudyReducer.swift */,
 				BB756CE82E033DFD00365610 /* SubscriptionReducer.swift */,
@@ -1282,6 +1291,7 @@
 				BBB1B7CC2D7B34EB0023147B /* MainButton.swift in Sources */,
 				BB2893162DAA82E300F7ED69 /* TranslationState.swift in Sources */,
 				BB7B6D9C2D1F30BC0030344A /* SnackBar.swift in Sources */,
+				BB756CFD2E03476B00365610 /* NavigationAction.swift in Sources */,
 				BB6572CE2CD12A9200AC5981 /* ChapterResponse.swift in Sources */,
 				BBDA56DE2DFF4D5000B61F05 /* DefinitionServicesProtocol.swift in Sources */,
 				BB756CE72E033DF700365610 /* SubscriptionAction.swift in Sources */,
@@ -1387,6 +1397,7 @@
 				BB84E0A22CF0AF4200520F5E /* CreateStorySettingsView.swift in Sources */,
 				BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */,
 				BBE990B72D29BC5500FAD3FB /* AppSound.swift in Sources */,
+				BB756CFF2E03477000365610 /* NavigationMiddleware.swift in Sources */,
 				BBE522212DEA591300ADACA8 /* StoryListContent.swift in Sources */,
 				BBE522222DEA591300ADACA8 /* StoryListEmptyState.swift in Sources */,
 				BBE522232DEA591300ADACA8 /* StoryCardOverlay.swift in Sources */,
@@ -1405,6 +1416,7 @@
 				BB6572D62CD4E09000AC5981 /* ActionButton.swift in Sources */,
 				BBDA56BE2DFF0F9800B61F05 /* DefinitionDataStoreProtocol.swift in Sources */,
 				BB756CEB2E03417300365610 /* AppSettingsAction.swift in Sources */,
+				BB756D012E03477500365610 /* NavigationReducer.swift in Sources */,
 				BBE16F242CC2AFC800A7EF1F /* ChapterListView.swift in Sources */,
 				BB4EDB032C90C86300699E7D /* FlowTaleStore.swift in Sources */,
 				BB6BD0362DB25C9100E45697 /* SpeechSpeedButton.swift in Sources */,

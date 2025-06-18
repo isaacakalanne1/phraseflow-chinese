@@ -173,7 +173,7 @@ struct ChapterListView: View {
             withAnimation(.easeInOut) {
                 store.dispatch(.audioAction(.playSound(.openChapter)))
                 let chapterIndex = story.chapters.count - 1 - index
-                store.dispatch(.selectChapter(story, chapterIndex: chapterIndex))
+                store.dispatch(.navigationAction(.selectChapter(story, chapterIndex: chapterIndex)))
             }
         } label: {
             HStack(spacing: 12) {

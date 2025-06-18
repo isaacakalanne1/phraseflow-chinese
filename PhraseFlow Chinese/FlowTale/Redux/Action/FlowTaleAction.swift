@@ -19,14 +19,12 @@ enum FlowTaleAction {
     case appSettingsAction(AppSettingsAction)
     case moderationAction(ModerationAction)
     case userLimitAction(UserLimitAction)
+    case navigationAction(NavigationAction)
     case updateCurrentSentence(Sentence)
     case updateAutoScrollEnabled(isEnabled: Bool)
     case clearCurrentDefinition
 
     case updateLoadingState(LoadingState)
-
-
-
 
     case failedToSaveStory
 
@@ -34,13 +32,9 @@ enum FlowTaleAction {
     case failedToSaveStoryAndSettings
     case showSnackBarThenSaveStory(SnackBarType, Story)
 
-    case selectChapter(Story, chapterIndex: Int)
-    case onSelectedChapter
-
     case showSnackBar(SnackBarType)
     case hideSnackbar
     case checkDeviceVolumeZero
-    case selectTab(ContentTab, shouldPlaySound: Bool)
 
 
 }

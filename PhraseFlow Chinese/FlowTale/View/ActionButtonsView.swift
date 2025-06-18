@@ -26,7 +26,7 @@ struct ActionButtonsView: View {
                                  size: 30) {
                         if !isSelected {
                             withAnimation {
-                                store.dispatch(.selectTab(tab, shouldPlaySound: true))
+                                store.dispatch(.navigationAction(.selectTab(tab, shouldPlaySound: true)))
                             }
                         }
                     }
