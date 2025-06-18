@@ -14,6 +14,7 @@ enum FlowTaleAction {
     case translationAction(TranslationAction)
     case storyAction(StoryAction)
     case audioAction(AudioAction)
+    case definitionAction(DefinitionAction)
     case updateCurrentSentence(Sentence)
     case updateAutoScrollEnabled(isEnabled: Bool)
     case clearCurrentDefinition
@@ -42,19 +43,6 @@ enum FlowTaleAction {
     case selectStoryFromSnackbar(Story)
     case onSelectedChapter
 
-    case loadDefinitions
-    case loadInitialSentenceDefinitions(Chapter, Story, Int)
-    case onLoadedInitialDefinitions([Definition])
-    case loadRemainingDefinitions(Chapter, Story, sentenceIndex: Int, previousDefinitions: [Definition])
-    case onLoadedDefinitions([Definition])
-    case failedToLoadDefinitions
-
-    case defineSentence(WordTimeStampData, shouldForce: Bool)
-    case onDefinedCharacter(Definition)
-    case onDefinedSentence(Sentence, [Definition], Definition)
-    case failedToDefineSentence
-    case saveDefinitions
-    case failedToSaveDefinitions
 
     case updateShowDefinition(Bool)
     case updateShowEnglish(Bool)
@@ -64,7 +52,6 @@ enum FlowTaleAction {
     case updateLanguage(Language)
 
     case refreshChapterView
-    case refreshDefinitionView
     case refreshTranslationView
     case refreshStoryListView
 
@@ -104,7 +91,6 @@ enum FlowTaleAction {
     case hideSnackbar
     case checkDeviceVolumeZero
 
-    case updateStudiedWord(Definition)
 
     case onDailyChapterLimitReached(nextAvailable: String)
 
@@ -123,8 +109,6 @@ enum FlowTaleAction {
     case updateIsShowingCustomPromptAlert(Bool)
     case selectTab(ContentTab, shouldPlaySound: Bool)
 
-    case deleteDefinition(Definition)
-    case failedToDeleteDefinition
 
     case checkFreeTrialLimit
     case hasReachedFreeTrialLimit

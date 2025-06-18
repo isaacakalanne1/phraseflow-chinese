@@ -156,7 +156,7 @@ let translationMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnv
             return .translationAction(.defineTranslationWord(word))
 
         case .onDefinedTranslationWord:
-            return .loadDefinitions
+            return .definitionAction(.loadDefinitions)
         case .updateInputText,
                 .updateSourceLanguage,
                 .updateTargetLanguage,

@@ -34,7 +34,7 @@ struct FlowTaleApp: App {
                     try? AVAudioSession.sharedInstance().setCategory(.playback)
                     store.dispatch(.loadAppSettings)
                     store.dispatch(.storyAction(.loadStories(isAppLaunch: true)))
-                    store.dispatch(.loadDefinitions)
+                    store.dispatch(.definitionAction(.loadDefinitions))
                     store.dispatch(.fetchSubscriptions)
                     store.dispatch(.getCurrentEntitlements)
                     store.dispatch(.observeTransactionUpdates)

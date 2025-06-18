@@ -61,7 +61,7 @@ struct CharacterView: View {
                                                                   story: store.state.storyState.currentStory)))
 
                             if let existingDefinition = store.state.definitionState.definition(timestampData: word) {
-                                store.dispatch(.onDefinedCharacter(existingDefinition))
+                                store.dispatch(.definitionAction(.onDefinedCharacter(existingDefinition)))
                             }
                         }
                     }

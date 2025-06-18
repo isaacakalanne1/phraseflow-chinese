@@ -25,6 +25,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         
     case .audioAction(let audioAction):
         newState = audioReducer(state, audioAction)
+        
+    case .definitionAction(let definitionAction):
+        newState = definitionReducer(state, definitionAction)
     case .updateCurrentSentence(let sentence):
         newState.storyState.currentSentence = sentence
     case .clearCurrentDefinition:
@@ -37,34 +40,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         if newState.audioState.audioPlayer.rate != 0 {
             newState.audioState.audioPlayer.rate = speed.playRate
         }
-    case .defineSentence(let wordTimeStampData, let shouldForce):
-        newState.viewState.isDefining = true
-    case .onDefinedCharacter(var definition):
-        definition.hasBeenSeen = true
-        definition.creationDate = .now
-        if definition.audioData == nil,
-           let extractedAudio = AudioExtractor.shared.extractAudioSegment(
-               from: state.audioState.audioPlayer,
-               startTime: definition.timestampData.time,
-               duration: definition.timestampData.duration
-           ) {
-            definition.audioData = extractedAudio
-        }
-
-        newState.definitionState.currentDefinition = definition
-        newState.definitionState.definitions.removeAll(where: { $0.id == definition.id })
-        newState.definitionState.definitions.append(definition)
-        newState.viewState.isDefining = false
-    case .onDefinedSentence(_, var definitions, var tappedDefinition):
-        tappedDefinition.hasBeenSeen = true
-        tappedDefinition.creationDate = .now
-        
-        newState.definitionState.currentDefinition = tappedDefinition
-        newState.definitionState.definitions.append(contentsOf: definitions)
-        newState.definitionState.definitions.removeAll(where: { $0.id == tappedDefinition.id })
-        newState.definitionState.definitions.append(tappedDefinition)
-
-        newState.viewState.isDefining = false
     case .updateShowDefinition(let isShowing):
         newState.settingsState.isShowingDefinition = isShowing
     case .updateShowEnglish(let isShowing):
@@ -110,8 +85,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         }
     case .refreshChapterView:
         newState.viewState.chapterViewId = UUID()
-    case .refreshDefinitionView:
-        newState.viewState.definitionViewId = UUID()
     case .refreshTranslationView:
         newState.viewState.translationViewId = UUID()
     case .refreshStoryListView:
@@ -127,26 +100,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
                 newState.settingsState.voice = voice
             }
         }
-    case .onLoadedInitialDefinitions(let definitions):
-        // Add the initial definitions to our state
-        print("Loading \(definitions.count) initial definitions")
-        newState.definitionState.definitions.addDefinitions(definitions)
-        
-        // Mark that the chapter is ready for viewing
-        newState.viewState.loadingState = .complete
-
-        newState.viewState.isWritingChapter = false
-
-    case .loadRemainingDefinitions(_, _, _, let definitions):
-        newState.definitionState.definitions.append(contentsOf: definitions)
-        
-    case .onLoadedDefinitions(let definitions):
-        print("Loading \(definitions.count) definitions")
-        print("Definitions with hasBeenSeen=true: \(definitions.filter { $0.hasBeenSeen }.count)")
-
-        newState.definitionState.definitions.addDefinitions(definitions)
-    case .deleteDefinition(let definition):
-        newState.definitionState.definitions.removeAll(where: { $0.id == definition.id })
     case .onFetchedSubscriptions(let subscriptions):
         newState.subscriptionState.products = subscriptions
     case .updatePurchasedProducts(let entitlements, _):
@@ -177,18 +130,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.snackBarState.isShowing = true
     case .hideSnackbar:
         newState.snackBarState.isShowing = false
-    case .failedToDefineSentence:
-        newState.viewState.isDefining = false
-    case .updateStudiedWord(var definition):
-        // Add the current date to studied dates
-        definition.studiedDates.append(.now)
-
-        // Update the definition in the list
-        if let index = newState.definitionState.definitions.firstIndex(where: { $0.timestampData == definition.timestampData }) {
-            newState.definitionState.definitions.replaceSubrange(index...index, with: [definition])
-        } else {
-            newState.definitionState.definitions.append(definition)
-        }
     case .updateCustomPrompt(let prompt):
         newState.settingsState.customPrompt = prompt
     case .passedModeration(let prompt):
@@ -254,11 +195,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .failedToLoadAppSettings,
             .loadAppSettings,
             .saveAppSettings,
-            .loadDefinitions,
-            .failedToLoadDefinitions,
-            .loadInitialSentenceDefinitions,
-            .saveDefinitions,
-            .failedToSaveDefinitions,
             .failedToSaveStoryAndSettings,
             .fetchSubscriptions,
             .failedToFetchSubscriptions,
@@ -273,8 +209,7 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .failedToModerateText,
             .checkFreeTrialLimit,
             .hasReachedDailyLimit,
-            .checkDeviceVolumeZero,
-            .failedToDeleteDefinition:
+            .checkDeviceVolumeZero:
         break
     }
 

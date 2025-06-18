@@ -96,7 +96,7 @@ struct StudyView: View {
 
     func goToNextDefinition() {
         if let definition = currentDefinition {
-            store.dispatch(.updateStudiedWord(definition))
+            store.dispatch(.definitionAction(.updateStudiedWord(definition)))
         }
         index = (index + 1) % studyWords.count
         store.dispatch(.audioAction(.playSound(.nextStudyWord)))

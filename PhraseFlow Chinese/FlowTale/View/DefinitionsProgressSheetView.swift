@@ -118,7 +118,7 @@ struct DefinitionsProgressSheetView: View {
                             }
                             .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
                                 Button(role: .destructive) {
-                                    store.dispatch(.deleteDefinition(definition))
+                                    store.dispatch(.definitionAction(.deleteDefinition(definition)))
                                     store.dispatch(.audioAction(.playSound(.actionButtonPress)))
                                 } label: {
                                     Label("Delete", systemImage: "trash")
