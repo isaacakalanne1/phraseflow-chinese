@@ -86,6 +86,9 @@
 		BB756CEB2E03417300365610 /* AppSettingsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CEA2E03417300365610 /* AppSettingsAction.swift */; };
 		BB756CED2E03417900365610 /* AppSettingsMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CEC2E03417900365610 /* AppSettingsMiddleware.swift */; };
 		BB756CEF2E03417E00365610 /* AppSettingsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CEE2E03417E00365610 /* AppSettingsReducer.swift */; };
+		BB756CF12E03439D00365610 /* ModerationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CF02E03439D00365610 /* ModerationAction.swift */; };
+		BB756CF32E0343A400365610 /* ModerationMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CF22E0343A400365610 /* ModerationMiddleware.swift */; };
+		BB756CF52E0343A900365610 /* ModerationReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CF42E0343A900365610 /* ModerationReducer.swift */; };
 		BB7B6D942D1ACEBF0030344A /* libPods-FlowTale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */; };
 		BB7B6D962D1DF0990030344A /* StudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D952D1DF0990030344A /* StudyView.swift */; };
 		BB7B6D982D1E0D070030344A /* StoryInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D972D1E0D070030344A /* StoryInfoView.swift */; };
@@ -307,6 +310,9 @@
 		BB756CEA2E03417300365610 /* AppSettingsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsAction.swift; sourceTree = "<group>"; };
 		BB756CEC2E03417900365610 /* AppSettingsMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsMiddleware.swift; sourceTree = "<group>"; };
 		BB756CEE2E03417E00365610 /* AppSettingsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsReducer.swift; sourceTree = "<group>"; };
+		BB756CF02E03439D00365610 /* ModerationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationAction.swift; sourceTree = "<group>"; };
+		BB756CF22E0343A400365610 /* ModerationMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationMiddleware.swift; sourceTree = "<group>"; };
+		BB756CF42E0343A900365610 /* ModerationReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationReducer.swift; sourceTree = "<group>"; };
 		BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-FlowTale.a"; path = "../../../../Library/Developer/Xcode/DerivedData/FlowTale-dzblbgdyrqlsjdggurnqsbvwzaoq/Build/Products/Debug-iphoneos/libPods-FlowTale.a"; sourceTree = "<group>"; };
 		BB7B6D952D1DF0990030344A /* StudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyView.swift; sourceTree = "<group>"; };
 		BB7B6D972D1E0D070030344A /* StoryInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryInfoView.swift; sourceTree = "<group>"; };
@@ -922,6 +928,7 @@
 				BB756CEA2E03417300365610 /* AppSettingsAction.swift */,
 				BB756CDA2E0337A700365610 /* AudioAction.swift */,
 				BB756CE22E033C4200365610 /* DefinitionAction.swift */,
+				BB756CF02E03439D00365610 /* ModerationAction.swift */,
 				BB756CD42E03319A00365610 /* StoryAction.swift */,
 				BBE522082DE9D8D600ADACA8 /* StudyAction.swift */,
 				BB756CE62E033DF700365610 /* SubscriptionAction.swift */,
@@ -988,6 +995,7 @@
 				BB756CEC2E03417900365610 /* AppSettingsMiddleware.swift */,
 				BB756CD82E03377600365610 /* AudioMiddleware.swift */,
 				BB756CDE2E033C2D00365610 /* DefinitionMiddleware.swift */,
+				BB756CF22E0343A400365610 /* ModerationMiddleware.swift */,
 				BB756CD22E03318400365610 /* StoryMiddleware.swift */,
 				BBEF63582DA1F99700F93ECC /* StudyMiddleware.swift */,
 				BB756CE42E033DE900365610 /* SubscriptionMiddleware.swift */,
@@ -1003,6 +1011,7 @@
 				BB756CEE2E03417E00365610 /* AppSettingsReducer.swift */,
 				BB756CDC2E03383800365610 /* AudioReducer.swift */,
 				BB756CE02E033C3A00365610 /* DefinitionReducer.swift */,
+				BB756CF42E0343A900365610 /* ModerationReducer.swift */,
 				BB756CD62E03322200365610 /* StoryReducer.swift */,
 				BBEF63562DA1F89B00F93ECC /* StudyReducer.swift */,
 				BB756CE82E033DFD00365610 /* SubscriptionReducer.swift */,
@@ -1256,6 +1265,7 @@
 				BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */,
 				BB756CD32E03318400365610 /* StoryMiddleware.swift in Sources */,
 				BB84E0AD2CF4952700520F5E /* strings-enum.stencil in Sources */,
+				BB756CF32E0343A400365610 /* ModerationMiddleware.swift in Sources */,
 				BBDA56C22DFF10F200B61F05 /* UserLimitsDataStoreProtocol.swift in Sources */,
 				BBDA56C02DFF10E700B61F05 /* UserLimitsDataStore.swift in Sources */,
 				BB6BD0152DB1768200E45697 /* ModerationResult.swift in Sources */,
@@ -1285,6 +1295,7 @@
 				BB756CEF2E03417E00365610 /* AppSettingsReducer.swift in Sources */,
 				BB756CDB2E0337A700365610 /* AudioAction.swift in Sources */,
 				BB6BD0102DB1639D00E45697 /* AVPlayer+Play.swift in Sources */,
+				BB756CF12E03439D00365610 /* ModerationAction.swift in Sources */,
 				BB756CE52E033DE900365610 /* SubscriptionMiddleware.swift in Sources */,
 				BB7B6D982D1E0D070030344A /* StoryInfoView.swift in Sources */,
 				BB4E6BF82D246AEF002B5CBA /* LoadingState.swift in Sources */,
@@ -1402,6 +1413,7 @@
 				BBAE07CD2D0C765B00DA95CD /* APIRequestType.swift in Sources */,
 				BB756CD52E03319A00365610 /* StoryAction.swift in Sources */,
 				BB6DD09B2D39BB9700EF6AF9 /* LanguageSettingsView.swift in Sources */,
+				BB756CF52E0343A900365610 /* ModerationReducer.swift in Sources */,
 				BB0854852CB42C1400F1661B /* Story.swift in Sources */,
 				BBDA56D62DFF1C1800B61F05 /* CreateStoryServices.swift in Sources */,
 				BBDA56DA2DFF1D0A00B61F05 /* ModerationServices.swift in Sources */,

@@ -147,16 +147,16 @@ struct StoryPromptSettingsView: View {
                 get: { store.state.viewState.isShowingModerationFailedAlert },
                 set: { newValue in
                     if !newValue {
-                        store.dispatch(.dismissFailedModerationAlert)
+                        store.dispatch(.moderationAction(.dismissFailedModerationAlert))
                     }
                 }
             ),
             actions: {
                 Button(LocalizedString.failedModerationWhyButton) {
-                    store.dispatch(.showModerationDetails)
+                    store.dispatch(.moderationAction(.showModerationDetails))
                 }
                 Button(LocalizedString.failedModerationOkButton) {
-                    store.dispatch(.dismissFailedModerationAlert)
+                    store.dispatch(.moderationAction(.dismissFailedModerationAlert))
                 }
             },
             message: {
@@ -169,7 +169,7 @@ struct StoryPromptSettingsView: View {
                 get: { store.state.viewState.isShowingModerationDetails },
                 set: {
                     if !$0 {
-                        store.dispatch(.updateIsShowingModerationDetails(isShowing: false))
+                        store.dispatch(.moderationAction(.updateIsShowingModerationDetails(isShowing: false)))
                     }
                 }
             )

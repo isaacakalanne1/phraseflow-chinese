@@ -17,6 +17,7 @@ enum FlowTaleAction {
     case definitionAction(DefinitionAction)
     case subscriptionAction(SubscriptionAction)
     case appSettingsAction(AppSettingsAction)
+    case moderationAction(ModerationAction)
     case updateCurrentSentence(Sentence)
     case updateAutoScrollEnabled(isEnabled: Bool)
     case clearCurrentDefinition
@@ -27,11 +28,6 @@ enum FlowTaleAction {
     case showFreeLimitExplanationScreen(isShowing: Bool)
     case showDailyLimitExplanationScreen(isShowing: Bool)
 
-    case didNotPassModeration
-    case dismissFailedModerationAlert
-    case showModerationDetails
-
-    case updateIsShowingModerationDetails(isShowing: Bool)
 
     case failedToSaveStory
 
@@ -59,11 +55,6 @@ enum FlowTaleAction {
 
 
 
-    case moderateText(String)
-    case onModeratedText(ModerationResponse, String)
-    case failedToModerateText
-
-    case passedModeration(String)
 
     case selectTab(ContentTab, shouldPlaySound: Bool)
 

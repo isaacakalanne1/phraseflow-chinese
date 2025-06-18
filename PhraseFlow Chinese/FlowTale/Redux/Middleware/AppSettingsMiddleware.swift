@@ -50,7 +50,7 @@ let appSettingsMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnv
                 return nil
             case .customPrompt(let prompt):
                 let isNewPrompt = !state.settingsState.customPrompts.contains(prompt)
-                return isNewPrompt ? .moderateText(prompt) : nil
+                return isNewPrompt ? .moderationAction(.moderateText(prompt)) : nil
             }
             
         case .deleteCustomPrompt:

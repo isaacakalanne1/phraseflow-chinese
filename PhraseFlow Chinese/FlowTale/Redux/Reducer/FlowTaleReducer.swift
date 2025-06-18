@@ -34,6 +34,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         
     case .appSettingsAction(let appSettingsAction):
         newState = appSettingsReducer(state, appSettingsAction)
+        
+    case .moderationAction(let moderationAction):
+        newState = moderationReducer(state, moderationAction)
     case .updateCurrentSentence(let sentence):
         newState.storyState.currentSentence = sentence
     case .clearCurrentDefinition:
@@ -94,22 +97,8 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.snackBarState.isShowing = true
     case .hideSnackbar:
         newState.snackBarState.isShowing = false
-    case .passedModeration(let prompt):
-        newState.settingsState.customPrompts.append(prompt)
-        newState.settingsState.storySetting = .customPrompt(prompt)
     case .selectTab(let tab, _):
         newState.viewState.contentTab = tab
-    case .onModeratedText(let response, _):
-        newState.moderationResponse = response
-    case .didNotPassModeration:
-        newState.viewState.isShowingModerationFailedAlert = true
-    case .dismissFailedModerationAlert:
-        newState.viewState.isShowingModerationFailedAlert = false
-    case .showModerationDetails:
-        newState.viewState.isShowingModerationFailedAlert = false
-        newState.viewState.isShowingModerationDetails = true
-    case .updateIsShowingModerationDetails(let isShowing):
-        newState.viewState.isShowingModerationDetails = isShowing
     case .showDailyLimitExplanationScreen(let isShowing):
         newState.viewState.isShowingDailyLimitExplanation = isShowing
     case .showFreeLimitExplanationScreen(let isShowing):
@@ -124,8 +113,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.loadingState = loadingState
     case .failedToSaveStory,
             .failedToSaveStoryAndSettings,
-            .moderateText,
-            .failedToModerateText,
             .checkFreeTrialLimit,
             .hasReachedDailyLimit,
             .checkDeviceVolumeZero:

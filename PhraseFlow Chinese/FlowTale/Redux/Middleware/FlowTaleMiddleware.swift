@@ -27,6 +27,8 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return await subscriptionMiddleware(state, .subscriptionAction(subscriptionAction), environment)
     case .appSettingsAction(let appSettingsAction):
         return await appSettingsMiddleware(state, .appSettingsAction(appSettingsAction), environment)
+    case .moderationAction(let moderationAction):
+        return await moderationMiddleware(state, .moderationAction(moderationAction), environment)
     case .checkFreeTrialLimit:
         return nil
 
@@ -70,21 +72,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             return nil
         }
         return audioSession.outputVolume == 0.0 ? .showSnackBar(.deviceVolumeZero) : nil
-    case .moderateText(let prompt):
-        do {
-            let response = try await environment.moderateText(prompt)
-            return .onModeratedText(response, prompt)
-        } catch {
-            return .failedToModerateText
-        }
-    case .onModeratedText(let response, let prompt):
-        return response.didPassModeration ? .passedModeration(prompt) : .didNotPassModeration
-    case .passedModeration:
-        try? environment.saveAppSettings(state.settingsState)
-        return .showSnackBar(.passedModeration)
-    case .didNotPassModeration,
-            .failedToModerateText:
-        return .showSnackBar(.didNotPassModeration)
     case .selectTab(_, let shouldPlaySound):
         return shouldPlaySound ? .audioAction(.playSound(.tabPress)) : nil
     case .failedToSaveStory,
@@ -94,9 +81,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             .refreshStoryListView,
             .updateAutoScrollEnabled,
             .hideSnackbar,
-            .dismissFailedModerationAlert,
-            .showModerationDetails,
-            .updateIsShowingModerationDetails,
             .showDailyLimitExplanationScreen,
             .hasReachedFreeTrialLimit,
             .hasReachedDailyLimit,
