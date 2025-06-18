@@ -11,8 +11,6 @@ struct ChapterListView: View {
     @EnvironmentObject var store: FlowTaleStore
     let storyId: UUID
 
-    // A computed property that looks up the current story from the store.
-    // If it's not found, this can be nil (or handle accordingly).
     private var story: Story? {
         store.state.storyState.savedStories.first(where: { $0.id == storyId })
     }
@@ -166,8 +164,7 @@ struct ChapterListView: View {
         .frame(maxWidth: .infinity)
         .padding(.vertical, 30)
     }
-    
-    // Individual chapter card
+
     private func chapterCard(for chapter: Chapter, at index: Int, in story: Story) -> some View {
         Button {
             withAnimation(.easeInOut) {
@@ -177,7 +174,6 @@ struct ChapterListView: View {
             }
         } label: {
             HStack(spacing: 12) {
-                // Chapter number indicator
                 ZStack {
                     Circle()
                         .fill(FlowTaleColor.accent.opacity(0.1))
@@ -193,8 +189,7 @@ struct ChapterListView: View {
                         .font(.system(size: 16, weight: .medium))
                         .foregroundColor(FlowTaleColor.primary)
                         .lineLimit(1)
-                    
-                    // Display a snippet of the chapter's content
+
                     let snippetText = chapter.sentences.prefix(1).map { $0.original }.first ?? ""
                     if !snippetText.isEmpty {
                         Text(snippetText)

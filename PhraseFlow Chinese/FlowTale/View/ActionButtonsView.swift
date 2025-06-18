@@ -15,7 +15,6 @@ struct ActionButtonsView: View {
         if store.state.definitionState.definitions.isEmpty {
             tabs.removeAll(where: { $0 == .progress })
         }
-        tabs.removeAll(where: { $0 == .translate }) // TODO: Reenable Translate
 
         return HStack(spacing: 12) {
             ForEach(tabs) { tab in
