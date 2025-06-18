@@ -23,6 +23,8 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return await audioMiddleware(state, .audioAction(audioAction), environment)
     case .definitionAction(let definitionAction):
         return await definitionMiddleware(state, .definitionAction(definitionAction), environment)
+    case .subscriptionAction(let subscriptionAction):
+        return await subscriptionMiddleware(state, .subscriptionAction(subscriptionAction), environment)
     case .checkFreeTrialLimit:
         return nil
 
@@ -89,60 +91,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             return nil
         }
         return audioSession.outputVolume == 0.0 ? .showSnackBar(.deviceVolumeZero) : nil
-    case .fetchSubscriptions:
-        environment.validateReceipt()
-        do {
-            let subscriptions = try await environment.getProducts()
-            return .onFetchedSubscriptions(subscriptions)
-        } catch {
-            return .failedToFetchSubscriptions
-        }
-    case .purchaseSubscription(let product):
-        do {
-            try await environment.purchase(product)
-        } catch {
-            return .failedToPurchaseSubscription
-        }
-        return .onPurchasedSubscription
-    case .onPurchasedSubscription:
-        return .getCurrentEntitlements
-    case .restoreSubscriptions:
-        environment.validateReceipt()
-        do {
-            try await AppStore.sync()
-        } catch {
-            return .failedToRestoreSubscriptions
-        }
-        return .onRestoredSubscriptions
-        
-    case .validateReceipt:
-        environment.validateReceipt()
-        return .onValidatedReceipt
-    case .getCurrentEntitlements:
-        var entitlements: [VerificationResult<Transaction>] = []
-        for await result in Transaction.currentEntitlements {
-            entitlements.append(result)
-        }
-        return .updatePurchasedProducts(entitlements, isOnLaunch: true)
-    case .observeTransactionUpdates:
-        var entitlements: [VerificationResult<Transaction>] = []
-        for await result in Transaction.updates {
-            entitlements.append(result)
-        }
-        return .updatePurchasedProducts(entitlements, isOnLaunch: false)
-    case .updatePurchasedProducts(let entitlements, let isOnLaunch):
-        for result in entitlements {
-            switch result {
-            case .unverified(let transaction, _),
-                    .verified(let transaction):
-                if transaction.revocationDate == nil && !isOnLaunch {
-                    return .showSnackBar(.subscribed)
-                } else {
-                    return nil
-                }
-            }
-        }
-        return nil
     case .onLoadedAppSettings:
         if state.settingsState.isPlayingMusic {
             return .audioAction(.playMusic(.whispersOfTheForest))
@@ -175,11 +123,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return shouldPlaySound ? .audioAction(.playSound(.tabPress)) : nil
     case .deleteCustomPrompt:
         return .saveAppSettings
-    case .setSubscriptionSheetShowing(let isShowing):
-        if isShowing {
-            return .hideSnackbar
-        }
-        return nil
     case .failedToSaveStory,
             .refreshChapterView,
             .failedToSaveAppSettings,
@@ -187,11 +130,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             .refreshTranslationView,
             .failedToSaveStoryAndSettings,
             .refreshStoryListView,
-            .onFetchedSubscriptions,
-            .failedToFetchSubscriptions,
-            .failedToPurchaseSubscription,
-            .onRestoredSubscriptions,
-            .failedToRestoreSubscriptions,
             .updateAutoScrollEnabled,
             .hideSnackbar,
             .updateCustomPrompt,
@@ -204,8 +142,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             .hasReachedDailyLimit,
             .showFreeLimitExplanationScreen,
             .selectStoryFromSnackbar,
-            .onValidatedReceipt,
-            .updateIsSubscriptionPurchaseLoading,
             .updateCurrentSentence,
             .clearCurrentDefinition,
             .updateLoadingState:

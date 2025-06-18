@@ -15,6 +15,7 @@ enum FlowTaleAction {
     case storyAction(StoryAction)
     case audioAction(AudioAction)
     case definitionAction(DefinitionAction)
+    case subscriptionAction(SubscriptionAction)
     case updateCurrentSentence(Sentence)
     case updateAutoScrollEnabled(isEnabled: Bool)
     case clearCurrentDefinition
@@ -64,28 +65,6 @@ enum FlowTaleAction {
     case saveAppSettings
     case failedToSaveAppSettings
 
-    case fetchSubscriptions
-    case onFetchedSubscriptions([Product])
-    case failedToFetchSubscriptions
-
-    case purchaseSubscription(Product)
-    case onPurchasedSubscription
-    case failedToPurchaseSubscription
-
-    case updateIsSubscriptionPurchaseLoading(Bool)
-
-    case restoreSubscriptions
-    case onRestoredSubscriptions
-    case failedToRestoreSubscriptions
-
-    case getCurrentEntitlements
-    case updatePurchasedProducts([VerificationResult<Transaction>], isOnLaunch: Bool)
-
-    case observeTransactionUpdates
-    case validateReceipt
-    case onValidatedReceipt
-
-    case setSubscriptionSheetShowing(Bool)
 
     case showSnackBar(SnackBarType)
     case hideSnackbar

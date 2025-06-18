@@ -15,7 +15,7 @@ struct ContentView: View {
             store.state.viewState.isShowingSubscriptionSheet
         } set: { newValue in
             if !newValue {
-                store.dispatch(.setSubscriptionSheetShowing(newValue))
+                store.dispatch(.subscriptionAction(.setSubscriptionSheetShowing(newValue)))
             }
         }
 

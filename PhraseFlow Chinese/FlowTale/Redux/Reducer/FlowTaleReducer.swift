@@ -25,7 +25,10 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         
     case .audioAction(let audioAction):
         newState = audioReducer(state, audioAction)
-        
+
+    case .subscriptionAction(let subscriptionAction):
+        newState = subscriptionReducer(state, subscriptionAction)
+
     case .definitionAction(let definitionAction):
         newState = definitionReducer(state, definitionAction)
     case .updateCurrentSentence(let sentence):
@@ -100,25 +103,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
                 newState.settingsState.voice = voice
             }
         }
-    case .onFetchedSubscriptions(let subscriptions):
-        newState.subscriptionState.products = subscriptions
-    case .updatePurchasedProducts(let entitlements, _):
-        for result in entitlements {
-            switch result {
-            case .unverified(let transaction, _),
-                    .verified(let transaction):
-                if transaction.revocationDate == nil {
-                    newState.subscriptionState.purchasedProductIDs.insert(transaction.productID)
-                } else {
-                    newState.subscriptionState.purchasedProductIDs.remove(transaction.productID)
-                }
-            }
-        }
-    case .setSubscriptionSheetShowing(let isShowing):
-        newState.viewState.isShowingSubscriptionSheet = isShowing
-        if isShowing {
-            newState.viewState.isWritingChapter = false
-        }
     case .showSnackBar(let type),
           .showSnackBarThenSaveStory(let type, _):
         if let url = type.sound.fileURL,
@@ -181,13 +165,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.subscriptionState.nextAvailableDescription = nextAvailable
     case .hideSnackbarThenSaveStoryAndSettings:
         newState.snackBarState.isShowing = false
-    case .updateIsSubscriptionPurchaseLoading(let isLoading):
-        newState.subscriptionState.isLoadingSubscriptionPurchase = isLoading
-    case .purchaseSubscription:
-        newState.subscriptionState.isLoadingSubscriptionPurchase = true
-    case .onPurchasedSubscription,
-            .failedToPurchaseSubscription:
-        newState.subscriptionState.isLoadingSubscriptionPurchase = false
     case .updateLoadingState(let loadingState):
         newState.viewState.loadingState = loadingState
     case .failedToSaveStory,
@@ -196,15 +173,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .loadAppSettings,
             .saveAppSettings,
             .failedToSaveStoryAndSettings,
-            .fetchSubscriptions,
-            .failedToFetchSubscriptions,
-            .getCurrentEntitlements,
-            .restoreSubscriptions,
-            .onRestoredSubscriptions,
-            .failedToRestoreSubscriptions,
-            .observeTransactionUpdates,
-            .validateReceipt,
-            .onValidatedReceipt,
             .moderateText,
             .failedToModerateText,
             .checkFreeTrialLimit,

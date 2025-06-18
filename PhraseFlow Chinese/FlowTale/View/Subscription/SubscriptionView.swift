@@ -40,9 +40,9 @@ struct SubscriptionView: View {
                                           action: {
                                               Task {
                                                   // First validate receipt to ensure proper sandbox handling
-                                                  store.dispatch(.validateReceipt)
+                                                  store.dispatch(.subscriptionAction(.validateReceipt))
                                                   // Then attempt to purchase
-                                                  store.dispatch(.purchaseSubscription(product))
+                                                  store.dispatch(.subscriptionAction(.purchaseSubscription(product)))
                                               }
                                           })
             }
@@ -60,8 +60,8 @@ struct SubscriptionView: View {
 
             Button {
                 Task {
-                    store.dispatch(.validateReceipt)
-                    store.dispatch(.restoreSubscriptions)
+                    store.dispatch(.subscriptionAction(.validateReceipt))
+                    store.dispatch(.subscriptionAction(.restoreSubscriptions))
                 }
             } label: {
                 Text(LocalizedString.restoreSubscription)
@@ -105,7 +105,7 @@ struct SubscriptionView: View {
         // Validate receipt whenever subscription view appears to ensure we handle sandbox receipts properly
         .onAppear {
             Task {
-                store.dispatch(.validateReceipt)
+                store.dispatch(.subscriptionAction(.validateReceipt))
             }
         }
         .padding(20)
