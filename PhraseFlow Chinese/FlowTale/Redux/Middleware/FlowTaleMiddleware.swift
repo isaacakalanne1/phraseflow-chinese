@@ -29,11 +29,8 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return await appSettingsMiddleware(state, .appSettingsAction(appSettingsAction), environment)
     case .moderationAction(let moderationAction):
         return await moderationMiddleware(state, .moderationAction(moderationAction), environment)
-    case .checkFreeTrialLimit:
-        return nil
-
-    case .onDailyChapterLimitReached(let nextAvailable):
-        return .showSnackBar(.dailyChapterLimitReached(nextAvailable: nextAvailable))
+    case .userLimitAction(let userLimitAction):
+        return await userLimitMiddleware(state, .userLimitAction(userLimitAction), environment)
 
     case .showSnackBar(let type):
         state.appAudioState.audioPlayer.play()
@@ -81,10 +78,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             .refreshStoryListView,
             .updateAutoScrollEnabled,
             .hideSnackbar,
-            .showDailyLimitExplanationScreen,
-            .hasReachedFreeTrialLimit,
-            .hasReachedDailyLimit,
-            .showFreeLimitExplanationScreen,
             .selectStoryFromSnackbar,
             .updateCurrentSentence,
             .clearCurrentDefinition,

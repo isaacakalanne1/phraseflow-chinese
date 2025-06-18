@@ -94,7 +94,7 @@ enum SnackBarType: Equatable {
         case .couldNotModerateText:
             store.dispatch(.appSettingsAction(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt))))
         case .dailyChapterLimitReached:
-            store.dispatch(.showDailyLimitExplanationScreen(isShowing: true))
+            store.dispatch(.userLimitAction(.showDailyLimitExplanationScreen(isShowing: true)))
         default:
             break
         }

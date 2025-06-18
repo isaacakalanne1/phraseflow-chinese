@@ -37,6 +37,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         
     case .moderationAction(let moderationAction):
         newState = moderationReducer(state, moderationAction)
+        
+    case .userLimitAction(let userLimitAction):
+        newState = userLimitReducer(state, userLimitAction)
     case .updateCurrentSentence(let sentence):
         newState.storyState.currentSentence = sentence
     case .clearCurrentDefinition:
@@ -99,22 +102,12 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.snackBarState.isShowing = false
     case .selectTab(let tab, _):
         newState.viewState.contentTab = tab
-    case .showDailyLimitExplanationScreen(let isShowing):
-        newState.viewState.isShowingDailyLimitExplanation = isShowing
-    case .showFreeLimitExplanationScreen(let isShowing):
-        newState.viewState.isShowingFreeLimitExplanation = isShowing
-    case .hasReachedFreeTrialLimit:
-        newState.subscriptionState.hasReachedFreeTrialLimit = true
-    case .onDailyChapterLimitReached(let nextAvailable):
-        newState.subscriptionState.nextAvailableDescription = nextAvailable
     case .hideSnackbarThenSaveStoryAndSettings:
         newState.snackBarState.isShowing = false
     case .updateLoadingState(let loadingState):
         newState.viewState.loadingState = loadingState
     case .failedToSaveStory,
             .failedToSaveStoryAndSettings,
-            .checkFreeTrialLimit,
-            .hasReachedDailyLimit,
             .checkDeviceVolumeZero:
         break
     }

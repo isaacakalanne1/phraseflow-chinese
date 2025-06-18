@@ -18,6 +18,7 @@ enum FlowTaleAction {
     case subscriptionAction(SubscriptionAction)
     case appSettingsAction(AppSettingsAction)
     case moderationAction(ModerationAction)
+    case userLimitAction(UserLimitAction)
     case updateCurrentSentence(Sentence)
     case updateAutoScrollEnabled(isEnabled: Bool)
     case clearCurrentDefinition
@@ -25,8 +26,6 @@ enum FlowTaleAction {
     case updateLoadingState(LoadingState)
 
 
-    case showFreeLimitExplanationScreen(isShowing: Bool)
-    case showDailyLimitExplanationScreen(isShowing: Bool)
 
 
     case failedToSaveStory
@@ -51,7 +50,6 @@ enum FlowTaleAction {
     case checkDeviceVolumeZero
 
 
-    case onDailyChapterLimitReached(nextAvailable: String)
 
 
 
@@ -59,7 +57,4 @@ enum FlowTaleAction {
     case selectTab(ContentTab, shouldPlaySound: Bool)
 
 
-    case checkFreeTrialLimit
-    case hasReachedFreeTrialLimit
-    case hasReachedDailyLimit
 }

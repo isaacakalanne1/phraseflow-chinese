@@ -64,13 +64,13 @@ struct ContentView: View {
         let isShowingDailyLimitExplanationScreen: Binding<Bool> = .init {
             store.state.viewState.isShowingDailyLimitExplanation
         } set: { newValue in
-            store.dispatch(.showDailyLimitExplanationScreen(isShowing: newValue))
+            store.dispatch(.userLimitAction(.showDailyLimitExplanationScreen(isShowing: newValue)))
         }
 
         let isShowingFreeLimitExplanationScreen: Binding<Bool> = .init {
             store.state.viewState.isShowingFreeLimitExplanation
         } set: { newValue in
-            store.dispatch(.showFreeLimitExplanationScreen(isShowing: newValue))
+            store.dispatch(.userLimitAction(.showFreeLimitExplanationScreen(isShowing: newValue)))
         }
 
         ZStack(alignment: .topTrailing) {
