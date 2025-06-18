@@ -13,15 +13,13 @@ enum FlowTaleAction {
     case studyAction(StudyAction)
     case translationAction(TranslationAction)
     case storyAction(StoryAction)
+    case audioAction(AudioAction)
     case updateCurrentSentence(Sentence)
     case updateAutoScrollEnabled(isEnabled: Bool)
     case clearCurrentDefinition
 
     case updateLoadingState(LoadingState)
 
-    case failedToCreateChapter
-
-    case setMusicVolume(MusicVolume)
 
     case showFreeLimitExplanationScreen(isShowing: Bool)
     case showDailyLimitExplanationScreen(isShowing: Bool)
@@ -51,13 +49,7 @@ enum FlowTaleAction {
     case onLoadedDefinitions([Definition])
     case failedToLoadDefinitions
 
-    case playAudio(time: Double?)
-    case pauseAudio
-    case onPlayedAudio
-    case updatePlayTime
-
     case defineSentence(WordTimeStampData, shouldForce: Bool)
-    case playWord(WordTimeStampData, story: Story?)
     case onDefinedCharacter(Definition)
     case onDefinedSentence(Sentence, [Definition], Definition)
     case failedToDefineSentence
@@ -116,10 +108,6 @@ enum FlowTaleAction {
 
     case onDailyChapterLimitReached(nextAvailable: String)
 
-    case playSound(AppSound)
-    case playMusic(MusicType)
-    case musicTrackFinished(MusicType)
-    case stopMusic
 
     case updateCustomPrompt(String)
     case updateColorScheme(FlowTaleColorScheme)

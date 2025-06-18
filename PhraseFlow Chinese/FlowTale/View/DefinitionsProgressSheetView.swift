@@ -41,7 +41,7 @@ struct DefinitionsProgressSheetView: View {
                     }
                     .pickerStyle(.segmented)
                     .onChange(of: showingCreations) { _, _ in
-                        store.dispatch(.playSound(.togglePress))
+                        store.dispatch(.audioAction(.playSound(.togglePress)))
                     }
 
                     Spacer()
@@ -119,7 +119,7 @@ struct DefinitionsProgressSheetView: View {
                             .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
                                 Button(role: .destructive) {
                                     store.dispatch(.deleteDefinition(definition))
-                                    store.dispatch(.playSound(.actionButtonPress))
+                                    store.dispatch(.audioAction(.playSound(.actionButtonPress)))
                                 } label: {
                                     Label("Delete", systemImage: "trash")
                                         .tint(FlowTaleColor.error)

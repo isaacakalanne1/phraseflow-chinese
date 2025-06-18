@@ -11,21 +11,6 @@ import AVKit
 import StoreKit
 import AVFoundation
 
-/// Checks if the playback is at or near the end of the audio
-/// Used to determine if we should loop back to the start when play is tapped
-private func isPlaybackAtEnd(_ state: FlowTaleState) -> Bool {
-    let currentTime = state.audioState.audioPlayer.currentTime().seconds
-
-    guard let lastSentence = state.storyState.currentChapter?.sentences.last,
-          let lastWordTime = lastSentence.timestamps.last?.time,
-          let lastWordDuration = lastSentence.timestamps.last?.duration else {
-        return false
-    }
-    let endTime = lastWordTime + lastWordDuration - 0.5
-    
-    return currentTime >= endTime
-}
-
 let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol> = { state, action, environment in
     switch action {
     case .translationAction(let translationAction):
@@ -33,18 +18,15 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
     case .studyAction(let studyAction):
         return await studyMiddleware(state, .studyAction(studyAction), environment)
     case .storyAction(let storyAction):
-        if let resultAction = await storyMiddleware(state, storyAction, environment) {
-            return .storyAction(resultAction)
-        }
-        return nil
+        return await storyMiddleware(state, .storyAction(storyAction), environment)
+    case .audioAction(let audioAction):
+        return await audioMiddleware(state, .audioAction(audioAction), environment)
     case .checkFreeTrialLimit:
         return nil
 
     case .onDailyChapterLimitReached(let nextAvailable):
         return .showSnackBar(.dailyChapterLimitReached(nextAvailable: nextAvailable))
 
-    case .failedToCreateChapter:
-        return .showSnackBar(.failedToWriteChapter)
     case .showSnackBar(let type):
         state.appAudioState.audioPlayer.play()
         if let duration = type.showDuration {
@@ -122,55 +104,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         } catch {
             return .failedToLoadDefinitions
         }
-    case .playAudio(let timestamp):
-        let playRate = state.settingsState.speechSpeed.playRate
-
-        if isPlaybackAtEnd(state) {
-            await state.audioState.audioPlayer.playAudio(playRate: playRate)
-        } else if let timestamp {
-            await state.audioState.audioPlayer.playAudio(fromSeconds: timestamp,
-                                                         playRate: playRate)
-        }
-        
-        if let story = state.storyState.currentStory {
-            return .storyAction(.saveStoryAndSettings(story))
-        }
-        return nil
-    case .playWord(let word, let story):
-        await state.audioState.audioPlayer.playAudio(fromSeconds: word.time,
-                                                     toSeconds: word.time + word.duration,
-                                                     playRate: state.settingsState.speechSpeed.playRate)
-        if let story = state.storyState.currentStory {
-            return .storyAction(.saveStoryAndSettings(story))
-        }
-        return nil
-    case .playSound:
-        if state.settingsState.shouldPlaySound {
-            state.appAudioState.audioPlayer.play()
-        }
-        return nil
-    case .playMusic:
-        state.musicAudioState.audioPlayer.play()
-        
-        if let story = state.storyState.currentStory {
-            return .storyAction(.saveStoryAndSettings(story))
-        }
-        return nil
-        
-    case .musicTrackFinished(let nextMusicType):
-        return .playMusic(nextMusicType)
-        
-    case .stopMusic:
-        if let story = state.storyState.currentStory {
-            return .storyAction(.saveStoryAndSettings(story))
-        }
-        return nil
-    case .pauseAudio:
-        state.audioState.audioPlayer.pause()
-        if let story = state.storyState.currentStory {
-            return .storyAction(.saveStoryAndSettings(story))
-        }
-        return nil
     case .defineSentence(let timestampData, let shouldForce):
         do {
             guard let sentence = state.storyState.sentence(containing: timestampData),
@@ -244,18 +177,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return .onSelectedChapter
     case .onSelectedChapter:
         return .selectTab(.reader, shouldPlaySound: false)
-    case .setMusicVolume(let volume):
-        state.musicAudioState.audioPlayer.setVolume(volume.float, fadeDuration: 0.2)
-        return nil
-    case .updatePlayTime:
-        let currentTime = state.audioState.audioPlayer.currentTime().seconds
-        if let lastSentence = state.storyState.currentChapter?.sentences.last,
-           let lastWordTime = lastSentence.timestamps.last?.time,
-           let lastWordDuration = lastSentence.timestamps.last?.duration,
-           currentTime > lastWordTime + lastWordDuration {
-            return .pauseAudio
-        }
-        return nil
     case .selectVoice,
             .updateLanguage,
             .updateSpeechSpeed,
@@ -345,7 +266,7 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return .saveDefinitions
     case .onLoadedAppSettings:
         if state.settingsState.isPlayingMusic {
-            return .playMusic(.whispersOfTheForest)
+            return .audioAction(.playMusic(.whispersOfTheForest))
         }
         return nil
     case .updateStorySetting(let setting):
@@ -372,7 +293,7 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             .failedToModerateText:
         return .showSnackBar(.didNotPassModeration)
     case .selectTab(_, let shouldPlaySound):
-        return shouldPlaySound ? .playSound(.tabPress) : nil
+        return shouldPlaySound ? .audioAction(.playSound(.tabPress)) : nil
     case .deleteCustomPrompt:
         return .saveAppSettings
     case .onLoadedInitialDefinitions(let definitions):
@@ -394,7 +315,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return nil
     case .failedToSaveStory,
             .failedToDefineSentence,
-            .onPlayedAudio,
             .refreshChapterView,
             .refreshDefinitionView,
             .failedToSaveAppSettings,

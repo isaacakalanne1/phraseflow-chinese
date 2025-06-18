@@ -90,7 +90,7 @@ struct StudyView: View {
         } else {
             index -= 1
         }
-        store.dispatch(.playSound(.previousStudyWord))
+        store.dispatch(.audioAction(.playSound(.previousStudyWord)))
         updateDefinition()
     }
 
@@ -99,7 +99,7 @@ struct StudyView: View {
             store.dispatch(.updateStudiedWord(definition))
         }
         index = (index + 1) % studyWords.count
-        store.dispatch(.playSound(.nextStudyWord))
+        store.dispatch(.audioAction(.playSound(.nextStudyWord)))
         updateDefinition()
     }
 

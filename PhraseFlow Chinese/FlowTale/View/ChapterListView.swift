@@ -132,7 +132,7 @@ struct ChapterListView: View {
             .background(FlowTaleColor.background)
             .scrollContentBackground(.hidden)
             .onAppear {
-                store.dispatch(.playSound(.openStory))
+                store.dispatch(.audioAction(.playSound(.openStory)))
 
                 if story.chapters.isEmpty {
                     store.dispatch(.storyAction(.loadChapters(story, isAppLaunch: false)))
@@ -171,7 +171,7 @@ struct ChapterListView: View {
     private func chapterCard(for chapter: Chapter, at index: Int, in story: Story) -> some View {
         Button {
             withAnimation(.easeInOut) {
-                store.dispatch(.playSound(.openChapter))
+                store.dispatch(.audioAction(.playSound(.openChapter)))
                 let chapterIndex = story.chapters.count - 1 - index
                 store.dispatch(.selectChapter(story, chapterIndex: chapterIndex))
             }

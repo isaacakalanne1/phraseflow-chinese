@@ -13,11 +13,11 @@ struct AudioButton: View {
     var body: some View {
         Button {
             if store.state.audioState.isPlayingAudio {
-                store.dispatch(.pauseAudio)
+                store.dispatch(.audioAction(.pauseAudio))
             } else {
                 let timestamps = store.state.storyState.currentSentence?.timestamps ?? []
                 let currentSpokenWord = store.state.storyState.currentSpokenWord ?? timestamps.first
-                store.dispatch(.playAudio(time: currentSpokenWord?.time))
+                store.dispatch(.audioAction(.playAudio(time: currentSpokenWord?.time)))
                 store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
             }
         } label: {

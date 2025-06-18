@@ -14,25 +14,25 @@ struct SettingsView: View {
         let showDefinition: Binding<Bool> = .init {
             store.state.settingsState.isShowingDefinition
         } set: { newValue in
-            store.dispatch(.playSound(.togglePress))
+            store.dispatch(.audioAction(.playSound(.togglePress)))
             store.dispatch(.updateShowDefinition(newValue))
         }
 
         let showEnglish: Binding<Bool> = .init {
             store.state.settingsState.isShowingEnglish
         } set: { newValue in
-            store.dispatch(.playSound(.togglePress))
+            store.dispatch(.audioAction(.playSound(.togglePress)))
             store.dispatch(.updateShowEnglish(newValue))
         }
 
         let playMusic: Binding<Bool> = .init {
             store.state.settingsState.isPlayingMusic
         } set: { newValue in
-            store.dispatch(.playSound(.togglePress))
+            store.dispatch(.audioAction(.playSound(.togglePress)))
             if newValue {
-                store.dispatch(.playMusic(.whispersOfTheForest))
+                store.dispatch(.audioAction(.playMusic(.whispersOfTheForest)))
             } else {
-                store.dispatch(.stopMusic)
+                store.dispatch(.audioAction(.stopMusic))
             }
         }
 
@@ -41,7 +41,7 @@ struct SettingsView: View {
         } set: { newValue in
             store.dispatch(.updateShouldPlaySound(newValue))
             if newValue {
-                store.dispatch(.playSound(.togglePress))
+                store.dispatch(.audioAction(.playSound(.togglePress)))
             }
         }
 

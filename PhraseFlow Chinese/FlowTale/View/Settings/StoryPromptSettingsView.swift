@@ -41,7 +41,7 @@ struct StoryPromptMenu: View {
                             isSelected: isRandomPromptSelected,
                             action: {
                                 withAnimation(.easeInOut) {
-                                    store.dispatch(.playSound(.changeSettings))
+                                    store.dispatch(.audioAction(.playSound(.changeSettings)))
                                     store.dispatch(.updateStorySetting(.random))
                                     if shouldDismissOnSelect {
                                         dismiss()
@@ -58,7 +58,7 @@ struct StoryPromptMenu: View {
                             isSelected: false,
                             action: {
                                 withAnimation(.easeInOut) {
-                                    store.dispatch(.playSound(.changeSettings))
+                                    store.dispatch(.audioAction(.playSound(.changeSettings)))
                                     store.dispatch(.updateIsShowingCustomPromptAlert(true))
                                 }
                             }
@@ -79,7 +79,7 @@ struct StoryPromptMenu: View {
                                 isTextCentered: true,
                                 action: {
                                     withAnimation(.easeInOut) {
-                                        store.dispatch(.playSound(.changeSettings))
+                                        store.dispatch(.audioAction(.playSound(.changeSettings)))
                                         store.dispatch(.updateStorySetting(.customPrompt(prompt)))
                                         if shouldDismissOnSelect {
                                             dismiss()

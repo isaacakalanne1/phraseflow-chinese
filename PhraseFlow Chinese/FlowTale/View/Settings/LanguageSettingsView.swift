@@ -55,7 +55,7 @@ struct LanguageMenu: View {
                             isSelected: store.state.translationState.sourceLanguage == nil,
                             action: {
                                 withAnimation(.easeInOut) {
-                                    store.dispatch(.playSound(.changeSettings))
+                                    store.dispatch(.audioAction(.playSound(.changeSettings)))
                                     store.dispatch(.translationAction(.updateSourceLanguage(nil)))
                                     dismiss()
                                 }
@@ -71,7 +71,7 @@ struct LanguageMenu: View {
                             isSelected: isSelectedLanguage,
                             action: {
                                 withAnimation(.easeInOut) {
-                                    store.dispatch(.playSound(.changeSettings))
+                                    store.dispatch(.audioAction(.playSound(.changeSettings)))
                                     switch type {
                                     case .normal:
                                         store.dispatch(.updateLanguage(language))

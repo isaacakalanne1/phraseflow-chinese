@@ -46,9 +46,7 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
         case .newStory:
             newState.viewState.shouldShowImageSpinner = true
         case .existingStory(let story):
-            if let voice = story.chapters.last?.audioVoice {
-                newState.settingsState.voice = voice
-            }
+            newState.settingsState.voice = story.chapters.last?.audioVoice ?? newState.settingsState.voice
             newState.viewState.shouldShowImageSpinner = story.imageData == nil
         }
         newState.viewState.loadingState = .writing
@@ -88,6 +86,8 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
         newState.storyState.currentStory?.currentPlaybackTime = sentence?.timestamps.first?.time ?? 0.1
     case .failedToLoadStories:
         newState.viewState.isInitialisingApp = false
+    case .failedToCreateChapter:
+        newState.viewState.isWritingChapter = false
     case .loadStories,
          .onFinishedLoadedStories,
          .failedToLoadChapters,

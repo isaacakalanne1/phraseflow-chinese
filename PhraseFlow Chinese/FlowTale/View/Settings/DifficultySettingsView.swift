@@ -28,7 +28,7 @@ struct DifficultyMenu: View {
                             isSelected: isSelectedDifficulty,
                             action: {
                                 withAnimation(.easeInOut) {
-                                    store.dispatch(.playSound(.changeSettings))
+                                    store.dispatch(.audioAction(.playSound(.changeSettings)))
                                     store.dispatch(.updateDifficulty(difficulty))
                                     if shouldDismissOnSelect {
                                         dismiss()

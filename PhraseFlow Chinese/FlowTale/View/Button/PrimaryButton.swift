@@ -29,7 +29,7 @@ struct PrimaryButton<Content: View>: View {
         if let act = action {
             Button {
                 if shouldPlaySound {
-                    store.dispatch(.playSound(.actionButtonPress))
+                    store.dispatch(.audioAction(.playSound(.actionButtonPress)))
                 }
                 act()
             } label: {

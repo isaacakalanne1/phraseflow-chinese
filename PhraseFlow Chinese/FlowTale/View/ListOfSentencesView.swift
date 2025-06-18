@@ -113,7 +113,7 @@ struct ListOfSentencesView: View {
             let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
             if doesNextChapterExist {
                 store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
-                store.dispatch(.playSound(.goToNextChapter))
+                store.dispatch(.audioAction(.playSound(.goToNextChapter)))
                 store.dispatch(.storyAction(.goToNextChapter))
             } else {
                 store.dispatch(.showSnackBar(.writingChapter))

@@ -22,6 +22,9 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         
     case .storyAction(let storyAction):
         newState = storyReducer(state, storyAction)
+        
+    case .audioAction(let audioAction):
+        newState = audioReducer(state, audioAction)
     case .updateCurrentSentence(let sentence):
         newState.storyState.currentSentence = sentence
     case .clearCurrentDefinition:
@@ -29,29 +32,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .onLoadedAppSettings(let settings):
         newState.settingsState = settings
         newState.translationState.targetLanguage = settings.language
-    case .playSound(let sound):
-        if let url = sound.fileURL,
-           let player = try? AVAudioPlayer(contentsOf: url) {
-            player.volume = 0.7
-            newState.appAudioState.audioPlayer = player
-        }
-    case .playMusic(let music):
-        if let url = music.fileURL,
-           let player = try? AVAudioPlayer(contentsOf: url) {
-            player.numberOfLoops = 0
-//            player.rate = 10
-//            player.enableRate = true
-            player.volume = MusicVolume.normal.float
-            newState.musicAudioState.currentMusicType = music
-            newState.musicAudioState.audioPlayer = player
-            newState.settingsState.isPlayingMusic = true
-        }
-    case .setMusicVolume(let volume):
-        newState.musicAudioState.volume = volume
-    case .stopMusic:
-        newState.settingsState.isPlayingMusic = false
-        newState.musicAudioState.audioPlayer.stop()
-        newState.musicAudioState.currentMusicType = .whispersOfTheForest
     case .updateSpeechSpeed(let speed):
         newState.settingsState.speechSpeed = speed
         if newState.audioState.audioPlayer.rate != 0 {
@@ -128,20 +108,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         if let language = newState.storyState.currentStory?.language {
             newState.settingsState.language = language
         }
-    case .failedToCreateChapter:
-        newState.viewState.isWritingChapter = false
-    case .playAudio(let time):
-        newState.definitionState.currentDefinition = nil
-        newState.audioState.isPlayingAudio = true
-        if let wordTime = time {
-            newState.storyState.currentStory?.currentPlaybackTime = wordTime
-        }
-    case .pauseAudio:
-        newState.audioState.isPlayingAudio = false
-    case .updatePlayTime:
-        newState.storyState.currentStory?.currentPlaybackTime = newState.audioState.audioPlayer.currentTime().seconds
-    case .playWord(let word, _):
-        newState.storyState.currentStory?.currentPlaybackTime = word.time
     case .refreshChapterView:
         newState.viewState.chapterViewId = UUID()
     case .refreshDefinitionView:
@@ -284,7 +250,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .updateLoadingState(let loadingState):
         newState.viewState.loadingState = loadingState
     case .failedToSaveStory,
-            .onPlayedAudio,
             .failedToSaveAppSettings,
             .failedToLoadAppSettings,
             .loadAppSettings,
@@ -308,7 +273,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
             .failedToModerateText,
             .checkFreeTrialLimit,
             .hasReachedDailyLimit,
-            .musicTrackFinished,
             .checkDeviceVolumeZero,
             .failedToDeleteDefinition:
         break

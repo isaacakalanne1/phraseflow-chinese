@@ -51,7 +51,7 @@ struct ContentView: View {
         .onChange(of: store.state.viewState.loadingState) { _, newValue in
             if newValue != .complete,
                newValue != .writing {
-                store.dispatch(.playSound(.progressUpdate))
+                store.dispatch(.audioAction(.playSound(.progressUpdate)))
             }
         }
         .background(FlowTaleColor.background)
@@ -154,17 +154,17 @@ struct ContentView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             if store.state.audioState.audioPlayer.rate != 0 || store.state.studyState.audioPlayer.rate != 0 {
                 if store.state.musicAudioState.volume == .normal {
-                    store.dispatch(.setMusicVolume(.quiet))
+                    store.dispatch(.audioAction(.setMusicVolume(.quiet)))
                 }
             } else {
                 if store.state.musicAudioState.volume == .quiet {
-                    store.dispatch(.setMusicVolume(.normal))
+                    store.dispatch(.audioAction(.setMusicVolume(.normal)))
                 }
             }
 
             // Update play time for audio state
             if store.state.audioState.isPlayingAudio {
-                store.dispatch(.updatePlayTime)
+                store.dispatch(.audioAction(.updatePlayTime))
             }
 
             if store.state.settingsState.isPlayingMusic,
@@ -172,7 +172,7 @@ struct ContentView: View {
             {
                 let currentMusic = store.state.musicAudioState.currentMusicType
                 let nextMusic = MusicType.next(after: currentMusic)
-                store.dispatch(.playMusic(nextMusic))
+                store.dispatch(.audioAction(.playMusic(nextMusic)))
             }
 
             startTimer()

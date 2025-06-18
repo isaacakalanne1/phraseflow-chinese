@@ -10,7 +10,8 @@ import Foundation
 enum StoryAction {
     case createChapter(CreateChapterType)
     case onCreatedChapter(Story)
-    
+    case failedToCreateChapter
+
     case loadStories(isAppLaunch: Bool)
     case onLoadedStories([Story], isAppLaunch: Bool)
     case onFinishedLoadedStories
