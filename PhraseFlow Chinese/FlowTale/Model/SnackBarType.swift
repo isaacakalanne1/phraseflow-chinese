@@ -92,7 +92,7 @@ enum SnackBarType: Equatable {
         store.dispatch(.hideSnackbar)
         switch self {
         case .couldNotModerateText:
-            store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))
+            store.dispatch(.appSettingsAction(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt))))
         case .dailyChapterLimitReached:
             store.dispatch(.showDailyLimitExplanationScreen(isShowing: true))
         default:

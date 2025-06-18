@@ -12,7 +12,7 @@ struct SpeechSpeedButton: View {
 
     var body: some View {
         Button {
-            store.dispatch(.updateSpeechSpeed(store.state.settingsState.speechSpeed.nextSpeed))
+            store.dispatch(.appSettingsAction(.updateSpeechSpeed(store.state.settingsState.speechSpeed.nextSpeed)))
             store.dispatch(.audioAction(.playSound(.changeSettings)))
         } label: {
             Text(store.state.settingsState.speechSpeed.text)

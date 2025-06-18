@@ -18,13 +18,13 @@ struct StoryPromptMenu: View {
         let isShowingAlert: Binding<Bool> = .init {
             store.state.viewState.isShowingCustomPromptAlert
         } set: { newValue in
-            store.dispatch(.updateIsShowingCustomPromptAlert(newValue))
+            store.dispatch(.appSettingsAction(.updateIsShowingCustomPromptAlert(newValue)))
         }
 
         let customPrompt: Binding<String> = .init {
             store.state.settingsState.customPrompt
         } set: { newValue in
-            store.dispatch(.updateCustomPrompt(newValue))
+            store.dispatch(.appSettingsAction(.updateCustomPrompt(newValue)))
         }
 
         ScrollView {
@@ -42,7 +42,7 @@ struct StoryPromptMenu: View {
                             action: {
                                 withAnimation(.easeInOut) {
                                     store.dispatch(.audioAction(.playSound(.changeSettings)))
-                                    store.dispatch(.updateStorySetting(.random))
+                                    store.dispatch(.appSettingsAction(.updateStorySetting(.random)))
                                     if shouldDismissOnSelect {
                                         dismiss()
                                     }
@@ -59,7 +59,7 @@ struct StoryPromptMenu: View {
                             action: {
                                 withAnimation(.easeInOut) {
                                     store.dispatch(.audioAction(.playSound(.changeSettings)))
-                                    store.dispatch(.updateIsShowingCustomPromptAlert(true))
+                                    store.dispatch(.appSettingsAction(.updateIsShowingCustomPromptAlert(true)))
                                 }
                             }
                         )
@@ -80,7 +80,7 @@ struct StoryPromptMenu: View {
                                 action: {
                                     withAnimation(.easeInOut) {
                                         store.dispatch(.audioAction(.playSound(.changeSettings)))
-                                        store.dispatch(.updateStorySetting(.customPrompt(prompt)))
+                                        store.dispatch(.appSettingsAction(.updateStorySetting(.customPrompt(prompt))))
                                         if shouldDismissOnSelect {
                                             dismiss()
                                         }
@@ -90,7 +90,7 @@ struct StoryPromptMenu: View {
                             .disabled(store.state.viewState.isWritingChapter)
                             .contextMenu {
                                 Button(role: .destructive) {
-                                    store.dispatch(.deleteCustomPrompt(prompt))
+                                    store.dispatch(.appSettingsAction(.deleteCustomPrompt(prompt)))
                                 } label: {
                                     Label("Delete", systemImage: "trash")
                                 }
@@ -111,7 +111,7 @@ struct StoryPromptMenu: View {
             TextField(LocalizedString.customStoryTextfieldPlaceholder, text: customPrompt)
             Button(LocalizedString.customStoryOkButton, action: submitCustomPrompt)
             Button(LocalizedString.customStoryCancelButton, role: .cancel) {
-                store.dispatch(.updateIsShowingCustomPromptAlert(false))
+                store.dispatch(.appSettingsAction(.updateIsShowingCustomPromptAlert(false)))
             }
         } message: {
             Text(LocalizedString.customStoryAlertMessage)
@@ -120,8 +120,8 @@ struct StoryPromptMenu: View {
 
     private func submitCustomPrompt() {
         store.dispatch(.showSnackBar(.moderatingText))
-        store.dispatch(.updateIsShowingCustomPromptAlert(false))
-        store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))
+        store.dispatch(.appSettingsAction(.updateIsShowingCustomPromptAlert(false)))
+        store.dispatch(.appSettingsAction(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt))))
     }
 }
 

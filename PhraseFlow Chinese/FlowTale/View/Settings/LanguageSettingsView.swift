@@ -74,7 +74,7 @@ struct LanguageMenu: View {
                                     store.dispatch(.audioAction(.playSound(.changeSettings)))
                                     switch type {
                                     case .normal:
-                                        store.dispatch(.updateLanguage(language))
+                                        store.dispatch(.appSettingsAction(.updateLanguage(language)))
                                     case .translationSourceLanguage:
                                         store.dispatch(.translationAction(.updateSourceLanguage(language)))
                                     case .translationTargetLanguage:

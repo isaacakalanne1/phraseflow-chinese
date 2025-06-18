@@ -16,6 +16,7 @@ enum FlowTaleAction {
     case audioAction(AudioAction)
     case definitionAction(DefinitionAction)
     case subscriptionAction(SubscriptionAction)
+    case appSettingsAction(AppSettingsAction)
     case updateCurrentSentence(Sentence)
     case updateAutoScrollEnabled(isEnabled: Bool)
     case clearCurrentDefinition
@@ -38,32 +39,15 @@ enum FlowTaleAction {
     case failedToSaveStoryAndSettings
     case showSnackBarThenSaveStory(SnackBarType, Story)
 
-    case deleteCustomPrompt(String)
 
     case selectChapter(Story, chapterIndex: Int)
     case selectStoryFromSnackbar(Story)
     case onSelectedChapter
 
 
-    case updateShowDefinition(Bool)
-    case updateShowEnglish(Bool)
-
-    case updateSpeechSpeed(SpeechSpeed)
-    case updateDifficulty(Difficulty)
-    case updateLanguage(Language)
-
     case refreshChapterView
     case refreshTranslationView
     case refreshStoryListView
-
-    case selectVoice(Voice)
-
-    case loadAppSettings
-    case onLoadedAppSettings(SettingsState)
-    case failedToLoadAppSettings
-
-    case saveAppSettings
-    case failedToSaveAppSettings
 
 
     case showSnackBar(SnackBarType)
@@ -74,9 +58,6 @@ enum FlowTaleAction {
     case onDailyChapterLimitReached(nextAvailable: String)
 
 
-    case updateCustomPrompt(String)
-    case updateColorScheme(FlowTaleColorScheme)
-    case updateShouldPlaySound(Bool)
 
     case moderateText(String)
     case onModeratedText(ModerationResponse, String)
@@ -84,8 +65,6 @@ enum FlowTaleAction {
 
     case passedModeration(String)
 
-    case updateStorySetting(StorySetting)
-    case updateIsShowingCustomPromptAlert(Bool)
     case selectTab(ContentTab, shouldPlaySound: Bool)
 
 

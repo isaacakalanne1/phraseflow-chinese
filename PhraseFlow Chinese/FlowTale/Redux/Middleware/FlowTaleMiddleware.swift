@@ -25,6 +25,8 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return await definitionMiddleware(state, .definitionAction(definitionAction), environment)
     case .subscriptionAction(let subscriptionAction):
         return await subscriptionMiddleware(state, .subscriptionAction(subscriptionAction), environment)
+    case .appSettingsAction(let appSettingsAction):
+        return await appSettingsMiddleware(state, .appSettingsAction(appSettingsAction), environment)
     case .checkFreeTrialLimit:
         return nil
 
@@ -60,29 +62,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return .onSelectedChapter
     case .onSelectedChapter:
         return .selectTab(.reader, shouldPlaySound: false)
-    case .selectVoice,
-            .updateLanguage,
-            .updateSpeechSpeed,
-            .updateShowDefinition,
-            .updateShowEnglish,
-            .updateDifficulty,
-            .updateColorScheme,
-            .updateShouldPlaySound:
-        return .saveAppSettings
-    case .saveAppSettings:
-        do {
-            try environment.saveAppSettings(state.settingsState)
-            return nil
-        } catch {
-            return .failedToSaveAppSettings
-        }
-    case .loadAppSettings:
-        do {
-            let settings = try environment.loadAppSettings()
-            return .onLoadedAppSettings(settings)
-        } catch {
-            return .failedToLoadAppSettings
-        }
     case .checkDeviceVolumeZero:
         let audioSession = AVAudioSession.sharedInstance()
         do {
@@ -91,19 +70,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             return nil
         }
         return audioSession.outputVolume == 0.0 ? .showSnackBar(.deviceVolumeZero) : nil
-    case .onLoadedAppSettings:
-        if state.settingsState.isPlayingMusic {
-            return .audioAction(.playMusic(.whispersOfTheForest))
-        }
-        return nil
-    case .updateStorySetting(let setting):
-        switch setting {
-        case .random:
-            return nil
-        case .customPrompt(let prompt):
-            let isNewPrompt = !state.settingsState.customPrompts.contains(prompt)
-            return isNewPrompt ? .moderateText(prompt) : nil
-        }
     case .moderateText(let prompt):
         do {
             let response = try await environment.moderateText(prompt)
@@ -121,19 +87,13 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return .showSnackBar(.didNotPassModeration)
     case .selectTab(_, let shouldPlaySound):
         return shouldPlaySound ? .audioAction(.playSound(.tabPress)) : nil
-    case .deleteCustomPrompt:
-        return .saveAppSettings
     case .failedToSaveStory,
             .refreshChapterView,
-            .failedToSaveAppSettings,
-            .failedToLoadAppSettings,
             .refreshTranslationView,
             .failedToSaveStoryAndSettings,
             .refreshStoryListView,
             .updateAutoScrollEnabled,
             .hideSnackbar,
-            .updateCustomPrompt,
-            .updateIsShowingCustomPromptAlert,
             .dismissFailedModerationAlert,
             .showModerationDetails,
             .updateIsShowingModerationDetails,

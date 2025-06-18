@@ -31,7 +31,7 @@ struct VoiceMenu: View {
                             action: {
                                 withAnimation(.easeInOut) {
                                     store.dispatch(.audioAction(.playSound(.changeSettings)))
-                                    store.dispatch(.selectVoice(voice))
+                                    store.dispatch(.appSettingsAction(.selectVoice(voice)))
                                     if shouldDismissOnSelect {
                                         dismiss()
                                     }

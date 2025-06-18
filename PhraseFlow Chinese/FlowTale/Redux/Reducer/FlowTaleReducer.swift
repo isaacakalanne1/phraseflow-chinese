@@ -31,22 +31,13 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
 
     case .definitionAction(let definitionAction):
         newState = definitionReducer(state, definitionAction)
+        
+    case .appSettingsAction(let appSettingsAction):
+        newState = appSettingsReducer(state, appSettingsAction)
     case .updateCurrentSentence(let sentence):
         newState.storyState.currentSentence = sentence
     case .clearCurrentDefinition:
         newState.definitionState.currentDefinition = nil
-    case .onLoadedAppSettings(let settings):
-        newState.settingsState = settings
-        newState.translationState.targetLanguage = settings.language
-    case .updateSpeechSpeed(let speed):
-        newState.settingsState.speechSpeed = speed
-        if newState.audioState.audioPlayer.rate != 0 {
-            newState.audioState.audioPlayer.rate = speed.playRate
-        }
-    case .updateShowDefinition(let isShowing):
-        newState.settingsState.isShowingDefinition = isShowing
-    case .updateShowEnglish(let isShowing):
-        newState.settingsState.isShowingEnglish = isShowing
     case .updateAutoScrollEnabled(let isEnabled):
         newState.viewState.isAutoscrollEnabled = isEnabled
     case .selectChapter(var story, let chapterIndex):
@@ -92,17 +83,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.translationViewId = UUID()
     case .refreshStoryListView:
         newState.viewState.storyListViewId = UUID()
-    case .selectVoice(let voice):
-        newState.settingsState.voice = voice
-    case .updateDifficulty(let difficulty):
-        newState.settingsState.difficulty = difficulty
-    case .updateLanguage(let language):
-        if language != newState.settingsState.language {
-            newState.settingsState.language = language
-            if let voice = language.voices.first {
-                newState.settingsState.voice = voice
-            }
-        }
     case .showSnackBar(let type),
           .showSnackBarThenSaveStory(let type, _):
         if let url = type.sound.fileURL,
@@ -114,32 +94,11 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.snackBarState.isShowing = true
     case .hideSnackbar:
         newState.snackBarState.isShowing = false
-    case .updateCustomPrompt(let prompt):
-        newState.settingsState.customPrompt = prompt
     case .passedModeration(let prompt):
         newState.settingsState.customPrompts.append(prompt)
         newState.settingsState.storySetting = .customPrompt(prompt)
-
-    case .updateStorySetting(let setting):
-        switch setting {
-        case .random:
-            newState.settingsState.storySetting = setting
-        case .customPrompt(let prompt):
-            let isExistingPrompt = state.settingsState.customPrompts.contains(prompt)
-            if isExistingPrompt {
-                newState.settingsState.storySetting = setting
-            }
-        }
-        newState.settingsState.storySetting = setting
-    case .updateIsShowingCustomPromptAlert(let isShowing):
-        newState.viewState.isShowingCustomPromptAlert = isShowing
     case .selectTab(let tab, _):
         newState.viewState.contentTab = tab
-    case .deleteCustomPrompt(let prompt):
-        newState.settingsState.customPrompts.removeAll(where: { $0 == prompt })
-        if newState.settingsState.storySetting == .customPrompt(prompt) {
-            newState.settingsState.storySetting = .random
-        }
     case .onModeratedText(let response, _):
         newState.moderationResponse = response
     case .didNotPassModeration:
@@ -151,10 +110,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState.viewState.isShowingModerationDetails = true
     case .updateIsShowingModerationDetails(let isShowing):
         newState.viewState.isShowingModerationDetails = isShowing
-    case .updateColorScheme(let colorScheme):
-        newState.settingsState.appColorScheme = colorScheme
-    case .updateShouldPlaySound(let shouldPlaySound):
-        newState.settingsState.shouldPlaySound = shouldPlaySound
     case .showDailyLimitExplanationScreen(let isShowing):
         newState.viewState.isShowingDailyLimitExplanation = isShowing
     case .showFreeLimitExplanationScreen(let isShowing):
@@ -168,10 +123,6 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
     case .updateLoadingState(let loadingState):
         newState.viewState.loadingState = loadingState
     case .failedToSaveStory,
-            .failedToSaveAppSettings,
-            .failedToLoadAppSettings,
-            .loadAppSettings,
-            .saveAppSettings,
             .failedToSaveStoryAndSettings,
             .moderateText,
             .failedToModerateText,

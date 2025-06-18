@@ -15,14 +15,14 @@ struct SettingsView: View {
             store.state.settingsState.isShowingDefinition
         } set: { newValue in
             store.dispatch(.audioAction(.playSound(.togglePress)))
-            store.dispatch(.updateShowDefinition(newValue))
+            store.dispatch(.appSettingsAction(.updateShowDefinition(newValue)))
         }
 
         let showEnglish: Binding<Bool> = .init {
             store.state.settingsState.isShowingEnglish
         } set: { newValue in
             store.dispatch(.audioAction(.playSound(.togglePress)))
-            store.dispatch(.updateShowEnglish(newValue))
+            store.dispatch(.appSettingsAction(.updateShowEnglish(newValue)))
         }
 
         let playMusic: Binding<Bool> = .init {
@@ -39,7 +39,7 @@ struct SettingsView: View {
         let shouldPlayButtonSounds: Binding<Bool> = .init {
             store.state.settingsState.shouldPlaySound
         } set: { newValue in
-            store.dispatch(.updateShouldPlaySound(newValue))
+            store.dispatch(.appSettingsAction(.updateShouldPlaySound(newValue)))
             if newValue {
                 store.dispatch(.audioAction(.playSound(.togglePress)))
             }
