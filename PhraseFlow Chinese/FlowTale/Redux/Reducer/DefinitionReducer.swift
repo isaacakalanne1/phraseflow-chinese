@@ -12,8 +12,6 @@ let definitionReducer: Reducer<FlowTaleState, DefinitionAction> = { state, actio
     var newState = state
 
     switch action {
-    case .defineSentence(let wordTimeStampData, let shouldForce):
-        newState.viewState.isDefining = true
         
     case .onDefinedCharacter(var definition):
         definition.hasBeenSeen = true
@@ -31,18 +29,6 @@ let definitionReducer: Reducer<FlowTaleState, DefinitionAction> = { state, actio
         newState.definitionState.definitions.removeAll(where: { $0.id == definition.id })
         newState.definitionState.definitions.append(definition)
         newState.viewState.isDefining = false
-        
-    case .onDefinedSentence(_, var definitions, var tappedDefinition):
-        tappedDefinition.hasBeenSeen = true
-        tappedDefinition.creationDate = .now
-        
-        newState.definitionState.currentDefinition = tappedDefinition
-        newState.definitionState.definitions.append(contentsOf: definitions)
-        newState.definitionState.definitions.removeAll(where: { $0.id == tappedDefinition.id })
-        newState.definitionState.definitions.append(tappedDefinition)
-
-        newState.viewState.isDefining = false
-        
     case .onLoadedInitialDefinitions(let definitions):
         print("Loading \(definitions.count) initial definitions")
         newState.definitionState.definitions.addDefinitions(definitions)
@@ -73,9 +59,6 @@ let definitionReducer: Reducer<FlowTaleState, DefinitionAction> = { state, actio
         
     case .refreshDefinitionView:
         newState.viewState.definitionViewId = UUID()
-        
-    case .failedToDefineSentence:
-        newState.viewState.isDefining = false
         
     case .loadDefinitions,
          .loadInitialSentenceDefinitions,

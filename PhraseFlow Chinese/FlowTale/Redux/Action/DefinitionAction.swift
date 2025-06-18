@@ -14,11 +14,8 @@ enum DefinitionAction {
     case loadRemainingDefinitions(Chapter, Story, sentenceIndex: Int, previousDefinitions: [Definition])
     case onLoadedDefinitions([Definition])
     case failedToLoadDefinitions
-    
-    case defineSentence(WordTimeStampData, shouldForce: Bool)
+
     case onDefinedCharacter(Definition)
-    case onDefinedSentence(Sentence, [Definition], Definition)
-    case failedToDefineSentence
     case saveDefinitions
     case failedToSaveDefinitions
     

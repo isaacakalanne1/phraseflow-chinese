@@ -64,62 +64,6 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
             } catch {
                 return .definitionAction(.failedToLoadDefinitions)
             }
-            
-        case .defineSentence(let timestampData, let shouldForce):
-            do {
-                guard let sentence = state.storyState.sentence(containing: timestampData),
-                      let story = state.storyState.currentStory else {
-                    return .definitionAction(.failedToDefineSentence)
-                }
-
-                if let definition = state.definitionState.definition(timestampData: timestampData),
-                   !shouldForce {
-                    return .definitionAction(.onDefinedCharacter(definition))
-                }
-
-                let definitionsForSentence = try await environment.fetchDefinitions(
-                    in: sentence,
-                    story: story,
-                    deviceLanguage: state.deviceLanguage ?? .english
-                )
-
-                guard let definitionOfTappedWord = definitionsForSentence.first(where: { $0.timestampData == timestampData }) else {
-                    return .definitionAction(.failedToDefineSentence)
-                }
-
-                return .definitionAction(.onDefinedSentence(sentence,
-                                          definitionsForSentence,
-                                          definitionOfTappedWord))
-
-            } catch {
-                return .definitionAction(.failedToDefineSentence)
-            }
-            
-        case .onDefinedSentence(let sentence, let definitions, var tappedDefinition):
-            guard let firstWord = definitions.first?.timestampData,
-                  let lastWord = definitions.last?.timestampData else {
-                return .definitionAction(.saveDefinitions)
-            }
-
-            let startTime = firstWord.time
-            let totalDuration = lastWord.time + lastWord.duration - startTime
-
-            guard let sentenceAudio = AudioExtractor.shared.extractAudioSegment(
-                from: state.audioState.audioPlayer,
-                startTime: firstWord.time,
-                duration: lastWord.time + lastWord.duration - firstWord.time
-            ) else {
-                return .definitionAction(.saveDefinitions)
-            }
-
-            do {
-                try environment.saveSentenceAudio(sentenceAudio, id: sentence.id)
-                tappedDefinition.sentenceId = sentence.id
-                return .definitionAction(.onDefinedCharacter(tappedDefinition))
-            } catch {
-                return .definitionAction(.saveDefinitions)
-            }
-            
         case .onDefinedCharacter:
             return .definitionAction(.saveDefinitions)
             
@@ -156,7 +100,6 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
             return .definitionAction(.refreshDefinitionView)
             
         case .failedToLoadDefinitions,
-             .failedToDefineSentence,
              .failedToSaveDefinitions,
              .failedToDeleteDefinition,
              .refreshDefinitionView:
