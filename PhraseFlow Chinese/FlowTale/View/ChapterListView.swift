@@ -18,10 +18,8 @@ struct ChapterListView: View {
     }
 
     var body: some View {
-        // We can unwrap the story or show an error/empty view if not found
         if let story = story {
             VStack(spacing: 0) {
-                // Header with cover image
                 GeometryReader { proxy in
                     Group {
                         if let image = story.coverArt {
@@ -45,7 +43,6 @@ struct ChapterListView: View {
                 }
                 .frame(height: 200)
 
-                // Story info section
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
                         Text(story.title)
@@ -70,7 +67,6 @@ struct ChapterListView: View {
                 .padding(.horizontal, 16)
                 .padding(.vertical, 16)
 
-                // Chapters section
                 ScrollView {
                     LazyVStack(spacing: 12) {
                         HStack {
@@ -97,10 +93,9 @@ struct ChapterListView: View {
                             .padding(.horizontal, 16)
                         }
                     }
-                    .padding(.bottom, 100) // Space for button
+                    .padding(.bottom, 100)
                 }
-                
-                // New Chapter button floating at the bottom
+
                 VStack {
                     PrimaryButton(
                         icon: {
@@ -110,7 +105,7 @@ struct ChapterListView: View {
                         title: LocalizedString.newChapter
                     ) {
                         store.dispatch(.showSnackBar(.writingChapter))
-                        store.dispatch(.createChapter(.existingStory(story)))
+                        store.dispatch(.storyAction(.createChapter(.existingStory(story))))
                     }
                     .disabled(store.state.viewState.isWritingChapter)
                     .padding(.horizontal, 20)
@@ -139,20 +134,17 @@ struct ChapterListView: View {
             .onAppear {
                 store.dispatch(.playSound(.openStory))
 
-                // If the chapters are empty, start loading
                 if story.chapters.isEmpty {
-                    store.dispatch(.loadChapters(story, isAppLaunch: false))
+                    store.dispatch(.storyAction(.loadChapters(story, isAppLaunch: false)))
                 }
             }
         } else {
-            // If no story found in store, show message
             Text(LocalizedString.chapterListStoryNotFound)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(FlowTaleColor.background)
         }
     }
-    
-    // Empty state when there are no chapters
+
     private var emptyChaptersView: some View {
         VStack(spacing: 16) {
             Image(systemName: "doc.text")

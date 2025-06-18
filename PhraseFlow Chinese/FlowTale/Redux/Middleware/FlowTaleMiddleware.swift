@@ -32,35 +32,13 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return await translationMiddleware(state, action, environment)
     case .studyAction(let studyAction):
         return await studyMiddleware(state, .studyAction(studyAction), environment)
+    case .storyAction(let storyAction):
+        if let resultAction = await storyMiddleware(state, storyAction, environment) {
+            return .storyAction(resultAction)
+        }
+        return nil
     case .checkFreeTrialLimit:
         return nil
-
-    case .createChapter(let type):
-        do {
-            var story: Story
-            if case .existingStory(let existingStory) = type {
-                story = existingStory
-            } else {
-                story = state.createNewStory()
-            }
-            story = try await environment.generateStory(story: story,
-                                                        voice: state.settingsState.voice,
-                                                        deviceLanguage: state.deviceLanguage,
-                                                        currentSubscription: state.subscriptionState.currentSubscription)
-            return .onCreatedChapter(story)
-        } catch FlowTaleDataStoreError.freeUserCharacterLimitReached { // TODO: Test this still works (manually throw error within create story service logic)
-            return .setSubscriptionSheetShowing(true)
-        } catch FlowTaleDataStoreError.characterLimitReached(let nextAvailable) {
-            return .onDailyChapterLimitReached(nextAvailable: nextAvailable)
-        } catch {
-            return .failedToCreateChapter
-        }
-
-    case .onCreatedChapter(let story):
-        guard let chapter = story.chapters.last else {
-            return .failedToCreateChapter
-        }
-        return .loadInitialSentenceDefinitions(chapter, story, state.definitionState.numberOfInitialSentencesToDefine)
 
     case .onDailyChapterLimitReached(let nextAvailable):
         return .showSnackBar(.dailyChapterLimitReached(nextAvailable: nextAvailable))
@@ -82,31 +60,16 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             try? await Task.sleep(for: .seconds(duration))
             return .hideSnackbarThenSaveStoryAndSettings(story)
         } else {
-            return .saveStoryAndSettings(story)
+            return .storyAction(.saveStoryAndSettings(story))
         }
         
     case .hideSnackbarThenSaveStoryAndSettings(_):
         if let currentStory = state.storyState.currentStory {
-            return .saveStoryAndSettings(currentStory)
+            return .storyAction(.saveStoryAndSettings(currentStory))
         } else if let firstStory = state.storyState.savedStories.first {
-            return .saveStoryAndSettings(firstStory)
+            return .storyAction(.saveStoryAndSettings(firstStory))
         }
         return nil
-    case .loadStories(let isAppLaunch):
-        do {
-            let stories = try environment.loadAllStories()
-                .sorted(by: { $0.lastUpdated > $1.lastUpdated })
-            return .onLoadedStories(stories, isAppLaunch: isAppLaunch)
-        } catch {
-            return .failedToLoadStories
-        }
-    case .loadChapters(let story, let isAppLaunch):
-        do {
-            let chapters = try environment.loadAllChapters(for: story.id)
-            return .onLoadedChapters(story, chapters, isAppLaunch: isAppLaunch)
-        } catch {
-            return .failedToLoadChapters
-        }
     case .loadDefinitions:
         do {
             let definitions = try environment.loadDefinitions()
@@ -159,15 +122,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         } catch {
             return .failedToLoadDefinitions
         }
-    case .deleteStory(let story):
-        do {
-            try environment.unsaveStory(story)
-            return .onDeletedStory(story.id)
-        } catch {
-            return .failedToDeleteStory
-        }
-    case .onDeletedStory:
-        return .loadStories(isAppLaunch: false)
     case .playAudio(let timestamp):
         let playRate = state.settingsState.speechSpeed.playRate
 
@@ -179,7 +133,7 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         }
         
         if let story = state.storyState.currentStory {
-            return .saveStoryAndSettings(story)
+            return .storyAction(.saveStoryAndSettings(story))
         }
         return nil
     case .playWord(let word, let story):
@@ -187,7 +141,7 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
                                                      toSeconds: word.time + word.duration,
                                                      playRate: state.settingsState.speechSpeed.playRate)
         if let story = state.storyState.currentStory {
-            return .saveStoryAndSettings(story)
+            return .storyAction(.saveStoryAndSettings(story))
         }
         return nil
     case .playSound:
@@ -199,7 +153,7 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         state.musicAudioState.audioPlayer.play()
         
         if let story = state.storyState.currentStory {
-            return .saveStoryAndSettings(story)
+            return .storyAction(.saveStoryAndSettings(story))
         }
         return nil
         
@@ -208,13 +162,13 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         
     case .stopMusic:
         if let story = state.storyState.currentStory {
-            return .saveStoryAndSettings(story)
+            return .storyAction(.saveStoryAndSettings(story))
         }
         return nil
     case .pauseAudio:
         state.audioState.audioPlayer.pause()
         if let story = state.storyState.currentStory {
-            return .saveStoryAndSettings(story)
+            return .storyAction(.saveStoryAndSettings(story))
         }
         return nil
     case .defineSentence(let timestampData, let shouldForce):
@@ -290,14 +244,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return .onSelectedChapter
     case .onSelectedChapter:
         return .selectTab(.reader, shouldPlaySound: false)
-    case .saveStoryAndSettings(var story):
-        do {
-            try environment.saveStory(story)
-            try environment.saveAppSettings(state.settingsState)
-        } catch {
-            return .failedToSaveStoryAndSettings
-        }
-        return nil
     case .setMusicVolume(let volume):
         state.musicAudioState.audioPlayer.setVolume(volume.float, fadeDuration: 0.2)
         return nil
@@ -308,11 +254,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
            let lastWordDuration = lastSentence.timestamps.last?.duration,
            currentTime > lastWordTime + lastWordDuration {
             return .pauseAudio
-        }
-        return nil
-    case .goToNextChapter:
-        if let story = state.storyState.currentStory {
-            return .saveStoryAndSettings(story)
         }
         return nil
     case .selectVoice,
@@ -432,16 +373,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return .showSnackBar(.didNotPassModeration)
     case .selectTab(_, let shouldPlaySound):
         return shouldPlaySound ? .playSound(.tabPress) : nil
-    case .onLoadedStories(let stories, let isAppLaunch):
-        return .onFinishedLoadedStories
-    case .onFinishedLoadedStories:
-        if let story = state.storyState.currentStory,
-           story.chapters.isEmpty {
-            return .loadChapters(story, isAppLaunch: false)
-        }
-        return nil
-    case .onLoadedChapters(let story, let chapters, let isAppLaunch):
-        return isAppLaunch ? .showSnackBar(.welcomeBack) : nil
     case .deleteCustomPrompt:
         return .saveAppSettings
     case .onLoadedInitialDefinitions(let definitions):
@@ -461,13 +392,11 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             return .hideSnackbar
         }
         return nil
-    case .failedToLoadStories,
-            .failedToSaveStory,
+    case .failedToSaveStory,
             .failedToDefineSentence,
             .onPlayedAudio,
             .refreshChapterView,
             .refreshDefinitionView,
-            .failedToDeleteStory,
             .failedToSaveAppSettings,
             .failedToLoadAppSettings,
             .refreshTranslationView,
@@ -484,7 +413,6 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             .hideSnackbar,
             .updateCustomPrompt,
             .updateIsShowingCustomPromptAlert,
-            .failedToLoadChapters,
             .dismissFailedModerationAlert,
             .showModerationDetails,
             .updateIsShowingModerationDetails,

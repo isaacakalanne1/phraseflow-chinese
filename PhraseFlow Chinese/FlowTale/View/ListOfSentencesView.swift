@@ -114,10 +114,10 @@ struct ListOfSentencesView: View {
             if doesNextChapterExist {
                 store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
                 store.dispatch(.playSound(.goToNextChapter))
-                store.dispatch(.goToNextChapter)
+                store.dispatch(.storyAction(.goToNextChapter))
             } else {
                 store.dispatch(.showSnackBar(.writingChapter))
-                store.dispatch(.createChapter(.existingStory(story)))
+                store.dispatch(.storyAction(.createChapter(.existingStory(story))))
             }
         }
         .disabled(store.state.viewState.isWritingChapter)

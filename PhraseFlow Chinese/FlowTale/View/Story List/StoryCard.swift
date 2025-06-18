@@ -28,7 +28,7 @@ struct StoryCard: View {
             .clipShape(RoundedRectangle(cornerRadius: 20))
             .contextMenu {
                 DeleteButton {
-                    store.dispatch(.deleteStory(story))
+                    store.dispatch(.storyAction(.deleteStory(story)))
                 }
             }
         }

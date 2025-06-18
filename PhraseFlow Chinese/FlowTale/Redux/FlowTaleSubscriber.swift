@@ -15,7 +15,7 @@ let flowTaleSubscriber: OnSubscribe<FlowTaleStore, FlowTaleEnvironmentProtocol> 
             environment.dataStore.storySubject
         ) { store, story in
             if let story {
-                store.dispatch(.loadStories(isAppLaunch: false))
+                store.dispatch(.storyAction(.loadStories(isAppLaunch: false)))
             }
         }
 

@@ -12,14 +12,13 @@ import StoreKit
 enum FlowTaleAction {
     case studyAction(StudyAction)
     case translationAction(TranslationAction)
+    case storyAction(StoryAction)
     case updateCurrentSentence(Sentence)
     case updateAutoScrollEnabled(isEnabled: Bool)
     case clearCurrentDefinition
 
     case updateLoadingState(LoadingState)
 
-    case createChapter(CreateChapterType)
-    case onCreatedChapter(Story)
     case failedToCreateChapter
 
     case setMusicVolume(MusicVolume)
@@ -35,34 +34,15 @@ enum FlowTaleAction {
 
     case failedToSaveStory
 
-    case saveStoryAndSettings(Story)
     case hideSnackbarThenSaveStoryAndSettings(Story)
     case failedToSaveStoryAndSettings
     case showSnackBarThenSaveStory(SnackBarType, Story)
-
-    case deleteStory(Story)
-    case onDeletedStory(UUID)
-    case failedToDeleteStory
 
     case deleteCustomPrompt(String)
 
     case selectChapter(Story, chapterIndex: Int)
     case selectStoryFromSnackbar(Story)
     case onSelectedChapter
-
-    case loadStories(isAppLaunch: Bool)
-    case onLoadedStories([Story], isAppLaunch: Bool)
-    case onFinishedLoadedStories
-    case failedToLoadStories
-
-    // 1) Request to load chapters for a specific story
-    case loadChapters(Story, isAppLaunch: Bool)
-
-    // 2) Called on success, includes the original Story + the loaded chapters
-    case onLoadedChapters(Story, [Chapter], isAppLaunch: Bool)
-
-    // 3) Called on failure
-    case failedToLoadChapters
 
     case loadDefinitions
     case loadInitialSentenceDefinitions(Chapter, Story, Int)
@@ -91,7 +71,6 @@ enum FlowTaleAction {
     case updateDifficulty(Difficulty)
     case updateLanguage(Language)
 
-    case goToNextChapter
     case refreshChapterView
     case refreshDefinitionView
     case refreshTranslationView
