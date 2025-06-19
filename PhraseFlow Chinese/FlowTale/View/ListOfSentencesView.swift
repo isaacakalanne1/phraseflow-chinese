@@ -66,7 +66,18 @@ struct ListOfSentencesView: View {
             .padding(.trailing, 30)
 
             if !isTranslation {
-                mainButton(story: story)
+                MainButton(title: LocalizedString.newChapter.uppercased()) {
+                    let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
+                    if doesNextChapterExist {
+                        store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: true)))
+                        store.dispatch(.audioAction(.playSound(.goToNextChapter)))
+                        store.dispatch(.storyAction(.goToNextChapter))
+                    } else {
+                        store.dispatch(.snackbarAction(.showSnackBar(.writingChapter)))
+                        store.dispatch(.storyAction(.createChapter(.existingStory(story))))
+                    }
+                }
+                .disabled(store.state.viewState.isWritingChapter)
             }
         }
         .simultaneousGesture(
@@ -106,20 +117,5 @@ struct ListOfSentencesView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: story.language.alignment)
-    }
-
-    func mainButton(story: Story) -> some View {
-        MainButton(title: LocalizedString.newChapter.uppercased()) {
-            let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
-            if doesNextChapterExist {
-                store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: true)))
-                store.dispatch(.audioAction(.playSound(.goToNextChapter)))
-                store.dispatch(.storyAction(.goToNextChapter))
-            } else {
-                store.dispatch(.snackbarAction(.showSnackBar(.writingChapter)))
-                store.dispatch(.storyAction(.createChapter(.existingStory(story))))
-            }
-        }
-        .disabled(store.state.viewState.isWritingChapter)
     }
 }

@@ -9,10 +9,6 @@ import Foundation
 
 class ModerationServices: ModerationServicesProtocol {
     func moderateText(_ text: String) async throws -> ModerationResponse {
-        guard let url = URL(string: "https://api.openai.com/v1/moderations") else {
-            throw URLError(.badURL)
-        }
-
         var request = RequestFactory.createURLRequest(
             baseUrl: "https://api.openai.com/v1/moderations",
             authKey: APIRequestType.openAI.authKey
