@@ -44,11 +44,8 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             return nil
         }
         return audioSession.outputVolume == 0.0 ? .snackbarAction(.showSnackBar(.deviceVolumeZero)) : nil
-    case .failedToSaveStory,
-            .failedToSaveStoryAndSettings,
-            .updateAutoScrollEnabled,
+    case .updateAutoScrollEnabled,
             .updateCurrentSentence,
-            .clearCurrentDefinition,
             .updateLoadingState:
         return nil
     }

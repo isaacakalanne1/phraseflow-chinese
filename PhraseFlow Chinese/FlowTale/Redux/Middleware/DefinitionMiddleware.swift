@@ -102,6 +102,7 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
         case .failedToLoadDefinitions,
              .failedToSaveDefinitions,
              .failedToDeleteDefinition,
+             .clearCurrentDefinition,
              .refreshDefinitionView:
             return nil
         }

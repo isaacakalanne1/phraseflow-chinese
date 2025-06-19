@@ -26,5 +26,6 @@ enum StoryAction {
     case failedToDeleteStory
 
     case saveStoryAndSettings(Story)
+    case failedToSaveStoryAndSettings
     case goToNextChapter
 }

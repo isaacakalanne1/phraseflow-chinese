@@ -85,13 +85,14 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
         newState.viewState.isInitialisingApp = false
     case .failedToCreateChapter:
         newState.viewState.isWritingChapter = false
-    case .loadStories,
-         .onFinishedLoadedStories,
-         .failedToLoadChapters,
-         .loadChapters,
-         .deleteStory,
-         .failedToDeleteStory,
-         .saveStoryAndSettings:
+    case .loadChapters,
+            .loadStories,
+            .deleteStory,
+            .saveStoryAndSettings,
+            .onFinishedLoadedStories,
+            .failedToLoadChapters,
+            .failedToDeleteStory,
+            .failedToSaveStoryAndSettings:
         break
     }
 

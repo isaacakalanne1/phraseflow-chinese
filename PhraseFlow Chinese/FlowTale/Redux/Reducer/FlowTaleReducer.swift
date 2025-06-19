@@ -48,15 +48,11 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         newState = snackbarReducer(state, snackbarAction)
     case .updateCurrentSentence(let sentence):
         newState.storyState.currentSentence = sentence
-    case .clearCurrentDefinition:
-        newState.definitionState.currentDefinition = nil
     case .updateAutoScrollEnabled(let isEnabled):
         newState.viewState.isAutoscrollEnabled = isEnabled
     case .updateLoadingState(let loadingState):
         newState.viewState.loadingState = loadingState
-    case .failedToSaveStory,
-            .failedToSaveStoryAndSettings,
-            .checkDeviceVolumeZero:
+    case .checkDeviceVolumeZero:
         break
     }
 

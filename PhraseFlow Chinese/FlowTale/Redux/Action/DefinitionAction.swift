@@ -24,4 +24,6 @@ enum DefinitionAction {
     
     case updateStudiedWord(Definition)
     case refreshDefinitionView
+    
+    case clearCurrentDefinition
 }

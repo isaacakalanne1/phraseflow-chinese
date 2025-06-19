@@ -70,7 +70,7 @@ struct CharacterView: View {
                     if isTranslation {
                         store.dispatch(.translationAction(.clearTranslationDefinition))
                     } else {
-                        store.dispatch(.clearCurrentDefinition)
+                        store.dispatch(.definitionAction(.clearCurrentDefinition))
                     }
                 }
         )

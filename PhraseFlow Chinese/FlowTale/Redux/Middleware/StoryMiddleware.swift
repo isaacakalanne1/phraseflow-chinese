@@ -69,7 +69,7 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
                 try environment.saveStory(story)
                 try environment.saveAppSettings(state.settingsState)
             } catch {
-                return nil
+                return .storyAction(.failedToSaveStoryAndSettings)
             }
             return nil
 
@@ -95,7 +95,8 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             return .snackbarAction(.showSnackBar(.failedToWriteChapter))
         case .failedToLoadStories,
                 .failedToLoadChapters,
-                .failedToDeleteStory:
+                .failedToDeleteStory,
+                .failedToSaveStoryAndSettings:
             return nil
         }
     default:

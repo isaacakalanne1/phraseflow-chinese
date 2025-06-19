@@ -59,7 +59,10 @@ let definitionReducer: Reducer<FlowTaleState, DefinitionAction> = { state, actio
         
     case .refreshDefinitionView:
         newState.viewState.definitionViewId = UUID()
-        
+
+    case .clearCurrentDefinition:
+        newState.definitionState.currentDefinition = nil
+
     case .loadDefinitions,
          .loadInitialSentenceDefinitions,
          .saveDefinitions,
