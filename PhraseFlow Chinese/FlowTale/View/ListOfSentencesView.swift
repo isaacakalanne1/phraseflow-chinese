@@ -32,26 +32,24 @@ struct ListOfSentencesView: View {
         if let story = store.state.storyState.currentStory {
             ScrollViewReader { proxy in
                 scrollView(story: story, proxy: proxy)
-                    .onChange(of: store.state.viewState.isAutoscrollEnabled) {
+                    .onChange(of: store.state.viewState.isAutoscrollEnabled) { oldValue, newValue in
+                        guard newValue else { return }
                         scrollToCurrentWord(spokenWord, proxy: proxy)
                     }
                     .onAppear {
                         opacity = 1
                         store.dispatch(.snackbarAction(.checkDeviceVolumeZero))
-                        scrollToCurrentWord(spokenWord, proxy: proxy, isForced: true)
+                        scrollToCurrentWord(spokenWord, proxy: proxy)
                     }
             }
         }
     }
 
     private func scrollToCurrentWord(_ word: WordTimeStampData?,
-                                     proxy: ScrollViewProxy,
-                                     isForced: Bool = false) {
+                                     proxy: ScrollViewProxy) {
         guard let word else { return }
-        if isForced || store.state.viewState.isAutoscrollEnabled {
-            withAnimation {
-                proxy.scrollTo(word.id, anchor: .center)
-            }
+        withAnimation {
+            proxy.scrollTo(word.id, anchor: .center)
         }
     }
 
@@ -60,7 +58,7 @@ struct ListOfSentencesView: View {
         ScrollView(.vertical) {
             ForEach(chapter.sentences, id: \.self) { sentence in
                 flowLayout(sentence: sentence,
-                           story: story,
+                           language: story.language,
                            proxy: proxy)
             }
             .padding(.trailing, 30)
@@ -68,11 +66,12 @@ struct ListOfSentencesView: View {
             if !isTranslation {
                 MainButton(title: LocalizedString.newChapter.uppercased()) {
                     let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
-                    if doesNextChapterExist {
+                    switch doesNextChapterExist {
+                    case true:
                         store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: true)))
                         store.dispatch(.audioAction(.playSound(.goToNextChapter)))
                         store.dispatch(.storyAction(.goToNextChapter))
-                    } else {
+                    case false:
                         store.dispatch(.snackbarAction(.showSnackBar(.writingChapter)))
                         store.dispatch(.storyAction(.createChapter(.existingStory(story))))
                     }
@@ -89,33 +88,26 @@ struct ListOfSentencesView: View {
     }
 
     private func flowLayout(sentence: Sentence,
-                    story: Story,
-                    proxy: ScrollViewProxy) -> some View
-    {
-        FlowLayout(spacing: 0, language: story.language) {
+                            language: Language,
+                            proxy: ScrollViewProxy) -> some View {
+        FlowLayout(spacing: 0, language: language) {
             ForEach(Array(sentence.timestamps.enumerated()), id: \.offset) { index, word in
-                CharacterView(
-                    word: word,
-                    isHighlighted: word.id == spokenWord?.id,
-                    isCurrentSentence: sentence.id == currentSentence?.id,
-                    isTranslation: isTranslation
-                )
-                .id(word.id)
-                .opacity(opacity)
-                .animation(.easeInOut.delay(Double(index) * 0.02),
-                           value: opacity)
+                CharacterView(word: word, sentence: sentence, isTranslation: isTranslation)
+                    .id(word.id)
+                    .opacity(opacity)
+                    .animation(.easeInOut.delay(Double(index) * 0.02), value: opacity)
             }
         }
-        .onChange(of: spokenWord) {
+        .onChange(of: spokenWord) { oldValue, newValue in
             if sentence.timestamps.contains(where: { $0.id == spokenWord?.id }),
-               currentSentence != sentence
-            {
+               currentSentence != sentence {
                 if !isTranslation {
                     store.dispatch(.storyAction(.updateCurrentSentence(sentence)))
                 }
-                scrollToCurrentWord(spokenWord, proxy: proxy)
+                guard let newValue else { return }
+                scrollToCurrentWord(newValue, proxy: proxy)
             }
         }
-        .frame(maxWidth: .infinity, alignment: story.language.alignment)
+        .frame(maxWidth: .infinity, alignment: language.alignment)
     }
 }

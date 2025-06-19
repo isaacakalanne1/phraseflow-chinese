@@ -19,7 +19,7 @@ struct ViewState {
     var isShowingFreeLimitExplanation = false
     var isShowingDailyLimitExplanation = false
 
-    var isAutoscrollEnabled = false
+    var isAutoscrollEnabled = true
     var isDefining = false
     
     var isWritingChapter = false

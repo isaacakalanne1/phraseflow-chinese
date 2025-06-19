@@ -11,16 +11,27 @@ struct CharacterView: View {
     @EnvironmentObject var store: FlowTaleStore
 
     let word: WordTimeStampData
-    let isHighlighted: Bool
-    let isCurrentSentence: Bool
+    let sentence: Sentence
     let isTranslation: Bool
 
     var isTappedWord: Bool {
         store.state.definitionState.currentDefinition?.timestampData == word
     }
-    
+
+    var spokenWord: WordTimeStampData? {
+        isTranslation ? store.state.translationState.currentSpokenWord : store.state.storyState.currentSpokenWord
+    }
+
+    var currentSentence: Sentence? {
+        isTranslation ? store.state.translationState.currentSentence : store.state.storyState.currentSentence
+    }
+
     var hasDefinition: Bool {
         store.state.definitionState.definition(timestampData: word) != nil
+    }
+
+    var definition: Definition? {
+        isTranslation ? store.state.translationState.currentDefinition : store.state.definitionState.currentDefinition
     }
 
     var body: some View {
@@ -29,16 +40,15 @@ struct CharacterView: View {
                 Text(word.word)
                     .font(.system(size: 25, weight: .light))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .foregroundStyle(isTappedWord ? FlowTaleColor.primary : (isHighlighted ? FlowTaleColor.wordHighlight : FlowTaleColor.primary))
+                    .foregroundStyle(isTappedWord ? FlowTaleColor.primary : (word == spokenWord ? FlowTaleColor.wordHighlight : FlowTaleColor.primary))
                     .background {
                         if isTappedWord {
                             FlowTaleColor.wordHighlight
-                        } else if isCurrentSentence {
+                        } else if sentence.id == currentSentence?.id {
                             FlowTaleColor.highlight
                         }
                     }
-                
-                // Show a loading indicator when this word is tapped but its definition is still loading
+
                 if isTappedWord && !hasDefinition {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
@@ -51,25 +61,27 @@ struct CharacterView: View {
         .simultaneousGesture(
             DragGesture(minimumDistance: 0)
                 .onChanged { isTapped in
-                    let definition = isTranslation ? store.state.translationState.currentDefinition : store.state.definitionState.currentDefinition
-                    if definition == nil {
-                        if isTranslation {
-                            store.dispatch(.translationAction(.selectTranslationWord(word)))
-                        } else {
-                            store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: false)))
-                            store.dispatch(.audioAction(.playWord(word,
-                                                                  story: store.state.storyState.currentStory)))
+                    guard definition == nil else {
+                        return
+                    }
+                    switch isTranslation {
+                    case true:
+                        store.dispatch(.translationAction(.selectTranslationWord(word)))
+                    case false:
+                        store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: false)))
+                        store.dispatch(.audioAction(.playWord(word,
+                                                              story: store.state.storyState.currentStory)))
 
-                            if let existingDefinition = store.state.definitionState.definition(timestampData: word) {
-                                store.dispatch(.definitionAction(.onDefinedCharacter(existingDefinition)))
-                            }
+                        if let existingDefinition = store.state.definitionState.definition(timestampData: word) {
+                            store.dispatch(.definitionAction(.onDefinedCharacter(existingDefinition)))
                         }
                     }
                 }
                 .onEnded { _ in
-                    if isTranslation {
+                    switch isTranslation {
+                    case true:
                         store.dispatch(.translationAction(.clearTranslationDefinition))
-                    } else {
+                    case false:
                         store.dispatch(.definitionAction(.clearCurrentDefinition))
                     }
                 }
