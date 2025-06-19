@@ -43,49 +43,7 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
             } catch {
                 return .snackbarAction(.showSnackBarThenSaveStory(.chapterReady, story))
             }
-            
-        case .loadRemainingDefinitions(let chapter, let story, let sentenceIndex, let definitions):
-            do {
-                if sentenceIndex >= chapter.sentences.count {
-                    return .definitionAction(.onLoadedDefinitions([]))
-                }
-                
-                let sentence = chapter.sentences[sentenceIndex]
-                
-                let definitionsForSentence = try await environment.fetchDefinitions(
-                    in: sentence,
-                    story: story,
-                    deviceLanguage: state.deviceLanguage ?? .english
-                )
 
-                try environment.saveDefinitions(definitionsForSentence)
-
-                return .definitionAction(.loadRemainingDefinitions(chapter, story, sentenceIndex: sentenceIndex + 1, previousDefinitions: definitionsForSentence))
-            } catch {
-                return .definitionAction(.failedToLoadDefinitions)
-            }
-        case .onDefinedCharacter:
-            return .definitionAction(.saveDefinitions)
-            
-        case .saveDefinitions:
-            do {
-                try environment.saveDefinitions(state.definitionState.definitions)
-            } catch {
-                return .definitionAction(.failedToSaveDefinitions)
-            }
-            return nil
-            
-        case .deleteDefinition(let definition):
-            do {
-                try environment.deleteDefinition(with: definition.id)
-            } catch {
-                return .definitionAction(.failedToDeleteDefinition)
-            }
-            return nil
-            
-        case .updateStudiedWord:
-            return .definitionAction(.saveDefinitions)
-            
         case .onLoadedInitialDefinitions(let definitions):
             if let currentStory = state.storyState.currentStory,
                let chapter = state.storyState.currentChapter {
@@ -95,10 +53,52 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
                                          previousDefinitions: definitions))
             }
             return .definitionAction(.refreshDefinitionView)
-            
+
+        case .loadRemainingDefinitions(let chapter, let story, let sentenceIndex, let definitions):
+            do {
+                if sentenceIndex >= chapter.sentences.count {
+                    return .definitionAction(.onLoadedDefinitions([]))
+                }
+                
+                let definitions = try await environment.fetchDefinitions(
+                    in: chapter.sentences[sentenceIndex],
+                    story: story,
+                    deviceLanguage: state.deviceLanguage
+                )
+
+                try environment.saveDefinitions(definitions)
+
+                return .definitionAction(.loadRemainingDefinitions(chapter,
+                                                                   story,
+                                                                   sentenceIndex: sentenceIndex + 1,
+                                                                   previousDefinitions: definitions))
+            } catch {
+                return .definitionAction(.failedToLoadDefinitions)
+            }
+
+        case .saveDefinitions:
+            do {
+                try environment.saveDefinitions(state.definitionState.definitions)
+            } catch {
+                return .definitionAction(.failedToSaveDefinitions)
+            }
+            return nil
+
+        case .deleteDefinition(let definition):
+            do {
+                try environment.deleteDefinition(with: definition.id)
+            } catch {
+                return .definitionAction(.failedToDeleteDefinition)
+            }
+            return nil
+
+        case .onDefinedCharacter:
+            return .definitionAction(.saveDefinitions)
+        case .updateStudiedWord:
+            return .definitionAction(.saveDefinitions)
         case .onLoadedDefinitions(let definitions):
             return .definitionAction(.refreshDefinitionView)
-            
+
         case .failedToLoadDefinitions,
              .failedToSaveDefinitions,
              .failedToDeleteDefinition,

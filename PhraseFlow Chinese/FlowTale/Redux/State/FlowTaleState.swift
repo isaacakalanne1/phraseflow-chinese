@@ -28,8 +28,8 @@ struct FlowTaleState {
                      storyPrompt: settingsState.storySetting.prompt)
     }
 
-    var deviceLanguage: Language? {
-        Language.allCases.first(where: { $0.identifier == locale.language.languageCode?.identifier })
+    var deviceLanguage: Language {
+        Language.allCases.first(where: { $0.identifier == locale.language.languageCode?.identifier }) ?? .english
     }
 
     init(settingsState: SettingsState = SettingsState(),

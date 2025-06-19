@@ -34,16 +34,11 @@ let translationMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnv
             guard !inputText.isEmpty else {
                 return .translationAction(.translationInProgress(false))
             }
-            
-            let textLanguage = state.translationState.textLanguage
-            guard let deviceLanguage = state.deviceLanguage else {
-                return .translationAction(.failedToBreakdown)
-            }
 
             guard let chapter = try? await environment.breakdownText(
                 inputText,
-                textLanguage: textLanguage,
-                deviceLanguage: deviceLanguage
+                textLanguage: state.translationState.textLanguage,
+                deviceLanguage: state.deviceLanguage
             ) else {
                 return .translationAction(.failedToBreakdown)
             }
@@ -52,13 +47,15 @@ let translationMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnv
 
         case .onBrokenDown(let chapter):
             let textLanguage = state.translationState.textLanguage
-            let story = Story(language: textLanguage)
 
             guard let voice = state.settingsState.voice.language == textLanguage ? state.settingsState.voice : textLanguage.voices.first else {
                 return .translationAction(.failedToBreakdown)
             }
 
-            guard let newChapter = try? await environment.synthesizeSpeech(for: chapter, story: story, voice: voice, language: textLanguage) else {
+            guard let newChapter = try? await environment.synthesizeSpeech(for: chapter,
+                                                                           story: Story(language: textLanguage),
+                                                                           voice: voice,
+                                                                           language: textLanguage) else {
                 return .translationAction(.failedToBreakdown)
             }
 
@@ -66,13 +63,15 @@ let translationMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnv
 
         case .onTranslated(let chapter):
             let targetLanguage = state.settingsState.language
-            let story = Story(language: targetLanguage)
 
             guard let voice = state.settingsState.voice.language == targetLanguage ? state.settingsState.voice : targetLanguage.voices.first else {
                 return .translationAction(.failedToTranslate)
             }
 
-            guard let newChapter = try? await environment.synthesizeSpeech(for: chapter, story: story, voice: voice, language: targetLanguage) else {
+            guard let newChapter = try? await environment.synthesizeSpeech(for: chapter,
+                                                                           story: Story(language: targetLanguage),
+                                                                           voice: voice,
+                                                                           language: targetLanguage) else {
                 return .translationAction(.failedToTranslate)
             }
 
@@ -93,7 +92,7 @@ let translationMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnv
                   var definitionsForSentence = try? await environment.fetchDefinitions(
                 in: sentence,
                 story: .init(language: state.settingsState.language),
-                deviceLanguage: state.deviceLanguage ?? .english
+                deviceLanguage: state.deviceLanguage
             ) else {
                 return .translationAction(.failedToDefineTranslationWord)
             }
@@ -133,7 +132,7 @@ let translationMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnv
 
         case .updateTranslationPlayTime:
             if state.translationState.isPlayingAudio {
-                try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 second
+                try? await Task.sleep(nanoseconds: 100_000_000)
                 return .translationAction(.updateTranslationPlayTime)
             }
             return nil
