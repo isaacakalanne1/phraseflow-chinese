@@ -5,6 +5,7 @@
 //  Created by iakalann on 15/06/2025.
 //
 
+import AVKit
 import Foundation
 import ReduxKit
 
@@ -96,7 +97,10 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
         case .failedToLoadStories,
                 .failedToLoadChapters,
                 .failedToDeleteStory,
-                .failedToSaveStoryAndSettings:
+                .failedToSaveStoryAndSettings,
+                .updateAutoScrollEnabled,
+                .updateCurrentSentence,
+                .updateLoadingState:
             return nil
         }
     default:

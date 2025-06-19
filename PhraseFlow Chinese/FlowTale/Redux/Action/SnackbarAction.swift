@@ -12,4 +12,5 @@ enum SnackbarAction {
     case hideSnackbar
     case showSnackBarThenSaveStory(SnackBarType, Story)
     case hideSnackbarThenSaveStoryAndSettings(Story)
+    case checkDeviceVolumeZero
 }

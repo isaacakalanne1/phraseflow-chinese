@@ -37,7 +37,7 @@ struct ListOfSentencesView: View {
                     }
                     .onAppear {
                         opacity = 1
-                        store.dispatch(.checkDeviceVolumeZero)
+                        store.dispatch(.snackbarAction(.checkDeviceVolumeZero))
                         scrollToCurrentWord(spokenWord, proxy: proxy, isForced: true)
                     }
             }
@@ -72,7 +72,7 @@ struct ListOfSentencesView: View {
         .simultaneousGesture(
             DragGesture()
                 .onChanged { _ in
-                    store.dispatch(.updateAutoScrollEnabled(isEnabled: false))
+                    store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: false)))
                 }
         )
     }
@@ -100,7 +100,7 @@ struct ListOfSentencesView: View {
                currentSentence != sentence
             {
                 if !isTranslation {
-                    store.dispatch(.updateCurrentSentence(sentence))
+                    store.dispatch(.storyAction(.updateCurrentSentence(sentence)))
                 }
                 scrollToCurrentWord(spokenWord, proxy: proxy)
             }
@@ -112,7 +112,7 @@ struct ListOfSentencesView: View {
         MainButton(title: LocalizedString.newChapter.uppercased()) {
             let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
             if doesNextChapterExist {
-                store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
+                store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: true)))
                 store.dispatch(.audioAction(.playSound(.goToNextChapter)))
                 store.dispatch(.storyAction(.goToNextChapter))
             } else {

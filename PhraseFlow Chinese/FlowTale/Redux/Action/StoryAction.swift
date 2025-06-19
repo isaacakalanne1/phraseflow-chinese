@@ -28,4 +28,8 @@ enum StoryAction {
     case saveStoryAndSettings(Story)
     case failedToSaveStoryAndSettings
     case goToNextChapter
+
+    case updateCurrentSentence(Sentence)
+    case updateAutoScrollEnabled(isEnabled: Bool)
+    case updateLoadingState(LoadingState)
 }

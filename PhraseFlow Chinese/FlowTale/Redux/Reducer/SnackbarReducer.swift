@@ -28,6 +28,9 @@ let snackbarReducer: Reducer<FlowTaleState, SnackbarAction> = { state, action in
         
     case .hideSnackbarThenSaveStoryAndSettings:
         newState.snackBarState.isShowing = false
+
+    case .checkDeviceVolumeZero:
+        break
     }
 
     return newState

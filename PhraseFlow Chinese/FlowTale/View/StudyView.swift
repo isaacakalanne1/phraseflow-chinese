@@ -53,7 +53,7 @@ struct StudyView: View {
         .onAppear {
             index = 0
             updateDefinition()
-            store.dispatch(.checkDeviceVolumeZero)
+            store.dispatch(.snackbarAction(.checkDeviceVolumeZero))
         }
         .padding()
         .background(FlowTaleColor.background)

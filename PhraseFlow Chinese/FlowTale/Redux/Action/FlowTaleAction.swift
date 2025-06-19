@@ -21,9 +21,4 @@ enum FlowTaleAction {
     case userLimitAction(UserLimitAction)
     case navigationAction(NavigationAction)
     case snackbarAction(SnackbarAction)
-
-    case updateCurrentSentence(Sentence)
-    case updateAutoScrollEnabled(isEnabled: Bool)
-    case updateLoadingState(LoadingState)
-    case checkDeviceVolumeZero
 }

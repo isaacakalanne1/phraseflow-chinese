@@ -53,7 +53,6 @@ struct ReaderView: View {
         ZStack(alignment: .trailing) {
             VStack {
                 ListOfSentencesView(chapter: chapter)
-                    .onAppear { store.dispatch(.checkDeviceVolumeZero) }
                     .padding()
             }
             .cardBackground()

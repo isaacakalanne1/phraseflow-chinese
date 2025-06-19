@@ -56,7 +56,7 @@ struct CharacterView: View {
                         if isTranslation {
                             store.dispatch(.translationAction(.selectTranslationWord(word)))
                         } else {
-                            store.dispatch(.updateAutoScrollEnabled(isEnabled: false))
+                            store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: false)))
                             store.dispatch(.audioAction(.playWord(word,
                                                                   story: store.state.storyState.currentStory)))
 

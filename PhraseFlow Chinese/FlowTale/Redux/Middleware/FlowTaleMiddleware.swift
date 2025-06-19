@@ -35,18 +35,5 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return await navigationMiddleware(state, .navigationAction(navigationAction), environment)
     case .snackbarAction(let snackbarAction):
         return await snackbarMiddleware(state, .snackbarAction(snackbarAction), environment)
-
-    case .checkDeviceVolumeZero:
-        let audioSession = AVAudioSession.sharedInstance()
-        do {
-            try audioSession.setActive(true)
-        } catch {
-            return nil
-        }
-        return audioSession.outputVolume == 0.0 ? .snackbarAction(.showSnackBar(.deviceVolumeZero)) : nil
-    case .updateAutoScrollEnabled,
-            .updateCurrentSentence,
-            .updateLoadingState:
-        return nil
     }
 }

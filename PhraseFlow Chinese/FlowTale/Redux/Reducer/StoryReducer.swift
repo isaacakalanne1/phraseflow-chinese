@@ -85,6 +85,12 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
         newState.viewState.isInitialisingApp = false
     case .failedToCreateChapter:
         newState.viewState.isWritingChapter = false
+    case .updateCurrentSentence(let sentence):
+        newState.storyState.currentSentence = sentence
+    case .updateAutoScrollEnabled(let isEnabled):
+        newState.viewState.isAutoscrollEnabled = isEnabled
+    case .updateLoadingState(let loadingState):
+        newState.viewState.loadingState = loadingState
     case .loadChapters,
             .loadStories,
             .deleteStory,

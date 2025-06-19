@@ -5,6 +5,7 @@
 //  Created by iakalann on 15/06/2025.
 //
 
+import AVKit
 import Foundation
 import ReduxKit
 
@@ -37,7 +38,14 @@ let snackbarMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
                 return .storyAction(.saveStoryAndSettings(firstStory))
             }
             return nil
-            
+        case .checkDeviceVolumeZero:
+            let audioSession = AVAudioSession.sharedInstance()
+            do {
+                try audioSession.setActive(true)
+            } catch {
+                return nil
+            }
+            return audioSession.outputVolume == 0.0 ? .snackbarAction(.showSnackBar(.deviceVolumeZero)) : nil
         case .hideSnackbar:
             return nil
         }

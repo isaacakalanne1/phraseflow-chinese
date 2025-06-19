@@ -39,7 +39,6 @@ struct FlowTaleApp: App {
                     store.dispatch(.subscriptionAction(.getCurrentEntitlements))
                     store.dispatch(.subscriptionAction(.observeTransactionUpdates))
                     store.dispatch(.userLimitAction(.checkFreeTrialLimit))
-                    store.dispatch(.checkDeviceVolumeZero)
                 }
         }
     }

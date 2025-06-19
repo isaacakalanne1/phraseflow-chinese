@@ -33,7 +33,7 @@ let flowTaleSubscriber: OnSubscribe<FlowTaleStore, FlowTaleEnvironmentProtocol> 
             environment.loadingSubject
         ) { store, loadingState in
             if let loadingState {
-                store.dispatch(.updateLoadingState(loadingState))
+                store.dispatch(.storyAction(.updateLoadingState(loadingState)))
             }
         }
 }

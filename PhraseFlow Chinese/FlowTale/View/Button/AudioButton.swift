@@ -18,7 +18,7 @@ struct AudioButton: View {
                 let timestamps = store.state.storyState.currentSentence?.timestamps ?? []
                 let currentSpokenWord = store.state.storyState.currentSpokenWord ?? timestamps.first
                 store.dispatch(.audioAction(.playAudio(time: currentSpokenWord?.time)))
-                store.dispatch(.updateAutoScrollEnabled(isEnabled: true))
+                store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: true)))
             }
         } label: {
             audioButtonLabel(systemImage: store.state.audioState.isPlayingAudio ? .pause : .play)
