@@ -25,11 +25,11 @@ let moderationMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
             
         case .passedModeration:
             try? environment.saveAppSettings(state.settingsState)
-            return .showSnackBar(.passedModeration)
-            
+            return .snackbarAction(.showSnackBar(.passedModeration))
+
         case .didNotPassModeration,
              .failedToModerateText:
-            return .showSnackBar(.didNotPassModeration)
+            return .snackbarAction(.showSnackBar(.didNotPassModeration))
             
         case .dismissFailedModerationAlert,
              .showModerationDetails,

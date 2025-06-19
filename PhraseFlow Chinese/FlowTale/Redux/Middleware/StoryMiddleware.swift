@@ -92,7 +92,7 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
         case .onLoadedChapters(let story, let chapters, let isAppLaunch):
             return nil
         case .failedToCreateChapter:
-            return .showSnackBar(.failedToWriteChapter)
+            return .snackbarAction(.showSnackBar(.failedToWriteChapter))
         case .failedToLoadStories,
                 .failedToLoadChapters,
                 .failedToDeleteStory:

@@ -116,7 +116,7 @@ struct ListOfSentencesView: View {
                 store.dispatch(.audioAction(.playSound(.goToNextChapter)))
                 store.dispatch(.storyAction(.goToNextChapter))
             } else {
-                store.dispatch(.showSnackBar(.writingChapter))
+                store.dispatch(.snackbarAction(.showSnackBar(.writingChapter)))
                 store.dispatch(.storyAction(.createChapter(.existingStory(story))))
             }
         }

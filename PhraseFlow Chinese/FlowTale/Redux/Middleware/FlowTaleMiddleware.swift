@@ -33,32 +33,9 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         return await userLimitMiddleware(state, .userLimitAction(userLimitAction), environment)
     case .navigationAction(let navigationAction):
         return await navigationMiddleware(state, .navigationAction(navigationAction), environment)
+    case .snackbarAction(let snackbarAction):
+        return await snackbarMiddleware(state, .snackbarAction(snackbarAction), environment)
 
-    case .showSnackBar(let type):
-        state.appAudioState.audioPlayer.play()
-        if let duration = type.showDuration {
-            try? await Task.sleep(for: .seconds(duration))
-            return .hideSnackbar
-        }
-        return nil
-        
-    case .showSnackBarThenSaveStory(let type, let story):
-        state.appAudioState.audioPlayer.play()
-
-        if let duration = type.showDuration {
-            try? await Task.sleep(for: .seconds(duration))
-            return .hideSnackbarThenSaveStoryAndSettings(story)
-        } else {
-            return .storyAction(.saveStoryAndSettings(story))
-        }
-        
-    case .hideSnackbarThenSaveStoryAndSettings(_):
-        if let currentStory = state.storyState.currentStory {
-            return .storyAction(.saveStoryAndSettings(currentStory))
-        } else if let firstStory = state.storyState.savedStories.first {
-            return .storyAction(.saveStoryAndSettings(firstStory))
-        }
-        return nil
     case .checkDeviceVolumeZero:
         let audioSession = AVAudioSession.sharedInstance()
         do {
@@ -66,11 +43,10 @@ let flowTaleMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
         } catch {
             return nil
         }
-        return audioSession.outputVolume == 0.0 ? .showSnackBar(.deviceVolumeZero) : nil
+        return audioSession.outputVolume == 0.0 ? .snackbarAction(.showSnackBar(.deviceVolumeZero)) : nil
     case .failedToSaveStory,
             .failedToSaveStoryAndSettings,
             .updateAutoScrollEnabled,
-            .hideSnackbar,
             .updateCurrentSentence,
             .clearCurrentDefinition,
             .updateLoadingState:

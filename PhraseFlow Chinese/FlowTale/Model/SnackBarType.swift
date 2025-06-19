@@ -89,7 +89,7 @@ enum SnackBarType: Equatable {
     }
 
     func action(store: FlowTaleStore) {
-        store.dispatch(.hideSnackbar)
+        store.dispatch(.snackbarAction(.hideSnackbar))
         switch self {
         case .couldNotModerateText:
             store.dispatch(.appSettingsAction(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt))))

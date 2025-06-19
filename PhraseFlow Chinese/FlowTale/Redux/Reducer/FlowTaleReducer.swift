@@ -43,25 +43,15 @@ let flowTaleReducer: Reducer<FlowTaleState, FlowTaleAction> = { state, action in
         
     case .navigationAction(let navigationAction):
         newState = navigationReducer(state, navigationAction)
+        
+    case .snackbarAction(let snackbarAction):
+        newState = snackbarReducer(state, snackbarAction)
     case .updateCurrentSentence(let sentence):
         newState.storyState.currentSentence = sentence
     case .clearCurrentDefinition:
         newState.definitionState.currentDefinition = nil
     case .updateAutoScrollEnabled(let isEnabled):
         newState.viewState.isAutoscrollEnabled = isEnabled
-    case .showSnackBar(let type),
-          .showSnackBarThenSaveStory(let type, _):
-        if let url = type.sound.fileURL,
-           let player = try? AVAudioPlayer(contentsOf: url) {
-            player.volume = 0.7
-            newState.appAudioState.audioPlayer = player
-        }
-        newState.snackBarState.type = type
-        newState.snackBarState.isShowing = true
-    case .hideSnackbar:
-        newState.snackBarState.isShowing = false
-    case .hideSnackbarThenSaveStoryAndSettings:
-        newState.snackBarState.isShowing = false
     case .updateLoadingState(let loadingState):
         newState.viewState.loadingState = loadingState
     case .failedToSaveStory,

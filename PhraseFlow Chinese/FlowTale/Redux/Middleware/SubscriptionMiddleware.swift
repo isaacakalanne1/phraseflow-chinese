@@ -66,7 +66,7 @@ let subscriptionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEn
                 case .unverified(let transaction, _),
                         .verified(let transaction):
                     if transaction.revocationDate == nil && !isOnLaunch {
-                        return .showSnackBar(.subscribed)
+                        return .snackbarAction(.showSnackBar(.subscribed))
                     } else {
                         return nil
                     }
@@ -76,7 +76,7 @@ let subscriptionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEn
             
         case .setSubscriptionSheetShowing(let isShowing):
             if isShowing {
-                return .hideSnackbar
+                return .snackbarAction(.hideSnackbar)
             }
             return nil
             

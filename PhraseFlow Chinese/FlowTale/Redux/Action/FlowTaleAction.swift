@@ -20,6 +20,7 @@ enum FlowTaleAction {
     case moderationAction(ModerationAction)
     case userLimitAction(UserLimitAction)
     case navigationAction(NavigationAction)
+    case snackbarAction(SnackbarAction)
     case updateCurrentSentence(Sentence)
     case updateAutoScrollEnabled(isEnabled: Bool)
     case clearCurrentDefinition
@@ -28,12 +29,8 @@ enum FlowTaleAction {
 
     case failedToSaveStory
 
-    case hideSnackbarThenSaveStoryAndSettings(Story)
     case failedToSaveStoryAndSettings
-    case showSnackBarThenSaveStory(SnackBarType, Story)
 
-    case showSnackBar(SnackBarType)
-    case hideSnackbar
     case checkDeviceVolumeZero
 
 

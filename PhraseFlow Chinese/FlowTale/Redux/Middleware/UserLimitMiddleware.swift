@@ -13,7 +13,7 @@ let userLimitMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvir
     case .userLimitAction(let userLimitAction):
         switch userLimitAction {
         case .onDailyChapterLimitReached(let nextAvailable):
-            return .showSnackBar(.dailyChapterLimitReached(nextAvailable: nextAvailable))
+            return .snackbarAction(.showSnackBar(.dailyChapterLimitReached(nextAvailable: nextAvailable)))
             
         case .checkFreeTrialLimit,
              .hasReachedFreeTrialLimit,

@@ -41,7 +41,7 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
 
                 return .definitionAction(.onLoadedInitialDefinitions(allDefinitions))
             } catch {
-                return .showSnackBarThenSaveStory(.chapterReady, story)
+                return .snackbarAction(.showSnackBarThenSaveStory(.chapterReady, story))
             }
             
         case .loadRemainingDefinitions(let chapter, let story, let sentenceIndex, let definitions):
