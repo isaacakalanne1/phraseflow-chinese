@@ -33,7 +33,7 @@ struct ContentView: View {
                     mainContent()
                 }
             }
-            if !store.state.storyState.savedStories.isEmpty {
+            if !store.state.storyState.allStories.isEmpty {
                 Divider()
                     .padding(.horizontal, 10)
                 ActionButtonsView()
@@ -76,7 +76,7 @@ struct ContentView: View {
         ZStack(alignment: .topTrailing) {
             switch store.state.viewState.contentTab {
             case .reader:
-                if store.state.storyState.savedStories.isEmpty {
+                if store.state.storyState.allStories.isEmpty {
                     NavigationStack {
                         LanguageOnboardingView()
                     }

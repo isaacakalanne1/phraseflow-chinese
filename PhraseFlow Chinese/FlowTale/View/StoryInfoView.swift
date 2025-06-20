@@ -8,12 +8,28 @@
 import SwiftUI
 
 struct StoryInfoView: View {
-    let story: Story
+    let story: Story?
+    let chapter: Chapter?
+    
+    init(story: Story) {
+        self.story = story
+        self.chapter = nil
+    }
+    
+    init(chapter: Chapter) {
+        self.story = nil
+        self.chapter = chapter
+    }
 
     var body: some View {
         HStack {
-            DifficultyView(difficulty: story.difficulty, isSelected: true)
-            Text(story.language.flagEmoji)
+            if let story = story {
+                DifficultyView(difficulty: story.difficulty, isSelected: true)
+                Text(story.language.flagEmoji)
+            } else if let chapter = chapter {
+                DifficultyView(difficulty: chapter.difficulty, isSelected: true)
+                Text(chapter.language.flagEmoji)
+            }
         }
     }
 }

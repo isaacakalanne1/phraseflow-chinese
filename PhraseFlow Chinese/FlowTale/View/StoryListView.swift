@@ -13,7 +13,7 @@ struct StoryListView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            if store.state.storyState.savedStories.isEmpty {
+            if store.state.storyState.allStories.isEmpty {
                 StoryListEmptyState()
             } else {
                 StoryListContent()

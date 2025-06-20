@@ -11,16 +11,20 @@ struct ChapterListView: View {
     @EnvironmentObject var store: FlowTaleStore
     let storyId: UUID
 
-    private var story: Story? {
-        store.state.storyState.savedStories.first(where: { $0.id == storyId })
+    private var latestChapter: Chapter? {
+        store.state.storyState.latestChapter(for: storyId)
+    }
+    
+    private var allChaptersForStory: [Chapter] {
+        store.state.storyState.storyChapters[storyId] ?? []
     }
 
     var body: some View {
-        if let story = story {
+        if let latestChapter = latestChapter {
             VStack(spacing: 0) {
                 GeometryReader { proxy in
                     Group {
-                        if let image = story.coverArt {
+                        if let image = latestChapter.coverArt {
                             Image(uiImage: image)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
@@ -43,21 +47,21 @@ struct ChapterListView: View {
 
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
-                        Text(story.title)
+                        Text(latestChapter.storyTitle)
                             .font(.headline)
                             .foregroundColor(FlowTaleColor.primary)
                         
                         Spacer()
                         
                         HStack(spacing: 4) {
-                            DifficultyView(difficulty: story.difficulty, isSelected: true)
-                            Text(story.difficulty.title)
+                            DifficultyView(difficulty: latestChapter.difficulty, isSelected: true)
+                            Text(latestChapter.difficulty.title)
                                 .font(.caption)
                                 .foregroundColor(FlowTaleColor.secondary)
                         }
                     }
                     
-                    Text(story.briefLatestStorySummary)
+                    Text(latestChapter.chapterSummary)
                         .font(.subheadline)
                         .foregroundColor(FlowTaleColor.primary.opacity(0.8))
                         .lineLimit(3)
@@ -82,11 +86,11 @@ struct ChapterListView: View {
                         .padding(.horizontal, 16)
                         .padding(.top, 8)
                         
-                        if story.chapters.isEmpty && store.state.viewState.loadingState == .complete {
+                        if allChaptersForStory.isEmpty && store.state.viewState.loadingState == .complete {
                             emptyChaptersView
                         } else {
-                            ForEach(Array(story.chapters.reversed().enumerated()), id: \.offset) { index, chapter in
-                                chapterCard(for: chapter, at: index, in: story)
+                            ForEach(Array(allChaptersForStory.reversed().enumerated()), id: \.offset) { index, chapter in
+                                chapterCard(for: chapter, at: index)
                             }
                             .padding(.horizontal, 16)
                         }
@@ -103,7 +107,7 @@ struct ChapterListView: View {
                         title: LocalizedString.newChapter
                     ) {
                         store.dispatch(.snackbarAction(.showSnackBar(.writingChapter)))
-                        store.dispatch(.storyAction(.createChapter(.existingStory(story))))
+                        store.dispatch(.storyAction(.createChapter(.existingStory(storyId))))
                     }
                     .disabled(store.state.viewState.isWritingChapter)
                     .padding(.horizontal, 20)
@@ -132,8 +136,8 @@ struct ChapterListView: View {
             .onAppear {
                 store.dispatch(.audioAction(.playSound(.openStory)))
 
-                if story.chapters.isEmpty {
-                    store.dispatch(.storyAction(.loadChapters(story, isAppLaunch: false)))
+                if allChaptersForStory.isEmpty {
+                    store.dispatch(.storyAction(.loadChapters(storyId, isAppLaunch: false)))
                 }
             }
         } else {
@@ -165,12 +169,12 @@ struct ChapterListView: View {
         .padding(.vertical, 30)
     }
 
-    private func chapterCard(for chapter: Chapter, at index: Int, in story: Story) -> some View {
+    private func chapterCard(for chapter: Chapter, at index: Int) -> some View {
         Button {
             withAnimation(.easeInOut) {
                 store.dispatch(.audioAction(.playSound(.openChapter)))
-                let chapterIndex = story.chapters.count - 1 - index
-                store.dispatch(.navigationAction(.selectChapter(story, chapterIndex: chapterIndex)))
+                let chapterIndex = allChaptersForStory.count - 1 - index
+                store.dispatch(.navigationAction(.selectChapter(storyId, chapterIndex: chapterIndex)))
             }
         } label: {
             HStack(spacing: 12) {
@@ -179,7 +183,7 @@ struct ChapterListView: View {
                         .fill(FlowTaleColor.accent.opacity(0.1))
                         .frame(width: 40, height: 40)
                     
-                    Text("\(story.chapters.count - index)")
+                    Text("\(allChaptersForStory.count - index)")
                         .font(.system(size: 18, weight: .medium))
                         .foregroundColor(FlowTaleColor.accent)
                 }

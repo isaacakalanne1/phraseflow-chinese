@@ -36,17 +36,17 @@ let audioMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
                                                              playRate: playRate)
             }
             
-            if let story = state.storyState.currentStory {
-                return .storyAction(.saveStoryAndSettings(story))
+            if let chapter = state.storyState.currentChapter {
+                return .storyAction(.saveChapter(chapter))
             }
             return nil
             
-        case .playWord(let word, let story):
+        case .playWord(let word, let chapter):
             await state.audioState.audioPlayer.playAudio(fromSeconds: word.time,
                                                          toSeconds: word.time + word.duration,
                                                          playRate: state.settingsState.speechSpeed.playRate)
-            if let story = state.storyState.currentStory {
-                return .storyAction(.saveStoryAndSettings(story))
+            if let chapter = state.storyState.currentChapter {
+                return .storyAction(.saveChapter(chapter))
             }
             return nil
             
@@ -59,8 +59,8 @@ let audioMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
         case .playMusic:
             state.musicAudioState.audioPlayer.play()
             
-            if let story = state.storyState.currentStory {
-                return .storyAction(.saveStoryAndSettings(story))
+            if let chapter = state.storyState.currentChapter {
+                return .storyAction(.saveChapter(chapter))
             }
             return nil
             
@@ -68,15 +68,15 @@ let audioMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             return .audioAction(.playMusic(nextMusicType))
             
         case .stopMusic:
-            if let story = state.storyState.currentStory {
-                return .storyAction(.saveStoryAndSettings(story))
+            if let chapter = state.storyState.currentChapter {
+                return .storyAction(.saveChapter(chapter))
             }
             return nil
             
         case .pauseAudio:
             state.audioState.audioPlayer.pause()
-            if let story = state.storyState.currentStory {
-                return .storyAction(.saveStoryAndSettings(story))
+            if let chapter = state.storyState.currentChapter {
+                return .storyAction(.saveChapter(chapter))
             }
             return nil
             

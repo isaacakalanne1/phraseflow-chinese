@@ -12,7 +12,7 @@ struct CreateStoryButton: View {
 
     var body: some View {
         MainButton(title: LocalizedString.newStory.uppercased()) {
-            let hasExistingStories = !store.state.storyState.savedStories.isEmpty
+            let hasExistingStories = !store.state.storyState.allStories.isEmpty
 
             if hasExistingStories {
                 store.dispatch(.snackbarAction(.showSnackBar(.writingChapter)))

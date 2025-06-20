@@ -29,11 +29,11 @@ struct ReaderView: View {
     
     private var storyHeaderSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            if let story = store.state.storyState.currentStory {
+            if let chapter = store.state.storyState.currentChapter {
                 HStack(spacing: 12) {
-                    StoryInfoView(story: story)
+                    StoryInfoView(chapter: chapter)
                     
-                    Text(story.title)
+                    Text(chapter.storyTitle)
                         .font(.headline)
                         .foregroundColor(FlowTaleColor.primary)
                         .lineLimit(1)

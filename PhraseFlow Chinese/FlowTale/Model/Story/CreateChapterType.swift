@@ -5,7 +5,9 @@
 //  Created by iakalann on 17/04/2025.
 //
 
+import Foundation
+
 enum CreateChapterType {
     case newStory
-    case existingStory(Story)
+    case existingStory(UUID)
 }

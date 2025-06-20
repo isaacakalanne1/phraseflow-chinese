@@ -9,27 +9,34 @@ import Foundation
 
 enum StoryAction {
     case createChapter(CreateChapterType)
-    case onCreatedChapter(Story)
+    case onCreatedChapter(Chapter)
     case failedToCreateChapter
 
+    case loadChapters(UUID, isAppLaunch: Bool)
     case loadStories(isAppLaunch: Bool)
-    case onLoadedStories([Story], isAppLaunch: Bool)
-    case onFinishedLoadedStories
-    case failedToLoadStories
-
-    case loadChapters(Story, isAppLaunch: Bool)
-    case onLoadedChapters(Story, [Chapter], isAppLaunch: Bool)
+    case onLoadedChapters([Chapter], isAppLaunch: Bool)
+    case onFinishedLoadedChapters
     case failedToLoadChapters
 
-    case deleteStory(Story)
+    case deleteStory(UUID)
     case onDeletedStory(UUID)
     case failedToDeleteStory
+    
+    case deleteChapter(UUID)
+    case onDeletedChapter(UUID)
+    case failedToDeleteChapter
 
-    case saveStoryAndSettings(Story)
-    case failedToSaveStoryAndSettings
+    case saveChapter(Chapter)
+    case onSavedChapter(Chapter)
+    case failedToSaveChapter
+    
+    case setCurrentStory(UUID)
     case goToNextChapter
+    case goToPreviousChapter
+    case goToChapter(Int)
 
     case updateCurrentSentence(Sentence)
     case updateAutoScrollEnabled(isEnabled: Bool)
     case updateLoadingState(LoadingState)
+    case updatePlaybackTime(Double)
 }

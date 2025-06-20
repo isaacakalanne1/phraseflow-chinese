@@ -28,14 +28,15 @@ let snackbarMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
                 try? await Task.sleep(for: .seconds(duration))
                 return .snackbarAction(.hideSnackbarThenSaveStoryAndSettings(story))
             } else {
-                return .storyAction(.saveStoryAndSettings(story))
+                return .storyAction(.saveChapter(story.chapters.first!))
             }
             
         case .hideSnackbarThenSaveStoryAndSettings(_):
-            if let currentStory = state.storyState.currentStory {
-                return .storyAction(.saveStoryAndSettings(currentStory))
-            } else if let firstStory = state.storyState.savedStories.first {
-                return .storyAction(.saveStoryAndSettings(firstStory))
+            if let currentChapter = state.storyState.currentChapter {
+                return .storyAction(.saveChapter(currentChapter))
+            } else if let firstStory = state.storyState.allStories.first,
+                      let firstChapter = state.storyState.storyChapters[firstStory.storyId]?.first {
+                return .storyAction(.saveChapter(firstChapter))
             }
             return nil
         case .checkDeviceVolumeZero:

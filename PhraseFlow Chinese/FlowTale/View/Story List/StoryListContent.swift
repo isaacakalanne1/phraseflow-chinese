@@ -20,8 +20,8 @@ struct StoryListContent: View {
                     .padding(.horizontal, 20)
                     .padding(.top, 8)
                 
-                ForEach(store.state.storyState.savedStories, id: \.self) { story in
-                    StoryCard(story: story)
+                ForEach(store.state.storyState.allStories, id: \.storyId) { storyInfo in
+                    StoryCard(storyID: storyInfo.storyId)
                         .padding(.horizontal, 16)
                 }
             }

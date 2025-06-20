@@ -20,15 +20,26 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
                 return .definitionAction(.failedToLoadDefinitions)
             }
             
-        case .loadInitialSentenceDefinitions(let chapter, let story):
+        case .loadInitialSentenceDefinitions(let chapter):
             do {
                 var allDefinitions: [Definition] = []
+                
+                // Create temp story for compatibility with existing fetchDefinitions API
+                let tempStory = Story(
+                    briefLatestStorySummary: chapter.chapterSummary,
+                    difficulty: chapter.difficulty,
+                    language: chapter.language,
+                    title: chapter.storyTitle,
+                    storyPrompt: chapter.storyPrompt,
+                    imageData: chapter.imageData,
+                    lastUpdated: chapter.lastUpdated
+                )
                 
                 for sentence in Array(chapter.sentences.prefix(3)) {
                     allDefinitions.append(contentsOf:
                                             try await environment.fetchDefinitions(
                                                 in: sentence,
-                                                story: story,
+                                                story: tempStory,
                                                 deviceLanguage: state.deviceLanguage
                                             )
                     )
@@ -37,7 +48,7 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
 
                 return .definitionAction(.onLoadedInitialDefinitions(allDefinitions))
             } catch {
-                return .snackbarAction(.showSnackBarThenSaveStory(.chapterReady, story))
+                return .snackbarAction(.showSnackBar(.chapterReady))
             }
 
         case .onLoadedInitialDefinitions(let definitions):
@@ -46,15 +57,25 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
 
         case .loadRemainingDefinitions(let sentenceIndex, _):
             do {
-                guard let story = state.storyState.currentStory,
-                      let chapter = state.storyState.currentChapter,
+                guard let chapter = state.storyState.currentChapter,
                       sentenceIndex < chapter.sentences.count else {
                     return nil
                 }
                 
+                // Create temp story for compatibility with existing fetchDefinitions API
+                let tempStory = Story(
+                    briefLatestStorySummary: chapter.chapterSummary,
+                    difficulty: chapter.difficulty,
+                    language: chapter.language,
+                    title: chapter.storyTitle,
+                    storyPrompt: chapter.storyPrompt,
+                    imageData: chapter.imageData,
+                    lastUpdated: chapter.lastUpdated
+                )
+                
                 let definitions = try await environment.fetchDefinitions(
                     in: chapter.sentences[sentenceIndex],
-                    story: story,
+                    story: tempStory,
                     deviceLanguage: state.deviceLanguage
                 )
 

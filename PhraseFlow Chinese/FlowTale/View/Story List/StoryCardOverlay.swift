@@ -8,7 +8,16 @@
 import SwiftUI
 
 struct StoryCardOverlay: View {
-    let story: Story
+    @EnvironmentObject var store: FlowTaleStore
+    let storyID: UUID
+    
+    private var latestChapter: Chapter? {
+        store.state.storyState.latestChapter(for: storyID)
+    }
+    
+    private var allChaptersForStory: [Chapter] {
+        store.state.storyState.storyChapters[storyID] ?? []
+    }
     
     var body: some View {
         // Content overlay
@@ -18,7 +27,7 @@ struct StoryCardOverlay: View {
             // Bottom section with story details
             VStack(alignment: .leading, spacing: 8) {
                 // Story title
-                Text(story.title)
+                Text(latestChapter?.storyTitle ?? "")
                     .font(.title2.bold())
                     .foregroundColor(FlowTaleColor.primary)
                     .lineLimit(2)
@@ -28,7 +37,7 @@ struct StoryCardOverlay: View {
                 languageAndDifficultyIndicators
 
                 // Story summary
-                Text(story.briefLatestStorySummary)
+                Text(latestChapter?.chapterSummary ?? "")
                     .font(.subheadline)
                     .foregroundColor(FlowTaleColor.primary)
                     .lineLimit(2)
@@ -45,10 +54,10 @@ struct StoryCardOverlay: View {
         HStack(spacing: 12) {
             // Language indicator
             HStack(spacing: 6) {
-                Text(story.language.flagEmoji)
+                Text(latestChapter?.language.flagEmoji ?? "")
                     .font(.title3)
 
-                Text(story.language.descriptiveEnglishName)
+                Text(latestChapter?.language.descriptiveEnglishName ?? "")
                     .font(.caption.weight(.medium))
                     .foregroundColor(FlowTaleColor.primary)
             }
@@ -62,9 +71,9 @@ struct StoryCardOverlay: View {
             
             // Difficulty indicator
             HStack(spacing: 8) {
-                DifficultyView(difficulty: story.difficulty, isSelected: true)
+                DifficultyView(difficulty: latestChapter?.difficulty ?? .beginner, isSelected: true)
 
-                Text(story.difficulty.title)
+                Text(latestChapter?.difficulty.title ?? "")
                     .font(.caption.weight(.medium))
                     .foregroundColor(FlowTaleColor.primary)
                     .tracking(0.5)
@@ -85,7 +94,7 @@ struct StoryCardOverlay: View {
                 .font(.caption)
                 .foregroundColor(FlowTaleColor.primary)
 
-            Text("\(story.chapters.count) \(story.chapters.count == 1 ? "chapter" : "chapters")")
+            Text("\(allChaptersForStory.count) \(allChaptersForStory.count == 1 ? "chapter" : "chapters")")
                 .font(.caption)
                 .foregroundColor(FlowTaleColor.primary)
         }

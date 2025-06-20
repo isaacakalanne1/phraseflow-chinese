@@ -39,10 +39,12 @@ class TranslationServices: TranslationServicesProtocol {
         let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguage: deviceLanguage, targetLanguage: targetLanguage)
         let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
         let passage = chapterResponse.sentences.reduce("") { $0 + $1.original }
-        return Chapter(title: chapterResponse.chapterNumberAndTitle ?? "",
+        return Chapter(storyId: UUID(),
+                       title: chapterResponse.chapterNumberAndTitle ?? "",
                        sentences: chapterResponse.sentences,
                        audio: .init(data: Data()),
-                       passage: passage)
+                       passage: passage,
+                       language: targetLanguage)
     }
 
     func breakdownText(
@@ -77,9 +79,11 @@ class TranslationServices: TranslationServicesProtocol {
         let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguage: textLanguage, targetLanguage: deviceLanguage)
         let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
         let passage = chapterResponse.sentences.reduce("") { $0 + $1.original }
-        return Chapter(title: chapterResponse.chapterNumberAndTitle ?? "",
+        return Chapter(storyId: UUID(),
+                       title: chapterResponse.chapterNumberAndTitle ?? "",
                        sentences: chapterResponse.sentences,
                        audio: .init(data: Data()),
-                       passage: passage)
+                       passage: passage,
+                       language: textLanguage)
     }
 }

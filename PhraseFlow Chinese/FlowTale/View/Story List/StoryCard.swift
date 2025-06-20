@@ -9,10 +9,14 @@ import SwiftUI
 
 struct StoryCard: View {
     @EnvironmentObject var store: FlowTaleStore
-    let story: Story
-    
+    let storyID: UUID
+
+    private var latestChapter: Chapter? {
+        store.state.storyState.latestChapter(for: storyID)
+    }
+
     var body: some View {
-        NavigationLink(destination: ChapterListView(storyId: story.id)) {
+        NavigationLink(destination: ChapterListView(storyId: storyID)) {
             ZStack {
                 // Background image or fallback
                 backgroundImage
@@ -21,14 +25,14 @@ struct StoryCard: View {
                 Color.black.opacity(0.2)
 
                 // Story content overlay
-                StoryCardOverlay(story: story)
+                StoryCardOverlay(storyID: storyID)
             }
             .frame(height: 150)
             .shadow(color: .black.opacity(0.15), radius: 12, x: 0, y: 4)
             .clipShape(RoundedRectangle(cornerRadius: 20))
             .contextMenu {
                 DeleteButton {
-                    store.dispatch(.storyAction(.deleteStory(story)))
+                    store.dispatch(.storyAction(.deleteStory(storyID)))
                 }
             }
         }
@@ -36,7 +40,7 @@ struct StoryCard: View {
     
     private var backgroundImage: some View {
         Group {
-            if let image = story.coverArt {
+            if let image = latestChapter?.coverArt {
                 Image(uiImage: image)
                     .resizable()
                     .aspectRatio(contentMode: .fill)

@@ -30,32 +30,35 @@ struct ListOfSentencesView: View {
 
     var body: some View {
         ScrollViewReader { proxy in
-            if let story = store.state.storyState.currentStory {
-                scrollView(story: story, proxy: proxy)
+            if let chapter = store.state.storyState.currentChapter {
+                scrollView(chapter: chapter, proxy: proxy)
             }
         }
     }
 
     @ViewBuilder
-    func scrollView(story: Story, proxy: ScrollViewProxy) -> some View {
+    func scrollView(chapter: Chapter, proxy: ScrollViewProxy) -> some View {
         ScrollView(.vertical) {
             ForEach(chapter.sentences, id: \.self) { sentence in
                 flowLayout(sentence: sentence,
-                           language: story.language,
+                           language: chapter.language,
                            proxy: proxy)
             }
             .padding(.trailing, 30)
 
             if !isTranslation {
                 MainButton(title: LocalizedString.newChapter.uppercased()) {
-                    switch story.isLastChapter {
+                    let allChaptersForStory = store.state.storyState.storyChapters[chapter.storyId] ?? []
+                    let isLastChapter = store.state.storyState.currentChapterIndex >= allChaptersForStory.count - 1
+                    
+                    switch isLastChapter {
                     case true:
                         store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: true)))
                         store.dispatch(.audioAction(.playSound(.goToNextChapter)))
                         store.dispatch(.storyAction(.goToNextChapter))
                     case false:
                         store.dispatch(.snackbarAction(.showSnackBar(.writingChapter)))
-                        store.dispatch(.storyAction(.createChapter(.existingStory(story))))
+                        store.dispatch(.storyAction(.createChapter(.existingStory(chapter.storyId))))
                     }
                 }
                 .disabled(store.state.viewState.isWritingChapter)

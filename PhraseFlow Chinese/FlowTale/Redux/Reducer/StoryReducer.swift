@@ -13,30 +13,32 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
     var newState = state
 
     switch action {
-    case .onLoadedStories(let stories, let isAppLaunch):
-        newState.storyState.savedStories = stories
-        newState.viewState.isInitialisingApp = false
-        if newState.storyState.currentStory == nil ||
-           !stories.contains(where: { $0.id == newState.storyState.currentStory?.id }) {
-            newState.storyState.currentStory = stories.first
-            let data = newState.storyState.currentChapter?.audio.data
-            let player = data?.createAVPlayer()
-            newState.audioState.audioPlayer = player ?? AVPlayer()
+    case .onLoadedChapters(let chapters, let isAppLaunch):
+        for chapter in chapters {
+            if newState.storyState.storyChapters[chapter.storyId] == nil {
+                newState.storyState.storyChapters[chapter.storyId] = []
+            }
+            newState.storyState.storyChapters[chapter.storyId]?.append(chapter)
         }
         
-    case .onLoadedChapters(let story, let chapters, _):
-        if let index = newState.storyState.savedStories.firstIndex(where: { $0.id == story.id }) {
-            var updatedStory = newState.storyState.savedStories[index]
-            updatedStory.chapters = chapters
-            newState.storyState.savedStories[index] = updatedStory
+        // Sort chapters by last updated for each story
+        for storyId in newState.storyState.storyChapters.keys {
+            newState.storyState.storyChapters[storyId]?.sort { $0.lastUpdated < $1.lastUpdated }
         }
-        if newState.storyState.currentStory?.id == story.id {
-            newState.storyState.currentStory?.chapters = chapters
-            let data = newState.storyState.currentChapter?.audio.data
-            let player = data?.createAVPlayer()
+        
+        newState.viewState.isInitialisingApp = false
+        
+        // Set current story if none is set
+        if newState.storyState.currentStoryId == nil {
+            newState.storyState.currentStoryId = newState.storyState.allStories.first?.storyId
+            newState.storyState.currentChapterIndex = 0
+        }
+        
+        // Set up audio player for current chapter
+        if let currentChapter = newState.storyState.currentChapter {
+            let player = currentChapter.audio.data.createAVPlayer()
             newState.audioState.audioPlayer = player ?? AVPlayer()
         }
-        newState.storyState.currentSentence = newState.storyState.currentChapter?.sentences.last(where: { $0.timestamps.contains(where: { story.currentPlaybackTime >= $0.time }) })
         
     case .createChapter(let type):
         newState.viewState.isWritingChapter = true
@@ -44,45 +46,101 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
         switch type {
         case .newStory:
             newState.viewState.shouldShowImageSpinner = true
-        case .existingStory(let story):
-            newState.settingsState.voice = story.chapters.last?.audioVoice ?? newState.settingsState.voice
-            newState.viewState.shouldShowImageSpinner = story.imageData == nil
+        case .existingStory(let storyId):
+            if let latestChapter = newState.storyState.latestChapter(for: storyId) {
+                newState.settingsState.voice = latestChapter.audioVoice ?? newState.settingsState.voice
+                newState.viewState.shouldShowImageSpinner = latestChapter.imageData == nil
+            }
         }
         newState.viewState.loadingState = .writing
         
-    case .onCreatedChapter(var story):
+    case .onCreatedChapter(var chapter):
         newState.definitionState.currentDefinition = nil
 
-        story.currentPlaybackTime = 0
-        story.currentChapterIndex = story.chapters.count - 1
-
-        newState.storyState.savedStories.append(story)
-        newState.storyState.currentStory = story
-        newState.storyState.currentSentence = story.chapters.last?.sentences.first
+        chapter.currentPlaybackTime = 0
+        
+        // Add chapter to story
+        if newState.storyState.storyChapters[chapter.storyId] == nil {
+            newState.storyState.storyChapters[chapter.storyId] = []
+        }
+        newState.storyState.storyChapters[chapter.storyId]?.append(chapter)
+        
+        // Set as current story
+        newState.storyState.currentStoryId = chapter.storyId
+        newState.storyState.currentChapterIndex = (newState.storyState.storyChapters[chapter.storyId]?.count ?? 1) - 1
+        
+        newState.storyState.currentSentence = chapter.sentences.first
         newState.viewState.contentTab = .reader
 
-        let player = story.chapters.last?.audio.data.createAVPlayer()
+        let player = chapter.audio.data.createAVPlayer()
         newState.audioState.audioPlayer = player ?? AVPlayer()
 
         newState.snackBarState.type = .chapterReady
         newState.snackBarState.isShowing = true
         
     case .onDeletedStory(let storyId):
-        if newState.storyState.currentStory?.id == storyId {
-            newState.storyState.currentStory = nil
+        newState.storyState.storyChapters.removeValue(forKey: storyId)
+        if newState.storyState.currentStoryId == storyId {
+            newState.storyState.currentStoryId = newState.storyState.allStories.first?.storyId
+            newState.storyState.currentChapterIndex = 0
             newState.viewState.contentTab = .storyList
         }
         
-    case .goToNextChapter:
-        var newStory = newState.storyState.currentStory
-        newStory?.currentChapterIndex += 1
-        newState.storyState.currentStory = newStory
+    case .onDeletedChapter(let chapterId):
+        for storyId in newState.storyState.storyChapters.keys {
+            newState.storyState.storyChapters[storyId]?.removeAll { $0.id == chapterId }
+        }
+        
+    case .onSavedChapter(let chapter):
+        if let storyChapters = newState.storyState.storyChapters[chapter.storyId],
+           let index = storyChapters.firstIndex(where: { $0.id == chapter.id }) {
+            newState.storyState.storyChapters[chapter.storyId]?[index] = chapter
+        }
+        
+    case .setCurrentStory(let storyId):
+        newState.storyState.currentStoryId = storyId
+        newState.storyState.currentChapterIndex = 0
         let data = newState.storyState.currentChapter?.audio.data
         let player = data?.createAVPlayer()
         newState.audioState.audioPlayer = player ?? AVPlayer()
-        let sentence = newState.storyState.currentSentence
-        newState.storyState.currentStory?.currentPlaybackTime = sentence?.timestamps.first?.time ?? 0.1
-    case .failedToLoadStories:
+        
+    case .goToNextChapter:
+        guard let currentStoryId = newState.storyState.currentStoryId,
+              let chapters = newState.storyState.storyChapters[currentStoryId] else { break }
+        
+        if newState.storyState.currentChapterIndex < chapters.count - 1 {
+            newState.storyState.currentChapterIndex += 1
+            let data = newState.storyState.currentChapter?.audio.data
+            let player = data?.createAVPlayer()
+            newState.audioState.audioPlayer = player ?? AVPlayer()
+            
+            let sentence = newState.storyState.currentSentence
+            newState.storyState.storyChapters[currentStoryId]?[newState.storyState.currentChapterIndex].currentPlaybackTime = sentence?.timestamps.first?.time ?? 0.1
+        }
+        
+    case .goToPreviousChapter:
+        if newState.storyState.currentChapterIndex > 0 {
+            newState.storyState.currentChapterIndex -= 1
+            let data = newState.storyState.currentChapter?.audio.data
+            let player = data?.createAVPlayer()
+            newState.audioState.audioPlayer = player ?? AVPlayer()
+        }
+        
+    case .goToChapter(let index):
+        guard let currentStoryId = newState.storyState.currentStoryId,
+              let chapters = newState.storyState.storyChapters[currentStoryId],
+              index >= 0 && index < chapters.count else { break }
+        
+        newState.storyState.currentChapterIndex = index
+        let data = newState.storyState.currentChapter?.audio.data
+        let player = data?.createAVPlayer()
+        newState.audioState.audioPlayer = player ?? AVPlayer()
+        
+    case .updatePlaybackTime(let time):
+        guard let currentStoryId = newState.storyState.currentStoryId else { break }
+        newState.storyState.storyChapters[currentStoryId]?[newState.storyState.currentChapterIndex].currentPlaybackTime = time
+        
+    case .failedToLoadChapters:
         newState.viewState.isInitialisingApp = false
     case .failedToCreateChapter:
         newState.viewState.isWritingChapter = false
@@ -95,11 +153,12 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
     case .loadChapters,
             .loadStories,
             .deleteStory,
-            .saveStoryAndSettings,
-            .onFinishedLoadedStories,
-            .failedToLoadChapters,
+            .deleteChapter,
+            .saveChapter,
+            .onFinishedLoadedChapters,
             .failedToDeleteStory,
-            .failedToSaveStoryAndSettings:
+            .failedToDeleteChapter,
+            .failedToSaveChapter:
         break
     }
 

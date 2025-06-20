@@ -9,7 +9,7 @@ import Foundation
 
 enum DefinitionAction {
     case loadDefinitions
-    case loadInitialSentenceDefinitions(Chapter, Story)
+    case loadInitialSentenceDefinitions(Chapter)
     case onLoadedInitialDefinitions([Definition])
     case loadRemainingDefinitions(sentenceIndex: Int, previousDefinitions: [Definition])
     case onLoadedDefinitions([Definition])

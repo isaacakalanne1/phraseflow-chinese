@@ -90,7 +90,7 @@ struct DefinitionsProgressSheetView: View {
             )
         }
         .navigationDestination(isPresented: $navigateToStudyView) {
-            let language = store.state.storyState.currentStory?.language
+            let language = store.state.storyState.currentChapter?.language
             StudyView(studyWords: store.state.definitionState.studyDefinitions(language: language))
         }
         .navigationDestination(isPresented: $showLanguageSelector) {

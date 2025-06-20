@@ -22,10 +22,15 @@ struct FlowTaleState {
     var locale: Locale
     var moderationResponse: ModerationResponse?
 
-    func createNewStory() -> Story {
-        return Story(difficulty: settingsState.difficulty,
-                     language: settingsState.language,
-                     storyPrompt: settingsState.storySetting.prompt)
+    func createNewChapter(storyId: UUID = UUID()) -> Chapter {
+        return Chapter(storyId: storyId,
+                       title: "",
+                       sentences: [],
+                       audio: ChapterAudio(data: Data()),
+                       passage: "",
+                       difficulty: settingsState.difficulty,
+                       language: settingsState.language,
+                       storyPrompt: settingsState.storySetting.prompt)
     }
 
     var deviceLanguage: Language {

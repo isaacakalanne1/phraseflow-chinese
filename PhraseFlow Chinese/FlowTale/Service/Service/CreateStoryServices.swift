@@ -22,10 +22,12 @@ class CreateStoryServices: CreateStoryServicesProtocol {
             let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguage: deviceLanguage, targetLanguage: story.language)
             let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
             let passage = chapterResponse.sentences.reduce("") { $0 + $1.original }
-            let chapter = Chapter(title: chapterResponse.chapterNumberAndTitle ?? "",
+            let chapter = Chapter(storyId: story.id,
+                                  title: chapterResponse.chapterNumberAndTitle ?? "",
                                   sentences: chapterResponse.sentences,
                                   audio: .init(data: Data()),
-                                  passage: passage)
+                                  passage: passage,
+                                  language: story.language)
 
             var story = story
             if story.chapters.isEmpty {

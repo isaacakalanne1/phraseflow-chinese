@@ -42,7 +42,27 @@ let flowTaleSubscriber: OnSubscribe<FlowTaleStore, FlowTaleEnvironmentProtocol> 
             environment.storySubject
         ) { store, story in
             if let story {
-                store.dispatch(.storyAction(.saveStoryAndSettings(story)))
+                // Convert story to chapters and save them
+                for chapter in story.chapters {
+                    let chapterWithStoryData = Chapter(
+                        id: chapter.id,
+                        storyId: story.id,
+                        title: chapter.title,
+                        sentences: chapter.sentences,
+                        audioVoice: chapter.audioVoice,
+                        audio: chapter.audio,
+                        passage: chapter.passage,
+                        chapterSummary: story.briefLatestStorySummary,
+                        difficulty: story.difficulty,
+                        language: story.language,
+                        storyTitle: story.title,
+                        currentPlaybackTime: chapter.currentPlaybackTime,
+                        lastUpdated: story.lastUpdated,
+                        storyPrompt: story.storyPrompt,
+                        imageData: story.imageData
+                    )
+                    store.dispatch(.storyAction(.saveChapter(chapterWithStoryData)))
+                }
             }
         }
 }

@@ -12,7 +12,7 @@ let navigationMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
     switch action {
     case .navigationAction(let navigationAction):
         switch navigationAction {
-        case .selectChapter:
+        case .selectChapter, .selectChapterLegacy:
             return .navigationAction(.onSelectedChapter)
         case .onSelectedChapter:
             return .navigationAction(.selectTab(.reader, shouldPlaySound: false))

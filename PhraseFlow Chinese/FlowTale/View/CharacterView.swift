@@ -70,7 +70,7 @@ struct CharacterView: View {
                     case false:
                         store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: false)))
                         store.dispatch(.audioAction(.playWord(word,
-                                                              story: store.state.storyState.currentStory)))
+                                                              story: store.state.storyState.currentChapter)))
 
                         if let existingDefinition = store.state.definitionState.definition(timestampData: word) {
                             store.dispatch(.definitionAction(.onDefinedCharacter(existingDefinition)))
