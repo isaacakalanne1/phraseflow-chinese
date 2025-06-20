@@ -9,60 +9,50 @@ import Foundation
 
 class CreateStoryServices: CreateStoryServicesProtocol {
 
-    func generateStory(story: Story, deviceLanguage: Language?) async throws -> Story {
+    func generateChapter(chapter: Chapter, deviceLanguage: Language?) async throws -> Chapter {
         do {
             guard let deviceLanguage else {
                 throw FlowTaleServicesError.failedToGetDeviceLanguage
             }
-            let jsonString = try await generateStoryRequest(story: story,
-                                                            deviceLanguage: deviceLanguage)
+            let jsonString = try await generateChapterRequest(chapter: chapter,
+                                                              deviceLanguage: deviceLanguage)
             guard let jsonData = jsonString.data(using: .utf8) else {
                 throw FlowTaleServicesError.failedToGetResponseData
             }
-            let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguage: deviceLanguage, targetLanguage: story.language)
+            let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguage: deviceLanguage, targetLanguage: chapter.language)
             let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
             let passage = chapterResponse.sentences.reduce("") { $0 + $1.original }
-            let chapter = Chapter(storyId: story.id,
-                                  title: chapterResponse.chapterNumberAndTitle ?? "",
-                                  sentences: chapterResponse.sentences,
-                                  audio: .init(data: Data()),
-                                  passage: passage,
-                                  language: story.language)
-
-            var story = story
-            if story.chapters.isEmpty {
-                story.chapters = [chapter]
-            } else {
-                story.chapters.append(chapter)
-            }
+            var newChapter = chapter
+            newChapter.title = chapterResponse.chapterNumberAndTitle ?? ""
+            newChapter.sentences = chapterResponse.sentences
+            newChapter.passage = passage
 
             if let title = chapterResponse.titleOfNovel {
-                story.title = title
+                newChapter.storyTitle = title
             }
-            story.briefLatestStorySummary = chapterResponse.briefLatestStorySummary
-            story.currentChapterIndex = story.chapters.count - 1
-            story.lastUpdated = .now
-            return story
+            newChapter.chapterSummary = chapterResponse.briefLatestStorySummary
+            newChapter.lastUpdated = .now
+            return newChapter
         } catch {
             throw FlowTaleServicesError.failedToDecodeSentences
         }
     }
 
-    private func generateStoryRequest(story: Story,
-                                      deviceLanguage: Language?) async throws -> String {
+    private func generateChapterRequest(chapter: Chapter,
+                                        deviceLanguage: Language?) async throws -> String {
         guard let deviceLanguage else {
             throw FlowTaleServicesError.failedToGetDeviceLanguage
         }
         var messages: [[String: String]] = []
         var initialPrompt = """
-        Write an incredible first chapter of a story written in \(story.language.descriptiveEnglishName).
+        Write an incredible first chapter of a story written in \(chapter.language.descriptiveEnglishName).
         
         """
         var furtherPrompt = """
-        Write an incredible next chapter of a story written in \(story.language.descriptiveEnglishName).
+        Write an incredible next chapter of a story written in \(chapter.language.descriptiveEnglishName).
         
         """
-        if let storyPrompt = story.storyPrompt {
+        if let storyPrompt = chapter.storyPrompt {
             let settingPrompt = "The story is in the following setting: \(storyPrompt)"
             initialPrompt.append(settingPrompt)
             furtherPrompt.append(settingPrompt)
@@ -70,23 +60,29 @@ class CreateStoryServices: CreateStoryServicesProtocol {
 
         let promptDetails = """
         
-        \(story.difficulty.vocabularyPrompt).
-        Use a vocabulary of around 150 \(story.language.descriptiveEnglishName) words.
-        The chapter should be around 400 \(story.language.descriptiveEnglishName) words long.
+        \(chapter.difficulty.vocabularyPrompt).
+        Use a vocabulary of around 150 \(chapter.language.descriptiveEnglishName) words.
+        The chapter should be around 400 \(chapter.language.descriptiveEnglishName) words long.
         
         """
         initialPrompt.append(promptDetails)
         furtherPrompt.append(promptDetails)
 
-        messages.append(["role": "user", "content": initialPrompt])
-        for chapter in story.chapters.suffix(20) {
-            messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
+        // For new stories, use initial prompt; for existing chapters, use further prompt  
+        if chapter.storyTitle.isEmpty {
+            messages.append(["role": "user", "content": initialPrompt])
+        } else {
+            // If this is a continuation, add previous chapter context
+            if !chapter.passage.isEmpty {
+                messages.append(["role": "system", "content": chapter.title + "\n" + chapter.passage])
+            }
             messages.append(["role": "user", "content": furtherPrompt])
         }
+        
         var requestBody: [String: Any] = ["messages": messages]
         requestBody["response_format"] = sentenceSchema(originalLanguage: deviceLanguage,
-                                                        translationLanguage: story.language,
-                                                        shouldCreateTitle: story.title.isEmpty)
+                                                        translationLanguage: chapter.language,
+                                                        shouldCreateTitle: chapter.storyTitle.isEmpty)
 
         return try await RequestFactory.makeRequest(type: APIRequestType.openRouter(.geminiFlash),
                                                     requestBody: requestBody)

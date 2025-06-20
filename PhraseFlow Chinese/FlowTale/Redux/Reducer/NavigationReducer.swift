@@ -32,21 +32,6 @@ let navigationReducer: Reducer<FlowTaleState, NavigationAction> = { state, actio
             newState.viewState.contentTab = .reader
         }
         
-    case .selectChapterLegacy(var story, let chapterIndex):
-        if let chapter = story.chapters[safe: chapterIndex] {
-            newState.definitionState.currentDefinition = nil
-            story.lastUpdated = .now
-            newState.settingsState.language = story.language
-
-            if let voice = chapter.audioVoice {
-                newState.settingsState.voice = voice
-            }
-
-            let data = chapter.audio.data
-            newState.audioState.audioPlayer = data.createAVPlayer() ?? AVPlayer()
-            
-            newState.viewState.contentTab = .reader
-        }
 
     case .onSelectedChapter:
         if let language = newState.storyState.currentChapter?.language {

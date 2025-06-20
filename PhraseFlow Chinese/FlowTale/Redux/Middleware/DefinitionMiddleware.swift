@@ -24,22 +24,13 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
             do {
                 var allDefinitions: [Definition] = []
                 
-                // Create temp story for compatibility with existing fetchDefinitions API
-                let tempStory = Story(
-                    briefLatestStorySummary: chapter.chapterSummary,
-                    difficulty: chapter.difficulty,
-                    language: chapter.language,
-                    title: chapter.storyTitle,
-                    storyPrompt: chapter.storyPrompt,
-                    imageData: chapter.imageData,
-                    lastUpdated: chapter.lastUpdated
-                )
+                // Use chapter directly with updated fetchDefinitions API
                 
                 for sentence in Array(chapter.sentences.prefix(3)) {
                     allDefinitions.append(contentsOf:
                                             try await environment.fetchDefinitions(
                                                 in: sentence,
-                                                story: tempStory,
+                                                chapter: chapter,
                                                 deviceLanguage: state.deviceLanguage
                                             )
                     )
@@ -62,20 +53,11 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
                     return nil
                 }
                 
-                // Create temp story for compatibility with existing fetchDefinitions API
-                let tempStory = Story(
-                    briefLatestStorySummary: chapter.chapterSummary,
-                    difficulty: chapter.difficulty,
-                    language: chapter.language,
-                    title: chapter.storyTitle,
-                    storyPrompt: chapter.storyPrompt,
-                    imageData: chapter.imageData,
-                    lastUpdated: chapter.lastUpdated
-                )
+                // Use chapter directly with updated fetchDefinitions API
                 
                 let definitions = try await environment.fetchDefinitions(
                     in: chapter.sentences[sentenceIndex],
-                    story: tempStory,
+                    chapter: chapter,
                     deviceLanguage: state.deviceLanguage
                 )
 

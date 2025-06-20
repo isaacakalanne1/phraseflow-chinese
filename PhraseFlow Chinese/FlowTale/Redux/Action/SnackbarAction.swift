@@ -10,7 +10,7 @@ import Foundation
 enum SnackbarAction {
     case showSnackBar(SnackBarType)
     case hideSnackbar
-    case showSnackBarThenSaveStory(SnackBarType, Story)
-    case hideSnackbarThenSaveStoryAndSettings(Story)
+    case showSnackBarThenSaveChapter(SnackBarType, Chapter)
+    case hideSnackbarThenSaveChapterAndSettings(Chapter)
     case checkDeviceVolumeZero
 }

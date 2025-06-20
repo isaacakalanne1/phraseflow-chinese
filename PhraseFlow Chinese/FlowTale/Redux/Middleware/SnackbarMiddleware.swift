@@ -21,17 +21,17 @@ let snackbarMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             }
             return nil
             
-        case .showSnackBarThenSaveStory(let type, let story):
+        case .showSnackBarThenSaveChapter(let type, let chapter):
             state.appAudioState.audioPlayer.play()
 
             if let duration = type.showDuration {
                 try? await Task.sleep(for: .seconds(duration))
-                return .snackbarAction(.hideSnackbarThenSaveStoryAndSettings(story))
+                return .snackbarAction(.hideSnackbarThenSaveChapterAndSettings(chapter))
             } else {
-                return .storyAction(.saveChapter(story.chapters.first!))
+                return .storyAction(.saveChapter(chapter))
             }
             
-        case .hideSnackbarThenSaveStoryAndSettings(_):
+        case .hideSnackbarThenSaveChapterAndSettings(_):
             if let currentChapter = state.storyState.currentChapter {
                 return .storyAction(.saveChapter(currentChapter))
             } else if let firstStory = state.storyState.allStories.first,

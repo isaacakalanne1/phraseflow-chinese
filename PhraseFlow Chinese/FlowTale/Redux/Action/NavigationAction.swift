@@ -9,7 +9,6 @@ import Foundation
 
 enum NavigationAction {
     case selectChapter(UUID, chapterIndex: Int)
-    case selectChapterLegacy(Story, chapterIndex: Int)
     case onSelectedChapter
     case selectTab(ContentTab, shouldPlaySound: Bool)
 }

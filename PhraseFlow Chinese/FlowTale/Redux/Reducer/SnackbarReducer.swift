@@ -14,7 +14,7 @@ let snackbarReducer: Reducer<FlowTaleState, SnackbarAction> = { state, action in
 
     switch action {
     case .showSnackBar(let type),
-          .showSnackBarThenSaveStory(let type, _):
+          .showSnackBarThenSaveChapter(let type, _):
         if let url = type.sound.fileURL,
            let player = try? AVAudioPlayer(contentsOf: url) {
             player.volume = 0.7
@@ -26,7 +26,7 @@ let snackbarReducer: Reducer<FlowTaleState, SnackbarAction> = { state, action in
     case .hideSnackbar:
         newState.snackBarState.isShowing = false
         
-    case .hideSnackbarThenSaveStoryAndSettings:
+    case .hideSnackbarThenSaveChapterAndSettings:
         newState.snackBarState.isShowing = false
 
     case .checkDeviceVolumeZero:

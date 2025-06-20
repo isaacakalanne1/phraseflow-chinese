@@ -7,6 +7,6 @@
 
 protocol DefinitionServicesProtocol {
     func fetchDefinitions(in sentence: Sentence?,
-                          story: Story,
+                          chapter: Chapter,
                           deviceLanguage: Language) async throws -> [Definition]
 }

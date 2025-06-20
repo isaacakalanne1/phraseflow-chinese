@@ -21,32 +21,28 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
         return fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
     }
 
-    public var storySubject: CurrentValueSubject<Story?, Never> {
-        storyDataStore.storySubject
+    public var chapterSubject: CurrentValueSubject<Chapter?, Never> {
+        storyDataStore.chapterSubject
     }
     
     public var definitionsSubject: CurrentValueSubject<[Definition]?, Never> {
         definitionDataStore.definitionsSubject
     }
 
-    func saveStory(_ story: Story) throws {
-        try storyDataStore.saveStory(story)
+    func saveChapter(_ chapter: Chapter) throws {
+        try storyDataStore.saveChapter(chapter)
     }
 
-    func loadAllStories() throws -> [Story] {
-        try storyDataStore.loadAllStories()
+    func loadAllChapters() throws -> [Chapter] {
+        try storyDataStore.loadAllChapters()
     }
-
-    func saveChapter(_ chapter: Chapter, storyId: UUID, chapterIndex: Int) throws {
-        try storyDataStore.saveChapter(chapter, storyId: storyId, chapterIndex: chapterIndex)
+    
+    func deleteChapter(_ chapter: Chapter) throws {
+        try storyDataStore.deleteChapter(chapter)
     }
 
     func loadAllChapters(for storyId: UUID) throws -> [Chapter] {
         try storyDataStore.loadAllChapters(for: storyId)
-    }
-
-    func unsaveStory(_ story: Story) throws {
-        try storyDataStore.unsaveStory(story)
     }
 
     func loadDefinitions() throws -> [Definition] {

@@ -10,7 +10,6 @@ import StoreKit
 
 protocol FlowTaleRepositoryProtocol {
     func synthesizeSpeech(_ chapter: Chapter,
-                          story: Story,
                           voice: Voice,
                           language: Language) async throws -> (Chapter, Int)
     func getProducts() async throws -> [Product]

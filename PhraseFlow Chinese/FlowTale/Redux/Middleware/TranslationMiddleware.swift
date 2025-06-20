@@ -52,7 +52,6 @@ let translationMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnv
             }
 
             guard let newChapter = try? await environment.synthesizeSpeech(for: chapter,
-                                                                           story: Story(language: language),
                                                                            voice: voice,
                                                                            language: language) else {
                 return .translationAction(.failedToSynthesizeAudio)
@@ -72,9 +71,10 @@ let translationMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnv
             }
 
             guard let sentence = state.translationState.chapter?.sentences.first,
+                  let chapter = state.translationState.chapter,
                   var definitionsForSentence = try? await environment.fetchDefinitions(
                 in: sentence,
-                story: .init(language: state.settingsState.language),
+                chapter: chapter,
                 deviceLanguage: state.deviceLanguage
             ) else {
                 return .translationAction(.failedToDefineTranslationWord)

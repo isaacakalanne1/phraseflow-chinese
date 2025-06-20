@@ -12,17 +12,16 @@ import StoreKit
 protocol FlowTaleEnvironmentProtocol {
     var dataStore: FlowTaleDataStoreProtocol { get }
     var loadingSubject: CurrentValueSubject<LoadingState?, Never> { get }
-    var storySubject: CurrentValueSubject<Story?, Never> { get }
+    var chapterSubject: CurrentValueSubject<Chapter?, Never> { get }
 
     func synthesizeSpeech(for chapter: Chapter,
-                          story: Story,
                           voice: Voice,
                           language: Language) async throws -> Chapter
     func getProducts() async throws -> [Product]
-    func generateStory(story: Story,
-                       voice: Voice,
-                       deviceLanguage: Language?,
-                       currentSubscription: SubscriptionLevel?) async throws -> Story
+    func generateChapter(chapter: Chapter,
+                         voice: Voice,
+                         deviceLanguage: Language?,
+                         currentSubscription: SubscriptionLevel?) async throws -> Chapter
 
     func loadDefinitions() throws -> [Definition]
     func saveDefinitions(_ definitions: [Definition]) throws
@@ -34,15 +33,15 @@ protocol FlowTaleEnvironmentProtocol {
     func loadAppSettings() throws -> SettingsState
     func saveAppSettings(_ settings: SettingsState) throws
 
-    // Stories & Chapters
-    func saveStory(_ story: Story) throws
-    func loadAllStories() throws -> [Story]
-    func unsaveStory(_ story: Story) throws
+    // Chapters only
+    func saveChapter(_ chapter: Chapter) throws
+    func loadAllChapters() throws -> [Chapter]
+    func deleteChapter(_ chapter: Chapter) throws
 
     func loadAllChapters(for storyId: UUID) throws -> [Chapter]
 
     func fetchDefinitions(in sentence: Sentence?,
-                          story: Story,
+                          chapter: Chapter,
                           deviceLanguage: Language) async throws -> [Definition]
     func purchase(_ product: Product) async throws
     func validateReceipt()

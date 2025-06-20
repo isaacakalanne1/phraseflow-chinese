@@ -9,7 +9,7 @@ import Foundation
 
 class DefinitionServices: DefinitionServicesProtocol {
     func fetchDefinitions(in sentence: Sentence?,
-                          story: Story,
+                          chapter: Chapter,
                           deviceLanguage: Language) async throws -> [Definition] {
         guard let sentence,
               !sentence.timestamps.isEmpty else {
@@ -17,11 +17,11 @@ class DefinitionServices: DefinitionServicesProtocol {
         }
 
         let systemPrompt = """
-        You are an AI assistant that provides \(deviceLanguage.displayName) definitions for words in \(story.language.descriptiveEnglishName) sentences.
+        You are an AI assistant that provides \(deviceLanguage.displayName) definitions for words in \(chapter.language.descriptiveEnglishName) sentences.
         """
 
         let userPrompt = """
-        We have this sentence in \(story.language.descriptiveEnglishName): "\(sentence.original)".
+        We have this sentence in \(chapter.language.descriptiveEnglishName): "\(sentence.original)".
         The user sees a translation: "\(sentence.translation)".
         Define each of the following words in the context of the above sentence:
         "\(sentence.timestamps.map { $0.word }.joined(separator: "\", \""))"
@@ -54,7 +54,7 @@ class DefinitionServices: DefinitionServicesProtocol {
                 timestampData: timeStamp,
                 sentence: sentence,
                 detail: wordDef,
-                language: story.language
+                language: chapter.language
             )
         }
     }

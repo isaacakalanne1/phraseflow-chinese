@@ -15,7 +15,7 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     let repository: FlowTaleRepositoryProtocol
 
     public let loadingSubject: CurrentValueSubject<LoadingState?, Never> = .init(nil)
-    public let storySubject: CurrentValueSubject<Story?, Never> = .init(nil)
+    public let chapterSubject: CurrentValueSubject<Chapter?, Never> = .init(nil)
 
     init() {
         service = FlowTaleServices()
@@ -26,12 +26,10 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     }
 
     func synthesizeSpeech(for chapter: Chapter,
-                          story: Story,
                           voice: Voice,
                           language: Language) async throws -> Chapter
     {
         let (processedChapter, _) = try await repository.synthesizeSpeech(chapter,
-                                                                         story: story,
                                                                          voice: voice,
                                                                          language: language)
         return processedChapter
@@ -39,12 +37,10 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     
     func synthesizeSpeechWithCharacterCount(
         _ chapter: Chapter,
-        story: Story,
         voice: Voice,
         language: Language
     ) async throws -> (Chapter, Int) {
         return try await repository.synthesizeSpeech(chapter,
-                                                    story: story,
                                                     voice: voice,
                                                     language: language)
     }
@@ -53,29 +49,25 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         try await repository.getProducts()
     }
 
-    func generateStory(story: Story,
-                       voice: Voice,
-                       deviceLanguage: Language?,
-                       currentSubscription: SubscriptionLevel?) async throws -> Story {
+    func generateChapter(chapter: Chapter,
+                         voice: Voice,
+                         deviceLanguage: Language?,
+                         currentSubscription: SubscriptionLevel?) async throws -> Chapter {
         loadingSubject.send(.writing)
 
-        var newStory = try await service.generateStory(story: story, deviceLanguage: deviceLanguage)
+        var newChapter = try await service.generateChapter(chapter: chapter, deviceLanguage: deviceLanguage)
         loadingSubject.send(.generatingImage)
 
-        if newStory.imageData == nil,
-           let passage = newStory.chapters.first?.passage {
-            newStory.imageData = try await service.generateImage(with: passage)
+        if newChapter.imageData == nil,
+           !newChapter.passage.isEmpty {
+            newChapter.imageData = try await service.generateImage(with: newChapter.passage)
         }
         loadingSubject.send(.generatingSpeech)
 
-        guard let chapter = newStory.chapters.last else {
-            throw FlowTaleRepositoryError.failedToPurchaseSubscription
-        }
-        let (newChapter, ssmlCharacterCount) = try await synthesizeSpeechWithCharacterCount(
-            chapter,
-            story: newStory,
+        let (processedChapter, ssmlCharacterCount) = try await synthesizeSpeechWithCharacterCount(
+            newChapter,
             voice: voice,
-            language: newStory.language
+            language: newChapter.language
         )
 
         try trackSSMLCharacterUsage(
@@ -83,31 +75,23 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
             subscription: currentSubscription
         )
 
-        newStory.chapters.removeLast()
-        newStory.chapters.append(newChapter)
-
-        storySubject.send(story)
+        chapterSubject.send(processedChapter)
         loadingSubject.send(.complete)
-        return newStory
+        return processedChapter
     }
 
-    // MARK: Stories
+    // MARK: Chapters
 
-    func saveStory(_ story: Story) throws {
-        for (index, chapter) in story.chapters.enumerated() {
-            try saveChapter(chapter, storyId: story.id, chapterIndex: index + 1)
-        }
-        try dataStore.saveStory(story)
+    func saveChapter(_ chapter: Chapter) throws {
+        try dataStore.saveChapter(chapter)
     }
 
-    func loadAllStories() throws -> [Story] {
-        try dataStore.loadAllStories()
+    func loadAllChapters() throws -> [Chapter] {
+        try dataStore.loadAllChapters()
     }
-
-    // MARK: Chapter
-
-    func saveChapter(_ chapter: Chapter, storyId: UUID, chapterIndex: Int) throws {
-        try dataStore.saveChapter(chapter, storyId: storyId, chapterIndex: chapterIndex)
+    
+    func deleteChapter(_ chapter: Chapter) throws {
+        try dataStore.deleteChapter(chapter)
     }
 
     func loadAllChapters(for storyId: UUID) throws -> [Chapter] {
@@ -116,10 +100,6 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
 
     func saveAppSettings(_ settings: SettingsState) throws {
         try dataStore.saveAppSettings(settings)
-    }
-
-    func unsaveStory(_ story: Story) throws {
-        try dataStore.unsaveStory(story)
     }
 
     func loadDefinitions() throws -> [Definition] {
@@ -157,11 +137,11 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     }
 
     func fetchDefinitions(in sentence: Sentence?,
-                          story: Story,
+                          chapter: Chapter,
                           deviceLanguage: Language) async throws -> [Definition]
     {
         try await service.fetchDefinitions(in: sentence,
-                                           story: story,
+                                           chapter: chapter,
                                            deviceLanguage: deviceLanguage)
     }
 

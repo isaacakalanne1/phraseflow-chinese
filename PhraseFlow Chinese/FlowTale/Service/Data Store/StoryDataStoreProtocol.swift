@@ -9,11 +9,9 @@ import Combine
 import Foundation
 
 protocol StoryDataStoreProtocol {
-    var storySubject: CurrentValueSubject<Story?, Never> { get }
-    func saveStory(_ story: Story) throws
-    func loadAllStories() throws -> [Story]
-    func unsaveStory(_ story: Story) throws
-
-    func saveChapter(_ chapter: Chapter, storyId: UUID, chapterIndex: Int) throws
+    var chapterSubject: CurrentValueSubject<Chapter?, Never> { get }
+    func saveChapter(_ chapter: Chapter) throws
+    func loadAllChapters() throws -> [Chapter]
+    func deleteChapter(_ chapter: Chapter) throws
     func loadAllChapters(for storyId: UUID) throws -> [Chapter]
 }

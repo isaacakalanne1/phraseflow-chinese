@@ -18,7 +18,6 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
     private var speechMarkCounter: Int = 0
 
     func synthesizeSpeech(_ chapter: Chapter,
-                          story: Story,
                           voice: Voice,
                           language: Language) async throws -> (Chapter, Int)
     {
@@ -64,8 +63,8 @@ class FlowTaleRepository: FlowTaleRepositoryProtocol {
 
             let newTimestamp = WordTimeStampData(
                 id: UUID(),
-                storyId: story.id,
-                chapterIndex: story.currentChapterIndex,
+                storyId: chapter.storyId,
+                chapterIndex: 0,
                 word: cleanedWord,
                 time: audioTimeInSeconds,
                 duration: event.duration

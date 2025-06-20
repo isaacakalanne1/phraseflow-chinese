@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		BB0854832CB42C0200F1661B /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854822CB42C0200F1661B /* Chapter.swift */; };
-		BB0854852CB42C1400F1661B /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854842CB42C1400F1661B /* Story.swift */; };
 		BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */; };
 		BB1994C82CE8E0BE00D61E54 /* Data+AVPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994C72CE8E0BE00D61E54 /* Data+AVPlayer.swift */; };
 		BB1994CD2CE904D900D61E54 /* StoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994CC2CE904D900D61E54 /* StoryState.swift */; };
@@ -22,6 +21,7 @@
 		BB3ED31E2E05862C003B7D14 /* LanguageMenuType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3ED31D2E05862C003B7D14 /* LanguageMenuType.swift */; };
 		BB45C5692D4A785C00B3705A /* DailyLimitExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB45C5682D4A785C00B3705A /* DailyLimitExplanationView.swift */; };
 		BB45C56B2D4A7C4000B3705A /* FreeLimitExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB45C56A2D4A7C4000B3705A /* FreeLimitExplanationView.swift */; };
+		BB47122B2E06178C0060782B /* ChapterAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB47122A2E06178C0060782B /* ChapterAudio.swift */; };
 		BB4E6BF62D22E0DB002B5CBA /* FlowTaleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4E6BF52D22E0DB002B5CBA /* FlowTaleColor.swift */; };
 		BB4E6BF82D246AEF002B5CBA /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4E6BF72D246AEF002B5CBA /* LoadingState.swift */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
@@ -243,7 +243,6 @@
 		8DBC39CBD1D5A30498912D09 /* Pods-FlowTale.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowTale.release.xcconfig"; path = "Target Support Files/Pods-FlowTale/Pods-FlowTale.release.xcconfig"; sourceTree = "<group>"; };
 		A6E47BC9388E891E2E0D0FE5 /* libPods-FlowTale.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FlowTale.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB0854822CB42C0200F1661B /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
-		BB0854842CB42C1400F1661B /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpeed.swift; sourceTree = "<group>"; };
 		BB1994C72CE8E0BE00D61E54 /* Data+AVPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+AVPlayer.swift"; sourceTree = "<group>"; };
 		BB1994CC2CE904D900D61E54 /* StoryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryState.swift; sourceTree = "<group>"; };
@@ -257,6 +256,7 @@
 		BB3ED31D2E05862C003B7D14 /* LanguageMenuType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageMenuType.swift; sourceTree = "<group>"; };
 		BB45C5682D4A785C00B3705A /* DailyLimitExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLimitExplanationView.swift; sourceTree = "<group>"; };
 		BB45C56A2D4A7C4000B3705A /* FreeLimitExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeLimitExplanationView.swift; sourceTree = "<group>"; };
+		BB47122A2E06178C0060782B /* ChapterAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterAudio.swift; sourceTree = "<group>"; };
 		BB4E6BF52D22E0DB002B5CBA /* FlowTaleColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleColor.swift; sourceTree = "<group>"; };
 		BB4E6BF72D246AEF002B5CBA /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleStore.swift; sourceTree = "<group>"; };
@@ -510,7 +510,7 @@
 				BB6BD0252DB1772C00E45697 /* CreateChapterType.swift */,
 				BBB6EF512C8C86B10079D135 /* Sentence.swift */,
 				BB6572CD2CD12A9200AC5981 /* ChapterResponse.swift */,
-				BB0854842CB42C1400F1661B /* Story.swift */,
+				BB47122A2E06178C0060782B /* ChapterAudio.swift */,
 				BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */,
 			);
 			path = Story;
@@ -1320,6 +1320,7 @@
 				BBE636C12CCC0B5000873E68 /* ActionButtonsView.swift in Sources */,
 				BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */,
 				BBAE07DB2D14BE0B00DA95CD /* SystemImageView.swift in Sources */,
+				BB47122B2E06178C0060782B /* ChapterAudio.swift in Sources */,
 				BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */,
 				BB6BD0172DB176AC00E45697 /* CategoryResult.swift in Sources */,
 				BB6DD0992D39BAF400EF6AF9 /* DifficultySettingsView.swift in Sources */,
@@ -1462,7 +1463,6 @@
 				BB756D052E0413EC00365610 /* SnackbarMiddleware.swift in Sources */,
 				BB6DD09B2D39BB9700EF6AF9 /* LanguageSettingsView.swift in Sources */,
 				BB756CF52E0343A900365610 /* ModerationReducer.swift in Sources */,
-				BB0854852CB42C1400F1661B /* Story.swift in Sources */,
 				BBDA56D62DFF1C1800B61F05 /* CreateStoryServices.swift in Sources */,
 				BBDA56DA2DFF1D0A00B61F05 /* ModerationServices.swift in Sources */,
 				BBE636C92CCC0E8400873E68 /* ListOfSentencesView.swift in Sources */,
