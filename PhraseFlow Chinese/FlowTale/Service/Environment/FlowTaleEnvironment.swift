@@ -15,6 +15,7 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     let repository: FlowTaleRepositoryProtocol
 
     public let loadingSubject: CurrentValueSubject<LoadingState?, Never> = .init(nil)
+    public let storySubject: CurrentValueSubject<Story?, Never> = .init(nil)
 
     init() {
         service = FlowTaleServices()
@@ -85,6 +86,7 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         newStory.chapters.removeLast()
         newStory.chapters.append(newChapter)
 
+        storySubject.send(story)
         loadingSubject.send(.complete)
         return newStory
     }

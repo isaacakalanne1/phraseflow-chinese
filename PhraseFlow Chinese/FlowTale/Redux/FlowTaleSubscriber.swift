@@ -36,4 +36,13 @@ let flowTaleSubscriber: OnSubscribe<FlowTaleStore, FlowTaleEnvironmentProtocol> 
                 store.dispatch(.storyAction(.updateLoadingState(loadingState)))
             }
         }
+
+    store
+        .subscribe(
+            environment.storySubject
+        ) { store, story in
+            if let story {
+                store.dispatch(.storyAction(.saveStoryAndSettings(story)))
+            }
+        }
 }

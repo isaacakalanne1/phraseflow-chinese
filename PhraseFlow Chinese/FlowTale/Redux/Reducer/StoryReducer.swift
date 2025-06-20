@@ -56,6 +56,7 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
         story.currentPlaybackTime = 0
         story.currentChapterIndex = story.chapters.count - 1
 
+        newState.storyState.savedStories.append(story)
         newState.storyState.currentStory = story
         newState.storyState.currentSentence = story.chapters.last?.sentences.first
         newState.viewState.contentTab = .reader

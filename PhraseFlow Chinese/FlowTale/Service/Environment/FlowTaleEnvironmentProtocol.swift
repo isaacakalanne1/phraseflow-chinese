@@ -12,6 +12,7 @@ import StoreKit
 protocol FlowTaleEnvironmentProtocol {
     var dataStore: FlowTaleDataStoreProtocol { get }
     var loadingSubject: CurrentValueSubject<LoadingState?, Never> { get }
+    var storySubject: CurrentValueSubject<Story?, Never> { get }
 
     func synthesizeSpeech(for chapter: Chapter,
                           story: Story,

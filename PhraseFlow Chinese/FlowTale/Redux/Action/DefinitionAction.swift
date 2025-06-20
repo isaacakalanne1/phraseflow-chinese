@@ -9,9 +9,9 @@ import Foundation
 
 enum DefinitionAction {
     case loadDefinitions
-    case loadInitialSentenceDefinitions(Chapter, Story, Int)
+    case loadInitialSentenceDefinitions(Chapter, Story)
     case onLoadedInitialDefinitions([Definition])
-    case loadRemainingDefinitions(Chapter, Story, sentenceIndex: Int, previousDefinitions: [Definition])
+    case loadRemainingDefinitions(sentenceIndex: Int, previousDefinitions: [Definition])
     case onLoadedDefinitions([Definition])
     case failedToLoadDefinitions
 

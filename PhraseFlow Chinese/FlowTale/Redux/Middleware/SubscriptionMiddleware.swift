@@ -25,22 +25,19 @@ let subscriptionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEn
         case .purchaseSubscription(let product):
             do {
                 try await environment.purchase(product)
+                return .subscriptionAction(.onPurchasedSubscription)
             } catch {
                 return .subscriptionAction(.failedToPurchaseSubscription)
             }
-            return .subscriptionAction(.onPurchasedSubscription)
-            
-        case .onPurchasedSubscription:
-            return .subscriptionAction(.getCurrentEntitlements)
-            
+
         case .restoreSubscriptions:
             environment.validateReceipt()
             do {
                 try await AppStore.sync()
+                return .subscriptionAction(.onRestoredSubscriptions)
             } catch {
                 return .subscriptionAction(.failedToRestoreSubscriptions)
             }
-            return .subscriptionAction(.onRestoredSubscriptions)
             
         case .validateReceipt:
             environment.validateReceipt()
@@ -65,21 +62,21 @@ let subscriptionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEn
                 switch result {
                 case .unverified(let transaction, _),
                         .verified(let transaction):
-                    if transaction.revocationDate == nil && !isOnLaunch {
-                        return .snackbarAction(.showSnackBar(.subscribed))
-                    } else {
+                    guard transaction.revocationDate == nil,
+                          !isOnLaunch else {
                         return nil
                     }
+                    return .snackbarAction(.showSnackBar(.subscribed))
                 }
             }
             return nil
-            
+
+        case .onPurchasedSubscription:
+            return .subscriptionAction(.getCurrentEntitlements)
+
         case .setSubscriptionSheetShowing(let isShowing):
-            if isShowing {
-                return .snackbarAction(.hideSnackbar)
-            }
-            return nil
-            
+            return isShowing ? .snackbarAction(.hideSnackbar) : nil
+
         case .onFetchedSubscriptions,
              .failedToFetchSubscriptions,
              .failedToPurchaseSubscription,

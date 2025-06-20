@@ -29,27 +29,10 @@ struct ListOfSentencesView: View {
     }
 
     var body: some View {
-        if let story = store.state.storyState.currentStory {
-            ScrollViewReader { proxy in
+        ScrollViewReader { proxy in
+            if let story = store.state.storyState.currentStory {
                 scrollView(story: story, proxy: proxy)
-                    .onChange(of: store.state.viewState.isAutoscrollEnabled) { oldValue, newValue in
-                        guard newValue else { return }
-                        scrollToCurrentWord(spokenWord, proxy: proxy)
-                    }
-                    .onAppear {
-                        opacity = 1
-                        store.dispatch(.snackbarAction(.checkDeviceVolumeZero))
-                        scrollToCurrentWord(spokenWord, proxy: proxy)
-                    }
             }
-        }
-    }
-
-    private func scrollToCurrentWord(_ word: WordTimeStampData?,
-                                     proxy: ScrollViewProxy) {
-        guard let word else { return }
-        withAnimation {
-            proxy.scrollTo(word.id, anchor: .center)
         }
     }
 
@@ -65,8 +48,7 @@ struct ListOfSentencesView: View {
 
             if !isTranslation {
                 MainButton(title: LocalizedString.newChapter.uppercased()) {
-                    let doesNextChapterExist = story.chapters.count > story.currentChapterIndex + 1
-                    switch doesNextChapterExist {
+                    switch story.isLastChapter {
                     case true:
                         store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: true)))
                         store.dispatch(.audioAction(.playSound(.goToNextChapter)))
@@ -85,6 +67,15 @@ struct ListOfSentencesView: View {
                     store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: false)))
                 }
         )
+        .onChange(of: store.state.viewState.isAutoscrollEnabled) { oldValue, newValue in
+            guard newValue else { return }
+            scrollToCurrentWord(spokenWord, proxy: proxy)
+        }
+        .onAppear {
+            opacity = 1
+            store.dispatch(.snackbarAction(.checkDeviceVolumeZero))
+            scrollToCurrentWord(spokenWord, proxy: proxy)
+        }
     }
 
     private func flowLayout(sentence: Sentence,
@@ -109,5 +100,13 @@ struct ListOfSentencesView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: language.alignment)
+    }
+
+    private func scrollToCurrentWord(_ word: WordTimeStampData?,
+                                     proxy: ScrollViewProxy) {
+        guard let word else { return }
+        withAnimation {
+            proxy.scrollTo(word.id, anchor: .center)
+        }
     }
 }

@@ -11,16 +11,35 @@ import Foundation
 class DefinitionDataStore: DefinitionDataStoreProtocol {
 
     private let fileManager = FileManager.default
+    private let encoder = JSONEncoder()
+    private let decoder = JSONDecoder()
+    private var pendingWrites: [UUID: Definition] = [:]
+    private var writeTimer: Timer?
 
     private var documentsDirectory: URL? {
         return fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
     }
 
-    private var definitionsFileURL: URL? {
-        documentsDirectory?.appendingPathComponent("definitions.json")
+    private var definitionsDirectory: URL? {
+        documentsDirectory?.appendingPathComponent("definitions")
     }
 
     public let definitionsSubject: CurrentValueSubject<[Definition]?, Never> = .init(nil)
+    
+    init() {
+        encoder.dateEncodingStrategy = .iso8601
+        decoder.dateDecodingStrategy = .iso8601
+        createDefinitionsDirectory()
+    }
+    
+    private func createDefinitionsDirectory() {
+        guard let dir = definitionsDirectory else { return }
+        try? fileManager.createDirectory(at: dir, withIntermediateDirectories: true)
+    }
+    
+    private func definitionFileURL(for id: UUID) -> URL? {
+        definitionsDirectory?.appendingPathComponent("\(id.uuidString).json")
+    }
 
     func cleanupOrphanedDefinitionFiles() throws {
         guard let dir = documentsDirectory else {
@@ -81,37 +100,59 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
         }
     }
 
-    func loadDefinitions() throws -> [Definition] {
-        guard let definitionsFileURL,
-              fileManager.fileExists(atPath: definitionsFileURL.path),
-              let data = try? Data(contentsOf: definitionsFileURL) else {
-            return []
+    private func scheduleWrite() {
+        writeTimer?.invalidate()
+        writeTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { _ in
+            self.flushPendingWrites()
         }
+    }
+    
+    private func flushPendingWrites() {
+        guard !pendingWrites.isEmpty else { return }
+        
+        for (id, definition) in pendingWrites {
+            guard let fileURL = definitionFileURL(for: id),
+                  let data = try? encoder.encode(definition) else { continue }
+            try? data.write(to: fileURL)
+        }
+        
+        pendingWrites.removeAll()
+        updateSubject()
+    }
+    
+    private func updateSubject() {
+        let definitions = try? loadDefinitions()
+        definitionsSubject.send(definitions)
+    }
 
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        return (try? decoder.decode([Definition].self, from: data)) ?? []
+    func loadDefinitions() throws -> [Definition] {
+        guard let dir = definitionsDirectory else {
+            throw FlowTaleDataStoreError.failedToCreateUrl
+        }
+        
+        let files = try fileManager.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil)
+        let jsonFiles = files.filter { $0.pathExtension == "json" }
+        
+        return jsonFiles.compactMap { fileURL in
+            guard let data = try? Data(contentsOf: fileURL),
+                  let definition = try? decoder.decode(Definition.self, from: data) else {
+                return nil
+            }
+            return definition
+        }
     }
 
     func saveDefinitions(_ definitions: [Definition]) throws {
-        guard let definitionsFileURL else {
-            throw FlowTaleDataStoreError.failedToCreateUrl
+        for definition in definitions {
+            pendingWrites[definition.id] = definition
         }
-
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
-        do {
-            let encodedData = try encoder.encode(definitions)
-            try encodedData.write(to: definitionsFileURL)
-            definitionsSubject.send(definitions)
-        } catch {
-            throw FlowTaleDataStoreError.failedToSaveData
-        }
+        scheduleWrite()
     }
 
     func deleteDefinition(with id: UUID) throws {
-        var definitions = try loadDefinitions()
-        definitions.removeAll(where: { $0.id == id })
-        try saveDefinitions(definitions)
+        pendingWrites.removeValue(forKey: id)
+        guard let fileURL = definitionFileURL(for: id) else { return }
+        try? fileManager.removeItem(at: fileURL)
+        updateSubject()
     }
 }

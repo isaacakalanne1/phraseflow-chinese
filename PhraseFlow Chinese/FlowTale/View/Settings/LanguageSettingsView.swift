@@ -20,13 +20,6 @@ struct LanguageOnboardingView: View {
     }
 }
 
-enum LanguageMenuType {
-    case normal
-    case translationSourceLanguage
-    case translationTargetLanguage
-    case translationTextLanguage
-}
-
 struct LanguageMenu: View {
     @EnvironmentObject var store: FlowTaleStore
     @Environment(\.dismiss) var dismiss

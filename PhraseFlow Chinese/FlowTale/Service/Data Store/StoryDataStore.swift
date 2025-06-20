@@ -54,7 +54,9 @@ class StoryDataStore: StoryDataStoreProtocol {
         for file in storyFiles {
             let fileURL = dir.appendingPathComponent(file)
             if let data = try? Data(contentsOf: fileURL),
-               let story = try? decoder.decode(Story.self, from: data) {
+               var story = try? decoder.decode(Story.self, from: data) {
+                let chapters = try loadAllChapters(for: story.id)
+                story.chapters = chapters
                 stories.append(story)
             }
         }

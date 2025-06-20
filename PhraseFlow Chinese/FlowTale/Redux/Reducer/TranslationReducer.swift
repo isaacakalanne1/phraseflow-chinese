@@ -50,13 +50,6 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         
     case .translationInProgress(let isInProgress):
         newState.isTranslating = isInProgress
-        
-    case .onTranslated(let chapter):
-        newState.chapter = chapter
-        
-    case .onBrokenDown(let chapter):
-        newState.chapter = chapter
-
     case .onSynthesizedTranslationAudio(let chapter):
         newState.chapter = chapter
         let player = chapter.audio.data.createAVPlayer()
@@ -128,7 +121,9 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         newState.currentSentence = nil
         newState.audioPlayer.replaceCurrentItem(with: nil)
         // Don't reset source language as it should persist between translations
-    case .playTranslationWord:
+    case .playTranslationWord,
+            .synthesizeAudio,
+            .failedToSynthesizeAudio:
         break
     }
     

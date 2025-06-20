@@ -19,6 +19,7 @@
 		BB2893142DAA82BF00F7ED69 /* TranslationMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2893132DAA82BF00F7ED69 /* TranslationMiddleware.swift */; };
 		BB2893162DAA82E300F7ED69 /* TranslationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2893152DAA82E300F7ED69 /* TranslationState.swift */; };
 		BB2893192DAAB49D00F7ED69 /* ChapterResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2893182DAAB49900F7ED69 /* ChapterResponseDecoder.swift */; };
+		BB3ED31E2E05862C003B7D14 /* LanguageMenuType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3ED31D2E05862C003B7D14 /* LanguageMenuType.swift */; };
 		BB45C5692D4A785C00B3705A /* DailyLimitExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB45C5682D4A785C00B3705A /* DailyLimitExplanationView.swift */; };
 		BB45C56B2D4A7C4000B3705A /* FreeLimitExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB45C56A2D4A7C4000B3705A /* FreeLimitExplanationView.swift */; };
 		BB4E6BF62D22E0DB002B5CBA /* FlowTaleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4E6BF52D22E0DB002B5CBA /* FlowTaleColor.swift */; };
@@ -253,6 +254,7 @@
 		BB2893132DAA82BF00F7ED69 /* TranslationMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationMiddleware.swift; sourceTree = "<group>"; };
 		BB2893152DAA82E300F7ED69 /* TranslationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationState.swift; sourceTree = "<group>"; };
 		BB2893182DAAB49900F7ED69 /* ChapterResponseDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterResponseDecoder.swift; sourceTree = "<group>"; };
+		BB3ED31D2E05862C003B7D14 /* LanguageMenuType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageMenuType.swift; sourceTree = "<group>"; };
 		BB45C5682D4A785C00B3705A /* DailyLimitExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLimitExplanationView.swift; sourceTree = "<group>"; };
 		BB45C56A2D4A7C4000B3705A /* FreeLimitExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeLimitExplanationView.swift; sourceTree = "<group>"; };
 		BB4E6BF52D22E0DB002B5CBA /* FlowTaleColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleColor.swift; sourceTree = "<group>"; };
@@ -552,6 +554,15 @@
 			path = Decoder;
 			sourceTree = "<group>";
 		};
+		BB3ED31C2E05861D003B7D14 /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				BB84E09F2CEFA96200520F5E /* Language.swift */,
+				BB3ED31D2E05862C003B7D14 /* LanguageMenuType.swift */,
+			);
+			path = Language;
+			sourceTree = "<group>";
+		};
 		BB4EDB012C90C85000699E7D /* Redux */ = {
 			isa = PBXGroup;
 			children = (
@@ -822,6 +833,7 @@
 				BB1994C62CE8DC2100D61E54 /* Speech */,
 				BB0854862CB42C7100F1661B /* Story */,
 				BB6BD0292DB178AB00E45697 /* User Limits */,
+				BB3ED31C2E05861D003B7D14 /* Language */,
 				BBEF63522DA1F80400F93ECC /* MusicVolume.swift */,
 				BBE5220D2DEA49FA00ADACA8 /* FlowTaleColorScheme.swift */,
 				BBE5220F2DEA4A1000ADACA8 /* StorySetting.swift */,
@@ -832,7 +844,6 @@
 				BB4E6BF52D22E0DB002B5CBA /* FlowTaleColor.swift */,
 				BBAE07CE2D0C768000DA95CD /* AnyKey.swift */,
 				BB7B6D9F2D1F316E0030344A /* SnackBarType.swift */,
-				BB84E09F2CEFA96200520F5E /* Language.swift */,
 				BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */,
 				BBAE07DC2D14BE3000DA95CD /* SystemImage.swift */,
 			);
@@ -1436,6 +1447,7 @@
 				BB6BD03A2DB25E7C00E45697 /* View+CardBackground.swift in Sources */,
 				BBE16F202CC152C400A7EF1F /* Difficulty.swift in Sources */,
 				BB756CD72E03322200365610 /* StoryReducer.swift in Sources */,
+				BB3ED31E2E05862C003B7D14 /* LanguageMenuType.swift in Sources */,
 				BB756D032E0413E400365610 /* SnackbarAction.swift in Sources */,
 				BB756CE92E033DFD00365610 /* SubscriptionReducer.swift in Sources */,
 				BB4EDB172C90D20300699E7D /* FlowTaleServices.swift in Sources */,

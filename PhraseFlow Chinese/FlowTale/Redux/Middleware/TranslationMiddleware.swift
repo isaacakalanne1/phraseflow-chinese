@@ -27,7 +27,7 @@ let translationMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnv
                 return .translationAction(.failedToTranslate)
             }
 
-            return .translationAction(.onTranslated(chapter))
+            return .translationAction(.synthesizeAudio(chapter, state.translationState.textLanguage))
 
         case .breakdownText:
             let inputText = state.translationState.inputText
@@ -43,36 +43,19 @@ let translationMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnv
                 return .translationAction(.failedToBreakdown)
             }
 
-            return .translationAction(.onBrokenDown(chapter))
+            return .translationAction(.synthesizeAudio(chapter, state.settingsState.language))
 
-        case .onBrokenDown(let chapter):
-            let textLanguage = state.translationState.textLanguage
+        case .synthesizeAudio(let chapter, let language):
 
-            guard let voice = state.settingsState.voice.language == textLanguage ? state.settingsState.voice : textLanguage.voices.first else {
+            guard let voice = state.settingsState.voice.language == language ? state.settingsState.voice : language.voices.first else {
                 return .translationAction(.failedToBreakdown)
             }
 
             guard let newChapter = try? await environment.synthesizeSpeech(for: chapter,
-                                                                           story: Story(language: textLanguage),
+                                                                           story: Story(language: language),
                                                                            voice: voice,
-                                                                           language: textLanguage) else {
-                return .translationAction(.failedToBreakdown)
-            }
-
-            return .translationAction(.onSynthesizedTranslationAudio(newChapter))
-
-        case .onTranslated(let chapter):
-            let targetLanguage = state.settingsState.language
-
-            guard let voice = state.settingsState.voice.language == targetLanguage ? state.settingsState.voice : targetLanguage.voices.first else {
-                return .translationAction(.failedToTranslate)
-            }
-
-            guard let newChapter = try? await environment.synthesizeSpeech(for: chapter,
-                                                                           story: Story(language: targetLanguage),
-                                                                           voice: voice,
-                                                                           language: targetLanguage) else {
-                return .translationAction(.failedToTranslate)
+                                                                           language: language) else {
+                return .translationAction(.failedToSynthesizeAudio)
             }
 
             return .translationAction(.onSynthesizedTranslationAudio(newChapter))
@@ -164,6 +147,7 @@ let translationMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnv
                 .swapLanguages,
                 .translationInProgress,
                 .onSynthesizedTranslationAudio,
+                .failedToSynthesizeAudio,
                 .failedToTranslate,
                 .failedToBreakdown,
                 .failedToDefineTranslationWord,

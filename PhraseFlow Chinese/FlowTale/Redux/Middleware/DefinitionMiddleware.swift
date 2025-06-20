@@ -20,24 +20,20 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
                 return .definitionAction(.failedToLoadDefinitions)
             }
             
-        case .loadInitialSentenceDefinitions(let chapter, let story, let sentenceCount):
+        case .loadInitialSentenceDefinitions(let chapter, let story):
             do {
-                let initialSentences = Array(chapter.sentences.prefix(sentenceCount))
                 var allDefinitions: [Definition] = []
                 
-                for sentence in initialSentences {
-                    if let firstWord = sentence.timestamps.first {
-                        let definitionsForSentence = try await environment.fetchDefinitions(
-                            in: sentence,
-                            story: story,
-                            deviceLanguage: state.deviceLanguage ?? .english
-                        )
-
-                        try environment.saveDefinitions(definitionsForSentence)
-                        allDefinitions.append(contentsOf: definitionsForSentence)
-                    }
+                for sentence in Array(chapter.sentences.prefix(3)) {
+                    allDefinitions.append(contentsOf:
+                                            try await environment.fetchDefinitions(
+                                                in: sentence,
+                                                story: story,
+                                                deviceLanguage: state.deviceLanguage
+                                            )
+                    )
                 }
-                try environment.saveStory(story)
+                try environment.saveDefinitions(allDefinitions)
 
                 return .definitionAction(.onLoadedInitialDefinitions(allDefinitions))
             } catch {
@@ -45,19 +41,15 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
             }
 
         case .onLoadedInitialDefinitions(let definitions):
-            if let currentStory = state.storyState.currentStory,
-               let chapter = state.storyState.currentChapter {
-                return .definitionAction(.loadRemainingDefinitions(chapter,
-                                         currentStory,
-                                         sentenceIndex: state.definitionState.numberOfInitialSentencesToDefine,
-                                         previousDefinitions: definitions))
-            }
-            return .definitionAction(.refreshDefinitionView)
+            return .definitionAction(.loadRemainingDefinitions(sentenceIndex: state.definitionState.numberOfInitialSentencesToDefine,
+                                                               previousDefinitions: definitions))
 
-        case .loadRemainingDefinitions(let chapter, let story, let sentenceIndex, let definitions):
+        case .loadRemainingDefinitions(let sentenceIndex, _):
             do {
-                if sentenceIndex >= chapter.sentences.count {
-                    return .definitionAction(.onLoadedDefinitions([]))
+                guard let story = state.storyState.currentStory,
+                      let chapter = state.storyState.currentChapter,
+                      sentenceIndex < chapter.sentences.count else {
+                    return nil
                 }
                 
                 let definitions = try await environment.fetchDefinitions(
@@ -68,9 +60,7 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
 
                 try environment.saveDefinitions(definitions)
 
-                return .definitionAction(.loadRemainingDefinitions(chapter,
-                                                                   story,
-                                                                   sentenceIndex: sentenceIndex + 1,
+                return .definitionAction(.loadRemainingDefinitions(sentenceIndex: sentenceIndex + 1,
                                                                    previousDefinitions: definitions))
             } catch {
                 return .definitionAction(.failedToLoadDefinitions)
@@ -79,18 +69,18 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
         case .saveDefinitions:
             do {
                 try environment.saveDefinitions(state.definitionState.definitions)
+                return nil
             } catch {
                 return .definitionAction(.failedToSaveDefinitions)
             }
-            return nil
 
         case .deleteDefinition(let definition):
             do {
                 try environment.deleteDefinition(with: definition.id)
+                return nil
             } catch {
                 return .definitionAction(.failedToDeleteDefinition)
             }
-            return nil
 
         case .onDefinedCharacter:
             return .definitionAction(.saveDefinitions)

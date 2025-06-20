@@ -36,7 +36,7 @@ let definitionReducer: Reducer<FlowTaleState, DefinitionAction> = { state, actio
         newState.viewState.loadingState = .complete
         newState.viewState.isWritingChapter = false
 
-    case .loadRemainingDefinitions(_, _, _, let definitions):
+    case .loadRemainingDefinitions(_, let definitions):
         newState.definitionState.definitions.append(contentsOf: definitions)
         
     case .onLoadedDefinitions(let definitions):

@@ -22,10 +22,10 @@ struct StoryState {
     }
 
     var currentChapter: Chapter? {
-        guard let story = currentStory else {
+        guard let currentStory else {
             return nil
         }
-        return story.chapters[safe: story.currentChapterIndex]
+        return currentStory.chapters[safe: currentStory.currentChapterIndex]
     }
 
     var currentSpokenWord: WordTimeStampData? { // TODO: Remove flatmap && last logic to improve performance

@@ -32,6 +32,10 @@ struct Story: Codable, Equatable, Hashable {
         return nil
     }
 
+    var isLastChapter: Bool {
+        chapters.count <= currentChapterIndex + 1
+    }
+
     init(briefLatestStorySummary: String = "",
          difficulty: Difficulty = .beginner,
          language: Language,

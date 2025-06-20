@@ -34,9 +34,6 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
                 return nil
             }
 
-        case .onCreatedChapter(let story):
-            return nil
-
         case .loadStories(let isAppLaunch):
             do {
                 let stories = try environment.loadAllStories()
@@ -49,7 +46,9 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
         case .loadChapters(let story, let isAppLaunch):
             do {
                 let chapters = try environment.loadAllChapters(for: story.id)
-                return .storyAction(.onLoadedChapters(story, chapters, isAppLaunch: isAppLaunch))
+                return .storyAction(.onLoadedChapters(story,
+                                                      chapters,
+                                                      isAppLaunch: isAppLaunch))
             } catch {
                 return .storyAction(.failedToLoadChapters)
             }
@@ -61,9 +60,6 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             } catch {
                 return .storyAction(.failedToDeleteStory)
             }
-
-        case .onDeletedStory:
-            return .storyAction(.loadStories(isAppLaunch: false))
 
         case .saveStoryAndSettings(var story):
             do {
@@ -80,9 +76,6 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             }
             return nil
 
-        case .onLoadedStories(let stories, let isAppLaunch):
-            return .storyAction(.onFinishedLoadedStories)
-
         case .onFinishedLoadedStories:
             if let story = state.storyState.currentStory,
                story.chapters.isEmpty {
@@ -90,8 +83,12 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             }
             return nil
 
-        case .onLoadedChapters(let story, let chapters, let isAppLaunch):
-            return nil
+        case .onDeletedStory:
+            return .storyAction(.loadStories(isAppLaunch: false))
+
+        case .onLoadedStories(let stories, let isAppLaunch):
+            return .storyAction(.onFinishedLoadedStories)
+
         case .failedToCreateChapter:
             return .snackbarAction(.showSnackBar(.failedToWriteChapter))
         case .failedToLoadStories,
@@ -100,6 +97,8 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
                 .failedToSaveStoryAndSettings,
                 .updateAutoScrollEnabled,
                 .updateCurrentSentence,
+                .onCreatedChapter,
+                .onLoadedChapters,
                 .updateLoadingState:
             return nil
         }
