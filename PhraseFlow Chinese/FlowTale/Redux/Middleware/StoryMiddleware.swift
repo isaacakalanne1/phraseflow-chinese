@@ -110,6 +110,8 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
 
         case .failedToCreateChapter:
             return .snackbarAction(.showSnackBar(.failedToWriteChapter))
+        case .onCreatedChapter(let chapter):
+            return .definitionAction(.loadInitialSentenceDefinitions(chapter))
         case .failedToLoadChapters,
                 .failedToDeleteStory,
                 .failedToDeleteChapter,
@@ -117,7 +119,6 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
                 .updateAutoScrollEnabled,
                 .updateCurrentSentence,
                 .updatePlaybackTime,
-                .onCreatedChapter,
                 .onDeletedChapter,
                 .onSavedChapter,
                 .setCurrentStory,

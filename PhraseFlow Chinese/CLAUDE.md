@@ -27,4 +27,6 @@ Further notes:
 - Any changes to the state can only happen in the reducer
 - Middleware can only return a single action for each case. Middleware cannot use store.dispatch(...)
 - The languages for localization are English, French, Chinese, Spanish, Arabic, Hindi, Russian, Korean, Japanese, Brazilian Portuguese, European Portuguese, and German. Any requests to localize text should be localized in all these languages
-- An entry should also be added to Strings.swift for the localized string 
+- An entry should also be added to Strings.swift for the localized string
+- Don't write code with comments. And keep the code clean and concise, and 
+  reuse code where possible, don't always opt to write new code if you don't need to 
