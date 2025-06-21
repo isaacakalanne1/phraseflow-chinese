@@ -83,9 +83,9 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
             }
 
         case .onDefinedCharacter:
-            return .definitionAction(.saveDefinitions)
+            return nil
         case .updateStudiedWord:
-            return .definitionAction(.saveDefinitions)
+            return nil
         case .onLoadedDefinitions(let definitions):
             return .definitionAction(.refreshDefinitionView)
 
