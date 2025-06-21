@@ -112,11 +112,11 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
     
     private func flushPendingWrites() {
         guard !pendingWrites.isEmpty else { return }
-        
+
+        print("Saving \(pendingWrites.count) definitions")
         for (id, definition) in pendingWrites {
             guard let fileURL = definitionFileURL(for: id),
                   let data = try? encoder.encode(definition) else { continue }
-            print("Saving \(pendingWrites.count) definitions")
             try? data.write(to: fileURL)
         }
         
