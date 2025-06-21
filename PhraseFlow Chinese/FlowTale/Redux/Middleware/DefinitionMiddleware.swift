@@ -49,7 +49,7 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
             do {
                 guard let chapter = state.storyState.currentChapter,
                       sentenceIndex < chapter.sentences.count else {
-                    return .navigationAction(.selectTab(.reader, shouldPlaySound: false))
+                    return nil
                 }
                 
                 let definitions = try await environment.fetchDefinitions(
