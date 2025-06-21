@@ -23,8 +23,6 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
     private var definitionsDirectory: URL? {
         documentsDirectory?.appendingPathComponent("definitions")
     }
-
-    public let definitionsSubject: CurrentValueSubject<[Definition]?, Never> = .init(nil)
     
     init() {
         encoder.dateEncodingStrategy = .iso8601
@@ -121,12 +119,6 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
         }
         
         pendingWrites.removeAll()
-        updateSubject()
-    }
-    
-    private func updateSubject() {
-        let definitions = try? loadDefinitions()
-        definitionsSubject.send(definitions)
     }
 
     func loadDefinitions() throws -> [Definition] {
@@ -158,6 +150,5 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
         pendingWrites.removeValue(forKey: id)
         guard let fileURL = definitionFileURL(for: id) else { return }
         try? fileManager.removeItem(at: fileURL)
-        updateSubject()
     }
 }

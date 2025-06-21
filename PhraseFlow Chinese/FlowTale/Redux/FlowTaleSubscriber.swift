@@ -12,15 +12,6 @@ let flowTaleSubscriber: OnSubscribe<FlowTaleStore, FlowTaleEnvironmentProtocol> 
 
     store
         .subscribe(
-            environment.dataStore.definitionsSubject
-        ) { store, definition in
-            if let definition {
-                store.dispatch(.definitionAction(.loadDefinitions))
-            }
-        }
-
-    store
-        .subscribe(
             environment.loadingSubject
         ) { store, loadingState in
             if let loadingState {

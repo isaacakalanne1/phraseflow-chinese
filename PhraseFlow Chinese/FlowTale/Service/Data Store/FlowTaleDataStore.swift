@@ -24,10 +24,6 @@ class FlowTaleDataStore: FlowTaleDataStoreProtocol {
     public var chapterSubject: CurrentValueSubject<Chapter?, Never> {
         storyDataStore.chapterSubject
     }
-    
-    public var definitionsSubject: CurrentValueSubject<[Definition]?, Never> {
-        definitionDataStore.definitionsSubject
-    }
 
     func saveChapter(_ chapter: Chapter) throws {
         try storyDataStore.saveChapter(chapter)

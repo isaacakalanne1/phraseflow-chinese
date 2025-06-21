@@ -9,8 +9,6 @@ import Combine
 import Foundation
 
 protocol DefinitionDataStoreProtocol {
-    var definitionsSubject: CurrentValueSubject<[Definition]?, Never> { get }
-
     func loadDefinitions() throws -> [Definition]
     func saveDefinitions(_ definitions: [Definition]) throws
     func deleteDefinition(with id: UUID) throws
