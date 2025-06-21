@@ -14,7 +14,7 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
     private var pendingWrites: [UUID: Definition] = [:]
-    private var writeTimer: Timer?
+    private var writeWorkItem: DispatchWorkItem?
 
     private var documentsDirectory: URL? {
         return fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
@@ -101,9 +101,12 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
     }
 
     private func scheduleWrite() {
-        writeTimer?.invalidate()
-        writeTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { _ in
-            self.flushPendingWrites()
+        writeWorkItem?.cancel()
+        writeWorkItem = DispatchWorkItem { [weak self] in
+            self?.flushPendingWrites()
+        }
+        if let workItem = writeWorkItem {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: workItem)
         }
     }
     
@@ -113,6 +116,7 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
         for (id, definition) in pendingWrites {
             guard let fileURL = definitionFileURL(for: id),
                   let data = try? encoder.encode(definition) else { continue }
+            print("Saving \(pendingWrites.count) definitions")
             try? data.write(to: fileURL)
         }
         
@@ -146,6 +150,7 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
         for definition in definitions {
             pendingWrites[definition.id] = definition
         }
+        print("Scheduling write for \(definitions.count) definitions")
         scheduleWrite()
     }
 

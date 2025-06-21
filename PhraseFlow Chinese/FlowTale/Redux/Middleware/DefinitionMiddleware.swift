@@ -24,8 +24,6 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
             do {
                 var allDefinitions: [Definition] = []
                 
-                // Use chapter directly with updated fetchDefinitions API
-                
                 for sentence in Array(chapter.sentences.prefix(3)) {
                     allDefinitions.append(contentsOf:
                                             try await environment.fetchDefinitions(
