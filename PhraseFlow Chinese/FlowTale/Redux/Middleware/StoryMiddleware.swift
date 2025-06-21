@@ -14,17 +14,18 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
     case .storyAction(let storyAction):
         switch storyAction {
         case .createChapter(let type):
+            var previousChapters: [Chapter] = []
             do {
                 var chapter: Chapter
-                if case .existingStory(let storyId) = type {
-                    chapter = state.createNewChapter(storyId: storyId)
+                if case .existingStory(let storyId) = type,
+                   let existingChapters = state.storyState.storyChapters[storyId] {
+                    previousChapters = existingChapters
                 } else {
-                    chapter = state.createNewChapter()
+                    previousChapters = [state.createNewChapter()]
                 }
                 
                 // Generate chapter content directly
-                chapter = try await environment.generateChapter(chapter: chapter,
-                                                               voice: state.settingsState.voice,
+                chapter = try await environment.generateChapter(previousChapters: previousChapters,
                                                                deviceLanguage: state.deviceLanguage,
                                                                currentSubscription: state.subscriptionState.currentSubscription)
                 

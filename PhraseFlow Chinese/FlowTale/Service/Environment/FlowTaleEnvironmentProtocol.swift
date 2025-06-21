@@ -18,8 +18,7 @@ protocol FlowTaleEnvironmentProtocol {
                           voice: Voice,
                           language: Language) async throws -> Chapter
     func getProducts() async throws -> [Product]
-    func generateChapter(chapter: Chapter,
-                         voice: Voice,
+    func generateChapter(previousChapters: [Chapter],
                          deviceLanguage: Language?,
                          currentSubscription: SubscriptionLevel?) async throws -> Chapter
 

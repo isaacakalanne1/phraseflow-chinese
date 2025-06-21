@@ -9,7 +9,7 @@ import Foundation
 
 class CreateStoryServices: CreateStoryServicesProtocol {
 
-    func generateChapter(chapter: Chapter, deviceLanguage: Language?) async throws -> Chapter {
+    func generateChapter(previousChapters: [Chapter], deviceLanguage: Language?) async throws -> Chapter {
         do {
             guard let deviceLanguage else {
                 throw FlowTaleServicesError.failedToGetDeviceLanguage

@@ -18,8 +18,8 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
         try await createImageServices.generateImage(with: prompt)
     }
 
-    func generateChapter(chapter: Chapter, deviceLanguage: Language?) async throws -> Chapter {
-        try await createStoryServices.generateChapter(chapter: chapter,
+    func generateChapter(previousChapters: [Chapter], deviceLanguage: Language?) async throws -> Chapter {
+        try await createStoryServices.generateChapter(previousChapters: previousChapters,
                                                       deviceLanguage: deviceLanguage)
     }
 

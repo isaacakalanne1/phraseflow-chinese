@@ -49,13 +49,14 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         try await repository.getProducts()
     }
 
-    func generateChapter(chapter: Chapter,
+    func generateChapter(previousChapters: [Chapter],
                          voice: Voice,
                          deviceLanguage: Language?,
                          currentSubscription: SubscriptionLevel?) async throws -> Chapter {
         loadingSubject.send(.writing)
 
-        var newChapter = try await service.generateChapter(chapter: chapter, deviceLanguage: deviceLanguage)
+        var newChapter = try await service.generateChapter(previousChapters: previousChapters,
+                                                           deviceLanguage: deviceLanguage)
         loadingSubject.send(.generatingImage)
 
         if newChapter.imageData == nil,
@@ -83,7 +84,17 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     // MARK: Chapters
 
     func saveChapter(_ chapter: Chapter) throws {
-        try dataStore.saveChapter(chapter)
+        var chapterToSave = chapter
+        
+        // Only save cover art in the first chapter to save memory
+        let allChapters = try dataStore.loadAllChapters(for: chapter.storyId)
+        let isFirstChapter = allChapters.isEmpty || allChapters.allSatisfy { $0.id == chapter.id }
+        
+        if !isFirstChapter {
+            chapterToSave.imageData = nil
+        }
+        
+        try dataStore.saveChapter(chapterToSave)
     }
 
     func loadAllChapters() throws -> [Chapter] {
