@@ -40,6 +40,7 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
                 return .snackbarAction(.showSnackBar(.chapterReady))
             }
 
+
         case .onLoadedInitialDefinitions(let definitions):
             return .definitionAction(.loadRemainingDefinitions(sentenceIndex: state.definitionState.numberOfInitialSentencesToDefine,
                                                                previousDefinitions: definitions))
@@ -48,10 +49,8 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
             do {
                 guard let chapter = state.storyState.currentChapter,
                       sentenceIndex < chapter.sentences.count else {
-                    return nil
+                    return .navigationAction(.selectTab(.reader, shouldPlaySound: false))
                 }
-                
-                // Use chapter directly with updated fetchDefinitions API
                 
                 let definitions = try await environment.fetchDefinitions(
                     in: chapter.sentences[sentenceIndex],

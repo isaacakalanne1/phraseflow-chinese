@@ -15,6 +15,7 @@ enum DefinitionAction {
     case onLoadedDefinitions([Definition])
     case failedToLoadDefinitions
 
+
     case onDefinedCharacter(Definition)
     case saveDefinitions
     case failedToSaveDefinitions

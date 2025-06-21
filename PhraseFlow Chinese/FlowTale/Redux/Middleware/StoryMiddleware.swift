@@ -100,7 +100,26 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             return nil
 
         case .onFinishedLoadedChapters:
-            return nil
+            if let currentChapter = state.storyState.currentChapter {
+                let existingDefinitions = state.definitionState.definitions
+                var firstMissingSentenceIndex: Int?
+                
+                for (sentenceIndex, sentence) in currentChapter.sentences.enumerated() {
+                    let sentenceHasDefinitions = sentence.timestamps.allSatisfy { timestamp in
+                        existingDefinitions.contains { $0.timestampData == timestamp }
+                    }
+                    
+                    if !sentenceHasDefinitions {
+                        firstMissingSentenceIndex = sentenceIndex
+                        break
+                    }
+                }
+                
+                if let sentenceIndex = firstMissingSentenceIndex {
+                    return .definitionAction(.loadRemainingDefinitions(sentenceIndex: sentenceIndex, previousDefinitions: []))
+                }
+            }
+            return .navigationAction(.selectTab(.reader, shouldPlaySound: false))
 
         case .onDeletedStory:
             return .storyAction(.loadStories(isAppLaunch: false))
