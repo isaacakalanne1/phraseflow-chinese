@@ -42,7 +42,7 @@ struct ReaderView: View {
                 Text(chapter.title)
                     .font(.subheadline)
                     .foregroundColor(FlowTaleColor.primary.opacity(0.9))
-                    .lineLimit(2)
+                    .lineLimit(1)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -67,6 +67,6 @@ struct ReaderView: View {
             SpeechSpeedButton()
         }
         .padding(20)
-        .frame(maxHeight: .infinity, alignment: .bottom)
+        .frame(alignment: .bottom)
     }
 }

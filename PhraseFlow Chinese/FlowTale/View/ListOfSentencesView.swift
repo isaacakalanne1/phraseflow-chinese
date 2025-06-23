@@ -42,52 +42,51 @@ struct ListOfSentencesView: View {
 
     @ViewBuilder
     func paginatedView(chapter: Chapter) -> some View {
-        GeometryReader { geometry in
-            VStack(spacing: 0) {
-                flowLayout(sentence: chapter.sentences[currentPage], language: chapter.language)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Spacer()
-                
-                paginationControls(totalPages: chapter.sentences.count)
-                
+        VStack(spacing: 0) {
+            flowLayout(sentence: chapter.sentences[currentPage], language: chapter.language)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            paginationControls(totalPages: chapter.sentences.count)
+
+            if !isTranslation {
+                MainButton(title: LocalizedString.newChapter.uppercased()) {
+                    let allChaptersForStory = store.state.storyState.storyChapters[chapter.storyId] ?? []
+                    let isLastChapter = store.state.storyState.currentChapterIndex >= allChaptersForStory.count - 1
+
+                    switch isLastChapter {
+                    case true:
+                        store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: true)))
+                        store.dispatch(.audioAction(.playSound(.goToNextChapter)))
+                        store.dispatch(.storyAction(.goToNextChapter))
+                    case false:
+                        store.dispatch(.snackbarAction(.showSnackBar(.writingChapter)))
+                        store.dispatch(.storyAction(.createChapter(.existingStory(chapter.storyId))))
+                    }
+                }
+                .disabled(store.state.viewState.isWritingChapter)
+            }
+        }
+        .onAppear {
+            opacity = 1
+            store.dispatch(.snackbarAction(.checkDeviceVolumeZero))
+            if let sentence = chapter.sentences.first(where: { $0.timestamps.contains { $0.id == spokenWord?.id }}) {
+                store.dispatch(.storyAction(.updateCurrentSentence(sentence)))
+            }
+        }
+        .onChange(of: currentSentence) { oldValue, newValue in
+            let targetPage = sentenceIndex(newValue, in: chapter.sentences)
+            if targetPage != currentPage {
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    currentPage = targetPage
+                }
+            }
+        }
+        .onChange(of: spokenWord) { oldValue, newValue in
+            if let newValue,
+               let sentence = chapter.sentences.first(where: { $0.timestamps.contains { $0.id == newValue.id } }),
+               currentSentence != sentence {
                 if !isTranslation {
-                    MainButton(title: LocalizedString.newChapter.uppercased()) {
-                        let allChaptersForStory = store.state.storyState.storyChapters[chapter.storyId] ?? []
-                        let isLastChapter = store.state.storyState.currentChapterIndex >= allChaptersForStory.count - 1
-                        
-                        switch isLastChapter {
-                        case true:
-                            store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: true)))
-                            store.dispatch(.audioAction(.playSound(.goToNextChapter)))
-                            store.dispatch(.storyAction(.goToNextChapter))
-                        case false:
-                            store.dispatch(.snackbarAction(.showSnackBar(.writingChapter)))
-                            store.dispatch(.storyAction(.createChapter(.existingStory(chapter.storyId))))
-                        }
-                    }
-                    .disabled(store.state.viewState.isWritingChapter)
-                }
-            }
-            .onAppear {
-                opacity = 1
-                store.dispatch(.snackbarAction(.checkDeviceVolumeZero))
-            }
-            .onChange(of: currentSentence) { oldValue, newValue in
-                let targetPage = sentenceIndex(newValue, in: chapter.sentences)
-                if targetPage != currentPage {
-                    withAnimation(.easeInOut(duration: 0.3)) {
-                        currentPage = targetPage
-                    }
-                }
-            }
-            .onChange(of: spokenWord) { oldValue, newValue in
-                if let newValue,
-                   let sentence = chapter.sentences.first(where: { $0.timestamps.contains { $0.id == newValue.id } }),
-                   currentSentence != sentence {
-                    if !isTranslation {
-                        store.dispatch(.storyAction(.updateCurrentSentence(sentence)))
-                    }
+                    store.dispatch(.storyAction(.updateCurrentSentence(sentence)))
                 }
             }
         }

@@ -18,7 +18,6 @@ struct TranslatedSentenceView: View {
                     Text(store.state.storyState.currentSentence?.original ?? "")
                         .font(.body)
                         .foregroundColor(FlowTaleColor.primary)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 8)
                 } else {
@@ -34,7 +33,6 @@ struct TranslatedSentenceView: View {
                             .foregroundColor(FlowTaleColor.secondary)
                             .multilineTextAlignment(.center)
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                 }
             } else {
                 // No sentence selected state
@@ -44,8 +42,8 @@ struct TranslatedSentenceView: View {
                         .foregroundColor(FlowTaleColor.secondary)
                         .multilineTextAlignment(.center)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
 }

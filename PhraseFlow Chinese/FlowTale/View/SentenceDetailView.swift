@@ -14,11 +14,11 @@ struct SentenceDetailView: View {
         Group {
             if (store.state.viewState.isDefining || store.state.definitionState.currentDefinition != nil) && store.state.settingsState.isShowingDefinition {
                 DefinitionView(definition: store.state.definitionState.currentDefinition)
-                    .frame(height: 200)
+                    .frame(maxHeight: .infinity)
                     .cardBackground()
             } else if store.state.settingsState.isShowingEnglish {
                 TranslatedSentenceView()
-                    .frame(height: 200)
+                    .frame(maxHeight: .infinity)
                     .cardBackground()
             }
         }
