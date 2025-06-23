@@ -131,10 +131,6 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
         let player = data?.createAVPlayer()
         newState.audioState.audioPlayer = player ?? AVPlayer()
         
-    case .updatePlaybackTime(let time):
-        guard let currentStoryId = newState.storyState.currentStoryId else { break }
-        newState.storyState.storyChapters[currentStoryId]?[newState.storyState.currentChapterIndex].currentPlaybackTime = time
-        
     case .failedToLoadChapters:
         newState.viewState.isInitialisingApp = false
     case .failedToCreateChapter:
