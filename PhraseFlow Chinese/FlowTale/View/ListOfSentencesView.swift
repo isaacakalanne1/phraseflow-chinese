@@ -10,6 +10,9 @@ import SwiftUI
 struct ListOfSentencesView: View {
     @EnvironmentObject var store: FlowTaleStore
     @State private var opacity: Double = 0
+    @State private var availableHeight: CGFloat = 0
+    @State private var sentenceHeight: CGFloat = 60
+    @State private var currentPage: Int = 0
 
     private let isTranslation: Bool
 
@@ -24,63 +27,119 @@ struct ListOfSentencesView: View {
     init(isTranslation: Bool = false) {
         self.isTranslation = isTranslation
     }
+    
+    private var sentencesPerPage: Int {
+        guard availableHeight > 50 else { return 3 }
+        
+        let buttonHeight: CGFloat = isTranslation ? 0 : 60
+        let minSpacing: CGFloat = 20
+        let usableHeight = max(50, availableHeight - buttonHeight - minSpacing)
+        
+        let estimatedSentenceHeight = max(50, min(sentenceHeight, 120))
+        let calculatedCount = max(1, Int(usableHeight / estimatedSentenceHeight))
+        
+        let maxSentences = max(2, min(calculatedCount, 8))
+        
+        return maxSentences
+    }
+    
+    private func pageForSentence(_ targetSentence: Sentence?, in sentences: [Sentence]) -> Int {
+        guard let targetSentence,
+              let sentenceIndex = sentences.firstIndex(of: targetSentence) else {
+            return 0
+        }
+        return sentenceIndex / sentencesPerPage
+    }
+    
+    private func sentencesForPage(_ pageIndex: Int, from sentences: [Sentence]) -> [Sentence] {
+        let startIndex = pageIndex * sentencesPerPage
+        let endIndex = min(startIndex + sentencesPerPage, sentences.count)
+        guard startIndex < sentences.count else { return [] }
+        return Array(sentences[startIndex..<endIndex])
+    }
 
     var body: some View {
-        ScrollViewReader { proxy in
-            if let chapter = store.state.storyState.currentChapter {
-                scrollView(chapter: chapter, proxy: proxy)
-            }
+        if let chapter = store.state.storyState.currentChapter {
+            paginatedView(chapter: chapter)
         }
     }
 
     @ViewBuilder
-    func scrollView(chapter: Chapter, proxy: ScrollViewProxy) -> some View {
-        ScrollView(.vertical) {
-            ForEach(chapter.sentences, id: \.self) { sentence in
-                flowLayout(sentence: sentence,
-                           language: chapter.language,
-                           proxy: proxy)
-            }
-            .padding(.trailing, 30)
-
-            if !isTranslation {
-                MainButton(title: LocalizedString.newChapter.uppercased()) {
-                    let allChaptersForStory = store.state.storyState.storyChapters[chapter.storyId] ?? []
-                    let isLastChapter = store.state.storyState.currentChapterIndex >= allChaptersForStory.count - 1
-                    
-                    switch isLastChapter {
-                    case true:
-                        store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: true)))
-                        store.dispatch(.audioAction(.playSound(.goToNextChapter)))
-                        store.dispatch(.storyAction(.goToNextChapter))
-                    case false:
-                        store.dispatch(.snackbarAction(.showSnackBar(.writingChapter)))
-                        store.dispatch(.storyAction(.createChapter(.existingStory(chapter.storyId))))
+    func paginatedView(chapter: Chapter) -> some View {
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                VStack(spacing: 8) {
+                    ForEach(sentencesForPage(currentPage, from: chapter.sentences), id: \.self) { sentence in
+                        flowLayout(sentence: sentence, language: chapter.language)
+                            .background(
+                                GeometryReader { sentenceGeometry in
+                                    Color.clear
+                                        .onAppear {
+                                            let measuredHeight = sentenceGeometry.size.height + 8
+                                            if measuredHeight > 0 && measuredHeight < 200 {
+                                                sentenceHeight = max(sentenceHeight, measuredHeight)
+                                            }
+                                        }
+                                }
+                            )
                     }
                 }
-                .disabled(store.state.viewState.isWritingChapter)
-            }
-        }
-        .simultaneousGesture(
-            DragGesture()
-                .onChanged { _ in
-                    store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: false)))
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.trailing, 30)
+                
+                Spacer()
+                
+                if !isTranslation {
+                    MainButton(title: LocalizedString.newChapter.uppercased()) {
+                        let allChaptersForStory = store.state.storyState.storyChapters[chapter.storyId] ?? []
+                        let isLastChapter = store.state.storyState.currentChapterIndex >= allChaptersForStory.count - 1
+                        
+                        switch isLastChapter {
+                        case true:
+                            store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: true)))
+                            store.dispatch(.audioAction(.playSound(.goToNextChapter)))
+                            store.dispatch(.storyAction(.goToNextChapter))
+                        case false:
+                            store.dispatch(.snackbarAction(.showSnackBar(.writingChapter)))
+                            store.dispatch(.storyAction(.createChapter(.existingStory(chapter.storyId))))
+                        }
+                    }
+                    .disabled(store.state.viewState.isWritingChapter)
                 }
-        )
-        .onChange(of: store.state.viewState.isAutoscrollEnabled) { oldValue, newValue in
-            guard newValue else { return }
-            scrollToCurrentWord(spokenWord, proxy: proxy)
-        }
-        .onAppear {
-            opacity = 1
-            store.dispatch(.snackbarAction(.checkDeviceVolumeZero))
-            scrollToCurrentWord(spokenWord, proxy: proxy)
+            }
+            .onAppear {
+                availableHeight = geometry.size.height
+                opacity = 1
+                store.dispatch(.snackbarAction(.checkDeviceVolumeZero))
+                let buttonHeight: CGFloat = isTranslation ? 0 : 60
+                let usableHeight = max(50, availableHeight - buttonHeight - 20)
+                print("📏 Available: \(availableHeight), Usable: \(usableHeight), Sentence: \(sentenceHeight), Per page: \(sentencesPerPage)")
+            }
+            .onChange(of: sentenceHeight) { oldValue, newValue in
+                print("Sentence height updated: \(newValue), New sentences per page: \(sentencesPerPage)")
+            }
+            .onChange(of: currentSentence) { oldValue, newValue in
+                let targetPage = pageForSentence(newValue, in: chapter.sentences)
+                if targetPage != currentPage {
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        currentPage = targetPage
+                    }
+                }
+            }
+            .onChange(of: spokenWord) { oldValue, newValue in
+                if let newValue,
+                   let sentence = chapter.sentences.first(where: { $0.timestamps.contains { $0.id == newValue.id } }),
+                   currentSentence != sentence {
+                    if !isTranslation {
+                        store.dispatch(.storyAction(.updateCurrentSentence(sentence)))
+                    }
+                }
+            }
         }
     }
 
     private func flowLayout(sentence: Sentence,
-                            language: Language,
-                            proxy: ScrollViewProxy) -> some View {
+                            language: Language) -> some View {
         FlowLayout(spacing: 0, language: language) {
             ForEach(Array(sentence.timestamps.enumerated()), id: \.offset) { index, word in
                 CharacterView(word: word, sentence: sentence, isTranslation: isTranslation)
@@ -89,24 +148,6 @@ struct ListOfSentencesView: View {
                     .animation(.easeInOut.delay(Double(index) * 0.02), value: opacity)
             }
         }
-        .onChange(of: spokenWord) { oldValue, newValue in
-            if sentence.timestamps.contains(where: { $0.id == spokenWord?.id }),
-               currentSentence != sentence {
-                if !isTranslation {
-                    store.dispatch(.storyAction(.updateCurrentSentence(sentence)))
-                }
-                guard let newValue else { return }
-                scrollToCurrentWord(newValue, proxy: proxy)
-            }
-        }
         .frame(maxWidth: .infinity, alignment: language.alignment)
-    }
-
-    private func scrollToCurrentWord(_ word: WordTimeStampData?,
-                                     proxy: ScrollViewProxy) {
-        guard let word else { return }
-        withAnimation {
-            proxy.scrollTo(word.id, anchor: .center)
-        }
     }
 }
