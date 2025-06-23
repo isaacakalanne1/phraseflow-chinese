@@ -52,7 +52,7 @@ struct ReaderView: View {
     private var storyContentSection: some View {
         ZStack(alignment: .trailing) {
             VStack {
-                ListOfSentencesView(chapter: chapter)
+                ListOfSentencesView()
                     .padding()
             }
             .cardBackground()
