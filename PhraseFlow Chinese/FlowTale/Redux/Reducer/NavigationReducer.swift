@@ -20,15 +20,11 @@ let navigationReducer: Reducer<FlowTaleState, NavigationAction> = { state, actio
         if let currentChapter = newState.storyState.currentChapter {
             newState.definitionState.currentDefinition = nil
             newState.settingsState.language = currentChapter.language
-
-            if let voice = currentChapter.audioVoice {
-                newState.settingsState.voice = voice
-            }
+            newState.settingsState.voice = currentChapter.audioVoice
 
             let data = currentChapter.audio.data
             let player = data.createAVPlayer()
             newState.audioState.audioPlayer = player ?? AVPlayer()
-
             newState.viewState.contentTab = .reader
         }
         

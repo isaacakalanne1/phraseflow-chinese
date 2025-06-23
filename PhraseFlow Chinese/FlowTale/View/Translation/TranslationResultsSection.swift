@@ -33,7 +33,7 @@ struct TranslationResultsSection: View {
                 .foregroundColor(FlowTaleColor.primary)
 
             HStack(alignment: .top) {
-                ListOfSentencesView(chapter: chapter, isTranslation: true)
+                ListOfSentencesView(isTranslation: true)
 
                 Button {
                     if store.state.translationState.isPlayingAudio {

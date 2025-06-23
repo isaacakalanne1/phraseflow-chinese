@@ -14,7 +14,7 @@ class StoryDataStore: StoryDataStoreProtocol {
         return fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
     }
 
-    public let chapterSubject: CurrentValueSubject<Chapter?, Never> = .init(nil)
+    private let chapterSubject: CurrentValueSubject<Chapter?, Never> = .init(nil)
 
     private func fileURL(for chapter: Chapter) throws -> URL {
         guard let dir = documentsDirectory else {

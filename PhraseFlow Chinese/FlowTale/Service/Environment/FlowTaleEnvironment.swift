@@ -10,9 +10,9 @@ import Foundation
 import StoreKit
 
 struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
-    let service: FlowTaleServicesProtocol
-    let dataStore: FlowTaleDataStoreProtocol
-    let repository: FlowTaleRepositoryProtocol
+    private let service: FlowTaleServicesProtocol
+    private let dataStore: FlowTaleDataStoreProtocol
+    private let repository: FlowTaleRepositoryProtocol
 
     public let loadingSubject: CurrentValueSubject<LoadingState?, Never> = .init(nil)
     public let chapterSubject: CurrentValueSubject<Chapter?, Never> = .init(nil)
@@ -50,7 +50,6 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     }
 
     func generateChapter(previousChapters: [Chapter],
-                         voice: Voice,
                          deviceLanguage: Language?,
                          currentSubscription: SubscriptionLevel?) async throws -> Chapter {
         loadingSubject.send(.writing)
@@ -61,13 +60,18 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
 
         if newChapter.imageData == nil,
            !newChapter.passage.isEmpty {
-            newChapter.imageData = try await service.generateImage(with: newChapter.passage)
+            if let firstChapter = previousChapters.first, let existingImageData = firstChapter.imageData {
+                newChapter.imageData = existingImageData
+            } else {
+                newChapter.imageData = try await service.generateImage(with: newChapter.passage)
+            }
         }
         loadingSubject.send(.generatingSpeech)
 
+        let voiceToUse = newChapter.audioVoice
         let (processedChapter, ssmlCharacterCount) = try await synthesizeSpeechWithCharacterCount(
             newChapter,
-            voice: voice,
+            voice: voiceToUse,
             language: newChapter.language
         )
 

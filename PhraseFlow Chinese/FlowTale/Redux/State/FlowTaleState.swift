@@ -26,6 +26,7 @@ struct FlowTaleState {
         return Chapter(storyId: storyId,
                        title: "",
                        sentences: [],
+                       audioVoice: settingsState.voice,
                        audio: ChapterAudio(data: Data()),
                        passage: "",
                        difficulty: settingsState.difficulty,

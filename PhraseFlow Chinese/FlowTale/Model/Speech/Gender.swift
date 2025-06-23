@@ -18,13 +18,4 @@ enum Gender: String {
             LocalizedString.female
         }
     }
-
-    var emoji: String {
-        switch self {
-        case .male:
-            "👨"
-        case .female:
-            "👩"
-        }
-    }
 }

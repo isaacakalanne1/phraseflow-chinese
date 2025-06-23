@@ -11,7 +11,6 @@ struct ListOfSentencesView: View {
     @EnvironmentObject var store: FlowTaleStore
     @State private var opacity: Double = 0
 
-    private let chapter: Chapter
     private let isTranslation: Bool
 
     var spokenWord: WordTimeStampData? {
@@ -22,9 +21,7 @@ struct ListOfSentencesView: View {
         isTranslation ? store.state.translationState.currentSentence : store.state.storyState.currentSentence
     }
 
-    init(chapter: Chapter,
-         isTranslation: Bool = false) {
-        self.chapter = chapter
+    init(isTranslation: Bool = false) {
         self.isTranslation = isTranslation
     }
 

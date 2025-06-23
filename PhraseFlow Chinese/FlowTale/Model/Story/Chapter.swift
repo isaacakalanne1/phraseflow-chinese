@@ -9,11 +9,11 @@ import Foundation
 import UIKit
 
 struct Chapter: Codable, Equatable, Hashable {
-    let id: UUID
+    var id: UUID
     let storyId: UUID
     var title: String
     var sentences: [Sentence]
-    var audioVoice: Voice?
+    var audioVoice: Voice
     var audio: ChapterAudio
     var passage: String
     
@@ -38,7 +38,7 @@ struct Chapter: Codable, Equatable, Hashable {
          storyId: UUID,
          title: String,
          sentences: [Sentence],
-         audioVoice: Voice? = nil,
+         audioVoice: Voice,
          audio: ChapterAudio,
          passage: String,
          chapterSummary: String = "",
@@ -72,7 +72,7 @@ struct Chapter: Codable, Equatable, Hashable {
         self.storyId = (try? container.decode(UUID.self, forKey: .storyId)) ?? UUID()
         self.title = try container.decode(String.self, forKey: .title)
         self.sentences = try container.decode([Sentence].self, forKey: .sentences)
-        self.audioVoice = try container.decodeIfPresent(Voice.self, forKey: .audioVoice)
+        self.audioVoice = try container.decode(Voice.self, forKey: .audioVoice)
         self.audio = (try? container.decode(ChapterAudio.self, forKey: .audio)) ?? ChapterAudio(data: Data())
         let newLine = """
 

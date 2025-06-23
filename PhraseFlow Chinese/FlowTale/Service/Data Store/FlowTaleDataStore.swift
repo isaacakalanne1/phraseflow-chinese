@@ -10,16 +10,10 @@ import Security
 import Combine
 
 class FlowTaleDataStore: FlowTaleDataStoreProtocol {
-    private let fileManager = FileManager.default
-
     private let storyDataStore = StoryDataStore()
     private let definitionDataStore = DefinitionDataStore()
     private let userLimitsDataStore = UserLimitsDataStore()
     private let settingsDataStore = SettingsDataStore()
-
-    private var documentsDirectory: URL? {
-        return fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
-    }
 
     public var chapterSubject: CurrentValueSubject<Chapter?, Never> {
         storyDataStore.chapterSubject

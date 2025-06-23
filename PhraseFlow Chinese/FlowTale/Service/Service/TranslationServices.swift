@@ -42,6 +42,7 @@ class TranslationServices: TranslationServicesProtocol {
         return Chapter(storyId: UUID(),
                        title: chapterResponse.chapterNumberAndTitle ?? "",
                        sentences: chapterResponse.sentences,
+                       audioVoice: targetLanguage.voices.first ?? .xiaoxiao,
                        audio: .init(data: Data()),
                        passage: passage,
                        language: targetLanguage)
@@ -82,6 +83,7 @@ class TranslationServices: TranslationServicesProtocol {
         return Chapter(storyId: UUID(),
                        title: chapterResponse.chapterNumberAndTitle ?? "",
                        sentences: chapterResponse.sentences,
+                       audioVoice: textLanguage.voices.first ?? .xiaoxiao,
                        audio: .init(data: Data()),
                        passage: passage,
                        language: textLanguage)

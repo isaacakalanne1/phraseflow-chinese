@@ -48,7 +48,7 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
             newState.viewState.shouldShowImageSpinner = true
         case .existingStory(let storyId):
             if let latestChapter = newState.storyState.latestChapter(for: storyId) {
-                newState.settingsState.voice = latestChapter.audioVoice ?? newState.settingsState.voice
+                newState.settingsState.voice = latestChapter.audioVoice
                 newState.viewState.shouldShowImageSpinner = latestChapter.imageData == nil
             }
         }
@@ -84,11 +84,6 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
             newState.storyState.currentStoryId = newState.storyState.allStories.first?.storyId
             newState.storyState.currentChapterIndex = 0
             newState.viewState.contentTab = .storyList
-        }
-        
-    case .onDeletedChapter(let chapterId):
-        for storyId in newState.storyState.storyChapters.keys {
-            newState.storyState.storyChapters[storyId]?.removeAll { $0.id == chapterId }
         }
         
     case .onSavedChapter(let chapter):
@@ -153,11 +148,9 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
     case .loadChapters,
             .loadStories,
             .deleteStory,
-            .deleteChapter,
             .saveChapter,
             .onFinishedLoadedChapters,
             .failedToDeleteStory,
-            .failedToDeleteChapter,
             .failedToSaveChapter:
         break
     }

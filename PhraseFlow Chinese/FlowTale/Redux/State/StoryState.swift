@@ -20,10 +20,6 @@ struct StoryState {
         self.storyChapters = storyChapters
     }
 
-    func sentence(containing timestampData: WordTimeStampData) -> Sentence? {
-        currentChapter?.sentences.first(where: { $0.timestamps.contains(where: { $0.id == timestampData.id }) })
-    }
-
     var currentChapter: Chapter? {
         guard let currentStoryId,
               let chapters = storyChapters[currentStoryId] else {

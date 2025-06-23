@@ -23,11 +23,10 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
                 } else {
                     previousChapters = [state.createNewChapter()]
                 }
-                
-                // Generate chapter content directly
+
                 chapter = try await environment.generateChapter(previousChapters: previousChapters,
                                                                deviceLanguage: state.deviceLanguage,
-                                                               currentSubscription: state.subscriptionState.currentSubscription)
+                                                                currentSubscription: state.subscriptionState.currentSubscription)
                 
                 return .storyAction(.onCreatedChapter(chapter))
             } catch FlowTaleDataStoreError.freeUserCharacterLimitReached {
@@ -68,10 +67,6 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             } catch {
                 return .storyAction(.failedToDeleteStory)
             }
-            
-        case .deleteChapter(let chapterId):
-            // TODO: Implement chapter deletion in environment
-            return .storyAction(.onDeletedChapter(chapterId))
 
         case .saveChapter(let chapter):
             do {
@@ -134,12 +129,10 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             return .definitionAction(.loadInitialSentenceDefinitions(chapter))
         case .failedToLoadChapters,
                 .failedToDeleteStory,
-                .failedToDeleteChapter,
                 .failedToSaveChapter,
                 .updateAutoScrollEnabled,
                 .updateCurrentSentence,
                 .updatePlaybackTime,
-                .onDeletedChapter,
                 .onSavedChapter,
                 .setCurrentStory,
                 .updateLoadingState:

@@ -21,10 +21,6 @@ enum StoryAction {
     case deleteStory(UUID)
     case onDeletedStory(UUID)
     case failedToDeleteStory
-    
-    case deleteChapter(UUID)
-    case onDeletedChapter(UUID)
-    case failedToDeleteChapter
 
     case saveChapter(Chapter)
     case onSavedChapter(Chapter)

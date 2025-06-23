@@ -10,7 +10,6 @@ import Foundation
 import StoreKit
 
 protocol FlowTaleEnvironmentProtocol {
-    var dataStore: FlowTaleDataStoreProtocol { get }
     var loadingSubject: CurrentValueSubject<LoadingState?, Never> { get }
     var chapterSubject: CurrentValueSubject<Chapter?, Never> { get }
 
