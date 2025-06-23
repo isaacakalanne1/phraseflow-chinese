@@ -67,24 +67,20 @@ struct ListOfSentencesView: View {
     func paginatedView(chapter: Chapter) -> some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                VStack(spacing: 8) {
-                    ForEach(sentencesForPage(currentPage, from: chapter.sentences), id: \.self) { sentence in
-                        flowLayout(sentence: sentence, language: chapter.language)
-                            .background(
-                                GeometryReader { sentenceGeometry in
-                                    Color.clear
-                                        .onAppear {
-                                            let measuredHeight = sentenceGeometry.size.height + 8
-                                            if measuredHeight > 0 && measuredHeight < 200 {
-                                                sentenceHeight = max(sentenceHeight, measuredHeight)
-                                            }
-                                        }
+                flowLayout(sentence: chapter.sentences[currentPage], language: chapter.language)
+                    .background(
+                        GeometryReader { sentenceGeometry in
+                            Color.clear
+                                .onAppear {
+                                    let measuredHeight = sentenceGeometry.size.height + 8
+                                    if measuredHeight > 0 && measuredHeight < 200 {
+                                        sentenceHeight = max(sentenceHeight, measuredHeight)
+                                    }
                                 }
-                            )
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.trailing, 30)
+                        }
+                    )
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.trailing, 30)
                 
                 Spacer()
                 
