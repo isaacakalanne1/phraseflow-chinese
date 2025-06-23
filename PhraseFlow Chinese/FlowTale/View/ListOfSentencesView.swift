@@ -42,28 +42,33 @@ struct ListOfSentencesView: View {
 
     @ViewBuilder
     func paginatedView(chapter: Chapter) -> some View {
-        VStack(spacing: 0) {
+        VStack(spacing: 16) {
             flowLayout(sentence: chapter.sentences[currentPage], language: chapter.language)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             paginationControls(totalPages: chapter.sentences.count)
-
+            
             if !isTranslation {
-                MainButton(title: LocalizedString.newChapter.uppercased()) {
-                    let allChaptersForStory = store.state.storyState.storyChapters[chapter.storyId] ?? []
-                    let isLastChapter = store.state.storyState.currentChapterIndex >= allChaptersForStory.count - 1
+                playbackControls
+                
+                let isLastPage = currentPage == chapter.sentences.count - 1
+                if isLastPage {
+                    MainButton(title: LocalizedString.newChapter.uppercased()) {
+                        let allChaptersForStory = store.state.storyState.storyChapters[chapter.storyId] ?? []
+                        let isLastChapter = store.state.storyState.currentChapterIndex >= allChaptersForStory.count - 1
 
-                    switch isLastChapter {
-                    case true:
-                        store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: true)))
-                        store.dispatch(.audioAction(.playSound(.goToNextChapter)))
-                        store.dispatch(.storyAction(.goToNextChapter))
-                    case false:
-                        store.dispatch(.snackbarAction(.showSnackBar(.writingChapter)))
-                        store.dispatch(.storyAction(.createChapter(.existingStory(chapter.storyId))))
+                        switch isLastChapter {
+                        case true:
+                            store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: true)))
+                            store.dispatch(.audioAction(.playSound(.goToNextChapter)))
+                            store.dispatch(.storyAction(.goToNextChapter))
+                        case false:
+                            store.dispatch(.snackbarAction(.showSnackBar(.writingChapter)))
+                            store.dispatch(.storyAction(.createChapter(.existingStory(chapter.storyId))))
+                        }
                     }
+                    .disabled(store.state.viewState.isWritingChapter)
                 }
-                .disabled(store.state.viewState.isWritingChapter)
             }
         }
         .onAppear {
@@ -89,6 +94,13 @@ struct ListOfSentencesView: View {
                     store.dispatch(.storyAction(.updateCurrentSentence(sentence)))
                 }
             }
+        }
+    }
+    
+    private var playbackControls: some View {
+        HStack(spacing: 16) {
+            AudioButton()
+            SpeechSpeedButton()
         }
     }
     

@@ -50,23 +50,10 @@ struct ReaderView: View {
     }
     
     private var storyContentSection: some View {
-        ZStack(alignment: .trailing) {
-            VStack {
-                ListOfSentencesView()
-                    .padding()
-            }
-            .cardBackground()
-
-            playbackControls
+        VStack {
+            ListOfSentencesView()
+                .padding()
         }
-    }
-    
-    private var playbackControls: some View {
-        VStack(spacing: 12) {
-            AudioButton()
-            SpeechSpeedButton()
-        }
-        .padding(20)
-        .frame(alignment: .bottom)
+        .cardBackground()
     }
 }
