@@ -29,18 +29,17 @@ struct ListOfSentencesView: View {
     }
     
     private var sentencesPerPage: Int {
-        guard availableHeight > 50 else { return 3 }
+        guard availableHeight > 50 else { return 2 }
         
         let buttonHeight: CGFloat = isTranslation ? 0 : 60
+        let paginationHeight: CGFloat = 40
         let minSpacing: CGFloat = 20
-        let usableHeight = max(50, availableHeight - buttonHeight - minSpacing)
+        let usableHeight = max(50, availableHeight - buttonHeight - paginationHeight - minSpacing)
         
-        let estimatedSentenceHeight = max(50, min(sentenceHeight, 120))
-        let calculatedCount = max(1, Int(usableHeight / estimatedSentenceHeight))
+        let estimatedSentenceHeight = max(40, min(sentenceHeight, 150))
+        let calculatedCount = max(1, Int(usableHeight / (estimatedSentenceHeight + 8)))
         
-        let maxSentences = max(2, min(calculatedCount, 8))
-        
-        return maxSentences
+        return max(1, min(calculatedCount, 10))
     }
     
     private func pageForSentence(_ targetSentence: Sentence?, in sentences: [Sentence]) -> Int {
@@ -89,6 +88,8 @@ struct ListOfSentencesView: View {
                 
                 Spacer()
                 
+                paginationControls(totalSentences: chapter.sentences.count)
+                
                 if !isTranslation {
                     MainButton(title: LocalizedString.newChapter.uppercased()) {
                         let allChaptersForStory = store.state.storyState.storyChapters[chapter.storyId] ?? []
@@ -135,6 +136,42 @@ struct ListOfSentencesView: View {
                     }
                 }
             }
+        }
+    }
+    
+    @ViewBuilder
+    private func paginationControls(totalSentences: Int) -> some View {
+        let totalPages = max(1, (totalSentences + sentencesPerPage - 1) / sentencesPerPage)
+        
+        if totalPages > 1 {
+            HStack(spacing: 16) {
+                Button {
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        currentPage = max(0, currentPage - 1)
+                    }
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .font(.title2)
+                        .foregroundColor(currentPage > 0 ? .primary : .gray)
+                }
+                .disabled(currentPage <= 0)
+                
+                Text("\(currentPage + 1) / \(totalPages)")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                
+                Button {
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        currentPage = min(totalPages - 1, currentPage + 1)
+                    }
+                } label: {
+                    Image(systemName: "chevron.right")
+                        .font(.title2)
+                        .foregroundColor(currentPage < totalPages - 1 ? .primary : .gray)
+                }
+                .disabled(currentPage >= totalPages - 1)
+            }
+            .padding(.vertical, 8)
         }
     }
 
