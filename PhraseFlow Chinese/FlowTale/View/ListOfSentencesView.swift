@@ -49,7 +49,7 @@ struct ListOfSentencesView: View {
                 
                 Spacer()
                 
-                paginationControls(totalSentences: chapter.sentences.count)
+                paginationControls(totalPages: chapter.sentences.count)
                 
                 if !isTranslation {
                     MainButton(title: LocalizedString.newChapter.uppercased()) {
