@@ -23,6 +23,14 @@ final class FlowTaleServices: FlowTaleServicesProtocol {
                                                       deviceLanguage: deviceLanguage)
     }
 
+    func generateFirstChapter(language: Language, difficulty: Difficulty, voice: Voice, deviceLanguage: Language?, storyPrompt: String?) async throws -> Chapter {
+        try await createStoryServices.generateFirstChapter(language: language,
+                                                           difficulty: difficulty,
+                                                           voice: voice,
+                                                           deviceLanguage: deviceLanguage,
+                                                           storyPrompt: storyPrompt)
+    }
+
     func fetchDefinitions(in sentence: Sentence?, chapter: Chapter, deviceLanguage: Language) async throws -> [Definition] {
         try await definitionServices.fetchDefinitions(in: sentence,
                                                       chapter: chapter,

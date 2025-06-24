@@ -7,4 +7,5 @@
 
 protocol CreateStoryServicesProtocol {
     func generateChapter(previousChapters: [Chapter], deviceLanguage: Language?) async throws -> Chapter
+    func generateFirstChapter(language: Language, difficulty: Difficulty, voice: Voice, deviceLanguage: Language?, storyPrompt: String?) async throws -> Chapter
 }
