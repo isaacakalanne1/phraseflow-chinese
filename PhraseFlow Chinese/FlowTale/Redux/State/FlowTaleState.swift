@@ -22,18 +22,6 @@ struct FlowTaleState {
     var locale: Locale
     var moderationResponse: ModerationResponse?
 
-    func createNewChapter(storyId: UUID = UUID()) -> Chapter {
-        return Chapter(storyId: storyId,
-                       title: "",
-                       sentences: [],
-                       audioVoice: settingsState.voice,
-                       audio: ChapterAudio(data: Data()),
-                       passage: "",
-                       difficulty: settingsState.difficulty,
-                       language: settingsState.language,
-                       storyPrompt: settingsState.storySetting.prompt)
-    }
-
     var deviceLanguage: Language {
         Language.allCases.first(where: { $0.identifier == locale.language.languageCode?.identifier }) ?? .english
     }

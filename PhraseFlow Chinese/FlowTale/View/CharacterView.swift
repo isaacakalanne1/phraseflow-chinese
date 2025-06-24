@@ -68,7 +68,6 @@ struct CharacterView: View {
                     case true:
                         store.dispatch(.translationAction(.selectTranslationWord(word)))
                     case false:
-                        store.dispatch(.storyAction(.updateAutoScrollEnabled(isEnabled: false)))
                         store.dispatch(.storyAction(.selectWord(word, playAudio: true)))
 
                         if let existingDefinition = store.state.definitionState.definition(timestampData: word) {

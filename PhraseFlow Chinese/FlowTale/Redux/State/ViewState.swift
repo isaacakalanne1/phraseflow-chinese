@@ -19,7 +19,6 @@ struct ViewState {
     var isShowingFreeLimitExplanation = false
     var isShowingDailyLimitExplanation = false
 
-    var isAutoscrollEnabled = true
     var isDefining = false
     
     var isWritingChapter = false
@@ -34,7 +33,6 @@ struct ViewState {
     init(definitionViewId: UUID = UUID(),
          isShowingSubscriptionSheet: Bool = false,
          isShowingCustomPromptAlert: Bool = false,
-         isAutoscrollEnabled: Bool = false,
          isDefining: Bool = false,
          isWritingChapter: Bool = false,
          contentTab: ContentTab = .reader,
@@ -44,7 +42,6 @@ struct ViewState {
         self.definitionViewId = definitionViewId
         self.isShowingSubscriptionSheet = isShowingSubscriptionSheet
         self.isShowingCustomPromptAlert = isShowingCustomPromptAlert
-        self.isAutoscrollEnabled = isAutoscrollEnabled
         self.isDefining = isDefining
         self.isWritingChapter = isWritingChapter
         self.contentTab = contentTab

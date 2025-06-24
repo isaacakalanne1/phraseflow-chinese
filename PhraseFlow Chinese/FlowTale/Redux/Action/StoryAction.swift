@@ -32,7 +32,6 @@ enum StoryAction {
     case goToChapter(Int)
 
     case updateCurrentSentence(Sentence)
-    case updateAutoScrollEnabled(isEnabled: Bool)
     case updateLoadingState(LoadingState)
 
     case selectWord(WordTimeStampData, playAudio: Bool)

@@ -145,7 +145,6 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
         case .failedToLoadChapters,
                 .failedToDeleteStory,
                 .failedToSaveChapter,
-                .updateAutoScrollEnabled,
                 .updateCurrentSentence,
                 .onSavedChapter,
                 .setCurrentStory,
