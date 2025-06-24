@@ -10,7 +10,7 @@ import Foundation
 enum AudioAction {
     case playAudio(time: Double?)
     case pauseAudio
-    case playWord(WordTimeStampData, story: Chapter?)
+    case playWord(WordTimeStampData)
     case playSound(AppSound)
     case playMusic(MusicType)
     case musicTrackFinished(MusicType)

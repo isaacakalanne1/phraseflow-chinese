@@ -140,6 +140,8 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             return .snackbarAction(.showSnackBar(.failedToWriteChapter))
         case .onCreatedChapter(let chapter):
             return .definitionAction(.loadInitialSentenceDefinitions(chapter))
+        case .selectWord(let word, let shouldPlay):
+            return shouldPlay ? .audioAction(.playWord(word)) : nil
         case .failedToLoadChapters,
                 .failedToDeleteStory,
                 .failedToSaveChapter,

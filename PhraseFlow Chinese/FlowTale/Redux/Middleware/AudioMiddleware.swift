@@ -41,7 +41,7 @@ let audioMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             }
             return nil
             
-        case .playWord(let word, let chapter):
+        case .playWord(let word):
             await state.audioState.audioPlayer.playAudio(fromSeconds: word.time,
                                                          toSeconds: word.time + word.duration,
                                                          playRate: state.settingsState.speechSpeed.playRate)

@@ -141,6 +141,10 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
         newState.viewState.isAutoscrollEnabled = isEnabled
     case .updateLoadingState(let loadingState):
         newState.viewState.loadingState = loadingState
+    case .selectWord(let word, _):
+        if let currentStoryId = newState.storyState.currentStoryId {
+            newState.storyState.storyChapters[currentStoryId]?[newState.storyState.currentChapterIndex].currentPlaybackTime = word.time
+        }
     case .loadChapters,
             .loadStories,
             .deleteStory,

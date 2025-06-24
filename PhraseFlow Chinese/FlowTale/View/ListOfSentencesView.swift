@@ -18,10 +18,6 @@ struct ListOfSentencesView: View {
         isTranslation ? store.state.translationState.currentSpokenWord : store.state.storyState.currentSpokenWord
     }
 
-    var currentSentence: Sentence? {
-        isTranslation ? store.state.translationState.currentSentence : store.state.storyState.currentSentence
-    }
-
     init(isTranslation: Bool = false) {
         self.isTranslation = isTranslation
     }
@@ -46,8 +42,8 @@ struct ListOfSentencesView: View {
             flowLayout(sentence: chapter.sentences[currentPage], language: chapter.language)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-            paginationControls(totalPages: chapter.sentences.count)
-            
+            paginationControls(totalPages: chapter.sentences.count, chapter: chapter)
+
             if !isTranslation {
                 playbackControls
                 
@@ -76,20 +72,14 @@ struct ListOfSentencesView: View {
             store.dispatch(.snackbarAction(.checkDeviceVolumeZero))
             if let sentence = chapter.sentences.first(where: { $0.timestamps.contains { $0.id == spokenWord?.id }}) {
                 store.dispatch(.storyAction(.updateCurrentSentence(sentence)))
+                let targetPage = sentenceIndex(sentence, in: chapter.sentences)
+                currentPage = targetPage
             }
         }
-        .onChange(of: currentSentence) { oldValue, newValue in
-            let targetPage = sentenceIndex(newValue, in: chapter.sentences)
-            if targetPage != currentPage {
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    currentPage = targetPage
-                }
-            }
-        }
-        .onChange(of: spokenWord) { oldValue, newValue in
-            if let newValue,
-               let sentence = chapter.sentences.first(where: { $0.timestamps.contains { $0.id == newValue.id } }),
-               currentSentence != sentence {
+        .onChange(of: spokenWord) {
+            if let sentence = chapter.sentences.first(where: { $0.timestamps.contains { $0.id == spokenWord?.id } }) {
+                let targetPage = sentenceIndex(sentence, in: chapter.sentences)
+                currentPage = targetPage
                 if !isTranslation {
                     store.dispatch(.storyAction(.updateCurrentSentence(sentence)))
                 }
@@ -105,12 +95,13 @@ struct ListOfSentencesView: View {
     }
     
     @ViewBuilder
-    private func paginationControls(totalPages: Int) -> some View {
+    private func paginationControls(totalPages: Int, chapter: Chapter) -> some View {
         if totalPages > 1 {
             HStack(spacing: 16) {
                 Button {
                     withAnimation(.easeInOut(duration: 0.3)) {
                         currentPage = max(0, currentPage - 1)
+                        updateSelectedSentenceAndWord(chapter: chapter)
                     }
                 } label: {
                     Image(systemName: "chevron.left")
@@ -126,6 +117,7 @@ struct ListOfSentencesView: View {
                 Button {
                     withAnimation(.easeInOut(duration: 0.3)) {
                         currentPage = min(totalPages - 1, currentPage + 1)
+                        updateSelectedSentenceAndWord(chapter: chapter)
                     }
                 } label: {
                     Image(systemName: "chevron.right")
@@ -135,6 +127,14 @@ struct ListOfSentencesView: View {
                 .disabled(currentPage >= totalPages - 1)
             }
             .padding(.vertical, 8)
+        }
+    }
+
+    private func updateSelectedSentenceAndWord(chapter: Chapter) {
+        let sentence = chapter.sentences[currentPage]
+        store.dispatch(.storyAction(.updateCurrentSentence(sentence)))
+        if let timestamp = sentence.timestamps.first {
+            store.dispatch(.storyAction(.selectWord(timestamp, playAudio: false)))
         }
     }
 

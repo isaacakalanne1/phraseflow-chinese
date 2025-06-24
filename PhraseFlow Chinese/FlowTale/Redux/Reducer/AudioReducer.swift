@@ -55,15 +55,9 @@ let audioReducer: Reducer<FlowTaleState, AudioAction> = { state, action in
             newState.storyState.storyChapters[currentStoryId]?[newState.storyState.currentChapterIndex].currentPlaybackTime = newState.audioState.audioPlayer.currentTime().seconds
         }
         
-    case .playWord(let word, _):
-        if let currentStoryId = newState.storyState.currentStoryId {
-            newState.storyState.storyChapters[currentStoryId]?[newState.storyState.currentChapterIndex].currentPlaybackTime = word.time
-        }
-        
-    case .musicTrackFinished:
-        break
-        
-    case .onPlayedAudio:
+    case .playWord,
+            .musicTrackFinished,
+            .onPlayedAudio:
         break
     }
 
