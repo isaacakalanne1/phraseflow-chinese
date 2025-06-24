@@ -39,9 +39,9 @@ struct StoryState {
             }
     }
     
-    func latestChapter(for storyId: UUID) -> Chapter? {
+    func firstChapter(for storyId: UUID) -> Chapter? {
         guard let chapters = storyChapters[storyId] else { return nil }
-        return chapters.max(by: { $0.lastUpdated < $1.lastUpdated })
+        return chapters.min(by: { $0.lastUpdated < $1.lastUpdated })
     }
 
     var currentSpokenWord: WordTimeStampData? {

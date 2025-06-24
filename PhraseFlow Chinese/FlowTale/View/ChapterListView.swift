@@ -11,8 +11,8 @@ struct ChapterListView: View {
     @EnvironmentObject var store: FlowTaleStore
     let storyId: UUID
 
-    private var latestChapter: Chapter? {
-        store.state.storyState.latestChapter(for: storyId)
+    private var firstChapter: Chapter? {
+        store.state.storyState.firstChapter(for: storyId)
     }
     
     private var allChaptersForStory: [Chapter] {
@@ -20,11 +20,11 @@ struct ChapterListView: View {
     }
 
     var body: some View {
-        if let latestChapter = latestChapter {
+        if let firstChapter = firstChapter {
             VStack(spacing: 0) {
                 GeometryReader { proxy in
                     Group {
-                        if let image = latestChapter.coverArt {
+                        if let image = firstChapter.coverArt {
                             Image(uiImage: image)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
@@ -47,21 +47,21 @@ struct ChapterListView: View {
 
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
-                        Text(latestChapter.storyTitle)
+                        Text(firstChapter.storyTitle)
                             .font(.headline)
                             .foregroundColor(FlowTaleColor.primary)
                         
                         Spacer()
                         
                         HStack(spacing: 4) {
-                            DifficultyView(difficulty: latestChapter.difficulty, isSelected: true)
-                            Text(latestChapter.difficulty.title)
+                            DifficultyView(difficulty: firstChapter.difficulty, isSelected: true)
+                            Text(firstChapter.difficulty.title)
                                 .font(.caption)
                                 .foregroundColor(FlowTaleColor.secondary)
                         }
                     }
                     
-                    Text(latestChapter.chapterSummary)
+                    Text(firstChapter.chapterSummary)
                         .font(.subheadline)
                         .foregroundColor(FlowTaleColor.primary.opacity(0.8))
                         .lineLimit(3)

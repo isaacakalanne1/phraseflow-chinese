@@ -11,8 +11,8 @@ struct StoryCardOverlay: View {
     @EnvironmentObject var store: FlowTaleStore
     let storyID: UUID
     
-    private var latestChapter: Chapter? {
-        store.state.storyState.latestChapter(for: storyID)
+    private var firstChapter: Chapter? {
+        store.state.storyState.firstChapter(for: storyID)
     }
     
     private var allChaptersForStory: [Chapter] {
@@ -27,7 +27,7 @@ struct StoryCardOverlay: View {
             // Bottom section with story details
             VStack(alignment: .leading, spacing: 8) {
                 // Story title
-                Text(latestChapter?.storyTitle ?? "")
+                Text(firstChapter?.storyTitle ?? "")
                     .font(.title2.bold())
                     .foregroundColor(FlowTaleColor.primary)
                     .lineLimit(2)
@@ -37,7 +37,7 @@ struct StoryCardOverlay: View {
                 languageAndDifficultyIndicators
 
                 // Story summary
-                Text(latestChapter?.chapterSummary ?? "")
+                Text(firstChapter?.chapterSummary ?? "")
                     .font(.subheadline)
                     .foregroundColor(FlowTaleColor.primary)
                     .lineLimit(2)
@@ -54,10 +54,10 @@ struct StoryCardOverlay: View {
         HStack(spacing: 12) {
             // Language indicator
             HStack(spacing: 6) {
-                Text(latestChapter?.language.flagEmoji ?? "")
+                Text(firstChapter?.language.flagEmoji ?? "")
                     .font(.title3)
 
-                Text(latestChapter?.language.descriptiveEnglishName ?? "")
+                Text(firstChapter?.language.descriptiveEnglishName ?? "")
                     .font(.caption.weight(.medium))
                     .foregroundColor(FlowTaleColor.primary)
             }
@@ -71,9 +71,9 @@ struct StoryCardOverlay: View {
             
             // Difficulty indicator
             HStack(spacing: 8) {
-                DifficultyView(difficulty: latestChapter?.difficulty ?? .beginner, isSelected: true)
+                DifficultyView(difficulty: firstChapter?.difficulty ?? .beginner, isSelected: true)
 
-                Text(latestChapter?.difficulty.title ?? "")
+                Text(firstChapter?.difficulty.title ?? "")
                     .font(.caption.weight(.medium))
                     .foregroundColor(FlowTaleColor.primary)
                     .tracking(0.5)

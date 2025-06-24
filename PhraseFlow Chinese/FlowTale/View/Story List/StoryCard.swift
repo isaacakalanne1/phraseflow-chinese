@@ -11,8 +11,8 @@ struct StoryCard: View {
     @EnvironmentObject var store: FlowTaleStore
     let storyID: UUID
 
-    private var latestChapter: Chapter? {
-        store.state.storyState.latestChapter(for: storyID)
+    private var firstChapter: Chapter? {
+        store.state.storyState.firstChapter(for: storyID)
     }
 
     var body: some View {
@@ -40,7 +40,7 @@ struct StoryCard: View {
     
     private var backgroundImage: some View {
         Group {
-            if let image = latestChapter?.coverArt {
+            if let image = firstChapter?.coverArt {
                 Image(uiImage: image)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
