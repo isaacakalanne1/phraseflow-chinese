@@ -20,6 +20,12 @@ protocol FlowTaleEnvironmentProtocol {
     func generateChapter(previousChapters: [Chapter],
                          deviceLanguage: Language?,
                          currentSubscription: SubscriptionLevel?) async throws -> Chapter
+    func generateFirstChapter(language: Language,
+                              difficulty: Difficulty,
+                              voice: Voice,
+                              deviceLanguage: Language?,
+                              storyPrompt: String?,
+                              currentSubscription: SubscriptionLevel?) async throws -> Chapter
 
     func loadDefinitions() throws -> [Definition]
     func saveDefinitions(_ definitions: [Definition]) throws

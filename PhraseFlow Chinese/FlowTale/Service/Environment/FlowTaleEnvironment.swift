@@ -85,6 +85,44 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         return processedChapter
     }
 
+    func generateFirstChapter(language: Language,
+                              difficulty: Difficulty,
+                              voice: Voice,
+                              deviceLanguage: Language?,
+                              storyPrompt: String?,
+                              currentSubscription: SubscriptionLevel?) async throws -> Chapter {
+        loadingSubject.send(.writing)
+
+        var newChapter = try await service.generateFirstChapter(language: language,
+                                                               difficulty: difficulty,
+                                                               voice: voice,
+                                                               deviceLanguage: deviceLanguage,
+                                                               storyPrompt: storyPrompt)
+        loadingSubject.send(.generatingImage)
+
+        if newChapter.imageData == nil,
+           !newChapter.passage.isEmpty {
+            newChapter.imageData = try await service.generateImage(with: newChapter.passage)
+        }
+        loadingSubject.send(.generatingSpeech)
+
+        let voiceToUse = newChapter.audioVoice
+        let (processedChapter, ssmlCharacterCount) = try await synthesizeSpeechWithCharacterCount(
+            newChapter,
+            voice: voiceToUse,
+            language: newChapter.language
+        )
+
+        try trackSSMLCharacterUsage(
+            characterCount: ssmlCharacterCount,
+            subscription: currentSubscription
+        )
+
+        chapterSubject.send(processedChapter)
+        loadingSubject.send(.complete)
+        return processedChapter
+    }
+
     // MARK: Chapters
 
     func saveChapter(_ chapter: Chapter) throws {

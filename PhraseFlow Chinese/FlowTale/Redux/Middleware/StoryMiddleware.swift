@@ -14,19 +14,32 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
     case .storyAction(let storyAction):
         switch storyAction {
         case .createChapter(let type):
-            var previousChapters: [Chapter] = []
             do {
-                var chapter: Chapter
-                if case .existingStory(let storyId) = type,
-                   let existingChapters = state.storyState.storyChapters[storyId] {
-                    previousChapters = existingChapters
-                } else {
-                    previousChapters = [state.createNewChapter()]
-                }
+                let chapter: Chapter
 
-                chapter = try await environment.generateChapter(previousChapters: previousChapters,
-                                                               deviceLanguage: state.deviceLanguage,
-                                                                currentSubscription: state.subscriptionState.currentSubscription)
+                switch type {
+                case .newStory:
+                    chapter = try await environment.generateFirstChapter(
+                        language: state.settingsState.language,
+                        difficulty: state.settingsState.difficulty,
+                        voice: state.settingsState.voice,
+                        deviceLanguage: state.deviceLanguage,
+                        storyPrompt: state.settingsState.storySetting.prompt,
+                        currentSubscription: state.subscriptionState.currentSubscription
+                    )
+                    
+                case .existingStory(let storyId):
+                    if let existingChapters = state.storyState.storyChapters[storyId] {
+                        chapter = try await environment.generateChapter(
+                            previousChapters: existingChapters,
+                            deviceLanguage: state.deviceLanguage,
+                            currentSubscription: state.subscriptionState.currentSubscription
+                        )
+                    } else {
+                        throw FlowTaleServicesError.failedToGetResponseData
+                    }
+
+                }
                 
                 return .storyAction(.onCreatedChapter(chapter))
             } catch FlowTaleDataStoreError.freeUserCharacterLimitReached {
