@@ -49,12 +49,25 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
                 return .definitionAction(.failedToDeleteDefinition)
             }
 
-        case .showDefinition(let definition, let shouldPlay):
+        case .showDefinition(var definition, let shouldPlay):
+            definition.hasBeenSeen = true
+            definition.creationDate = .now
+            if definition.audioData == nil,
+               let extractedAudio = AudioExtractor.shared.extractAudioSegment(
+                   from: state.audioState.audioPlayer,
+                   startTime: definition.timestampData.time,
+                   duration: definition.timestampData.duration
+               ) {
+                definition.audioData = extractedAudio
+            }
+            return .definitionAction(.onShownDefinition(definition, shouldPlay: shouldPlay))
+        case .onShownDefinition(let definition, let shouldPlay):
+            try? environment.saveDefinitions([definition])
             return shouldPlay ? .audioAction(.playWord(definition.timestampData)) : nil
         case .updateStudiedWord:
             return nil
         case .onLoadedAllDefinitions(let definitions):
-            return .definitionAction(.refreshDefinitionView)
+            return nil
 
         case .failedToLoadDefinitions,
              .failedToDeleteDefinition,

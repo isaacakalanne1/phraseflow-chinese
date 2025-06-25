@@ -28,6 +28,7 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
         encoder.dateEncodingStrategy = .iso8601
         decoder.dateDecodingStrategy = .iso8601
         createDefinitionsDirectory()
+        scheduleWrite()
     }
     
     private func createDefinitionsDirectory() {
@@ -99,18 +100,12 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
     }
 
     private func scheduleWrite() {
-        writeWorkItem?.cancel()
-        writeWorkItem = DispatchWorkItem { [weak self] in
-            self?.flushPendingWrites()
-        }
-        if let workItem = writeWorkItem {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: workItem)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.flushPendingWrites()
         }
     }
     
     private func flushPendingWrites() {
-        guard !pendingWrites.isEmpty else { return }
-
         print("Saving \(pendingWrites.count) definitions")
         for (id, definition) in pendingWrites {
             guard let fileURL = definitionFileURL(for: id),
@@ -119,6 +114,7 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
         }
         
         pendingWrites.removeAll()
+        scheduleWrite()
     }
 
     func loadDefinitions() throws -> [Definition] {
@@ -143,7 +139,6 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
             pendingWrites[definition.id] = definition
         }
         print("Scheduling write for \(definitions.count) definitions")
-        scheduleWrite()
     }
 
     func deleteDefinition(with id: UUID) throws {

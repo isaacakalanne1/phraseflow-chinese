@@ -13,22 +13,13 @@ let definitionReducer: Reducer<FlowTaleState, DefinitionAction> = { state, actio
 
     switch action {
         
-    case .showDefinition(var definition, _):
-        definition.hasBeenSeen = true
-        definition.creationDate = .now
-        if definition.audioData == nil,
-           let extractedAudio = AudioExtractor.shared.extractAudioSegment(
-               from: state.audioState.audioPlayer,
-               startTime: definition.timestampData.time,
-               duration: definition.timestampData.duration
-           ) {
-            definition.audioData = extractedAudio
-        }
-
+    case .onShownDefinition(var definition, _):
         newState.definitionState.currentDefinition = definition
         newState.definitionState.definitions.removeAll(where: { $0.id == definition.id })
         newState.definitionState.definitions.append(definition)
         newState.viewState.isDefining = false
+    case .showDefinition:
+        break
 
     case .defineSentence(let index, let definitions):
         newState.viewState.loadingState = .complete

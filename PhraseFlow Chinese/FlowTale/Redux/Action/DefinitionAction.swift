@@ -14,7 +14,8 @@ enum DefinitionAction {
     case failedToLoadDefinitions
 
     case showDefinition(Definition, shouldPlay: Bool)
-    
+    case onShownDefinition(Definition, shouldPlay: Bool)
+
     case deleteDefinition(Definition)
     case failedToDeleteDefinition
     
