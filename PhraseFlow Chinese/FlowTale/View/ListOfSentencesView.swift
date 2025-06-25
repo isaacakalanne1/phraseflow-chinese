@@ -31,8 +31,19 @@ struct ListOfSentencesView: View {
     }
 
     var body: some View {
-        if let chapter = store.state.storyState.currentChapter {
-            paginatedView(chapter: chapter)
+        let chapter: Chapter?
+        switch isTranslation {
+        case true:
+            chapter = store.state.translationState.chapter
+        case false:
+            chapter = store.state.storyState.currentChapter
+        }
+        return Group {
+            if let chapter {
+                paginatedView(chapter: chapter)
+            } else {
+                EmptyView()
+            }
         }
     }
 
