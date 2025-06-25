@@ -136,7 +136,7 @@ struct ChapterListView: View {
                 store.dispatch(.audioAction(.playSound(.openStory)))
 
                 if allChaptersForStory.isEmpty {
-                    store.dispatch(.storyAction(.loadChapters(storyId, isAppLaunch: false)))
+                    store.dispatch(.storyAction(.loadChapters(storyId)))
                 }
             }
         } else {

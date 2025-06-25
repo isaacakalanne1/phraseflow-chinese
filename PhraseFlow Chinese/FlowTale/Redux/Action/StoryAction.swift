@@ -12,9 +12,9 @@ enum StoryAction {
     case onCreatedChapter(Chapter)
     case failedToCreateChapter
 
-    case loadChapters(UUID, isAppLaunch: Bool)
-    case loadStories(isAppLaunch: Bool)
-    case onLoadedChapters([Chapter], isAppLaunch: Bool)
+    case loadChapters(UUID)
+    case loadStories
+    case onLoadedChapters([Chapter])
     case onFinishedLoadedChapters
     case failedToLoadChapters
 
@@ -35,4 +35,5 @@ enum StoryAction {
     case updateLoadingState(LoadingState)
 
     case selectWord(WordTimeStampData, playAudio: Bool)
+    case setPlaybackTime(Double)
 }

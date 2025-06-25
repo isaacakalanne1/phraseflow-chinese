@@ -13,7 +13,7 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
     var newState = state
 
     switch action {
-    case .onLoadedChapters(let chapters, let isAppLaunch):
+    case .onLoadedChapters(let chapters):
         for chapter in chapters {
             if newState.storyState.storyChapters[chapter.storyId] == nil {
                 newState.storyState.storyChapters[chapter.storyId] = []
@@ -53,7 +53,11 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
             }
         }
         newState.viewState.loadingState = .writing
-        
+
+    case .setPlaybackTime(let time):
+        guard let currentStoryId = newState.storyState.currentStoryId else { break }
+        newState.storyState.storyChapters[currentStoryId]?[newState.storyState.currentChapterIndex].currentPlaybackTime = time
+
     case .onCreatedChapter(var chapter):
         newState.definitionState.currentDefinition = nil
 

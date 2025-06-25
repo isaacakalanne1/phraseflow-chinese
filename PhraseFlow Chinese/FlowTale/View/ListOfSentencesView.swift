@@ -144,7 +144,7 @@ struct ListOfSentencesView: View {
         let sentence = chapter.sentences[currentPage]
         store.dispatch(.storyAction(.updateCurrentSentence(sentence)))
         if let timestamp = sentence.timestamps.first {
-            store.dispatch(.storyAction(.selectWord(timestamp, playAudio: false)))
+            store.dispatch(.storyAction(.setPlaybackTime(timestamp.time)))
         }
     }
 

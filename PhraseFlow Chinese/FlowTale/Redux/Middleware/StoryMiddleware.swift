@@ -50,20 +50,20 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
                 return nil
             }
 
-        case .loadChapters(let storyId, let isAppLaunch):
+        case .loadChapters(let storyId):
             do {
                 // Load chapters for a specific story
                 let chapters = try environment.loadAllChapters(for: storyId)
-                return .storyAction(.onLoadedChapters(chapters, isAppLaunch: isAppLaunch))
+                return .storyAction(.onLoadedChapters(chapters))
             } catch {
                 return .storyAction(.failedToLoadChapters)
             }
         
-        case .loadStories(let isAppLaunch):
+        case .loadStories:
             do {
                 // Load all chapters directly
                 let chapters = try environment.loadAllChapters()
-                return .storyAction(.onLoadedChapters(chapters, isAppLaunch: isAppLaunch))
+                return .storyAction(.onLoadedChapters(chapters))
             } catch {
                 return .storyAction(.failedToLoadChapters)
             }
@@ -131,7 +131,7 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             }
             return .navigationAction(.selectTab(.reader, shouldPlaySound: false))
 
-        case .onLoadedChapters(let chapters, let isAppLaunch):
+        case .onLoadedChapters(let chapters):
             return .storyAction(.onFinishedLoadedChapters)
 
         case .failedToCreateChapter:
@@ -150,6 +150,7 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
                 .onSavedChapter,
                 .setCurrentStory,
                 .onDeletedStory,
+                .setPlaybackTime,
                 .updateLoadingState:
             return nil
         }
