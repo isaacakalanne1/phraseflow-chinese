@@ -13,7 +13,7 @@ let definitionReducer: Reducer<FlowTaleState, DefinitionAction> = { state, actio
 
     switch action {
         
-    case .showDefinition(var definition):
+    case .showDefinition(var definition, _):
         definition.hasBeenSeen = true
         definition.creationDate = .now
         if definition.audioData == nil,
