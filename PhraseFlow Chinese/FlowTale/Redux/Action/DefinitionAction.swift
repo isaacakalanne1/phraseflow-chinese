@@ -8,17 +8,12 @@
 import Foundation
 
 enum DefinitionAction {
-    case loadDefinitions
-    case loadInitialSentenceDefinitions(Chapter)
-    case onLoadedInitialDefinitions([Definition])
-    case loadRemainingDefinitions(sentenceIndex: Int, previousDefinitions: [Definition])
-    case onLoadedDefinitions([Definition])
+    case loadAllDefinitions
+    case defineSentence(sentenceIndex: Int, previousDefinitions: [Definition])
+    case onLoadedAllDefinitions([Definition])
     case failedToLoadDefinitions
 
-
-    case onDefinedCharacter(Definition)
-    case saveDefinitions
-    case failedToSaveDefinitions
+    case showDefinition(Definition, shouldPlay: Bool)
     
     case deleteDefinition(Definition)
     case failedToDeleteDefinition

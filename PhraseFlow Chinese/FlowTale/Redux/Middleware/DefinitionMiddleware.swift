@@ -12,66 +12,33 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
     switch action {
     case .definitionAction(let definitionAction):
         switch definitionAction {
-        case .loadDefinitions:
+        case .loadAllDefinitions:
             do {
                 let definitions = try environment.loadDefinitions()
-                return .definitionAction(.onLoadedDefinitions(definitions))
+                return .definitionAction(.onLoadedAllDefinitions(definitions))
             } catch {
                 return .definitionAction(.failedToLoadDefinitions)
             }
-            
-        case .loadInitialSentenceDefinitions(let chapter):
-            do {
-                var allDefinitions: [Definition] = []
-                
-                for sentence in Array(chapter.sentences.prefix(3)) {
-                    allDefinitions.append(contentsOf:
-                                            try await environment.fetchDefinitions(
-                                                in: sentence,
-                                                chapter: chapter,
-                                                deviceLanguage: state.deviceLanguage
-                                            )
-                    )
-                }
-                try environment.saveDefinitions(allDefinitions)
 
-                return .definitionAction(.onLoadedInitialDefinitions(allDefinitions))
-            } catch {
-                return .snackbarAction(.showSnackBar(.chapterReady))
-            }
-
-
-        case .onLoadedInitialDefinitions(let definitions):
-            return .definitionAction(.loadRemainingDefinitions(sentenceIndex: state.definitionState.numberOfInitialSentencesToDefine,
-                                                               previousDefinitions: definitions))
-
-        case .loadRemainingDefinitions(let sentenceIndex, _):
+        case .defineSentence(let index, _):
             do {
                 guard let chapter = state.storyState.currentChapter,
-                      sentenceIndex < chapter.sentences.count else {
+                      index < chapter.sentences.count else {
                     return nil
                 }
                 
                 let definitions = try await environment.fetchDefinitions(
-                    in: chapter.sentences[sentenceIndex],
+                    in: chapter.sentences[index],
                     chapter: chapter,
                     deviceLanguage: state.deviceLanguage
                 )
 
                 try environment.saveDefinitions(definitions)
 
-                return .definitionAction(.loadRemainingDefinitions(sentenceIndex: sentenceIndex + 1,
-                                                                   previousDefinitions: definitions))
+                return .definitionAction(.defineSentence(sentenceIndex: index + 1,
+                                                         previousDefinitions: definitions))
             } catch {
                 return .definitionAction(.failedToLoadDefinitions)
-            }
-
-        case .saveDefinitions:
-            do {
-                try environment.saveDefinitions(state.definitionState.definitions)
-                return nil
-            } catch {
-                return .definitionAction(.failedToSaveDefinitions)
             }
 
         case .deleteDefinition(let definition):
@@ -82,15 +49,14 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
                 return .definitionAction(.failedToDeleteDefinition)
             }
 
-        case .onDefinedCharacter:
-            return nil
+        case .showDefinition(let definition, let shouldPlay):
+            return shouldPlay ? .audioAction(.playWord(definition.timestampData)) : nil
         case .updateStudiedWord:
             return nil
-        case .onLoadedDefinitions(let definitions):
+        case .onLoadedAllDefinitions(let definitions):
             return .definitionAction(.refreshDefinitionView)
 
         case .failedToLoadDefinitions,
-             .failedToSaveDefinitions,
              .failedToDeleteDefinition,
              .clearCurrentDefinition,
              .refreshDefinitionView:

@@ -35,7 +35,7 @@ struct FlowTaleApp: App {
                     store.dispatch(.appSettingsAction(.loadAppSettings))
                     store.dispatch(.storyAction(.loadStories(isAppLaunch: true)))
                     store.dispatch(.subscriptionAction(.fetchSubscriptions))
-                    store.dispatch(.definitionAction(.loadDefinitions))
+                    store.dispatch(.definitionAction(.loadAllDefinitions))
                     store.dispatch(.subscriptionAction(.getCurrentEntitlements))
                     store.dispatch(.subscriptionAction(.observeTransactionUpdates))
                     store.dispatch(.userLimitAction(.checkFreeTrialLimit))

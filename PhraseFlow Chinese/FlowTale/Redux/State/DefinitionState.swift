@@ -12,7 +12,7 @@ struct DefinitionState {
     var definitions: [Definition]
 
     var numberOfInitialSentencesToDefine: Int {
-        3
+        0
     }
 
     func studyDefinitions(language: Language?) -> [Definition] {

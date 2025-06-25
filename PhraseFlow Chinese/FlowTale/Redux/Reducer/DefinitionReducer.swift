@@ -13,7 +13,7 @@ let definitionReducer: Reducer<FlowTaleState, DefinitionAction> = { state, actio
 
     switch action {
         
-    case .onDefinedCharacter(var definition):
+    case .showDefinition(var definition):
         definition.hasBeenSeen = true
         definition.creationDate = .now
         if definition.audioData == nil,
@@ -29,17 +29,15 @@ let definitionReducer: Reducer<FlowTaleState, DefinitionAction> = { state, actio
         newState.definitionState.definitions.removeAll(where: { $0.id == definition.id })
         newState.definitionState.definitions.append(definition)
         newState.viewState.isDefining = false
-    case .onLoadedInitialDefinitions(let definitions):
-        print("Loading \(definitions.count) initial definitions")
-        newState.definitionState.definitions.addDefinitions(definitions)
-        
-        newState.viewState.loadingState = .complete
-        newState.viewState.isWritingChapter = false
 
-    case .loadRemainingDefinitions(_, let definitions):
-        newState.definitionState.definitions.append(contentsOf: definitions)
-        
-    case .onLoadedDefinitions(let definitions):
+    case .defineSentence(let index, let definitions):
+        newState.viewState.loadingState = .complete
+        if index >= 1 {
+            newState.viewState.isWritingChapter = false
+        }
+        newState.definitionState.definitions.addDefinitions(definitions)
+
+    case .onLoadedAllDefinitions(let definitions):
         print("Loading \(definitions.count) definitions")
         print("Definitions with hasBeenSeen=true: \(definitions.filter { $0.hasBeenSeen }.count)")
 
@@ -63,11 +61,8 @@ let definitionReducer: Reducer<FlowTaleState, DefinitionAction> = { state, actio
     case .clearCurrentDefinition:
         newState.definitionState.currentDefinition = nil
 
-    case .loadDefinitions,
-         .loadInitialSentenceDefinitions,
-         .saveDefinitions,
+    case .loadAllDefinitions,
          .failedToLoadDefinitions,
-         .failedToSaveDefinitions,
          .failedToDeleteDefinition:
         break
     }

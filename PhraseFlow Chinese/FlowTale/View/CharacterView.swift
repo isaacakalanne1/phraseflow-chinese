@@ -61,18 +61,11 @@ struct CharacterView: View {
         .simultaneousGesture(
             DragGesture(minimumDistance: 0)
                 .onChanged { isTapped in
-                    guard definition == nil else {
-                        return
-                    }
                     switch isTranslation {
                     case true:
                         store.dispatch(.translationAction(.selectTranslationWord(word)))
                     case false:
                         store.dispatch(.storyAction(.selectWord(word, playAudio: true)))
-
-                        if let existingDefinition = store.state.definitionState.definition(timestampData: word) {
-                            store.dispatch(.definitionAction(.onDefinedCharacter(existingDefinition)))
-                        }
                     }
                 }
                 .onEnded { _ in

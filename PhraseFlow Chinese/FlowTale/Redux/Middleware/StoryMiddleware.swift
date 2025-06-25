@@ -126,7 +126,7 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
                 }
                 
                 if let sentenceIndex = firstMissingSentenceIndex {
-                    return .definitionAction(.loadRemainingDefinitions(sentenceIndex: sentenceIndex, previousDefinitions: []))
+                    return .definitionAction(.defineSentence(sentenceIndex: sentenceIndex, previousDefinitions: []))
                 }
             }
             return .navigationAction(.selectTab(.reader, shouldPlaySound: false))
@@ -137,8 +137,11 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
         case .failedToCreateChapter:
             return .snackbarAction(.showSnackBar(.failedToWriteChapter))
         case .onCreatedChapter(let chapter):
-            return .definitionAction(.loadInitialSentenceDefinitions(chapter))
+            return .definitionAction(.defineSentence(sentenceIndex: 0, previousDefinitions: []))
         case .selectWord(let word, let shouldPlay):
+            if let definition = state.definitionState.definition(timestampData: word) {
+                return .definitionAction(.showDefinition(definition, shouldPlay: shouldPlay))
+            }
             return shouldPlay ? .audioAction(.playWord(word)) : nil
         case .failedToLoadChapters,
                 .failedToDeleteStory,

@@ -31,7 +31,7 @@ let navigationMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
                 }
                 
                 if let sentenceIndex = firstMissingSentenceIndex {
-                    return .definitionAction(.loadRemainingDefinitions(sentenceIndex: sentenceIndex, previousDefinitions: []))
+                    return .definitionAction(.defineSentence(sentenceIndex: sentenceIndex, previousDefinitions: []))
                 }
             }
             return .navigationAction(.selectTab(.reader, shouldPlaySound: false))
