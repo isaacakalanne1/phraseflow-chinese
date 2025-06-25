@@ -15,7 +15,6 @@ struct CreateStoryButton: View {
             let hasExistingStories = !store.state.storyState.allStories.isEmpty
 
             if hasExistingStories {
-                store.dispatch(.snackbarAction(.showSnackBar(.writingChapter)))
                 store.dispatch(.storyAction(.createChapter(.newStory)))
             } else {
                 store.dispatch(.audioAction(.playSound(.largeBoom)))

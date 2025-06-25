@@ -73,8 +73,11 @@ struct ContentView: View {
             store.dispatch(.userLimitAction(.showFreeLimitExplanationScreen(isShowing: newValue)))
         }
 
-        ZStack(alignment: .topTrailing) {
-            switch store.state.viewState.contentTab {
+        VStack(spacing: 0) {
+            LoadingProgressBar()
+            
+            ZStack(alignment: .topTrailing) {
+                switch store.state.viewState.contentTab {
             case .reader:
                 if store.state.storyState.allStories.isEmpty {
                     NavigationStack {
@@ -133,8 +136,9 @@ struct ContentView: View {
                 NavigationStack {
                     SettingsView()
                 }
+                }
+                snackbarView()
             }
-            snackbarView()
         }
     }
 

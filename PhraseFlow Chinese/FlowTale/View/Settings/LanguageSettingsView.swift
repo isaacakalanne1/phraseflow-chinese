@@ -8,15 +8,26 @@
 import SwiftUI
 
 struct LanguageOnboardingView: View {
+    @EnvironmentObject var store: FlowTaleStore
+    
     var body: some View {
-        VStack(spacing: 0) {
-            LanguageMenu()
+        ZStack {
+            VStack(spacing: 0) {
+                LanguageMenu()
 
-            CreateStoryButton()
-                .padding(.horizontal)
-                .padding(.bottom)
+                CreateStoryButton()
+                    .padding(.horizontal)
+                    .padding(.bottom)
+            }
+            .background(FlowTaleColor.background)
+            .opacity(store.state.viewState.isWritingChapter ? 0.3 : 1.0)
+            .disabled(store.state.viewState.isWritingChapter)
+            
+            if store.state.viewState.isWritingChapter {
+                LoadingProgressBar(isCentered: true)
+                    .background(FlowTaleColor.background.opacity(0.9))
+            }
         }
-        .background(FlowTaleColor.background)
     }
 }
 

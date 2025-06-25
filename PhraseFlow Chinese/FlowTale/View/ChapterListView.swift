@@ -106,7 +106,6 @@ struct ChapterListView: View {
                         },
                         title: LocalizedString.newChapter
                     ) {
-                        store.dispatch(.snackbarAction(.showSnackBar(.writingChapter)))
                         store.dispatch(.storyAction(.createChapter(.existingStory(storyId))))
                     }
                     .disabled(store.state.viewState.isWritingChapter)

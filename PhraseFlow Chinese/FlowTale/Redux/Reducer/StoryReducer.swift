@@ -75,8 +75,6 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
         let player = chapter.audio.data.createAVPlayer()
         newState.audioState.audioPlayer = player ?? AVPlayer()
 
-        newState.snackBarState.type = .chapterReady
-        newState.snackBarState.isShowing = true
         
     case .onDeletedStory(let storyId):
         newState.storyState.storyChapters.removeValue(forKey: storyId)

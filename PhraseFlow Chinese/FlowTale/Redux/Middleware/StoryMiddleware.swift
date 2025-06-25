@@ -131,9 +131,6 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             }
             return .navigationAction(.selectTab(.reader, shouldPlaySound: false))
 
-        case .onDeletedStory:
-            return nil
-
         case .onLoadedChapters(let chapters, let isAppLaunch):
             return .storyAction(.onFinishedLoadedChapters)
 
@@ -149,6 +146,7 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
                 .updateCurrentSentence,
                 .onSavedChapter,
                 .setCurrentStory,
+                .onDeletedStory,
                 .updateLoadingState:
             return nil
         }
