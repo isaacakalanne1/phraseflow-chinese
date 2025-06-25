@@ -42,10 +42,8 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
             newState.sourceLanguage = tempTarget
         }
         
-    case .translateText:
-        newState.isTranslating = true
-        
-    case .breakdownText:
+    case .translateText,
+            .breakdownText:
         newState.isTranslating = true
         
     case .translationInProgress(let isInProgress):
@@ -56,10 +54,8 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         newState.audioPlayer = player ?? AVPlayer()
         newState.isTranslating = false
         
-    case .failedToTranslate:
-        newState.isTranslating = false
-        
-    case .failedToBreakdown:
+    case .failedToTranslate,
+            .failedToBreakdown:
         newState.isTranslating = false
         
     case .playTranslationAudio:
@@ -96,17 +92,8 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
             newState.currentSentence = sentence
         }
         
-    case .defineTranslationWord:
-        break
-        
-    case .translationDefiningInProgress:
-        break
-        
     case .onDefinedTranslationWord(let definition):
         newState.currentDefinition = definition
-        
-    case .failedToDefineTranslationWord:
-        break
         
     case .clearTranslationDefinition:
         newState.currentDefinition = nil
@@ -123,6 +110,9 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         // Don't reset source language as it should persist between translations
     case .playTranslationWord,
             .synthesizeAudio,
+            .defineTranslationWord,
+            .translationDefiningInProgress,
+            .failedToDefineTranslationWord,
             .failedToSynthesizeAudio:
         break
     }
