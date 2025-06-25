@@ -81,6 +81,7 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
                 return .storyAction(.failedToDeleteStory)
             }
 
+
         case .saveChapter(let chapter):
             do {
                 try environment.saveChapter(chapter)
@@ -131,7 +132,7 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             return .navigationAction(.selectTab(.reader, shouldPlaySound: false))
 
         case .onDeletedStory:
-            return .storyAction(.loadStories(isAppLaunch: false))
+            return nil
 
         case .onLoadedChapters(let chapters, let isAppLaunch):
             return .storyAction(.onFinishedLoadedChapters)
