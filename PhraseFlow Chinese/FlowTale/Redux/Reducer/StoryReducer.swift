@@ -13,7 +13,8 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
     var newState = state
 
     switch action {
-    case .onLoadedChapters(let chapters):
+    case .onLoadedStoriesAndDefitions(let chapters, let definitions):
+        newState.definitionState.definitions = definitions
         for chapter in chapters {
             if newState.storyState.storyChapters[chapter.storyId] == nil {
                 newState.storyState.storyChapters[chapter.storyId] = []
@@ -27,7 +28,7 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
         }
         
         newState.viewState.isInitialisingApp = false
-        
+
         // Set current story if none is set
         if newState.storyState.currentStoryId == nil {
             newState.storyState.currentStoryId = newState.storyState.allStories.first?.storyId
@@ -133,7 +134,7 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
         let player = data?.createAVPlayer()
         newState.audioState.audioPlayer = player ?? AVPlayer()
         
-    case .failedToLoadChapters:
+    case .failedToLoadStoriesAndDefinitions:
         newState.viewState.isInitialisingApp = false
     case .failedToCreateChapter:
         newState.viewState.isWritingChapter = false
@@ -145,11 +146,9 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
         if let currentStoryId = newState.storyState.currentStoryId {
             newState.storyState.storyChapters[currentStoryId]?[newState.storyState.currentChapterIndex].currentPlaybackTime = word.time
         }
-    case .loadChapters,
-            .loadStories,
+    case .loadStoriesAndDefinitions,
             .deleteStory,
             .saveChapter,
-            .onFinishedLoadedChapters,
             .failedToDeleteStory,
             .failedToSaveChapter:
         break

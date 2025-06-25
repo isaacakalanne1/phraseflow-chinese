@@ -27,12 +27,6 @@ let definitionReducer: Reducer<FlowTaleState, DefinitionAction> = { state, actio
             newState.viewState.isWritingChapter = false
         }
         newState.definitionState.definitions.addDefinitions(definitions)
-
-    case .onLoadedAllDefinitions(let definitions):
-        print("Loading \(definitions.count) definitions")
-        print("Definitions with hasBeenSeen=true: \(definitions.filter { $0.hasBeenSeen }.count)")
-
-        newState.definitionState.definitions.addDefinitions(definitions)
         
     case .deleteDefinition(let definition):
         newState.definitionState.definitions.removeAll(where: { $0.id == definition.id })
@@ -52,8 +46,7 @@ let definitionReducer: Reducer<FlowTaleState, DefinitionAction> = { state, actio
     case .clearCurrentDefinition:
         newState.definitionState.currentDefinition = nil
 
-    case .loadAllDefinitions,
-         .failedToLoadDefinitions,
+    case .failedToLoadDefinitions,
          .failedToDeleteDefinition:
         break
     }

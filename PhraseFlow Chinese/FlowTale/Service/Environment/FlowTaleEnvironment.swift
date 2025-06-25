@@ -147,10 +147,6 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         try dataStore.deleteChapter(chapter)
     }
 
-    func loadAllChapters(for storyId: UUID) throws -> [Chapter] {
-        try dataStore.loadAllChapters(for: storyId)
-    }
-
     func saveAppSettings(_ settings: SettingsState) throws {
         try dataStore.saveAppSettings(settings)
     }

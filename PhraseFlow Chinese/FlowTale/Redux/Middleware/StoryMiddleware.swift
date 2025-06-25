@@ -49,24 +49,37 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             } catch {
                 return nil
             }
-
-        case .loadChapters(let storyId):
-            do {
-                // Load chapters for a specific story
-                let chapters = try environment.loadAllChapters(for: storyId)
-                return .storyAction(.onLoadedChapters(chapters))
-            } catch {
-                return .storyAction(.failedToLoadChapters)
-            }
         
-        case .loadStories:
+        case .loadStoriesAndDefinitions:
             do {
                 // Load all chapters directly
                 let chapters = try environment.loadAllChapters()
-                return .storyAction(.onLoadedChapters(chapters))
+                let definitions = try environment.loadDefinitions()
+                return .storyAction(.onLoadedStoriesAndDefitions(chapters, definitions))
             } catch {
-                return .storyAction(.failedToLoadChapters)
+                return .storyAction(.failedToLoadStoriesAndDefinitions)
             }
+        case .onLoadedStoriesAndDefitions(let chapters, let definitions):
+            if let currentChapter = state.storyState.currentChapter {
+                let existingDefinitions = state.definitionState.definitions
+                var firstMissingSentenceIndex: Int?
+
+                for (sentenceIndex, sentence) in currentChapter.sentences.enumerated() {
+                    let sentenceHasDefinitions = sentence.timestamps.allSatisfy { timestamp in
+                        existingDefinitions.contains { $0.timestampData == timestamp }
+                    }
+
+                    if !sentenceHasDefinitions {
+                        firstMissingSentenceIndex = sentenceIndex
+                        break
+                    }
+                }
+
+                if let sentenceIndex = firstMissingSentenceIndex {
+                    return .definitionAction(.defineSentence(sentenceIndex: sentenceIndex, previousDefinitions: []))
+                }
+            }
+            return .navigationAction(.selectTab(.reader, shouldPlaySound: false))
 
         case .deleteStory(let storyId):
             do {
@@ -109,41 +122,17 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             }
             return nil
 
-        case .onFinishedLoadedChapters:
-            if let currentChapter = state.storyState.currentChapter {
-                let existingDefinitions = state.definitionState.definitions
-                var firstMissingSentenceIndex: Int?
-                
-                for (sentenceIndex, sentence) in currentChapter.sentences.enumerated() {
-                    let sentenceHasDefinitions = sentence.timestamps.allSatisfy { timestamp in
-                        existingDefinitions.contains { $0.timestampData == timestamp }
-                    }
-                    
-                    if !sentenceHasDefinitions {
-                        firstMissingSentenceIndex = sentenceIndex
-                        break
-                    }
-                }
-                
-                if let sentenceIndex = firstMissingSentenceIndex {
-                    return .definitionAction(.defineSentence(sentenceIndex: sentenceIndex, previousDefinitions: []))
-                }
-            }
-            return .navigationAction(.selectTab(.reader, shouldPlaySound: false))
-
-        case .onLoadedChapters(let chapters):
-            return .storyAction(.onFinishedLoadedChapters)
-
         case .failedToCreateChapter:
             return .snackbarAction(.showSnackBar(.failedToWriteChapter))
         case .onCreatedChapter(let chapter):
+            try? environment.saveChapter(chapter)
             return .definitionAction(.defineSentence(sentenceIndex: 0, previousDefinitions: []))
         case .selectWord(let word, let shouldPlay):
             if let definition = state.definitionState.definition(timestampData: word) {
                 return .definitionAction(.showDefinition(definition, shouldPlay: shouldPlay))
             }
             return shouldPlay ? .audioAction(.playWord(word)) : nil
-        case .failedToLoadChapters,
+        case .failedToLoadStoriesAndDefinitions,
                 .failedToDeleteStory,
                 .failedToSaveChapter,
                 .updateCurrentSentence,

@@ -12,11 +12,9 @@ enum StoryAction {
     case onCreatedChapter(Chapter)
     case failedToCreateChapter
 
-    case loadChapters(UUID)
-    case loadStories
-    case onLoadedChapters([Chapter])
-    case onFinishedLoadedChapters
-    case failedToLoadChapters
+    case loadStoriesAndDefinitions
+    case onLoadedStoriesAndDefitions([Chapter], [Definition])
+    case failedToLoadStoriesAndDefinitions
 
     case deleteStory(UUID)
     case onDeletedStory(UUID)

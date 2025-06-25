@@ -14,7 +14,6 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
     private var pendingWrites: [UUID: Definition] = [:]
-    private var writeWorkItem: DispatchWorkItem?
 
     private var documentsDirectory: URL? {
         return fileManager.urls(for: .documentDirectory, in: .userDomainMask).first

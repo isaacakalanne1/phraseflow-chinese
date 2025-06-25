@@ -11,10 +11,6 @@ struct DefinitionState {
     var currentDefinition: Definition?
     var definitions: [Definition]
 
-    var numberOfInitialSentencesToDefine: Int {
-        0
-    }
-
     func studyDefinitions(language: Language?) -> [Definition] {
         definitions
             .filter {

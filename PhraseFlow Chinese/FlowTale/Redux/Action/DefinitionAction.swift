@@ -8,9 +8,7 @@
 import Foundation
 
 enum DefinitionAction {
-    case loadAllDefinitions
     case defineSentence(sentenceIndex: Int, previousDefinitions: [Definition])
-    case onLoadedAllDefinitions([Definition])
     case failedToLoadDefinitions
 
     case showDefinition(Definition, shouldPlay: Bool)

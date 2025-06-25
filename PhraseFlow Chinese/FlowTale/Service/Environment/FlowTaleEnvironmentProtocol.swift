@@ -42,8 +42,6 @@ protocol FlowTaleEnvironmentProtocol {
     func loadAllChapters() throws -> [Chapter]
     func deleteChapter(_ chapter: Chapter) throws
 
-    func loadAllChapters(for storyId: UUID) throws -> [Chapter]
-
     func fetchDefinitions(in sentence: Sentence?,
                           chapter: Chapter,
                           deviceLanguage: Language) async throws -> [Definition]

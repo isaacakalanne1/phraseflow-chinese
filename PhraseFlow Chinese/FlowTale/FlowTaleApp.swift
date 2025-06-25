@@ -33,9 +33,8 @@ struct FlowTaleApp: App {
                     UIApplication.shared.isIdleTimerDisabled = true
                     try? AVAudioSession.sharedInstance().setCategory(.playback)
                     store.dispatch(.appSettingsAction(.loadAppSettings))
-                    store.dispatch(.storyAction(.loadStories))
+                    store.dispatch(.storyAction(.loadStoriesAndDefinitions))
                     store.dispatch(.subscriptionAction(.fetchSubscriptions))
-                    store.dispatch(.definitionAction(.loadAllDefinitions))
                     store.dispatch(.subscriptionAction(.getCurrentEntitlements))
                     store.dispatch(.subscriptionAction(.observeTransactionUpdates))
                     store.dispatch(.userLimitAction(.checkFreeTrialLimit))

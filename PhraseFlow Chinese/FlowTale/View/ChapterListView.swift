@@ -134,10 +134,6 @@ struct ChapterListView: View {
             .scrollContentBackground(.hidden)
             .onAppear {
                 store.dispatch(.audioAction(.playSound(.openStory)))
-
-                if allChaptersForStory.isEmpty {
-                    store.dispatch(.storyAction(.loadChapters(storyId)))
-                }
             }
         } else {
             Text(LocalizedString.chapterListStoryNotFound)

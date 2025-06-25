@@ -30,10 +30,6 @@ struct CharacterView: View {
         store.state.definitionState.definition(timestampData: word) != nil
     }
 
-    var definition: Definition? {
-        isTranslation ? store.state.translationState.currentDefinition : store.state.definitionState.currentDefinition
-    }
-
     var body: some View {
         VStack(spacing: 0) {
             ZStack {

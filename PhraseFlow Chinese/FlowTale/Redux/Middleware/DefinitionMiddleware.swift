@@ -12,13 +12,6 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
     switch action {
     case .definitionAction(let definitionAction):
         switch definitionAction {
-        case .loadAllDefinitions:
-            do {
-                let definitions = try environment.loadDefinitions()
-                return .definitionAction(.onLoadedAllDefinitions(definitions))
-            } catch {
-                return .definitionAction(.failedToLoadDefinitions)
-            }
 
         case .defineSentence(let index, _):
             do {
@@ -65,8 +58,6 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
             try? environment.saveDefinitions([definition])
             return shouldPlay ? .audioAction(.playWord(definition.timestampData)) : nil
         case .updateStudiedWord:
-            return nil
-        case .onLoadedAllDefinitions(let definitions):
             return nil
 
         case .failedToLoadDefinitions,
