@@ -41,9 +41,14 @@ let audioReducer: Reducer<FlowTaleState, AudioAction> = { state, action in
     case .playAudio(let time):
         newState.definitionState.currentDefinition = nil
         newState.audioState.isPlayingAudio = true
-        if let wordTime = time {
-            if let currentStoryId = newState.storyState.currentStoryId {
-                newState.storyState.storyChapters[currentStoryId]?[newState.storyState.currentChapterIndex].currentPlaybackTime = wordTime
+        if let wordTime = time,
+           var currentChapter = newState.storyState.currentChapter {
+            currentChapter.currentPlaybackTime = wordTime
+            newState.storyState.currentChapter = currentChapter
+            if let storyId = currentChapter.storyId as UUID?,
+               let chapters = newState.storyState.storyChapters[storyId],
+               let index = chapters.firstIndex(where: { $0.id == currentChapter.id }) {
+                newState.storyState.storyChapters[storyId]?[index] = currentChapter
             }
         }
         
@@ -51,8 +56,14 @@ let audioReducer: Reducer<FlowTaleState, AudioAction> = { state, action in
         newState.audioState.isPlayingAudio = false
         
     case .updatePlayTime:
-        if let currentStoryId = newState.storyState.currentStoryId {
-            newState.storyState.storyChapters[currentStoryId]?[newState.storyState.currentChapterIndex].currentPlaybackTime = newState.audioState.audioPlayer.currentTime().seconds
+        if var currentChapter = newState.storyState.currentChapter {
+            currentChapter.currentPlaybackTime = newState.audioState.audioPlayer.currentTime().seconds
+            newState.storyState.currentChapter = currentChapter
+            if let storyId = currentChapter.storyId as UUID?,
+               let chapters = newState.storyState.storyChapters[storyId],
+               let index = chapters.firstIndex(where: { $0.id == currentChapter.id }) {
+                newState.storyState.storyChapters[storyId]?[index] = currentChapter
+            }
         }
         
     case .playWord,

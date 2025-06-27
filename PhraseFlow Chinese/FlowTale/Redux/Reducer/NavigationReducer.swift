@@ -15,14 +15,16 @@ let navigationReducer: Reducer<FlowTaleState, NavigationAction> = { state, actio
     switch action {
     case .selectChapter(let storyId, let chapterIndex):
         newState.storyState.currentStoryId = storyId
-        newState.storyState.currentChapterIndex = chapterIndex
         
-        if let currentChapter = newState.storyState.currentChapter {
+        if let chapters = newState.storyState.storyChapters[storyId],
+           chapterIndex >= 0 && chapterIndex < chapters.count {
+            let selectedChapter = chapters[chapterIndex]
+            newState.storyState.currentChapter = selectedChapter
             newState.definitionState.currentDefinition = nil
-            newState.settingsState.language = currentChapter.language
-            newState.settingsState.voice = currentChapter.audioVoice
+            newState.settingsState.language = selectedChapter.language
+            newState.settingsState.voice = selectedChapter.audioVoice
 
-            let data = currentChapter.audio.data
+            let data = selectedChapter.audio.data
             let player = data.createAVPlayer()
             newState.audioState.audioPlayer = player ?? AVPlayer()
             newState.viewState.contentTab = .reader

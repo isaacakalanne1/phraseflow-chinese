@@ -9,23 +9,15 @@ import Foundation
 
 struct StoryState {
     var currentStoryId: UUID?
-    var currentChapterIndex: Int = 0
+    var currentChapter: Chapter?
     var storyChapters: [UUID: [Chapter]] = [:]
 
     init(currentStoryId: UUID? = nil,
-         currentChapterIndex: Int = 0,
+         currentChapter: Chapter? = nil,
          storyChapters: [UUID: [Chapter]] = [:]) {
         self.currentStoryId = currentStoryId
-        self.currentChapterIndex = currentChapterIndex
+        self.currentChapter = currentChapter
         self.storyChapters = storyChapters
-    }
-
-    var currentChapter: Chapter? {
-        guard let currentStoryId,
-              let chapters = storyChapters[currentStoryId] else {
-            return nil
-        }
-        return chapters[safe: currentChapterIndex]
     }
     
     var allStories: [(storyId: UUID, chapters: [Chapter])] {

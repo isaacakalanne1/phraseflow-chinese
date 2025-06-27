@@ -62,7 +62,7 @@ struct ListOfSentencesView: View {
                 if isLastPage {
                     MainButton(title: LocalizedString.newChapter.uppercased()) {
                         let allChaptersForStory = store.state.storyState.storyChapters[chapter.storyId] ?? []
-                        let isLastChapter = store.state.storyState.currentChapterIndex >= allChaptersForStory.count - 1
+                        let isLastChapter = chapter.id == allChaptersForStory.last?.id
 
                         switch isLastChapter {
                         case true:
