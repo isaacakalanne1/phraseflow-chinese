@@ -8,14 +8,12 @@
 import Foundation
 
 struct StoryState {
-    var currentStoryId: UUID?
     var currentChapter: Chapter?
+    var currentSentence: Sentence?
     var storyChapters: [UUID: [Chapter]] = [:]
 
-    init(currentStoryId: UUID? = nil,
-         currentChapter: Chapter? = nil,
+    init(currentChapter: Chapter? = nil,
          storyChapters: [UUID: [Chapter]] = [:]) {
-        self.currentStoryId = currentStoryId
         self.currentChapter = currentChapter
         self.storyChapters = storyChapters
     }
@@ -41,6 +39,4 @@ struct StoryState {
         let playbackTime = currentChapter.currentPlaybackTime
         return currentChapter.sentences.flatMap({ $0.timestamps}).last(where: { playbackTime >= $0.time })
     }
-
-    var currentSentence: Sentence?
 }

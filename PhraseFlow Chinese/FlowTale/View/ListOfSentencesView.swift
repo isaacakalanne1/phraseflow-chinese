@@ -80,23 +80,26 @@ struct ListOfSentencesView: View {
         .onAppear {
             opacity = 1
             store.dispatch(.snackbarAction(.checkDeviceVolumeZero))
-            if let sentence = chapter.sentences.first(where: { $0.timestamps.contains { $0.id == spokenWord?.id }}) {
-                store.dispatch(.storyAction(.updateCurrentSentence(sentence)))
-                let targetPage = sentenceIndex(sentence, in: chapter.sentences)
-                currentPage = targetPage
-            }
+            updateCurrentSentence(chapter: chapter)
         }
         .onChange(of: spokenWord) {
-            if let sentence = chapter.sentences.first(where: { $0.timestamps.contains { $0.id == spokenWord?.id } }) {
-                let targetPage = sentenceIndex(sentence, in: chapter.sentences)
-                currentPage = targetPage
-                if !isTranslation {
-                    store.dispatch(.storyAction(.updateCurrentSentence(sentence)))
-                }
+            updateCurrentSentence(chapter: chapter)
+        }
+        .onChange(of: store.state.storyState.currentChapter) {
+            updateCurrentSentence(chapter: chapter)
+        }
+    }
+
+    private func updateCurrentSentence(chapter: Chapter) {
+        if let sentence = chapter.sentences.first(where: { $0.timestamps.contains { $0.id == spokenWord?.id } }) {
+            let targetPage = sentenceIndex(sentence, in: chapter.sentences)
+            currentPage = targetPage
+            if !isTranslation {
+                store.dispatch(.storyAction(.updateCurrentSentence(sentence)))
             }
         }
     }
-    
+
     private var playbackControls: some View {
         HStack(spacing: 16) {
             AudioButton()

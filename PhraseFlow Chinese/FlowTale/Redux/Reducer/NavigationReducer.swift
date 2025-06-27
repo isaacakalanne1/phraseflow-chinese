@@ -14,8 +14,6 @@ let navigationReducer: Reducer<FlowTaleState, NavigationAction> = { state, actio
 
     switch action {
     case .selectChapter(let storyId, let chapterIndex):
-        newState.storyState.currentStoryId = storyId
-        
         if let chapters = newState.storyState.storyChapters[storyId],
            chapterIndex >= 0 && chapterIndex < chapters.count {
             let selectedChapter = chapters[chapterIndex]

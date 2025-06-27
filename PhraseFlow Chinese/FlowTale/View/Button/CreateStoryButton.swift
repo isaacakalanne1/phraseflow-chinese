@@ -13,7 +13,6 @@ struct CreateStoryButton: View {
     var body: some View {
         MainButton(title: LocalizedString.newStory.uppercased()) {
             store.dispatch(.audioAction(.playSound(.largeBoom)))
-            store.dispatch(.navigationAction(.selectTab(.reader, shouldPlaySound: false)))
             store.dispatch(.storyAction(.createChapter(.newStory)))
         }
         .disabled(store.state.viewState.isWritingChapter)
