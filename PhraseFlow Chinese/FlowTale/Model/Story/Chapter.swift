@@ -23,6 +23,7 @@ struct Chapter: Codable, Equatable, Hashable {
     let language: Language
     var storyTitle: String
     var currentPlaybackTime: Double = 0
+    var currentSentence: Sentence?
     var lastUpdated: Date
     var storyPrompt: String?
     var imageData: Data?
@@ -46,6 +47,7 @@ struct Chapter: Codable, Equatable, Hashable {
          language: Language,
          storyTitle: String = "",
          currentPlaybackTime: Double = 0,
+         currentSentence: Sentence? = nil,
          lastUpdated: Date = .now,
          storyPrompt: String? = nil,
          imageData: Data? = nil) {
@@ -61,6 +63,7 @@ struct Chapter: Codable, Equatable, Hashable {
         self.language = language
         self.storyTitle = storyTitle
         self.currentPlaybackTime = currentPlaybackTime
+        self.currentSentence = currentSentence
         self.lastUpdated = lastUpdated
         self.storyPrompt = storyPrompt
         self.imageData = imageData
@@ -84,6 +87,7 @@ struct Chapter: Codable, Equatable, Hashable {
         self.language = (try? container.decode(Language.self, forKey: .language)) ?? .english
         self.storyTitle = (try? container.decode(String.self, forKey: .storyTitle)) ?? ""
         self.currentPlaybackTime = (try? container.decode(Double.self, forKey: .currentPlaybackTime)) ?? 0
+        self.currentSentence = try? container.decode(Sentence.self, forKey: .currentSentence)
         self.lastUpdated = (try? container.decode(Date.self, forKey: .lastUpdated)) ?? .now
         self.storyPrompt = try? container.decode(String.self, forKey: .storyPrompt)
         self.imageData = try? container.decode(Data.self, forKey: .imageData)

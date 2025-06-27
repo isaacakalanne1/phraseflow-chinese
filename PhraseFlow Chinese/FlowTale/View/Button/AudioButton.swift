@@ -15,7 +15,7 @@ struct AudioButton: View {
             if store.state.audioState.isPlayingAudio {
                 store.dispatch(.audioAction(.pauseAudio))
             } else {
-                let timestamps = store.state.storyState.currentSentence?.timestamps ?? []
+                let timestamps = store.state.storyState.currentChapter?.currentSentence?.timestamps ?? []
                 let currentSpokenWord = store.state.storyState.currentSpokenWord ?? timestamps.first
                 store.dispatch(.audioAction(.playAudio(time: currentSpokenWord?.time)))
             }

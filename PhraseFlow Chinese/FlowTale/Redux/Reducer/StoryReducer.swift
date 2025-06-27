@@ -80,7 +80,7 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
         // Set as current story
         newState.storyState.currentChapter = chapter
         
-        newState.storyState.currentSentence = chapter.sentences.first
+        newState.storyState.currentChapter?.currentSentence = chapter.sentences.first
         newState.viewState.contentTab = .reader
 
         let player = chapter.audio.data.createAVPlayer()
@@ -116,7 +116,7 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
               currentIndex < chapters.count - 1 else { break }
         
         var nextChapter = chapters[currentIndex + 1]
-        let sentence = newState.storyState.currentSentence
+        let sentence = newState.storyState.currentChapter?.currentSentence
         nextChapter.currentPlaybackTime = sentence?.timestamps.first?.time ?? 0.1
         newState.storyState.currentChapter = nextChapter
         newState.storyState.storyChapters[currentChapter.storyId]?[currentIndex + 1] = nextChapter
@@ -155,7 +155,14 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
     case .failedToCreateChapter:
         newState.viewState.isWritingChapter = false
     case .updateCurrentSentence(let sentence):
-        newState.storyState.currentSentence = sentence
+        if var currentChapter = newState.storyState.currentChapter {
+            currentChapter.currentSentence = sentence
+            newState.storyState.currentChapter = currentChapter
+            if let chapters = newState.storyState.storyChapters[currentChapter.storyId],
+               let index = chapters.firstIndex(where: { $0.id == currentChapter.id }) {
+                newState.storyState.storyChapters[currentChapter.storyId]?[index] = currentChapter
+            }
+        }
     case .updateLoadingState(let loadingState):
         newState.viewState.loadingState = loadingState
     case .selectWord(let word, _):

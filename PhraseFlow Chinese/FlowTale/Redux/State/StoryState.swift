@@ -9,7 +9,6 @@ import Foundation
 
 struct StoryState {
     var currentChapter: Chapter?
-    var currentSentence: Sentence?
     var storyChapters: [UUID: [Chapter]] = [:]
 
     init(currentChapter: Chapter? = nil,

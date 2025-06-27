@@ -23,7 +23,7 @@ struct CharacterView: View {
     }
 
     var currentSentence: Sentence? {
-        isTranslation ? store.state.translationState.currentSentence : store.state.storyState.currentSentence
+        isTranslation ? store.state.translationState.currentSentence : store.state.storyState.currentChapter?.currentSentence
     }
 
     var hasDefinition: Bool {

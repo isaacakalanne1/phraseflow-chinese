@@ -13,7 +13,6 @@ struct Sentence: Codable, Equatable, Hashable {
     let original: String
     var timestamps: [WordTimeStampData]
 
-
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = (try? container.decode(UUID.self, forKey: .id)) ?? UUID()
