@@ -12,17 +12,10 @@ struct CreateStoryButton: View {
 
     var body: some View {
         MainButton(title: LocalizedString.newStory.uppercased()) {
-            let hasExistingStories = !store.state.storyState.allStories.isEmpty
-
-            if hasExistingStories {
-                store.dispatch(.storyAction(.createChapter(.newStory)))
-            } else {
-                store.dispatch(.audioAction(.playSound(.largeBoom)))
-                store.dispatch(.navigationAction(.selectTab(.reader, shouldPlaySound: false)))
-                store.dispatch(.storyAction(.createChapter(.newStory)))
-            }
+            store.dispatch(.audioAction(.playSound(.largeBoom)))
+            store.dispatch(.navigationAction(.selectTab(.reader, shouldPlaySound: false)))
+            store.dispatch(.storyAction(.createChapter(.newStory)))
         }
-        // Disable button if currently writing a chapter
         .disabled(store.state.viewState.isWritingChapter)
     }
 }
