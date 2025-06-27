@@ -103,12 +103,6 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
             newState.storyState.storyChapters[chapter.storyId]?[index] = chapter
         }
         
-    case .setCurrentStory(let storyId):
-        newState.storyState.currentChapter = newState.storyState.storyChapters[storyId]?.first
-        let data = newState.storyState.currentChapter?.audio.data
-        let player = data?.createAVPlayer()
-        newState.audioState.audioPlayer = player ?? AVPlayer()
-        
     case .goToNextChapter:
         guard let currentChapter = newState.storyState.currentChapter,
               let chapters = newState.storyState.storyChapters[currentChapter.storyId],

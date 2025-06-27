@@ -24,7 +24,6 @@ enum StoryAction {
     case onSavedChapter(Chapter)
     case failedToSaveChapter
     
-    case setCurrentStory(UUID)
     case goToNextChapter
     case goToPreviousChapter
     case goToChapter(Int)

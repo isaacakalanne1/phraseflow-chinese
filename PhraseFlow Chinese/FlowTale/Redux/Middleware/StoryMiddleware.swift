@@ -137,7 +137,6 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
                 .failedToSaveChapter,
                 .updateCurrentSentence,
                 .onSavedChapter,
-                .setCurrentStory,
                 .onDeletedStory,
                 .setPlaybackTime,
                 .updateLoadingState:
