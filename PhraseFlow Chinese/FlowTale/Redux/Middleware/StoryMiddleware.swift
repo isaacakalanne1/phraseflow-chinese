@@ -109,18 +109,6 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
                 return .storyAction(.saveChapter(currentChapter))
             }
             return nil
-            
-        case .goToPreviousChapter:
-            if let currentChapter = state.storyState.currentChapter {
-                return .storyAction(.saveChapter(currentChapter))
-            }
-            return nil
-            
-        case .goToChapter:
-            if let currentChapter = state.storyState.currentChapter {
-                return .storyAction(.saveChapter(currentChapter))
-            }
-            return nil
 
         case .failedToCreateChapter:
             return .snackbarAction(.showSnackBar(.failedToWriteChapter))

@@ -25,8 +25,6 @@ enum StoryAction {
     case failedToSaveChapter
     
     case goToNextChapter
-    case goToPreviousChapter
-    case goToChapter(Int)
 
     case updateCurrentSentence(Sentence)
     case updateLoadingState(LoadingState)

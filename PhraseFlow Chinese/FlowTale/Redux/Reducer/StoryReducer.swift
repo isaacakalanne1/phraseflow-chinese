@@ -118,32 +118,6 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
         let data = nextChapter.audio.data
         let player = data.createAVPlayer()
         newState.audioState.audioPlayer = player ?? AVPlayer()
-        
-    case .goToPreviousChapter:
-        guard let currentChapter = newState.storyState.currentChapter,
-              let chapters = newState.storyState.storyChapters[currentChapter.storyId],
-              let currentIndex = chapters.firstIndex(where: { $0.id == currentChapter.id }),
-              currentIndex > 0 else { break }
-        
-        let previousChapter = chapters[currentIndex - 1]
-        newState.storyState.currentChapter = previousChapter
-        
-        let data = previousChapter.audio.data
-        let player = data.createAVPlayer()
-        newState.audioState.audioPlayer = player ?? AVPlayer()
-        
-    case .goToChapter(let index):
-        guard let currentChapter = newState.storyState.currentChapter,
-              let chapters = newState.storyState.storyChapters[currentChapter.storyId],
-              index >= 0 && index < chapters.count else { break }
-        
-        let targetChapter = chapters[index]
-        newState.storyState.currentChapter = targetChapter
-        
-        let data = targetChapter.audio.data
-        let player = data.createAVPlayer()
-        newState.audioState.audioPlayer = player ?? AVPlayer()
-        
     case .failedToLoadStoriesAndDefinitions:
         newState.viewState.isInitialisingApp = false
     case .failedToCreateChapter:
