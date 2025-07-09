@@ -200,7 +200,7 @@ struct StudyView: View {
                         store.dispatch(.studyAction(.playStudySentence))
                     }
                 } label: {
-                    SystemImageView(store.state.studyState.isAudioPlaying ? .stop : .play)
+                    SystemImageView(.speaker)
                 }
             }
             Text(LocalizedString.translation)
