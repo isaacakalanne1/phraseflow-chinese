@@ -19,7 +19,7 @@ struct CharacterView: View {
     }
 
     var spokenWord: WordTimeStampData? {
-        isTranslation ? store.state.translationState.currentSpokenWord : store.state.storyState.currentSpokenWord
+        isTranslation ? store.state.translationState.currentSpokenWord : store.state.storyState.currentChapter?.currentSpokenWord
     }
 
     var currentSentence: Sentence? {

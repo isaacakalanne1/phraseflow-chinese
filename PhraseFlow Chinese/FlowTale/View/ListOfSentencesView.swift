@@ -15,7 +15,7 @@ struct ListOfSentencesView: View {
     private let isTranslation: Bool
 
     var spokenWord: WordTimeStampData? {
-        isTranslation ? store.state.translationState.currentSpokenWord : store.state.storyState.currentSpokenWord
+        isTranslation ? store.state.translationState.currentSpokenWord : store.state.storyState.currentChapter?.currentSpokenWord
     }
 
     init(isTranslation: Bool = false) {

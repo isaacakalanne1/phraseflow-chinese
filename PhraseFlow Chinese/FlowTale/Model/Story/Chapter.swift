@@ -35,6 +35,10 @@ struct Chapter: Codable, Equatable, Hashable {
         return nil
     }
 
+    var currentSpokenWord: WordTimeStampData? {
+        return sentences.flatMap({ $0.timestamps}).last(where: { currentPlaybackTime >= $0.time })
+    }
+
     init(id: UUID = UUID(),
          storyId: UUID,
          title: String,

@@ -53,6 +53,17 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
                ) {
                 definition.audioData = extractedAudio
             }
+            if let sentence = state.storyState.currentChapter?.currentSentence,
+               let firstWord = sentence.timestamps.first,
+               let lastWord = sentence.timestamps.last,
+               let sentenceAudio = AudioExtractor.shared.extractAudioSegment(
+                   from: state.audioState.audioPlayer,
+                   startTime: firstWord.time,
+                   duration: lastWord.time + lastWord.duration - firstWord.time
+               ){
+                definition.sentenceId = sentence.id
+                try? environment.saveSentenceAudio(sentenceAudio, id: definition.sentenceId)
+            }
             return .definitionAction(.onShownDefinition(definition, shouldPlay: shouldPlay))
         case .onShownDefinition(let definition, let shouldPlay):
             try? environment.saveDefinitions([definition])

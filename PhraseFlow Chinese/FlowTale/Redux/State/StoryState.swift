@@ -33,9 +33,4 @@ struct StoryState {
         return chapters.min(by: { $0.lastUpdated < $1.lastUpdated })
     }
 
-    var currentSpokenWord: WordTimeStampData? {
-        guard let currentChapter else { return nil }
-        let playbackTime = currentChapter.currentPlaybackTime
-        return currentChapter.sentences.flatMap({ $0.timestamps}).last(where: { playbackTime >= $0.time })
-    }
 }

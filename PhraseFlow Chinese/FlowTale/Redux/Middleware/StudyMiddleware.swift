@@ -24,9 +24,10 @@ let studyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             }
         case .playStudySentence:
             await state.studyState.sentenceAudioPlayer.playAudio(playRate: state.settingsState.speechSpeed.playRate)
-            return nil
+            return .studyAction(.updateStudyAudioPlaying(true))
         case .pauseStudyAudio:
             state.studyState.audioPlayer.pause()
+            state.studyState.sentenceAudioPlayer.pause()
             return .studyAction(.updateStudyAudioPlaying(false))
         case .failedToPrepareStudyWord,
                 .failedToPrepareStudySentence,

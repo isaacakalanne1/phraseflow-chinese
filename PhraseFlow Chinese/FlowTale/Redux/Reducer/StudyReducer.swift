@@ -16,11 +16,12 @@ let studyReducer: Reducer<StudyState, StudyAction> = { state, action in
         newState.audioPlayer = definition.audioData?.createAVPlayer(fileExtension: "m4a") ?? AVPlayer()
     case .onPreparedStudySentence(let data):
         newState.sentenceAudioPlayer = data.createAVPlayer(fileExtension: "m4a") ?? AVPlayer()
+    case .failedToPrepareStudySentence:
+        newState.sentenceAudioPlayer = AVPlayer()
     case .updateStudyAudioPlaying(let isPlaying):
         newState.isAudioPlaying = isPlaying
     case .failedToPrepareStudyWord,
             .prepareToPlayStudySentence,
-            .failedToPrepareStudySentence,
             .playStudySentence,
             .pauseStudyAudio:
         break
