@@ -33,7 +33,79 @@ struct StudyView: View {
         VStack {
             if let definition = currentDefinition {
                 ScrollView {
-                    wordView(definition: definition)
+                    let characterCount = definition.sentence.original.count
+                    let baseString = definition.sentence.translation
+
+                    VStack(alignment: .leading) {
+                        ZStack {
+                            Text(definition.timestampData.word)
+                                .font(.flowTaleBodyXLarge())
+                                .frame(maxWidth: .infinity, alignment: .center)
+                            HStack {
+                                Spacer()
+                                Button {
+                                    store.dispatch(.studyAction(.playStudyWord(definition)))
+                                } label: {
+                                    SystemImageView(.speaker)
+                                }
+                            }
+                        }
+
+                        StudySection(
+                            title: LocalizedString.studyPronunciationLabel,
+                            isShown: isPronounciationShown,
+                            content:
+                            VStack {
+                                Text(LocalizedString.studyPronunciationPrefix + definition.detail.pronunciation)
+                                    .font(.flowTaleBodySmall())
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                        )
+
+                        StudySection(
+                            title: LocalizedString.definition,
+                            isShown: isDefinitionShown,
+                            content:
+                                Group {
+                                    Text(LocalizedString.studyDefinitionPrefix + definition.detail.definition)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .font(.flowTaleBodySmall())
+                                    Divider()
+                                    Text(LocalizedString.studyContextPrefix + definition.detail.definitionInContextOfSentence)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .scaleEffect(x: 1, y: isDefinitionShown ? 1 : 0, anchor: .top)
+                                        .font(.flowTaleBodySmall())
+                                }
+                        )
+
+                        StudySection(
+                            title: LocalizedString.sentence,
+                            isShown: true,
+                            content:
+                                HStack {
+                                    let highlighted = boldSubstring(in: baseString, at: characterCount, length: definition.timestampData.word.count) ?? AttributedString(definition.sentence.translation)
+
+                                    Text(highlighted)
+                                        .font(.flowTaleBodyLarge())
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    Button {
+                                        let studyAction: StudyAction = store.state.studyState.isAudioPlaying ? .pauseStudyAudio : .playStudySentence
+                                        store.dispatch(.studyAction(studyAction))
+                                    } label: {
+                                        SystemImageView(.speaker)
+                                    }
+                                }
+                        )
+
+                        StudySection(
+                            title: LocalizedString.translation,
+                            isShown: isDefinitionShown,
+                            content:
+                                Text(definition.sentence.original)
+                                    .font(.flowTaleBodySmall())
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                        )
+                    }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .scrollBounceBehavior(.basedOnSize)
@@ -44,7 +116,24 @@ struct StudyView: View {
                         store.dispatch(.studyAction(.updateDisplayStatus(nextStatus)))
                     }
                 }
-                buttons(definition: definition)
+                HStack {
+                    if !shouldShowAllDetails {
+                        PrimaryButton(
+                            title: LocalizedString.previous,
+                            shouldPlaySound: false
+                        ) {
+                            goToPreviousDefinition()
+                        }
+
+                        PrimaryButton(
+                            title: isDefinitionShown ? LocalizedString.next : LocalizedString.reveal,
+                            shouldPlaySound: false
+                        ) {
+                            nextTapped(definition: definition)
+                        }
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .bottom) // TODO: Remove if unneeded
             }
         }
         .navigationTitle(LocalizedString.studyNavTitle)
@@ -55,27 +144,6 @@ struct StudyView: View {
         }
         .padding()
         .background(.ftBackground)
-    }
-
-    func buttons(definition: Definition) -> some View {
-        HStack {
-            if !shouldShowAllDetails {
-                PrimaryButton(
-                    title: LocalizedString.previous,
-                    shouldPlaySound: false
-                ) {
-                    goToPreviousDefinition()
-                }
-
-                PrimaryButton(
-                    title: isDefinitionShown ? LocalizedString.next : LocalizedString.reveal,
-                              shouldPlaySound: false
-                ) {
-                    nextTapped(definition: definition)
-                }
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .bottom)
     }
 
     private func nextTapped(definition: Definition) {
@@ -142,76 +210,4 @@ struct StudyView: View {
         return attributed
     }
 
-    func wordView(definition: Definition) -> some View {
-        let characterCount = definition.sentence.original.count
-        let baseString = definition.sentence.translation
-
-        return VStack(alignment: .leading) {
-            ZStack {
-                Text(definition.timestampData.word)
-                    .font(.flowTaleBodyXLarge())
-                    .frame(maxWidth: .infinity, alignment: .center)
-                HStack {
-                    Spacer()
-                    Button {
-                        store.dispatch(.studyAction(.playStudyWord(definition)))
-                    } label: {
-                        SystemImageView(.speaker)
-                    }
-                }
-            }
-            Text(LocalizedString.studyPronunciationLabel)
-                .greyBackground()
-            VStack {
-                Text(LocalizedString.studyPronunciationPrefix + definition.detail.pronunciation)
-                    .font(.flowTaleBodySmall())
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            .scaleEffect(x: 1, y: isPronounciationShown ? 1 : 0, anchor: .top)
-            .opacity(isPronounciationShown ? 1 : 0)
-            Text(LocalizedString.definition)
-                .greyBackground()
-            Group {
-                Text(LocalizedString.studyDefinitionPrefix + definition.detail.definition)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.flowTaleBodySmall())
-                Divider()
-                Text(LocalizedString.studyContextPrefix + definition.detail.definitionInContextOfSentence)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .scaleEffect(x: 1, y: isDefinitionShown ? 1 : 0, anchor: .top)
-                    .font(.flowTaleBodySmall())
-            }
-            .opacity(isDefinitionShown ? 1 : 0)
-            .scaleEffect(x: 1, y: isDefinitionShown ? 1 : 0, anchor: .top)
-            Text(LocalizedString.sentence)
-                .greyBackground()
-            HStack {
-                if characterCount >= 0,
-                   characterCount + definition.timestampData.word.count <= baseString.count,
-                   let highlighted = boldSubstring(in: baseString, at: characterCount, length: definition.timestampData.word.count)
-                {
-                    Text(highlighted)
-                        .font(.flowTaleBodyLarge())
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                } else {
-                    Text(definition.sentence.translation)
-                        .font(.flowTaleBodyLarge())
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                Button {
-                    let studyAction: StudyAction = store.state.studyState.isAudioPlaying ? .pauseStudyAudio : .playStudySentence
-                    store.dispatch(.studyAction(studyAction))
-                } label: {
-                    SystemImageView(.speaker)
-                }
-            }
-            Text(LocalizedString.translation)
-                .greyBackground()
-            Text(definition.sentence.original)
-                .font(.flowTaleBodySmall())
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .opacity(isDefinitionShown ? 1 : 0)
-                .scaleEffect(x: 1, y: isDefinitionShown ? 1 : 0, anchor: .top)
-        }
-    }
 }
