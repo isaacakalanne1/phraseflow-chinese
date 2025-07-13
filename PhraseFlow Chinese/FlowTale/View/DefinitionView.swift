@@ -20,23 +20,23 @@ struct DefinitionView: View {
                     VStack(alignment: .leading, spacing: 16) {
                         HStack(spacing: 6) {
                             Text(definition.timestampData.word)
-                                .font(.title)
+                                .font(.flowtaleHeader())
                                 .fontWeight(.bold)
                                 .foregroundColor(FlowTaleColor.primary)
                             Text(definition.detail.pronunciation)
-                                .font(.body)
+                                .font(.flowTaleBodyMedium())
                                 .italic()
                                 .foregroundColor(FlowTaleColor.accent)
                         }
 
                         Text(definition.detail.definition)
-                            .font(.body)
+                            .font(.flowTaleBodyMedium())
                             .padding(.horizontal, 4)
 
                         Divider()
 
                         Text(definition.detail.definitionInContextOfSentence)
-                            .font(.body)
+                            .font(.flowTaleBodyMedium())
                             .multilineTextAlignment(.leading)
                             .frame(maxHeight: .infinity)
                     }
@@ -46,25 +46,23 @@ struct DefinitionView: View {
                 // Loading state when no definition is available yet
                 VStack {
                     Text("🔍 \(LocalizedString.loading)")
-                        .font(.subheadline)
+                        .font(.flowtaleSecondaryHeader())
                         .foregroundColor(FlowTaleColor.secondary)
                     ProgressView()
                         .padding()
                 }
             } else {
-                // No definition selected state
                 VStack {
                     HStack(spacing: 8) {
                         Image(systemName: "hand.tap")
-                            .font(.system(size: 24))
                             .foregroundColor(FlowTaleColor.secondary)
                         Text("👆")
-                            .font(.system(size: 24))
                     }
+                    .font(.flowTaleBodyMedium())
                     .padding(.bottom, 10)
                     
                     Text(LocalizedString.tapAWordToDefineIt)
-                        .font(.subheadline)
+                        .font(.flowtaleSecondaryHeader())
                         .foregroundColor(FlowTaleColor.secondary)
                         .multilineTextAlignment(.center)
                 }

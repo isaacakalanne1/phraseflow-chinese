@@ -165,7 +165,7 @@ struct DefinitionsChartView: View {
                 .foregroundStyle(FlowTaleColor.secondary)
                 .annotation(position: .top, alignment: .leading) {
                     Text(checkpoint.label)
-                        .font(.caption)
+                        .font(.flowtaleSecondaryHeader())
                         .foregroundColor(.secondary)
                 }
             }
@@ -255,17 +255,17 @@ struct DefinitionsChartView: View {
                         if showYear {
                             // Show full date with year: "2nd Feb 2024"
                             Text("\(date, format: .dateTime.day()) \(date, format: .dateTime.month(.abbreviated)) \(year)")
-                                .font(.caption)
+                                .font(.flowtaleSecondaryHeader())
                                 .foregroundColor(.secondary)
                         } else if showMonthName {
                             // Show date with month: "2nd Feb"
                             Text("\(date, format: .dateTime.day()) \(date, format: .dateTime.month(.abbreviated))")
-                                .font(.caption)
+                                .font(.flowtaleSecondaryHeader())
                                 .foregroundColor(.secondary)
                         } else {
                             // Just show day: "2nd"
                             Text("\(date, format: .dateTime.day())")
-                                .font(.caption)
+                                .font(.flowtaleSecondaryHeader())
                                 .foregroundColor(.secondary)
                         }
                     }
@@ -276,7 +276,7 @@ struct DefinitionsChartView: View {
             AxisMarks(values: [nowWithCurrentHour]) { _ in
                 AxisValueLabel(anchor: .leading, horizontalSpacing: 0) {
                     Text(LocalizedString.now)
-                        .font(.caption)
+                        .font(.flowtaleSecondaryHeader())
                         .fontWeight(.bold)
                         .foregroundColor(FlowTaleColor.accent)
                         .fixedSize()

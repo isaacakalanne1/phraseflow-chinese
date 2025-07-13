@@ -16,19 +16,19 @@ struct FreeLimitExplanationView: View {
             VStack(alignment: .leading) {
                 if store.state.subscriptionState.hasReachedFreeTrialLimit {
                     Text(LocalizedString.freeTrialWhatHappened)
-                        .font(.title2)
+                        .font(.flowTaleHeader())
                         .fontWeight(.medium)
                     Text(LocalizedString.freeTrialReachedLimit)
-                        .font(.body)
+                        .font(.flowTaleBodyMedium())
                         .fontWeight(.light)
                     Divider()
                 }
 
                 Text(LocalizedString.freeTrialWhyHeader)
-                    .font(.title2)
+                    .font(.flowTaleHeader())
                     .fontWeight(.medium)
                 Text(LocalizedString.dailyLimitWhy)
-                    .font(.body)
+                    .font(.flowTaleBodyMedium())
                     .fontWeight(.light)
 
                 Divider()
@@ -36,7 +36,7 @@ struct FreeLimitExplanationView: View {
                 // TODO: Add logic to show which chapter creation dates used free trial
 
 //                Text("Which chapters used up my free trial limit?")
-//                    .font(.title2)
+//                    .font(.flowTaleHeader())
 //                    .fontWeight(.medium)
 //
 //                Divider()
@@ -63,7 +63,7 @@ struct FreeLimitExplanationView: View {
 //                                         Text(LocalizedString.userScoreExplanation("\(result.scorePercentageString)"))
 //                                        .bold(!result.didPass)
 //                                }
-//                                .font(.footnote)
+//                                .font(.flowTaleSubHeader())
 //                                .foregroundColor(.secondary)
 //                            }
 //                            .padding(.bottom)

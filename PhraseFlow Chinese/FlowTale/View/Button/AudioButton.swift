@@ -27,7 +27,7 @@ struct AudioButton: View {
     @ViewBuilder
     private func audioButtonLabel(systemImage: SystemImage) -> some View {
         Image(systemName: systemImage.systemName)
-            .font(.system(size: 30))
+            .font(.flowTaleBodyLarge()) // TODO: Remove if not needed
             .foregroundColor(FlowTaleColor.accent)
             .frame(width: 60, height: 60)
             .background(

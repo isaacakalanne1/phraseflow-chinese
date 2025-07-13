@@ -10,7 +10,7 @@ import SwiftUI
 struct AIStatementView: View {
     var body: some View {
         Text(LocalizedString.aiStatement)
-            .font(.system(size: 11))
+            .font(.flowTaleBodyXSmall())
             .foregroundStyle(FlowTaleColor.primary.opacity(0.3))
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)

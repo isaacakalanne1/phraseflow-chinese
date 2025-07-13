@@ -23,32 +23,32 @@ struct DailyLimitExplanationView: View {
             VStack(alignment: .leading) {
                 Text(title)
                     .lineLimit(-1)
-                    .font(.title)
+                    .font(.flowtaleHeader())
                     .fontWeight(.semibold)
 
                 Divider()
 
                 Text(LocalizedString.dailyLimitWhyHeader)
-                    .font(.title2)
+                    .font(.flowTaleHeader())
                     .fontWeight(.medium)
                 Text(LocalizedString.dailyLimitExplanation)
-                    .font(.footnote)
+                    .font(.flowTaleSubHeader())
                     .fontWeight(.light)
 
                 Text(LocalizedString.dailyLimitWhenCanCreateMore)
-                    .font(.title2)
+                    .font(.flowTaleHeader())
                     .fontWeight(.medium)
                 Text(LocalizedString.dailyLimitNextAvailable(store.state.subscriptionState.nextAvailableDescription))
-                    .font(.footnote)
+                    .font(.flowTaleSubHeader())
                     .fontWeight(.light)
 
                 Divider()
 
                 Text(LocalizedString.dailyLimitWhyHeader)
-                    .font(.title2)
+                    .font(.flowTaleHeader())
                     .fontWeight(.medium)
                 Text(LocalizedString.dailyLimitWhy)
-                    .font(.footnote)
+                    .font(.flowTaleSubHeader())
                     .fontWeight(.light)
 
                 // TODO: Add logic to show which chapter creation dates used free trial
@@ -56,7 +56,7 @@ struct DailyLimitExplanationView: View {
 //                Divider()
 //
 //                Text("Which stories did I create today?")
-//                    .font(.title2)
+//                    .font(.flowTaleHeader())
 //                    .fontWeight(.medium)
 //
 //                Divider()
@@ -83,7 +83,7 @@ struct DailyLimitExplanationView: View {
 //                                         Text(LocalizedString.userScoreExplanation("\(result.scorePercentageString)"))
 //                                        .bold(!result.didPass)
 //                                }
-//                                .font(.footnote)
+//                                .font(.flowTaleSubHeader())
 //                                .foregroundColor(.secondary)
 //                            }
 //                            .padding(.bottom)

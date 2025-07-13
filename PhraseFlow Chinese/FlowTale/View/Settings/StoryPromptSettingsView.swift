@@ -99,7 +99,7 @@ struct StoryPromptMenu: View {
                     }
                 } header: {
                     Text(LocalizedString.howStoryStart.uppercased())
-                        .font(.footnote)
+                        .font(.flowTaleSubHeader())
                 }
             }
         }

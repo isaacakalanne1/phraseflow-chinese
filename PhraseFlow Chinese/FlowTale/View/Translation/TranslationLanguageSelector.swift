@@ -17,7 +17,7 @@ struct TranslationLanguageSelector: View {
         VStack(spacing: 8) {
             if store.state.translationState.mode == .translate {
                 Text("Translate between languages")
-                    .font(.footnote)
+                    .font(.flowTaleSubHeader())
                     .foregroundColor(FlowTaleColor.secondary)
 
                 HStack(spacing: 8) {
@@ -33,7 +33,7 @@ struct TranslationLanguageSelector: View {
             } else {
                 // Breakdown mode - only show text language selector
                 Text("Select text language")
-                    .font(.footnote)
+                    .font(.flowTaleSubHeader())
                     .foregroundColor(FlowTaleColor.secondary)
 
                 textLanguageButton
@@ -50,21 +50,21 @@ struct TranslationLanguageSelector: View {
             HStack(spacing: 6) {
                 if sourceLanguage != nil {
                     Text(sourceLanguage!.flagEmoji)
-                        .font(.system(size: 16))
+                        .font(.flowTaleBodyXSmall())
                     Text(sourceLanguage!.displayName)
-                        .font(.footnote)
+                        .font(.flowTaleSubHeader())
                         .fontWeight(.medium)
                         .lineLimit(1)
                 } else {
                     Text("🔍")
-                        .font(.system(size: 16))
+                        .font(.flowTaleBodyXSmall())
                     Text("Auto-detect")
-                        .font(.footnote)
+                        .font(.flowTaleSubHeader())
                         .fontWeight(.medium)
                         .lineLimit(1)
                 }
                 Image(systemName: "chevron.down")
-                    .font(.caption2)
+                    .font(.flowtaleSecondaryHeader())
             }
             .foregroundColor(FlowTaleColor.primary)
             .padding(.vertical, 6)
@@ -86,7 +86,7 @@ struct TranslationLanguageSelector: View {
         } label: {
             Image(systemName: store.state.translationState.sourceLanguage == nil ?
                   "arrow.right" : "arrow.left.arrow.right")
-                .font(.system(size: 16))
+                .font(.flowTaleBodyXSmall())
                 .foregroundColor(store.state.translationState.sourceLanguage == nil ?
                                 FlowTaleColor.secondary : FlowTaleColor.accent)
                 .frame(width: 36, height: 36)
@@ -106,13 +106,13 @@ struct TranslationLanguageSelector: View {
             let targetLanguage = store.state.translationState.targetLanguage
             HStack(spacing: 6) {
                 Text(targetLanguage.flagEmoji)
-                    .font(.system(size: 16))
+                    .font(.flowTaleBodyXSmall())
                 Text(targetLanguage.displayName)
-                    .font(.footnote)
+                    .font(.flowTaleSubHeader())
                     .fontWeight(.medium)
                     .lineLimit(1)
                 Image(systemName: "chevron.down")
-                    .font(.caption2)
+                    .font(.flowtaleSecondaryHeader())
             }
             .foregroundColor(FlowTaleColor.primary)
             .padding(.vertical, 6)
@@ -135,13 +135,13 @@ struct TranslationLanguageSelector: View {
             let textLanguage = store.state.translationState.textLanguage
             HStack(spacing: 6) {
                 Text(textLanguage.flagEmoji)
-                    .font(.system(size: 16))
+                    .font(.flowTaleBodyXSmall())
                 Text(textLanguage.displayName)
-                    .font(.footnote)
+                    .font(.flowTaleSubHeader())
                     .fontWeight(.medium)
                     .lineLimit(1)
                 Image(systemName: "chevron.down")
-                    .font(.caption2)
+                    .font(.flowtaleSecondaryHeader())
             }
             .foregroundColor(FlowTaleColor.primary)
             .padding(.vertical, 6)

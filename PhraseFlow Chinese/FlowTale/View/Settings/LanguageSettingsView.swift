@@ -97,7 +97,7 @@ struct LanguageMenu: View {
                 }
             } header: {
                 Text(LocalizedString.whichLanguageLearn.uppercased())
-                    .font(.footnote)
+                    .font(.flowTaleSubHeader())
             }
         }
         .padding()

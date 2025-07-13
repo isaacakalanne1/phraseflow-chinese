@@ -143,7 +143,7 @@ struct StudyView: View {
         return VStack(alignment: .leading) {
             ZStack {
                 Text(definition.timestampData.word)
-                    .font(.system(size: 60, weight: .light))
+                    .font(.flowTaleBodyXLarge())
                     .frame(maxWidth: .infinity, alignment: .center)
                 HStack {
                     Spacer()
@@ -158,7 +158,7 @@ struct StudyView: View {
                 .greyBackground()
             VStack {
                 Text(LocalizedString.studyPronunciationPrefix + definition.detail.pronunciation)
-                    .font(.system(size: 20, weight: .light))
+                    .font(.flowTaleBodySmall())
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .scaleEffect(x: 1, y: isWordDefinitionView || isPronounciationShown ? 1 : 0, anchor: .top)
@@ -168,12 +168,12 @@ struct StudyView: View {
             Group {
                 Text(LocalizedString.studyDefinitionPrefix + definition.detail.definition)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.system(size: 20, weight: .light))
+                    .font(.flowTaleBodySmall())
                 Divider()
                 Text(LocalizedString.studyContextPrefix + definition.detail.definitionInContextOfSentence)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .scaleEffect(x: 1, y: isWordDefinitionView || isDefinitionShown ? 1 : 0, anchor: .top)
-                    .font(.system(size: 20, weight: .light))
+                    .font(.flowTaleBodySmall())
             }
             .opacity(isWordDefinitionView || isDefinitionShown ? 1 : 0)
             .scaleEffect(x: 1, y: isWordDefinitionView || isDefinitionShown ? 1 : 0, anchor: .top)
@@ -184,13 +184,12 @@ struct StudyView: View {
                    characterCount + definition.timestampData.word.count <= baseString.count,
                    let highlighted = boldSubstring(in: baseString, at: characterCount, length: definition.timestampData.word.count)
                 {
-                    // In SwiftUI, just show it:
                     Text(highlighted)
-                        .font(.system(size: 30, weight: .light))
+                        .font(.flowTaleBodyLarge())
                         .frame(maxWidth: .infinity, alignment: .leading)
                 } else {
                     Text(definition.sentence.translation)
-                        .font(.system(size: 30, weight: .light))
+                        .font(.flowTaleBodyLarge())
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 Button {
@@ -206,7 +205,7 @@ struct StudyView: View {
             Text(LocalizedString.translation)
                 .greyBackground()
             Text(definition.sentence.original)
-                .font(.system(size: 20, weight: .light))
+                .font(.flowTaleBodySmall())
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .opacity(isWordDefinitionView || isDefinitionShown ? 1 : 0)
                 .scaleEffect(x: 1, y: isWordDefinitionView || isDefinitionShown ? 1 : 0, anchor: .top)

@@ -34,13 +34,13 @@ struct ReaderView: View {
                     StoryInfoView(chapter: chapter)
                     
                     Text(chapter.storyTitle)
-                        .font(.headline)
+                        .font(.flowtaleSecondaryHeader())
                         .foregroundColor(FlowTaleColor.primary)
                         .lineLimit(1)
                 }
                 
                 Text(chapter.title)
-                    .font(.subheadline)
+                    .font(.flowtaleSecondaryHeader())
                     .foregroundColor(FlowTaleColor.primary.opacity(0.9))
                     .lineLimit(1)
             }

@@ -52,10 +52,10 @@ struct SubscriptionOption: View {
         }, label: {
             VStack {
                 Text(title)
-                    .font(.title2)
+                    .font(.flowTaleHeader())
                     .bold()
                 Text(detail)
-                    .font(.subheadline)
+                    .font(.flowtaleSecondaryHeader())
             }
             .padding()
             .frame(maxWidth: .infinity)

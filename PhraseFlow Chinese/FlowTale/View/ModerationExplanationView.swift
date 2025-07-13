@@ -16,35 +16,35 @@ struct ModerationExplanationView: View {
             VStack(alignment: .leading) {
                 Text(LocalizedString.storyDidNotPassModeration)
                     .lineLimit(0)
-                    .font(.title)
+                    .font(.flowtaleHeader())
                     .fontWeight(.semibold)
 
                 Text(store.state.settingsState.customPrompt)
-                    .font(.footnote)
+                    .font(.flowTaleSubHeader())
                     .fontWeight(.light)
 
                 Divider()
 
                 Text(LocalizedString.whatIsModeration)
-                    .font(.title2)
+                    .font(.flowTaleHeader())
                     .fontWeight(.medium)
                 Text(LocalizedString.moderationExplanation)
-                    .font(.footnote)
+                    .font(.flowTaleSubHeader())
                     .fontWeight(.light)
 
                 Divider()
 
                 Text(LocalizedString.howDoesModerationWork)
-                    .font(.title2)
+                    .font(.flowTaleHeader())
                     .fontWeight(.medium)
                 Text(LocalizedString.moderationWorkExplanation)
-                    .font(.footnote)
+                    .font(.flowTaleSubHeader())
                     .fontWeight(.light)
 
                 Divider()
 
                 Text(LocalizedString.whyDidntItPass)
-                    .font(.title2)
+                    .font(.flowTaleHeader())
                     .fontWeight(.medium)
 
                 Divider()
@@ -71,7 +71,7 @@ struct ModerationExplanationView: View {
                                     Text(LocalizedString.userScoreExplanation("\(result.scorePercentageString)"))
                                         .bold(!result.didPass)
                                 }
-                                .font(.footnote)
+                                .font(.flowTaleSubHeader())
                                 .foregroundColor(.secondary)
                             }
                             .padding(.bottom)

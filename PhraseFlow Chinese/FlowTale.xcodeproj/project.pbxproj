@@ -18,6 +18,7 @@
 		BB2893142DAA82BF00F7ED69 /* TranslationMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2893132DAA82BF00F7ED69 /* TranslationMiddleware.swift */; };
 		BB2893162DAA82E300F7ED69 /* TranslationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2893152DAA82E300F7ED69 /* TranslationState.swift */; };
 		BB2893192DAAB49D00F7ED69 /* ChapterResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2893182DAAB49900F7ED69 /* ChapterResponseDecoder.swift */; };
+		BB34C4F82E23E09900238EA8 /* Font+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34C4F72E23E09700238EA8 /* Font+Types.swift */; };
 		BB3ED31E2E05862C003B7D14 /* LanguageMenuType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3ED31D2E05862C003B7D14 /* LanguageMenuType.swift */; };
 		BB45C5692D4A785C00B3705A /* DailyLimitExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB45C5682D4A785C00B3705A /* DailyLimitExplanationView.swift */; };
 		BB45C56B2D4A7C4000B3705A /* FreeLimitExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB45C56A2D4A7C4000B3705A /* FreeLimitExplanationView.swift */; };
@@ -254,6 +255,7 @@
 		BB2893132DAA82BF00F7ED69 /* TranslationMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationMiddleware.swift; sourceTree = "<group>"; };
 		BB2893152DAA82E300F7ED69 /* TranslationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationState.swift; sourceTree = "<group>"; };
 		BB2893182DAAB49900F7ED69 /* ChapterResponseDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterResponseDecoder.swift; sourceTree = "<group>"; };
+		BB34C4F72E23E09700238EA8 /* Font+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Types.swift"; sourceTree = "<group>"; };
 		BB3ED31D2E05862C003B7D14 /* LanguageMenuType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageMenuType.swift; sourceTree = "<group>"; };
 		BB45C5682D4A785C00B3705A /* DailyLimitExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLimitExplanationView.swift; sourceTree = "<group>"; };
 		BB45C56A2D4A7C4000B3705A /* FreeLimitExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeLimitExplanationView.swift; sourceTree = "<group>"; };
@@ -594,6 +596,7 @@
 			isa = PBXGroup;
 			children = (
 				BB6572D12CD165F200AC5981 /* Collection+Safe.swift */,
+				BB34C4F72E23E09700238EA8 /* Font+Types.swift */,
 				BB6572D32CD3932300AC5981 /* View+GreyBackground.swift */,
 				BB6BD0392DB25E7700E45697 /* View+CardBackground.swift */,
 				BB6BD03B2DB25F3500E45697 /* View+BackgroundImage.swift */,
@@ -1405,6 +1408,7 @@
 				BBC3E1822E0C57D6007F9878 /* LoadingProgressBar.swift in Sources */,
 				BBAE07CF2D0C768000DA95CD /* AnyKey.swift in Sources */,
 				BB45C56B2D4A7C4000B3705A /* FreeLimitExplanationView.swift in Sources */,
+				BB34C4F82E23E09900238EA8 /* Font+Types.swift in Sources */,
 				BB4EDB102C90CA4900699E7D /* FlowTaleSubscriber.swift in Sources */,
 				BBE636CD2CCC0F8500873E68 /* ReaderView.swift in Sources */,
 				BB1994D32CE9051700D61E54 /* ViewState.swift in Sources */,
