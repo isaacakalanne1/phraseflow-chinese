@@ -32,6 +32,7 @@ let studyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
         case .failedToPrepareStudyWord,
                 .failedToPrepareStudySentence,
                 .onPreparedStudySentence,
+                .updateDisplayStatus,
                 .updateStudyAudioPlaying:
             return nil
         }

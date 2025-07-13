@@ -18,13 +18,13 @@ struct SpeechSpeedButton: View {
             Text(store.state.settingsState.speechSpeed.text)
                 .font(.flowTaleBodyMedium())
                 .fontWeight(.medium)
-                .foregroundStyle(FlowTaleColor.primary)
+                .foregroundStyle(.ftPrimary)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
                 .background(
                     Capsule()
-                        .fill(FlowTaleColor.background.opacity(0.9))
-                        .overlay(Capsule().strokeBorder(FlowTaleColor.accent, lineWidth: 1))
+                        .fill(.ftBackground.opacity(0.9))
+                        .overlay(Capsule().strokeBorder(.ftAccent, lineWidth: 1))
                         .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 2)
                 )
         }

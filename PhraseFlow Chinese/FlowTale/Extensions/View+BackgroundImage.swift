@@ -19,7 +19,9 @@ struct BackgroundImage: ViewModifier {
                             Image(uiImage: uiImage)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .overlay { FlowTaleColor.background.opacity(0.9) }
+                                .overlay {
+                                    Color.ftBackground.opacity(0.9)
+                                }
                         }
                     }
                 }

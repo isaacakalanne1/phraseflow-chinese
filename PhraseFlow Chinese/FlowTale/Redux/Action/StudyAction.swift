@@ -16,4 +16,5 @@ enum StudyAction {
     case playStudySentence
     case pauseStudyAudio
     case updateStudyAudioPlaying(Bool)
+    case updateDisplayStatus(StudyDisplayStatus)
 }

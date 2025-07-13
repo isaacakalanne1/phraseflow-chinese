@@ -22,10 +22,10 @@ struct SystemImageView: View {
     }
 
     var body: some View {
-        let baseColor = isSelected ? FlowTaleColor.accent : FlowTaleColor.primary
-        let bottomColor = isSelected ?
-            FlowTaleColor.accent.opacity(0.7) // Accent with opacity for selected (simulates black overlay)
-            : FlowTaleColor.primary.opacity(0.7) // Darker version for non-selected
+        let baseColor: Color = isSelected ? .ftAccent : .ftPrimary
+        let bottomColor: Color = isSelected ?
+            .ftAccent.opacity(0.7) // Accent with opacity for selected (simulates black overlay)
+            : .ftPrimary.opacity(0.7) // Darker version for non-selected
 
         Image(systemName: systemImage.systemName)
             .resizable()

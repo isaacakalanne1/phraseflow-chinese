@@ -17,7 +17,7 @@ struct TranslatedSentenceView: View {
                     // Show translation with scroll indicators
                     Text(store.state.storyState.currentChapter?.currentSentence?.original ?? "")
                         .font(.flowTaleBodyMedium())
-                        .foregroundColor(FlowTaleColor.primary)
+                        .foregroundColor(.ftPrimary)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 8)
                 } else {
@@ -25,12 +25,12 @@ struct TranslatedSentenceView: View {
                     VStack {
                         Image(systemName: "eye.slash")
                             .font(.flowTaleBodyMedium())
-                            .foregroundColor(FlowTaleColor.secondary)
+                            .foregroundColor(.ftSecondary)
                             .padding(.bottom, 4)
                         
                         Text(LocalizedString.tapRevealToShow)
                             .font(.flowTaleSecondaryHeader())
-                            .foregroundColor(FlowTaleColor.secondary)
+                            .foregroundColor(.ftSecondary)
                             .multilineTextAlignment(.center)
                     }
                 }
@@ -39,7 +39,7 @@ struct TranslatedSentenceView: View {
                 VStack {
                     Text("Select a sentence to see the translation")
                         .font(.flowTaleSecondaryHeader())
-                        .foregroundColor(FlowTaleColor.secondary)
+                        .foregroundColor(.ftSecondary)
                         .multilineTextAlignment(.center)
                 }
             }

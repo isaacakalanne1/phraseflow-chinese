@@ -20,6 +20,8 @@ let studyReducer: Reducer<StudyState, StudyAction> = { state, action in
         newState.sentenceAudioPlayer = AVPlayer()
     case .updateStudyAudioPlaying(let isPlaying):
         newState.isAudioPlaying = isPlaying
+    case let .updateDisplayStatus(displayStatus):
+        newState.displayStatus = displayStatus
     case .failedToPrepareStudyWord,
             .prepareToPlayStudySentence,
             .playStudySentence,

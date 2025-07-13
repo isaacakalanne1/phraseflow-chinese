@@ -23,24 +23,24 @@ struct SubscriptionOption: View {
     var backgroundColor: Color {
         if let _ = product {
             if isUserCurrentSubscription {
-                return FlowTaleColor.primary
+                return .ftPrimary
             } else {
-                return FlowTaleColor.accent
+                return .ftAccent
             }
         } else {
-            return FlowTaleColor.secondary
+            return .ftSecondary
         }
     }
 
     var foregroundColor: Color {
         if let _ = product {
             if isUserCurrentSubscription {
-                return FlowTaleColor.accent
+                return .ftAccent
             } else {
-                return FlowTaleColor.background
+                return .ftBackground
             }
         } else {
-            return FlowTaleColor.primary
+            return .ftPrimary
         }
     }
 
@@ -64,7 +64,7 @@ struct SubscriptionOption: View {
             .cornerRadius(10)
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(isUserCurrentSubscription ? FlowTaleColor.accent : .clear, lineWidth: 3)
+                    .stroke(isUserCurrentSubscription ? .ftAccent : .clear, lineWidth: 3)
             )
         })
     }

@@ -22,11 +22,11 @@ struct DefinitionView: View {
                             Text(definition.timestampData.word)
                                 .font(.flowTaleHeader())
                                 .fontWeight(.bold)
-                                .foregroundColor(FlowTaleColor.primary)
+                                .foregroundColor(.ftPrimary)
                             Text(definition.detail.pronunciation)
                                 .font(.flowTaleBodyMedium())
                                 .italic()
-                                .foregroundColor(FlowTaleColor.accent)
+                                .foregroundColor(.ftAccent)
                         }
 
                         Text(definition.detail.definition)
@@ -47,7 +47,7 @@ struct DefinitionView: View {
                 VStack {
                     Text("🔍 \(LocalizedString.loading)")
                         .font(.flowTaleSecondaryHeader())
-                        .foregroundColor(FlowTaleColor.secondary)
+                        .foregroundColor(.ftSecondary)
                     ProgressView()
                         .padding()
                 }
@@ -55,7 +55,7 @@ struct DefinitionView: View {
                 VStack {
                     HStack(spacing: 8) {
                         Image(systemName: "hand.tap")
-                            .foregroundColor(FlowTaleColor.secondary)
+                            .foregroundColor(.ftSecondary)
                         Text("👆")
                     }
                     .font(.flowTaleBodyMedium())
@@ -63,7 +63,7 @@ struct DefinitionView: View {
                     
                     Text(LocalizedString.tapAWordToDefineIt)
                         .font(.flowTaleSecondaryHeader())
-                        .foregroundColor(FlowTaleColor.secondary)
+                        .foregroundColor(.ftSecondary)
                         .multilineTextAlignment(.center)
                 }
             }

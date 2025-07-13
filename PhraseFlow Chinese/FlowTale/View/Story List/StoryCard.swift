@@ -48,8 +48,8 @@ struct StoryCard: View {
                 // Fallback gradient background
                 LinearGradient(
                     colors: [
-                        FlowTaleColor.accent.opacity(0.6),
-                        FlowTaleColor.primary.opacity(0.8)
+                        .ftAccent.opacity(0.6),
+                        .ftPrimary.opacity(0.8)
                     ],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing

@@ -105,7 +105,7 @@ struct StoryPromptMenu: View {
         }
         .padding()
         .navigationTitle(LocalizedString.story)
-        .background(FlowTaleColor.background)
+        .background(.ftBackground)
         .scrollContentBackground(.hidden)
         .alert(LocalizedString.customStoryAlertTitle, isPresented: isShowingAlert) {
             TextField(LocalizedString.customStoryTextfieldPlaceholder, text: customPrompt)
@@ -139,7 +139,7 @@ struct StoryPromptSettingsView: View {
             .padding(.horizontal)
             .padding(.bottom)
         }
-        .background(FlowTaleColor.background)
+        .background(.ftBackground)
         // Attach the alert:
         .alert(
             LocalizedString.storyDidNotPassModeration,

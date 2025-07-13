@@ -23,7 +23,7 @@ struct ContentView: View {
             if !store.state.subscriptionState.isSubscribed {
                 Text(LocalizedString.freeTrial)
                     .font(.flowTaleBodyXSmall())
-                    .foregroundStyle(FlowTaleColor.primary)
+                    .foregroundStyle(.ftPrimary)
             }
             Group {
                 if store.state.viewState.isInitialisingApp {
@@ -54,8 +54,8 @@ struct ContentView: View {
                 store.dispatch(.audioAction(.playSound(.progressUpdate)))
             }
         }
-        .background(FlowTaleColor.background)
-        .tint(FlowTaleColor.accent)
+        .background(.ftBackground)
+        .tint(.ftAccent)
         .preferredColorScheme(.dark)
     }
 

@@ -17,13 +17,13 @@ struct SubscriptionView: View {
             Text(store.state.subscriptionState.isSubscribed ? LocalizedString.manageSubscription : LocalizedString.subscribe)
                 .font(.flowTaleHeader())
                 .bold()
-                .foregroundColor(FlowTaleColor.primary)
+                .foregroundColor(.ftPrimary)
             if !store.state.subscriptionState.isSubscribed {
                 Text(LocalizedString.subscriptionSubscribeNow)
                     .multilineTextAlignment(.center)
                     .font(.flowTaleSecondaryHeader())
                     .bold()
-                    .foregroundColor(FlowTaleColor.primary)
+                    .foregroundColor(.ftPrimary)
             }
 
             ForEach(store.state.subscriptionState.products?.sorted(by: { $0.price > $1.price }) ?? []) { product in
@@ -54,7 +54,7 @@ struct SubscriptionView: View {
                 Text(LocalizedString.subscriptionFreeCharactersDetail(4000))
                     .font(.flowTaleSecondaryHeader())
             }
-            .foregroundStyle(FlowTaleColor.primary)
+            .foregroundStyle(.ftPrimary)
 
             Divider()
 
@@ -68,7 +68,7 @@ struct SubscriptionView: View {
                     .multilineTextAlignment(.center)
                     .font(.flowTaleSecondaryHeader())
                     .bold()
-                    .foregroundColor(FlowTaleColor.primary)
+                    .foregroundColor(.ftPrimary)
             }
 
             HStack {
@@ -80,7 +80,7 @@ struct SubscriptionView: View {
                     Text(LocalizedString.termsOfUse)
                         .multilineTextAlignment(.center)
                         .font(.flowTaleSecondaryHeader())
-                        .foregroundColor(FlowTaleColor.primary)
+                        .foregroundColor(.ftPrimary)
                 }
 
                 Button {
@@ -91,7 +91,7 @@ struct SubscriptionView: View {
                     Text(LocalizedString.privacyPolicy)
                         .multilineTextAlignment(.center)
                         .font(.flowTaleSecondaryHeader())
-                        .foregroundColor(FlowTaleColor.primary)
+                        .foregroundColor(.ftPrimary)
                 }
             }
 
@@ -99,7 +99,7 @@ struct SubscriptionView: View {
                 Text(LocalizedString.manageSubscriptionsInstructions)
                     .multilineTextAlignment(.center)
                     .font(.flowTaleSecondaryHeader())
-                    .foregroundColor(FlowTaleColor.primary)
+                    .foregroundColor(.ftPrimary)
             }
         }
         // Validate receipt whenever subscription view appears to ensure we handle sandbox receipts properly
@@ -110,7 +110,7 @@ struct SubscriptionView: View {
         }
         .padding(20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(FlowTaleColor.background)
+        .background(.ftBackground)
         .navigationTitle(ContentTab.subscribe.title)
         .navigationBarTitleDisplayMode(.inline)
         .overlay(content: {
@@ -119,7 +119,7 @@ struct SubscriptionView: View {
                     ZStack {
                         Color.black.opacity(0.5)
                         ProgressView()
-                            .tint(FlowTaleColor.primary)
+                            .tint(.ftPrimary)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }

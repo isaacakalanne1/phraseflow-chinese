@@ -11,7 +11,7 @@ struct AIStatementView: View {
     var body: some View {
         Text(LocalizedString.aiStatement)
             .font(.flowTaleBodyXSmall())
-            .foregroundStyle(FlowTaleColor.primary.opacity(0.3))
+            .foregroundStyle(.ftPrimary.opacity(0.3))
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
     }

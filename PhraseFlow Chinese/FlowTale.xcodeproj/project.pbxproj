@@ -19,11 +19,11 @@
 		BB2893162DAA82E300F7ED69 /* TranslationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2893152DAA82E300F7ED69 /* TranslationState.swift */; };
 		BB2893192DAAB49D00F7ED69 /* ChapterResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2893182DAAB49900F7ED69 /* ChapterResponseDecoder.swift */; };
 		BB34C4F82E23E09900238EA8 /* Font+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34C4F72E23E09700238EA8 /* Font+Types.swift */; };
+		BB34C4FD2E23EBF500238EA8 /* StudyDisplayStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34C4FC2E23EBF500238EA8 /* StudyDisplayStatus.swift */; };
 		BB3ED31E2E05862C003B7D14 /* LanguageMenuType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3ED31D2E05862C003B7D14 /* LanguageMenuType.swift */; };
 		BB45C5692D4A785C00B3705A /* DailyLimitExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB45C5682D4A785C00B3705A /* DailyLimitExplanationView.swift */; };
 		BB45C56B2D4A7C4000B3705A /* FreeLimitExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB45C56A2D4A7C4000B3705A /* FreeLimitExplanationView.swift */; };
 		BB47122B2E06178C0060782B /* ChapterAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB47122A2E06178C0060782B /* ChapterAudio.swift */; };
-		BB4E6BF62D22E0DB002B5CBA /* FlowTaleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4E6BF52D22E0DB002B5CBA /* FlowTaleColor.swift */; };
 		BB4E6BF82D246AEF002B5CBA /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4E6BF72D246AEF002B5CBA /* LoadingState.swift */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
 		BB4EDB032C90C86300699E7D /* FlowTaleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */; };
@@ -256,11 +256,11 @@
 		BB2893152DAA82E300F7ED69 /* TranslationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationState.swift; sourceTree = "<group>"; };
 		BB2893182DAAB49900F7ED69 /* ChapterResponseDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterResponseDecoder.swift; sourceTree = "<group>"; };
 		BB34C4F72E23E09700238EA8 /* Font+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Types.swift"; sourceTree = "<group>"; };
+		BB34C4FC2E23EBF500238EA8 /* StudyDisplayStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyDisplayStatus.swift; sourceTree = "<group>"; };
 		BB3ED31D2E05862C003B7D14 /* LanguageMenuType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageMenuType.swift; sourceTree = "<group>"; };
 		BB45C5682D4A785C00B3705A /* DailyLimitExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLimitExplanationView.swift; sourceTree = "<group>"; };
 		BB45C56A2D4A7C4000B3705A /* FreeLimitExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeLimitExplanationView.swift; sourceTree = "<group>"; };
 		BB47122A2E06178C0060782B /* ChapterAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterAudio.swift; sourceTree = "<group>"; };
-		BB4E6BF52D22E0DB002B5CBA /* FlowTaleColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleColor.swift; sourceTree = "<group>"; };
 		BB4E6BF72D246AEF002B5CBA /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleStore.swift; sourceTree = "<group>"; };
 		BB4EDB042C90C89C00699E7D /* FlowTaleState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleState.swift; sourceTree = "<group>"; };
@@ -840,13 +840,13 @@
 				BB6BD0292DB178AB00E45697 /* User Limits */,
 				BB3ED31C2E05861D003B7D14 /* Language */,
 				BBEF63522DA1F80400F93ECC /* MusicVolume.swift */,
+				BB34C4FC2E23EBF500238EA8 /* StudyDisplayStatus.swift */,
 				BBE5220D2DEA49FA00ADACA8 /* FlowTaleColorScheme.swift */,
 				BBE5220F2DEA4A1000ADACA8 /* StorySetting.swift */,
 				BBE990B62D29BC5500FAD3FB /* AppSound.swift */,
 				BB6BD02D2DB17D4500E45697 /* ContentTab.swift */,
 				BBE990C02D29C59C00FAD3FB /* MusicType.swift */,
 				BB4E6BF72D246AEF002B5CBA /* LoadingState.swift */,
-				BB4E6BF52D22E0DB002B5CBA /* FlowTaleColor.swift */,
 				BBAE07CE2D0C768000DA95CD /* AnyKey.swift */,
 				BB7B6D9F2D1F316E0030344A /* SnackBarType.swift */,
 				BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */,
@@ -1362,6 +1362,7 @@
 				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,
 				BB2893192DAAB49D00F7ED69 /* ChapterResponseDecoder.swift in Sources */,
 				BB756CED2E03417900365610 /* AppSettingsMiddleware.swift in Sources */,
+				BB34C4FD2E23EBF500238EA8 /* StudyDisplayStatus.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FlowTaleDataStore.swift in Sources */,
 				BBDA56CA2DFF132D00B61F05 /* MultipleWordsResponse.swift in Sources */,
 				BB45C5692D4A785C00B3705A /* DailyLimitExplanationView.swift in Sources */,
@@ -1381,7 +1382,6 @@
 				BBE521FD2DE9D83C00ADACA8 /* FlowTaleServicesProtocol.swift in Sources */,
 				BB1994D12CE9050000D61E54 /* AudioState.swift in Sources */,
 				BBAE07D52D0CA79A00DA95CD /* SubscriptionOption.swift in Sources */,
-				BB4E6BF62D22E0DB002B5CBA /* FlowTaleColor.swift in Sources */,
 				BB756CE12E033C3A00365610 /* DefinitionReducer.swift in Sources */,
 				BB756CF92E0344FC00365610 /* UserLimitMiddleware.swift in Sources */,
 				BB6BD0132DB1766200E45697 /* ModerationResponse.swift in Sources */,

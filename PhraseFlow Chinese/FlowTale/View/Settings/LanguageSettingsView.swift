@@ -19,13 +19,13 @@ struct LanguageOnboardingView: View {
                     .padding(.horizontal)
                     .padding(.bottom)
             }
-            .background(FlowTaleColor.background)
+            .background(.ftBackground)
             .opacity(store.state.viewState.isWritingChapter ? 0.3 : 1.0)
             .disabled(store.state.viewState.isWritingChapter)
             
             if store.state.viewState.isWritingChapter {
                 LoadingProgressBar(isCentered: true)
-                    .background(FlowTaleColor.background.opacity(0.9))
+                    .background(.ftBackground.opacity(0.9))
             }
         }
     }
@@ -102,7 +102,7 @@ struct LanguageMenu: View {
         }
         .padding()
         .navigationTitle(LocalizedString.language)
-        .background(FlowTaleColor.background)
+        .background(.ftBackground)
         .scrollContentBackground(.hidden)
     }
 }
@@ -120,6 +120,6 @@ struct LanguageSettingsView: View {
             .padding(.horizontal)
             .padding(.bottom)
         }
-        .background(FlowTaleColor.background)
+        .background(.ftBackground)
     }
 }

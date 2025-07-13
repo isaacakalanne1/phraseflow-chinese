@@ -12,12 +12,17 @@ struct StudyState {
     var audioPlayer: AVPlayer
     var sentenceAudioPlayer: AVPlayer
     var isAudioPlaying: Bool
-    
-    init(audioPlayer: AVPlayer = AVPlayer(),
-         sentenceAudioPlayer: AVPlayer = AVPlayer(),
-         isAudioPlaying: Bool = false) {
+    var displayStatus: StudyDisplayStatus = .wordShown
+
+    init(
+        audioPlayer: AVPlayer = AVPlayer(),
+        sentenceAudioPlayer: AVPlayer = AVPlayer(),
+        isAudioPlaying: Bool = false,
+        displayStatus: StudyDisplayStatus = .wordShown
+    ) {
         self.audioPlayer = audioPlayer
         self.sentenceAudioPlayer = sentenceAudioPlayer
         self.isAudioPlaying = isAudioPlaying
+        self.displayStatus = displayStatus
     }
 }

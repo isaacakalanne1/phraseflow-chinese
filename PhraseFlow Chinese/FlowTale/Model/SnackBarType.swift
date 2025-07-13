@@ -112,7 +112,7 @@ enum SnackBarType: Equatable {
     }
 
     var backgroundColor: Color {
-        isError ? FlowTaleColor.error : FlowTaleColor.accent
+        isError ? .ftError : .ftAccent
     }
 
     var sound: AppSound {

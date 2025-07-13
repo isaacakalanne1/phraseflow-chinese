@@ -46,7 +46,7 @@ struct DifficultyMenu: View {
         }
         .padding()
         .navigationTitle(LocalizedString.difficulty)
-        .background(FlowTaleColor.background)
+        .background(.ftBackground)
         .scrollContentBackground(.hidden)
     }
 }
@@ -64,6 +64,6 @@ struct DifficultySettingsView: View {
             .padding(.horizontal)
             .padding(.bottom)
         }
-        .background(FlowTaleColor.background)
+        .background(.ftBackground)
     }
 }

@@ -12,8 +12,13 @@ struct StudyView: View {
 
     var studyWords: [Definition]
 
-    @State var isPronounciationShown: Bool = false
-    @State var isDefinitionShown: Bool = false
+    var isPronounciationShown: Bool {
+        store.state.studyState.displayStatus != .wordShown
+    }
+
+    var isDefinitionShown: Bool {
+        store.state.studyState.displayStatus == .allShown
+    }
 
     @State var index: Int = 0
     var currentDefinition: Definition? {
@@ -35,14 +40,8 @@ struct StudyView: View {
                 .scrollIndicators(.hidden)
                 .onTapGesture {
                     withAnimation {
-                        if !isPronounciationShown {
-                            isPronounciationShown = true
-                        } else if !isDefinitionShown {
-                            isDefinitionShown = true
-                        } else {
-                            isPronounciationShown = false
-                            isDefinitionShown = false
-                        }
+                        let nextStatus = store.state.studyState.displayStatus.nextStatus
+                        store.dispatch(.studyAction(.updateDisplayStatus(nextStatus)))
                     }
                 }
                 buttons(definition: definition)
@@ -56,7 +55,7 @@ struct StudyView: View {
             store.dispatch(.snackbarAction(.checkDeviceVolumeZero))
         }
         .padding()
-        .background(FlowTaleColor.background)
+        .background(.ftBackground)
     }
 
     func buttons(definition: Definition) -> some View {
@@ -78,8 +77,7 @@ struct StudyView: View {
         } else {
             store.dispatch(.studyAction(.playStudyWord(definition)))
             withAnimation {
-                isPronounciationShown = true
-                isDefinitionShown = true
+                store.dispatch(.studyAction(.updateDisplayStatus(.allShown)))
             }
         }
     }
@@ -104,8 +102,7 @@ struct StudyView: View {
     }
 
     func updateDefinition() {
-        isPronounciationShown = false
-        isDefinitionShown = false
+        store.dispatch(.studyAction(.updateDisplayStatus(.wordShown)))
         if let definition = currentDefinition {
             store.dispatch(.studyAction(.prepareToPlayStudySentence(definition)))
             store.dispatch(.studyAction(.pauseStudyAudio))

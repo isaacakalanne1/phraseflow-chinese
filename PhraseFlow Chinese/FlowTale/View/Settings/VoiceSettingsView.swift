@@ -48,7 +48,7 @@ struct VoiceMenu: View {
         }
         .padding()
         .navigationTitle(LocalizedString.voice)
-        .background(FlowTaleColor.background)
+        .background(.ftBackground)
     }
 }
 
@@ -65,6 +65,6 @@ struct VoiceSettingsView: View {
             .padding(.horizontal)
             .padding(.bottom)
         }
-        .background(FlowTaleColor.background)
+        .background(.ftBackground)
     }
 }

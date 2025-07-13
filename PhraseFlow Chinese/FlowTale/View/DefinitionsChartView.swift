@@ -51,7 +51,7 @@ struct DefinitionsChartView: View {
                 )
                 .interpolationMethod(.linear)
                 .foregroundStyle(
-                    FlowTaleColor.accent
+                    .ftAccent
                 )
 
                 // -- Add a light fill under the line
@@ -61,7 +61,7 @@ struct DefinitionsChartView: View {
                               isCreations ? dataPoint.cumulativeCreations : dataPoint.cumulativeStudied)
                 )
                 .foregroundStyle(
-                    FlowTaleColor.accent.opacity(0.2).gradient
+                    .ftAccent.opacity(0.2).gradient
                 )
             }
 
@@ -92,13 +92,13 @@ struct DefinitionsChartView: View {
                     y: .value(isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords, 0)
                 )
                 .interpolationMethod(.linear)
-                .foregroundStyle(FlowTaleColor.accent)
+                .foregroundStyle(.ftAccent)
 
                 AreaMark(
                     x: .value(LocalizedString.chartDate, todayStart),
                     y: .value(isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords, 0)
                 )
-                .foregroundStyle(FlowTaleColor.accent.opacity(0.2).gradient)
+                .foregroundStyle(.ftAccent.opacity(0.2).gradient)
 
                 // Add the "Now" point with today's count
                 let nowValue = isCreations ? todayCreations : todayStudied
@@ -108,13 +108,13 @@ struct DefinitionsChartView: View {
                     y: .value(isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords, nowValue)
                 )
                 .interpolationMethod(.linear)
-                .foregroundStyle(FlowTaleColor.accent)
+                .foregroundStyle(.ftAccent)
 
                 AreaMark(
                     x: .value(LocalizedString.chartDate, nowWithCurrentHour),
                     y: .value(isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords, nowValue)
                 )
-                .foregroundStyle(FlowTaleColor.accent.opacity(0.2).gradient)
+                .foregroundStyle(.ftAccent.opacity(0.2).gradient)
 
                 // Symbol for the "Now" point
                 PointMark(
@@ -122,7 +122,7 @@ struct DefinitionsChartView: View {
                     y: .value(isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords, nowValue)
                 )
                 .symbolSize(100)
-                .foregroundStyle(FlowTaleColor.accent)
+                .foregroundStyle(.ftAccent)
 
             } else if let lastDataPoint = dailyCumulativeCount.last {
                 // Case 2: We have historical data points plus today's data
@@ -138,14 +138,14 @@ struct DefinitionsChartView: View {
                     y: .value(isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords, nowValue)
                 )
                 .interpolationMethod(.linear)
-                .foregroundStyle(FlowTaleColor.accent)
+                .foregroundStyle(.ftAccent)
 
                 // Add the area fill
                 AreaMark(
                     x: .value(LocalizedString.chartDate, nowWithCurrentHour),
                     y: .value(isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords, nowValue)
                 )
-                .foregroundStyle(FlowTaleColor.accent.opacity(0.2).gradient)
+                .foregroundStyle(.ftAccent.opacity(0.2).gradient)
 
                 // Add a special point that marks "Now" with a symbol
                 PointMark(
@@ -153,7 +153,7 @@ struct DefinitionsChartView: View {
                     y: .value(isCreations ? LocalizedString.chartSavedDefinitions : LocalizedString.chartStudiedWords, nowValue)
                 )
                 .symbolSize(100) // Make it visible
-                .foregroundStyle(FlowTaleColor.accent)
+                .foregroundStyle(.ftAccent)
             }
 
             // -- Draw each upcoming checkpoint with a dashed line
@@ -162,7 +162,7 @@ struct DefinitionsChartView: View {
                     y: .value(LocalizedString.chartCheckpoint, checkpoint.value)
                 )
                 .lineStyle(StrokeStyle(lineWidth: 1, dash: [5])) // dotted line
-                .foregroundStyle(FlowTaleColor.secondary)
+                .foregroundStyle(.ftSecondary)
                 .annotation(position: .top, alignment: .leading) {
                     Text(checkpoint.label)
                         .font(.flowTaleSecondaryHeader())
@@ -278,7 +278,7 @@ struct DefinitionsChartView: View {
                     Text(LocalizedString.now)
                         .font(.flowTaleSecondaryHeader())
                         .fontWeight(.bold)
-                        .foregroundColor(FlowTaleColor.accent)
+                        .foregroundColor(.ftAccent)
                         .fixedSize()
                         .padding(.trailing, 10) // Add padding to shift left
                 }

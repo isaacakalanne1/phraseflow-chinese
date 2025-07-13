@@ -15,22 +15,22 @@ struct TranslationResultsSection: View {
         VStack(spacing: 8) {
             Text(LocalizedString.definition)
                 .font(.flowTaleSecondaryHeader())
-                .foregroundColor(FlowTaleColor.primary)
+                .foregroundColor(.ftPrimary)
 
             DefinitionView(definition: store.state.translationState.currentDefinition)
                 .frame(height: 150)
                 .background(
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(FlowTaleColor.background)
+                        .fill(.ftBackground)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .strokeBorder(FlowTaleColor.secondary, lineWidth: 1)
+                                .strokeBorder(.ftSecondary, lineWidth: 1)
                         )
                 )
 
             Text(LocalizedString.translation)
                 .font(.flowTaleSecondaryHeader())
-                .foregroundColor(FlowTaleColor.primary)
+                .foregroundColor(.ftPrimary)
 
             HStack(alignment: .top) {
                 ListOfSentencesView(isTranslation: true)
@@ -46,16 +46,16 @@ struct TranslationResultsSection: View {
                           "pause.circle.fill" : "play.circle.fill")
                     .resizable()
                     .frame(width: 40, height: 40)
-                    .foregroundColor(FlowTaleColor.accent)
+                    .foregroundColor(.ftAccent)
                 }
             }
             .padding(12)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(FlowTaleColor.background)
+                    .fill(.ftBackground)
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .strokeBorder(FlowTaleColor.secondary, lineWidth: 1)
+                            .strokeBorder(.ftSecondary, lineWidth: 1)
                     )
             )
         }

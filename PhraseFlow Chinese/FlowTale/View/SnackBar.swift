@@ -20,7 +20,7 @@ struct SnackBar: View {
             HStack {
                 type.iconView
                 Text(type.text)
-                    .foregroundStyle(FlowTaleColor.background)
+                    .foregroundStyle(.ftBackground)
             }
 
             // Only show loading indicators for the writing chapter snackbar
@@ -38,7 +38,7 @@ struct SnackBar: View {
         .padding()
         .frame(maxWidth: .infinity)
         .background(type.backgroundColor)
-        .foregroundStyle(FlowTaleColor.primary)
+        .foregroundStyle(.ftPrimary)
         .cornerRadius(15)
         .multilineTextAlignment(.center)
         .padding()
@@ -56,10 +56,10 @@ struct SnackBar: View {
             } else if store.state.viewState.loadingState.progressInt == completeState.progressInt {
                 ProgressView()
                     .scaleEffect(0.8)
-                    .tint(FlowTaleColor.background)
+                    .tint(.ftBackground)
             } else {
                 Circle()
-                    .fill(FlowTaleColor.background.opacity(0.3))
+                    .fill(.ftBackground.opacity(0.3))
                     .frame(width: 8, height: 8)
             }
         }

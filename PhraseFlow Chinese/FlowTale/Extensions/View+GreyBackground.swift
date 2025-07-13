@@ -17,7 +17,7 @@ struct GreyBackground: ViewModifier {
                 .padding(4)
                 .background {
                     if isShowing {
-                        FlowTaleColor.secondary
+                        Color.ftSecondary
                             .clipShape(.rect(cornerRadius: 5))
                     }
                 }

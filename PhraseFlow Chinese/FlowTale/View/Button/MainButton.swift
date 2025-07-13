@@ -22,7 +22,7 @@ struct MainButton: View {
                     VideoBackgroundView(player: player, autoPlay: true)
                         .frame(height: 70)
                         .overlay {
-                            FlowTaleColor.accent.opacity(0.6)
+                            Color.ftAccent.opacity(0.6)
                         }
                         .cornerRadius(10)
                         .scaleEffect(x: -1, y: 1)

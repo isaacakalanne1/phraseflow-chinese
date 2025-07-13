@@ -30,14 +30,14 @@ struct StoryListView: View {
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 16)
-            .shadow(color: FlowTaleColor.accent.opacity(0.3), radius: 10, x: 0, y: 5)
+            .shadow(color: .ftAccent.opacity(0.3), radius: 10, x: 0, y: 5)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(FlowTaleColor.background)
+        .background(.ftBackground)
         .navigationTitle(ContentTab.storyList.title)
         .navigationDestination(isPresented: $showCreateStorySettings) {
             CreateStorySettingsView()
-                .background(FlowTaleColor.background)
+                .background(.ftBackground)
         }
         .navigationBarTitleDisplayMode(.inline)
     }

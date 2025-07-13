@@ -51,10 +51,10 @@ struct LoadingProgressBar: View {
                     VStack(spacing: 8) {
                         Text(statusText)
                             .font(.flowTaleSecondaryHeader())
-                            .foregroundColor(FlowTaleColor.primary)
+                            .foregroundColor(.ftPrimary)
                         
                         ProgressView(value: progress, total: 1.0)
-                            .progressViewStyle(LinearProgressViewStyle(tint: FlowTaleColor.accent))
+                            .progressViewStyle(LinearProgressViewStyle(tint: .ftAccent))
                             .scaleEffect(y: 1.5)
                             .animation(.easeInOut(duration: 0.3), value: progress)
                         
@@ -88,7 +88,7 @@ struct LoadingProgressBar: View {
                     .padding(.vertical, 16)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(FlowTaleColor.background)
+                            .fill(.ftBackground)
                             .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
                     )
                     .padding(.horizontal, 40)
@@ -102,7 +102,7 @@ struct LoadingProgressBar: View {
                     HStack {
                         Text(statusText)
                             .font(.flowTaleSecondaryHeader())
-                            .foregroundColor(FlowTaleColor.primary)
+                            .foregroundColor(.ftPrimary)
                         
                         Spacer()
                         
@@ -134,7 +134,7 @@ struct LoadingProgressBar: View {
                     }
                     
                     ProgressView(value: progress, total: 1.0)
-                        .progressViewStyle(LinearProgressViewStyle(tint: FlowTaleColor.accent))
+                        .progressViewStyle(LinearProgressViewStyle(tint: .ftAccent))
                         .scaleEffect(y: 0.8)
                         .animation(.easeInOut(duration: 0.3), value: progress)
                 }
@@ -142,7 +142,7 @@ struct LoadingProgressBar: View {
                 .padding(.vertical, 8)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(FlowTaleColor.background)
+                        .fill(.ftBackground)
                         .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
                 )
                 .padding(.horizontal, 16)
@@ -165,9 +165,9 @@ struct ProgressStep: View {
             ZStack {
                 Circle()
                     .fill(
-                        isCompleted ? FlowTaleColor.accent :
-                        isCurrent ? FlowTaleColor.accent.opacity(0.3) :
-                        FlowTaleColor.secondary.opacity(0.2)
+                        isCompleted ? .ftAccent :
+                        isCurrent ? .ftAccent.opacity(0.3) :
+                        .ftSecondary.opacity(0.2)
                     )
                     .frame(width: 24, height: 24)
                 
@@ -178,11 +178,11 @@ struct ProgressStep: View {
                 } else if isCurrent {
                     ProgressView()
                         .scaleEffect(0.5)
-                        .progressViewStyle(CircularProgressViewStyle(tint: FlowTaleColor.accent))
+                        .progressViewStyle(CircularProgressViewStyle(tint: .ftAccent))
                 } else {
                     Image(systemName: icon)
                         .font(.flowTaleBodyXSmall())
-                        .foregroundColor(FlowTaleColor.secondary.opacity(0.6))
+                        .foregroundColor(.ftSecondary.opacity(0.6))
                 }
             }
         } else {
@@ -191,9 +191,9 @@ struct ProgressStep: View {
                 ZStack {
                     Circle()
                         .fill(
-                            isCompleted ? FlowTaleColor.accent :
-                            isCurrent ? FlowTaleColor.accent.opacity(0.3) :
-                            FlowTaleColor.secondary.opacity(0.2)
+                            isCompleted ? .ftAccent :
+                            isCurrent ? .ftAccent.opacity(0.3) :
+                            .ftSecondary.opacity(0.2)
                         )
                         .frame(width: 40, height: 40)
                     
@@ -204,18 +204,18 @@ struct ProgressStep: View {
                     } else if isCurrent {
                         ProgressView()
                             .scaleEffect(0.8)
-                            .progressViewStyle(CircularProgressViewStyle(tint: FlowTaleColor.accent))
+                            .progressViewStyle(CircularProgressViewStyle(tint: .ftAccent))
                     } else {
                         Image(systemName: icon)
                             .font(.flowTaleBodySmall())
-                            .foregroundColor(FlowTaleColor.secondary.opacity(0.6))
+                            .foregroundColor(.ftSecondary.opacity(0.6))
                     }
                 }
                 
                 Text(title)
                     .font(.flowTaleSecondaryHeader())
                     .foregroundColor(
-                        isCompleted || isCurrent ? FlowTaleColor.primary : FlowTaleColor.secondary
+                        isCompleted || isCurrent ? .ftPrimary : .ftSecondary
                     )
             }
         }
