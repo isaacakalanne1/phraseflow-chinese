@@ -13,11 +13,11 @@ struct StudyView: View {
     var studyWords: [Definition]
 
     var isPronounciationShown: Bool {
-        store.state.studyState.displayStatus != .wordShown
+        store.state.studyState.displayStatus != .wordShown || shouldShowAllDetails
     }
 
     var isDefinitionShown: Bool {
-        store.state.studyState.displayStatus == .allShown
+        store.state.studyState.displayStatus == .allShown || shouldShowAllDetails
     }
 
     @State var index: Int = 0
@@ -25,7 +25,7 @@ struct StudyView: View {
         studyWords[safe: index]
     }
 
-    var isWordDefinitionView: Bool {
+    var shouldShowAllDetails: Bool {
         studyWords.count == 1
     }
 
@@ -45,7 +45,6 @@ struct StudyView: View {
                     }
                 }
                 buttons(definition: definition)
-                    .frame(maxWidth: .infinity, alignment: .bottom)
             }
         }
         .navigationTitle(LocalizedString.studyNavTitle)
@@ -60,15 +59,23 @@ struct StudyView: View {
 
     func buttons(definition: Definition) -> some View {
         HStack {
-            if !isWordDefinitionView {
-                PrimaryButton(title: LocalizedString.previous, shouldPlaySound: false) {
+            if !shouldShowAllDetails {
+                PrimaryButton(
+                    title: LocalizedString.previous,
+                    shouldPlaySound: false
+                ) {
                     goToPreviousDefinition()
                 }
-                PrimaryButton(title: isDefinitionShown ? LocalizedString.next : LocalizedString.reveal, shouldPlaySound: false) {
+
+                PrimaryButton(
+                    title: isDefinitionShown ? LocalizedString.next : LocalizedString.reveal,
+                              shouldPlaySound: false
+                ) {
                     nextTapped(definition: definition)
                 }
             }
         }
+        .frame(maxWidth: .infinity, alignment: .bottom)
     }
 
     private func nextTapped(definition: Definition) {
@@ -83,21 +90,23 @@ struct StudyView: View {
     }
 
     func goToPreviousDefinition() {
+        store.dispatch(.audioAction(.playSound(.previousStudyWord)))
+
         if index - 1 < 0 {
             index = studyWords.count - 1
         } else {
             index -= 1
         }
-        store.dispatch(.audioAction(.playSound(.previousStudyWord)))
         updateDefinition()
     }
 
     func goToNextDefinition() {
+        store.dispatch(.audioAction(.playSound(.nextStudyWord)))
         if let definition = currentDefinition {
             store.dispatch(.definitionAction(.updateStudiedWord(definition)))
         }
+
         index = (index + 1) % studyWords.count
-        store.dispatch(.audioAction(.playSound(.nextStudyWord)))
         updateDefinition()
     }
 
@@ -158,8 +167,8 @@ struct StudyView: View {
                     .font(.flowTaleBodySmall())
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .scaleEffect(x: 1, y: isWordDefinitionView || isPronounciationShown ? 1 : 0, anchor: .top)
-            .opacity(isWordDefinitionView || isPronounciationShown ? 1 : 0)
+            .scaleEffect(x: 1, y: isPronounciationShown ? 1 : 0, anchor: .top)
+            .opacity(isPronounciationShown ? 1 : 0)
             Text(LocalizedString.definition)
                 .greyBackground()
             Group {
@@ -169,11 +178,11 @@ struct StudyView: View {
                 Divider()
                 Text(LocalizedString.studyContextPrefix + definition.detail.definitionInContextOfSentence)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .scaleEffect(x: 1, y: isWordDefinitionView || isDefinitionShown ? 1 : 0, anchor: .top)
+                    .scaleEffect(x: 1, y: isDefinitionShown ? 1 : 0, anchor: .top)
                     .font(.flowTaleBodySmall())
             }
-            .opacity(isWordDefinitionView || isDefinitionShown ? 1 : 0)
-            .scaleEffect(x: 1, y: isWordDefinitionView || isDefinitionShown ? 1 : 0, anchor: .top)
+            .opacity(isDefinitionShown ? 1 : 0)
+            .scaleEffect(x: 1, y: isDefinitionShown ? 1 : 0, anchor: .top)
             Text(LocalizedString.sentence)
                 .greyBackground()
             HStack {
@@ -190,11 +199,8 @@ struct StudyView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 Button {
-                    if store.state.studyState.isAudioPlaying {
-                        store.dispatch(.studyAction(.pauseStudyAudio))
-                    } else {
-                        store.dispatch(.studyAction(.playStudySentence))
-                    }
+                    let studyAction: StudyAction = store.state.studyState.isAudioPlaying ? .pauseStudyAudio : .playStudySentence
+                    store.dispatch(.studyAction(studyAction))
                 } label: {
                     SystemImageView(.speaker)
                 }
@@ -204,8 +210,8 @@ struct StudyView: View {
             Text(definition.sentence.original)
                 .font(.flowTaleBodySmall())
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .opacity(isWordDefinitionView || isDefinitionShown ? 1 : 0)
-                .scaleEffect(x: 1, y: isWordDefinitionView || isDefinitionShown ? 1 : 0, anchor: .top)
+                .opacity(isDefinitionShown ? 1 : 0)
+                .scaleEffect(x: 1, y: isDefinitionShown ? 1 : 0, anchor: .top)
         }
     }
 }
