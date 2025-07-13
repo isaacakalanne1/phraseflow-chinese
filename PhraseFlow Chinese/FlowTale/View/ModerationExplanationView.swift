@@ -16,7 +16,7 @@ struct ModerationExplanationView: View {
             VStack(alignment: .leading) {
                 Text(LocalizedString.storyDidNotPassModeration)
                     .lineLimit(0)
-                    .font(.flowtaleHeader())
+                    .font(.flowTaleHeader())
                     .fontWeight(.semibold)
 
                 Text(store.state.settingsState.customPrompt)

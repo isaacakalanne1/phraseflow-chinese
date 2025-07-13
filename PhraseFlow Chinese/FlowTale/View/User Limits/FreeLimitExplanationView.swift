@@ -16,7 +16,7 @@ struct FreeLimitExplanationView: View {
             VStack(alignment: .leading) {
                 if store.state.subscriptionState.hasReachedFreeTrialLimit {
                     Text(LocalizedString.freeTrialWhatHappened)
-                        .font(.flowTaleHeader())
+                        .font(.flowta())
                         .fontWeight(.medium)
                     Text(LocalizedString.freeTrialReachedLimit)
                         .font(.flowTaleBodyMedium())

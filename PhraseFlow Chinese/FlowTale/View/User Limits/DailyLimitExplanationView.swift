@@ -23,7 +23,7 @@ struct DailyLimitExplanationView: View {
             VStack(alignment: .leading) {
                 Text(title)
                     .lineLimit(-1)
-                    .font(.flowtaleHeader())
+                    .font(.flowTaleHeader())
                     .fontWeight(.semibold)
 
                 Divider()

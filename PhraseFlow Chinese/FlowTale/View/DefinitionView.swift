@@ -20,7 +20,7 @@ struct DefinitionView: View {
                     VStack(alignment: .leading, spacing: 16) {
                         HStack(spacing: 6) {
                             Text(definition.timestampData.word)
-                                .font(.flowtaleHeader())
+                                .font(.flowTaleHeader())
                                 .fontWeight(.bold)
                                 .foregroundColor(FlowTaleColor.primary)
                             Text(definition.detail.pronunciation)
@@ -46,7 +46,7 @@ struct DefinitionView: View {
                 // Loading state when no definition is available yet
                 VStack {
                     Text("🔍 \(LocalizedString.loading)")
-                        .font(.flowtaleSecondaryHeader())
+                        .font(.flowTaleSecondaryHeader())
                         .foregroundColor(FlowTaleColor.secondary)
                     ProgressView()
                         .padding()
@@ -62,7 +62,7 @@ struct DefinitionView: View {
                     .padding(.bottom, 10)
                     
                     Text(LocalizedString.tapAWordToDefineIt)
-                        .font(.flowtaleSecondaryHeader())
+                        .font(.flowTaleSecondaryHeader())
                         .foregroundColor(FlowTaleColor.secondary)
                         .multilineTextAlignment(.center)
                 }

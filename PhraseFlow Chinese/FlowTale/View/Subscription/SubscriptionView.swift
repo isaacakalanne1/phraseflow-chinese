@@ -15,13 +15,13 @@ struct SubscriptionView: View {
         VStack(spacing: 20) {
             Spacer()
             Text(store.state.subscriptionState.isSubscribed ? LocalizedString.manageSubscription : LocalizedString.subscribe)
-                .font(.flowtaleHeader())
+                .font(.flowTaleHeader())
                 .bold()
                 .foregroundColor(FlowTaleColor.primary)
             if !store.state.subscriptionState.isSubscribed {
                 Text(LocalizedString.subscriptionSubscribeNow)
                     .multilineTextAlignment(.center)
-                    .font(.flowtaleSecondaryHeader())
+                    .font(.flowTaleSecondaryHeader())
                     .bold()
                     .foregroundColor(FlowTaleColor.primary)
             }
@@ -52,7 +52,7 @@ struct SubscriptionView: View {
                     .font(.flowTaleHeader())
                     .bold()
                 Text(LocalizedString.subscriptionFreeCharactersDetail(4000))
-                    .font(.flowtaleSecondaryHeader())
+                    .font(.flowTaleSecondaryHeader())
             }
             .foregroundStyle(FlowTaleColor.primary)
 
@@ -66,7 +66,7 @@ struct SubscriptionView: View {
             } label: {
                 Text(LocalizedString.restoreSubscription)
                     .multilineTextAlignment(.center)
-                    .font(.flowtaleSecondaryHeader())
+                    .font(.flowTaleSecondaryHeader())
                     .bold()
                     .foregroundColor(FlowTaleColor.primary)
             }
@@ -79,7 +79,7 @@ struct SubscriptionView: View {
                 } label: {
                     Text(LocalizedString.termsOfUse)
                         .multilineTextAlignment(.center)
-                        .font(.flowtaleSecondaryHeader())
+                        .font(.flowTaleSecondaryHeader())
                         .foregroundColor(FlowTaleColor.primary)
                 }
 
@@ -90,7 +90,7 @@ struct SubscriptionView: View {
                 } label: {
                     Text(LocalizedString.privacyPolicy)
                         .multilineTextAlignment(.center)
-                        .font(.flowtaleSecondaryHeader())
+                        .font(.flowTaleSecondaryHeader())
                         .foregroundColor(FlowTaleColor.primary)
                 }
             }
@@ -98,7 +98,7 @@ struct SubscriptionView: View {
             if store.state.subscriptionState.isSubscribed {
                 Text(LocalizedString.manageSubscriptionsInstructions)
                     .multilineTextAlignment(.center)
-                    .font(.flowtaleSecondaryHeader())
+                    .font(.flowTaleSecondaryHeader())
                     .foregroundColor(FlowTaleColor.primary)
             }
         }

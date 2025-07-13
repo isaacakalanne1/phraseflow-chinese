@@ -38,7 +38,7 @@ struct StoryCardOverlay: View {
 
                 // Story summary
                 Text(firstChapter?.chapterSummary ?? "")
-                    .font(.flowtaleSecondaryHeader())
+                    .font(.flowTaleSecondaryHeader())
                     .foregroundColor(FlowTaleColor.primary)
                     .lineLimit(2)
                     .shadow(color: .black, radius: 4, x: 0, y: 0)
@@ -55,10 +55,10 @@ struct StoryCardOverlay: View {
             // Language indicator
             HStack(spacing: 6) {
                 Text(firstChapter?.language.flagEmoji ?? "")
-                    .font(.flowtaleHeader())
+                    .font(.flowTaleHeader())
 
                 Text(firstChapter?.language.descriptiveEnglishName ?? "")
-                    .font(.flowtaleSecondaryHeader())
+                    .font(.flowTaleSecondaryHeader())
                     .foregroundColor(FlowTaleColor.primary)
             }
             .padding(.horizontal, 10)
@@ -74,7 +74,7 @@ struct StoryCardOverlay: View {
                 DifficultyView(difficulty: firstChapter?.difficulty ?? .beginner, isSelected: true)
 
                 Text(firstChapter?.difficulty.title ?? "")
-                    .font(.flowtaleSecondaryHeader())
+                    .font(.flowTaleSecondaryHeader())
                     .foregroundColor(FlowTaleColor.primary)
                     .tracking(0.5)
             }
@@ -91,11 +91,11 @@ struct StoryCardOverlay: View {
     private var chaptersCount: some View {
         HStack(spacing: 4) {
             Image(systemName: "book.pages")
-                .font(.flowtaleSecondaryHeader())
+                .font(.flowTaleSecondaryHeader())
                 .foregroundColor(FlowTaleColor.primary)
 
             Text("\(allChaptersForStory.count) \(allChaptersForStory.count == 1 ? "chapter" : "chapters")")
-                .font(.flowtaleSecondaryHeader())
+                .font(.flowTaleSecondaryHeader())
                 .foregroundColor(FlowTaleColor.primary)
         }
         .shadow(color: .black, radius: 4, x: 0, y: 0)

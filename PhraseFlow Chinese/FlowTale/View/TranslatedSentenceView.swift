@@ -29,7 +29,7 @@ struct TranslatedSentenceView: View {
                             .padding(.bottom, 4)
                         
                         Text(LocalizedString.tapRevealToShow)
-                            .font(.flowtaleSecondaryHeader())
+                            .font(.flowTaleSecondaryHeader())
                             .foregroundColor(FlowTaleColor.secondary)
                             .multilineTextAlignment(.center)
                     }
@@ -38,7 +38,7 @@ struct TranslatedSentenceView: View {
                 // No sentence selected state
                 VStack {
                     Text("Select a sentence to see the translation")
-                        .font(.flowtaleSecondaryHeader())
+                        .font(.flowTaleSecondaryHeader())
                         .foregroundColor(FlowTaleColor.secondary)
                         .multilineTextAlignment(.center)
                 }

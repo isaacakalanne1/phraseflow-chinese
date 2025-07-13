@@ -55,7 +55,7 @@ struct SubscriptionOption: View {
                     .font(.flowTaleHeader())
                     .bold()
                 Text(detail)
-                    .font(.flowtaleSecondaryHeader())
+                    .font(.flowTaleSecondaryHeader())
             }
             .padding()
             .frame(maxWidth: .infinity)

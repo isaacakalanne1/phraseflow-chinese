@@ -50,7 +50,7 @@ struct LoadingProgressBar: View {
                     
                     VStack(spacing: 8) {
                         Text(statusText)
-                            .font(.flowtaleSecondaryHeader())
+                            .font(.flowTaleSecondaryHeader())
                             .foregroundColor(FlowTaleColor.primary)
                         
                         ProgressView(value: progress, total: 1.0)
@@ -101,7 +101,7 @@ struct LoadingProgressBar: View {
                 VStack(spacing: 4) {
                     HStack {
                         Text(statusText)
-                            .font(.flowtaleSecondaryHeader())
+                            .font(.flowTaleSecondaryHeader())
                             .foregroundColor(FlowTaleColor.primary)
                         
                         Spacer()
@@ -213,7 +213,7 @@ struct ProgressStep: View {
                 }
                 
                 Text(title)
-                    .font(.flowtaleSecondaryHeader())
+                    .font(.flowTaleSecondaryHeader())
                     .foregroundColor(
                         isCompleted || isCurrent ? FlowTaleColor.primary : FlowTaleColor.secondary
                     )

@@ -48,7 +48,7 @@ struct ChapterListView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
                         Text(firstChapter.storyTitle)
-                            .font(.flowtaleSecondaryHeader())
+                            .font(.flowTaleSecondaryHeader())
                             .foregroundColor(FlowTaleColor.primary)
                         
                         Spacer()
@@ -56,13 +56,13 @@ struct ChapterListView: View {
                         HStack(spacing: 4) {
                             DifficultyView(difficulty: firstChapter.difficulty, isSelected: true)
                             Text(firstChapter.difficulty.title)
-                                .font(.flowtaleSecondaryHeader())
+                                .font(.flowTaleSecondaryHeader())
                                 .foregroundColor(FlowTaleColor.secondary)
                         }
                     }
                     
                     Text(firstChapter.chapterSummary)
-                        .font(.flowtaleSecondaryHeader())
+                        .font(.flowTaleSecondaryHeader())
                         .foregroundColor(FlowTaleColor.primary.opacity(0.8))
                         .lineLimit(3)
                 }
@@ -73,7 +73,7 @@ struct ChapterListView: View {
                     LazyVStack(spacing: 12) {
                         HStack {
                             Text(LocalizedString.chapters)
-                                .font(.flowtaleSecondaryHeader())
+                                .font(.flowTaleSecondaryHeader())
                                 .foregroundColor(FlowTaleColor.secondary)
                             
                             Spacer()
@@ -150,11 +150,11 @@ struct ChapterListView: View {
                 .padding(.top, 20)
             
             Text(LocalizedString.noChaptersYet)
-                .font(.flowtaleSecondaryHeader())
+                .font(.flowTaleSecondaryHeader())
                 .foregroundColor(FlowTaleColor.primary)
             
             Text(LocalizedString.createYourFirstChapter)
-                .font(.flowtaleSecondaryHeader())
+                .font(.flowTaleSecondaryHeader())
                 .foregroundColor(FlowTaleColor.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 40)

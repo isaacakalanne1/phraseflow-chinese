@@ -37,7 +37,7 @@ struct TranslationActionButton: View {
                     (store.state.translationState.mode == .translate ? LocalizedString.translate : LocalizedString.breakdown)
                 
                 Text(buttonText)
-                    .font(.flowtaleSecondaryHeader())
+                    .font(.flowTaleSecondaryHeader())
             }
             .foregroundColor(.white)
             .padding()

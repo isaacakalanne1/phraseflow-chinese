@@ -17,11 +17,11 @@ struct StoryListEmptyState: View {
                 .foregroundColor(FlowTaleColor.accent.opacity(0.6))
             
             Text(LocalizedString.noStoriesYet)
-                .font(.flowtaleSecondaryHeader())
+                .font(.flowTaleSecondaryHeader())
                 .foregroundColor(FlowTaleColor.primary)
             
             Text(LocalizedString.createYourFirstStory)
-                .font(.flowtaleSecondaryHeader())
+                .font(.flowTaleSecondaryHeader())
                 .foregroundColor(FlowTaleColor.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 40)

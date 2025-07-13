@@ -11,11 +11,11 @@ extension Font {
 
     // MARK: Header
 
-    static func flowtaleHeader() -> Font {
+    static func flowTaleHeader() -> Font {
         .title2
     }
 
-    static func flowtaleSecondaryHeader() -> Font {
+    static func flowTaleSecondaryHeader() -> Font {
         .subheadline
     }
 

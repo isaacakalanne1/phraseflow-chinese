@@ -124,7 +124,7 @@ struct ListOfSentencesView: View {
                 .disabled(currentPage <= 0)
                 
                 Text("\(currentPage + 1) / \(totalPages)")
-                    .font(.flowtaleSecondaryHeader())
+                    .font(.flowTaleSecondaryHeader())
                     .foregroundColor(.secondary)
                 
                 Button {

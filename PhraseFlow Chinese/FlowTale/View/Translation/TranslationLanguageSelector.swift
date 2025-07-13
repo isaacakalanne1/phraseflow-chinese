@@ -64,7 +64,7 @@ struct TranslationLanguageSelector: View {
                         .lineLimit(1)
                 }
                 Image(systemName: "chevron.down")
-                    .font(.flowtaleSecondaryHeader())
+                    .font(.flowTaleSecondaryHeader())
             }
             .foregroundColor(FlowTaleColor.primary)
             .padding(.vertical, 6)
@@ -112,7 +112,7 @@ struct TranslationLanguageSelector: View {
                     .fontWeight(.medium)
                     .lineLimit(1)
                 Image(systemName: "chevron.down")
-                    .font(.flowtaleSecondaryHeader())
+                    .font(.flowTaleSecondaryHeader())
             }
             .foregroundColor(FlowTaleColor.primary)
             .padding(.vertical, 6)
@@ -141,7 +141,7 @@ struct TranslationLanguageSelector: View {
                     .fontWeight(.medium)
                     .lineLimit(1)
                 Image(systemName: "chevron.down")
-                    .font(.flowtaleSecondaryHeader())
+                    .font(.flowTaleSecondaryHeader())
             }
             .foregroundColor(FlowTaleColor.primary)
             .padding(.vertical, 6)
