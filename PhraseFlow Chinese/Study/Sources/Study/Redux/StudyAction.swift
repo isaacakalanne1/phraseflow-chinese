@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum StudyAction {
+public enum StudyAction {
     case failedToPrepareStudyWord
     case playStudyWord(Definition)
     case prepareToPlayStudySentence(Definition)

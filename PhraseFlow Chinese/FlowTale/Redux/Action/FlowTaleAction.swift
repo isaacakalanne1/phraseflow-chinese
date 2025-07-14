@@ -8,6 +8,7 @@
 import AVKit
 import Foundation
 import StoreKit
+import Study
 
 enum FlowTaleAction {
     case studyAction(StudyAction)

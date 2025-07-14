@@ -19,7 +19,6 @@
 		BB2893162DAA82E300F7ED69 /* TranslationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2893152DAA82E300F7ED69 /* TranslationState.swift */; };
 		BB2893192DAAB49D00F7ED69 /* ChapterResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2893182DAAB49900F7ED69 /* ChapterResponseDecoder.swift */; };
 		BB34C4F82E23E09900238EA8 /* Font+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34C4F72E23E09700238EA8 /* Font+Types.swift */; };
-		BB34C4FD2E23EBF500238EA8 /* StudyDisplayStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34C4FC2E23EBF500238EA8 /* StudyDisplayStatus.swift */; };
 		BB34C4FF2E23F23900238EA8 /* StudySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34C4FE2E23F23900238EA8 /* StudySection.swift */; };
 		BB3ED31E2E05862C003B7D14 /* LanguageMenuType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3ED31D2E05862C003B7D14 /* LanguageMenuType.swift */; };
 		BB45C5692D4A785C00B3705A /* DailyLimitExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB45C5682D4A785C00B3705A /* DailyLimitExplanationView.swift */; };
@@ -39,7 +38,6 @@
 		BB4EDB1D2C90DFDD00699E7D /* FlowTaleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB1C2C90DFDD00699E7D /* FlowTaleRepository.swift */; };
 		BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB232C91902100699E7D /* SettingsView.swift */; };
 		BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */; };
-		BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB2A2C91B35D00699E7D /* Definition.swift */; };
 		BB5062CC2DA875B50031B62B /* TranslationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5062CB2DA875B50031B62B /* TranslationView.swift */; };
 		BB6572CE2CD12A9200AC5981 /* ChapterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572CD2CD12A9200AC5981 /* ChapterResponse.swift */; };
 		BB6572D22CD165F200AC5981 /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D12CD165F200AC5981 /* Collection+Safe.swift */; };
@@ -57,7 +55,6 @@
 		BB6BD01B2DB176C800E45697 /* ModerationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD01A2DB176C800E45697 /* ModerationRequest.swift */; };
 		BB6BD01E2DB176ED00E45697 /* FluxImageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD01D2DB176ED00E45697 /* FluxImageError.swift */; };
 		BB6BD0212DB1770B00E45697 /* FlowTaleServicesError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD0202DB1770B00E45697 /* FlowTaleServicesError.swift */; };
-		BB6BD0242DB1771B00E45697 /* WordDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD0232DB1771B00E45697 /* WordDefinition.swift */; };
 		BB6BD0262DB1772C00E45697 /* CreateChapterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD0252DB1772C00E45697 /* CreateChapterType.swift */; };
 		BB6BD0282DB177C200E45697 /* FlowTaleDataStoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD0272DB177C200E45697 /* FlowTaleDataStoreError.swift */; };
 		BB6BD02B2DB178B300E45697 /* CharacterUsageRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD02A2DB178B300E45697 /* CharacterUsageRecord.swift */; };
@@ -80,9 +77,6 @@
 		BB756CD92E03377600365610 /* AudioMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CD82E03377600365610 /* AudioMiddleware.swift */; };
 		BB756CDB2E0337A700365610 /* AudioAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CDA2E0337A700365610 /* AudioAction.swift */; };
 		BB756CDD2E03383800365610 /* AudioReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CDC2E03383800365610 /* AudioReducer.swift */; };
-		BB756CDF2E033C2D00365610 /* DefinitionMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CDE2E033C2D00365610 /* DefinitionMiddleware.swift */; };
-		BB756CE12E033C3A00365610 /* DefinitionReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CE02E033C3A00365610 /* DefinitionReducer.swift */; };
-		BB756CE32E033C4200365610 /* DefinitionAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CE22E033C4200365610 /* DefinitionAction.swift */; };
 		BB756CE52E033DE900365610 /* SubscriptionMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CE42E033DE900365610 /* SubscriptionMiddleware.swift */; };
 		BB756CE72E033DF700365610 /* SubscriptionAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CE62E033DF700365610 /* SubscriptionAction.swift */; };
 		BB756CE92E033DFD00365610 /* SubscriptionReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CE82E033DFD00365610 /* SubscriptionReducer.swift */; };
@@ -104,7 +98,6 @@
 		BB7B6D942D1ACEBF0030344A /* libPods-FlowTale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */; };
 		BB7B6D962D1DF0990030344A /* StudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D952D1DF0990030344A /* StudyView.swift */; };
 		BB7B6D982D1E0D070030344A /* StoryInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D972D1E0D070030344A /* StoryInfoView.swift */; };
-		BB7B6D9A2D1EEA3D0030344A /* StudyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D992D1EEA3D0030344A /* StudyState.swift */; };
 		BB7B6D9C2D1F30BC0030344A /* SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D9B2D1F30BC0030344A /* SnackBar.swift */; };
 		BB7B6D9E2D1F31190030344A /* SnackBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D9D2D1F31190030344A /* SnackBarState.swift */; };
 		BB7B6DA02D1F316E0030344A /* SnackBarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D9F2D1F316E0030344A /* SnackBarType.swift */; };
@@ -147,14 +140,11 @@
 		BBC3E1822E0C57D6007F9878 /* LoadingProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC3E1812E0C57D6007F9878 /* LoadingProgressBar.swift */; };
 		BBDA56B82DFF0DF000B61F05 /* StoryDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56B72DFF0DF000B61F05 /* StoryDataStore.swift */; };
 		BBDA56BA2DFF0DFC00B61F05 /* StoryDataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56B92DFF0DFC00B61F05 /* StoryDataStoreProtocol.swift */; };
-		BBDA56BC2DFF0F8200B61F05 /* DefinitionDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56BB2DFF0F8200B61F05 /* DefinitionDataStore.swift */; };
-		BBDA56BE2DFF0F9800B61F05 /* DefinitionDataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56BD2DFF0F9800B61F05 /* DefinitionDataStoreProtocol.swift */; };
 		BBDA56C02DFF10E700B61F05 /* UserLimitsDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56BF2DFF10E700B61F05 /* UserLimitsDataStore.swift */; };
 		BBDA56C22DFF10F200B61F05 /* UserLimitsDataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56C12DFF10F200B61F05 /* UserLimitsDataStoreProtocol.swift */; };
 		BBDA56C42DFF117F00B61F05 /* SettingsDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56C32DFF117F00B61F05 /* SettingsDataStore.swift */; };
 		BBDA56C62DFF118D00B61F05 /* SettingsDataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56C52DFF118D00B61F05 /* SettingsDataStoreProtocol.swift */; };
 		BBDA56C82DFF12C200B61F05 /* FlowTaleRepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56C72DFF12C200B61F05 /* FlowTaleRepositoryError.swift */; };
-		BBDA56CA2DFF132D00B61F05 /* MultipleWordsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56C92DFF132D00B61F05 /* MultipleWordsResponse.swift */; };
 		BBDA56CC2DFF165500B61F05 /* CreateImageServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56CB2DFF165500B61F05 /* CreateImageServices.swift */; };
 		BBDA56CE2DFF166500B61F05 /* CreateImageServicesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56CD2DFF166500B61F05 /* CreateImageServicesProtocol.swift */; };
 		BBDA56D02DFF1A8600B61F05 /* TranslationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56CF2DFF1A8600B61F05 /* TranslationServices.swift */; };
@@ -164,8 +154,6 @@
 		BBDA56D82DFF1C2800B61F05 /* CreateStoryServicesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56D72DFF1C2800B61F05 /* CreateStoryServicesProtocol.swift */; };
 		BBDA56DA2DFF1D0A00B61F05 /* ModerationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56D92DFF1D0A00B61F05 /* ModerationServices.swift */; };
 		BBDA56DC2DFF1D1800B61F05 /* ModerationServicesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56DB2DFF1D1800B61F05 /* ModerationServicesProtocol.swift */; };
-		BBDA56DE2DFF4D5000B61F05 /* DefinitionServicesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56DD2DFF4D5000B61F05 /* DefinitionServicesProtocol.swift */; };
-		BBDA56E02DFF4D5E00B61F05 /* DefinitionServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56DF2DFF4D5E00B61F05 /* DefinitionServices.swift */; };
 		BBE16F202CC152C400A7EF1F /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */; };
 		BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F212CC2769C00A7EF1F /* StoryListView.swift */; };
 		BBE16F242CC2AFC800A7EF1F /* ChapterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */; };
@@ -173,7 +161,6 @@
 		BBE521FD2DE9D83C00ADACA8 /* FlowTaleServicesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE521FC2DE9D83C00ADACA8 /* FlowTaleServicesProtocol.swift */; };
 		BBE522002DE9D85B00ADACA8 /* FlowTaleDataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE521FF2DE9D85B00ADACA8 /* FlowTaleDataStoreProtocol.swift */; };
 		BBE522052DE9D88F00ADACA8 /* FlowTaleRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE522042DE9D88F00ADACA8 /* FlowTaleRepositoryProtocol.swift */; };
-		BBE522092DE9D8D600ADACA8 /* StudyAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE522082DE9D8D600ADACA8 /* StudyAction.swift */; };
 		BBE5220C2DE9D8EB00ADACA8 /* TranslationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE5220B2DE9D8EB00ADACA8 /* TranslationAction.swift */; };
 		BBE5220E2DEA49FA00ADACA8 /* FlowTaleColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE5220D2DEA49FA00ADACA8 /* FlowTaleColorScheme.swift */; };
 		BBE522102DEA4A1000ADACA8 /* StorySetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE5220F2DEA4A1000ADACA8 /* StorySetting.swift */; };
@@ -209,8 +196,6 @@
 		BBE990E72D2ABE8B00FAD3FB /* ProgressUpdate.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */; };
 		BBEF63512DA1EB5600F93ECC /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF63502DA1EB5300F93ECC /* KeychainManager.swift */; };
 		BBEF63532DA1F80800F93ECC /* MusicVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF63522DA1F80400F93ECC /* MusicVolume.swift */; };
-		BBEF63572DA1F89F00F93ECC /* StudyReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF63562DA1F89B00F93ECC /* StudyReducer.swift */; };
-		BBEF63592DA1F99900F93ECC /* StudyMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF63582DA1F99700F93ECC /* StudyMiddleware.swift */; };
 		BBF6187E2D42DE6D00CA3229 /* NextStudyWord.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF6187D2D42DE6C00CA3229 /* NextStudyWord.mp3 */; };
 		BBF618822D42E06800CA3229 /* PreviousStudyWord.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618812D42E06800CA3229 /* PreviousStudyWord.mp3 */; };
 		BBF618842D42E43E00CA3229 /* CreateNextChapter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618832D42E43E00CA3229 /* CreateNextChapter.mp3 */; };
@@ -257,8 +242,9 @@
 		BB2893152DAA82E300F7ED69 /* TranslationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationState.swift; sourceTree = "<group>"; };
 		BB2893182DAAB49900F7ED69 /* ChapterResponseDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterResponseDecoder.swift; sourceTree = "<group>"; };
 		BB34C4F72E23E09700238EA8 /* Font+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Types.swift"; sourceTree = "<group>"; };
-		BB34C4FC2E23EBF500238EA8 /* StudyDisplayStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyDisplayStatus.swift; sourceTree = "<group>"; };
 		BB34C4FE2E23F23900238EA8 /* StudySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySection.swift; sourceTree = "<group>"; };
+		BB34C5022E2430BA00238EA8 /* Study */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Study; sourceTree = "<group>"; };
+		BB34C5032E25259C00238EA8 /* Definition */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Definition; sourceTree = "<group>"; };
 		BB3ED31D2E05862C003B7D14 /* LanguageMenuType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageMenuType.swift; sourceTree = "<group>"; };
 		BB45C5682D4A785C00B3705A /* DailyLimitExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLimitExplanationView.swift; sourceTree = "<group>"; };
 		BB45C56A2D4A7C4000B3705A /* FreeLimitExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeLimitExplanationView.swift; sourceTree = "<group>"; };
@@ -276,7 +262,6 @@
 		BB4EDB1C2C90DFDD00699E7D /* FlowTaleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleRepository.swift; sourceTree = "<group>"; };
 		BB4EDB232C91902100699E7D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPhrasesResponse.swift; sourceTree = "<group>"; };
-		BB4EDB2A2C91B35D00699E7D /* Definition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Definition.swift; sourceTree = "<group>"; };
 		BB5062CB2DA875B50031B62B /* TranslationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationView.swift; sourceTree = "<group>"; };
 		BB6572CD2CD12A9200AC5981 /* ChapterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterResponse.swift; sourceTree = "<group>"; };
 		BB6572D12CD165F200AC5981 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
@@ -294,7 +279,6 @@
 		BB6BD01A2DB176C800E45697 /* ModerationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationRequest.swift; sourceTree = "<group>"; };
 		BB6BD01D2DB176ED00E45697 /* FluxImageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FluxImageError.swift; sourceTree = "<group>"; };
 		BB6BD0202DB1770B00E45697 /* FlowTaleServicesError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleServicesError.swift; sourceTree = "<group>"; };
-		BB6BD0232DB1771B00E45697 /* WordDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDefinition.swift; sourceTree = "<group>"; };
 		BB6BD0252DB1772C00E45697 /* CreateChapterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChapterType.swift; sourceTree = "<group>"; };
 		BB6BD0272DB177C200E45697 /* FlowTaleDataStoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleDataStoreError.swift; sourceTree = "<group>"; };
 		BB6BD02A2DB178B300E45697 /* CharacterUsageRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterUsageRecord.swift; sourceTree = "<group>"; };
@@ -317,9 +301,6 @@
 		BB756CD82E03377600365610 /* AudioMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMiddleware.swift; sourceTree = "<group>"; };
 		BB756CDA2E0337A700365610 /* AudioAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAction.swift; sourceTree = "<group>"; };
 		BB756CDC2E03383800365610 /* AudioReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioReducer.swift; sourceTree = "<group>"; };
-		BB756CDE2E033C2D00365610 /* DefinitionMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionMiddleware.swift; sourceTree = "<group>"; };
-		BB756CE02E033C3A00365610 /* DefinitionReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionReducer.swift; sourceTree = "<group>"; };
-		BB756CE22E033C4200365610 /* DefinitionAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionAction.swift; sourceTree = "<group>"; };
 		BB756CE42E033DE900365610 /* SubscriptionMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionMiddleware.swift; sourceTree = "<group>"; };
 		BB756CE62E033DF700365610 /* SubscriptionAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionAction.swift; sourceTree = "<group>"; };
 		BB756CE82E033DFD00365610 /* SubscriptionReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionReducer.swift; sourceTree = "<group>"; };
@@ -341,7 +322,6 @@
 		BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-FlowTale.a"; path = "../../../../Library/Developer/Xcode/DerivedData/FlowTale-dzblbgdyrqlsjdggurnqsbvwzaoq/Build/Products/Debug-iphoneos/libPods-FlowTale.a"; sourceTree = "<group>"; };
 		BB7B6D952D1DF0990030344A /* StudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyView.swift; sourceTree = "<group>"; };
 		BB7B6D972D1E0D070030344A /* StoryInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryInfoView.swift; sourceTree = "<group>"; };
-		BB7B6D992D1EEA3D0030344A /* StudyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyState.swift; sourceTree = "<group>"; };
 		BB7B6D9B2D1F30BC0030344A /* SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBar.swift; sourceTree = "<group>"; };
 		BB7B6D9D2D1F31190030344A /* SnackBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarState.swift; sourceTree = "<group>"; };
 		BB7B6D9F2D1F316E0030344A /* SnackBarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarType.swift; sourceTree = "<group>"; };
@@ -398,14 +378,11 @@
 		BBC3E1812E0C57D6007F9878 /* LoadingProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingProgressBar.swift; sourceTree = "<group>"; };
 		BBDA56B72DFF0DF000B61F05 /* StoryDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryDataStore.swift; sourceTree = "<group>"; };
 		BBDA56B92DFF0DFC00B61F05 /* StoryDataStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryDataStoreProtocol.swift; sourceTree = "<group>"; };
-		BBDA56BB2DFF0F8200B61F05 /* DefinitionDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionDataStore.swift; sourceTree = "<group>"; };
-		BBDA56BD2DFF0F9800B61F05 /* DefinitionDataStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionDataStoreProtocol.swift; sourceTree = "<group>"; };
 		BBDA56BF2DFF10E700B61F05 /* UserLimitsDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLimitsDataStore.swift; sourceTree = "<group>"; };
 		BBDA56C12DFF10F200B61F05 /* UserLimitsDataStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLimitsDataStoreProtocol.swift; sourceTree = "<group>"; };
 		BBDA56C32DFF117F00B61F05 /* SettingsDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDataStore.swift; sourceTree = "<group>"; };
 		BBDA56C52DFF118D00B61F05 /* SettingsDataStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDataStoreProtocol.swift; sourceTree = "<group>"; };
 		BBDA56C72DFF12C200B61F05 /* FlowTaleRepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleRepositoryError.swift; sourceTree = "<group>"; };
-		BBDA56C92DFF132D00B61F05 /* MultipleWordsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleWordsResponse.swift; sourceTree = "<group>"; };
 		BBDA56CB2DFF165500B61F05 /* CreateImageServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageServices.swift; sourceTree = "<group>"; };
 		BBDA56CD2DFF166500B61F05 /* CreateImageServicesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateImageServicesProtocol.swift; sourceTree = "<group>"; };
 		BBDA56CF2DFF1A8600B61F05 /* TranslationServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationServices.swift; sourceTree = "<group>"; };
@@ -415,8 +392,6 @@
 		BBDA56D72DFF1C2800B61F05 /* CreateStoryServicesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStoryServicesProtocol.swift; sourceTree = "<group>"; };
 		BBDA56D92DFF1D0A00B61F05 /* ModerationServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationServices.swift; sourceTree = "<group>"; };
 		BBDA56DB2DFF1D1800B61F05 /* ModerationServicesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationServicesProtocol.swift; sourceTree = "<group>"; };
-		BBDA56DD2DFF4D5000B61F05 /* DefinitionServicesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionServicesProtocol.swift; sourceTree = "<group>"; };
-		BBDA56DF2DFF4D5E00B61F05 /* DefinitionServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionServices.swift; sourceTree = "<group>"; };
 		BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
 		BBE16F212CC2769C00A7EF1F /* StoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListView.swift; sourceTree = "<group>"; };
 		BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterListView.swift; sourceTree = "<group>"; };
@@ -424,7 +399,6 @@
 		BBE521FC2DE9D83C00ADACA8 /* FlowTaleServicesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleServicesProtocol.swift; sourceTree = "<group>"; };
 		BBE521FF2DE9D85B00ADACA8 /* FlowTaleDataStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleDataStoreProtocol.swift; sourceTree = "<group>"; };
 		BBE522042DE9D88F00ADACA8 /* FlowTaleRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleRepositoryProtocol.swift; sourceTree = "<group>"; };
-		BBE522082DE9D8D600ADACA8 /* StudyAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyAction.swift; sourceTree = "<group>"; };
 		BBE5220B2DE9D8EB00ADACA8 /* TranslationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationAction.swift; sourceTree = "<group>"; };
 		BBE5220D2DEA49FA00ADACA8 /* FlowTaleColorScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleColorScheme.swift; sourceTree = "<group>"; };
 		BBE5220F2DEA4A1000ADACA8 /* StorySetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorySetting.swift; sourceTree = "<group>"; };
@@ -460,8 +434,6 @@
 		BBE990E62D2ABE8A00FAD3FB /* ProgressUpdate.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ProgressUpdate.mp3; sourceTree = "<group>"; };
 		BBEF63502DA1EB5300F93ECC /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		BBEF63522DA1F80400F93ECC /* MusicVolume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicVolume.swift; sourceTree = "<group>"; };
-		BBEF63562DA1F89B00F93ECC /* StudyReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyReducer.swift; sourceTree = "<group>"; };
-		BBEF63582DA1F99700F93ECC /* StudyMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMiddleware.swift; sourceTree = "<group>"; };
 		BBF6187D2D42DE6C00CA3229 /* NextStudyWord.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = NextStudyWord.mp3; sourceTree = "<group>"; };
 		BBF618812D42E06800CA3229 /* PreviousStudyWord.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PreviousStudyWord.mp3; sourceTree = "<group>"; };
 		BBF618832D42E43E00CA3229 /* CreateNextChapter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CreateNextChapter.mp3; sourceTree = "<group>"; };
@@ -545,7 +517,6 @@
 				BB6572F62CDB991A00AC5981 /* SettingsState.swift */,
 				BB1994CC2CE904D900D61E54 /* StoryState.swift */,
 				BB7B6D9D2D1F31190030344A /* SnackBarState.swift */,
-				BB7B6D992D1EEA3D0030344A /* StudyState.swift */,
 				BB2893152DAA82E300F7ED69 /* TranslationState.swift */,
 				BB1994D22CE9051700D61E54 /* ViewState.swift */,
 			);
@@ -643,16 +614,6 @@
 				BB6BD0202DB1770B00E45697 /* FlowTaleServicesError.swift */,
 			);
 			path = Error;
-			sourceTree = "<group>";
-		};
-		BB6BD0222DB1771600E45697 /* Definition */ = {
-			isa = PBXGroup;
-			children = (
-				BB4EDB2A2C91B35D00699E7D /* Definition.swift */,
-				BBDA56C92DFF132D00B61F05 /* MultipleWordsResponse.swift */,
-				BB6BD0232DB1771B00E45697 /* WordDefinition.swift */,
-			);
-			path = Definition;
 			sourceTree = "<group>";
 		};
 		BB6BD0292DB178AB00E45697 /* User Limits */ = {
@@ -763,6 +724,8 @@
 		BBB6EF1A2C8C86240079D135 = {
 			isa = PBXGroup;
 			children = (
+				BB34C5032E25259C00238EA8 /* Definition */,
+				BB34C5022E2430BA00238EA8 /* Study */,
 				BBB6EF252C8C86240079D135 /* FlowTale */,
 				BBB6EF362C8C862A0079D135 /* FlowTaleTests */,
 				BBB6EF402C8C862A0079D135 /* FlowTaleUITests */,
@@ -831,7 +794,6 @@
 			children = (
 				BB6BD03D2DB25FA300E45697 /* Background */,
 				BB2893172DAAB49300F7ED69 /* Decoder */,
-				BB6BD0222DB1771600E45697 /* Definition */,
 				BB6BD01F2DB176FE00E45697 /* Error */,
 				BB6BD01C2DB176D800E45697 /* Flux Image */,
 				BB6BD0322DB17F0A00E45697 /* LLM API */,
@@ -842,7 +804,6 @@
 				BB6BD0292DB178AB00E45697 /* User Limits */,
 				BB3ED31C2E05861D003B7D14 /* Language */,
 				BBEF63522DA1F80400F93ECC /* MusicVolume.swift */,
-				BB34C4FC2E23EBF500238EA8 /* StudyDisplayStatus.swift */,
 				BBE5220D2DEA49FA00ADACA8 /* FlowTaleColorScheme.swift */,
 				BBE5220F2DEA4A1000ADACA8 /* StorySetting.swift */,
 				BBE990B62D29BC5500FAD3FB /* AppSound.swift */,
@@ -901,7 +862,6 @@
 				BBE521FC2DE9D83C00ADACA8 /* FlowTaleServicesProtocol.swift */,
 				BBDA56CD2DFF166500B61F05 /* CreateImageServicesProtocol.swift */,
 				BBDA56D72DFF1C2800B61F05 /* CreateStoryServicesProtocol.swift */,
-				BBDA56DD2DFF4D5000B61F05 /* DefinitionServicesProtocol.swift */,
 				BBDA56DB2DFF1D1800B61F05 /* ModerationServicesProtocol.swift */,
 				BBDA56D12DFF1A9D00B61F05 /* TranslationServicesProtocol.swift */,
 			);
@@ -924,7 +884,6 @@
 				BB4EDB162C90D20300699E7D /* FlowTaleServices.swift */,
 				BBDA56CB2DFF165500B61F05 /* CreateImageServices.swift */,
 				BBDA56D52DFF1C1800B61F05 /* CreateStoryServices.swift */,
-				BBDA56DF2DFF4D5E00B61F05 /* DefinitionServices.swift */,
 				BBDA56D32DFF1AB800B61F05 /* RequestFactory.swift */,
 				BBDA56D92DFF1D0A00B61F05 /* ModerationServices.swift */,
 				BBDA56CF2DFF1A8600B61F05 /* TranslationServices.swift */,
@@ -937,8 +896,6 @@
 			children = (
 				BB4EDB142C90CF7400699E7D /* FlowTaleDataStore.swift */,
 				BBE521FF2DE9D85B00ADACA8 /* FlowTaleDataStoreProtocol.swift */,
-				BBDA56BB2DFF0F8200B61F05 /* DefinitionDataStore.swift */,
-				BBDA56BD2DFF0F9800B61F05 /* DefinitionDataStoreProtocol.swift */,
 				BBDA56BF2DFF10E700B61F05 /* UserLimitsDataStore.swift */,
 				BBDA56C12DFF10F200B61F05 /* UserLimitsDataStoreProtocol.swift */,
 				BBDA56B72DFF0DF000B61F05 /* StoryDataStore.swift */,
@@ -965,12 +922,10 @@
 				BB4EDB062C90C8CA00699E7D /* FlowTaleAction.swift */,
 				BB756CEA2E03417300365610 /* AppSettingsAction.swift */,
 				BB756CDA2E0337A700365610 /* AudioAction.swift */,
-				BB756CE22E033C4200365610 /* DefinitionAction.swift */,
 				BB756CF02E03439D00365610 /* ModerationAction.swift */,
 				BB756CFC2E03476B00365610 /* NavigationAction.swift */,
 				BB756D022E0413E400365610 /* SnackbarAction.swift */,
 				BB756CD42E03319A00365610 /* StoryAction.swift */,
-				BBE522082DE9D8D600ADACA8 /* StudyAction.swift */,
 				BB756CE62E033DF700365610 /* SubscriptionAction.swift */,
 				BBE5220B2DE9D8EB00ADACA8 /* TranslationAction.swift */,
 				BB756CF62E0344F700365610 /* UserLimitAction.swift */,
@@ -1035,12 +990,10 @@
 				BB4EDB0D2C90CA0300699E7D /* FlowTaleMiddleware.swift */,
 				BB756CEC2E03417900365610 /* AppSettingsMiddleware.swift */,
 				BB756CD82E03377600365610 /* AudioMiddleware.swift */,
-				BB756CDE2E033C2D00365610 /* DefinitionMiddleware.swift */,
 				BB756CF22E0343A400365610 /* ModerationMiddleware.swift */,
 				BB756CFE2E03477000365610 /* NavigationMiddleware.swift */,
 				BB756D042E0413EC00365610 /* SnackbarMiddleware.swift */,
 				BB756CD22E03318400365610 /* StoryMiddleware.swift */,
-				BBEF63582DA1F99700F93ECC /* StudyMiddleware.swift */,
 				BB756CE42E033DE900365610 /* SubscriptionMiddleware.swift */,
 				BB2893132DAA82BF00F7ED69 /* TranslationMiddleware.swift */,
 				BB756CF82E0344FC00365610 /* UserLimitMiddleware.swift */,
@@ -1054,12 +1007,10 @@
 				BB4EDB0B2C90C9A100699E7D /* FlowTaleReducer.swift */,
 				BB756CEE2E03417E00365610 /* AppSettingsReducer.swift */,
 				BB756CDC2E03383800365610 /* AudioReducer.swift */,
-				BB756CE02E033C3A00365610 /* DefinitionReducer.swift */,
 				BB756CF42E0343A900365610 /* ModerationReducer.swift */,
 				BB756D002E03477500365610 /* NavigationReducer.swift */,
 				BB756D062E0413F300365610 /* SnackbarReducer.swift */,
 				BB756CD62E03322200365610 /* StoryReducer.swift */,
-				BBEF63562DA1F89B00F93ECC /* StudyReducer.swift */,
 				BB756CE82E033DFD00365610 /* SubscriptionReducer.swift */,
 				BB2893112DAA82B700F7ED69 /* TranslationReducer.swift */,
 				BB756CFA2E03450500365610 /* UserLimitReducer.swift */,
@@ -1299,7 +1250,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBEF63572DA1F89F00F93ECC /* StudyReducer.swift in Sources */,
 				BBE5220C2DE9D8EB00ADACA8 /* TranslationAction.swift in Sources */,
 				BBE636C52CCC0CDD00873E68 /* DefinitionView.swift in Sources */,
 				BBAE07D92D14BD6D00DA95CD /* AIStatementView.swift in Sources */,
@@ -1316,13 +1266,11 @@
 				BBDA56C22DFF10F200B61F05 /* UserLimitsDataStoreProtocol.swift in Sources */,
 				BBDA56C02DFF10E700B61F05 /* UserLimitsDataStore.swift in Sources */,
 				BB6BD0152DB1768200E45697 /* ModerationResult.swift in Sources */,
-				BBEF63592DA1F99900F93ECC /* StudyMiddleware.swift in Sources */,
 				BBB1B7CC2D7B34EB0023147B /* MainButton.swift in Sources */,
 				BB2893162DAA82E300F7ED69 /* TranslationState.swift in Sources */,
 				BB7B6D9C2D1F30BC0030344A /* SnackBar.swift in Sources */,
 				BB756CFD2E03476B00365610 /* NavigationAction.swift in Sources */,
 				BB6572CE2CD12A9200AC5981 /* ChapterResponse.swift in Sources */,
-				BBDA56DE2DFF4D5000B61F05 /* DefinitionServicesProtocol.swift in Sources */,
 				BB756CE72E033DF700365610 /* SubscriptionAction.swift in Sources */,
 				BBAE07DD2D14BE3000DA95CD /* SystemImage.swift in Sources */,
 				BB6BD0212DB1770B00E45697 /* FlowTaleServicesError.swift in Sources */,
@@ -1331,7 +1279,6 @@
 				BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */,
 				BBAE07DB2D14BE0B00DA95CD /* SystemImageView.swift in Sources */,
 				BB47122B2E06178C0060782B /* ChapterAudio.swift in Sources */,
-				BB4EDB2B2C91B35D00699E7D /* Definition.swift in Sources */,
 				BB6BD0172DB176AC00E45697 /* CategoryResult.swift in Sources */,
 				BB6DD0992D39BAF400EF6AF9 /* DifficultySettingsView.swift in Sources */,
 				BB0854832CB42C0200F1661B /* Chapter.swift in Sources */,
@@ -1349,14 +1296,12 @@
 				BB756CE52E033DE900365610 /* SubscriptionMiddleware.swift in Sources */,
 				BB7B6D982D1E0D070030344A /* StoryInfoView.swift in Sources */,
 				BB4E6BF82D246AEF002B5CBA /* LoadingState.swift in Sources */,
-				BB6BD0242DB1771B00E45697 /* WordDefinition.swift in Sources */,
 				BBDA56D82DFF1C2800B61F05 /* CreateStoryServicesProtocol.swift in Sources */,
 				BBDA56CC2DFF165500B61F05 /* CreateImageServices.swift in Sources */,
 				BBE522262DEAF48E00ADACA8 /* DeleteButton.swift in Sources */,
 				BBE522162DEA51CA00ADACA8 /* TranslationLanguageSelector.swift in Sources */,
 				BB756CF72E0344F700365610 /* UserLimitAction.swift in Sources */,
 				BBE522172DEA51CA00ADACA8 /* TranslationInputSection.swift in Sources */,
-				BB756CE32E033C4200365610 /* DefinitionAction.swift in Sources */,
 				BBE522182DEA51CA00ADACA8 /* TranslationResultsSection.swift in Sources */,
 				BBE522192DEA51CA00ADACA8 /* TranslationActionButton.swift in Sources */,
 				BBDA56B82DFF0DF000B61F05 /* StoryDataStore.swift in Sources */,
@@ -1366,12 +1311,9 @@
 				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,
 				BB2893192DAAB49D00F7ED69 /* ChapterResponseDecoder.swift in Sources */,
 				BB756CED2E03417900365610 /* AppSettingsMiddleware.swift in Sources */,
-				BB34C4FD2E23EBF500238EA8 /* StudyDisplayStatus.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FlowTaleDataStore.swift in Sources */,
-				BBDA56CA2DFF132D00B61F05 /* MultipleWordsResponse.swift in Sources */,
 				BB45C5692D4A785C00B3705A /* DailyLimitExplanationView.swift in Sources */,
 				BBDA56D42DFF1AB800B61F05 /* RequestFactory.swift in Sources */,
-				BB7B6D9A2D1EEA3D0030344A /* StudyState.swift in Sources */,
 				BBE990C12D29C59C00FAD3FB /* MusicType.swift in Sources */,
 				BBDA56C42DFF117F00B61F05 /* SettingsDataStore.swift in Sources */,
 				BBE636C72CCC0E1200873E68 /* TranslatedSentenceView.swift in Sources */,
@@ -1386,7 +1328,6 @@
 				BBE521FD2DE9D83C00ADACA8 /* FlowTaleServicesProtocol.swift in Sources */,
 				BB1994D12CE9050000D61E54 /* AudioState.swift in Sources */,
 				BBAE07D52D0CA79A00DA95CD /* SubscriptionOption.swift in Sources */,
-				BB756CE12E033C3A00365610 /* DefinitionReducer.swift in Sources */,
 				BB756CF92E0344FC00365610 /* UserLimitMiddleware.swift in Sources */,
 				BB6BD0132DB1766200E45697 /* ModerationResponse.swift in Sources */,
 				BB6572D22CD165F200AC5981 /* Collection+Safe.swift in Sources */,
@@ -1398,7 +1339,6 @@
 				BBE990B52D29BC2200FAD3FB /* AppAudioState.swift in Sources */,
 				BB756D072E0413F300365610 /* SnackbarReducer.swift in Sources */,
 				BBE522002DE9D85B00ADACA8 /* FlowTaleDataStoreProtocol.swift in Sources */,
-				BB756CDF2E033C2D00365610 /* DefinitionMiddleware.swift in Sources */,
 				BB6BD01B2DB176C800E45697 /* ModerationRequest.swift in Sources */,
 				BBDA56DC2DFF1D1800B61F05 /* ModerationServicesProtocol.swift in Sources */,
 				BB7B6D962D1DF0990030344A /* StudyView.swift in Sources */,
@@ -1438,7 +1378,6 @@
 				BBE522242DEA591300ADACA8 /* StoryCard.swift in Sources */,
 				BB1994CF2CE904F000D61E54 /* DefinitionState.swift in Sources */,
 				BB6BD03F2DB25FAD00E45697 /* BackgroundImageType.swift in Sources */,
-				BBE522092DE9D8D600ADACA8 /* StudyAction.swift in Sources */,
 				BB4EDB0C2C90C9A100699E7D /* FlowTaleReducer.swift in Sources */,
 				BB6572F92CDBB14C00AC5981 /* SpeechStyle.swift in Sources */,
 				BB6BD0342DB25C1700E45697 /* AudioButton.swift in Sources */,
@@ -1448,7 +1387,6 @@
 				BB756CD92E03377600365610 /* AudioMiddleware.swift in Sources */,
 				BBFB3B072D3D37F2001997A8 /* ModerationExplanationView.swift in Sources */,
 				BB6572D62CD4E09000AC5981 /* ActionButton.swift in Sources */,
-				BBDA56BE2DFF0F9800B61F05 /* DefinitionDataStoreProtocol.swift in Sources */,
 				BB756CEB2E03417300365610 /* AppSettingsAction.swift in Sources */,
 				BB756D012E03477500365610 /* NavigationReducer.swift in Sources */,
 				BBE16F242CC2AFC800A7EF1F /* ChapterListView.swift in Sources */,
@@ -1456,7 +1394,6 @@
 				BB6BD0362DB25C9100E45697 /* SpeechSpeedButton.swift in Sources */,
 				BBE522052DE9D88F00ADACA8 /* FlowTaleRepositoryProtocol.swift in Sources */,
 				BB6BD0312DB17E7800E45697 /* OpenRouterModel.swift in Sources */,
-				BBDA56BC2DFF0F8200B61F05 /* DefinitionDataStore.swift in Sources */,
 				BB6BD03A2DB25E7C00E45697 /* View+CardBackground.swift in Sources */,
 				BBE16F202CC152C400A7EF1F /* Difficulty.swift in Sources */,
 				BB756CD72E03322200365610 /* StoryReducer.swift in Sources */,
@@ -1465,7 +1402,6 @@
 				BB756CE92E033DFD00365610 /* SubscriptionReducer.swift in Sources */,
 				BB4EDB172C90D20300699E7D /* FlowTaleServices.swift in Sources */,
 				BB6572F72CDB991B00AC5981 /* SettingsState.swift in Sources */,
-				BBDA56E02DFF4D5E00B61F05 /* DefinitionServices.swift in Sources */,
 				BBDA56D22DFF1A9D00B61F05 /* TranslationServicesProtocol.swift in Sources */,
 				BB6BD0282DB177C200E45697 /* FlowTaleDataStoreError.swift in Sources */,
 				BB4EDB052C90C89C00699E7D /* FlowTaleState.swift in Sources */,
