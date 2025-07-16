@@ -6,6 +6,7 @@
 //
 
 import AVKit
+import Localization
 import SwiftUI
 
 struct CreateStorySettingsView: View {

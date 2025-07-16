@@ -11,7 +11,7 @@ struct BackgroundImage: ViewModifier {
     let type: BackgroundImageType
 
     func body(content: Content) -> some View {
-        ZStack(alignment: .bottomTrailing) {
+        ZStack(alignment: .bottomTrailing) { // TODO: Remove if not needed
             content
                 .background {
                     Group {

@@ -4,31 +4,27 @@
 import PackageDescription
 
 let package = Package(
-    name: "Definition",
+    name: "Sound",
     platforms: [
         .iOS("17.4")
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "Definition",
-            targets: ["Definition"]),
-    ],
-    dependencies: [
-        .package(name: "Story", path: "../Story")
+            name: "Sound",
+            targets: ["Sound"]),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Definition",
-            dependencies: [
-                "Story"
-            ]
-        ),
+            name: "Sound",
+            resources: [
+                .process("Resources")
+            ]),
         .testTarget(
-            name: "DefinitionTests",
-            dependencies: ["Definition"]
+            name: "SoundTests",
+            dependencies: ["Sound"]
         ),
     ]
 )

@@ -5,6 +5,7 @@
 //  Created by iakalann on 21/11/2024.
 //
 
+import Localization
 import SwiftUI
 
 public enum Language: String, Codable, CaseIterable {
