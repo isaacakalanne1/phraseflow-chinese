@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum Voice: String, Codable, CaseIterable, Equatable {
+public enum Voice: String, Codable, CaseIterable, Equatable {
     case xiaoxiao, // Chinese
          yunjian,
          denise, // French

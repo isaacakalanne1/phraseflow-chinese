@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Settings
+import Speech
 import UIKit
 
 struct Chapter: Codable, Equatable, Hashable {

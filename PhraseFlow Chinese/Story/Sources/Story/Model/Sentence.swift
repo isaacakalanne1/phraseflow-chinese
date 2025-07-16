@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct Sentence: Codable, Equatable, Hashable {
+public struct Sentence: Codable, Equatable, Hashable {
     let id: UUID
     let translation: String
     let original: String
     var timestamps: [WordTimeStampData]
 
-    init(from decoder: any Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = (try? container.decode(UUID.self, forKey: .id)) ?? UUID()
         self.translation = try container.decode(String.self, forKey: .translation)

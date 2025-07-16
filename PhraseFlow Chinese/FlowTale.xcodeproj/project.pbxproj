@@ -7,10 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BB0854832CB42C0200F1661B /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0854822CB42C0200F1661B /* Chapter.swift */; };
-		BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */; };
 		BB1994C82CE8E0BE00D61E54 /* Data+AVPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994C72CE8E0BE00D61E54 /* Data+AVPlayer.swift */; };
-		BB1994CD2CE904D900D61E54 /* StoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994CC2CE904D900D61E54 /* StoryState.swift */; };
 		BB1994CF2CE904F000D61E54 /* DefinitionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994CE2CE904F000D61E54 /* DefinitionState.swift */; };
 		BB1994D12CE9050000D61E54 /* AudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D02CE9050000D61E54 /* AudioState.swift */; };
 		BB1994D32CE9051700D61E54 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1994D22CE9051700D61E54 /* ViewState.swift */; };
@@ -23,7 +20,6 @@
 		BB3ED31E2E05862C003B7D14 /* LanguageMenuType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3ED31D2E05862C003B7D14 /* LanguageMenuType.swift */; };
 		BB45C5692D4A785C00B3705A /* DailyLimitExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB45C5682D4A785C00B3705A /* DailyLimitExplanationView.swift */; };
 		BB45C56B2D4A7C4000B3705A /* FreeLimitExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB45C56A2D4A7C4000B3705A /* FreeLimitExplanationView.swift */; };
-		BB47122B2E06178C0060782B /* ChapterAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB47122A2E06178C0060782B /* ChapterAudio.swift */; };
 		BB4E6BF82D246AEF002B5CBA /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4E6BF72D246AEF002B5CBA /* LoadingState.swift */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
 		BB4EDB032C90C86300699E7D /* FlowTaleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */; };
@@ -39,14 +35,10 @@
 		BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB232C91902100699E7D /* SettingsView.swift */; };
 		BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */; };
 		BB5062CC2DA875B50031B62B /* TranslationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5062CB2DA875B50031B62B /* TranslationView.swift */; };
-		BB6572CE2CD12A9200AC5981 /* ChapterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572CD2CD12A9200AC5981 /* ChapterResponse.swift */; };
 		BB6572D22CD165F200AC5981 /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D12CD165F200AC5981 /* Collection+Safe.swift */; };
 		BB6572D42CD3932300AC5981 /* View+GreyBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D32CD3932300AC5981 /* View+GreyBackground.swift */; };
 		BB6572D62CD4E09000AC5981 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D52CD4E08F00AC5981 /* ActionButton.swift */; };
-		BB6572E52CD8D12400AC5981 /* Voice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572E42CD8D12400AC5981 /* Voice.swift */; };
-		BB6572E72CD8D1E300AC5981 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572E62CD8D1E300AC5981 /* Gender.swift */; };
 		BB6572F72CDB991B00AC5981 /* SettingsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572F62CDB991A00AC5981 /* SettingsState.swift */; };
-		BB6572F92CDBB14C00AC5981 /* SpeechStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572F82CDBB14C00AC5981 /* SpeechStyle.swift */; };
 		BB6BD0102DB1639D00E45697 /* AVPlayer+Play.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD00F2DB1639300E45697 /* AVPlayer+Play.swift */; };
 		BB6BD0132DB1766200E45697 /* ModerationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD0122DB1765F00E45697 /* ModerationResponse.swift */; };
 		BB6BD0152DB1768200E45697 /* ModerationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD0142DB1768200E45697 /* ModerationResult.swift */; };
@@ -55,7 +47,6 @@
 		BB6BD01B2DB176C800E45697 /* ModerationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD01A2DB176C800E45697 /* ModerationRequest.swift */; };
 		BB6BD01E2DB176ED00E45697 /* FluxImageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD01D2DB176ED00E45697 /* FluxImageError.swift */; };
 		BB6BD0212DB1770B00E45697 /* FlowTaleServicesError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD0202DB1770B00E45697 /* FlowTaleServicesError.swift */; };
-		BB6BD0262DB1772C00E45697 /* CreateChapterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD0252DB1772C00E45697 /* CreateChapterType.swift */; };
 		BB6BD0282DB177C200E45697 /* FlowTaleDataStoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD0272DB177C200E45697 /* FlowTaleDataStoreError.swift */; };
 		BB6BD02B2DB178B300E45697 /* CharacterUsageRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD02A2DB178B300E45697 /* CharacterUsageRecord.swift */; };
 		BB6BD02E2DB17D4500E45697 /* ContentTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD02D2DB17D4500E45697 /* ContentTab.swift */; };
@@ -68,12 +59,6 @@
 		BB6BD03F2DB25FAD00E45697 /* BackgroundImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD03E2DB25FAD00E45697 /* BackgroundImageType.swift */; };
 		BB6BD0442DB2644100E45697 /* CreateStoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD0432DB2644100E45697 /* CreateStoryButton.swift */; };
 		BB6BD0462DB2645700E45697 /* VideoBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD0452DB2645700E45697 /* VideoBackgroundView.swift */; };
-		BB6DD0992D39BAF400EF6AF9 /* DifficultySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6DD0982D39BAF400EF6AF9 /* DifficultySettingsView.swift */; };
-		BB6DD09B2D39BB9700EF6AF9 /* LanguageSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6DD09A2D39BB9700EF6AF9 /* LanguageSettingsView.swift */; };
-		BB6DD09D2D39BCF900EF6AF9 /* StoryPromptSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6DD09C2D39BCF900EF6AF9 /* StoryPromptSettingsView.swift */; };
-		BB756CD32E03318400365610 /* StoryMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CD22E03318400365610 /* StoryMiddleware.swift */; };
-		BB756CD52E03319A00365610 /* StoryAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CD42E03319A00365610 /* StoryAction.swift */; };
-		BB756CD72E03322200365610 /* StoryReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CD62E03322200365610 /* StoryReducer.swift */; };
 		BB756CD92E03377600365610 /* AudioMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CD82E03377600365610 /* AudioMiddleware.swift */; };
 		BB756CDB2E0337A700365610 /* AudioAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CDA2E0337A700365610 /* AudioAction.swift */; };
 		BB756CDD2E03383800365610 /* AudioReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CDC2E03383800365610 /* AudioReducer.swift */; };
@@ -102,8 +87,6 @@
 		BB7B6D9E2D1F31190030344A /* SnackBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D9D2D1F31190030344A /* SnackBarState.swift */; };
 		BB7B6DA02D1F316E0030344A /* SnackBarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D9F2D1F316E0030344A /* SnackBarType.swift */; };
 		BB7B6DA22D1F3B680030344A /* DifficultyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6DA12D1F3B680030344A /* DifficultyView.swift */; };
-		BB84E0A02CEFA96200520F5E /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB84E09F2CEFA96200520F5E /* Language.swift */; };
-		BB84E0A22CF0AF4200520F5E /* CreateStorySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */; };
 		BB84E0A62CF3EC8600520F5E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BB84E0A42CF3EC8600520F5E /* Localizable.strings */; };
 		BB84E0AB2CF494D900520F5E /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = BB84E0AA2CF494D900520F5E /* swiftgen.yml */; };
 		BB84E0AD2CF4952700520F5E /* strings-enum.stencil in Sources */ = {isa = PBXBuildFile; fileRef = BB84E0AC2CF4952700520F5E /* strings-enum.stencil */; };
@@ -136,10 +119,7 @@
 		BBB6EF382C8C862A0079D135 /* FlowTaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF372C8C862A0079D135 /* FlowTaleTests.swift */; };
 		BBB6EF422C8C862A0079D135 /* FlowTaleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF412C8C862A0079D135 /* FlowTaleUITests.swift */; };
 		BBB6EF442C8C862A0079D135 /* FlowTaleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF432C8C862A0079D135 /* FlowTaleUITestsLaunchTests.swift */; };
-		BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF512C8C86B10079D135 /* Sentence.swift */; };
 		BBC3E1822E0C57D6007F9878 /* LoadingProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC3E1812E0C57D6007F9878 /* LoadingProgressBar.swift */; };
-		BBDA56B82DFF0DF000B61F05 /* StoryDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56B72DFF0DF000B61F05 /* StoryDataStore.swift */; };
-		BBDA56BA2DFF0DFC00B61F05 /* StoryDataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56B92DFF0DFC00B61F05 /* StoryDataStoreProtocol.swift */; };
 		BBDA56C02DFF10E700B61F05 /* UserLimitsDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56BF2DFF10E700B61F05 /* UserLimitsDataStore.swift */; };
 		BBDA56C22DFF10F200B61F05 /* UserLimitsDataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56C12DFF10F200B61F05 /* UserLimitsDataStoreProtocol.swift */; };
 		BBDA56C42DFF117F00B61F05 /* SettingsDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56C32DFF117F00B61F05 /* SettingsDataStore.swift */; };
@@ -150,11 +130,8 @@
 		BBDA56D02DFF1A8600B61F05 /* TranslationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56CF2DFF1A8600B61F05 /* TranslationServices.swift */; };
 		BBDA56D22DFF1A9D00B61F05 /* TranslationServicesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56D12DFF1A9D00B61F05 /* TranslationServicesProtocol.swift */; };
 		BBDA56D42DFF1AB800B61F05 /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56D32DFF1AB800B61F05 /* RequestFactory.swift */; };
-		BBDA56D62DFF1C1800B61F05 /* CreateStoryServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56D52DFF1C1800B61F05 /* CreateStoryServices.swift */; };
-		BBDA56D82DFF1C2800B61F05 /* CreateStoryServicesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56D72DFF1C2800B61F05 /* CreateStoryServicesProtocol.swift */; };
 		BBDA56DA2DFF1D0A00B61F05 /* ModerationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56D92DFF1D0A00B61F05 /* ModerationServices.swift */; };
 		BBDA56DC2DFF1D1800B61F05 /* ModerationServicesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56DB2DFF1D1800B61F05 /* ModerationServicesProtocol.swift */; };
-		BBE16F202CC152C400A7EF1F /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */; };
 		BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F212CC2769C00A7EF1F /* StoryListView.swift */; };
 		BBE16F242CC2AFC800A7EF1F /* ChapterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */; };
 		BBE521FA2DE9D81300ADACA8 /* FlowTaleEnvironmentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE521F92DE9D81300ADACA8 /* FlowTaleEnvironmentProtocol.swift */; };
@@ -173,7 +150,6 @@
 		BBE522232DEA591300ADACA8 /* StoryCardOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE5221C2DEA591300ADACA8 /* StoryCardOverlay.swift */; };
 		BBE522242DEA591300ADACA8 /* StoryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE5221B2DEA591300ADACA8 /* StoryCard.swift */; };
 		BBE522262DEAF48E00ADACA8 /* DeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE522252DEAF48E00ADACA8 /* DeleteButton.swift */; };
-		BBE636BF2CC98B2B00873E68 /* WordTimeStampData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */; };
 		BBE636C12CCC0B5000873E68 /* ActionButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636C02CCC0B5000873E68 /* ActionButtonsView.swift */; };
 		BBE636C32CCC0BE900873E68 /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636C22CCC0BE900873E68 /* CharacterView.swift */; };
 		BBE636C52CCC0CDD00873E68 /* DefinitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE636C42CCC0CDD00873E68 /* DefinitionView.swift */; };
@@ -200,7 +176,6 @@
 		BBF618822D42E06800CA3229 /* PreviousStudyWord.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618812D42E06800CA3229 /* PreviousStudyWord.mp3 */; };
 		BBF618842D42E43E00CA3229 /* CreateNextChapter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618832D42E43E00CA3229 /* CreateNextChapter.mp3 */; };
 		BBF618862D42E63D00CA3229 /* GoToNextChapter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF618852D42E63D00CA3229 /* GoToNextChapter.mp3 */; };
-		BBF618882D42F7C300CA3229 /* VoiceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF618872D42F7C300CA3229 /* VoiceSettingsView.swift */; };
 		BBF6188C2D43A54200CA3229 /* OpenStorySettings.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF6188B2D43A54200CA3229 /* OpenStorySettings.mp3 */; };
 		BBFB3B072D3D37F2001997A8 /* ModerationExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFB3B062D3D37F2001997A8 /* ModerationExplanationView.swift */; };
 		BBFDBBE92D203AD80056C448 /* DefinitionsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFDBBE82D203AD80056C448 /* DefinitionsChartView.swift */; };
@@ -230,10 +205,7 @@
 		5EDA23FCE91C5CB989C86534 /* Pods-PhraseFlow Chinese.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhraseFlow Chinese.release.xcconfig"; path = "Target Support Files/Pods-PhraseFlow Chinese/Pods-PhraseFlow Chinese.release.xcconfig"; sourceTree = "<group>"; };
 		8DBC39CBD1D5A30498912D09 /* Pods-FlowTale.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowTale.release.xcconfig"; path = "Target Support Files/Pods-FlowTale/Pods-FlowTale.release.xcconfig"; sourceTree = "<group>"; };
 		A6E47BC9388E891E2E0D0FE5 /* libPods-FlowTale.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FlowTale.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB0854822CB42C0200F1661B /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
-		BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpeed.swift; sourceTree = "<group>"; };
 		BB1994C72CE8E0BE00D61E54 /* Data+AVPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+AVPlayer.swift"; sourceTree = "<group>"; };
-		BB1994CC2CE904D900D61E54 /* StoryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryState.swift; sourceTree = "<group>"; };
 		BB1994CE2CE904F000D61E54 /* DefinitionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionState.swift; sourceTree = "<group>"; };
 		BB1994D02CE9050000D61E54 /* AudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioState.swift; sourceTree = "<group>"; };
 		BB1994D22CE9051700D61E54 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
@@ -245,10 +217,13 @@
 		BB34C4FE2E23F23900238EA8 /* StudySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySection.swift; sourceTree = "<group>"; };
 		BB34C5022E2430BA00238EA8 /* Study */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Study; sourceTree = "<group>"; };
 		BB34C5032E25259C00238EA8 /* Definition */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Definition; sourceTree = "<group>"; };
+		BB34C5042E25279800238EA8 /* Story */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Story; sourceTree = "<group>"; };
+		BB34C5052E252D7100238EA8 /* Speech */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Speech; sourceTree = "<group>"; };
+		BB34C5062E28258A00238EA8 /* Settings */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Settings; sourceTree = "<group>"; };
+		BB34C5072E28264C00238EA8 /* Localization */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Localization; sourceTree = "<group>"; };
 		BB3ED31D2E05862C003B7D14 /* LanguageMenuType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageMenuType.swift; sourceTree = "<group>"; };
 		BB45C5682D4A785C00B3705A /* DailyLimitExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLimitExplanationView.swift; sourceTree = "<group>"; };
 		BB45C56A2D4A7C4000B3705A /* FreeLimitExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeLimitExplanationView.swift; sourceTree = "<group>"; };
-		BB47122A2E06178C0060782B /* ChapterAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterAudio.swift; sourceTree = "<group>"; };
 		BB4E6BF72D246AEF002B5CBA /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleStore.swift; sourceTree = "<group>"; };
 		BB4EDB042C90C89C00699E7D /* FlowTaleState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleState.swift; sourceTree = "<group>"; };
@@ -263,14 +238,10 @@
 		BB4EDB232C91902100699E7D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPhrasesResponse.swift; sourceTree = "<group>"; };
 		BB5062CB2DA875B50031B62B /* TranslationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationView.swift; sourceTree = "<group>"; };
-		BB6572CD2CD12A9200AC5981 /* ChapterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterResponse.swift; sourceTree = "<group>"; };
 		BB6572D12CD165F200AC5981 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
 		BB6572D32CD3932300AC5981 /* View+GreyBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+GreyBackground.swift"; sourceTree = "<group>"; };
 		BB6572D52CD4E08F00AC5981 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
-		BB6572E42CD8D12400AC5981 /* Voice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voice.swift; sourceTree = "<group>"; };
-		BB6572E62CD8D1E300AC5981 /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
 		BB6572F62CDB991A00AC5981 /* SettingsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsState.swift; sourceTree = "<group>"; };
-		BB6572F82CDBB14C00AC5981 /* SpeechStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechStyle.swift; sourceTree = "<group>"; };
 		BB6BD00F2DB1639300E45697 /* AVPlayer+Play.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayer+Play.swift"; sourceTree = "<group>"; };
 		BB6BD0122DB1765F00E45697 /* ModerationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationResponse.swift; sourceTree = "<group>"; };
 		BB6BD0142DB1768200E45697 /* ModerationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationResult.swift; sourceTree = "<group>"; };
@@ -279,7 +250,6 @@
 		BB6BD01A2DB176C800E45697 /* ModerationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationRequest.swift; sourceTree = "<group>"; };
 		BB6BD01D2DB176ED00E45697 /* FluxImageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FluxImageError.swift; sourceTree = "<group>"; };
 		BB6BD0202DB1770B00E45697 /* FlowTaleServicesError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleServicesError.swift; sourceTree = "<group>"; };
-		BB6BD0252DB1772C00E45697 /* CreateChapterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChapterType.swift; sourceTree = "<group>"; };
 		BB6BD0272DB177C200E45697 /* FlowTaleDataStoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleDataStoreError.swift; sourceTree = "<group>"; };
 		BB6BD02A2DB178B300E45697 /* CharacterUsageRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterUsageRecord.swift; sourceTree = "<group>"; };
 		BB6BD02D2DB17D4500E45697 /* ContentTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTab.swift; sourceTree = "<group>"; };
@@ -292,12 +262,6 @@
 		BB6BD03E2DB25FAD00E45697 /* BackgroundImageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageType.swift; sourceTree = "<group>"; };
 		BB6BD0432DB2644100E45697 /* CreateStoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStoryButton.swift; sourceTree = "<group>"; };
 		BB6BD0452DB2645700E45697 /* VideoBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoBackgroundView.swift; sourceTree = "<group>"; };
-		BB6DD0982D39BAF400EF6AF9 /* DifficultySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultySettingsView.swift; sourceTree = "<group>"; };
-		BB6DD09A2D39BB9700EF6AF9 /* LanguageSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsView.swift; sourceTree = "<group>"; };
-		BB6DD09C2D39BCF900EF6AF9 /* StoryPromptSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPromptSettingsView.swift; sourceTree = "<group>"; };
-		BB756CD22E03318400365610 /* StoryMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryMiddleware.swift; sourceTree = "<group>"; };
-		BB756CD42E03319A00365610 /* StoryAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryAction.swift; sourceTree = "<group>"; };
-		BB756CD62E03322200365610 /* StoryReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryReducer.swift; sourceTree = "<group>"; };
 		BB756CD82E03377600365610 /* AudioMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMiddleware.swift; sourceTree = "<group>"; };
 		BB756CDA2E0337A700365610 /* AudioAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAction.swift; sourceTree = "<group>"; };
 		BB756CDC2E03383800365610 /* AudioReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioReducer.swift; sourceTree = "<group>"; };
@@ -326,8 +290,6 @@
 		BB7B6D9D2D1F31190030344A /* SnackBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarState.swift; sourceTree = "<group>"; };
 		BB7B6D9F2D1F316E0030344A /* SnackBarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarType.swift; sourceTree = "<group>"; };
 		BB7B6DA12D1F3B680030344A /* DifficultyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyView.swift; sourceTree = "<group>"; };
-		BB84E09F2CEFA96200520F5E /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
-		BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStorySettingsView.swift; sourceTree = "<group>"; };
 		BB84E0A52CF3EC8600520F5E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BB84E0AA2CF494D900520F5E /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		BB84E0AC2CF4952700520F5E /* strings-enum.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = "strings-enum.stencil"; sourceTree = "<group>"; };
@@ -374,10 +336,7 @@
 		BBB6EF3D2C8C862A0079D135 /* FlowTaleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowTaleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF412C8C862A0079D135 /* FlowTaleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleUITests.swift; sourceTree = "<group>"; };
 		BBB6EF432C8C862A0079D135 /* FlowTaleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		BBB6EF512C8C86B10079D135 /* Sentence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sentence.swift; sourceTree = "<group>"; };
 		BBC3E1812E0C57D6007F9878 /* LoadingProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingProgressBar.swift; sourceTree = "<group>"; };
-		BBDA56B72DFF0DF000B61F05 /* StoryDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryDataStore.swift; sourceTree = "<group>"; };
-		BBDA56B92DFF0DFC00B61F05 /* StoryDataStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryDataStoreProtocol.swift; sourceTree = "<group>"; };
 		BBDA56BF2DFF10E700B61F05 /* UserLimitsDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLimitsDataStore.swift; sourceTree = "<group>"; };
 		BBDA56C12DFF10F200B61F05 /* UserLimitsDataStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLimitsDataStoreProtocol.swift; sourceTree = "<group>"; };
 		BBDA56C32DFF117F00B61F05 /* SettingsDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDataStore.swift; sourceTree = "<group>"; };
@@ -388,11 +347,8 @@
 		BBDA56CF2DFF1A8600B61F05 /* TranslationServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationServices.swift; sourceTree = "<group>"; };
 		BBDA56D12DFF1A9D00B61F05 /* TranslationServicesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationServicesProtocol.swift; sourceTree = "<group>"; };
 		BBDA56D32DFF1AB800B61F05 /* RequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFactory.swift; sourceTree = "<group>"; };
-		BBDA56D52DFF1C1800B61F05 /* CreateStoryServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStoryServices.swift; sourceTree = "<group>"; };
-		BBDA56D72DFF1C2800B61F05 /* CreateStoryServicesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStoryServicesProtocol.swift; sourceTree = "<group>"; };
 		BBDA56D92DFF1D0A00B61F05 /* ModerationServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationServices.swift; sourceTree = "<group>"; };
 		BBDA56DB2DFF1D1800B61F05 /* ModerationServicesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationServicesProtocol.swift; sourceTree = "<group>"; };
-		BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
 		BBE16F212CC2769C00A7EF1F /* StoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListView.swift; sourceTree = "<group>"; };
 		BBE16F232CC2AFC800A7EF1F /* ChapterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterListView.swift; sourceTree = "<group>"; };
 		BBE521F92DE9D81300ADACA8 /* FlowTaleEnvironmentProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleEnvironmentProtocol.swift; sourceTree = "<group>"; };
@@ -411,7 +367,6 @@
 		BBE5221D2DEA591300ADACA8 /* StoryListContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListContent.swift; sourceTree = "<group>"; };
 		BBE5221E2DEA591300ADACA8 /* StoryListEmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListEmptyState.swift; sourceTree = "<group>"; };
 		BBE522252DEAF48E00ADACA8 /* DeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButton.swift; sourceTree = "<group>"; };
-		BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTimeStampData.swift; sourceTree = "<group>"; };
 		BBE636C02CCC0B5000873E68 /* ActionButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonsView.swift; sourceTree = "<group>"; };
 		BBE636C22CCC0BE900873E68 /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterView.swift; sourceTree = "<group>"; };
 		BBE636C42CCC0CDD00873E68 /* DefinitionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionView.swift; sourceTree = "<group>"; };
@@ -438,7 +393,6 @@
 		BBF618812D42E06800CA3229 /* PreviousStudyWord.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PreviousStudyWord.mp3; sourceTree = "<group>"; };
 		BBF618832D42E43E00CA3229 /* CreateNextChapter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CreateNextChapter.mp3; sourceTree = "<group>"; };
 		BBF618852D42E63D00CA3229 /* GoToNextChapter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = GoToNextChapter.mp3; sourceTree = "<group>"; };
-		BBF618872D42F7C300CA3229 /* VoiceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSettingsView.swift; sourceTree = "<group>"; };
 		BBF6188B2D43A54200CA3229 /* OpenStorySettings.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = OpenStorySettings.mp3; sourceTree = "<group>"; };
 		BBFB3B062D3D37F2001997A8 /* ModerationExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationExplanationView.swift; sourceTree = "<group>"; };
 		BBFDBBE82D203AD80056C448 /* DefinitionsChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionsChartView.swift; sourceTree = "<group>"; };
@@ -481,30 +435,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		BB0854862CB42C7100F1661B /* Story */ = {
-			isa = PBXGroup;
-			children = (
-				BB0854822CB42C0200F1661B /* Chapter.swift */,
-				BB6BD0252DB1772C00E45697 /* CreateChapterType.swift */,
-				BBB6EF512C8C86B10079D135 /* Sentence.swift */,
-				BB6572CD2CD12A9200AC5981 /* ChapterResponse.swift */,
-				BB47122A2E06178C0060782B /* ChapterAudio.swift */,
-				BBE16F1F2CC152C400A7EF1F /* Difficulty.swift */,
-			);
-			path = Story;
-			sourceTree = "<group>";
-		};
-		BB1994C62CE8DC2100D61E54 /* Speech */ = {
-			isa = PBXGroup;
-			children = (
-				BB6572E62CD8D1E300AC5981 /* Gender.swift */,
-				BB0B8FD72C8DFABD001DD6F0 /* SpeechSpeed.swift */,
-				BB6572F82CDBB14C00AC5981 /* SpeechStyle.swift */,
-				BB6572E42CD8D12400AC5981 /* Voice.swift */,
-			);
-			path = Speech;
-			sourceTree = "<group>";
-		};
 		BB1994CB2CE904C600D61E54 /* State */ = {
 			isa = PBXGroup;
 			children = (
@@ -515,7 +445,6 @@
 				BB4EDB042C90C89C00699E7D /* FlowTaleState.swift */,
 				BBAE07D22D0C796500DA95CD /* SubscriptionState.swift */,
 				BB6572F62CDB991A00AC5981 /* SettingsState.swift */,
-				BB1994CC2CE904D900D61E54 /* StoryState.swift */,
 				BB7B6D9D2D1F31190030344A /* SnackBarState.swift */,
 				BB2893152DAA82E300F7ED69 /* TranslationState.swift */,
 				BB1994D22CE9051700D61E54 /* ViewState.swift */,
@@ -534,7 +463,6 @@
 		BB3ED31C2E05861D003B7D14 /* Language */ = {
 			isa = PBXGroup;
 			children = (
-				BB84E09F2CEFA96200520F5E /* Language.swift */,
 				BB3ED31D2E05862C003B7D14 /* LanguageMenuType.swift */,
 			);
 			path = Language;
@@ -658,18 +586,6 @@
 			path = Subscription;
 			sourceTree = "<group>";
 		};
-		BB6BD0412DB260FB00E45697 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				BB84E0A12CF0AF4100520F5E /* CreateStorySettingsView.swift */,
-				BB6DD0982D39BAF400EF6AF9 /* DifficultySettingsView.swift */,
-				BB6DD09A2D39BB9700EF6AF9 /* LanguageSettingsView.swift */,
-				BB6DD09C2D39BCF900EF6AF9 /* StoryPromptSettingsView.swift */,
-				BBF618872D42F7C300CA3229 /* VoiceSettingsView.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
 		BB6BD0422DB2612800E45697 /* User Limits */ = {
 			isa = PBXGroup;
 			children = (
@@ -725,6 +641,10 @@
 			isa = PBXGroup;
 			children = (
 				BB34C5032E25259C00238EA8 /* Definition */,
+				BB34C5072E28264C00238EA8 /* Localization */,
+				BB34C5062E28258A00238EA8 /* Settings */,
+				BB34C5052E252D7100238EA8 /* Speech */,
+				BB34C5042E25279800238EA8 /* Story */,
 				BB34C5022E2430BA00238EA8 /* Study */,
 				BBB6EF252C8C86240079D135 /* FlowTale */,
 				BBB6EF362C8C862A0079D135 /* FlowTaleTests */,
@@ -799,8 +719,6 @@
 				BB6BD0322DB17F0A00E45697 /* LLM API */,
 				BB6BD0112DB1765700E45697 /* Moderation */,
 				BB4EDB272C919A3300699E7D /* Response */,
-				BB1994C62CE8DC2100D61E54 /* Speech */,
-				BB0854862CB42C7100F1661B /* Story */,
 				BB6BD0292DB178AB00E45697 /* User Limits */,
 				BB3ED31C2E05861D003B7D14 /* Language */,
 				BBEF63522DA1F80400F93ECC /* MusicVolume.swift */,
@@ -812,7 +730,6 @@
 				BB4E6BF72D246AEF002B5CBA /* LoadingState.swift */,
 				BBAE07CE2D0C768000DA95CD /* AnyKey.swift */,
 				BB7B6D9F2D1F316E0030344A /* SnackBarType.swift */,
-				BBE636BE2CC98B2B00873E68 /* WordTimeStampData.swift */,
 				BBAE07DC2D14BE3000DA95CD /* SystemImage.swift */,
 			);
 			path = Model;
@@ -822,7 +739,6 @@
 			isa = PBXGroup;
 			children = (
 				BBB1B7CA2D7B34D40023147B /* Button */,
-				BB6BD0412DB260FB00E45697 /* Settings */,
 				BB6BD0402DB2609500E45697 /* Subscription */,
 				BB6BD0422DB2612800E45697 /* User Limits */,
 				BB6BD0472DB2648200E45697 /* Video */,
@@ -861,7 +777,6 @@
 			children = (
 				BBE521FC2DE9D83C00ADACA8 /* FlowTaleServicesProtocol.swift */,
 				BBDA56CD2DFF166500B61F05 /* CreateImageServicesProtocol.swift */,
-				BBDA56D72DFF1C2800B61F05 /* CreateStoryServicesProtocol.swift */,
 				BBDA56DB2DFF1D1800B61F05 /* ModerationServicesProtocol.swift */,
 				BBDA56D12DFF1A9D00B61F05 /* TranslationServicesProtocol.swift */,
 			);
@@ -883,7 +798,6 @@
 				BBC2930D2DFF80F500E5686D /* Protocol */,
 				BB4EDB162C90D20300699E7D /* FlowTaleServices.swift */,
 				BBDA56CB2DFF165500B61F05 /* CreateImageServices.swift */,
-				BBDA56D52DFF1C1800B61F05 /* CreateStoryServices.swift */,
 				BBDA56D32DFF1AB800B61F05 /* RequestFactory.swift */,
 				BBDA56D92DFF1D0A00B61F05 /* ModerationServices.swift */,
 				BBDA56CF2DFF1A8600B61F05 /* TranslationServices.swift */,
@@ -898,8 +812,6 @@
 				BBE521FF2DE9D85B00ADACA8 /* FlowTaleDataStoreProtocol.swift */,
 				BBDA56BF2DFF10E700B61F05 /* UserLimitsDataStore.swift */,
 				BBDA56C12DFF10F200B61F05 /* UserLimitsDataStoreProtocol.swift */,
-				BBDA56B72DFF0DF000B61F05 /* StoryDataStore.swift */,
-				BBDA56B92DFF0DFC00B61F05 /* StoryDataStoreProtocol.swift */,
 				BBDA56C32DFF117F00B61F05 /* SettingsDataStore.swift */,
 				BBDA56C52DFF118D00B61F05 /* SettingsDataStoreProtocol.swift */,
 			);
@@ -925,7 +837,6 @@
 				BB756CF02E03439D00365610 /* ModerationAction.swift */,
 				BB756CFC2E03476B00365610 /* NavigationAction.swift */,
 				BB756D022E0413E400365610 /* SnackbarAction.swift */,
-				BB756CD42E03319A00365610 /* StoryAction.swift */,
 				BB756CE62E033DF700365610 /* SubscriptionAction.swift */,
 				BBE5220B2DE9D8EB00ADACA8 /* TranslationAction.swift */,
 				BB756CF62E0344F700365610 /* UserLimitAction.swift */,
@@ -993,7 +904,6 @@
 				BB756CF22E0343A400365610 /* ModerationMiddleware.swift */,
 				BB756CFE2E03477000365610 /* NavigationMiddleware.swift */,
 				BB756D042E0413EC00365610 /* SnackbarMiddleware.swift */,
-				BB756CD22E03318400365610 /* StoryMiddleware.swift */,
 				BB756CE42E033DE900365610 /* SubscriptionMiddleware.swift */,
 				BB2893132DAA82BF00F7ED69 /* TranslationMiddleware.swift */,
 				BB756CF82E0344FC00365610 /* UserLimitMiddleware.swift */,
@@ -1010,7 +920,6 @@
 				BB756CF42E0343A900365610 /* ModerationReducer.swift */,
 				BB756D002E03477500365610 /* NavigationReducer.swift */,
 				BB756D062E0413F300365610 /* SnackbarReducer.swift */,
-				BB756CD62E03322200365610 /* StoryReducer.swift */,
 				BB756CE82E033DFD00365610 /* SubscriptionReducer.swift */,
 				BB2893112DAA82B700F7ED69 /* TranslationReducer.swift */,
 				BB756CFA2E03450500365610 /* UserLimitReducer.swift */,
@@ -1258,9 +1167,7 @@
 				BB7B6DA22D1F3B680030344A /* DifficultyView.swift in Sources */,
 				BBE636D12CCD77BC00873E68 /* FlowLayout.swift in Sources */,
 				BB6BD02B2DB178B300E45697 /* CharacterUsageRecord.swift in Sources */,
-				BBF618882D42F7C300CA3229 /* VoiceSettingsView.swift in Sources */,
 				BBE16F222CC2769C00A7EF1F /* StoryListView.swift in Sources */,
-				BB756CD32E03318400365610 /* StoryMiddleware.swift in Sources */,
 				BB84E0AD2CF4952700520F5E /* strings-enum.stencil in Sources */,
 				BB756CF32E0343A400365610 /* ModerationMiddleware.swift in Sources */,
 				BBDA56C22DFF10F200B61F05 /* UserLimitsDataStoreProtocol.swift in Sources */,
@@ -1270,7 +1177,6 @@
 				BB2893162DAA82E300F7ED69 /* TranslationState.swift in Sources */,
 				BB7B6D9C2D1F30BC0030344A /* SnackBar.swift in Sources */,
 				BB756CFD2E03476B00365610 /* NavigationAction.swift in Sources */,
-				BB6572CE2CD12A9200AC5981 /* ChapterResponse.swift in Sources */,
 				BB756CE72E033DF700365610 /* SubscriptionAction.swift in Sources */,
 				BBAE07DD2D14BE3000DA95CD /* SystemImage.swift in Sources */,
 				BB6BD0212DB1770B00E45697 /* FlowTaleServicesError.swift in Sources */,
@@ -1278,17 +1184,12 @@
 				BBE636C12CCC0B5000873E68 /* ActionButtonsView.swift in Sources */,
 				BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */,
 				BBAE07DB2D14BE0B00DA95CD /* SystemImageView.swift in Sources */,
-				BB47122B2E06178C0060782B /* ChapterAudio.swift in Sources */,
 				BB6BD0172DB176AC00E45697 /* CategoryResult.swift in Sources */,
-				BB6DD0992D39BAF400EF6AF9 /* DifficultySettingsView.swift in Sources */,
-				BB0854832CB42C0200F1661B /* Chapter.swift in Sources */,
-				BB6572E52CD8D12400AC5981 /* Voice.swift in Sources */,
 				BB9C21932D3ACE05004C7689 /* PrimaryButton.swift in Sources */,
 				BBAE07D12D0C793000DA95CD /* SubscriptionView.swift in Sources */,
 				BBAE07D32D0C796500DA95CD /* SubscriptionState.swift in Sources */,
 				BBFDBBE92D203AD80056C448 /* DefinitionsChartView.swift in Sources */,
 				BB2893142DAA82BF00F7ED69 /* TranslationMiddleware.swift in Sources */,
-				BBDA56BA2DFF0DFC00B61F05 /* StoryDataStoreProtocol.swift in Sources */,
 				BB756CEF2E03417E00365610 /* AppSettingsReducer.swift in Sources */,
 				BB756CDB2E0337A700365610 /* AudioAction.swift in Sources */,
 				BB6BD0102DB1639D00E45697 /* AVPlayer+Play.swift in Sources */,
@@ -1296,7 +1197,6 @@
 				BB756CE52E033DE900365610 /* SubscriptionMiddleware.swift in Sources */,
 				BB7B6D982D1E0D070030344A /* StoryInfoView.swift in Sources */,
 				BB4E6BF82D246AEF002B5CBA /* LoadingState.swift in Sources */,
-				BBDA56D82DFF1C2800B61F05 /* CreateStoryServicesProtocol.swift in Sources */,
 				BBDA56CC2DFF165500B61F05 /* CreateImageServices.swift in Sources */,
 				BBE522262DEAF48E00ADACA8 /* DeleteButton.swift in Sources */,
 				BBE522162DEA51CA00ADACA8 /* TranslationLanguageSelector.swift in Sources */,
@@ -1304,11 +1204,8 @@
 				BBE522172DEA51CA00ADACA8 /* TranslationInputSection.swift in Sources */,
 				BBE522182DEA51CA00ADACA8 /* TranslationResultsSection.swift in Sources */,
 				BBE522192DEA51CA00ADACA8 /* TranslationActionButton.swift in Sources */,
-				BBDA56B82DFF0DF000B61F05 /* StoryDataStore.swift in Sources */,
 				BB4EDB072C90C8CA00699E7D /* FlowTaleAction.swift in Sources */,
-				BBE636BF2CC98B2B00873E68 /* WordTimeStampData.swift in Sources */,
 				BBEF63512DA1EB5600F93ECC /* KeychainManager.swift in Sources */,
-				BBB6EF522C8C86B10079D135 /* Sentence.swift in Sources */,
 				BB2893192DAAB49D00F7ED69 /* ChapterResponseDecoder.swift in Sources */,
 				BB756CED2E03417900365610 /* AppSettingsMiddleware.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FlowTaleDataStore.swift in Sources */,
@@ -1317,13 +1214,11 @@
 				BBE990C12D29C59C00FAD3FB /* MusicType.swift in Sources */,
 				BBDA56C42DFF117F00B61F05 /* SettingsDataStore.swift in Sources */,
 				BBE636C72CCC0E1200873E68 /* TranslatedSentenceView.swift in Sources */,
-				BB6BD0262DB1772C00E45697 /* CreateChapterType.swift in Sources */,
 				BB4EDB1D2C90DFDD00699E7D /* FlowTaleRepository.swift in Sources */,
 				BB6BD0442DB2644100E45697 /* CreateStoryButton.swift in Sources */,
 				BB2893122DAA82B700F7ED69 /* TranslationReducer.swift in Sources */,
 				BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */,
 				BB756CFB2E03450500365610 /* UserLimitReducer.swift in Sources */,
-				BB84E0A02CEFA96200520F5E /* Language.swift in Sources */,
 				BB1994C82CE8E0BE00D61E54 /* Data+AVPlayer.swift in Sources */,
 				BBE521FD2DE9D83C00ADACA8 /* FlowTaleServicesProtocol.swift in Sources */,
 				BB1994D12CE9050000D61E54 /* AudioState.swift in Sources */,
@@ -1331,11 +1226,9 @@
 				BB756CF92E0344FC00365610 /* UserLimitMiddleware.swift in Sources */,
 				BB6BD0132DB1766200E45697 /* ModerationResponse.swift in Sources */,
 				BB6572D22CD165F200AC5981 /* Collection+Safe.swift in Sources */,
-				BB1994CD2CE904D900D61E54 /* StoryState.swift in Sources */,
 				BB6BD0462DB2645700E45697 /* VideoBackgroundView.swift in Sources */,
 				BB4EDB0E2C90CA0300699E7D /* FlowTaleMiddleware.swift in Sources */,
 				BB6BD03C2DB25F3500E45697 /* View+BackgroundImage.swift in Sources */,
-				BB6572E72CD8D1E300AC5981 /* Gender.swift in Sources */,
 				BBE990B52D29BC2200FAD3FB /* AppAudioState.swift in Sources */,
 				BB756D072E0413F300365610 /* SnackbarReducer.swift in Sources */,
 				BBE522002DE9D85B00ADACA8 /* FlowTaleDataStoreProtocol.swift in Sources */,
@@ -1361,14 +1254,11 @@
 				BB6BD01E2DB176ED00E45697 /* FluxImageError.swift in Sources */,
 				BBDA56C62DFF118D00B61F05 /* SettingsDataStoreProtocol.swift in Sources */,
 				BBDA56CE2DFF166500B61F05 /* CreateImageServicesProtocol.swift in Sources */,
-				BB6DD09D2D39BCF900EF6AF9 /* StoryPromptSettingsView.swift in Sources */,
 				BBE522102DEA4A1000ADACA8 /* StorySetting.swift in Sources */,
 				BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */,
-				BB0B8FD82C8DFABD001DD6F0 /* SpeechSpeed.swift in Sources */,
 				BB6BD0192DB176BF00E45697 /* ModerationCategories.swift in Sources */,
 				BBE636C32CCC0BE900873E68 /* CharacterView.swift in Sources */,
 				BB6BD02E2DB17D4500E45697 /* ContentTab.swift in Sources */,
-				BB84E0A22CF0AF4200520F5E /* CreateStorySettingsView.swift in Sources */,
 				BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */,
 				BBE990B72D29BC5500FAD3FB /* AppSound.swift in Sources */,
 				BB756CFF2E03477000365610 /* NavigationMiddleware.swift in Sources */,
@@ -1379,7 +1269,6 @@
 				BB1994CF2CE904F000D61E54 /* DefinitionState.swift in Sources */,
 				BB6BD03F2DB25FAD00E45697 /* BackgroundImageType.swift in Sources */,
 				BB4EDB0C2C90C9A100699E7D /* FlowTaleReducer.swift in Sources */,
-				BB6572F92CDBB14C00AC5981 /* SpeechStyle.swift in Sources */,
 				BB6BD0342DB25C1700E45697 /* AudioButton.swift in Sources */,
 				BB4EDB0A2C90C8F100699E7D /* FlowTaleEnvironment.swift in Sources */,
 				BB7B6D9E2D1F31190030344A /* SnackBarState.swift in Sources */,
@@ -1395,8 +1284,6 @@
 				BBE522052DE9D88F00ADACA8 /* FlowTaleRepositoryProtocol.swift in Sources */,
 				BB6BD0312DB17E7800E45697 /* OpenRouterModel.swift in Sources */,
 				BB6BD03A2DB25E7C00E45697 /* View+CardBackground.swift in Sources */,
-				BBE16F202CC152C400A7EF1F /* Difficulty.swift in Sources */,
-				BB756CD72E03322200365610 /* StoryReducer.swift in Sources */,
 				BB3ED31E2E05862C003B7D14 /* LanguageMenuType.swift in Sources */,
 				BB756D032E0413E400365610 /* SnackbarAction.swift in Sources */,
 				BB756CE92E033DFD00365610 /* SubscriptionReducer.swift in Sources */,
@@ -1407,11 +1294,8 @@
 				BB4EDB052C90C89C00699E7D /* FlowTaleState.swift in Sources */,
 				BBDA56C82DFF12C200B61F05 /* FlowTaleRepositoryError.swift in Sources */,
 				BBAE07CD2D0C765B00DA95CD /* APIRequestType.swift in Sources */,
-				BB756CD52E03319A00365610 /* StoryAction.swift in Sources */,
 				BB756D052E0413EC00365610 /* SnackbarMiddleware.swift in Sources */,
-				BB6DD09B2D39BB9700EF6AF9 /* LanguageSettingsView.swift in Sources */,
 				BB756CF52E0343A900365610 /* ModerationReducer.swift in Sources */,
-				BBDA56D62DFF1C1800B61F05 /* CreateStoryServices.swift in Sources */,
 				BBDA56DA2DFF1D0A00B61F05 /* ModerationServices.swift in Sources */,
 				BBE636C92CCC0E8400873E68 /* ListOfSentencesView.swift in Sources */,
 				BB5062CC2DA875B50031B62B /* TranslationView.swift in Sources */,

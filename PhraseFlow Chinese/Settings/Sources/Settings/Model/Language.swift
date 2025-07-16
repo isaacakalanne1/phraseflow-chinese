@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum Language: String, Codable, CaseIterable {
+public enum Language: String, Codable, CaseIterable {
     case english,
          englishUK,
          mandarinChinese,

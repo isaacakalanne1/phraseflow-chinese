@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import Story
 
-struct Definition: Codable, Equatable, Hashable {
+public struct Definition: Codable, Equatable, Hashable {
     var id: UUID // Unique identifier for this definition
     var creationDate: Date
     var studiedDates: [Date]
