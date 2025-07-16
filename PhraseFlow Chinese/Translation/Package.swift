@@ -4,15 +4,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "Settings",
+    name: "Translation",
     platforms: [
         .iOS("17.4")
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "Settings",
-            targets: ["Settings"]),
+            name: "Translation",
+            targets: ["Translation"]),
     ],
     dependencies: [
         .package(name: "Localization", path: "../Localization")
@@ -21,13 +21,13 @@ let package = Package(
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Settings",
+            name: "Translation",
             dependencies: [
                 "Localization"
             ]),
         .testTarget(
-            name: "SettingsTests",
-            dependencies: ["Settings"]
+            name: "TranslationTests",
+            dependencies: ["Translation"]
         ),
     ]
 )

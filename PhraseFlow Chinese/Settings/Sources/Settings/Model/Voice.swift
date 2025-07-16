@@ -5,6 +5,7 @@
 //  Created by iakalann on 04/11/2024.
 //
 
+import Localization
 import SwiftUI
 
 public enum Voice: String, Codable, CaseIterable, Equatable {

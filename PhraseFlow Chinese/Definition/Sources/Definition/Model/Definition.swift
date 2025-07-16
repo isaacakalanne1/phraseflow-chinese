@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Settings
+import Speech
 import Story
 
 public struct Definition: Codable, Equatable, Hashable {

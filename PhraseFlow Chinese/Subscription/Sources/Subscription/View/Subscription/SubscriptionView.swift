@@ -5,6 +5,7 @@
 //  Created by iakalann on 13/12/2024.
 //
 
+import Localization
 import StoreKit
 import SwiftUI
 

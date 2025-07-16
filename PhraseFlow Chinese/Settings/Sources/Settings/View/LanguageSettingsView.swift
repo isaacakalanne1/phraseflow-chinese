@@ -11,23 +11,16 @@ struct LanguageOnboardingView: View {
     @EnvironmentObject var store: FlowTaleStore
     
     var body: some View {
-        ZStack {
-            VStack(spacing: 0) {
-                LanguageMenu()
+        VStack(spacing: 0) {
+            LanguageMenu()
 
-                CreateStoryButton()
-                    .padding(.horizontal)
-                    .padding(.bottom)
-            }
-            .background(.ftBackground)
-            .opacity(store.state.viewState.isWritingChapter ? 0.3 : 1.0)
-            .disabled(store.state.viewState.isWritingChapter)
-            
-            if store.state.viewState.isWritingChapter {
-                LoadingProgressBar(isCentered: true)
-                    .background(.ftBackground.opacity(0.9))
-            }
+            CreateStoryButton()
+                .padding(.horizontal)
+                .padding(.bottom)
         }
+        .background(.ftBackground)
+        .opacity(store.state.viewState.isWritingChapter ? 0.3 : 1.0)
+        .disabled(store.state.viewState.isWritingChapter)
     }
 }
 

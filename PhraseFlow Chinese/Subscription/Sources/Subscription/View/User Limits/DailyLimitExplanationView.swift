@@ -1,41 +1,62 @@
 //
-//  FreeLimitExplanationView.swift
+//  DailyLimitExplanationView.swift
 //  FlowTale
 //
 //  Created by iakalann on 19/01/2025.
 //
 
+import Localization
 import SwiftUI
 
-struct FreeLimitExplanationView: View {
+struct DailyLimitExplanationView: View {
     @EnvironmentObject var store: FlowTaleStore
     @Environment(\.dismiss) private var dismiss
+
+    var title: String {
+        if let limit = store.state.subscriptionState.currentSubscription?.ssmlCharacterLimitPerDay {
+            return LocalizedString.dailyLimitReachedWithLimit(limit)
+        }
+        return LocalizedString.dailyLimitReached
+    }
 
     var body: some View {
         VStack(spacing: 16) {
             VStack(alignment: .leading) {
-                if store.state.subscriptionState.hasReachedFreeTrialLimit {
-                    Text(LocalizedString.freeTrialWhatHappened)
-                        .font(.flowTaleHeader())
-                        .fontWeight(.medium)
-                    Text(LocalizedString.freeTrialReachedLimit)
-                        .font(.flowTaleBodyMedium())
-                        .fontWeight(.light)
-                    Divider()
-                }
+                Text(title)
+                    .lineLimit(-1)
+                    .font(.flowTaleHeader())
+                    .fontWeight(.semibold)
 
-                Text(LocalizedString.freeTrialWhyHeader)
+                Divider()
+
+                Text(LocalizedString.dailyLimitWhyHeader)
                     .font(.flowTaleHeader())
                     .fontWeight(.medium)
-                Text(LocalizedString.dailyLimitWhy)
-                    .font(.flowTaleBodyMedium())
+                Text(LocalizedString.dailyLimitExplanation)
+                    .font(.flowTaleSubHeader())
+                    .fontWeight(.light)
+
+                Text(LocalizedString.dailyLimitWhenCanCreateMore)
+                    .font(.flowTaleHeader())
+                    .fontWeight(.medium)
+                Text(LocalizedString.dailyLimitNextAvailable(store.state.subscriptionState.nextAvailableDescription))
+                    .font(.flowTaleSubHeader())
                     .fontWeight(.light)
 
                 Divider()
 
+                Text(LocalizedString.dailyLimitWhyHeader)
+                    .font(.flowTaleHeader())
+                    .fontWeight(.medium)
+                Text(LocalizedString.dailyLimitWhy)
+                    .font(.flowTaleSubHeader())
+                    .fontWeight(.light)
+
                 // TODO: Add logic to show which chapter creation dates used free trial
 
-//                Text("Which chapters used up my free trial limit?")
+//                Divider()
+//
+//                Text("Which stories did I create today?")
 //                    .font(.flowTaleHeader())
 //                    .fontWeight(.medium)
 //

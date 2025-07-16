@@ -5,6 +5,7 @@
 //  Created by iakalann on 30/05/2025.
 //
 
+import Localization
 import SwiftUI
 
 struct TranslationInputSection: View {

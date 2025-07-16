@@ -16,10 +16,6 @@
 		BB2893162DAA82E300F7ED69 /* TranslationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2893152DAA82E300F7ED69 /* TranslationState.swift */; };
 		BB2893192DAAB49D00F7ED69 /* ChapterResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2893182DAAB49900F7ED69 /* ChapterResponseDecoder.swift */; };
 		BB34C4F82E23E09900238EA8 /* Font+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34C4F72E23E09700238EA8 /* Font+Types.swift */; };
-		BB34C4FF2E23F23900238EA8 /* StudySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB34C4FE2E23F23900238EA8 /* StudySection.swift */; };
-		BB3ED31E2E05862C003B7D14 /* LanguageMenuType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3ED31D2E05862C003B7D14 /* LanguageMenuType.swift */; };
-		BB45C5692D4A785C00B3705A /* DailyLimitExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB45C5682D4A785C00B3705A /* DailyLimitExplanationView.swift */; };
-		BB45C56B2D4A7C4000B3705A /* FreeLimitExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB45C56A2D4A7C4000B3705A /* FreeLimitExplanationView.swift */; };
 		BB4E6BF82D246AEF002B5CBA /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4E6BF72D246AEF002B5CBA /* LoadingState.swift */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
 		BB4EDB032C90C86300699E7D /* FlowTaleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */; };
@@ -32,12 +28,9 @@
 		BB4EDB152C90CF7400699E7D /* FlowTaleDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB142C90CF7400699E7D /* FlowTaleDataStore.swift */; };
 		BB4EDB172C90D20300699E7D /* FlowTaleServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB162C90D20300699E7D /* FlowTaleServices.swift */; };
 		BB4EDB1D2C90DFDD00699E7D /* FlowTaleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB1C2C90DFDD00699E7D /* FlowTaleRepository.swift */; };
-		BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB232C91902100699E7D /* SettingsView.swift */; };
 		BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */; };
-		BB5062CC2DA875B50031B62B /* TranslationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5062CB2DA875B50031B62B /* TranslationView.swift */; };
 		BB6572D22CD165F200AC5981 /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D12CD165F200AC5981 /* Collection+Safe.swift */; };
 		BB6572D42CD3932300AC5981 /* View+GreyBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D32CD3932300AC5981 /* View+GreyBackground.swift */; };
-		BB6572D62CD4E09000AC5981 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D52CD4E08F00AC5981 /* ActionButton.swift */; };
 		BB6572F72CDB991B00AC5981 /* SettingsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572F62CDB991A00AC5981 /* SettingsState.swift */; };
 		BB6BD0102DB1639D00E45697 /* AVPlayer+Play.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD00F2DB1639300E45697 /* AVPlayer+Play.swift */; };
 		BB6BD0132DB1766200E45697 /* ModerationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD0122DB1765F00E45697 /* ModerationResponse.swift */; };
@@ -51,13 +44,9 @@
 		BB6BD02B2DB178B300E45697 /* CharacterUsageRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD02A2DB178B300E45697 /* CharacterUsageRecord.swift */; };
 		BB6BD02E2DB17D4500E45697 /* ContentTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD02D2DB17D4500E45697 /* ContentTab.swift */; };
 		BB6BD0312DB17E7800E45697 /* OpenRouterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD0302DB17E7800E45697 /* OpenRouterModel.swift */; };
-		BB6BD0342DB25C1700E45697 /* AudioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD0332DB25C1300E45697 /* AudioButton.swift */; };
-		BB6BD0362DB25C9100E45697 /* SpeechSpeedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD0352DB25C8D00E45697 /* SpeechSpeedButton.swift */; };
 		BB6BD03A2DB25E7C00E45697 /* View+CardBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD0392DB25E7700E45697 /* View+CardBackground.swift */; };
 		BB6BD03C2DB25F3500E45697 /* View+BackgroundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD03B2DB25F3500E45697 /* View+BackgroundImage.swift */; };
 		BB6BD03F2DB25FAD00E45697 /* BackgroundImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD03E2DB25FAD00E45697 /* BackgroundImageType.swift */; };
-		BB6BD0442DB2644100E45697 /* CreateStoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD0432DB2644100E45697 /* CreateStoryButton.swift */; };
-		BB6BD0462DB2645700E45697 /* VideoBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BD0452DB2645700E45697 /* VideoBackgroundView.swift */; };
 		BB756CD92E03377600365610 /* AudioMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CD82E03377600365610 /* AudioMiddleware.swift */; };
 		BB756CDB2E0337A700365610 /* AudioAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CDA2E0337A700365610 /* AudioAction.swift */; };
 		BB756CDD2E03383800365610 /* AudioReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756CDC2E03383800365610 /* AudioReducer.swift */; };
@@ -80,20 +69,15 @@
 		BB756D052E0413EC00365610 /* SnackbarMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756D042E0413EC00365610 /* SnackbarMiddleware.swift */; };
 		BB756D072E0413F300365610 /* SnackbarReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB756D062E0413F300365610 /* SnackbarReducer.swift */; };
 		BB7B6D942D1ACEBF0030344A /* libPods-FlowTale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */; };
-		BB7B6D962D1DF0990030344A /* StudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D952D1DF0990030344A /* StudyView.swift */; };
 		BB7B6D9C2D1F30BC0030344A /* SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D9B2D1F30BC0030344A /* SnackBar.swift */; };
 		BB7B6D9E2D1F31190030344A /* SnackBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D9D2D1F31190030344A /* SnackBarState.swift */; };
 		BB7B6DA02D1F316E0030344A /* SnackBarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B6D9F2D1F316E0030344A /* SnackBarType.swift */; };
-		BB9C21932D3ACE05004C7689 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C21922D3ACE05004C7689 /* PrimaryButton.swift */; };
 		BBA94CCD2D19AAE000EB4A7E /* FlowTaleStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA94CCC2D19AAE000EB4A7E /* FlowTaleStateTests.swift */; };
 		BBAE07CD2D0C765B00DA95CD /* APIRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07CC2D0C765B00DA95CD /* APIRequestType.swift */; };
 		BBAE07CF2D0C768000DA95CD /* AnyKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07CE2D0C768000DA95CD /* AnyKey.swift */; };
-		BBAE07D12D0C793000DA95CD /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07D02D0C793000DA95CD /* SubscriptionView.swift */; };
 		BBAE07D32D0C796500DA95CD /* SubscriptionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07D22D0C796500DA95CD /* SubscriptionState.swift */; };
-		BBAE07D52D0CA79A00DA95CD /* SubscriptionOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07D42D0CA79A00DA95CD /* SubscriptionOption.swift */; };
 		BBAE07DD2D14BE3000DA95CD /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07DC2D14BE3000DA95CD /* SystemImage.swift */; };
 		BBB1B7B72D79B3120023147B /* ButtonBackground.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7B62D79B3120023147B /* ButtonBackground.mp4 */; };
-		BBB1B7CC2D7B34EB0023147B /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB1B7CB2D7B34EB0023147B /* MainButton.swift */; };
 		BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -121,15 +105,9 @@
 		BBE5220C2DE9D8EB00ADACA8 /* TranslationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE5220B2DE9D8EB00ADACA8 /* TranslationAction.swift */; };
 		BBE5220E2DEA49FA00ADACA8 /* FlowTaleColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE5220D2DEA49FA00ADACA8 /* FlowTaleColorScheme.swift */; };
 		BBE522102DEA4A1000ADACA8 /* StorySetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE5220F2DEA4A1000ADACA8 /* StorySetting.swift */; };
-		BBE522162DEA51CA00ADACA8 /* TranslationLanguageSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE522132DEA51CA00ADACA8 /* TranslationLanguageSelector.swift */; };
-		BBE522172DEA51CA00ADACA8 /* TranslationInputSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE522122DEA51CA00ADACA8 /* TranslationInputSection.swift */; };
-		BBE522182DEA51CA00ADACA8 /* TranslationResultsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE522142DEA51CA00ADACA8 /* TranslationResultsSection.swift */; };
-		BBE522192DEA51CA00ADACA8 /* TranslationActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE522112DEA51CA00ADACA8 /* TranslationActionButton.swift */; };
-		BBE522262DEAF48E00ADACA8 /* DeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE522252DEAF48E00ADACA8 /* DeleteButton.swift */; };
 		BBE990B52D29BC2200FAD3FB /* AppAudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE990B42D29BC2200FAD3FB /* AppAudioState.swift */; };
 		BBE990BD2D29C56D00FAD3FB /* MusicAudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE990BC2D29C56D00FAD3FB /* MusicAudioState.swift */; };
 		BBEF63512DA1EB5600F93ECC /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF63502DA1EB5300F93ECC /* KeychainManager.swift */; };
-		BBFB3B072D3D37F2001997A8 /* ModerationExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFB3B062D3D37F2001997A8 /* ModerationExplanationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,7 +142,6 @@
 		BB2893152DAA82E300F7ED69 /* TranslationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationState.swift; sourceTree = "<group>"; };
 		BB2893182DAAB49900F7ED69 /* ChapterResponseDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterResponseDecoder.swift; sourceTree = "<group>"; };
 		BB34C4F72E23E09700238EA8 /* Font+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Types.swift"; sourceTree = "<group>"; };
-		BB34C4FE2E23F23900238EA8 /* StudySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySection.swift; sourceTree = "<group>"; };
 		BB34C5022E2430BA00238EA8 /* Study */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Study; sourceTree = "<group>"; };
 		BB34C5032E25259C00238EA8 /* Definition */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Definition; sourceTree = "<group>"; };
 		BB34C5042E25279800238EA8 /* Story */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Story; sourceTree = "<group>"; };
@@ -172,9 +149,9 @@
 		BB34C5062E28258A00238EA8 /* Settings */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Settings; sourceTree = "<group>"; };
 		BB34C5072E28264C00238EA8 /* Localization */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Localization; sourceTree = "<group>"; };
 		BB34C5082E282D0800238EA8 /* Sound */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Sound; sourceTree = "<group>"; };
-		BB3ED31D2E05862C003B7D14 /* LanguageMenuType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageMenuType.swift; sourceTree = "<group>"; };
-		BB45C5682D4A785C00B3705A /* DailyLimitExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLimitExplanationView.swift; sourceTree = "<group>"; };
-		BB45C56A2D4A7C4000B3705A /* FreeLimitExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeLimitExplanationView.swift; sourceTree = "<group>"; };
+		BB34C5092E2832D900238EA8 /* Translation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Translation; sourceTree = "<group>"; };
+		BB34C50A2E2836E000238EA8 /* Moderation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Moderation; sourceTree = "<group>"; };
+		BB34C50B2E28373F00238EA8 /* Subscription */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Subscription; sourceTree = "<group>"; };
 		BB4E6BF72D246AEF002B5CBA /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleStore.swift; sourceTree = "<group>"; };
 		BB4EDB042C90C89C00699E7D /* FlowTaleState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleState.swift; sourceTree = "<group>"; };
@@ -186,12 +163,9 @@
 		BB4EDB142C90CF7400699E7D /* FlowTaleDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleDataStore.swift; sourceTree = "<group>"; };
 		BB4EDB162C90D20300699E7D /* FlowTaleServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleServices.swift; sourceTree = "<group>"; };
 		BB4EDB1C2C90DFDD00699E7D /* FlowTaleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleRepository.swift; sourceTree = "<group>"; };
-		BB4EDB232C91902100699E7D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		BB4EDB282C919A3C00699E7D /* NewPhrasesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPhrasesResponse.swift; sourceTree = "<group>"; };
-		BB5062CB2DA875B50031B62B /* TranslationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationView.swift; sourceTree = "<group>"; };
 		BB6572D12CD165F200AC5981 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
 		BB6572D32CD3932300AC5981 /* View+GreyBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+GreyBackground.swift"; sourceTree = "<group>"; };
-		BB6572D52CD4E08F00AC5981 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		BB6572F62CDB991A00AC5981 /* SettingsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsState.swift; sourceTree = "<group>"; };
 		BB6BD00F2DB1639300E45697 /* AVPlayer+Play.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayer+Play.swift"; sourceTree = "<group>"; };
 		BB6BD0122DB1765F00E45697 /* ModerationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationResponse.swift; sourceTree = "<group>"; };
@@ -205,13 +179,9 @@
 		BB6BD02A2DB178B300E45697 /* CharacterUsageRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterUsageRecord.swift; sourceTree = "<group>"; };
 		BB6BD02D2DB17D4500E45697 /* ContentTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTab.swift; sourceTree = "<group>"; };
 		BB6BD0302DB17E7800E45697 /* OpenRouterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenRouterModel.swift; sourceTree = "<group>"; };
-		BB6BD0332DB25C1300E45697 /* AudioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioButton.swift; sourceTree = "<group>"; };
-		BB6BD0352DB25C8D00E45697 /* SpeechSpeedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpeedButton.swift; sourceTree = "<group>"; };
 		BB6BD0392DB25E7700E45697 /* View+CardBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CardBackground.swift"; sourceTree = "<group>"; };
 		BB6BD03B2DB25F3500E45697 /* View+BackgroundImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+BackgroundImage.swift"; sourceTree = "<group>"; };
 		BB6BD03E2DB25FAD00E45697 /* BackgroundImageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageType.swift; sourceTree = "<group>"; };
-		BB6BD0432DB2644100E45697 /* CreateStoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStoryButton.swift; sourceTree = "<group>"; };
-		BB6BD0452DB2645700E45697 /* VideoBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoBackgroundView.swift; sourceTree = "<group>"; };
 		BB756CD82E03377600365610 /* AudioMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMiddleware.swift; sourceTree = "<group>"; };
 		BB756CDA2E0337A700365610 /* AudioAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAction.swift; sourceTree = "<group>"; };
 		BB756CDC2E03383800365610 /* AudioReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioReducer.swift; sourceTree = "<group>"; };
@@ -234,20 +204,15 @@
 		BB756D042E0413EC00365610 /* SnackbarMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackbarMiddleware.swift; sourceTree = "<group>"; };
 		BB756D062E0413F300365610 /* SnackbarReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackbarReducer.swift; sourceTree = "<group>"; };
 		BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-FlowTale.a"; path = "../../../../Library/Developer/Xcode/DerivedData/FlowTale-dzblbgdyrqlsjdggurnqsbvwzaoq/Build/Products/Debug-iphoneos/libPods-FlowTale.a"; sourceTree = "<group>"; };
-		BB7B6D952D1DF0990030344A /* StudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyView.swift; sourceTree = "<group>"; };
 		BB7B6D9B2D1F30BC0030344A /* SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBar.swift; sourceTree = "<group>"; };
 		BB7B6D9D2D1F31190030344A /* SnackBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarState.swift; sourceTree = "<group>"; };
 		BB7B6D9F2D1F316E0030344A /* SnackBarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarType.swift; sourceTree = "<group>"; };
-		BB9C21922D3ACE05004C7689 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		BBA94CCC2D19AAE000EB4A7E /* FlowTaleStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleStateTests.swift; sourceTree = "<group>"; };
 		BBAE07CC2D0C765B00DA95CD /* APIRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestType.swift; sourceTree = "<group>"; };
 		BBAE07CE2D0C768000DA95CD /* AnyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyKey.swift; sourceTree = "<group>"; };
-		BBAE07D02D0C793000DA95CD /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
 		BBAE07D22D0C796500DA95CD /* SubscriptionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionState.swift; sourceTree = "<group>"; };
-		BBAE07D42D0CA79A00DA95CD /* SubscriptionOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionOption.swift; sourceTree = "<group>"; };
 		BBAE07DC2D14BE3000DA95CD /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
 		BBB1B7B62D79B3120023147B /* ButtonBackground.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ButtonBackground.mp4; sourceTree = "<group>"; };
-		BBB1B7CB2D7B34EB0023147B /* MainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButton.swift; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* FlowTale.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowTale.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -278,15 +243,9 @@
 		BBE5220B2DE9D8EB00ADACA8 /* TranslationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationAction.swift; sourceTree = "<group>"; };
 		BBE5220D2DEA49FA00ADACA8 /* FlowTaleColorScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleColorScheme.swift; sourceTree = "<group>"; };
 		BBE5220F2DEA4A1000ADACA8 /* StorySetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorySetting.swift; sourceTree = "<group>"; };
-		BBE522112DEA51CA00ADACA8 /* TranslationActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationActionButton.swift; sourceTree = "<group>"; };
-		BBE522122DEA51CA00ADACA8 /* TranslationInputSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationInputSection.swift; sourceTree = "<group>"; };
-		BBE522132DEA51CA00ADACA8 /* TranslationLanguageSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationLanguageSelector.swift; sourceTree = "<group>"; };
-		BBE522142DEA51CA00ADACA8 /* TranslationResultsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationResultsSection.swift; sourceTree = "<group>"; };
-		BBE522252DEAF48E00ADACA8 /* DeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButton.swift; sourceTree = "<group>"; };
 		BBE990B42D29BC2200FAD3FB /* AppAudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAudioState.swift; sourceTree = "<group>"; };
 		BBE990BC2D29C56D00FAD3FB /* MusicAudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicAudioState.swift; sourceTree = "<group>"; };
 		BBEF63502DA1EB5300F93ECC /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
-		BBFB3B062D3D37F2001997A8 /* ModerationExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationExplanationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -348,14 +307,6 @@
 				BB2893182DAAB49900F7ED69 /* ChapterResponseDecoder.swift */,
 			);
 			path = Decoder;
-			sourceTree = "<group>";
-		};
-		BB3ED31C2E05861D003B7D14 /* Language */ = {
-			isa = PBXGroup;
-			children = (
-				BB3ED31D2E05862C003B7D14 /* LanguageMenuType.swift */,
-			);
-			path = Language;
 			sourceTree = "<group>";
 		};
 		BB4EDB012C90C85000699E7D /* Redux */ = {
@@ -467,32 +418,6 @@
 			path = Background;
 			sourceTree = "<group>";
 		};
-		BB6BD0402DB2609500E45697 /* Subscription */ = {
-			isa = PBXGroup;
-			children = (
-				BBAE07D42D0CA79A00DA95CD /* SubscriptionOption.swift */,
-				BBAE07D02D0C793000DA95CD /* SubscriptionView.swift */,
-			);
-			path = Subscription;
-			sourceTree = "<group>";
-		};
-		BB6BD0422DB2612800E45697 /* User Limits */ = {
-			isa = PBXGroup;
-			children = (
-				BB45C5682D4A785C00B3705A /* DailyLimitExplanationView.swift */,
-				BB45C56A2D4A7C4000B3705A /* FreeLimitExplanationView.swift */,
-			);
-			path = "User Limits";
-			sourceTree = "<group>";
-		};
-		BB6BD0472DB2648200E45697 /* Video */ = {
-			isa = PBXGroup;
-			children = (
-				BB6BD0452DB2645700E45697 /* VideoBackgroundView.swift */,
-			);
-			path = Video;
-			sourceTree = "<group>";
-		};
 		BBB1B7BF2D79DD320023147B /* Video */ = {
 			isa = PBXGroup;
 			children = (
@@ -501,30 +426,19 @@
 			path = Video;
 			sourceTree = "<group>";
 		};
-		BBB1B7CA2D7B34D40023147B /* Button */ = {
-			isa = PBXGroup;
-			children = (
-				BB6572D52CD4E08F00AC5981 /* ActionButton.swift */,
-				BBE522252DEAF48E00ADACA8 /* DeleteButton.swift */,
-				BB6BD0332DB25C1300E45697 /* AudioButton.swift */,
-				BBB1B7CB2D7B34EB0023147B /* MainButton.swift */,
-				BB9C21922D3ACE05004C7689 /* PrimaryButton.swift */,
-				BB6BD0352DB25C8D00E45697 /* SpeechSpeedButton.swift */,
-				BB6BD0432DB2644100E45697 /* CreateStoryButton.swift */,
-			);
-			path = Button;
-			sourceTree = "<group>";
-		};
 		BBB6EF1A2C8C86240079D135 = {
 			isa = PBXGroup;
 			children = (
 				BB34C5032E25259C00238EA8 /* Definition */,
 				BB34C5072E28264C00238EA8 /* Localization */,
+				BB34C50A2E2836E000238EA8 /* Moderation */,
 				BB34C5062E28258A00238EA8 /* Settings */,
 				BB34C5052E252D7100238EA8 /* Speech */,
 				BB34C5082E282D0800238EA8 /* Sound */,
 				BB34C5042E25279800238EA8 /* Story */,
 				BB34C5022E2430BA00238EA8 /* Study */,
+				BB34C50B2E28373F00238EA8 /* Subscription */,
+				BB34C5092E2832D900238EA8 /* Translation */,
 				BBB6EF252C8C86240079D135 /* FlowTale */,
 				BBB6EF362C8C862A0079D135 /* FlowTaleTests */,
 				BBB6EF402C8C862A0079D135 /* FlowTaleUITests */,
@@ -597,7 +511,6 @@
 				BB6BD0112DB1765700E45697 /* Moderation */,
 				BB4EDB272C919A3300699E7D /* Response */,
 				BB6BD0292DB178AB00E45697 /* User Limits */,
-				BB3ED31C2E05861D003B7D14 /* Language */,
 				BBE5220D2DEA49FA00ADACA8 /* FlowTaleColorScheme.swift */,
 				BBE5220F2DEA4A1000ADACA8 /* StorySetting.swift */,
 				BB6BD02D2DB17D4500E45697 /* ContentTab.swift */,
@@ -612,19 +525,9 @@
 		BBB6EF562C8C87540079D135 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				BBB1B7CA2D7B34D40023147B /* Button */,
-				BB6BD0402DB2609500E45697 /* Subscription */,
-				BB6BD0422DB2612800E45697 /* User Limits */,
-				BB6BD0472DB2648200E45697 /* Video */,
-				BBE522152DEA51CA00ADACA8 /* Translation */,
 				BBB6EF282C8C86240079D135 /* ContentView.swift */,
 				BBC3E1812E0C57D6007F9878 /* LoadingProgressBar.swift */,
-				BB4EDB232C91902100699E7D /* SettingsView.swift */,
 				BB7B6D9B2D1F30BC0030344A /* SnackBar.swift */,
-				BB7B6D952D1DF0990030344A /* StudyView.swift */,
-				BB34C4FE2E23F23900238EA8 /* StudySection.swift */,
-				BB5062CB2DA875B50031B62B /* TranslationView.swift */,
-				BBFB3B062D3D37F2001997A8 /* ModerationExplanationView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -699,17 +602,6 @@
 				BB756CF62E0344F700365610 /* UserLimitAction.swift */,
 			);
 			path = Action;
-			sourceTree = "<group>";
-		};
-		BBE522152DEA51CA00ADACA8 /* Translation */ = {
-			isa = PBXGroup;
-			children = (
-				BBE522112DEA51CA00ADACA8 /* TranslationActionButton.swift */,
-				BBE522122DEA51CA00ADACA8 /* TranslationInputSection.swift */,
-				BBE522132DEA51CA00ADACA8 /* TranslationLanguageSelector.swift */,
-				BBE522142DEA51CA00ADACA8 /* TranslationResultsSection.swift */,
-			);
-			path = Translation;
 			sourceTree = "<group>";
 		};
 		BBEF63542DA1F87E00F93ECC /* Middleware */ = {
@@ -959,18 +851,14 @@
 				BBDA56C22DFF10F200B61F05 /* UserLimitsDataStoreProtocol.swift in Sources */,
 				BBDA56C02DFF10E700B61F05 /* UserLimitsDataStore.swift in Sources */,
 				BB6BD0152DB1768200E45697 /* ModerationResult.swift in Sources */,
-				BBB1B7CC2D7B34EB0023147B /* MainButton.swift in Sources */,
 				BB2893162DAA82E300F7ED69 /* TranslationState.swift in Sources */,
 				BB7B6D9C2D1F30BC0030344A /* SnackBar.swift in Sources */,
 				BB756CFD2E03476B00365610 /* NavigationAction.swift in Sources */,
 				BB756CE72E033DF700365610 /* SubscriptionAction.swift in Sources */,
 				BBAE07DD2D14BE3000DA95CD /* SystemImage.swift in Sources */,
 				BB6BD0212DB1770B00E45697 /* FlowTaleServicesError.swift in Sources */,
-				BB34C4FF2E23F23900238EA8 /* StudySection.swift in Sources */,
 				BB4EDB292C919A3C00699E7D /* NewPhrasesResponse.swift in Sources */,
 				BB6BD0172DB176AC00E45697 /* CategoryResult.swift in Sources */,
-				BB9C21932D3ACE05004C7689 /* PrimaryButton.swift in Sources */,
-				BBAE07D12D0C793000DA95CD /* SubscriptionView.swift in Sources */,
 				BBAE07D32D0C796500DA95CD /* SubscriptionState.swift in Sources */,
 				BB2893142DAA82BF00F7ED69 /* TranslationMiddleware.swift in Sources */,
 				BB756CEF2E03417E00365610 /* AppSettingsReducer.swift in Sources */,
@@ -980,33 +868,24 @@
 				BB756CE52E033DE900365610 /* SubscriptionMiddleware.swift in Sources */,
 				BB4E6BF82D246AEF002B5CBA /* LoadingState.swift in Sources */,
 				BBDA56CC2DFF165500B61F05 /* CreateImageServices.swift in Sources */,
-				BBE522262DEAF48E00ADACA8 /* DeleteButton.swift in Sources */,
-				BBE522162DEA51CA00ADACA8 /* TranslationLanguageSelector.swift in Sources */,
 				BB756CF72E0344F700365610 /* UserLimitAction.swift in Sources */,
-				BBE522172DEA51CA00ADACA8 /* TranslationInputSection.swift in Sources */,
-				BBE522182DEA51CA00ADACA8 /* TranslationResultsSection.swift in Sources */,
-				BBE522192DEA51CA00ADACA8 /* TranslationActionButton.swift in Sources */,
 				BB4EDB072C90C8CA00699E7D /* FlowTaleAction.swift in Sources */,
 				BBEF63512DA1EB5600F93ECC /* KeychainManager.swift in Sources */,
 				BB2893192DAAB49D00F7ED69 /* ChapterResponseDecoder.swift in Sources */,
 				BB756CED2E03417900365610 /* AppSettingsMiddleware.swift in Sources */,
 				BB4EDB152C90CF7400699E7D /* FlowTaleDataStore.swift in Sources */,
-				BB45C5692D4A785C00B3705A /* DailyLimitExplanationView.swift in Sources */,
 				BBDA56D42DFF1AB800B61F05 /* RequestFactory.swift in Sources */,
 				BBDA56C42DFF117F00B61F05 /* SettingsDataStore.swift in Sources */,
 				BB4EDB1D2C90DFDD00699E7D /* FlowTaleRepository.swift in Sources */,
-				BB6BD0442DB2644100E45697 /* CreateStoryButton.swift in Sources */,
 				BB2893122DAA82B700F7ED69 /* TranslationReducer.swift in Sources */,
 				BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */,
 				BB756CFB2E03450500365610 /* UserLimitReducer.swift in Sources */,
 				BB1994C82CE8E0BE00D61E54 /* Data+AVPlayer.swift in Sources */,
 				BBE521FD2DE9D83C00ADACA8 /* FlowTaleServicesProtocol.swift in Sources */,
 				BB1994D12CE9050000D61E54 /* AudioState.swift in Sources */,
-				BBAE07D52D0CA79A00DA95CD /* SubscriptionOption.swift in Sources */,
 				BB756CF92E0344FC00365610 /* UserLimitMiddleware.swift in Sources */,
 				BB6BD0132DB1766200E45697 /* ModerationResponse.swift in Sources */,
 				BB6572D22CD165F200AC5981 /* Collection+Safe.swift in Sources */,
-				BB6BD0462DB2645700E45697 /* VideoBackgroundView.swift in Sources */,
 				BB4EDB0E2C90CA0300699E7D /* FlowTaleMiddleware.swift in Sources */,
 				BB6BD03C2DB25F3500E45697 /* View+BackgroundImage.swift in Sources */,
 				BBE990B52D29BC2200FAD3FB /* AppAudioState.swift in Sources */,
@@ -1014,7 +893,6 @@
 				BBE522002DE9D85B00ADACA8 /* FlowTaleDataStoreProtocol.swift in Sources */,
 				BB6BD01B2DB176C800E45697 /* ModerationRequest.swift in Sources */,
 				BBDA56DC2DFF1D1800B61F05 /* ModerationServicesProtocol.swift in Sources */,
-				BB7B6D962D1DF0990030344A /* StudyView.swift in Sources */,
 				BB7B6DA02D1F316E0030344A /* SnackBarType.swift in Sources */,
 				BBE5220E2DEA49FA00ADACA8 /* FlowTaleColorScheme.swift in Sources */,
 				BBDA56D02DFF1A8600B61F05 /* TranslationServices.swift in Sources */,
@@ -1022,7 +900,6 @@
 				BB756CDD2E03383800365610 /* AudioReducer.swift in Sources */,
 				BBC3E1822E0C57D6007F9878 /* LoadingProgressBar.swift in Sources */,
 				BBAE07CF2D0C768000DA95CD /* AnyKey.swift in Sources */,
-				BB45C56B2D4A7C4000B3705A /* FreeLimitExplanationView.swift in Sources */,
 				BB34C4F82E23E09900238EA8 /* Font+Types.swift in Sources */,
 				BB4EDB102C90CA4900699E7D /* FlowTaleSubscriber.swift in Sources */,
 				BB1994D32CE9051700D61E54 /* ViewState.swift in Sources */,
@@ -1030,7 +907,6 @@
 				BBDA56C62DFF118D00B61F05 /* SettingsDataStoreProtocol.swift in Sources */,
 				BBDA56CE2DFF166500B61F05 /* CreateImageServicesProtocol.swift in Sources */,
 				BBE522102DEA4A1000ADACA8 /* StorySetting.swift in Sources */,
-				BB4EDB242C91902100699E7D /* SettingsView.swift in Sources */,
 				BB6BD0192DB176BF00E45697 /* ModerationCategories.swift in Sources */,
 				BB6BD02E2DB17D4500E45697 /* ContentTab.swift in Sources */,
 				BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */,
@@ -1038,21 +914,16 @@
 				BB1994CF2CE904F000D61E54 /* DefinitionState.swift in Sources */,
 				BB6BD03F2DB25FAD00E45697 /* BackgroundImageType.swift in Sources */,
 				BB4EDB0C2C90C9A100699E7D /* FlowTaleReducer.swift in Sources */,
-				BB6BD0342DB25C1700E45697 /* AudioButton.swift in Sources */,
 				BB4EDB0A2C90C8F100699E7D /* FlowTaleEnvironment.swift in Sources */,
 				BB7B6D9E2D1F31190030344A /* SnackBarState.swift in Sources */,
 				BBE990BD2D29C56D00FAD3FB /* MusicAudioState.swift in Sources */,
 				BB756CD92E03377600365610 /* AudioMiddleware.swift in Sources */,
-				BBFB3B072D3D37F2001997A8 /* ModerationExplanationView.swift in Sources */,
-				BB6572D62CD4E09000AC5981 /* ActionButton.swift in Sources */,
 				BB756CEB2E03417300365610 /* AppSettingsAction.swift in Sources */,
 				BB756D012E03477500365610 /* NavigationReducer.swift in Sources */,
 				BB4EDB032C90C86300699E7D /* FlowTaleStore.swift in Sources */,
-				BB6BD0362DB25C9100E45697 /* SpeechSpeedButton.swift in Sources */,
 				BBE522052DE9D88F00ADACA8 /* FlowTaleRepositoryProtocol.swift in Sources */,
 				BB6BD0312DB17E7800E45697 /* OpenRouterModel.swift in Sources */,
 				BB6BD03A2DB25E7C00E45697 /* View+CardBackground.swift in Sources */,
-				BB3ED31E2E05862C003B7D14 /* LanguageMenuType.swift in Sources */,
 				BB756D032E0413E400365610 /* SnackbarAction.swift in Sources */,
 				BB756CE92E033DFD00365610 /* SubscriptionReducer.swift in Sources */,
 				BB4EDB172C90D20300699E7D /* FlowTaleServices.swift in Sources */,
@@ -1065,7 +936,6 @@
 				BB756D052E0413EC00365610 /* SnackbarMiddleware.swift in Sources */,
 				BB756CF52E0343A900365610 /* ModerationReducer.swift in Sources */,
 				BBDA56DA2DFF1D0A00B61F05 /* ModerationServices.swift in Sources */,
-				BB5062CC2DA875B50031B62B /* TranslationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,7 +15,9 @@ let package = Package(
             targets: ["Definition"]),
     ],
     dependencies: [
-        .package(name: "Story", path: "../Story")
+        .package(name: "Story", path: "../Story"),
+        .package(name: "Settings", path: "../Settings"),
+        .package(name: "Speech", path: "../Speech")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -23,7 +25,9 @@ let package = Package(
         .target(
             name: "Definition",
             dependencies: [
-                "Story"
+                "Story",
+                "Settings",
+                "Speech"
             ]
         ),
         .testTarget(
