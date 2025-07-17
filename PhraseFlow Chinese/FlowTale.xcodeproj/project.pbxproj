@@ -23,7 +23,6 @@
 		BBB6EF382C8C862A0079D135 /* FlowTaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF372C8C862A0079D135 /* FlowTaleTests.swift */; };
 		BBB6EF422C8C862A0079D135 /* FlowTaleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF412C8C862A0079D135 /* FlowTaleUITests.swift */; };
 		BBB6EF442C8C862A0079D135 /* FlowTaleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF432C8C862A0079D135 /* FlowTaleUITestsLaunchTests.swift */; };
-		BBDA56D42DFF1AB800B61F05 /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDA56D32DFF1AB800B61F05 /* RequestFactory.swift */; };
 		BBE521FA2DE9D81300ADACA8 /* FlowTaleEnvironmentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE521F92DE9D81300ADACA8 /* FlowTaleEnvironmentProtocol.swift */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +68,7 @@
 		BB34C5172E28FCD300238EA8 /* DataStorage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DataStorage; sourceTree = "<group>"; };
 		BB34C5182E29007F00238EA8 /* UserLimit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = UserLimit; sourceTree = "<group>"; };
 		BB34C5192E29012A00238EA8 /* Navigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Navigation; sourceTree = "<group>"; };
+		BB34C51A2E2905B700238EA8 /* APIRequest */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = APIRequest; sourceTree = "<group>"; };
 		BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleStore.swift; sourceTree = "<group>"; };
 		BB4EDB092C90C8F100699E7D /* FlowTaleEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleEnvironment.swift; sourceTree = "<group>"; };
 		BB4EDB0F2C90CA4900699E7D /* FlowTaleSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleSubscriber.swift; sourceTree = "<group>"; };
@@ -87,7 +87,6 @@
 		BBB6EF3D2C8C862A0079D135 /* FlowTaleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowTaleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF412C8C862A0079D135 /* FlowTaleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleUITests.swift; sourceTree = "<group>"; };
 		BBB6EF432C8C862A0079D135 /* FlowTaleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		BBDA56D32DFF1AB800B61F05 /* RequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFactory.swift; sourceTree = "<group>"; };
 		BBE521F92DE9D81300ADACA8 /* FlowTaleEnvironmentProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleEnvironmentProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -140,7 +139,6 @@
 			isa = PBXGroup;
 			children = (
 				BBE521FB2DE9D82A00ADACA8 /* Environment */,
-				BBE521FE2DE9D84400ADACA8 /* Service */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -164,6 +162,7 @@
 		BBB6EF1A2C8C86240079D135 = {
 			isa = PBXGroup;
 			children = (
+				BB34C51A2E2905B700238EA8 /* APIRequest */,
 				BB34C5142E28F6F800238EA8 /* Audio */,
 				BB34C5172E28FCD300238EA8 /* DataStorage */,
 				BB34C5032E25259C00238EA8 /* Definition */,
@@ -267,14 +266,6 @@
 				BBE521F92DE9D81300ADACA8 /* FlowTaleEnvironmentProtocol.swift */,
 			);
 			path = Environment;
-			sourceTree = "<group>";
-		};
-		BBE521FE2DE9D84400ADACA8 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				BBDA56D32DFF1AB800B61F05 /* RequestFactory.swift */,
-			);
-			path = Service;
 			sourceTree = "<group>";
 		};
 		D2708F9BEB6EBF9B4147F685 /* Pods */ = {
@@ -486,7 +477,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBAE07DD2D14BE3000DA95CD /* SystemImage.swift in Sources */,
-				BBDA56D42DFF1AB800B61F05 /* RequestFactory.swift in Sources */,
 				BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */,
 				BB6572D22CD165F200AC5981 /* Collection+Safe.swift in Sources */,
 				BBE521FA2DE9D81300ADACA8 /* FlowTaleEnvironmentProtocol.swift in Sources */,
