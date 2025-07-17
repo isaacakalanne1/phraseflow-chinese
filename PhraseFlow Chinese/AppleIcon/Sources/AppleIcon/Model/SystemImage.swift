@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum SystemImage {
+public enum SystemImage {
     case _repeat,
          speaker,
          pause,

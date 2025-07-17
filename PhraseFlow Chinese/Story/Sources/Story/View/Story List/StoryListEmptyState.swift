@@ -14,7 +14,7 @@ struct StoryListEmptyState: View {
             
             Image(systemName: "book.closed")
                 .font(.flowTaleBodyXLarge())
-                .foregroundColor(.ftAccent.opacity(0.6))
+                .foregroundColor(FTColor.accent.opacity(0.6))
             
             Text(LocalizedString.noStoriesYet)
                 .font(.flowTaleSecondaryHeader())

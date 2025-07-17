@@ -33,7 +33,7 @@ struct AudioButton: View {
             .background(
                 Circle()
                     .fill(.ftBackground)
-                    .overlay(Circle().strokeBorder(.ftAccent, lineWidth: 2))
+                    .overlay(Circle().strokeBorder(FTColor.accent, lineWidth: 2))
                     .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
             )
     }

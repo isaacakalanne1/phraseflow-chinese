@@ -55,7 +55,7 @@ struct ContentView: View {
             }
         }
         .background(.ftBackground)
-        .tint(.ftAccent)
+        .tint(FTColor.accent)
         .preferredColorScheme(.dark)
     }
 

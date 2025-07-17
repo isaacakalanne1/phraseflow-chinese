@@ -56,7 +56,7 @@ struct ImageButton: View {
                     }
                     Text(title)
                         .fontWeight(isSelected ? .bold : .regular)
-                        .foregroundStyle(isSelected ? .ftAccent : Color.white)
+                        .foregroundStyle(isSelected ? FTColor.accent : Color.white)
                         .lineLimit(5)
                         .truncationMode(.tail)
                         .padding(.bottom, 8)
@@ -65,7 +65,7 @@ struct ImageButton: View {
             }
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(isSelected ? .ftAccent : Color.clear, lineWidth: 6)
+                    .stroke(isSelected ? FTColor.accent : Color.clear, lineWidth: 6)
             )
             .cornerRadius(12)
             .frame(maxWidth: .infinity)

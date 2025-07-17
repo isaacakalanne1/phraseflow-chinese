@@ -25,7 +25,7 @@ struct SubscriptionOption: View {
             if isUserCurrentSubscription {
                 return .ftPrimary
             } else {
-                return .ftAccent
+                return FTColor.accent
             }
         } else {
             return .ftSecondary
@@ -35,7 +35,7 @@ struct SubscriptionOption: View {
     var foregroundColor: Color {
         if let _ = product {
             if isUserCurrentSubscription {
-                return .ftAccent
+                return FTColor.accent
             } else {
                 return .ftBackground
             }
@@ -64,7 +64,7 @@ struct SubscriptionOption: View {
             .cornerRadius(10)
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(isUserCurrentSubscription ? .ftAccent : .clear, lineWidth: 3)
+                    .stroke(isUserCurrentSubscription ? FTColor.accent : .clear, lineWidth: 3)
             )
         })
     }

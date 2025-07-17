@@ -24,7 +24,7 @@ struct SpeechSpeedButton: View {
                 .background(
                     Capsule()
                         .fill(.ftBackground.opacity(0.9))
-                        .overlay(Capsule().strokeBorder(.ftAccent, lineWidth: 1))
+                        .overlay(Capsule().strokeBorder(FTColor.accent, lineWidth: 1))
                         .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 2)
                 )
         }

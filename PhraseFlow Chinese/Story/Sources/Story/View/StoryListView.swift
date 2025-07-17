@@ -30,7 +30,7 @@ struct StoryListView: View {
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 16)
-            .shadow(color: .ftAccent.opacity(0.3), radius: 10, x: 0, y: 5)
+            .shadow(color: FTColor.accent.opacity(0.3), radius: 10, x: 0, y: 5)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.ftBackground)

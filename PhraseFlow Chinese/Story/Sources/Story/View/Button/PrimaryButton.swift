@@ -39,7 +39,7 @@ struct PrimaryButton<Content: View>: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(.ftAccent)
+                .background(FTColor.accent)
                 .foregroundColor(.white)
                 .cornerRadius(10)
             }
@@ -50,7 +50,7 @@ struct PrimaryButton<Content: View>: View {
             }
             .frame(maxWidth: .infinity)
             .padding()
-            .background(.ftAccent)
+            .background(FTColor.accent)
             .foregroundColor(.white)
             .cornerRadius(10)
         }

@@ -5,6 +5,7 @@
 //  Created by iakalann on 26/12/2024.
 //
 
+import Localization
 import SwiftUI
 
 struct StudyView: View {

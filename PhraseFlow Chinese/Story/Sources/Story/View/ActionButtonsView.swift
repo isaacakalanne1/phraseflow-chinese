@@ -32,7 +32,7 @@ struct ActionButtonsView: View {
                     }
                     RoundedRectangle(cornerRadius: 1.5, style: .continuous)
                         .frame(width: 40, height: 3)
-                        .foregroundStyle(isSelected ? .ftAccent : Color.clear)
+                        .foregroundStyle(isSelected ? FTColor.accent : Color.clear)
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.top, 4)

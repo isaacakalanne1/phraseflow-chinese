@@ -14,13 +14,15 @@ let package = Package(
             targets: ["Study"]),
     ],
     dependencies: [
-        .package(name: "Definition", path: "../Definition")
+        .package(name: "Definition", path: "../Definition"),
+        .package(name: "Localization", path: "../Localization")
     ],
     targets: [
         .target(
             name: "Study",
             dependencies: [
-                "Definition"
+                "Definition",
+                "Localization"
             ]
         ),
         .testTarget(

@@ -54,7 +54,7 @@ struct LoadingProgressBar: View {
                             .foregroundColor(.ftPrimary)
                         
                         ProgressView(value: progress, total: 1.0)
-                            .progressViewStyle(LinearProgressViewStyle(tint: .ftAccent))
+                            .progressViewStyle(LinearProgressViewStyle(tint: FTColor.accent))
                             .scaleEffect(y: 1.5)
                             .animation(.easeInOut(duration: 0.3), value: progress)
                         
@@ -134,7 +134,7 @@ struct LoadingProgressBar: View {
                     }
                     
                     ProgressView(value: progress, total: 1.0)
-                        .progressViewStyle(LinearProgressViewStyle(tint: .ftAccent))
+                        .progressViewStyle(LinearProgressViewStyle(tint: FTColor.accent))
                         .scaleEffect(y: 0.8)
                         .animation(.easeInOut(duration: 0.3), value: progress)
                 }
@@ -165,8 +165,8 @@ struct ProgressStep: View {
             ZStack {
                 Circle()
                     .fill(
-                        isCompleted ? .ftAccent :
-                        isCurrent ? .ftAccent.opacity(0.3) :
+                        isCompleted ? FTColor.accent :
+                        isCurrent ? FTColor.accent.opacity(0.3) :
                         .ftSecondary.opacity(0.2)
                     )
                     .frame(width: 24, height: 24)
@@ -178,7 +178,7 @@ struct ProgressStep: View {
                 } else if isCurrent {
                     ProgressView()
                         .scaleEffect(0.5)
-                        .progressViewStyle(CircularProgressViewStyle(tint: .ftAccent))
+                        .progressViewStyle(CircularProgressViewStyle(tint: FTColor.accent))
                 } else {
                     Image(systemName: icon)
                         .font(.flowTaleBodyXSmall())
@@ -191,8 +191,8 @@ struct ProgressStep: View {
                 ZStack {
                     Circle()
                         .fill(
-                            isCompleted ? .ftAccent :
-                            isCurrent ? .ftAccent.opacity(0.3) :
+                            isCompleted ? FTColor.accent :
+                            isCurrent ? FTColor.accent.opacity(0.3) :
                             .ftSecondary.opacity(0.2)
                         )
                         .frame(width: 40, height: 40)
@@ -204,7 +204,7 @@ struct ProgressStep: View {
                     } else if isCurrent {
                         ProgressView()
                             .scaleEffect(0.8)
-                            .progressViewStyle(CircularProgressViewStyle(tint: .ftAccent))
+                            .progressViewStyle(CircularProgressViewStyle(tint: FTColor.accent))
                     } else {
                         Image(systemName: icon)
                             .font(.flowTaleBodySmall())

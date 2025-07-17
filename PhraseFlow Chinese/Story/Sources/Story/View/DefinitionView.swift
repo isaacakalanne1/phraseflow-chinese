@@ -26,7 +26,7 @@ struct DefinitionView: View {
                             Text(definition.detail.pronunciation)
                                 .font(.flowTaleBodyMedium())
                                 .italic()
-                                .foregroundColor(.ftAccent)
+                                .foregroundColor(FTColor.accent)
                         }
 
                         Text(definition.detail.definition)

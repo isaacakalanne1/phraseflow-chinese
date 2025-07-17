@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct SystemImageView: View {
+public struct SystemImageView: View {
     private let systemImage: SystemImage
     private let size: CGFloat
     private let isSelected: Bool
 
-    init(_ systemImage: SystemImage,
+    public init(_ systemImage: SystemImage,
          size: CGFloat = 40,
          isSelected: Bool = true)
     {
@@ -21,10 +21,10 @@ struct SystemImageView: View {
         self.isSelected = isSelected
     }
 
-    var body: some View {
-        let baseColor: Color = isSelected ? .ftAccent : .ftPrimary
+    public var body: some View {
+        let baseColor: Color = isSelected ? FTColor.accent : .ftPrimary
         let bottomColor: Color = isSelected ?
-            .ftAccent.opacity(0.7) // Accent with opacity for selected (simulates black overlay)
+            FTColor.accent.opacity(0.7) // Accent with opacity for selected (simulates black overlay)
             : .ftPrimary.opacity(0.7) // Darker version for non-selected
 
         Image(systemName: systemImage.systemName)

@@ -48,7 +48,7 @@ struct StoryCard: View {
                 // Fallback gradient background
                 LinearGradient(
                     colors: [
-                        .ftAccent.opacity(0.6),
+                        FTColor.accent.opacity(0.6),
                         .ftPrimary.opacity(0.8)
                     ],
                     startPoint: .topLeading,

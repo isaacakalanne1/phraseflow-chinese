@@ -111,7 +111,7 @@ struct ChapterListView: View {
                     .disabled(store.state.viewState.isWritingChapter)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 16)
-                    .shadow(color: .ftAccent.opacity(0.3), radius: 10, x: 0, y: 5)
+                    .shadow(color: FTColor.accent.opacity(0.3), radius: 10, x: 0, y: 5)
                 }
                 .background(
                     Rectangle()
@@ -146,7 +146,7 @@ struct ChapterListView: View {
         VStack(spacing: 16) {
             Image(systemName: "doc.text")
                 .font(.flowTaleBodyXLarge())
-                .foregroundColor(.ftAccent.opacity(0.6))
+                .foregroundColor(FTColor.accent.opacity(0.6))
                 .padding(.top, 20)
             
             Text(LocalizedString.noChaptersYet)
@@ -175,12 +175,12 @@ struct ChapterListView: View {
             HStack(spacing: 12) {
                 ZStack {
                     Circle()
-                        .fill(.ftAccent.opacity(0.1))
+                        .fill(FTColor.accent.opacity(0.1))
                         .frame(width: 40, height: 40)
                     
                     Text("\(allChaptersForStory.count - index)")
                         .font(.flowTaleBodyXSmall())
-                        .foregroundColor(.ftAccent)
+                        .foregroundColor(FTColor.accent)
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {

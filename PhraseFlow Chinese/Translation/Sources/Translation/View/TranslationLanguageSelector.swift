@@ -88,12 +88,12 @@ struct TranslationLanguageSelector: View {
                   "arrow.right" : "arrow.left.arrow.right")
                 .font(.flowTaleBodyXSmall())
                 .foregroundColor(store.state.translationState.sourceLanguage == nil ?
-                                .ftSecondary : .ftAccent)
+                                .ftSecondary : FTColor.accent)
                 .frame(width: 36, height: 36)
                 .background(
                     Circle()
                         .strokeBorder(store.state.translationState.sourceLanguage == nil ?
-                                     .ftSecondary : .ftAccent, lineWidth: 1)
+                                     .ftSecondary : FTColor.accent, lineWidth: 1)
                 )
         }
         .disabled(store.state.translationState.sourceLanguage == nil)
