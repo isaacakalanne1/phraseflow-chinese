@@ -56,7 +56,8 @@ class SpeechRepository: SpeechRepositoryProtocol {
                 cleanedWord = cleanedWord.replacingOccurrences(of: self.sentenceMarker, with: "")
             }
 
-            if var previousTimestamp = wordTimestamps[safe: index] {
+            if wordTimestamps.indices.contains(index) {
+                var previousTimestamp = wordTimestamps[index]
                 previousTimestamp.duration = audioTimeInSeconds - previousTimestamp.time
                 wordTimestamps[index] = previousTimestamp
             }

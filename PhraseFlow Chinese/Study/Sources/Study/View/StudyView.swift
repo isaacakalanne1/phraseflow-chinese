@@ -22,7 +22,7 @@ struct StudyView: View {
 
     @State var index: Int = 0
     var currentDefinition: Definition? {
-        studyWords[safe: index]
+        studyWords.indices.contains(index) ? studyWords[index] : nil
     }
 
     var shouldShowAllDetails: Bool {

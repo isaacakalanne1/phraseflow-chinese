@@ -11,11 +11,8 @@
 		BB4EDB032C90C86300699E7D /* FlowTaleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */; };
 		BB4EDB0A2C90C8F100699E7D /* FlowTaleEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB092C90C8F100699E7D /* FlowTaleEnvironment.swift */; };
 		BB4EDB102C90CA4900699E7D /* FlowTaleSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0F2C90CA4900699E7D /* FlowTaleSubscriber.swift */; };
-		BB6572D22CD165F200AC5981 /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6572D12CD165F200AC5981 /* Collection+Safe.swift */; };
 		BB7B6D942D1ACEBF0030344A /* libPods-FlowTale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */; };
 		BBA94CCD2D19AAE000EB4A7E /* FlowTaleStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA94CCC2D19AAE000EB4A7E /* FlowTaleStateTests.swift */; };
-		BBAE07DD2D14BE3000DA95CD /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE07DC2D14BE3000DA95CD /* SystemImage.swift */; };
-		BBB1B7B72D79B3120023147B /* ButtonBackground.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BBB1B7B62D79B3120023147B /* ButtonBackground.mp4 */; };
 		BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -69,14 +66,13 @@
 		BB34C5182E29007F00238EA8 /* UserLimit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = UserLimit; sourceTree = "<group>"; };
 		BB34C5192E29012A00238EA8 /* Navigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Navigation; sourceTree = "<group>"; };
 		BB34C51A2E2905B700238EA8 /* APIRequest */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = APIRequest; sourceTree = "<group>"; };
+		BB34C51B2E290A2300238EA8 /* AppleIcon */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AppleIcon; sourceTree = "<group>"; };
+		BB34C51C2E290A7C00238EA8 /* FTColor */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FTColor; sourceTree = "<group>"; };
 		BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleStore.swift; sourceTree = "<group>"; };
 		BB4EDB092C90C8F100699E7D /* FlowTaleEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleEnvironment.swift; sourceTree = "<group>"; };
 		BB4EDB0F2C90CA4900699E7D /* FlowTaleSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleSubscriber.swift; sourceTree = "<group>"; };
-		BB6572D12CD165F200AC5981 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
 		BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-FlowTale.a"; path = "../../../../Library/Developer/Xcode/DerivedData/FlowTale-dzblbgdyrqlsjdggurnqsbvwzaoq/Build/Products/Debug-iphoneos/libPods-FlowTale.a"; sourceTree = "<group>"; };
 		BBA94CCC2D19AAE000EB4A7E /* FlowTaleStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleStateTests.swift; sourceTree = "<group>"; };
-		BBAE07DC2D14BE3000DA95CD /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
-		BBB1B7B62D79B3120023147B /* ButtonBackground.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ButtonBackground.mp4; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* FlowTale.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowTale.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -143,29 +139,15 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
-		BB4EDB112C90CBAE00699E7D /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				BB6572D12CD165F200AC5981 /* Collection+Safe.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		BBB1B7BF2D79DD320023147B /* Video */ = {
-			isa = PBXGroup;
-			children = (
-				BBB1B7B62D79B3120023147B /* ButtonBackground.mp4 */,
-			);
-			path = Video;
-			sourceTree = "<group>";
-		};
 		BBB6EF1A2C8C86240079D135 = {
 			isa = PBXGroup;
 			children = (
 				BB34C51A2E2905B700238EA8 /* APIRequest */,
+				BB34C51B2E290A2300238EA8 /* AppleIcon */,
 				BB34C5142E28F6F800238EA8 /* Audio */,
 				BB34C5172E28FCD300238EA8 /* DataStorage */,
 				BB34C5032E25259C00238EA8 /* Definition */,
+				BB34C51C2E290A7C00238EA8 /* FTColor */,
 				BB34C5132E28F62B00238EA8 /* FTFont */,
 				BB34C50C2E285EEC00238EA8 /* ImageGeneration */,
 				BB34C5162E28FA1900238EA8 /* Loading */,
@@ -174,8 +156,8 @@
 				BB34C50A2E2836E000238EA8 /* Moderation */,
 				BB34C5192E29012A00238EA8 /* Navigation */,
 				BB34C5062E28258A00238EA8 /* Settings */,
-				BB34C5052E252D7100238EA8 /* Speech */,
 				BB34C5152E28F97000238EA8 /* SnackBar */,
+				BB34C5052E252D7100238EA8 /* Speech */,
 				BB34C5042E25279800238EA8 /* Story */,
 				BB34C5022E2430BA00238EA8 /* Study */,
 				BB34C50B2E28373F00238EA8 /* Subscription */,
@@ -204,13 +186,10 @@
 		BBB6EF252C8C86240079D135 /* FlowTale */ = {
 			isa = PBXGroup;
 			children = (
-				BBB1B7BF2D79DD320023147B /* Video */,
 				BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */,
-				BB4EDB112C90CBAE00699E7D /* Extensions */,
 				BB4EDB012C90C85000699E7D /* Redux */,
 				BB4EDB082C90C8E100699E7D /* Service */,
 				BBB6EF562C8C87540079D135 /* View */,
-				BBB6EF502C8C86A50079D135 /* Model */,
 				BBB6EF2A2C8C86290079D135 /* Assets.xcassets */,
 				BBB6EF2C2C8C86290079D135 /* Preview Content */,
 			);
@@ -241,14 +220,6 @@
 				BBB6EF432C8C862A0079D135 /* FlowTaleUITestsLaunchTests.swift */,
 			);
 			path = FlowTaleUITests;
-			sourceTree = "<group>";
-		};
-		BBB6EF502C8C86A50079D135 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				BBAE07DC2D14BE3000DA95CD /* SystemImage.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		BBB6EF562C8C87540079D135 /* View */ = {
@@ -403,7 +374,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBB1B7B72D79B3120023147B /* ButtonBackground.mp4 in Resources */,
 				BBB6EF2E2C8C86290079D135 /* Preview Assets.xcassets in Resources */,
 				BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */,
 			);
@@ -476,9 +446,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBAE07DD2D14BE3000DA95CD /* SystemImage.swift in Sources */,
 				BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */,
-				BB6572D22CD165F200AC5981 /* Collection+Safe.swift in Sources */,
 				BBE521FA2DE9D81300ADACA8 /* FlowTaleEnvironmentProtocol.swift in Sources */,
 				BB4EDB102C90CA4900699E7D /* FlowTaleSubscriber.swift in Sources */,
 				BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */,
