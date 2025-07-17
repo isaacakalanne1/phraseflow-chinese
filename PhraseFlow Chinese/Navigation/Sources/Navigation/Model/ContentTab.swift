@@ -8,7 +8,9 @@
 import Foundation
 
 enum ContentTab: CaseIterable, Equatable, Identifiable {
-    var id = UUID()
+    var id: UUID {
+        UUID()
+    }
 
     case reader, storyList, progress, translate, subscribe, settings
 

@@ -23,6 +23,10 @@ public enum Language: String, Codable, CaseIterable {
          russian,
          german
 
+    var deviceLanguage: Language {
+        Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier }) ?? .english
+    }
+
     var thumbnail: UIImage? {
         return UIImage(named: "thumbnail-\(rawValue)")
     }
