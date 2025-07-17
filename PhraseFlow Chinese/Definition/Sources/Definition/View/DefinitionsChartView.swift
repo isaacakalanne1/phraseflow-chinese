@@ -162,7 +162,7 @@ struct DefinitionsChartView: View {
                     y: .value(LocalizedString.chartCheckpoint, checkpoint.value)
                 )
                 .lineStyle(StrokeStyle(lineWidth: 1, dash: [5])) // dotted line
-                .foregroundStyle(.ftSecondary)
+                .foregroundStyle(FTColor.secondary)
                 .annotation(position: .top, alignment: .leading) {
                     Text(checkpoint.label)
                         .font(.flowTaleSecondaryHeader())

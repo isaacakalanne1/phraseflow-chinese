@@ -67,7 +67,7 @@ struct SettingsView: View {
         }
         .navigationTitle(ContentTab.settings.title)
         .navigationBarTitleDisplayMode(.inline)
-        .background(.ftBackground)
+        .background(FTColor.background)
         .scrollContentBackground(.hidden)
         .scrollIndicators(.hidden)
     }

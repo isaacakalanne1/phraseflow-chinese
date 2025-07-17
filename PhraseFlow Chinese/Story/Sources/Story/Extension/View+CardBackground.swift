@@ -13,10 +13,10 @@ struct CardBackground: ViewModifier {
             content
                 .background {
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(.ftBackground)
+                        .fill(FTColor.background)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .strokeBorder(.ftSecondary, lineWidth: 1)
+                                .strokeBorder(FTColor.secondary, lineWidth: 1)
                         )
                 }
         }

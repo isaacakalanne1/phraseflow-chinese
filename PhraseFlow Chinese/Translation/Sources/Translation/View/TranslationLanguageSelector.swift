@@ -18,7 +18,7 @@ struct TranslationLanguageSelector: View {
             if store.state.translationState.mode == .translate {
                 Text("Translate between languages")
                     .font(.flowTaleSubHeader())
-                    .foregroundColor(.ftSecondary)
+                    .foregroundColor(FTColor.secondary)
 
                 HStack(spacing: 8) {
                     // Source language selector
@@ -34,7 +34,7 @@ struct TranslationLanguageSelector: View {
                 // Breakdown mode - only show text language selector
                 Text("Select text language")
                     .font(.flowTaleSubHeader())
-                    .foregroundColor(.ftSecondary)
+                    .foregroundColor(FTColor.secondary)
 
                 textLanguageButton
             }
@@ -66,15 +66,15 @@ struct TranslationLanguageSelector: View {
                 Image(systemName: "chevron.down")
                     .font(.flowTaleSecondaryHeader())
             }
-            .foregroundColor(.ftPrimary)
+            .foregroundColor(FTColor.primary)
             .padding(.vertical, 6)
             .padding(.horizontal, 10)
             .background(
                 Capsule()
-                    .fill(.ftBackground)
+                    .fill(FTColor.background)
                     .overlay(
                         Capsule()
-                            .strokeBorder(.ftSecondary, lineWidth: 1)
+                            .strokeBorder(FTColor.secondary, lineWidth: 1)
                     )
             )
         }
@@ -88,12 +88,12 @@ struct TranslationLanguageSelector: View {
                   "arrow.right" : "arrow.left.arrow.right")
                 .font(.flowTaleBodyXSmall())
                 .foregroundColor(store.state.translationState.sourceLanguage == nil ?
-                                .ftSecondary : FTColor.accent)
+                                FTColor.secondary : FTColor.accent)
                 .frame(width: 36, height: 36)
                 .background(
                     Circle()
                         .strokeBorder(store.state.translationState.sourceLanguage == nil ?
-                                     .ftSecondary : FTColor.accent, lineWidth: 1)
+                                     FTColor.secondary : FTColor.accent, lineWidth: 1)
                 )
         }
         .disabled(store.state.translationState.sourceLanguage == nil)
@@ -114,15 +114,15 @@ struct TranslationLanguageSelector: View {
                 Image(systemName: "chevron.down")
                     .font(.flowTaleSecondaryHeader())
             }
-            .foregroundColor(.ftPrimary)
+            .foregroundColor(FTColor.primary)
             .padding(.vertical, 6)
             .padding(.horizontal, 10)
             .background(
                 Capsule()
-                    .fill(.ftBackground)
+                    .fill(FTColor.background)
                     .overlay(
                         Capsule()
-                            .strokeBorder(.ftSecondary, lineWidth: 1)
+                            .strokeBorder(FTColor.secondary, lineWidth: 1)
                     )
             )
         }
@@ -143,15 +143,15 @@ struct TranslationLanguageSelector: View {
                 Image(systemName: "chevron.down")
                     .font(.flowTaleSecondaryHeader())
             }
-            .foregroundColor(.ftPrimary)
+            .foregroundColor(FTColor.primary)
             .padding(.vertical, 6)
             .padding(.horizontal, 10)
             .background(
                 Capsule()
-                    .fill(.ftBackground)
+                    .fill(FTColor.background)
                     .overlay(
                         Capsule()
-                            .strokeBorder(.ftSecondary, lineWidth: 1)
+                            .strokeBorder(FTColor.secondary, lineWidth: 1)
                     )
             )
         }

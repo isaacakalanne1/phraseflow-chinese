@@ -33,11 +33,11 @@ struct StoryListView: View {
             .shadow(color: FTColor.accent.opacity(0.3), radius: 10, x: 0, y: 5)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.ftBackground)
+        .background(FTColor.background)
         .navigationTitle(ContentTab.storyList.title)
         .navigationDestination(isPresented: $showCreateStorySettings) {
             CreateStorySettingsView()
-                .background(.ftBackground)
+                .background(FTColor.background)
         }
         .navigationBarTitleDisplayMode(.inline)
     }

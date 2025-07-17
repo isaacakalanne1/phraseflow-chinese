@@ -31,7 +31,7 @@ public enum Language: String, Codable, CaseIterable {
         return UIImage(named: "thumbnail-\(rawValue)")
     }
 
-    var descriptiveEnglishName: String {
+    public var descriptiveEnglishName: String {
         switch self {
         case .brazilianPortuguese:
             "Brazilian Portuguese"

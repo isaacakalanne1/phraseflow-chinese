@@ -5,6 +5,8 @@
 //  Created by iakalann on 07/09/2024.
 //
 
+import FTColor
+import Localization
 import SwiftUI
 
 struct ContentView: View {
@@ -23,7 +25,7 @@ struct ContentView: View {
             if !store.state.subscriptionState.isSubscribed {
                 Text(LocalizedString.freeTrial)
                     .font(.flowTaleBodyXSmall())
-                    .foregroundStyle(.ftPrimary)
+                    .foregroundStyle(FTColor.primary)
             }
             Group {
                 if store.state.viewState.isInitialisingApp {
@@ -54,7 +56,7 @@ struct ContentView: View {
                 store.dispatch(.audioAction(.playSound(.progressUpdate)))
             }
         }
-        .background(.ftBackground)
+        .background(FTColor.background)
         .tint(FTColor.accent)
         .preferredColorScheme(.dark)
     }

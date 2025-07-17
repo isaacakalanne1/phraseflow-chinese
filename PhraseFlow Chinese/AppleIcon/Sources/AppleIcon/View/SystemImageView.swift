@@ -5,6 +5,7 @@
 //  Created by iakalann on 19/12/2024.
 //
 
+import FTColor
 import SwiftUI
 
 public struct SystemImageView: View {
@@ -22,10 +23,10 @@ public struct SystemImageView: View {
     }
 
     public var body: some View {
-        let baseColor: Color = isSelected ? FTColor.accent : .ftPrimary
+        let baseColor: Color = isSelected ? FTColor.accent : FTColor.primary
         let bottomColor: Color = isSelected ?
             FTColor.accent.opacity(0.7) // Accent with opacity for selected (simulates black overlay)
-            : .ftPrimary.opacity(0.7) // Darker version for non-selected
+            : FTColor.primary.opacity(0.7) // Darker version for non-selected
 
         Image(systemName: systemImage.systemName)
             .resizable()

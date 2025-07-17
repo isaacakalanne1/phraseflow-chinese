@@ -33,11 +33,11 @@ struct ChapterListView: View {
                         } else {
                             ZStack {
                                 Rectangle()
-                                    .fill(.ftSecondary.opacity(0.1))
+                                    .fill(FTColor.secondary.opacity(0.1))
                                 
                                 Image(systemName: "book.closed.fill")
                                     .font(.flowTaleBodyXLarge())
-                                    .foregroundColor(.ftSecondary.opacity(0.5))
+                                    .foregroundColor(FTColor.secondary.opacity(0.5))
                             }
                         }
                     }
@@ -49,7 +49,7 @@ struct ChapterListView: View {
                     HStack {
                         Text(firstChapter.storyTitle)
                             .font(.flowTaleSecondaryHeader())
-                            .foregroundColor(.ftPrimary)
+                            .foregroundColor(FTColor.primary)
                         
                         Spacer()
                         
@@ -57,13 +57,13 @@ struct ChapterListView: View {
                             DifficultyView(difficulty: firstChapter.difficulty, isSelected: true)
                             Text(firstChapter.difficulty.title)
                                 .font(.flowTaleSecondaryHeader())
-                                .foregroundColor(.ftSecondary)
+                                .foregroundColor(FTColor.secondary)
                         }
                     }
                     
                     Text(firstChapter.chapterSummary)
                         .font(.flowTaleSecondaryHeader())
-                        .foregroundColor(.ftPrimary.opacity(0.8))
+                        .foregroundColor(FTColor.primary.opacity(0.8))
                         .lineLimit(3)
                 }
                 .padding(.horizontal, 16)
@@ -74,7 +74,7 @@ struct ChapterListView: View {
                         HStack {
                             Text(LocalizedString.chapters)
                                 .font(.flowTaleSecondaryHeader())
-                                .foregroundColor(.ftSecondary)
+                                .foregroundColor(FTColor.secondary)
                             
                             Spacer()
                             
@@ -118,8 +118,8 @@ struct ChapterListView: View {
                         .fill(
                             LinearGradient(
                                 colors: [
-                                    .ftBackground.opacity(0),
-                                    .ftBackground
+                                    FTColor.background.opacity(0),
+                                    FTColor.background
                                 ],
                                 startPoint: .top,
                                 endPoint: .bottom
@@ -130,7 +130,7 @@ struct ChapterListView: View {
                 )
             }
             .navigationTitle(LocalizedString.chooseChapter)
-            .background(.ftBackground)
+            .background(FTColor.background)
             .scrollContentBackground(.hidden)
             .onAppear {
                 store.dispatch(.audioAction(.playSound(.openStory)))
@@ -138,7 +138,7 @@ struct ChapterListView: View {
         } else {
             Text(LocalizedString.chapterListStoryNotFound)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(.ftBackground)
+                .background(FTColor.background)
         }
     }
 
@@ -151,11 +151,11 @@ struct ChapterListView: View {
             
             Text(LocalizedString.noChaptersYet)
                 .font(.flowTaleSecondaryHeader())
-                .foregroundColor(.ftPrimary)
+                .foregroundColor(FTColor.primary)
             
             Text(LocalizedString.createYourFirstChapter)
                 .font(.flowTaleSecondaryHeader())
-                .foregroundColor(.ftSecondary)
+                .foregroundColor(FTColor.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 40)
                 .padding(.bottom, 20)
@@ -186,14 +186,14 @@ struct ChapterListView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(chapter.title)
                         .font(.flowTaleBodyXSmall())
-                        .foregroundColor(.ftPrimary)
+                        .foregroundColor(FTColor.primary)
                         .lineLimit(1)
 
                     let snippetText = chapter.sentences.prefix(1).map { $0.original }.first ?? ""
                     if !snippetText.isEmpty {
                         Text(snippetText)
                             .font(.flowTaleBodyXSmall())
-                            .foregroundColor(.ftSecondary)
+                            .foregroundColor(FTColor.secondary)
                             .lineLimit(2)
                     }
                 }
@@ -202,14 +202,14 @@ struct ChapterListView: View {
                 Spacer()
                 
                 Image(systemName: "chevron.right")
-                    .foregroundColor(.ftSecondary)
+                    .foregroundColor(FTColor.secondary)
                     .font(.flowTaleBodyXSmall())
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(.ftBackground)
+                    .fill(FTColor.background)
                     .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
             )
             .contentShape(RoundedRectangle(cornerRadius: 12))

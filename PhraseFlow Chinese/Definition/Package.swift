@@ -15,7 +15,6 @@ let package = Package(
             targets: ["Definition"]),
     ],
     dependencies: [
-        .package(name: "Story", path: "../Story"),
         .package(name: "Settings", path: "../Settings"),
         .package(name: "Speech", path: "../Speech")
     ],
@@ -25,7 +24,6 @@ let package = Package(
         .target(
             name: "Definition",
             dependencies: [
-                "Story",
                 "Settings",
                 "Speech"
             ]

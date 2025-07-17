@@ -7,14 +7,22 @@
 
 import Foundation
 
-class RequestFactory {
-    static func makeRequest(type: APIRequestType, requestBody: [String: Any]) async throws -> String {
+enum RequestFactoryError: Error {
+    case failedToEncodeJson
+    case failedToDecodeJson
+}
+
+public class RequestFactory {
+    public static func makeRequest(
+        type: APIRequestType,
+        requestBody: [String: Any]
+    ) async throws -> String {
         let request = createURLRequest(baseUrl: type.baseUrl, authKey: type.authKey)
         var requestBody = requestBody
         requestBody["model"] = type.modelName
 
         guard let jsonData = try? JSONSerialization.data(withJSONObject: requestBody) else {
-            throw FlowTaleServicesError.failedToEncodeJson
+            throw RequestFactoryError.failedToEncodeJson
         }
 
         let session = createURLSession()
@@ -23,12 +31,15 @@ class RequestFactory {
         guard let response = try? JSONDecoder().decode(GPTResponse.self, from: data),
               let responseString = response.choices.first?.message.content
         else {
-            throw FlowTaleServicesError.failedToDecodeJson
+            throw RequestFactoryError.failedToDecodeJson
         }
         return responseString
     }
 
-    static func createURLRequest(baseUrl: String, authKey: String) -> URLRequest {
+    public static func createURLRequest(
+        baseUrl: String,
+        authKey: String
+    ) -> URLRequest {
         var request = URLRequest(url: URL(string: baseUrl)!)
         request.httpMethod = "POST"
         request.addValue("Bearer \(authKey)", forHTTPHeaderField: "Authorization")

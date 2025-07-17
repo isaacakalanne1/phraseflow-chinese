@@ -40,7 +40,7 @@ struct TranslationView: View {
         .padding()
         .navigationTitle(LocalizedString.translation)
         .navigationBarTitleDisplayMode(.inline)
-        .background(.ftBackground)
+        .background(FTColor.background)
         .navigationDestination(isPresented: $showLanguageSelector) {
             LanguageMenu(type: .translationTargetLanguage)
         }

@@ -28,11 +28,11 @@ struct AudioButton: View {
     private func audioButtonLabel(systemImage: SystemImage) -> some View {
         Image(systemName: systemImage.systemName)
             .font(.flowTaleBodyLarge()) // TODO: Remove if not needed
-            .foregroundColor(.ftPrimary)
+            .foregroundColor(FTColor.primary)
             .frame(width: 60, height: 60)
             .background(
                 Circle()
-                    .fill(.ftBackground)
+                    .fill(FTColor.background)
                     .overlay(Circle().strokeBorder(FTColor.accent, lineWidth: 2))
                     .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
             )

@@ -5,17 +5,28 @@ import PackageDescription
 
 let package = Package(
     name: "Navigation",
+    platforms: [
+        .iOS("17.4")
+    ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "Navigation",
             targets: ["Navigation"]),
     ],
+    dependencies: [
+        .package(name: "Localization", path: "../Localization"),
+        .package(name: "AppleIcon", path: "../AppleIcon"),
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Navigation"),
+            name: "Navigation",
+            dependencies: [
+                "Localization",
+                "AppleIcon"
+            ]),
         .testTarget(
             name: "NavigationTests",
             dependencies: ["Navigation"]

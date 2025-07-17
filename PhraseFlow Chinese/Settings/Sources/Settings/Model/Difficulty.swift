@@ -5,9 +5,10 @@
 //  Created by iakalann on 17/10/2024.
 //
 
+import Localization
 import SwiftUI
 
-enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
+public enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
     case beginner, intermediate, advanced, expert
 
     var maxIntValue: Int {
@@ -70,7 +71,7 @@ enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
         }
     }
 
-    var vocabularyPrompt: String {
+    public var vocabularyPrompt: String {
         var prompt: String
         switch self {
         case .beginner:

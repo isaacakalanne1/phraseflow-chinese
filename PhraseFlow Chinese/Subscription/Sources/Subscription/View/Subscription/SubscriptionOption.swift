@@ -23,12 +23,12 @@ struct SubscriptionOption: View {
     var backgroundColor: Color {
         if let _ = product {
             if isUserCurrentSubscription {
-                return .ftPrimary
+                return FTColor.primary
             } else {
                 return FTColor.accent
             }
         } else {
-            return .ftSecondary
+            return FTColor.secondary
         }
     }
 
@@ -37,10 +37,10 @@ struct SubscriptionOption: View {
             if isUserCurrentSubscription {
                 return FTColor.accent
             } else {
-                return .ftBackground
+                return FTColor.background
             }
         } else {
-            return .ftPrimary
+            return FTColor.primary
         }
     }
 

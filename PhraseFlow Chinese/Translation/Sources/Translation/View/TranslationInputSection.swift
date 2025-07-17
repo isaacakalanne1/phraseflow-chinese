@@ -17,19 +17,19 @@ struct TranslationInputSection: View {
         VStack(spacing: 8) {
             Text(LocalizedString.enterText)
                 .font(.flowTaleSubHeader())
-                .foregroundColor(.ftPrimary)
+                .foregroundColor(FTColor.primary)
 
             TextEditor(text: $inputText)
                 .frame(height: 120)
                 .padding(10)
                 .scrollContentBackground(.hidden)
-                .background(.ftBackground)
+                .background(FTColor.background)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
-                        .strokeBorder(.ftSecondary, lineWidth: 1)
+                        .strokeBorder(FTColor.secondary, lineWidth: 1)
                 )
-                .foregroundColor(.ftPrimary)
+                .foregroundColor(FTColor.primary)
                 .focused($isInputFocused)
 
             Picker("Translation Mode", selection: Binding(

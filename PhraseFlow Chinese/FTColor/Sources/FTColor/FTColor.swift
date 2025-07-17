@@ -3,12 +3,12 @@
 
 import SwiftUI
 
-struct FTColor {
-    static let accent: Color = Color("FTAccent")
-    static let background: Color = Color("FTBackground")
-    static let error: Color = Color("FTError")
-    static let highlight: Color = Color("FTHighlight")
-    static let primary: Color = Color("FTPrimary")
-    static let secondary: Color = Color("FTSecondary")
-    static let wordHighlight: Color = Color("FTWordHighlight")
+public struct FTColor {
+    public static let accent: Color = Color("FTAccent")
+    public static let background: Color = Color("FTBackground")
+    public static let error: Color = Color("FTError")
+    public static let highlight: Color = Color("FTHighlight")
+    public static let primary: Color = Color("FTPrimary")
+    public static let secondary: Color = Color("FTSecondary")
+    public static let wordHighlight: Color = Color("FTWordHighlight")
 }

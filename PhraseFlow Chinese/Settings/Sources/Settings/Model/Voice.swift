@@ -230,13 +230,4 @@ public enum Voice: String, Codable, CaseIterable, Equatable {
                 .male
         }
     }
-
-    private var defaultSpeechStyle: SpeechStyle {
-        switch self {
-        case .xiaoxiao:
-                .lyrical
-        default:
-                .lyrical
-        }
-    }
 }

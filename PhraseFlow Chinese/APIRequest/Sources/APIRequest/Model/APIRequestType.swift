@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum APIRequestType {
+public enum APIRequestType {
     case openAI, openRouter(OpenRouterModel)
 
     var baseUrl: String {

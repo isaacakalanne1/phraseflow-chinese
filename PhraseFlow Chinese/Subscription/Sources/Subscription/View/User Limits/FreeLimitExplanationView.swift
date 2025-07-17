@@ -81,6 +81,6 @@ struct FreeLimitExplanationView: View {
         .padding()
         .navigationTitle(LocalizedString.navigationTitleWhy)
         .navigationBarTitleDisplayMode(.inline)
-        .background(.ftBackground)
+        .background(FTColor.background)
     }
 }

@@ -5,7 +5,7 @@
 //  Created by iakalann on 17/04/2025.
 //
 
-enum OpenRouterModel {
+public enum OpenRouterModel {
     case metaLlama, geminiFlash, gpt_4o_Mini
 
     static var baseUrl: String {

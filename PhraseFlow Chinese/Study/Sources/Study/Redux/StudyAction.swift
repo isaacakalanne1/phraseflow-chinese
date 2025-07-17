@@ -5,9 +5,10 @@
 //  Created by iakalann on 30/05/2025.
 //
 
+import Definition
 import Foundation
 
-public enum StudyAction {
+enum StudyAction {
     case failedToPrepareStudyWord
     case playStudyWord(Definition)
     case prepareToPlayStudySentence(Definition)

@@ -101,6 +101,6 @@ struct DailyLimitExplanationView: View {
         .padding()
         .navigationTitle(LocalizedString.navigationTitleWhy)
         .navigationBarTitleDisplayMode(.inline)
-        .background(.ftBackground)
+        .background(FTColor.background)
     }
 }

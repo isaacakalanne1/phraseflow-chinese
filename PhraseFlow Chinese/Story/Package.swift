@@ -15,7 +15,10 @@ let package = Package(
             targets: ["Story"]),
     ],
     dependencies: [
-        .package(name: "Speech", path: "../Speech")
+        .package(name: "Loading", path: "../Loading"),
+        .package(name: "Speech", path: "../Speech"),
+        .package(name: "Settings", path: "../Settings"),
+        .package(name: "TextGeneration", path: "../TextGeneration")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -23,7 +26,10 @@ let package = Package(
         .target(
             name: "Story",
             dependencies: [
-                "Speech"
+                "Loading",
+                "Speech",
+                "Settings",
+                "TextGeneration"
             ]
         ),
         .testTarget(

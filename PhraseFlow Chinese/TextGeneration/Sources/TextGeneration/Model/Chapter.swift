@@ -10,7 +10,7 @@ import Settings
 import Speech
 import UIKit
 
-struct Chapter: Codable, Equatable, Hashable {
+public struct Chapter: Codable, Equatable, Hashable {
     var id: UUID
     let storyId: UUID
     var title: String
@@ -41,22 +41,24 @@ struct Chapter: Codable, Equatable, Hashable {
         return sentences.flatMap({ $0.timestamps}).last(where: { currentPlaybackTime >= $0.time })
     }
 
-    init(id: UUID = UUID(),
-         storyId: UUID,
-         title: String,
-         sentences: [Sentence],
-         audioVoice: Voice,
-         audio: ChapterAudio,
-         passage: String,
-         chapterSummary: String = "",
-         difficulty: Difficulty = .beginner,
-         language: Language,
-         storyTitle: String = "",
-         currentPlaybackTime: Double = 0,
-         currentSentence: Sentence? = nil,
-         lastUpdated: Date = .now,
-         storyPrompt: String? = nil,
-         imageData: Data? = nil) {
+    public init(
+        id: UUID = UUID(),
+        storyId: UUID,
+        title: String,
+        sentences: [Sentence],
+        audioVoice: Voice,
+        audio: ChapterAudio,
+        passage: String,
+        chapterSummary: String = "",
+        difficulty: Difficulty = .beginner,
+        language: Language,
+        storyTitle: String = "",
+        currentPlaybackTime: Double = 0,
+        currentSentence: Sentence? = nil,
+        lastUpdated: Date = .now,
+        storyPrompt: String? = nil,
+        imageData: Data? = nil
+    ) {
         self.id = id
         self.storyId = storyId
         self.title = title
@@ -75,7 +77,7 @@ struct Chapter: Codable, Equatable, Hashable {
         self.imageData = imageData
     }
 
-    init(from decoder: any Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = (try? container.decode(UUID.self, forKey: .id)) ?? UUID()
         self.storyId = (try? container.decode(UUID.self, forKey: .storyId)) ?? UUID()

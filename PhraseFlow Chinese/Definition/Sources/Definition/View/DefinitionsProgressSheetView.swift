@@ -60,15 +60,15 @@ struct DefinitionsProgressSheetView: View {
                             Image(systemName: "chevron.down")
                                 .font(.flowTaleSecondaryHeader())
                         }
-                        .foregroundColor(.ftPrimary)
+                        .foregroundColor(FTColor.primary)
                         .padding(.vertical, 6)
                         .padding(.horizontal, 10)
                         .background(
                             Capsule()
-                                .fill(.ftBackground)
+                                .fill(FTColor.background)
                                 .overlay(
                                     Capsule()
-                                        .strokeBorder(.ftSecondary, lineWidth: 1)
+                                        .strokeBorder(FTColor.secondary, lineWidth: 1)
                                 )
                         )
                     }
@@ -85,7 +85,7 @@ struct DefinitionsProgressSheetView: View {
             .padding(.vertical, 12)
             .background(
                 Rectangle()
-                    .fill(.ftBackground)
+                    .fill(FTColor.background)
                     .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: -2)
             )
         }
@@ -96,7 +96,7 @@ struct DefinitionsProgressSheetView: View {
         .navigationDestination(isPresented: $showLanguageSelector) {
             LanguageSettingsView()
         }
-        .background(.ftBackground)
+        .background(FTColor.background)
     }
 
     @ViewBuilder
@@ -114,7 +114,7 @@ struct DefinitionsProgressSheetView: View {
                             } label: {
                                 Text(definition.timestampData.word)
                                     .fontWeight(.light)
-                                    .foregroundStyle(.ftPrimary)
+                                    .foregroundStyle(FTColor.primary)
                             }
                             .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
                                 Button(role: .destructive) {
@@ -122,7 +122,7 @@ struct DefinitionsProgressSheetView: View {
                                     store.dispatch(.audioAction(.playSound(.actionButtonPress)))
                                 } label: {
                                     Label("Delete", systemImage: "trash")
-                                        .tint(.ftError)
+                                        .tint(FTColor.error)
                                 }
                             })
                         }
@@ -135,10 +135,10 @@ struct DefinitionsProgressSheetView: View {
                 .listStyle(.insetGrouped)
                 .navigationTitle(ContentTab.progress.title)
                 .navigationBarTitleDisplayMode(.inline)
-                .background(.ftBackground)
+                .background(FTColor.background)
                 .scrollContentBackground(.hidden)
             }
-            .background(.ftBackground)
+            .background(FTColor.background)
         }
     }
 

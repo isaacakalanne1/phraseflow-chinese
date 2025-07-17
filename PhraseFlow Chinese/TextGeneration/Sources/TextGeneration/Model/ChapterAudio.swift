@@ -7,6 +7,6 @@
 
 import SwiftUI
 
-struct ChapterAudio: Codable, Equatable, Hashable {
+public struct ChapterAudio: Codable, Equatable, Hashable {
     let data: Data
 }

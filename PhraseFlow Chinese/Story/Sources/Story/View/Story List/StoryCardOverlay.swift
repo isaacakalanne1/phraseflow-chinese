@@ -29,7 +29,7 @@ struct StoryCardOverlay: View {
                 // Story title
                 Text(firstChapter?.storyTitle ?? "")
                     .font(.flowTaleHeader())
-                    .foregroundColor(.ftPrimary)
+                    .foregroundColor(FTColor.primary)
                     .lineLimit(2)
                     .shadow(color: .black.opacity(0.5), radius: 1, x: 0, y: 1)
 
@@ -39,7 +39,7 @@ struct StoryCardOverlay: View {
                 // Story summary
                 Text(firstChapter?.chapterSummary ?? "")
                     .font(.flowTaleSecondaryHeader())
-                    .foregroundColor(.ftPrimary)
+                    .foregroundColor(FTColor.primary)
                     .lineLimit(2)
                     .shadow(color: .black, radius: 4, x: 0, y: 0)
 
@@ -59,7 +59,7 @@ struct StoryCardOverlay: View {
 
                 Text(firstChapter?.language.descriptiveEnglishName ?? "")
                     .font(.flowTaleSecondaryHeader())
-                    .foregroundColor(.ftPrimary)
+                    .foregroundColor(FTColor.primary)
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 4)
@@ -75,7 +75,7 @@ struct StoryCardOverlay: View {
 
                 Text(firstChapter?.difficulty.title ?? "")
                     .font(.flowTaleSecondaryHeader())
-                    .foregroundColor(.ftPrimary)
+                    .foregroundColor(FTColor.primary)
                     .tracking(0.5)
             }
             .padding(.horizontal, 10)
@@ -92,11 +92,11 @@ struct StoryCardOverlay: View {
         HStack(spacing: 4) {
             Image(systemName: "book.pages")
                 .font(.flowTaleSecondaryHeader())
-                .foregroundColor(.ftPrimary)
+                .foregroundColor(FTColor.primary)
 
             Text("\(allChaptersForStory.count) \(allChaptersForStory.count == 1 ? "chapter" : "chapters")")
                 .font(.flowTaleSecondaryHeader())
-                .foregroundColor(.ftPrimary)
+                .foregroundColor(FTColor.primary)
         }
         .shadow(color: .black, radius: 4, x: 0, y: 0)
     }

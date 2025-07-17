@@ -16,22 +16,22 @@ struct TranslationResultsSection: View {
         VStack(spacing: 8) {
             Text(LocalizedString.definition)
                 .font(.flowTaleSecondaryHeader())
-                .foregroundColor(.ftPrimary)
+                .foregroundColor(FTColor.primary)
 
             DefinitionView(definition: store.state.translationState.currentDefinition)
                 .frame(height: 150)
                 .background(
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(.ftBackground)
+                        .fill(FTColor.background)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .strokeBorder(.ftSecondary, lineWidth: 1)
+                                .strokeBorder(FTColor.secondary, lineWidth: 1)
                         )
                 )
 
             Text(LocalizedString.translation)
                 .font(.flowTaleSecondaryHeader())
-                .foregroundColor(.ftPrimary)
+                .foregroundColor(FTColor.primary)
 
             HStack(alignment: .top) {
                 ListOfSentencesView(isTranslation: true)
@@ -53,10 +53,10 @@ struct TranslationResultsSection: View {
             .padding(12)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(.ftBackground)
+                    .fill(FTColor.background)
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .strokeBorder(.ftSecondary, lineWidth: 1)
+                            .strokeBorder(FTColor.secondary, lineWidth: 1)
                     )
             )
         }

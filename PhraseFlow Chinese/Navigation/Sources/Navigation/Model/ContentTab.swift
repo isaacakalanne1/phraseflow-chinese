@@ -5,6 +5,8 @@
 //  Created by iakalann on 17/04/2025.
 //
 
+import AppleIcon
+import Localization
 import Foundation
 
 enum ContentTab: CaseIterable, Equatable, Identifiable {

@@ -1,18 +1,32 @@
 //
-//  CreateStoryServices.swift
+//  TextGenerationServices.swift
 //  FlowTale
 //
 //  Created by iakalann on 15/06/2025.
 //
 
+import APIRequest
+import Settings
 import Foundation
 
-class CreateStoryServices: CreateStoryServicesProtocol {
+enum TextGenerationServicesError: Error {
+    case failedToGetDeviceLanguage
+    case failedToGetResponseData
+    case failedToDecodeSentences
+}
 
-    func generateFirstChapter(language: Language, difficulty: Difficulty, voice: Voice, deviceLanguage: Language?, storyPrompt: String?) async throws -> Chapter {
+class TextGenerationServices: TextGenerationServicesProtocol {
+
+    func generateFirstChapter(
+        language: Language,
+        difficulty: Difficulty,
+        voice: Voice,
+        deviceLanguage: Language?,
+        storyPrompt: String?
+    ) async throws -> Chapter {
         do {
             guard let deviceLanguage else {
-                throw FlowTaleServicesError.failedToGetDeviceLanguage
+                throw TextGenerationServicesError.failedToGetDeviceLanguage
             }
             
             let baseChapter = Chapter(
@@ -29,7 +43,7 @@ class CreateStoryServices: CreateStoryServicesProtocol {
             
             let jsonString = try await generateFirstChapterRequest(baseChapter: baseChapter, deviceLanguage: deviceLanguage)
             guard let jsonData = jsonString.data(using: .utf8) else {
-                throw FlowTaleServicesError.failedToGetResponseData
+                throw TextGenerationServicesError.failedToGetResponseData
             }
             
             let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguage: deviceLanguage, targetLanguage: language)
@@ -46,20 +60,20 @@ class CreateStoryServices: CreateStoryServicesProtocol {
             newChapter.lastUpdated = .now
             return newChapter
         } catch {
-            throw FlowTaleServicesError.failedToDecodeSentences
+            throw TextGenerationServicesError.failedToDecodeSentences
         }
     }
 
     func generateChapter(previousChapters: [Chapter], deviceLanguage: Language?) async throws -> Chapter {
         do {
             guard let deviceLanguage else {
-                throw FlowTaleServicesError.failedToGetDeviceLanguage
+                throw TextGenerationServicesError.failedToGetDeviceLanguage
             }
             
             let jsonString = try await generateChapterRequest(previousChapters: previousChapters,
                                                               deviceLanguage: deviceLanguage)
             guard let jsonData = jsonString.data(using: .utf8) else {
-                throw FlowTaleServicesError.failedToGetResponseData
+                throw TextGenerationServicesError.failedToGetResponseData
             }
             
             let baseChapter = previousChapters.last ?? Chapter(storyId: UUID(), title: "", sentences: [], audioVoice: .xiaoxiao, audio: ChapterAudio(data: Data()), passage: "", language: .mandarinChinese)
@@ -80,11 +94,14 @@ class CreateStoryServices: CreateStoryServicesProtocol {
             newChapter.lastUpdated = .now
             return newChapter
         } catch {
-            throw FlowTaleServicesError.failedToDecodeSentences
+            throw TextGenerationServicesError.failedToDecodeSentences
         }
     }
 
-    private func generateFirstChapterRequest(baseChapter: Chapter, deviceLanguage: Language) async throws -> String {
+    private func generateFirstChapterRequest(
+        baseChapter: Chapter,
+        deviceLanguage: Language
+    ) async throws -> String {
         var messages: [[String: String]] = []
         
         var initialPrompt = """
@@ -112,18 +129,18 @@ class CreateStoryServices: CreateStoryServicesProtocol {
                                                         translationLanguage: baseChapter.language,
                                                         shouldCreateTitle: true)
 
-        return try await RequestFactory.makeRequest(type: APIRequestType.openRouter(.geminiFlash),
+        return try await RequestFactory.makeRequest(type: .openRouter(.geminiFlash),
                                                     requestBody: requestBody)
     }
 
     private func generateChapterRequest(previousChapters: [Chapter],
                                         deviceLanguage: Language?) async throws -> String {
         guard let deviceLanguage else {
-            throw FlowTaleServicesError.failedToGetDeviceLanguage
+            throw TextGenerationServicesError.failedToGetDeviceLanguage
         }
         
         guard let baseChapter = previousChapters.last else {
-            throw FlowTaleServicesError.failedToGetResponseData
+            throw TextGenerationServicesError.failedToGetResponseData
         }
         
         var messages: [[String: String]] = []

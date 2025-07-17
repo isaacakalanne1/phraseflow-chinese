@@ -15,7 +15,7 @@ struct StoryListContent: View {
             LazyVStack(spacing: 20) {
                 Text(LocalizedString.stories)
                     .font(.flowTaleSecondaryHeader())
-                    .foregroundColor(.ftSecondary)
+                    .foregroundColor(FTColor.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 20)
                     .padding(.top, 8)

@@ -49,7 +49,7 @@ struct StoryCard: View {
                 LinearGradient(
                     colors: [
                         FTColor.accent.opacity(0.6),
-                        .ftPrimary.opacity(0.8)
+                        FTColor.primary.opacity(0.8)
                     ],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing

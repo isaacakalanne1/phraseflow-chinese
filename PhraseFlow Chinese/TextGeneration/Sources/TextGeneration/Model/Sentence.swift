@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Settings
 
 public struct Sentence: Codable, Equatable, Hashable {
     let id: UUID

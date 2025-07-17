@@ -5,6 +5,8 @@
 //  Created by iakalann on 16/01/2025.
 //
 
+import FTColor
+import Localization
 import SwiftUI
 
 struct LanguageOnboardingView: View {
@@ -18,7 +20,7 @@ struct LanguageOnboardingView: View {
                 .padding(.horizontal)
                 .padding(.bottom)
         }
-        .background(.ftBackground)
+        .background(FTColor.background)
         .opacity(store.state.viewState.isWritingChapter ? 0.3 : 1.0)
         .disabled(store.state.viewState.isWritingChapter)
     }
@@ -95,7 +97,7 @@ struct LanguageMenu: View {
         }
         .padding()
         .navigationTitle(LocalizedString.language)
-        .background(.ftBackground)
+        .background(FTColor.background)
         .scrollContentBackground(.hidden)
     }
 }
@@ -113,6 +115,6 @@ struct LanguageSettingsView: View {
             .padding(.horizontal)
             .padding(.bottom)
         }
-        .background(.ftBackground)
+        .background(FTColor.background)
     }
 }

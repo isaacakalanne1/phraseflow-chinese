@@ -144,7 +144,7 @@ struct StudyView: View {
             store.dispatch(.snackbarAction(.checkDeviceVolumeZero))
         }
         .padding()
-        .background(.ftBackground)
+        .background(FTColor.background)
     }
 
     private func nextTapped(definition: Definition) {

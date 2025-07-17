@@ -36,12 +36,12 @@ struct CharacterView: View {
                 Text(word.word)
                     .font(.flowTaleBodyMedium())
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .foregroundStyle(isTappedWord ? .ftPrimary : (word == spokenWord ? .ftWordHighlight : .ftPrimary))
+                    .foregroundStyle(isTappedWord ? FTColor.primary : (word == spokenWord ? FTColor.wordHighlight : FTColor.primary))
                     .background {
                         if isTappedWord {
-                            Color.ftWordHighlight
+                            FTColor.wordHighlight
                         } else if sentence.id == currentSentence?.id {
-                            Color.ftHighlight
+                            FTColor.highlight
                         }
                     }
 
@@ -49,7 +49,7 @@ struct CharacterView: View {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
                         .padding(4)
-                        .background(.ftBackground.opacity(0.7))
+                        .background(FTColor.background.opacity(0.7))
                         .cornerRadius(8)
                 }
             }
