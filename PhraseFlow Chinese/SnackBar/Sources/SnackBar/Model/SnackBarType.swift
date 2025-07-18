@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FTColor
 
 enum SnackBarType: Equatable {
     case welcomeBack

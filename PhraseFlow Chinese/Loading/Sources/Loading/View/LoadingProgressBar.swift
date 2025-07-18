@@ -5,6 +5,8 @@
 //  Created by iakalann on 25/06/2025.
 //
 
+import FTColor
+import Localization
 import SwiftUI
 
 struct LoadingProgressBar: View {

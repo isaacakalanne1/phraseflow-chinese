@@ -8,6 +8,8 @@
 import Localization
 import StoreKit
 import SwiftUI
+import FTFont
+import FTColor
 
 struct SubscriptionView: View {
     @EnvironmentObject var store: FlowTaleStore

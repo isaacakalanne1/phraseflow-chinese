@@ -7,6 +7,8 @@
 
 import StoreKit
 import SwiftUI
+import FTFont
+import FTColor
 
 struct SubscriptionOption: View {
     @EnvironmentObject var store: FlowTaleStore

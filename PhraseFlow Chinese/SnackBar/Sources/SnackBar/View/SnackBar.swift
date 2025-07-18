@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import FTColor
 
 struct SnackBar: View {
     @EnvironmentObject private var store: FlowTaleStore

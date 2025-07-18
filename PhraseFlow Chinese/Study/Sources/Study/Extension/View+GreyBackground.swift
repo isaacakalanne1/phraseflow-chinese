@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FTColor
 
 struct GreyBackground: ViewModifier {
     let isShowing: Bool
@@ -17,7 +18,7 @@ struct GreyBackground: ViewModifier {
                 .padding(4)
                 .background {
                     if isShowing {
-                        ColorFTColor.secondary
+                        FTColor.secondary
                             .clipShape(.rect(cornerRadius: 5))
                     }
                 }

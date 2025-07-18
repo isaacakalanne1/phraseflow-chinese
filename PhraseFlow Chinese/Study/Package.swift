@@ -15,14 +15,18 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "Definition", path: "../Definition"),
-        .package(name: "Localization", path: "../Localization")
+        .package(name: "Localization", path: "../Localization"),
+        .package(name: "FTColor", path: "../FTColor"),
+        .package(name: "FTFont", path: "../FTFont")
     ],
     targets: [
         .target(
             name: "Study",
             dependencies: [
                 "Definition",
-                "Localization"
+                "Localization",
+                "FTColor",
+                "FTFont"
             ]
         ),
         .testTarget(

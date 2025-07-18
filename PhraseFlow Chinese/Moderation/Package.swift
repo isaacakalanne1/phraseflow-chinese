@@ -14,11 +14,16 @@ let package = Package(
             name: "Moderation",
             targets: ["Moderation"]),
     ],
+    dependencies: [
+        .package(name: "FTColor", path: "../FTColor"),
+        .package(name: "FTFont", path: "../FTFont")
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Moderation"),
+            name: "Moderation",
+            dependencies: ["FTColor", "FTFont"]),
         .testTarget(
             name: "ModerationTests",
             dependencies: ["Moderation"]

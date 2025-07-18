@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FTFont
+import FTColor
 
 struct SpeechSpeedButton: View {
     @EnvironmentObject var store: FlowTaleStore

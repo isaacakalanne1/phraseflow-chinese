@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FTColor
 
 struct PrimaryButton<Content: View>: View {
     @EnvironmentObject var store: FlowTaleStore

@@ -10,6 +10,16 @@
 		BB34C51E2E29525B00238EA8 /* FTColor in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C51D2E29525B00238EA8 /* FTColor */; };
 		BB34C5202E29526700238EA8 /* Localization in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C51F2E29526700238EA8 /* Localization */; };
 		BB34C5222E29526C00238EA8 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5212E29526C00238EA8 /* Navigation */; };
+		BB34C5242E29BF3500238EA8 /* Media in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5232E29BF3500238EA8 /* Media */; };
+		BB34C5262E29BF4700238EA8 /* APIRequest in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5252E29BF4700238EA8 /* APIRequest */; };
+		BB34C5282E29BF4700238EA8 /* AppleIcon in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5272E29BF4700238EA8 /* AppleIcon */; };
+		BB34C52A2E29BF4700238EA8 /* Audio in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5292E29BF4700238EA8 /* Audio */; };
+		BB34C52C2E29BF4700238EA8 /* DataStorage in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C52B2E29BF4700238EA8 /* DataStorage */; };
+		BB34C52E2E29BF4700238EA8 /* Definition in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C52D2E29BF4700238EA8 /* Definition */; };
+		BB34C5302E29BF4700238EA8 /* FTFont in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C52F2E29BF4700238EA8 /* FTFont */; };
+		BB34C5322E29BF4700238EA8 /* ImageGeneration in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5312E29BF4700238EA8 /* ImageGeneration */; };
+		BB34C5342E29BF4700238EA8 /* Loading in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5332E29BF4700238EA8 /* Loading */; };
+		BB34C5362E29BF4700238EA8 /* Moderation in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5352E29BF4700238EA8 /* Moderation */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
 		BB4EDB032C90C86300699E7D /* FlowTaleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */; };
 		BB4EDB0A2C90C8F100699E7D /* FlowTaleEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB092C90C8F100699E7D /* FlowTaleEnvironment.swift */; };
@@ -94,11 +104,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB34C52C2E29BF4700238EA8 /* DataStorage in Frameworks */,
+				BB34C5362E29BF4700238EA8 /* Moderation in Frameworks */,
+				BB34C52A2E29BF4700238EA8 /* Audio in Frameworks */,
 				BB34C51E2E29525B00238EA8 /* FTColor in Frameworks */,
+				BB34C5342E29BF4700238EA8 /* Loading in Frameworks */,
+				BB34C5322E29BF4700238EA8 /* ImageGeneration in Frameworks */,
+				BB34C5262E29BF4700238EA8 /* APIRequest in Frameworks */,
 				BB34C5202E29526700238EA8 /* Localization in Frameworks */,
+				BB34C52E2E29BF4700238EA8 /* Definition in Frameworks */,
 				BB7B6D942D1ACEBF0030344A /* libPods-FlowTale.a in Frameworks */,
+				BB34C5282E29BF4700238EA8 /* AppleIcon in Frameworks */,
+				BB34C5242E29BF3500238EA8 /* Media in Frameworks */,
 				BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */,
 				BB34C5222E29526C00238EA8 /* Navigation in Frameworks */,
+				BB34C5302E29BF4700238EA8 /* FTFont in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +299,16 @@
 				BB34C51D2E29525B00238EA8 /* FTColor */,
 				BB34C51F2E29526700238EA8 /* Localization */,
 				BB34C5212E29526C00238EA8 /* Navigation */,
+				BB34C5232E29BF3500238EA8 /* Media */,
+				BB34C5252E29BF4700238EA8 /* APIRequest */,
+				BB34C5272E29BF4700238EA8 /* AppleIcon */,
+				BB34C5292E29BF4700238EA8 /* Audio */,
+				BB34C52B2E29BF4700238EA8 /* DataStorage */,
+				BB34C52D2E29BF4700238EA8 /* Definition */,
+				BB34C52F2E29BF4700238EA8 /* FTFont */,
+				BB34C5312E29BF4700238EA8 /* ImageGeneration */,
+				BB34C5332E29BF4700238EA8 /* Loading */,
+				BB34C5352E29BF4700238EA8 /* Moderation */,
 			);
 			productName = "PhraseFlow Chinese";
 			productReference = BBB6EF232C8C86240079D135 /* FlowTale.app */;
@@ -822,6 +852,46 @@
 		BB34C5212E29526C00238EA8 /* Navigation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Navigation;
+		};
+		BB34C5232E29BF3500238EA8 /* Media */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Media;
+		};
+		BB34C5252E29BF4700238EA8 /* APIRequest */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = APIRequest;
+		};
+		BB34C5272E29BF4700238EA8 /* AppleIcon */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppleIcon;
+		};
+		BB34C5292E29BF4700238EA8 /* Audio */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Audio;
+		};
+		BB34C52B2E29BF4700238EA8 /* DataStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DataStorage;
+		};
+		BB34C52D2E29BF4700238EA8 /* Definition */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Definition;
+		};
+		BB34C52F2E29BF4700238EA8 /* FTFont */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FTFont;
+		};
+		BB34C5312E29BF4700238EA8 /* ImageGeneration */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ImageGeneration;
+		};
+		BB34C5332E29BF4700238EA8 /* Loading */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Loading;
+		};
+		BB34C5352E29BF4700238EA8 /* Moderation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Moderation;
 		};
 		BB4EDAFF2C90C7E600699E7D /* ReduxKit */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FTColor
+import FTFont
 
 struct VoiceMenu: View {
     @EnvironmentObject var store: FlowTaleStore

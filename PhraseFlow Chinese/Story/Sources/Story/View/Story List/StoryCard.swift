@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FTColor
 
 struct StoryCard: View {
     @EnvironmentObject var store: FlowTaleStore

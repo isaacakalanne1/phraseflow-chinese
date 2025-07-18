@@ -5,6 +5,7 @@
 //  Created by iakalann on 28/12/2024.
 //
 
+import FTColor
 import SwiftUI
 
 struct DefinitionsProgressSheetView: View {

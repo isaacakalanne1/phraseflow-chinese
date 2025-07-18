@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FTFont
+import FTColor
 
 struct StoryListView: View {
     @EnvironmentObject var store: FlowTaleStore

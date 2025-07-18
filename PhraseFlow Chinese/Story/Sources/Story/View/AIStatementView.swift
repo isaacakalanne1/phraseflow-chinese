@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FTFont
+import FTColor
 
 struct AIStatementView: View {
     var body: some View {

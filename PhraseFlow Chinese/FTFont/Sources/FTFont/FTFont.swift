@@ -11,37 +11,74 @@ public struct FTFont {
 
     // MARK: Header
 
-    static func flowTaleHeader() -> Font {
+    public static func flowTaleHeader() -> Font {
         .title2
     }
 
-    static func flowTaleSecondaryHeader() -> Font {
+    public static func flowTaleSecondaryHeader() -> Font {
         .subheadline
     }
 
-    static func flowTaleSubHeader() -> Font {
+    public static func flowTaleSubHeader() -> Font {
         .footnote
     }
 
     // MARK: Body
 
-    static func flowTaleBodyXSmall() -> Font {
+    public static func flowTaleBodyXSmall() -> Font {
         .system(size: 12, weight: .light)
     }
 
-    static func flowTaleBodySmall() -> Font {
+    public static func flowTaleBodySmall() -> Font {
         .system(size: 16, weight: .light)
     }
 
-    static func flowTaleBodyMedium() -> Font {
+    public static func flowTaleBodyMedium() -> Font {
         .system(size: 20, weight: .light)
     }
 
-    static func flowTaleBodyLarge() -> Font {
+    public static func flowTaleBodyLarge() -> Font {
         .system(size: 30, weight: .light)
     }
 
-    static func flowTaleBodyXLarge() -> Font {
+    public static func flowTaleBodyXLarge() -> Font {
         .system(size: 60, weight: .light)
+    }
+}
+
+// MARK: - Font Extensions
+extension Font {
+    // MARK: Header
+    public static func flowTaleHeader() -> Font {
+        FTFont.flowTaleHeader()
+    }
+    
+    public static func flowTaleSecondaryHeader() -> Font {
+        FTFont.flowTaleSecondaryHeader()
+    }
+    
+    public static func flowTaleSubHeader() -> Font {
+        FTFont.flowTaleSubHeader()
+    }
+    
+    // MARK: Body
+    public static func flowTaleBodyXSmall() -> Font {
+        FTFont.flowTaleBodyXSmall()
+    }
+    
+    public static func flowTaleBodySmall() -> Font {
+        FTFont.flowTaleBodySmall()
+    }
+    
+    public static func flowTaleBodyMedium() -> Font {
+        FTFont.flowTaleBodyMedium()
+    }
+    
+    public static func flowTaleBodyLarge() -> Font {
+        FTFont.flowTaleBodyLarge()
+    }
+    
+    public static func flowTaleBodyXLarge() -> Font {
+        FTFont.flowTaleBodyXLarge()
     }
 }

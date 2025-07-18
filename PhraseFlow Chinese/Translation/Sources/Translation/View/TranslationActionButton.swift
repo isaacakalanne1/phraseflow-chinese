@@ -7,6 +7,8 @@
 
 import Localization
 import SwiftUI
+import FTFont
+import FTColor
 
 struct TranslationActionButton: View {
     @EnvironmentObject var store: FlowTaleStore

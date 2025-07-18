@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FTFont
 
 struct ListOfSentencesView: View {
     @EnvironmentObject var store: FlowTaleStore

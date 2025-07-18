@@ -15,6 +15,8 @@ let package = Package(
             targets: ["Definition"]),
     ],
     dependencies: [
+        .package(name: "FTColor", path: "../FTColor"),
+        .package(name: "FTFont", path: "../FTFont"),
         .package(name: "Settings", path: "../Settings"),
         .package(name: "Speech", path: "../Speech")
     ],
@@ -24,6 +26,8 @@ let package = Package(
         .target(
             name: "Definition",
             dependencies: [
+                "FTColor",
+                "FTFont",
                 "Settings",
                 "Speech"
             ]

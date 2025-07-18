@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FTColor
+import FTFont
 
 struct StoryPromptMenu: View {
     @EnvironmentObject var store: FlowTaleStore

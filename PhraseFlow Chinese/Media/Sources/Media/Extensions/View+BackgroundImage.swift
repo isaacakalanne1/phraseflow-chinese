@@ -5,12 +5,13 @@
 //  Created by iakalann on 18/04/2025.
 //
 
+import FTColor
 import SwiftUI
 
-struct BackgroundImage: ViewModifier {
+public struct BackgroundImage: ViewModifier {
     let type: BackgroundImageType
 
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         ZStack(alignment: .bottomTrailing) { // TODO: Remove if not needed
             content
                 .background {
@@ -20,7 +21,7 @@ struct BackgroundImage: ViewModifier {
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .overlay {
-                                    ColorFTColor.background.opacity(0.9)
+                                    FTColor.background.opacity(0.9)
                                 }
                         }
                     }
@@ -29,7 +30,7 @@ struct BackgroundImage: ViewModifier {
     }
 }
 
-extension View {
+public extension View {
     func backgroundImage(type: BackgroundImageType) -> some View {
         modifier(BackgroundImage(type: type))
     }

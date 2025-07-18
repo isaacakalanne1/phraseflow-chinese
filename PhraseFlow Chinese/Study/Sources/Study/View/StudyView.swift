@@ -7,6 +7,7 @@
 
 import Localization
 import SwiftUI
+import FTColor
 
 struct StudyView: View {
     @EnvironmentObject var store: FlowTaleStore

@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FTColor
+import FTFont
 
 struct DifficultyMenu: View {
     @EnvironmentObject var store: FlowTaleStore

@@ -6,6 +6,7 @@
 //
 
 import Charts
+import FTColor
 import SwiftUI
 
 // MARK: - Main View

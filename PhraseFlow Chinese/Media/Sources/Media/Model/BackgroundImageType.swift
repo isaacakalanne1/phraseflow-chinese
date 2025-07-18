@@ -5,7 +5,7 @@
 //  Created by iakalann on 18/04/2025.
 //
 
-enum BackgroundImageType {
+public enum BackgroundImageType {
     case main, createStory
 
     var name: String {

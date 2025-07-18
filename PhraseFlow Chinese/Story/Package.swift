@@ -16,7 +16,9 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "FTColor", path: "../FTColor"),
+        .package(name: "FTFont", path: "../FTFont"),
         .package(name: "Loading", path: "../Loading"),
+        .package(name: "Media", path: "../Media"),
         .package(name: "Speech", path: "../Speech"),
         .package(name: "Settings", path: "../Settings"),
         .package(name: "TextGeneration", path: "../TextGeneration")
@@ -28,7 +30,9 @@ let package = Package(
             name: "Story",
             dependencies: [
                 "FTColor",
+                "FTFont",
                 "Loading",
+                "Media",
                 "Speech",
                 "Settings",
                 "TextGeneration"

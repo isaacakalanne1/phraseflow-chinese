@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FTFont
+import FTColor
 
 struct StoryCardOverlay: View {
     @EnvironmentObject var store: FlowTaleStore

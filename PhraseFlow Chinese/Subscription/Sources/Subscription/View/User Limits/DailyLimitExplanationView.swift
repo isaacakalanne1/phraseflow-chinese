@@ -7,6 +7,8 @@
 
 import Localization
 import SwiftUI
+import FTFont
+import FTColor
 
 struct DailyLimitExplanationView: View {
     @EnvironmentObject var store: FlowTaleStore

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FTColor
 
 struct CardBackground: ViewModifier {
     func body(content: Content) -> some View {
