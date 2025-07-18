@@ -19,6 +19,7 @@ let package = Package(
         .package(name: "FTFont", path: "../FTFont"),
         .package(name: "Settings", path: "../Settings"),
         .package(name: "Speech", path: "../Speech"),
+        .package(name: "Story", path: "../Story"),
         .package(name: "ReduxKit", path: "../ReduxKit"),
     ],
     targets: [
@@ -31,6 +32,7 @@ let package = Package(
                 "FTFont",
                 "Settings",
                 "Speech",
+                "Story",
                 .product(name: "ReduxKit", package: "ReduxKit")
             ]
         ),

@@ -8,35 +8,31 @@
 import AVKit
 import ReduxKit
 
-let studyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol> = { state, action, environment in
+@MainActor
+let studyMiddleware: Middleware<StudyState, StudyAction, StudyEnvironmentProtocol> = { state, action, environment in
     switch action {
-    case .studyAction(let studyAction):
-        switch studyAction {
-        case .playStudyWord(let definition):
-            await state.studyState.audioPlayer.playAudio(toSeconds: definition.timestampData.duration,
-                                                         playRate: state.settingsState.speechSpeed.playRate)
-            return nil
-        case .prepareToPlayStudySentence(let definition):
-            if let audioData = try? environment.loadSentenceAudio(id: definition.sentenceId) {
-                return .studyAction(.onPreparedStudySentence(audioData))
-            } else {
-                return .studyAction(.failedToPrepareStudySentence)
-            }
-        case .playStudySentence:
-            await state.studyState.sentenceAudioPlayer.playAudio(playRate: state.settingsState.speechSpeed.playRate)
-            return .studyAction(.updateStudyAudioPlaying(true))
-        case .pauseStudyAudio:
-            state.studyState.audioPlayer.pause()
-            state.studyState.sentenceAudioPlayer.pause()
-            return .studyAction(.updateStudyAudioPlaying(false))
-        case .failedToPrepareStudyWord,
-                .failedToPrepareStudySentence,
-                .onPreparedStudySentence,
-                .updateDisplayStatus,
-                .updateStudyAudioPlaying:
-            return nil
+    case .playStudyWord(let definition):
+        await state.audioPlayer.playAudio(toSeconds: definition.timestampData.duration,
+                                          playRate: environment.speechPlayRate)
+        return nil
+    case .prepareToPlayStudySentence(let definition):
+        if let audioData = try? environment.loadSentenceAudio(id: definition.sentenceId) {
+            return .onPreparedStudySentence(audioData)
+        } else {
+            return .failedToPrepareStudySentence
         }
-    default:
+    case .playStudySentence:
+        await state.sentenceAudioPlayer.playAudio(playRate: environment.speechPlayRate)
+        return .updateStudyAudioPlaying(true)
+    case .pauseStudyAudio:
+        state.audioPlayer.pause()
+        state.sentenceAudioPlayer.pause()
+        return .updateStudyAudioPlaying(false)
+    case .failedToPrepareStudyWord,
+            .failedToPrepareStudySentence,
+            .onPreparedStudySentence,
+            .updateDisplayStatus,
+            .updateStudyAudioPlaying:
         return nil
     }
 }

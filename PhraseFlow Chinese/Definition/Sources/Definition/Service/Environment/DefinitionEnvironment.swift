@@ -29,4 +29,8 @@ struct DefinitionEnvironment: DefinitionEnvironmentProtocol {
     func saveSentenceAudio(_ audioData: Data, id: UUID) throws {
         try definitionDataStore.saveSentenceAudio(audioData, id: id)
     }
+    
+    func loadSentenceAudio(id: UUID) throws -> Data {
+        return try definitionDataStore.loadSentenceAudio(id: id)
+    }
 }
