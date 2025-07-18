@@ -1,6 +1,4 @@
 # Uncomment the next line to define a global platform for your project
 platform :ios, '17.4'
 
-target 'FlowTale' do
-  pod 'MicrosoftCognitiveServicesSpeech-iOS', '~> 1.40.0'
 end
