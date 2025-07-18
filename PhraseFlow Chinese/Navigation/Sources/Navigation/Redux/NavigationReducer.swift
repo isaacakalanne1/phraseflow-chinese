@@ -9,7 +9,8 @@ import SwiftUI
 import ReduxKit
 import AVKit
 
-let navigationReducer: Reducer<FlowTaleState, NavigationAction> = { state, action in
+@MainActor
+let navigationReducer: Reducer<NavigationState, NavigationAction> = { state, action in
     var newState = state
 
     switch action {

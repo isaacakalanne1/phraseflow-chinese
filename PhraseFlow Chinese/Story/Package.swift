@@ -15,6 +15,7 @@ let package = Package(
             targets: ["Story"]),
     ],
     dependencies: [
+        .package(name: "FTColor", path: "../FTColor"),
         .package(name: "Loading", path: "../Loading"),
         .package(name: "Speech", path: "../Speech"),
         .package(name: "Settings", path: "../Settings"),
@@ -26,6 +27,7 @@ let package = Package(
         .target(
             name: "Story",
             dependencies: [
+                "FTColor",
                 "Loading",
                 "Speech",
                 "Settings",

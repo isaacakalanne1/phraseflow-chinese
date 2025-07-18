@@ -7,6 +7,7 @@
 
 import FTColor
 import Localization
+import Navigation
 import SwiftUI
 
 struct ContentView: View {
@@ -20,6 +21,7 @@ struct ContentView: View {
                 store.dispatch(.subscriptionAction(.setSubscriptionSheetShowing(newValue)))
             }
         }
+        MainContentView()
 
         VStack {
             if !store.state.subscriptionState.isSubscribed {
@@ -80,64 +82,64 @@ struct ContentView: View {
             
             ZStack(alignment: .topTrailing) {
                 switch store.state.viewState.contentTab {
-            case .reader:
-                if store.state.storyState.allStories.isEmpty {
-                    NavigationStack {
-                        LanguageOnboardingView()
+                case .reader:
+                    if store.state.storyState.allStories.isEmpty {
+                        NavigationStack {
+                            LanguageOnboardingView()
+                        }
+                    } else if let chapter = store.state.storyState.currentChapter {
+                        NavigationStack {
+                            ReaderView(chapter: chapter)
+                                .navigationDestination(
+                                    isPresented: isShowingDailyLimitExplanationScreen
+                                ) {
+                                    DailyLimitExplanationView()
+                                }
+                                .navigationDestination(
+                                    isPresented: isShowingFreeLimitExplanationScreen
+                                ) {
+                                    FreeLimitExplanationView()
+                                }
+                        }
+                    } else {
+                        ProgressView()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
-                } else if let chapter = store.state.storyState.currentChapter {
+
+                case .storyList:
                     NavigationStack {
-                        ReaderView(chapter: chapter)
+                        StoryListView()
                             .navigationDestination(
                                 isPresented: isShowingDailyLimitExplanationScreen
                             ) {
                                 DailyLimitExplanationView()
                             }
+                    }
+
+                case .progress:
+                    NavigationStack {
+                        DefinitionsProgressSheetView()
+                    }
+
+                case .translate:
+                    NavigationStack {
+                        TranslationView()
+                    }
+
+                case .subscribe:
+                    NavigationStack {
+                        SubscriptionView()
                             .navigationDestination(
                                 isPresented: isShowingFreeLimitExplanationScreen
                             ) {
                                 FreeLimitExplanationView()
                             }
                     }
-                } else {
-                    ProgressView()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
 
-            case .storyList:
-                NavigationStack {
-                    StoryListView()
-                        .navigationDestination(
-                            isPresented: isShowingDailyLimitExplanationScreen
-                        ) {
-                            DailyLimitExplanationView()
-                        }
-                }
-
-            case .progress:
-                NavigationStack {
-                    DefinitionsProgressSheetView()
-                }
-
-            case .translate:
-                NavigationStack {
-                    TranslationView()
-                }
-
-            case .subscribe:
-                NavigationStack {
-                    SubscriptionView()
-                        .navigationDestination(
-                            isPresented: isShowingFreeLimitExplanationScreen
-                        ) {
-                            FreeLimitExplanationView()
-                        }
-                }
-
-            case .settings:
-                NavigationStack {
-                    SettingsView()
-                }
+                case .settings:
+                    NavigationStack {
+                        SettingsView()
+                    }
                 }
                 snackbarView()
             }

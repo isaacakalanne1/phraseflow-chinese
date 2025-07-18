@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB34C51E2E29525B00238EA8 /* FTColor in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C51D2E29525B00238EA8 /* FTColor */; };
+		BB34C5202E29526700238EA8 /* Localization in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C51F2E29526700238EA8 /* Localization */; };
+		BB34C5222E29526C00238EA8 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5212E29526C00238EA8 /* Navigation */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
 		BB4EDB032C90C86300699E7D /* FlowTaleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */; };
 		BB4EDB0A2C90C8F100699E7D /* FlowTaleEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB092C90C8F100699E7D /* FlowTaleEnvironment.swift */; };
@@ -91,8 +94,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB34C51E2E29525B00238EA8 /* FTColor in Frameworks */,
+				BB34C5202E29526700238EA8 /* Localization in Frameworks */,
 				BB7B6D942D1ACEBF0030344A /* libPods-FlowTale.a in Frameworks */,
 				BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */,
+				BB34C5222E29526C00238EA8 /* Navigation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +276,9 @@
 			name = FlowTale;
 			packageProductDependencies = (
 				BB4EDAFF2C90C7E600699E7D /* ReduxKit */,
+				BB34C51D2E29525B00238EA8 /* FTColor */,
+				BB34C51F2E29526700238EA8 /* Localization */,
+				BB34C5212E29526C00238EA8 /* Navigation */,
 			);
 			productName = "PhraseFlow Chinese";
 			productReference = BBB6EF232C8C86240079D135 /* FlowTale.app */;
@@ -802,6 +811,18 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BB34C51D2E29525B00238EA8 /* FTColor */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FTColor;
+		};
+		BB34C51F2E29526700238EA8 /* Localization */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Localization;
+		};
+		BB34C5212E29526C00238EA8 /* Navigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Navigation;
+		};
 		BB4EDAFF2C90C7E600699E7D /* ReduxKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BB4EDAFE2C90C7E600699E7D /* XCRemoteSwiftPackageReference "reduxkit" */;

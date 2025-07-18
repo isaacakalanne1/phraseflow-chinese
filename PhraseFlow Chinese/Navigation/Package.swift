@@ -17,6 +17,7 @@ let package = Package(
     dependencies: [
         .package(name: "Localization", path: "../Localization"),
         .package(name: "AppleIcon", path: "../AppleIcon"),
+        .package(url: "git@git-gdd.sdo.jlrmotor.com:OFFBOARD/mobile/libraries/ios/kits/reduxkit.git", .upToNextMajor(from: "4.1.2")),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -25,7 +26,8 @@ let package = Package(
             name: "Navigation",
             dependencies: [
                 "Localization",
-                "AppleIcon"
+                "AppleIcon",
+                .product(name: "ReduxKit", package: "ReduxKit")
             ]),
         .testTarget(
             name: "NavigationTests",

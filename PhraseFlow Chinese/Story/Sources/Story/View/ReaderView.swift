@@ -5,13 +5,15 @@
 //  Created by iakalann on 25/10/2024.
 //
 
+import FTColor
 import SwiftUI
+import TextGeneration
 
-struct ReaderView: View {
+public struct ReaderView: View {
     @EnvironmentObject var store: FlowTaleStore
     let chapter: Chapter
 
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 16) {
             AIStatementView()
 

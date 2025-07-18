@@ -6,8 +6,9 @@
 //
 
 import AppleIcon
-import Localization
 import Foundation
+import Localization
+import SwiftUI
 
 enum ContentTab: CaseIterable, Equatable, Identifiable {
     var id: UUID {
@@ -47,6 +48,61 @@ enum ContentTab: CaseIterable, Equatable, Identifiable {
             .heart(isSelected: isSelected)
         case .settings:
             .gear(isSelected: isSelected)
+        }
+    }
+
+    @ViewBuilder
+    func view() -> some View {
+        switch self {
+        case .reader:
+            NavigationStack {
+                ReaderView(chapter: chapter)
+                    .navigationDestination(
+                        isPresented: isShowingDailyLimitExplanationScreen
+                    ) {
+                        DailyLimitExplanationView()
+                    }
+                    .navigationDestination(
+                        isPresented: isShowingFreeLimitExplanationScreen
+                    ) {
+                        FreeLimitExplanationView()
+                    }
+            }
+
+        case .storyList:
+            NavigationStack {
+                StoryListView()
+                    .navigationDestination(
+                        isPresented: isShowingDailyLimitExplanationScreen
+                    ) {
+                        DailyLimitExplanationView()
+                    }
+            }
+
+        case .progress:
+            NavigationStack {
+                DefinitionsProgressSheetView()
+            }
+
+        case .translate:
+            NavigationStack {
+                TranslationView()
+            }
+
+        case .subscribe:
+            NavigationStack {
+                SubscriptionView()
+                    .navigationDestination(
+                        isPresented: isShowingFreeLimitExplanationScreen
+                    ) {
+                        FreeLimitExplanationView()
+                    }
+            }
+
+        case .settings:
+            NavigationStack {
+                SettingsView()
+            }
         }
     }
 }
