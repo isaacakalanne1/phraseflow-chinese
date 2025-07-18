@@ -8,6 +8,8 @@
 import Foundation
 import MicrosoftCognitiveServicesSpeech
 import StoreKit
+import TextGeneration
+import Settings
 
 class SpeechRepository: SpeechRepositoryProtocol {
     private let speechCharacters = ["“", "”", "«", "»", "「", "」", "\"", "''"]

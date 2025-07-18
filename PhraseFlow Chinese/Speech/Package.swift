@@ -14,6 +14,10 @@ let package = Package(
             name: "Speech",
             targets: ["Speech"]),
     ],
+    dependencies: [
+        .package(name: "TextGeneration", path: "../TextGeneration"),
+        .package(name: "Settings", path: "../Settings")
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
@@ -24,7 +28,9 @@ let package = Package(
         .target(
             name: "Speech",
             dependencies: [
-                "MicrosoftCognitiveServicesSpeech"
+                "MicrosoftCognitiveServicesSpeech",
+                "TextGeneration",
+                "Settings"
             ]
         ),
         .testTarget(

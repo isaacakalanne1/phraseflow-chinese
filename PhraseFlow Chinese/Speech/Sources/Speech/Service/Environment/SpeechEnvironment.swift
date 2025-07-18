@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import TextGeneration
+import Settings
 
 struct SpeechEnvironment: SpeechEnvironmentProtocol {
     let speechRepository: SpeechRepositoryProtocol

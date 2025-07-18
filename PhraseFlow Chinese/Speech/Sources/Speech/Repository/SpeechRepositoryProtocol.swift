@@ -7,6 +7,8 @@
 
 import Foundation
 import StoreKit
+import TextGeneration
+import Settings
 
 protocol SpeechRepositoryProtocol {
     func synthesizeSpeech(_ chapter: Chapter,

@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import TextGeneration
+import Settings
 
 protocol SpeechEnvironmentProtocol {
     var speechRepository: SpeechRepositoryProtocol { get }
