@@ -14,7 +14,7 @@ let navigationReducer: Reducer<NavigationState, NavigationAction> = { state, act
     var newState = state
 
     switch action {
-    case .selectChapter(_, _):
+    case .selectChapter:
         newState.contentTab = .reader
         
     case .selectTab(let tab, _):

@@ -12,6 +12,10 @@ import StoreKit
 import Story
 import Settings
 import Moderation
+import Definition
+import SnackBar
+import Translation
+import Speech
 
 protocol FlowTaleEnvironmentProtocol {
     var loadingSubject: CurrentValueSubject<LoadingState?, Never> { get }
@@ -20,6 +24,11 @@ protocol FlowTaleEnvironmentProtocol {
     var audioEnvironment: AudioEnvironmentProtocol { get }
     var settingsEnvironment: SettingsEnvironmentProtocol { get }
     var moderationEnvironment: ModerationEnvironmentProtocol { get }
+    var viewStateEnvironment: ViewStateEnvironmentProtocol { get }
+    var snackBarEnvironment: SnackBarEnvironmentProtocol { get }
+    var definitionEnvironment: DefinitionEnvironmentProtocol { get }
+    var translationEnvironment: TranslationEnvironmentProtocol { get }
+    var speechEnvironment: SpeechEnvironmentProtocol { get }
 
     func synthesizeSpeech(for chapter: Chapter,
                           voice: Voice,

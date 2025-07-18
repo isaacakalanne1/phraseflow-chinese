@@ -28,6 +28,10 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
 
                 try environment.saveDefinitions(definitions)
 
+                environment.definitionEnvironment.viewStateEnvironment.setLoadingState(.complete)
+                if index >= 1 {
+                    environment.definitionEnvironment.viewStateEnvironment.setIsWritingChapter(false)
+                }
                 return .definitionAction(.defineSentence(sentenceIndex: index + 1,
                                                          previousDefinitions: definitions))
             } catch {
@@ -47,7 +51,7 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
             definition.creationDate = .now
             if definition.audioData == nil,
                let extractedAudio = AudioExtractor.shared.extractAudioSegment(
-                   from: state.audioState.audioPlayer,
+                   from: state.audioState.chapterAudioPlayer,
                    startTime: definition.timestampData.time,
                    duration: definition.timestampData.duration
                ) {
@@ -57,7 +61,7 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
                let firstWord = sentence.timestamps.first,
                let lastWord = sentence.timestamps.last,
                let sentenceAudio = AudioExtractor.shared.extractAudioSegment(
-                   from: state.audioState.audioPlayer,
+                   from: state.audioState.chapterAudioPlayer,
                    startTime: firstWord.time,
                    duration: lastWord.time + lastWord.duration - firstWord.time
                ){
@@ -67,14 +71,18 @@ let definitionMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvi
             return .definitionAction(.onShownDefinition(definition, shouldPlay: shouldPlay))
         case .onShownDefinition(let definition, let shouldPlay):
             try? environment.saveDefinitions([definition])
+            environment.definitionEnvironment.viewStateEnvironment.setIsDefining(false)
             return shouldPlay ? .audioAction(.playWord(definition.timestampData)) : nil
         case .updateStudiedWord:
             return nil
 
+        case .refreshDefinitionView:
+            environment.definitionEnvironment.viewStateEnvironment.refreshDefinitionView()
+            return nil
+            
         case .failedToLoadDefinitions,
              .failedToDeleteDefinition,
-             .clearCurrentDefinition,
-             .refreshDefinitionView:
+             .clearCurrentDefinition:
             return nil
         }
     default:

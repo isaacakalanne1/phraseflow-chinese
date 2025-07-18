@@ -9,6 +9,7 @@ import SwiftUI
 import ReduxKit
 import AVKit
 
+@MainActor
 let audioReducer: Reducer<AudioState, AudioAction> = { state, action in
     var newState = state
 

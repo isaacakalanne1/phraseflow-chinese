@@ -18,7 +18,9 @@ let package = Package(
         .package(name: "Localization", path: "../Localization"),
         .package(name: "FTColor", path: "../FTColor"),
         .package(name: "FTFont", path: "../FTFont"),
-        .package(name: "Settings", path: "../Settings")
+        .package(name: "Settings", path: "../Settings"),
+        .package(name: "Speech", path: "../Speech"),
+        .package(name: "Definition", path: "../Definition")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -29,7 +31,9 @@ let package = Package(
                 "Localization",
                 "FTColor",
                 "FTFont",
-                "Settings"
+                "Settings",
+                "Speech",
+                "Definition"
             ]),
         .testTarget(
             name: "TranslationTests",

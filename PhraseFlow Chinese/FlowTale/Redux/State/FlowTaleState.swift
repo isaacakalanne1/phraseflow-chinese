@@ -67,6 +67,10 @@ struct ViewState {
     var isShowingDailyLimitExplanation: Bool = false
     var isShowingFreeLimitExplanation: Bool = false
     var loadingState: LoadingState = LoadingState()
+    var isDefining: Bool = false
+    var isWritingChapter: Bool = false
+    var definitionViewId: UUID = UUID()
+    var isShowingCustomPromptAlert: Bool = false
 }
 
 enum ContentTab {

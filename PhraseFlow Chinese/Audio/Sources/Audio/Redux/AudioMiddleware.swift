@@ -36,6 +36,8 @@ let audioMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
                                                              playRate: playRate)
             }
             
+            environment.audioEnvironment.clearCurrentDefinition()
+            
             if let chapter = state.storyState.currentChapter {
                 return .storyAction(.saveChapter(chapter))
             }
@@ -58,6 +60,7 @@ let audioMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             
         case .playMusic:
             state.audioState.musicAudioPlayer.play()
+            environment.audioEnvironment.settingsEnvironment.setIsPlayingMusic(true)
             
             if let chapter = state.storyState.currentChapter {
                 return .storyAction(.saveChapter(chapter))
@@ -68,6 +71,8 @@ let audioMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             return .audioAction(.playMusic(nextMusicType))
             
         case .stopMusic:
+            environment.audioEnvironment.settingsEnvironment.setIsPlayingMusic(false)
+            
             if let chapter = state.storyState.currentChapter {
                 return .storyAction(.saveChapter(chapter))
             }

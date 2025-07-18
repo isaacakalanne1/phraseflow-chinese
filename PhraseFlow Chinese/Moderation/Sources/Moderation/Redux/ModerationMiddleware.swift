@@ -8,6 +8,7 @@
 import Foundation
 import ReduxKit
 
+@MainActor
 let moderationMiddleware: Middleware<ModerationState, ModerationAction, ModerationEnvironmentProtocol> = { state, action, environment in
     switch action {
     case .moderateText(let prompt):
@@ -21,12 +22,18 @@ let moderationMiddleware: Middleware<ModerationState, ModerationAction, Moderati
     case .onModeratedText(let response, let prompt):
         return response.didPassModeration ? .passedModeration(prompt) : .didNotPassModeration
         
-    case .passedModeration:
+    case .passedModeration(let prompt):
+        environment.settingsEnvironment.addCustomPrompt(prompt)
+        environment.settingsEnvironment.setStorySetting(.customPrompt(prompt))
+        environment.snackBarEnvironment.showSnackBar(.passedModeration)
         environment.saveAppSettings()
         return nil
 
-    case .didNotPassModeration,
-         .failedToModerateText:
+    case .didNotPassModeration:
+        environment.snackBarEnvironment.showSnackBar(.didNotPassModeration)
+        return nil
+        
+    case .failedToModerateText:
         return nil
         
     case .dismissFailedModerationAlert,

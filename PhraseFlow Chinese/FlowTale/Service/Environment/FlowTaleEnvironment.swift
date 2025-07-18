@@ -12,6 +12,10 @@ import StoreKit
 import Story
 import Settings
 import Moderation
+import Definition
+import SnackBar
+import Translation
+import Speech
 
 struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     private let service: FlowTaleServicesProtocol
@@ -24,18 +28,51 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     public let audioEnvironment: AudioEnvironmentProtocol
     public let settingsEnvironment: SettingsEnvironmentProtocol
     public let moderationEnvironment: ModerationEnvironmentProtocol
+    public let viewStateEnvironment: ViewStateEnvironmentProtocol
+    public let snackBarEnvironment: SnackBarEnvironmentProtocol
+    public let definitionEnvironment: DefinitionEnvironmentProtocol
+    public let translationEnvironment: TranslationEnvironmentProtocol
+    public let speechEnvironment: SpeechEnvironmentProtocol
 
     init() {
         service = FlowTaleServices()
         dataStore = FlowTaleDataStore()
         repository = FlowTaleRepository()
+        
+        // Create basic environments first
         storyEnvironment = StoryEnvironment()
-        settingsEnvironment = SettingsEnvironment()
+        settingsEnvironment = SettingsEnvironment(settingsDataStore: dataStore)
+        viewStateEnvironment = ViewStateEnvironment()
+        snackBarEnvironment = SnackBarEnvironment()
+        
+        // Create SpeechEnvironment
+        speechEnvironment = SpeechEnvironment(speechRepository: repository)
+        
+        // AudioEnvironment depends on SettingsEnvironment
         audioEnvironment = AudioEnvironment(settingsEnvironment: settingsEnvironment)
-        moderationEnvironment = ModerationEnvironment(
-            moderationServices: service,
+        
+        // DefinitionEnvironment depends on ViewStateEnvironment, DefinitionServices, and DefinitionDataStore
+        definitionEnvironment = DefinitionEnvironment(
+            viewStateEnvironment: viewStateEnvironment,
+            definitionServices: service,
+            definitionDataStore: dataStore
+        )
+        
+        // TranslationEnvironment depends on multiple environments
+        translationEnvironment = TranslationEnvironment(
+            translationServices: service,
+            speechEnvironment: speechEnvironment,
+            definitionEnvironment: definitionEnvironment,
             settingsEnvironment: settingsEnvironment
         )
+        
+        // ModerationEnvironment depends on SettingsEnvironment and SnackBarEnvironment
+        moderationEnvironment = ModerationEnvironment(
+            moderationServices: service,
+            settingsEnvironment: settingsEnvironment,
+            snackBarEnvironment: snackBarEnvironment
+        )
+        
         try? cleanupOrphanedDefinitionFiles()
         try? cleanupOrphanedSentenceAudioFiles()
     }

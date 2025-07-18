@@ -11,6 +11,7 @@ import Settings
 
 struct AudioEnvironment: AudioEnvironmentProtocol {
     let appSoundSubject = CurrentValueSubject<AppSound?, Never>(nil)
+    let clearDefinitionSubject = CurrentValueSubject<Void, Never>(())
     let settingsEnvironment: SettingsEnvironmentProtocol
     
     func playSound(_ sound: AppSound) {
@@ -19,5 +20,9 @@ struct AudioEnvironment: AudioEnvironmentProtocol {
     
     func saveSpeechSpeed(_ speed: SpeechSpeed) {
         settingsEnvironment.saveSpeechSpeed(speed)
+    }
+    
+    func clearCurrentDefinition() {
+        clearDefinitionSubject.send(())
     }
 }

@@ -10,6 +10,8 @@ import ReduxKit
 import Story
 import Audio
 import Settings
+import Definition
+import SnackBar
 
 let flowTaleSubscriber: OnSubscribe<FlowTaleStore, FlowTaleEnvironmentProtocol> = { store, environment in
 
@@ -31,12 +33,18 @@ let flowTaleSubscriber: OnSubscribe<FlowTaleStore, FlowTaleEnvironmentProtocol> 
             }
         }
 
-    // Add story subscriber
+    // Add package subscribers
     storySubscriber(store, environment.storyEnvironment)
-    
-    // Add audio subscriber
     audioSubscriber(store, environment.audioEnvironment)
-    
-    // Add settings subscriber
     settingsSubscriber(store, environment.settingsEnvironment)
+    
+    // Add new subscribers
+    ViewStateSubscriber.initialize(store: store, environment: environment.viewStateEnvironment)
+    SnackBarSubscriber.initialize(store: store, environment: environment.snackBarEnvironment)
+    DefinitionSubscriber.initialize(store: store, environment: environment.definitionEnvironment)
+    
+    // Add cross-package subscribers
+    store.subscribe(environment.audioEnvironment.clearDefinitionSubject) { store, _ in
+        store.dispatch(.definitionAction(.clearCurrentDefinition))
+    }
 }

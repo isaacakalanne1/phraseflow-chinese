@@ -9,86 +9,98 @@ import Foundation
 import ReduxKit
 import AVKit
 
-let translationMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol> = { state, action, environment in
+let translationMiddleware: Middleware<TranslationState, TranslationAction, TranslationEnvironmentProtocol> = { state, action, environment in
     switch action {
-    case .translationAction(let translationAction):
-        switch translationAction {
         case .translateText:
-            let inputText = state.translationState.inputText
+            let inputText = state.inputText
             guard !inputText.isEmpty else {
-                return .translationAction(.translationInProgress(false))
+                return .translationInProgress(false)
             }
+
+            // Get device and target language from settings environment
+            let deviceLanguage = environment.settingsEnvironment.deviceLanguage
+            let targetLanguage = state.targetLanguage
 
             guard let chapter = try? await environment.translateText(
                 inputText,
-                from: state.deviceLanguage,
-                to: state.settingsState.language
+                from: deviceLanguage,
+                to: targetLanguage
             ) else {
-                return .translationAction(.failedToTranslate)
+                return .failedToTranslate
             }
 
-            return .translationAction(.synthesizeAudio(chapter, state.translationState.textLanguage))
+            return .synthesizeAudio(chapter, state.textLanguage)
 
         case .breakdownText:
-            let inputText = state.translationState.inputText
+            let inputText = state.inputText
             guard !inputText.isEmpty else {
-                return .translationAction(.translationInProgress(false))
+                return .translationInProgress(false)
             }
+
+            // Get device language from settings environment
+            let deviceLanguage = environment.settingsEnvironment.deviceLanguage
 
             guard let chapter = try? await environment.breakdownText(
                 inputText,
-                textLanguage: state.translationState.textLanguage,
-                deviceLanguage: state.deviceLanguage
+                textLanguage: state.textLanguage,
+                deviceLanguage: deviceLanguage
             ) else {
-                return .translationAction(.failedToBreakdown)
+                return .failedToBreakdown
             }
 
-            return .translationAction(.synthesizeAudio(chapter, state.settingsState.language))
+            return .synthesizeAudio(chapter, state.targetLanguage)
 
         case .synthesizeAudio(let chapter, let language):
-
-            guard let voice = state.settingsState.voice.language == language ? state.settingsState.voice : language.voices.first else {
-                return .translationAction(.failedToBreakdown)
+            // Get voice from settings environment
+            let currentVoice = environment.settingsEnvironment.currentVoice
+            let voice = currentVoice.language == language ? currentVoice : language.voices.first
+            
+            guard let selectedVoice = voice else {
+                return .failedToBreakdown
             }
 
             guard let newChapter = try? await environment.synthesizeSpeech(for: chapter,
-                                                                           voice: voice,
+                                                                           voice: selectedVoice,
                                                                            language: language) else {
-                return .translationAction(.failedToSynthesizeAudio)
+                return .failedToSynthesizeAudio
             }
 
-            return .translationAction(.onSynthesizedTranslationAudio(newChapter))
+            return .onSynthesizedTranslationAudio(newChapter)
 
         case .defineTranslationWord(let wordTimeStampData):
-            return .translationAction(.translationDefiningInProgress(true))
+            return .translationDefiningInProgress(true)
 
         case .translationDefiningInProgress:
+            let timestampData = state.currentSpokenWord
 
-            let timestampData = state.translationState.currentSpokenWord
-
-            if let existingDefinition = state.definitionState.definition(timestampData: timestampData) {
-                return .translationAction(.onDefinedTranslationWord(existingDefinition))
+            // Check if definition already exists through environment
+            // Note: This would require a method to check existing definitions
+            // For now, proceed with fetching new definitions
+            
+            guard let sentence = state.chapter?.sentences.first,
+                  let chapter = state.chapter else {
+                return .failedToDefineTranslationWord
             }
 
-            guard let sentence = state.translationState.chapter?.sentences.first,
-                  let chapter = state.translationState.chapter,
-                  var definitionsForSentence = try? await environment.fetchDefinitions(
+            let deviceLanguage = environment.settingsEnvironment.deviceLanguage
+            
+            guard var definitionsForSentence = try? await environment.fetchDefinitions(
                 in: sentence,
                 chapter: chapter,
-                deviceLanguage: state.deviceLanguage
+                deviceLanguage: deviceLanguage
             ) else {
-                return .translationAction(.failedToDefineTranslationWord)
+                return .failedToDefineTranslationWord
             }
 
             guard var definitionOfTappedWord = definitionsForSentence.first(where: { $0.timestampData == timestampData }) else {
-                return .translationAction(.failedToDefineTranslationWord)
+                return .failedToDefineTranslationWord
             }
 
             definitionOfTappedWord.hasBeenSeen = true
             definitionOfTappedWord.creationDate = .now
 
             let extractedAudio = AudioExtractor.shared.extractAudioSegment(
-                from: state.translationState.audioPlayer,
+                from: state.audioPlayer,
                 startTime: definitionOfTappedWord.timestampData.time,
                 duration: definitionOfTappedWord.timestampData.duration
             )
@@ -96,46 +108,45 @@ let translationMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnv
 
             definitionsForSentence.addDefinitions([definitionOfTappedWord])
 
-            var allDefinitions = state.definitionState.definitions
-            allDefinitions.addDefinitions(definitionsForSentence)
-
-            try? environment.saveDefinitions(allDefinitions)
+            try? environment.saveDefinitions(definitionsForSentence)
             if let data = definitionOfTappedWord.audioData {
                 try? environment.saveSentenceAudio(data, id: sentence.id)
             }
 
-            return .translationAction(.onDefinedTranslationWord(definitionOfTappedWord))
+            return .onDefinedTranslationWord(definitionOfTappedWord)
 
         case .playTranslationAudio:
-            if let lastWord = state.translationState.chapter?.sentences.last?.timestamps.last {
-                await state.translationState.audioPlayer.playAudio(toSeconds: lastWord.time + lastWord.duration)
-                return .translationAction(.updateTranslationPlayTime)
+            if let lastWord = state.chapter?.sentences.last?.timestamps.last {
+                await state.audioPlayer.playAudio(toSeconds: lastWord.time + lastWord.duration)
+                return .updateTranslationPlayTime
             }
             return nil
 
         case .updateTranslationPlayTime:
-            if state.translationState.isPlayingAudio {
+            if state.isPlayingAudio {
                 try? await Task.sleep(nanoseconds: 100_000_000)
-                return .translationAction(.updateTranslationPlayTime)
+                return .updateTranslationPlayTime
             }
             return nil
 
         case .pauseTranslationAudio:
-            state.translationState.audioPlayer.pause()
+            state.audioPlayer.pause()
             return nil
 
         case .playTranslationWord(let word):
-            await state.translationState.audioPlayer.playAudio(fromSeconds: word.time,
-                                                               toSeconds: word.time + word.duration,
-                                                               playRate: state.settingsState.speechSpeed.playRate)
-            return .translationAction(.updateTranslationPlayTime)
+            let speechSpeed = environment.settingsEnvironment.speechSpeed
+            await state.audioPlayer.playAudio(fromSeconds: word.time,
+                                               toSeconds: word.time + word.duration,
+                                               playRate: speechSpeed.playRate)
+            return .updateTranslationPlayTime
 
         case .selectTranslationWord(let word):
-            await state.translationState.audioPlayer.playAudio(fromSeconds: word.time,
-                                                               toSeconds: word.time + word.duration,
-                                                               playRate: state.settingsState.speechSpeed.playRate)
+            let speechSpeed = environment.settingsEnvironment.speechSpeed
+            await state.audioPlayer.playAudio(fromSeconds: word.time,
+                                               toSeconds: word.time + word.duration,
+                                               playRate: speechSpeed.playRate)
 
-            return .translationAction(.defineTranslationWord(word))
+            return .defineTranslationWord(word)
 
         case .onDefinedTranslationWord:
             return nil
@@ -155,8 +166,4 @@ let translationMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnv
                 .clearTranslation:
             return nil
         }
-
-    default:
-        return nil
-    }
 }

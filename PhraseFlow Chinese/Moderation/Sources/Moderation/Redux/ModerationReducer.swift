@@ -8,6 +8,7 @@
 import SwiftUI
 import ReduxKit
 
+@MainActor
 let moderationReducer: Reducer<ModerationState, ModerationAction> = { state, action in
     var newState = state
 

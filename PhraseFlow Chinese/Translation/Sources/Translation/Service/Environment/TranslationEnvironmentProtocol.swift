@@ -1,0 +1,25 @@
+//
+//  TranslationEnvironmentProtocol.swift
+//  Translation
+//
+//  Created by iakalann on 18/07/2025.
+//
+
+import Foundation
+import Speech
+import Definition
+import Settings
+
+protocol TranslationEnvironmentProtocol {
+    var translationServices: TranslationServicesProtocol { get }
+    var speechEnvironment: SpeechEnvironmentProtocol { get }
+    var definitionEnvironment: DefinitionEnvironmentProtocol { get }
+    var settingsEnvironment: SettingsEnvironmentProtocol { get }
+    
+    func translateText(_ text: String, from sourceLanguage: Language?, to targetLanguage: Language) async throws -> Chapter
+    func breakdownText(_ text: String, textLanguage: Language, deviceLanguage: Language) async throws -> Chapter
+    func synthesizeSpeech(for chapter: Chapter, voice: Voice, language: Language) async throws -> Chapter
+    func fetchDefinitions(in sentence: Sentence?, chapter: Chapter, deviceLanguage: Language) async throws -> [Definition]
+    func saveDefinitions(_ definitions: [Definition]) throws
+    func saveSentenceAudio(_ audioData: Data, id: UUID) throws
+}
