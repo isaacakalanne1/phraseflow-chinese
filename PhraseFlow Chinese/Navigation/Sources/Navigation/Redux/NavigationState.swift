@@ -6,5 +6,5 @@
 //
 
 struct NavigationState {
-    
+    var contentTab: ContentTab = .reader
 }

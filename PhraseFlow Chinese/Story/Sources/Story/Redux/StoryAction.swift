@@ -35,4 +35,5 @@ enum StoryAction {
 
     case selectWord(WordTimeStampData, playAudio: Bool)
     case setPlaybackTime(Double)
+    case selectChapter(storyId: UUID)
 }

@@ -12,7 +12,8 @@
       "Bash(/usr/local/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-darwin/rg -n \"\\.showSnackBarThenSaveStory|\\.hideSnackbarThenSaveStoryAndSettings\" \"/Users/iakalann/Documents/Apps/phraseflow-chinese/PhraseFlow Chinese/FlowTale\" --type swift)",
       "Bash(/usr/local/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-darwin/rg -n \"store\\.dispatch\\(\\.showSnackBarThenSaveStory|store\\.dispatch\\(\\.hideSnackbarThenSaveStoryAndSettings\" \"/Users/iakalann/Documents/Apps/phraseflow-chinese/PhraseFlow Chinese/FlowTale\" --type swift)",
       "Bash(mv:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(mkdir:*)"
     ],
     "deny": []
   }

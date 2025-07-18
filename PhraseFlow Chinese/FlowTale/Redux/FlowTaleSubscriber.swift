@@ -7,6 +7,7 @@
 
 import Foundation
 import ReduxKit
+import Story
 
 let flowTaleSubscriber: OnSubscribe<FlowTaleStore, FlowTaleEnvironmentProtocol> = { store, environment in
 
@@ -27,4 +28,7 @@ let flowTaleSubscriber: OnSubscribe<FlowTaleStore, FlowTaleEnvironmentProtocol> 
                 store.dispatch(.storyAction(.saveChapter(chapter)))
             }
         }
+
+    // Add story subscriber
+    storySubscriber(store, environment.storyEnvironment)
 }

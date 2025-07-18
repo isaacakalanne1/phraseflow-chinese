@@ -17,6 +17,7 @@ let package = Package(
     dependencies: [
         .package(name: "Localization", path: "../Localization"),
         .package(name: "AppleIcon", path: "../AppleIcon"),
+        .package(name: "Story", path: "../Story"),
         .package(url: "git@git-gdd.sdo.jlrmotor.com:OFFBOARD/mobile/libraries/ios/kits/reduxkit.git", .upToNextMajor(from: "4.1.2")),
     ],
     targets: [
@@ -27,6 +28,7 @@ let package = Package(
             dependencies: [
                 "Localization",
                 "AppleIcon",
+                "Story",
                 .product(name: "ReduxKit", package: "ReduxKit")
             ]),
         .testTarget(

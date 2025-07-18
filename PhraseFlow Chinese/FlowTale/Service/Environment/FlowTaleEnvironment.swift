@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 import StoreKit
+import Story
 
 struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     private let service: FlowTaleServicesProtocol
@@ -16,11 +17,13 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
 
     public let loadingSubject: CurrentValueSubject<LoadingState?, Never> = .init(nil)
     public let chapterSubject: CurrentValueSubject<Chapter?, Never> = .init(nil)
+    public let storyEnvironment: StoryEnvironmentProtocol
 
     init() {
         service = FlowTaleServices()
         dataStore = FlowTaleDataStore()
         repository = FlowTaleRepository()
+        storyEnvironment = StoryEnvironment()
         try? cleanupOrphanedDefinitionFiles()
         try? cleanupOrphanedSentenceAudioFiles()
     }

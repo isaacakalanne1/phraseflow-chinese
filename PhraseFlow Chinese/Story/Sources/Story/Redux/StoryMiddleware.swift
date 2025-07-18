@@ -120,6 +120,28 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
                 return .definitionAction(.showDefinition(definition, shouldPlay: shouldPlay))
             }
             return shouldPlay ? .audioAction(.playWord(word)) : nil
+        case .selectChapter(let storyId):
+            if let chapters = state.storyState.storyChapters[storyId], !chapters.isEmpty {
+                let selectedChapter = chapters.last ?? chapters[0]
+                let existingDefinitions = state.definitionState.definitions
+                var firstMissingSentenceIndex: Int?
+
+                for (sentenceIndex, sentence) in selectedChapter.sentences.enumerated() {
+                    let sentenceHasDefinitions = sentence.timestamps.allSatisfy { timestamp in
+                        existingDefinitions.contains { $0.timestampData == timestamp }
+                    }
+
+                    if !sentenceHasDefinitions {
+                        firstMissingSentenceIndex = sentenceIndex
+                        break
+                    }
+                }
+
+                if let sentenceIndex = firstMissingSentenceIndex {
+                    return .definitionAction(.defineSentence(sentenceIndex: sentenceIndex, previousDefinitions: []))
+                }
+            }
+            return nil
         case .failedToLoadStoriesAndDefinitions,
                 .failedToDeleteStory,
                 .failedToSaveChapter,

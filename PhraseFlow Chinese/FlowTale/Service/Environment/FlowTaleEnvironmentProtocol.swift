@@ -8,10 +8,12 @@
 import Combine
 import Foundation
 import StoreKit
+import Story
 
 protocol FlowTaleEnvironmentProtocol {
     var loadingSubject: CurrentValueSubject<LoadingState?, Never> { get }
     var chapterSubject: CurrentValueSubject<Chapter?, Never> { get }
+    var storyEnvironment: StoryEnvironmentProtocol { get }
 
     func synthesizeSpeech(for chapter: Chapter,
                           voice: Voice,

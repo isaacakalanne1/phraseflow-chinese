@@ -20,6 +20,15 @@
 		BB34C5322E29BF4700238EA8 /* ImageGeneration in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5312E29BF4700238EA8 /* ImageGeneration */; };
 		BB34C5342E29BF4700238EA8 /* Loading in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5332E29BF4700238EA8 /* Loading */; };
 		BB34C5362E29BF4700238EA8 /* Moderation in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5352E29BF4700238EA8 /* Moderation */; };
+		BB34C5382E2A4FB200238EA8 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5372E2A4FB200238EA8 /* Settings */; };
+		BB34C53A2E2A4FB200238EA8 /* SnackBar in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5392E2A4FB200238EA8 /* SnackBar */; };
+		BB34C53C2E2A4FB200238EA8 /* Speech in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C53B2E2A4FB200238EA8 /* Speech */; };
+		BB34C53E2E2A4FB200238EA8 /* Story in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C53D2E2A4FB200238EA8 /* Story */; };
+		BB34C5402E2A4FB200238EA8 /* Study in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C53F2E2A4FB200238EA8 /* Study */; };
+		BB34C5422E2A4FB200238EA8 /* Subscription in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5412E2A4FB200238EA8 /* Subscription */; };
+		BB34C5442E2A4FB200238EA8 /* TextGeneration in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5432E2A4FB200238EA8 /* TextGeneration */; };
+		BB34C5462E2A4FB200238EA8 /* Translation in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5452E2A4FB200238EA8 /* Translation */; };
+		BB34C5482E2A4FB200238EA8 /* UserLimit in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5472E2A4FB200238EA8 /* UserLimit */; };
 		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
 		BB4EDB032C90C86300699E7D /* FlowTaleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */; };
 		BB4EDB0A2C90C8F100699E7D /* FlowTaleEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB092C90C8F100699E7D /* FlowTaleEnvironment.swift */; };
@@ -104,17 +113,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB34C53A2E2A4FB200238EA8 /* SnackBar in Frameworks */,
+				BB34C5462E2A4FB200238EA8 /* Translation in Frameworks */,
 				BB34C52C2E29BF4700238EA8 /* DataStorage in Frameworks */,
+				BB34C53C2E2A4FB200238EA8 /* Speech in Frameworks */,
 				BB34C5362E29BF4700238EA8 /* Moderation in Frameworks */,
 				BB34C52A2E29BF4700238EA8 /* Audio in Frameworks */,
 				BB34C51E2E29525B00238EA8 /* FTColor in Frameworks */,
+				BB34C5482E2A4FB200238EA8 /* UserLimit in Frameworks */,
 				BB34C5342E29BF4700238EA8 /* Loading in Frameworks */,
 				BB34C5322E29BF4700238EA8 /* ImageGeneration in Frameworks */,
 				BB34C5262E29BF4700238EA8 /* APIRequest in Frameworks */,
 				BB34C5202E29526700238EA8 /* Localization in Frameworks */,
+				BB34C5422E2A4FB200238EA8 /* Subscription in Frameworks */,
+				BB34C5402E2A4FB200238EA8 /* Study in Frameworks */,
 				BB34C52E2E29BF4700238EA8 /* Definition in Frameworks */,
+				BB34C5442E2A4FB200238EA8 /* TextGeneration in Frameworks */,
+				BB34C5382E2A4FB200238EA8 /* Settings in Frameworks */,
 				BB7B6D942D1ACEBF0030344A /* libPods-FlowTale.a in Frameworks */,
 				BB34C5282E29BF4700238EA8 /* AppleIcon in Frameworks */,
+				BB34C53E2E2A4FB200238EA8 /* Story in Frameworks */,
 				BB34C5242E29BF3500238EA8 /* Media in Frameworks */,
 				BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */,
 				BB34C5222E29526C00238EA8 /* Navigation in Frameworks */,
@@ -309,6 +327,15 @@
 				BB34C5312E29BF4700238EA8 /* ImageGeneration */,
 				BB34C5332E29BF4700238EA8 /* Loading */,
 				BB34C5352E29BF4700238EA8 /* Moderation */,
+				BB34C5372E2A4FB200238EA8 /* Settings */,
+				BB34C5392E2A4FB200238EA8 /* SnackBar */,
+				BB34C53B2E2A4FB200238EA8 /* Speech */,
+				BB34C53D2E2A4FB200238EA8 /* Story */,
+				BB34C53F2E2A4FB200238EA8 /* Study */,
+				BB34C5412E2A4FB200238EA8 /* Subscription */,
+				BB34C5432E2A4FB200238EA8 /* TextGeneration */,
+				BB34C5452E2A4FB200238EA8 /* Translation */,
+				BB34C5472E2A4FB200238EA8 /* UserLimit */,
 			);
 			productName = "PhraseFlow Chinese";
 			productReference = BBB6EF232C8C86240079D135 /* FlowTale.app */;
@@ -892,6 +919,42 @@
 		BB34C5352E29BF4700238EA8 /* Moderation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Moderation;
+		};
+		BB34C5372E2A4FB200238EA8 /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Settings;
+		};
+		BB34C5392E2A4FB200238EA8 /* SnackBar */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SnackBar;
+		};
+		BB34C53B2E2A4FB200238EA8 /* Speech */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Speech;
+		};
+		BB34C53D2E2A4FB200238EA8 /* Story */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Story;
+		};
+		BB34C53F2E2A4FB200238EA8 /* Study */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Study;
+		};
+		BB34C5412E2A4FB200238EA8 /* Subscription */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Subscription;
+		};
+		BB34C5432E2A4FB200238EA8 /* TextGeneration */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TextGeneration;
+		};
+		BB34C5452E2A4FB200238EA8 /* Translation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Translation;
+		};
+		BB34C5472E2A4FB200238EA8 /* UserLimit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UserLimit;
 		};
 		BB4EDAFF2C90C7E600699E7D /* ReduxKit */ = {
 			isa = XCSwiftPackageProductDependency;

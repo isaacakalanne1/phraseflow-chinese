@@ -143,6 +143,39 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
                 newState.storyState.storyChapters[storyId]?[index] = currentChapter
             }
         }
+    case .selectChapter(let storyId):
+        if let chapters = newState.storyState.storyChapters[storyId], !chapters.isEmpty {
+            let selectedChapter = chapters.last ?? chapters[0]
+            newState.storyState.currentChapter = selectedChapter
+            newState.definitionState.currentDefinition = nil
+            newState.settingsState.language = selectedChapter.language
+            newState.settingsState.voice = selectedChapter.audioVoice
+
+            let data = selectedChapter.audio.data
+            let player = data.createAVPlayer()
+            newState.audioState.audioPlayer = player ?? AVPlayer()
+            newState.viewState.contentTab = .reader
+            
+            // Check for missing definitions
+            let existingDefinitions = newState.definitionState.definitions
+            var firstMissingSentenceIndex: Int?
+
+            for (sentenceIndex, sentence) in selectedChapter.sentences.enumerated() {
+                let sentenceHasDefinitions = sentence.timestamps.allSatisfy { timestamp in
+                    existingDefinitions.contains { $0.timestampData == timestamp }
+                }
+
+                if !sentenceHasDefinitions {
+                    firstMissingSentenceIndex = sentenceIndex
+                    break
+                }
+            }
+
+            if let sentenceIndex = firstMissingSentenceIndex {
+                newState.definitionState.currentDefinition = nil
+                // Note: The actual definition action will be handled in middleware
+            }
+        }
     case .loadStoriesAndDefinitions,
             .deleteStory,
             .saveChapter,
