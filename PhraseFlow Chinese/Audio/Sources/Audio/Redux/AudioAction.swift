@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Settings
 
 enum AudioAction {
     case playAudio(time: Double?)
@@ -18,4 +19,5 @@ enum AudioAction {
     case updatePlayTime
     case setMusicVolume(MusicVolume)
     case onPlayedAudio
+    case updateSpeechSpeed(SpeechSpeed)
 }

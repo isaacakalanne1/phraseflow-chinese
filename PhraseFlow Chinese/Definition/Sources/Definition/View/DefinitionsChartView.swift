@@ -20,7 +20,7 @@ struct DefinitionsChartView: View {
         // 1) Compute dailyCumulativeCount. You might do this in your store or here:
         // Example: let dailyCumulativeCount = makeDailyCumulativeCount(from: definitions)
         // But in your code, you said you have:
-        let dailyCumulativeCount = store.state.definitionState.dailyCreationAndStudyCumulative(from: definitions)
+        let dailyCumulativeCount = store.state.dailyCreationAndStudyCumulative(from: definitions)
 
         // 2) Get the maximum cumulative count
         let maxCount = dailyCumulativeCount
@@ -81,8 +81,8 @@ struct DefinitionsChartView: View {
             let todayStart = calendar.startOfDay(for: now)
 
             // Get counts for today
-            let todayCreations = store.state.definitionState.dailyCreationCount(from: definitions)
-            let todayStudied = store.state.definitionState.dailyStudiedCount(from: definitions)
+            let todayCreations = store.state.dailyCreationCount(from: definitions)
+            let todayStudied = store.state.dailyStudiedCount(from: definitions)
 
             if dailyCumulativeCount.isEmpty {
                 // Case 1: No historical data points - just show today's data with a point at start of day

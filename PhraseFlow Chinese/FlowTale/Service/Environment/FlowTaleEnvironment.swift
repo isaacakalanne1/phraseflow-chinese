@@ -5,10 +5,13 @@
 //  Created by iakalann on 10/09/2024.
 //
 
+import Audio
 import Combine
 import Foundation
 import StoreKit
 import Story
+import Settings
+import Moderation
 
 struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     private let service: FlowTaleServicesProtocol
@@ -18,12 +21,21 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     public let loadingSubject: CurrentValueSubject<LoadingState?, Never> = .init(nil)
     public let chapterSubject: CurrentValueSubject<Chapter?, Never> = .init(nil)
     public let storyEnvironment: StoryEnvironmentProtocol
+    public let audioEnvironment: AudioEnvironmentProtocol
+    public let settingsEnvironment: SettingsEnvironmentProtocol
+    public let moderationEnvironment: ModerationEnvironmentProtocol
 
     init() {
         service = FlowTaleServices()
         dataStore = FlowTaleDataStore()
         repository = FlowTaleRepository()
         storyEnvironment = StoryEnvironment()
+        settingsEnvironment = SettingsEnvironment()
+        audioEnvironment = AudioEnvironment(settingsEnvironment: settingsEnvironment)
+        moderationEnvironment = ModerationEnvironment(
+            moderationServices: service,
+            settingsEnvironment: settingsEnvironment
+        )
         try? cleanupOrphanedDefinitionFiles()
         try? cleanupOrphanedSentenceAudioFiles()
     }

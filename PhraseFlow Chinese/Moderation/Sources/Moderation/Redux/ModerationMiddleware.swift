@@ -8,35 +8,30 @@
 import Foundation
 import ReduxKit
 
-let moderationMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol> = { state, action, environment in
+let moderationMiddleware: Middleware<ModerationState, ModerationAction, ModerationEnvironmentProtocol> = { state, action, environment in
     switch action {
-    case .moderationAction(let moderationAction):
-        switch moderationAction {
-        case .moderateText(let prompt):
-            do {
-                let response = try await environment.moderateText(prompt)
-                return .moderationAction(.onModeratedText(response, prompt))
-            } catch {
-                return .moderationAction(.failedToModerateText)
-            }
-            
-        case .onModeratedText(let response, let prompt):
-            return response.didPassModeration ? .moderationAction(.passedModeration(prompt)) : .moderationAction(.didNotPassModeration)
-            
-        case .passedModeration:
-            try? environment.saveAppSettings(state.settingsState)
-            return .snackbarAction(.showSnackBar(.passedModeration))
-
-        case .didNotPassModeration,
-             .failedToModerateText:
-            return .snackbarAction(.showSnackBar(.didNotPassModeration))
-            
-        case .dismissFailedModerationAlert,
-             .showModerationDetails,
-             .updateIsShowingModerationDetails:
-            return nil
+    case .moderateText(let prompt):
+        do {
+            let response = try await environment.moderateText(prompt)
+            return .onModeratedText(response, prompt)
+        } catch {
+            return .failedToModerateText
         }
-    default:
+        
+    case .onModeratedText(let response, let prompt):
+        return response.didPassModeration ? .passedModeration(prompt) : .didNotPassModeration
+        
+    case .passedModeration:
+        environment.saveAppSettings()
+        return nil
+
+    case .didNotPassModeration,
+         .failedToModerateText:
+        return nil
+        
+    case .dismissFailedModerationAlert,
+         .showModerationDetails,
+         .updateIsShowingModerationDetails:
         return nil
     }
 }

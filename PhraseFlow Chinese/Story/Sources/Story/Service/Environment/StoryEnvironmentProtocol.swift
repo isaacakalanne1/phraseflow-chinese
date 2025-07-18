@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-protocol StoryEnvironmentProtocol {
+public protocol StoryEnvironmentProtocol {
     var storySubject: CurrentValueSubject<UUID?, Never> { get }
     func selectChapter(storyId: UUID)
 }

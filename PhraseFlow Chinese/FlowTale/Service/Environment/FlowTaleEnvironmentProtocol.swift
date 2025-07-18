@@ -5,15 +5,21 @@
 //  Created by iakalann on 30/05/2025.
 //
 
+import Audio
 import Combine
 import Foundation
 import StoreKit
 import Story
+import Settings
+import Moderation
 
 protocol FlowTaleEnvironmentProtocol {
     var loadingSubject: CurrentValueSubject<LoadingState?, Never> { get }
     var chapterSubject: CurrentValueSubject<Chapter?, Never> { get }
     var storyEnvironment: StoryEnvironmentProtocol { get }
+    var audioEnvironment: AudioEnvironmentProtocol { get }
+    var settingsEnvironment: SettingsEnvironmentProtocol { get }
+    var moderationEnvironment: ModerationEnvironmentProtocol { get }
 
     func synthesizeSpeech(for chapter: Chapter,
                           voice: Voice,

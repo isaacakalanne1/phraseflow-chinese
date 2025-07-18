@@ -18,6 +18,7 @@ let package = Package(
         .package(name: "Localization", path: "../Localization"),
         .package(name: "AppleIcon", path: "../AppleIcon"),
         .package(name: "Story", path: "../Story"),
+        .package(name: "Audio", path: "../Audio"),
         .package(url: "git@git-gdd.sdo.jlrmotor.com:OFFBOARD/mobile/libraries/ios/kits/reduxkit.git", .upToNextMajor(from: "4.1.2")),
     ],
     targets: [
@@ -29,6 +30,7 @@ let package = Package(
                 "Localization",
                 "AppleIcon",
                 "Story",
+                "Audio",
                 .product(name: "ReduxKit", package: "ReduxKit")
             ]),
         .testTarget(

@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import Audio
 
 protocol NavigationEnvironmentProtocol {
     func selectChapter(storyId: UUID)
+    func playSound(_ sound: AppSound)
 }

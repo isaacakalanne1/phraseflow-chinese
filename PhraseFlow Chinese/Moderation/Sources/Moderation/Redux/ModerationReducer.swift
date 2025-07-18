@@ -8,31 +8,28 @@
 import SwiftUI
 import ReduxKit
 
-let moderationReducer: Reducer<FlowTaleState, ModerationAction> = { state, action in
+let moderationReducer: Reducer<ModerationState, ModerationAction> = { state, action in
     var newState = state
 
     switch action {
     case .onModeratedText(let response, _):
         newState.moderationResponse = response
         
-    case .passedModeration(let prompt):
-        newState.settingsState.customPrompts.append(prompt)
-        newState.settingsState.storySetting = .customPrompt(prompt)
-        
     case .didNotPassModeration:
-        newState.viewState.isShowingModerationFailedAlert = true
+        newState.isShowingModerationFailedAlert = true
         
     case .dismissFailedModerationAlert:
-        newState.viewState.isShowingModerationFailedAlert = false
+        newState.isShowingModerationFailedAlert = false
         
     case .showModerationDetails:
-        newState.viewState.isShowingModerationFailedAlert = false
-        newState.viewState.isShowingModerationDetails = true
+        newState.isShowingModerationFailedAlert = false
+        newState.isShowingModerationDetails = true
         
     case .updateIsShowingModerationDetails(let isShowing):
-        newState.viewState.isShowingModerationDetails = isShowing
+        newState.isShowingModerationDetails = isShowing
         
     case .moderateText,
+         .passedModeration,
          .failedToModerateText:
         break
     }

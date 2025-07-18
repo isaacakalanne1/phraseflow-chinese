@@ -18,9 +18,7 @@ let appSettingsReducer: Reducer<FlowTaleState, AppSettingsAction> = { state, act
         
     case .updateSpeechSpeed(let speed):
         newState.settingsState.speechSpeed = speed
-        if newState.audioState.audioPlayer.rate != 0 {
-            newState.audioState.audioPlayer.rate = speed.playRate
-        }
+        // Audio player logic now handled in AudioReducer
         
     case .updateShowDefinition(let isShowing):
         newState.settingsState.isShowingDefinition = isShowing

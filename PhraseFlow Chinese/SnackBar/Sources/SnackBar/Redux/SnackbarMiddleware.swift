@@ -14,7 +14,7 @@ let snackbarMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
     case .snackbarAction(let snackbarAction):
         switch snackbarAction {
         case .showSnackBar(let type):
-            state.appAudioState.audioPlayer.play()
+            state.audioState.appSoundAudioPlayer.play()
             if let duration = type.showDuration {
                 try? await Task.sleep(for: .seconds(duration))
                 return .snackbarAction(.hideSnackbar)
@@ -22,7 +22,7 @@ let snackbarMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             return nil
             
         case .showSnackBarThenSaveChapter(let type, let chapter):
-            state.appAudioState.audioPlayer.play()
+            state.audioState.appSoundAudioPlayer.play()
 
             if let duration = type.showDuration {
                 try? await Task.sleep(for: .seconds(duration))

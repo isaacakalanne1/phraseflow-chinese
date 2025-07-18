@@ -8,6 +8,8 @@
 import Foundation
 import ReduxKit
 import Story
+import Audio
+import Settings
 
 let flowTaleSubscriber: OnSubscribe<FlowTaleStore, FlowTaleEnvironmentProtocol> = { store, environment in
 
@@ -31,4 +33,10 @@ let flowTaleSubscriber: OnSubscribe<FlowTaleStore, FlowTaleEnvironmentProtocol> 
 
     // Add story subscriber
     storySubscriber(store, environment.storyEnvironment)
+    
+    // Add audio subscriber
+    audioSubscriber(store, environment.audioEnvironment)
+    
+    // Add settings subscriber
+    settingsSubscriber(store, environment.settingsEnvironment)
 }

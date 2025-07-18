@@ -16,7 +16,7 @@ struct DefinitionsProgressSheetView: View {
 
     var body: some View {
         let filterLanguage = store.state.settingsState.language
-        let definitions = store.state.definitionState.studyDefinitions(language: filterLanguage)
+        let definitions = store.state.studyDefinitions(language: filterLanguage)
         let filteredDefinitions = removeDuplicates(from: definitions)
         let studiedDefinitions = filteredDefinitions.filter { !$0.studiedDates.isEmpty }
 
@@ -92,7 +92,7 @@ struct DefinitionsProgressSheetView: View {
         }
         .navigationDestination(isPresented: $navigateToStudyView) {
             let language = store.state.storyState.currentChapter?.language
-            StudyView(studyWords: store.state.definitionState.studyDefinitions(language: language))
+            StudyView(studyWords: store.state.studyDefinitions(language: language))
         }
         .navigationDestination(isPresented: $showLanguageSelector) {
             LanguageSettingsView()

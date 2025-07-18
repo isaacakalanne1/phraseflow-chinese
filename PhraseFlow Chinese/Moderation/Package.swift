@@ -16,14 +16,27 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "FTColor", path: "../FTColor"),
-        .package(name: "FTFont", path: "../FTFont")
+        .package(name: "FTFont", path: "../FTFont"),
+        .package(name: "Settings", path: "../Settings"),
+        .package(name: "Localization", path: "../Localization"),
+        .package(name: "APIRequest", path: "../APIRequest"),
+        .package(name: "Story", path: "../Story"),
+        .package(url: "git@git-gdd.sdo.jlrmotor.com:OFFBOARD/mobile/libraries/ios/kits/reduxkit.git", .upToNextMajor(from: "4.1.2")),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "Moderation",
-            dependencies: ["FTColor", "FTFont"]),
+            dependencies: [
+                "FTColor", 
+                "FTFont",
+                "Settings",
+                "Localization",
+                "APIRequest",
+                "Story",
+                .product(name: "ReduxKit", package: "ReduxKit")
+            ]),
         .testTarget(
             name: "ModerationTests",
             dependencies: ["Moderation"]

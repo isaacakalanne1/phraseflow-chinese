@@ -15,6 +15,9 @@ let navigationMiddleware: Middleware<NavigationState, NavigationAction, Navigati
         environment.selectChapter(storyId: storyId)
         return nil
     case .selectTab(_, let shouldPlaySound):
-        return shouldPlaySound ? .audioAction(.playSound(.tabPress)) : nil
+        if shouldPlaySound {
+            environment.playSound(.tabPress)
+        }
+        return nil
     }
 }

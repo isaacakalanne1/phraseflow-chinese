@@ -9,7 +9,7 @@ import SwiftUI
 import ReduxKit
 import AVKit
 
-let audioReducer: Reducer<FlowTaleState, AudioAction> = { state, action in
+let audioReducer: Reducer<AudioState, AudioAction> = { state, action in
     var newState = state
 
     switch action {
@@ -17,7 +17,7 @@ let audioReducer: Reducer<FlowTaleState, AudioAction> = { state, action in
         if let url = sound.fileURL,
            let player = try? AVAudioPlayer(contentsOf: url) {
             player.volume = 0.7
-            newState.appAudioState.audioPlayer = player
+            newState.appSoundAudioPlayer = player
         }
         
     case .playMusic(let music):
@@ -25,45 +25,34 @@ let audioReducer: Reducer<FlowTaleState, AudioAction> = { state, action in
            let player = try? AVAudioPlayer(contentsOf: url) {
             player.numberOfLoops = 0
             player.volume = MusicVolume.normal.float
-            newState.musicAudioState.currentMusicType = music
-            newState.musicAudioState.audioPlayer = player
-            newState.settingsState.isPlayingMusic = true
+            newState.currentMusicType = music
+            newState.musicAudioPlayer = player
+            // Settings state changes handled at FlowTaleReducer level
         }
         
     case .setMusicVolume(let volume):
-        newState.musicAudioState.volume = volume
+        newState.volume = volume
         
     case .stopMusic:
-        newState.settingsState.isPlayingMusic = false
-        newState.musicAudioState.audioPlayer.stop()
-        newState.musicAudioState.currentMusicType = .whispersOfTheForest
+        // Settings state changes handled at FlowTaleReducer level
+        newState.musicAudioPlayer.stop()
+        newState.currentMusicType = .whispersOfTheForest
         
     case .playAudio(let time):
-        newState.definitionState.currentDefinition = nil
-        newState.audioState.isPlayingAudio = true
-        if let wordTime = time,
-           var currentChapter = newState.storyState.currentChapter {
-            currentChapter.currentPlaybackTime = wordTime
-            newState.storyState.currentChapter = currentChapter
-            if let storyId = currentChapter.storyId as UUID?,
-               let chapters = newState.storyState.storyChapters[storyId],
-               let index = chapters.firstIndex(where: { $0.id == currentChapter.id }) {
-                newState.storyState.storyChapters[storyId]?[index] = currentChapter
-            }
-        }
+        // Definition and story state changes handled at FlowTaleReducer level
+        newState.isPlayingAudio = true
         
     case .pauseAudio:
-        newState.audioState.isPlayingAudio = false
+        newState.isPlayingAudio = false
         
     case .updatePlayTime:
-        if var currentChapter = newState.storyState.currentChapter {
-            currentChapter.currentPlaybackTime = newState.audioState.audioPlayer.currentTime().seconds
-            newState.storyState.currentChapter = currentChapter
-            if let storyId = currentChapter.storyId as UUID?,
-               let chapters = newState.storyState.storyChapters[storyId],
-               let index = chapters.firstIndex(where: { $0.id == currentChapter.id }) {
-                newState.storyState.storyChapters[storyId]?[index] = currentChapter
-            }
+        // Story state changes handled at FlowTaleReducer level
+        break
+        
+    case .updateSpeechSpeed(let speed):
+        newState.speechSpeed = speed
+        if newState.chapterAudioPlayer.rate != 0 {
+            newState.chapterAudioPlayer.rate = speed.playRate
         }
         
     case .playWord,

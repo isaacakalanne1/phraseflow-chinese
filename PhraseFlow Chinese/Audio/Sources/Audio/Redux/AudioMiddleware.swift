@@ -10,7 +10,7 @@ import ReduxKit
 import AVKit
 
 private func isPlaybackAtEnd(_ state: FlowTaleState) -> Bool {
-    let currentTime = state.audioState.audioPlayer.currentTime().seconds
+    let currentTime = state.audioState.chapterAudioPlayer.currentTime().seconds
 
     guard let lastSentence = state.storyState.currentChapter?.sentences.last,
           let lastWordTime = lastSentence.timestamps.last?.time,
@@ -27,12 +27,12 @@ let audioMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
     case .audioAction(let audioAction):
         switch audioAction {
         case .playAudio(let timestamp):
-            let playRate = state.settingsState.speechSpeed.playRate
+            let playRate = state.audioState.speechSpeed.playRate
 
             if isPlaybackAtEnd(state) {
-                await state.audioState.audioPlayer.playAudio(playRate: playRate)
+                await state.audioState.chapterAudioPlayer.playAudio(playRate: playRate)
             } else if let timestamp {
-                await state.audioState.audioPlayer.playAudio(fromSeconds: timestamp,
+                await state.audioState.chapterAudioPlayer.playAudio(fromSeconds: timestamp,
                                                              playRate: playRate)
             }
             
@@ -42,9 +42,9 @@ let audioMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             return nil
             
         case .playWord(let word):
-            await state.audioState.audioPlayer.playAudio(fromSeconds: word.time,
+            await state.audioState.chapterAudioPlayer.playAudio(fromSeconds: word.time,
                                                          toSeconds: word.time + word.duration,
-                                                         playRate: state.settingsState.speechSpeed.playRate)
+                                                         playRate: state.audioState.speechSpeed.playRate)
             if let chapter = state.storyState.currentChapter {
                 return .storyAction(.saveChapter(chapter))
             }
@@ -52,12 +52,12 @@ let audioMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             
         case .playSound:
             if state.settingsState.shouldPlaySound {
-                state.appAudioState.audioPlayer.play()
+                state.audioState.appSoundAudioPlayer.play()
             }
             return nil
             
         case .playMusic:
-            state.musicAudioState.audioPlayer.play()
+            state.audioState.musicAudioPlayer.play()
             
             if let chapter = state.storyState.currentChapter {
                 return .storyAction(.saveChapter(chapter))
@@ -74,14 +74,14 @@ let audioMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             return nil
             
         case .pauseAudio:
-            state.audioState.audioPlayer.pause()
+            state.audioState.chapterAudioPlayer.pause()
             if let chapter = state.storyState.currentChapter {
                 return .storyAction(.saveChapter(chapter))
             }
             return nil
             
         case .updatePlayTime:
-            let currentTime = state.audioState.audioPlayer.currentTime().seconds
+            let currentTime = state.audioState.chapterAudioPlayer.currentTime().seconds
             if let lastSentence = state.storyState.currentChapter?.sentences.last,
                let lastWordTime = lastSentence.timestamps.last?.time,
                let lastWordDuration = lastSentence.timestamps.last?.duration,
@@ -91,7 +91,11 @@ let audioMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
             return nil
             
         case .setMusicVolume(let volume):
-            state.musicAudioState.audioPlayer.setVolume(volume.float, fadeDuration: 0.2)
+            state.audioState.musicAudioPlayer.setVolume(volume.float, fadeDuration: 0.2)
+            return nil
+            
+        case .updateSpeechSpeed(let speed):
+            environment.audioEnvironment.saveSpeechSpeed(speed)
             return nil
             
         case .onPlayedAudio:

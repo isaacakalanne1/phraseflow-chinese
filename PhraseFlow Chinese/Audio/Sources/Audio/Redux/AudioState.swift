@@ -7,14 +7,34 @@
 
 import Foundation
 import AVKit
+import Settings
 
 struct AudioState {
-    var audioPlayer = AVPlayer()
+    var chapterAudioPlayer = AVPlayer()
+    var musicAudioPlayer = AVAudioPlayer()
+    var appSoundAudioPlayer = AVAudioPlayer()
     var isPlayingAudio = false
+    var volume: MusicVolume = .normal
+    var currentMusicType: MusicType
+    var speechSpeed: SpeechSpeed = .normal
 
-    init(audioPlayer: AVPlayer = AVPlayer(),
-         isPlayingAudio: Bool = false) {
-        self.audioPlayer = audioPlayer
+    var isNearEndOfTrack: Bool {
+        guard musicAudioPlayer.duration > 0 else { return false }
+        // Consider near end if within last 3 seconds of track
+        return musicAudioPlayer.currentTime >= musicAudioPlayer.duration - 3
+    }
+
+    init(chapterAudioPlayer: AVPlayer = AVPlayer(),
+         musicAudioPlayer: AVAudioPlayer = AVAudioPlayer(),
+         appSoundAudioPlayer: AVAudioPlayer = AVAudioPlayer(),
+         isPlayingAudio: Bool = false,
+         currentMusicType: MusicType = .whispersOfTheForest,
+         speechSpeed: SpeechSpeed = .normal) {
+        self.chapterAudioPlayer = chapterAudioPlayer
+        self.musicAudioPlayer = musicAudioPlayer
+        self.appSoundAudioPlayer = appSoundAudioPlayer
         self.isPlayingAudio = isPlayingAudio
+        self.currentMusicType = currentMusicType
+        self.speechSpeed = speechSpeed
     }
 }
