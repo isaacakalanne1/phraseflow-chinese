@@ -21,7 +21,7 @@ let package = Package(
         .package(name: "Localization", path: "../Localization"),
         .package(name: "APIRequest", path: "../APIRequest"),
         .package(name: "Story", path: "../Story"),
-        .package(url: "git@git-gdd.sdo.jlrmotor.com:OFFBOARD/mobile/libraries/ios/kits/reduxkit.git", .upToNextMajor(from: "4.1.2")),
+        .package(name: "ReduxKit", path: "../ReduxKit"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.

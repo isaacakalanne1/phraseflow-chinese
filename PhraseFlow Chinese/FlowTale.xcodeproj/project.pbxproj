@@ -29,7 +29,6 @@
 		BB34C5442E2A4FB200238EA8 /* TextGeneration in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5432E2A4FB200238EA8 /* TextGeneration */; };
 		BB34C5462E2A4FB200238EA8 /* Translation in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5452E2A4FB200238EA8 /* Translation */; };
 		BB34C5482E2A4FB200238EA8 /* UserLimit in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5472E2A4FB200238EA8 /* UserLimit */; };
-		BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB4EDAFF2C90C7E600699E7D /* ReduxKit */; };
 		BB4EDB032C90C86300699E7D /* FlowTaleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */; };
 		BB4EDB0A2C90C8F100699E7D /* FlowTaleEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB092C90C8F100699E7D /* FlowTaleEnvironment.swift */; };
 		BB4EDB102C90CA4900699E7D /* FlowTaleSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0F2C90CA4900699E7D /* FlowTaleSubscriber.swift */; };
@@ -64,6 +63,7 @@
 
 /* Begin PBXFileReference section */
 		03C5BB9FC82BE5D51BD916B3 /* Pods-PhraseFlow Chinese.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhraseFlow Chinese.debug.xcconfig"; path = "Target Support Files/Pods-PhraseFlow Chinese/Pods-PhraseFlow Chinese.debug.xcconfig"; sourceTree = "<group>"; };
+		112BE27B2E2AE3E0006E80FC /* ReduxKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ReduxKit; sourceTree = "<group>"; };
 		12D35770448B2EA1CE5FAB27 /* Pods-FlowTale.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowTale.debug.xcconfig"; path = "Target Support Files/Pods-FlowTale/Pods-FlowTale.debug.xcconfig"; sourceTree = "<group>"; };
 		5EDA23FCE91C5CB989C86534 /* Pods-PhraseFlow Chinese.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhraseFlow Chinese.release.xcconfig"; path = "Target Support Files/Pods-PhraseFlow Chinese/Pods-PhraseFlow Chinese.release.xcconfig"; sourceTree = "<group>"; };
 		8DBC39CBD1D5A30498912D09 /* Pods-FlowTale.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowTale.release.xcconfig"; path = "Target Support Files/Pods-FlowTale/Pods-FlowTale.release.xcconfig"; sourceTree = "<group>"; };
@@ -134,7 +134,6 @@
 				BB34C5282E29BF4700238EA8 /* AppleIcon in Frameworks */,
 				BB34C53E2E2A4FB200238EA8 /* Story in Frameworks */,
 				BB34C5242E29BF3500238EA8 /* Media in Frameworks */,
-				BB4EDB002C90C7E600699E7D /* ReduxKit in Frameworks */,
 				BB34C5222E29526C00238EA8 /* Navigation in Frameworks */,
 				BB34C5302E29BF4700238EA8 /* FTFont in Frameworks */,
 			);
@@ -199,6 +198,7 @@
 				BB34C5122E286C6E00238EA8 /* Media */,
 				BB34C50A2E2836E000238EA8 /* Moderation */,
 				BB34C5192E29012A00238EA8 /* Navigation */,
+				112BE27B2E2AE3E0006E80FC /* ReduxKit */,
 				BB34C5062E28258A00238EA8 /* Settings */,
 				BB34C5152E28F97000238EA8 /* SnackBar */,
 				BB34C5052E252D7100238EA8 /* Speech */,
@@ -313,7 +313,6 @@
 			);
 			name = FlowTale;
 			packageProductDependencies = (
-				BB4EDAFF2C90C7E600699E7D /* ReduxKit */,
 				BB34C51D2E29525B00238EA8 /* FTColor */,
 				BB34C51F2E29526700238EA8 /* Localization */,
 				BB34C5212E29526C00238EA8 /* Navigation */,
@@ -422,7 +421,6 @@
 			);
 			mainGroup = BBB6EF1A2C8C86240079D135;
 			packageReferences = (
-				BB4EDAFE2C90C7E600699E7D /* XCRemoteSwiftPackageReference "reduxkit" */,
 			);
 			productRefGroup = BBB6EF242C8C86240079D135 /* Products */;
 			projectDirPath = "";
@@ -856,17 +854,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		BB4EDAFE2C90C7E600699E7D /* XCRemoteSwiftPackageReference "reduxkit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@git-gdd.sdo.jlrmotor.com:OFFBOARD/mobile/libraries/ios/kits/reduxkit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.1.2;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
 		BB34C51D2E29525B00238EA8 /* FTColor */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -955,11 +942,6 @@
 		BB34C5472E2A4FB200238EA8 /* UserLimit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = UserLimit;
-		};
-		BB4EDAFF2C90C7E600699E7D /* ReduxKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BB4EDAFE2C90C7E600699E7D /* XCRemoteSwiftPackageReference "reduxkit" */;
-			productName = ReduxKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

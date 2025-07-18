@@ -15,7 +15,7 @@ let package = Package(
             targets: ["SnackBar"]),
     ],
     dependencies: [
-        .package(url: "git@git-gdd.sdo.jlrmotor.com:OFFBOARD/mobile/libraries/ios/kits/reduxkit.git", .upToNextMajor(from: "4.1.2")),
+        .package(name: "ReduxKit", path: "../ReduxKit"),
         .package(name: "FTColor", path: "../FTColor")
     ],
     targets: [
