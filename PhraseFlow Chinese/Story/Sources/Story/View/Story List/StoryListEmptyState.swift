@@ -15,15 +15,15 @@ struct StoryListEmptyState: View {
             Spacer()
             
             Image(systemName: "book.closed")
-                .font(.flowTaleBodyXLarge())
+                .font(FTFont.flowTaleBodyXLarge())
                 .foregroundColor(FTColor.accent.opacity(0.6))
             
             Text(LocalizedString.noStoriesYet)
-                .font(.flowTaleSecondaryHeader())
+                .font(FTFont.flowTaleSecondaryHeader())
                 .foregroundColor(FTColor.primary)
             
             Text(LocalizedString.createYourFirstStory)
-                .font(.flowTaleSecondaryHeader())
+                .font(FTFont.flowTaleSecondaryHeader())
                 .foregroundColor(FTColor.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 40)

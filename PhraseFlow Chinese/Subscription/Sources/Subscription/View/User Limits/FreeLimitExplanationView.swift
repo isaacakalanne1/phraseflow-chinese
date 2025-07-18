@@ -19,19 +19,19 @@ struct FreeLimitExplanationView: View {
             VStack(alignment: .leading) {
                 if store.state.subscriptionState.hasReachedFreeTrialLimit {
                     Text(LocalizedString.freeTrialWhatHappened)
-                        .font(.flowTaleHeader())
+                        .font(FTFont.flowTaleHeader())
                         .fontWeight(.medium)
                     Text(LocalizedString.freeTrialReachedLimit)
-                        .font(.flowTaleBodyMedium())
+                        .font(FTFont.flowTaleBodyMedium())
                         .fontWeight(.light)
                     Divider()
                 }
 
                 Text(LocalizedString.freeTrialWhyHeader)
-                    .font(.flowTaleHeader())
+                    .font(FTFont.flowTaleHeader())
                     .fontWeight(.medium)
                 Text(LocalizedString.dailyLimitWhy)
-                    .font(.flowTaleBodyMedium())
+                    .font(FTFont.flowTaleBodyMedium())
                     .fontWeight(.light)
 
                 Divider()

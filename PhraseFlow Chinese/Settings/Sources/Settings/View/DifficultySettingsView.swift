@@ -43,7 +43,7 @@ struct DifficultyMenu: View {
                 }
             } header: {
                 Text(LocalizedString.howDifficultStory.uppercased())
-                    .font(.flowTaleSubHeader())
+                    .font(FTFont.flowTaleSubHeader())
             }
         }
         .padding()

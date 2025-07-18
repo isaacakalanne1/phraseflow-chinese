@@ -19,7 +19,7 @@ struct TranslationLanguageSelector: View {
         VStack(spacing: 8) {
             if store.state.translationState.mode == .translate {
                 Text("Translate between languages")
-                    .font(.flowTaleSubHeader())
+                    .font(FTFont.flowTaleSubHeader())
                     .foregroundColor(FTColor.secondary)
 
                 HStack(spacing: 8) {
@@ -35,7 +35,7 @@ struct TranslationLanguageSelector: View {
             } else {
                 // Breakdown mode - only show text language selector
                 Text("Select text language")
-                    .font(.flowTaleSubHeader())
+                    .font(FTFont.flowTaleSubHeader())
                     .foregroundColor(FTColor.secondary)
 
                 textLanguageButton
@@ -52,21 +52,21 @@ struct TranslationLanguageSelector: View {
             HStack(spacing: 6) {
                 if sourceLanguage != nil {
                     Text(sourceLanguage!.flagEmoji)
-                        .font(.flowTaleBodyXSmall())
+                        .font(FTFont.flowTaleBodyXSmall())
                     Text(sourceLanguage!.displayName)
-                        .font(.flowTaleSubHeader())
+                        .font(FTFont.flowTaleSubHeader())
                         .fontWeight(.medium)
                         .lineLimit(1)
                 } else {
                     Text("🔍")
-                        .font(.flowTaleBodyXSmall())
+                        .font(FTFont.flowTaleBodyXSmall())
                     Text("Auto-detect")
-                        .font(.flowTaleSubHeader())
+                        .font(FTFont.flowTaleSubHeader())
                         .fontWeight(.medium)
                         .lineLimit(1)
                 }
                 Image(systemName: "chevron.down")
-                    .font(.flowTaleSecondaryHeader())
+                    .font(FTFont.flowTaleSecondaryHeader())
             }
             .foregroundColor(FTColor.primary)
             .padding(.vertical, 6)
@@ -88,7 +88,7 @@ struct TranslationLanguageSelector: View {
         } label: {
             Image(systemName: store.state.translationState.sourceLanguage == nil ?
                   "arrow.right" : "arrow.left.arrow.right")
-                .font(.flowTaleBodyXSmall())
+                .font(FTFont.flowTaleBodyXSmall())
                 .foregroundColor(store.state.translationState.sourceLanguage == nil ?
                                 FTColor.secondary : FTColor.accent)
                 .frame(width: 36, height: 36)
@@ -108,13 +108,13 @@ struct TranslationLanguageSelector: View {
             let targetLanguage = store.state.translationState.targetLanguage
             HStack(spacing: 6) {
                 Text(targetLanguage.flagEmoji)
-                    .font(.flowTaleBodyXSmall())
+                    .font(FTFont.flowTaleBodyXSmall())
                 Text(targetLanguage.displayName)
-                    .font(.flowTaleSubHeader())
+                    .font(FTFont.flowTaleSubHeader())
                     .fontWeight(.medium)
                     .lineLimit(1)
                 Image(systemName: "chevron.down")
-                    .font(.flowTaleSecondaryHeader())
+                    .font(FTFont.flowTaleSecondaryHeader())
             }
             .foregroundColor(FTColor.primary)
             .padding(.vertical, 6)
@@ -137,13 +137,13 @@ struct TranslationLanguageSelector: View {
             let textLanguage = store.state.translationState.textLanguage
             HStack(spacing: 6) {
                 Text(textLanguage.flagEmoji)
-                    .font(.flowTaleBodyXSmall())
+                    .font(FTFont.flowTaleBodyXSmall())
                 Text(textLanguage.displayName)
-                    .font(.flowTaleSubHeader())
+                    .font(FTFont.flowTaleSubHeader())
                     .fontWeight(.medium)
                     .lineLimit(1)
                 Image(systemName: "chevron.down")
-                    .font(.flowTaleSecondaryHeader())
+                    .font(FTFont.flowTaleSecondaryHeader())
             }
             .foregroundColor(FTColor.primary)
             .padding(.vertical, 6)

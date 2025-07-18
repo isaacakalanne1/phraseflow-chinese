@@ -119,13 +119,13 @@ struct ListOfSentencesView: View {
                     }
                 } label: {
                     Image(systemName: "chevron.left")
-                        .font(.flowTaleHeader())
+                        .font(FTFont.flowTaleHeader())
                         .foregroundColor(currentPage > 0 ? .primary : .gray)
                 }
                 .disabled(currentPage <= 0)
                 
                 Text("\(currentPage + 1) / \(totalPages)")
-                    .font(.flowTaleSecondaryHeader())
+                    .font(FTFont.flowTaleSecondaryHeader())
                     .foregroundColor(.secondary)
                 
                 Button {
@@ -135,7 +135,7 @@ struct ListOfSentencesView: View {
                     }
                 } label: {
                     Image(systemName: "chevron.right")
-                        .font(.flowTaleHeader())
+                        .font(FTFont.flowTaleHeader())
                         .foregroundColor(currentPage < totalPages - 1 ? .primary : .gray)
                 }
                 .disabled(currentPage >= totalPages - 1)

@@ -52,7 +52,7 @@ struct LoadingProgressBar: View {
                     
                     VStack(spacing: 8) {
                         Text(statusText)
-                            .font(.flowTaleSecondaryHeader())
+                            .font(FTFont.flowTaleSecondaryHeader())
                             .foregroundColor(FTColor.primary)
                         
                         ProgressView(value: progress, total: 1.0)
@@ -103,7 +103,7 @@ struct LoadingProgressBar: View {
                 VStack(spacing: 4) {
                     HStack {
                         Text(statusText)
-                            .font(.flowTaleSecondaryHeader())
+                            .font(FTFont.flowTaleSecondaryHeader())
                             .foregroundColor(FTColor.primary)
                         
                         Spacer()
@@ -175,7 +175,7 @@ struct ProgressStep: View {
                 
                 if isCompleted {
                     Image(systemName: "checkmark")
-                        .font(.flowTaleBodyXSmall())
+                        .font(FTFont.flowTaleBodyXSmall())
                         .foregroundColor(.white)
                 } else if isCurrent {
                     ProgressView()
@@ -183,7 +183,7 @@ struct ProgressStep: View {
                         .progressViewStyle(CircularProgressViewStyle(tint: FTColor.accent))
                 } else {
                     Image(systemName: icon)
-                        .font(.flowTaleBodyXSmall())
+                        .font(FTFont.flowTaleBodyXSmall())
                         .foregroundColor(FTColor.secondary.opacity(0.6))
                 }
             }
@@ -201,7 +201,7 @@ struct ProgressStep: View {
                     
                     if isCompleted {
                         Image(systemName: "checkmark")
-                            .font(.flowTaleBodySmall())
+                            .font(FTFont.flowTaleBodySmall())
                             .foregroundColor(.white)
                     } else if isCurrent {
                         ProgressView()
@@ -209,13 +209,13 @@ struct ProgressStep: View {
                             .progressViewStyle(CircularProgressViewStyle(tint: FTColor.accent))
                     } else {
                         Image(systemName: icon)
-                            .font(.flowTaleBodySmall())
+                            .font(FTFont.flowTaleBodySmall())
                             .foregroundColor(FTColor.secondary.opacity(0.6))
                     }
                 }
                 
                 Text(title)
-                    .font(.flowTaleSecondaryHeader())
+                    .font(FTFont.flowTaleSecondaryHeader())
                     .foregroundColor(
                         isCompleted || isCurrent ? FTColor.primary : FTColor.secondary
                     )

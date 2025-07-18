@@ -54,10 +54,10 @@ struct SubscriptionOption: View {
         }, label: {
             VStack {
                 Text(title)
-                    .font(.flowTaleHeader())
+                    .font(FTFont.flowTaleHeader())
                     .bold()
                 Text(detail)
-                    .font(.flowTaleSecondaryHeader())
+                    .font(FTFont.flowTaleSecondaryHeader())
             }
             .padding()
             .frame(maxWidth: .infinity)

@@ -24,7 +24,7 @@ struct StoryListView: View {
             PrimaryButton(
                 icon: {
                     Image(systemName: "plus")
-                        .font(.flowTaleBodySmall())
+                        .font(FTFont.flowTaleBodySmall())
                 },
                 title: LocalizedString.createStory
             ) {

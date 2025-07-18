@@ -41,7 +41,7 @@ struct StudyView: View {
                     VStack(alignment: .leading) {
                         ZStack {
                             Text(definition.timestampData.word)
-                                .font(.flowTaleBodyXLarge())
+                                .font(FTFont.flowTaleBodyXLarge())
                                 .frame(maxWidth: .infinity, alignment: .center)
                             HStack {
                                 Spacer()
@@ -59,7 +59,7 @@ struct StudyView: View {
                             content:
                             VStack {
                                 Text(LocalizedString.studyPronunciationPrefix + definition.detail.pronunciation)
-                                    .font(.flowTaleBodySmall())
+                                    .font(FTFont.flowTaleBodySmall())
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
                         )
@@ -71,12 +71,12 @@ struct StudyView: View {
                                 Group {
                                     Text(LocalizedString.studyDefinitionPrefix + definition.detail.definition)
                                         .frame(maxWidth: .infinity, alignment: .leading)
-                                        .font(.flowTaleBodySmall())
+                                        .font(FTFont.flowTaleBodySmall())
                                     Divider()
                                     Text(LocalizedString.studyContextPrefix + definition.detail.definitionInContextOfSentence)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .scaleEffect(x: 1, y: isDefinitionShown ? 1 : 0, anchor: .top)
-                                        .font(.flowTaleBodySmall())
+                                        .font(FTFont.flowTaleBodySmall())
                                 }
                         )
 
@@ -88,7 +88,7 @@ struct StudyView: View {
                                     let highlighted = boldSubstring(in: baseString, at: characterCount, length: definition.timestampData.word.count) ?? AttributedString(definition.sentence.translation)
 
                                     Text(highlighted)
-                                        .font(.flowTaleBodyLarge())
+                                        .font(FTFont.flowTaleBodyLarge())
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Button {
                                         let studyAction: StudyAction = store.state.studyState.isAudioPlaying ? .pauseStudyAudio : .playStudySentence
@@ -104,7 +104,7 @@ struct StudyView: View {
                             isShown: isDefinitionShown,
                             content:
                                 Text(definition.sentence.original)
-                                    .font(.flowTaleBodySmall())
+                                    .font(FTFont.flowTaleBodySmall())
                                     .frame(maxWidth: .infinity, alignment: .leading)
                         )
                     }

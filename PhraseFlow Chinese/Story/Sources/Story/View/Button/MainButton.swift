@@ -32,7 +32,7 @@ struct MainButton: View {
 
                 // Button content
                 Text(title)
-                    .font(.flowTaleBodyLarge())
+                    .font(FTFont.flowTaleBodyLarge())
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity)
                     .frame(height: 70)

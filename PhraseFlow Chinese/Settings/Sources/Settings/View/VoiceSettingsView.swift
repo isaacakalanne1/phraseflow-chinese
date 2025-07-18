@@ -45,7 +45,7 @@ struct VoiceMenu: View {
                 }
             } header: {
                 Text(LocalizedString.voiceMenuHeader.uppercased())
-                    .font(.flowTaleSubHeader())
+                    .font(FTFont.flowTaleSubHeader())
             }
         }
         .padding()

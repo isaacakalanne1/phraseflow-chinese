@@ -31,7 +31,7 @@ struct TranslationActionButton: View {
                         .padding(.trailing, 8)
                 } else {
                     Image(systemName: "arrow.right.circle.fill")
-                        .font(.flowTaleBodySmall())
+                        .font(FTFont.flowTaleBodySmall())
                         .padding(.trailing, 8)
                 }
                 
@@ -40,7 +40,7 @@ struct TranslationActionButton: View {
                     (store.state.translationState.mode == .translate ? LocalizedString.translate : LocalizedString.breakdown)
                 
                 Text(buttonText)
-                    .font(.flowTaleSecondaryHeader())
+                    .font(FTFont.flowTaleSecondaryHeader())
             }
             .foregroundColor(.white)
             .padding()

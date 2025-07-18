@@ -16,7 +16,7 @@ struct StoryListContent: View {
         ScrollView {
             LazyVStack(spacing: 20) {
                 Text(LocalizedString.stories)
-                    .font(.flowTaleSecondaryHeader())
+                    .font(FTFont.flowTaleSecondaryHeader())
                     .foregroundColor(FTColor.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 20)

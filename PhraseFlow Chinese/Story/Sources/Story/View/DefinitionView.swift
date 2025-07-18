@@ -22,23 +22,23 @@ struct DefinitionView: View {
                     VStack(alignment: .leading, spacing: 16) {
                         HStack(spacing: 6) {
                             Text(definition.timestampData.word)
-                                .font(.flowTaleHeader())
+                                .font(FTFont.flowTaleHeader())
                                 .fontWeight(.bold)
                                 .foregroundColor(FTColor.primary)
                             Text(definition.detail.pronunciation)
-                                .font(.flowTaleBodyMedium())
+                                .font(FTFont.flowTaleBodyMedium())
                                 .italic()
                                 .foregroundColor(FTColor.accent)
                         }
 
                         Text(definition.detail.definition)
-                            .font(.flowTaleBodyMedium())
+                            .font(FTFont.flowTaleBodyMedium())
                             .padding(.horizontal, 4)
 
                         Divider()
 
                         Text(definition.detail.definitionInContextOfSentence)
-                            .font(.flowTaleBodyMedium())
+                            .font(FTFont.flowTaleBodyMedium())
                             .multilineTextAlignment(.leading)
                             .frame(maxHeight: .infinity)
                     }
@@ -48,7 +48,7 @@ struct DefinitionView: View {
                 // Loading state when no definition is available yet
                 VStack {
                     Text("🔍 \(LocalizedString.loading)")
-                        .font(.flowTaleSecondaryHeader())
+                        .font(FTFont.flowTaleSecondaryHeader())
                         .foregroundColor(FTColor.secondary)
                     ProgressView()
                         .padding()
@@ -60,11 +60,11 @@ struct DefinitionView: View {
                             .foregroundColor(FTColor.secondary)
                         Text("👆")
                     }
-                    .font(.flowTaleBodyMedium())
+                    .font(FTFont.flowTaleBodyMedium())
                     .padding(.bottom, 10)
                     
                     Text(LocalizedString.tapAWordToDefineIt)
-                        .font(.flowTaleSecondaryHeader())
+                        .font(FTFont.flowTaleSecondaryHeader())
                         .foregroundColor(FTColor.secondary)
                         .multilineTextAlignment(.center)
                 }

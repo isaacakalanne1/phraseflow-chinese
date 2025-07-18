@@ -53,13 +53,13 @@ struct DefinitionsProgressSheetView: View {
                     } label: {
                         HStack(spacing: 6) {
                             Text(languageIcon)
-                                .font(.flowTaleBodyXSmall())
+                                .font(FTFont.flowTaleBodyXSmall())
                             Text(languageName)
-                                .font(.flowTaleSubHeader())
+                                .font(FTFont.flowTaleSubHeader())
                                 .fontWeight(.medium)
                                 .lineLimit(1)
                             Image(systemName: "chevron.down")
-                                .font(.flowTaleSecondaryHeader())
+                                .font(FTFont.flowTaleSecondaryHeader())
                         }
                         .foregroundColor(FTColor.primary)
                         .padding(.vertical, 6)

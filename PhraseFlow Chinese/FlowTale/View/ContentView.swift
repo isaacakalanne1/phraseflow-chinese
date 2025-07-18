@@ -27,7 +27,7 @@ struct ContentView: View {
         VStack {
             if !store.state.subscriptionState.isSubscribed {
                 Text(LocalizedString.freeTrial)
-                    .font(.flowTaleBodyXSmall())
+                    .font(FTFont.flowTaleBodyXSmall())
                     .foregroundStyle(FTColor.primary)
             }
             Group {

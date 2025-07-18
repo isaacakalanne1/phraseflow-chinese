@@ -38,7 +38,7 @@ struct ChapterListView: View {
                                     .fill(FTColor.secondary.opacity(0.1))
                                 
                                 Image(systemName: "book.closed.fill")
-                                    .font(.flowTaleBodyXLarge())
+                                    .font(FTFont.flowTaleBodyXLarge())
                                     .foregroundColor(FTColor.secondary.opacity(0.5))
                             }
                         }
@@ -50,7 +50,7 @@ struct ChapterListView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
                         Text(firstChapter.storyTitle)
-                            .font(.flowTaleSecondaryHeader())
+                            .font(FTFont.flowTaleSecondaryHeader())
                             .foregroundColor(FTColor.primary)
                         
                         Spacer()
@@ -58,13 +58,13 @@ struct ChapterListView: View {
                         HStack(spacing: 4) {
                             DifficultyView(difficulty: firstChapter.difficulty, isSelected: true)
                             Text(firstChapter.difficulty.title)
-                                .font(.flowTaleSecondaryHeader())
+                                .font(FTFont.flowTaleSecondaryHeader())
                                 .foregroundColor(FTColor.secondary)
                         }
                     }
                     
                     Text(firstChapter.chapterSummary)
-                        .font(.flowTaleSecondaryHeader())
+                        .font(FTFont.flowTaleSecondaryHeader())
                         .foregroundColor(FTColor.primary.opacity(0.8))
                         .lineLimit(3)
                 }
@@ -75,7 +75,7 @@ struct ChapterListView: View {
                     LazyVStack(spacing: 12) {
                         HStack {
                             Text(LocalizedString.chapters)
-                                .font(.flowTaleSecondaryHeader())
+                                .font(FTFont.flowTaleSecondaryHeader())
                                 .foregroundColor(FTColor.secondary)
                             
                             Spacer()
@@ -104,7 +104,7 @@ struct ChapterListView: View {
                     PrimaryButton(
                         icon: {
                             Image(systemName: "plus")
-                                .font(.flowTaleBodyXSmall())
+                                .font(FTFont.flowTaleBodyXSmall())
                         },
                         title: LocalizedString.newChapter
                     ) {
@@ -147,16 +147,16 @@ struct ChapterListView: View {
     private var emptyChaptersView: some View {
         VStack(spacing: 16) {
             Image(systemName: "doc.text")
-                .font(.flowTaleBodyXLarge())
+                .font(FTFont.flowTaleBodyXLarge())
                 .foregroundColor(FTColor.accent.opacity(0.6))
                 .padding(.top, 20)
             
             Text(LocalizedString.noChaptersYet)
-                .font(.flowTaleSecondaryHeader())
+                .font(FTFont.flowTaleSecondaryHeader())
                 .foregroundColor(FTColor.primary)
             
             Text(LocalizedString.createYourFirstChapter)
-                .font(.flowTaleSecondaryHeader())
+                .font(FTFont.flowTaleSecondaryHeader())
                 .foregroundColor(FTColor.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 40)
@@ -181,20 +181,20 @@ struct ChapterListView: View {
                         .frame(width: 40, height: 40)
                     
                     Text("\(allChaptersForStory.count - index)")
-                        .font(.flowTaleBodyXSmall())
+                        .font(FTFont.flowTaleBodyXSmall())
                         .foregroundColor(FTColor.accent)
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(chapter.title)
-                        .font(.flowTaleBodyXSmall())
+                        .font(FTFont.flowTaleBodyXSmall())
                         .foregroundColor(FTColor.primary)
                         .lineLimit(1)
 
                     let snippetText = chapter.sentences.prefix(1).map { $0.original }.first ?? ""
                     if !snippetText.isEmpty {
                         Text(snippetText)
-                            .font(.flowTaleBodyXSmall())
+                            .font(FTFont.flowTaleBodyXSmall())
                             .foregroundColor(FTColor.secondary)
                             .lineLimit(2)
                     }
@@ -205,7 +205,7 @@ struct ChapterListView: View {
                 
                 Image(systemName: "chevron.right")
                     .foregroundColor(FTColor.secondary)
-                    .font(.flowTaleBodyXSmall())
+                    .font(FTFont.flowTaleBodyXSmall())
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 8)

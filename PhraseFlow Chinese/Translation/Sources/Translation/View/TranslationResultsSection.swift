@@ -17,7 +17,7 @@ struct TranslationResultsSection: View {
     var body: some View {
         VStack(spacing: 8) {
             Text(LocalizedString.definition)
-                .font(.flowTaleSecondaryHeader())
+                .font(FTFont.flowTaleSecondaryHeader())
                 .foregroundColor(FTColor.primary)
 
             DefinitionView(definition: store.state.translationState.currentDefinition)
@@ -32,7 +32,7 @@ struct TranslationResultsSection: View {
                 )
 
             Text(LocalizedString.translation)
-                .font(.flowTaleSecondaryHeader())
+                .font(FTFont.flowTaleSecondaryHeader())
                 .foregroundColor(FTColor.primary)
 
             HStack(alignment: .top) {

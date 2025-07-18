@@ -18,35 +18,35 @@ struct ModerationExplanationView: View {
             VStack(alignment: .leading) {
                 Text(LocalizedString.storyDidNotPassModeration)
                     .lineLimit(0)
-                    .font(.flowTaleHeader())
+                    .font(FTFont.flowTaleHeader())
                     .fontWeight(.semibold)
 
                 Text(store.state.settingsState.customPrompt)
-                    .font(.flowTaleSubHeader())
+                    .font(FTFont.flowTaleSubHeader())
                     .fontWeight(.light)
 
                 Divider()
 
                 Text(LocalizedString.whatIsModeration)
-                    .font(.flowTaleHeader())
+                    .font(FTFont.flowTaleHeader())
                     .fontWeight(.medium)
                 Text(LocalizedString.moderationExplanation)
-                    .font(.flowTaleSubHeader())
+                    .font(FTFont.flowTaleSubHeader())
                     .fontWeight(.light)
 
                 Divider()
 
                 Text(LocalizedString.howDoesModerationWork)
-                    .font(.flowTaleHeader())
+                    .font(FTFont.flowTaleHeader())
                     .fontWeight(.medium)
                 Text(LocalizedString.moderationWorkExplanation)
-                    .font(.flowTaleSubHeader())
+                    .font(FTFont.flowTaleSubHeader())
                     .fontWeight(.light)
 
                 Divider()
 
                 Text(LocalizedString.whyDidntItPass)
-                    .font(.flowTaleHeader())
+                    .font(FTFont.flowTaleHeader())
                     .fontWeight(.medium)
 
                 Divider()
@@ -73,7 +73,7 @@ struct ModerationExplanationView: View {
                                     Text(LocalizedString.userScoreExplanation("\(result.scorePercentageString)"))
                                         .bold(!result.didPass)
                                 }
-                                .font(.flowTaleSubHeader())
+                                .font(FTFont.flowTaleSubHeader())
                                 .foregroundColor(.secondary)
                             }
                             .padding(.bottom)

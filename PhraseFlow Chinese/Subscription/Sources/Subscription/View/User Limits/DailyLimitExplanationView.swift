@@ -26,32 +26,32 @@ struct DailyLimitExplanationView: View {
             VStack(alignment: .leading) {
                 Text(title)
                     .lineLimit(-1)
-                    .font(.flowTaleHeader())
+                    .font(FTFont.flowTaleHeader())
                     .fontWeight(.semibold)
 
                 Divider()
 
                 Text(LocalizedString.dailyLimitWhyHeader)
-                    .font(.flowTaleHeader())
+                    .font(FTFont.flowTaleHeader())
                     .fontWeight(.medium)
                 Text(LocalizedString.dailyLimitExplanation)
-                    .font(.flowTaleSubHeader())
+                    .font(FTFont.flowTaleSubHeader())
                     .fontWeight(.light)
 
                 Text(LocalizedString.dailyLimitWhenCanCreateMore)
-                    .font(.flowTaleHeader())
+                    .font(FTFont.flowTaleHeader())
                     .fontWeight(.medium)
                 Text(LocalizedString.dailyLimitNextAvailable(store.state.subscriptionState.nextAvailableDescription))
-                    .font(.flowTaleSubHeader())
+                    .font(FTFont.flowTaleSubHeader())
                     .fontWeight(.light)
 
                 Divider()
 
                 Text(LocalizedString.dailyLimitWhyHeader)
-                    .font(.flowTaleHeader())
+                    .font(FTFont.flowTaleHeader())
                     .fontWeight(.medium)
                 Text(LocalizedString.dailyLimitWhy)
-                    .font(.flowTaleSubHeader())
+                    .font(FTFont.flowTaleSubHeader())
                     .fontWeight(.light)
 
                 // TODO: Add logic to show which chapter creation dates used free trial

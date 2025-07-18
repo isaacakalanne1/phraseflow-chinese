@@ -93,7 +93,7 @@ struct LanguageMenu: View {
                 }
             } header: {
                 Text(LocalizedString.whichLanguageLearn.uppercased())
-                    .font(.flowTaleSubHeader())
+                    .font(FTFont.flowTaleSubHeader())
             }
         }
         .padding()
