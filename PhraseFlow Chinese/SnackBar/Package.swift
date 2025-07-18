@@ -15,6 +15,7 @@ let package = Package(
             targets: ["SnackBar"]),
     ],
     dependencies: [
+        .package(url: "git@git-gdd.sdo.jlrmotor.com:OFFBOARD/mobile/libraries/ios/kits/reduxkit.git", .upToNextMajor(from: "4.1.2")),
         .package(name: "FTColor", path: "../FTColor")
     ],
     targets: [
@@ -22,7 +23,10 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "SnackBar",
-            dependencies: ["FTColor"]),
+            dependencies: [
+                .product(name: "ReduxKit", package: "ReduxKit"),
+                "FTColor"
+            ]),
         .testTarget(
             name: "SnackBarTests",
             dependencies: ["SnackBar"]

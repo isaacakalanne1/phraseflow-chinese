@@ -15,6 +15,7 @@ let package = Package(
             targets: ["Story"]),
     ],
     dependencies: [
+        .package(url: "git@git-gdd.sdo.jlrmotor.com:OFFBOARD/mobile/libraries/ios/kits/reduxkit.git", .upToNextMajor(from: "4.1.2")),
         .package(name: "FTColor", path: "../FTColor"),
         .package(name: "FTFont", path: "../FTFont"),
         .package(name: "Loading", path: "../Loading"),
@@ -29,6 +30,7 @@ let package = Package(
         .target(
             name: "Story",
             dependencies: [
+                .product(name: "ReduxKit", package: "ReduxKit"),
                 "FTColor",
                 "FTFont",
                 "Loading",

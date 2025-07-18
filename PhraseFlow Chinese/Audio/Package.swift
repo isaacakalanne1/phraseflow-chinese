@@ -15,6 +15,7 @@ let package = Package(
             targets: ["Audio"]),
     ],
     dependencies: [
+        .package(url: "git@git-gdd.sdo.jlrmotor.com:OFFBOARD/mobile/libraries/ios/kits/reduxkit.git", .upToNextMajor(from: "4.1.2")),
         .package(name: "Settings", path: "../Settings"),
     ],
     targets: [
@@ -22,7 +23,10 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "Audio",
-            dependencies: ["Settings"],
+            dependencies: [
+                .product(name: "ReduxKit", package: "ReduxKit"),
+                "Settings"
+            ],
             resources: [
                 .process("Resources")
             ]
