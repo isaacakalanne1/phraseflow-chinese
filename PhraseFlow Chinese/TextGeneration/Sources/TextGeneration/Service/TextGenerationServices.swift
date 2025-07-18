@@ -46,7 +46,7 @@ class TextGenerationServices: TextGenerationServicesProtocol {
                 throw TextGenerationServicesError.failedToGetResponseData
             }
             
-            let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguage: deviceLanguage, targetLanguage: language)
+            let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguageKey: deviceLanguage.rawValue, targetLanguageKey: language.rawValue)
             let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
             let passage = chapterResponse.sentences.reduce("") { $0 + $1.original }
             
@@ -77,7 +77,7 @@ class TextGenerationServices: TextGenerationServicesProtocol {
             }
             
             let baseChapter = previousChapters.last ?? Chapter(storyId: UUID(), title: "", sentences: [], audioVoice: .xiaoxiao, audio: ChapterAudio(data: Data()), passage: "", language: .mandarinChinese)
-            let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguage: deviceLanguage, targetLanguage: baseChapter.language)
+            let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguageKey: deviceLanguage.rawValue, targetLanguageKey: baseChapter.language.rawValue)
             let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
             let passage = chapterResponse.sentences.reduce("") { $0 + $1.original }
             

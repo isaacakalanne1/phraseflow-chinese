@@ -36,7 +36,7 @@ class TranslationServices: TranslationServicesProtocol {
         guard let jsonData = jsonString.data(using: .utf8) else {
             throw FlowTaleServicesError.failedToGetResponseData
         }
-        let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguage: deviceLanguage, targetLanguage: targetLanguage)
+        let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguageKey: deviceLanguage.rawValue, targetLanguageKey: targetLanguage.rawValue)
         let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
         let passage = chapterResponse.sentences.reduce("") { $0 + $1.original }
         return Chapter(storyId: UUID(),
@@ -77,7 +77,7 @@ class TranslationServices: TranslationServicesProtocol {
         guard let jsonData = jsonString.data(using: .utf8) else {
             throw FlowTaleServicesError.failedToGetResponseData
         }
-        let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguage: textLanguage, targetLanguage: deviceLanguage)
+        let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguageKey: textLanguage.rawValue, targetLanguageKey: deviceLanguage.rawValue)
         let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
         let passage = chapterResponse.sentences.reduce("") { $0 + $1.original }
         return Chapter(storyId: UUID(),
