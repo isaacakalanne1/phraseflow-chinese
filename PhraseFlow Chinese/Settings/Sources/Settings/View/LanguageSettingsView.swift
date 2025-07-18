@@ -27,13 +27,13 @@ struct LanguageOnboardingView: View {
     }
 }
 
-struct LanguageMenu: View {
+public struct LanguageMenu: View {
     @EnvironmentObject var store: FlowTaleStore
     @Environment(\.dismiss) var dismiss
     var shouldDismissOnSelect = false
     let type: LanguageMenuType
 
-    init(shouldDismissOnSelect: Bool = false,
+    public init(shouldDismissOnSelect: Bool = false,
          type: LanguageMenuType = .normal) {
         self.shouldDismissOnSelect = shouldDismissOnSelect
         self.type = type

@@ -17,7 +17,8 @@ let package = Package(
     dependencies: [
         .package(name: "Localization", path: "../Localization"),
         .package(name: "FTColor", path: "../FTColor"),
-        .package(name: "FTFont", path: "../FTFont")
+        .package(name: "FTFont", path: "../FTFont"),
+        .package(name: "Settings", path: "../Settings")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -27,7 +28,8 @@ let package = Package(
             dependencies: [
                 "Localization",
                 "FTColor",
-                "FTFont"
+                "FTFont",
+                "Settings"
             ]),
         .testTarget(
             name: "TranslationTests",

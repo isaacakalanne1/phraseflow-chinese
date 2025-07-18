@@ -5,7 +5,7 @@
 //  Created by iakalann on 20/06/2025.
 //
 
-enum LanguageMenuType {
+public enum LanguageMenuType {
     case normal
     case translationSourceLanguage
     case translationTargetLanguage

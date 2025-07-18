@@ -8,14 +8,14 @@
 import SwiftUI
 import FTColor
 
-struct ImageButton: View {
+public struct ImageButton: View {
     let title: String
     let image: UIImage?
     let isSelected: Bool
     let isTextCentered: Bool
     let action: () -> Void
     
-    init(
+    public init(
         title: String,
         image: UIImage?,
         isSelected: Bool,

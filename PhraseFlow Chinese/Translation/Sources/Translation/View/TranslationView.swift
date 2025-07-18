@@ -8,6 +8,7 @@
 import Localization
 import SwiftUI
 import FTColor
+import Settings
 
 struct TranslationView: View {
     @EnvironmentObject var store: FlowTaleStore
