@@ -7,7 +7,7 @@
 
 import StoreKit
 
-class SubscriptionRepository {
+class SubscriptionRepository: SubscriptionRepositoryProtocol {
 
     func getProducts() async throws -> [Product] {
         return try await Product.products(for: [
