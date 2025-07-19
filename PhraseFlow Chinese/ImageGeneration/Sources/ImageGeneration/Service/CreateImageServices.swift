@@ -26,7 +26,7 @@ class CreateImageServices: CreateImageServicesProtocol {
 
     private func submitGenerationRequest(prompt: String) async throws -> String {
         guard let url = URL(string: "\(baseURL)/schnell") else {
-            throw FlowTaleServicesError.generalError
+            throw FluxImageError.missingImageURL
         }
 
         var request = URLRequest(url: url)

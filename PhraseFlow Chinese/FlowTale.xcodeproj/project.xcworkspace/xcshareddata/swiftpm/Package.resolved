@@ -1,5 +1,5 @@
 {
-  "originHash" : "f987e9d8527c55b7eb703c9e7569d9822e7bbbf6de709e0a4f15ffc141631cf2",
+  "originHash" : "b9e122fc6c441010072c9ed2032ee2d1f7709d0815b3a63293d57a43677eb03e",
   "pins" : [
     {
       "identity" : "combine-schedulers",
@@ -8,15 +8,6 @@
       "state" : {
         "revision" : "ec62f32d21584214a4b27c8cee2b2ad70ab2c38a",
         "version" : "0.11.0"
-      }
-    },
-    {
-      "identity" : "reduxkit",
-      "kind" : "remoteSourceControl",
-      "location" : "git@git-gdd.sdo.jlrmotor.com:OFFBOARD/mobile/libraries/ios/kits/reduxkit.git",
-      "state" : {
-        "revision" : "d5898226dea3d72e5e323709891f487cd307cce4",
-        "version" : "3.1.0"
       }
     },
     {

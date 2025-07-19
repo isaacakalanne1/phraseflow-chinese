@@ -32,7 +32,6 @@
 		BB4EDB032C90C86300699E7D /* FlowTaleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */; };
 		BB4EDB0A2C90C8F100699E7D /* FlowTaleEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB092C90C8F100699E7D /* FlowTaleEnvironment.swift */; };
 		BB4EDB102C90CA4900699E7D /* FlowTaleSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB0F2C90CA4900699E7D /* FlowTaleSubscriber.swift */; };
-		BB7B6D942D1ACEBF0030344A /* libPods-FlowTale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */; };
 		BBA94CCD2D19AAE000EB4A7E /* FlowTaleStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA94CCC2D19AAE000EB4A7E /* FlowTaleStateTests.swift */; };
 		BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
@@ -62,12 +61,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		03C5BB9FC82BE5D51BD916B3 /* Pods-PhraseFlow Chinese.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhraseFlow Chinese.debug.xcconfig"; path = "Target Support Files/Pods-PhraseFlow Chinese/Pods-PhraseFlow Chinese.debug.xcconfig"; sourceTree = "<group>"; };
 		112BE27B2E2AE3E0006E80FC /* ReduxKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ReduxKit; sourceTree = "<group>"; };
-		12D35770448B2EA1CE5FAB27 /* Pods-FlowTale.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowTale.debug.xcconfig"; path = "Target Support Files/Pods-FlowTale/Pods-FlowTale.debug.xcconfig"; sourceTree = "<group>"; };
-		5EDA23FCE91C5CB989C86534 /* Pods-PhraseFlow Chinese.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhraseFlow Chinese.release.xcconfig"; path = "Target Support Files/Pods-PhraseFlow Chinese/Pods-PhraseFlow Chinese.release.xcconfig"; sourceTree = "<group>"; };
-		8DBC39CBD1D5A30498912D09 /* Pods-FlowTale.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowTale.release.xcconfig"; path = "Target Support Files/Pods-FlowTale/Pods-FlowTale.release.xcconfig"; sourceTree = "<group>"; };
-		A6E47BC9388E891E2E0D0FE5 /* libPods-FlowTale.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FlowTale.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB34C5022E2430BA00238EA8 /* Study */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Study; sourceTree = "<group>"; };
 		BB34C5032E25259C00238EA8 /* Definition */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Definition; sourceTree = "<group>"; };
 		BB34C5042E25279800238EA8 /* Story */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Story; sourceTree = "<group>"; };
@@ -93,7 +87,6 @@
 		BB4EDB022C90C86300699E7D /* FlowTaleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleStore.swift; sourceTree = "<group>"; };
 		BB4EDB092C90C8F100699E7D /* FlowTaleEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleEnvironment.swift; sourceTree = "<group>"; };
 		BB4EDB0F2C90CA4900699E7D /* FlowTaleSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleSubscriber.swift; sourceTree = "<group>"; };
-		BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-FlowTale.a"; path = "../../../../Library/Developer/Xcode/DerivedData/FlowTale-dzblbgdyrqlsjdggurnqsbvwzaoq/Build/Products/Debug-iphoneos/libPods-FlowTale.a"; sourceTree = "<group>"; };
 		BBA94CCC2D19AAE000EB4A7E /* FlowTaleStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleStateTests.swift; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* FlowTale.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowTale.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleApp.swift; sourceTree = "<group>"; };
@@ -130,7 +123,6 @@
 				BB34C52E2E29BF4700238EA8 /* Definition in Frameworks */,
 				BB34C5442E2A4FB200238EA8 /* TextGeneration in Frameworks */,
 				BB34C5382E2A4FB200238EA8 /* Settings in Frameworks */,
-				BB7B6D942D1ACEBF0030344A /* libPods-FlowTale.a in Frameworks */,
 				BB34C5282E29BF4700238EA8 /* AppleIcon in Frameworks */,
 				BB34C53E2E2A4FB200238EA8 /* Story in Frameworks */,
 				BB34C5242E29BF3500238EA8 /* Media in Frameworks */,
@@ -156,15 +148,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8F09325601693DB4E5512903 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BB7B6D932D1ACEBC0030344A /* libPods-FlowTale.a */,
-				A6E47BC9388E891E2E0D0FE5 /* libPods-FlowTale.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		BB4EDB012C90C85000699E7D /* Redux */ = {
 			isa = PBXGroup;
 			children = (
@@ -212,8 +195,6 @@
 				BBB6EF362C8C862A0079D135 /* FlowTaleTests */,
 				BBB6EF402C8C862A0079D135 /* FlowTaleUITests */,
 				BBB6EF242C8C86240079D135 /* Products */,
-				D2708F9BEB6EBF9B4147F685 /* Pods */,
-				8F09325601693DB4E5512903 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -283,17 +264,6 @@
 			path = Environment;
 			sourceTree = "<group>";
 		};
-		D2708F9BEB6EBF9B4147F685 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				03C5BB9FC82BE5D51BD916B3 /* Pods-PhraseFlow Chinese.debug.xcconfig */,
-				5EDA23FCE91C5CB989C86534 /* Pods-PhraseFlow Chinese.release.xcconfig */,
-				12D35770448B2EA1CE5FAB27 /* Pods-FlowTale.debug.xcconfig */,
-				8DBC39CBD1D5A30498912D09 /* Pods-FlowTale.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -301,11 +271,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BBB6EF472C8C862A0079D135 /* Build configuration list for PBXNativeTarget "FlowTale" */;
 			buildPhases = (
-				0A1D975A1B4245905866B684 /* [CP] Check Pods Manifest.lock */,
 				BBB6EF1F2C8C86240079D135 /* Sources */,
 				BBB6EF202C8C86240079D135 /* Frameworks */,
 				BBB6EF212C8C86240079D135 /* Resources */,
-				994704F95C0B281E7CCEA589 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -458,52 +426,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		0A1D975A1B4245905866B684 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-FlowTale-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		994704F95C0B281E7CCEA589 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FlowTale/Pods-FlowTale-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FlowTale/Pods-FlowTale-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FlowTale/Pods-FlowTale-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BBB6EF1F2C8C86240079D135 /* Sources */ = {
@@ -676,7 +598,6 @@
 		};
 		BBB6EF482C8C862A0079D135 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 12D35770448B2EA1CE5FAB27 /* Pods-FlowTale.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -710,7 +631,6 @@
 		};
 		BBB6EF492C8C862A0079D135 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8DBC39CBD1D5A30498912D09 /* Pods-FlowTale.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

@@ -6,6 +6,7 @@
 //
 
 import FTColor
+import FTFont
 import Localization
 import SwiftUI
 
