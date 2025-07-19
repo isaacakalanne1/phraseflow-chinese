@@ -8,11 +8,12 @@
 import Foundation
 import ReduxKit
 
-class DefinitionSubscriber {
-    static func initialize(store: FlowTaleStore, environment: DefinitionEnvironmentProtocol) {
-        
-        store.subscribe(environment.clearDefinitionSubject) { store, _ in
-            store.dispatch(.definitionAction(.clearCurrentDefinition))
+let definitionSubscriber: OnSubscribe<DefinitionStore, DefinitionEnvironmentProtocol> = { store, environment in
+
+    store
+        .subscribe(
+            environment.clearDefinitionSubject
+        ) { store, _ in
+            store.dispatch(.clearCurrentDefinition)
         }
-    }
 }

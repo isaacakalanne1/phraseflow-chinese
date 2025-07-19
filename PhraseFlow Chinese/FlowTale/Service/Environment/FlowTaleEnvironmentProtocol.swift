@@ -24,7 +24,6 @@ protocol FlowTaleEnvironmentProtocol {
     var audioEnvironment: AudioEnvironmentProtocol { get }
     var settingsEnvironment: SettingsEnvironmentProtocol { get }
     var moderationEnvironment: ModerationEnvironmentProtocol { get }
-    var viewStateEnvironment: ViewStateEnvironmentProtocol { get }
     var snackBarEnvironment: SnackBarEnvironmentProtocol { get }
     var definitionEnvironment: DefinitionEnvironmentProtocol { get }
     var translationEnvironment: TranslationEnvironmentProtocol { get }

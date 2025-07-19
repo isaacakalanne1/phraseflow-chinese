@@ -28,7 +28,6 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     public let audioEnvironment: AudioEnvironmentProtocol
     public let settingsEnvironment: SettingsEnvironmentProtocol
     public let moderationEnvironment: ModerationEnvironmentProtocol
-    public let viewStateEnvironment: ViewStateEnvironmentProtocol
     public let snackBarEnvironment: SnackBarEnvironmentProtocol
     public let definitionEnvironment: DefinitionEnvironmentProtocol
     public let translationEnvironment: TranslationEnvironmentProtocol

@@ -9,7 +9,6 @@ import Foundation
 import Combine
 
 protocol DefinitionEnvironmentProtocol {
-    var viewStateEnvironment: ViewStateEnvironmentProtocol { get }
     var clearDefinitionSubject: CurrentValueSubject<Void, Never> { get }
     var definitionServices: DefinitionServicesProtocol { get }
     var definitionDataStore: DefinitionDataStoreProtocol { get }

@@ -6,10 +6,12 @@
 //
 
 import FTColor
+import FTFont
+import Localization
 import SwiftUI
 
 struct DefinitionsProgressSheetView: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: DefinitionStore
     @State private var showingCreations = true
     @State private var navigateToStudyView = false
     @State private var showLanguageSelector = false

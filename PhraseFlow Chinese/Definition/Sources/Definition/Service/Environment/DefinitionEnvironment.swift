@@ -10,7 +10,6 @@ import Combine
 
 struct DefinitionEnvironment: DefinitionEnvironmentProtocol {
     let clearDefinitionSubject = CurrentValueSubject<Void, Never>(())
-    let viewStateEnvironment: ViewStateEnvironmentProtocol
     let definitionServices: DefinitionServicesProtocol
     let definitionDataStore: DefinitionDataStoreProtocol
     
