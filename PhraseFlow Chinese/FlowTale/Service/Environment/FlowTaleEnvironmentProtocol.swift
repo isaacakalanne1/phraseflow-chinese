@@ -19,7 +19,7 @@ import Speech
 
 // IGNORE: THIS WILL BE DELETED SOON
 protocol FlowTaleEnvironmentProtocol {
-    var loadingSubject: CurrentValueSubject<LoadingState?, Never> { get }
+    var loadingSubject: CurrentValueSubject<LoadingStatus?, Never> { get }
     var chapterSubject: CurrentValueSubject<Chapter?, Never> { get }
     var storyEnvironment: StoryEnvironmentProtocol { get }
     var audioEnvironment: AudioEnvironmentProtocol { get }

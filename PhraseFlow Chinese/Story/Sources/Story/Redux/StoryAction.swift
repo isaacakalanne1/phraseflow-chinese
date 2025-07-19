@@ -31,7 +31,7 @@ enum StoryAction {
     case goToNextChapter
 
     case updateCurrentSentence(Sentence)
-    case updateLoadingState(LoadingState)
+    case updateLoadingStatus(LoadingStatus)
 
     case selectWord(WordTimeStampData, playAudio: Bool)
     case setPlaybackTime(Double)

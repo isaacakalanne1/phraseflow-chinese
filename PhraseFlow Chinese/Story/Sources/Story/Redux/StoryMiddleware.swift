@@ -149,7 +149,7 @@ let storyMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironme
                 .onSavedChapter,
                 .onDeletedStory,
                 .setPlaybackTime,
-                .updateLoadingState:
+                .updateLoadingStatus:
             return nil
         }
     default:

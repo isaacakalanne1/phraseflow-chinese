@@ -17,8 +17,11 @@ let package = Package(
     dependencies: [
         .package(name: "Localization", path: "../Localization"),
         .package(name: "AppleIcon", path: "../AppleIcon"),
+        .package(name: "FTColor", path: "../FTColor"),
         .package(name: "Story", path: "../Story"),
         .package(name: "Audio", path: "../Audio"),
+        .package(name: "Settings", path: "../Settings"),
+        .package(name: "DataStorage", path: "../DataStorage"),
         .package(name: "ReduxKit", path: "../ReduxKit"),
     ],
     targets: [
@@ -29,8 +32,11 @@ let package = Package(
             dependencies: [
                 "Localization",
                 "AppleIcon",
+                "FTColor",
                 "Story",
                 "Audio",
+                "Settings",
+                "DataStorage",
                 .product(name: "ReduxKit", package: "ReduxKit")
             ]),
         .testTarget(

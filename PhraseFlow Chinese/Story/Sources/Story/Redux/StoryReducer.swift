@@ -131,7 +131,7 @@ let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
                 newState.storyState.storyChapters[currentChapter.storyId]?[index] = currentChapter
             }
         }
-    case .updateLoadingState(let loadingState):
+    case .updateLoadingStatus(let loadingState):
         newState.viewState.loadingState = loadingState
     case .selectWord(let word, _):
         if var currentChapter = newState.storyState.currentChapter {

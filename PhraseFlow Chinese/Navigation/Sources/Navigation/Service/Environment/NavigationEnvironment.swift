@@ -8,6 +8,8 @@
 import Foundation
 import Story
 import Audio
+import Settings
+import DataStorage
 
 struct NavigationEnvironment: NavigationEnvironmentProtocol {
     let storyEnvironment: StoryEnvironmentProtocol
@@ -16,6 +18,13 @@ struct NavigationEnvironment: NavigationEnvironmentProtocol {
     init(storyEnvironment: StoryEnvironmentProtocol, audioEnvironment: AudioEnvironmentProtocol) {
         self.storyEnvironment = storyEnvironment
         self.audioEnvironment = audioEnvironment
+    }
+    
+    init() {
+        self.storyEnvironment = StoryEnvironment()
+        let settingsDataStore = SettingsDataStore()
+        let settingsEnvironment = SettingsEnvironment(settingsDataStore: settingsDataStore)
+        self.audioEnvironment = AudioEnvironment(settingsEnvironment: settingsEnvironment)
     }
     
     func selectChapter(storyId: UUID) {

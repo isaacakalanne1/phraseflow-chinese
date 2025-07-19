@@ -6,10 +6,47 @@
 //
 
 import SwiftUI
+import Story
+import FTColor
 
 struct TabBarView: View {
+    @EnvironmentObject var store: NavigationStore
+    
+    private var filteredTabs: [ContentTab] {
+        ContentTab.allCases.filter { tab in
+            switch tab {
+            case .translate:
+                return false
+            default:
+                return true
+            }
+        }
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack(spacing: 12) {
+            ForEach(filteredTabs, id: \.self) { tab in
+                VStack(spacing: 4) {
+                    ActionButton(
+                        systemImage: tab.image(isSelected: store.state.contentTab == tab),
+                        isSelected: store.state.contentTab == tab,
+                        size: 30
+                    ) {
+                        if store.state.contentTab != tab {
+                            withAnimation {
+                                store.dispatch(.selectTab(tab, shouldPlaySound: true))
+                            }
+                        }
+                    }
+                    
+                    RoundedRectangle(cornerRadius: 1.5)
+                        .fill(store.state.contentTab == tab ? FTColor.accent : Color.clear)
+                        .frame(width: 40, height: 3)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.top, 4)
+            }
+        }
     }
 }
 

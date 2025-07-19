@@ -17,7 +17,8 @@ let package = Package(
     dependencies: [
         .package(name: "FTColor", path: "../FTColor"),
         .package(name: "FTFont", path: "../FTFont"),
-        .package(name: "Localization", path: "../Localization")
+        .package(name: "Localization", path: "../Localization"),
+        .package(name: "ReduxKit", path: "../ReduxKit")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -27,7 +28,8 @@ let package = Package(
             dependencies: [
                 "FTColor",
                 "FTFont",
-                "Localization"
+                "Localization",
+                "ReduxKit"
             ]
         ),
         .testTarget(

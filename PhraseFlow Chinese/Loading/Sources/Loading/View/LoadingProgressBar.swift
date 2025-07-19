@@ -10,24 +10,14 @@ import FTFont
 import Localization
 import SwiftUI
 
-struct LoadingProgressBar: View {
-    @EnvironmentObject var store: FlowTaleStore
-    let isCentered: Bool
+public struct LoadingProgressBar: View {
+    @EnvironmentObject var store: LoadingStore
     
-    init(isCentered: Bool = false) {
-        self.isCentered = isCentered
-    }
-    
-    private var loadingState: LoadingState {
-        store.state.viewState.loadingState
-    }
-    
-    private var isLoading: Bool {
-        store.state.viewState.isWritingChapter
+    private var loadingState: LoadingStatus {
+        store.state
     }
     
     private var progress: Double {
-        guard isLoading else { return 0 }
         return Double(loadingState.progressInt) / 3.0
     }
     
@@ -44,114 +34,56 @@ struct LoadingProgressBar: View {
         }
     }
     
-    var body: some View {
-        if isLoading {
-            if isCentered {
-                // Full centered version for onboarding
-                VStack(spacing: 12) {
-                    Spacer()
-                    
-                    VStack(spacing: 8) {
-                        Text(statusText)
-                            .font(FTFont.flowTaleSecondaryHeader())
-                            .foregroundColor(FTColor.primary)
-                        
-                        ProgressView(value: progress, total: 1.0)
-                            .progressViewStyle(LinearProgressViewStyle(tint: FTColor.accent))
-                            .scaleEffect(y: 1.5)
-                            .animation(.easeInOut(duration: 0.3), value: progress)
-                        
-                        HStack(spacing: 16) {
-                            ProgressStep(
-                                icon: "doc.text",
-                                title: "Writing",
-                                isCompleted: loadingState.progressInt > 0,
-                                isCurrent: loadingState == .writing,
-                                isCompact: false
-                            )
-                            
-                            ProgressStep(
-                                icon: "photo",
-                                title: "Image",
-                                isCompleted: loadingState.progressInt > 1,
-                                isCurrent: loadingState == .generatingImage,
-                                isCompact: false
-                            )
-                            
-                            ProgressStep(
-                                icon: "speaker.wave.3",
-                                title: "Audio",
-                                isCompleted: loadingState.progressInt > 2,
-                                isCurrent: loadingState == .generatingSpeech,
-                                isCompact: false
-                            )
-                        }
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 16)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(FTColor.background)
-                            .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
+    public var body: some View {
+        VStack(spacing: 4) {
+            HStack {
+                Text(statusText)
+                    .font(FTFont.flowTaleSecondaryHeader())
+                    .foregroundColor(FTColor.primary)
+                
+                Spacer()
+                
+                HStack(spacing: 8) {
+                    ProgressStep(
+                        icon: "doc.text",
+                        title: "Writing",
+                        isCompleted: loadingState.progressInt > 0,
+                        isCurrent: loadingState == .writing,
+                        isCompact: true
                     )
-                    .padding(.horizontal, 40)
                     
-                    Spacer()
-                }
-                .transition(.opacity.combined(with: .scale(scale: 0.9)))
-            } else {
-                // Compact version for top of screen
-                VStack(spacing: 4) {
-                    HStack {
-                        Text(statusText)
-                            .font(FTFont.flowTaleSecondaryHeader())
-                            .foregroundColor(FTColor.primary)
-                        
-                        Spacer()
-                        
-                        HStack(spacing: 8) {
-                            ProgressStep(
-                                icon: "doc.text",
-                                title: "Writing",
-                                isCompleted: loadingState.progressInt > 0,
-                                isCurrent: loadingState == .writing,
-                                isCompact: true
-                            )
-                            
-                            ProgressStep(
-                                icon: "photo",
-                                title: "Image",
-                                isCompleted: loadingState.progressInt > 1,
-                                isCurrent: loadingState == .generatingImage,
-                                isCompact: true
-                            )
-                            
-                            ProgressStep(
-                                icon: "speaker.wave.3",
-                                title: "Audio",
-                                isCompleted: loadingState.progressInt > 2,
-                                isCurrent: loadingState == .generatingSpeech,
-                                isCompact: true
-                            )
-                        }
-                    }
+                    ProgressStep(
+                        icon: "photo",
+                        title: "Image",
+                        isCompleted: loadingState.progressInt > 1,
+                        isCurrent: loadingState == .generatingImage,
+                        isCompact: true
+                    )
                     
-                    ProgressView(value: progress, total: 1.0)
-                        .progressViewStyle(LinearProgressViewStyle(tint: FTColor.accent))
-                        .scaleEffect(y: 0.8)
-                        .animation(.easeInOut(duration: 0.3), value: progress)
+                    ProgressStep(
+                        icon: "speaker.wave.3",
+                        title: "Audio",
+                        isCompleted: loadingState.progressInt > 2,
+                        isCurrent: loadingState == .generatingSpeech,
+                        isCompact: true
+                    )
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(FTColor.background)
-                        .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
-                )
-                .padding(.horizontal, 16)
-                .transition(.opacity.combined(with: .move(edge: .top)))
             }
+            
+            ProgressView(value: progress, total: 1.0)
+                .progressViewStyle(LinearProgressViewStyle(tint: FTColor.accent))
+                .scaleEffect(y: 0.8)
+                .animation(.easeInOut(duration: 0.3), value: progress)
         }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(FTColor.background)
+                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+        )
+        .padding(.horizontal, 16)
+        .transition(.opacity.combined(with: .move(edge: .top)))
     }
 }
 

@@ -50,7 +50,7 @@ struct SnackBar: View {
     }
 
     @ViewBuilder
-    func progressView(checkIfComplete completeState: LoadingState) -> some View {
+    func progressView(checkIfComplete completeState: LoadingStatus) -> some View {
         Group {
             if store.state.viewState.loadingState.progressInt > completeState.progressInt {
                 Text("✅")

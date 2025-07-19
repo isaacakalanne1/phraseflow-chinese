@@ -1,5 +1,5 @@
 //
-//  LoadingState.swift
+//  LoadingStatus.swift
 //  FlowTale
 //
 //  Created by iakalann on 31/12/2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum LoadingState {
+public enum LoadingStatus {
     case complete, writing, generatingImage, generatingSpeech
 
     var progressInt: Int {

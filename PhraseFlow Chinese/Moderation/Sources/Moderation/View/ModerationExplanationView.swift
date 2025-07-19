@@ -8,6 +8,7 @@
 import SwiftUI
 import FTColor
 import FTFont
+import Localization
 
 struct ModerationExplanationView: View {
     @EnvironmentObject var store: FlowTaleStore

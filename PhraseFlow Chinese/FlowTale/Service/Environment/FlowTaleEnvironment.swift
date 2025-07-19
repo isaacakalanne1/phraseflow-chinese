@@ -23,7 +23,7 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     private let dataStore: FlowTaleDataStoreProtocol
     private let repository: FlowTaleRepositoryProtocol
 
-    public let loadingSubject: CurrentValueSubject<LoadingState?, Never> = .init(nil)
+    public let loadingSubject: CurrentValueSubject<LoadingStatus?, Never> = .init(nil)
     public let chapterSubject: CurrentValueSubject<Chapter?, Never> = .init(nil)
     public let storyEnvironment: StoryEnvironmentProtocol
     public let audioEnvironment: AudioEnvironmentProtocol

@@ -8,8 +8,31 @@
 import SwiftUI
 
 struct DisplayedContentView: View {
+    @EnvironmentObject var store: NavigationStore
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Group {
+            switch store.state.contentTab {
+            case .reader:
+                Text("Reader View")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            case .storyList:
+                Text("Story List View")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            case .progress:
+                Text("Progress View")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            case .translate:
+                Text("Translate View")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            case .subscribe:
+                Text("Subscribe View")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            case .settings:
+                Text("Settings View")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+        }
     }
 }
 

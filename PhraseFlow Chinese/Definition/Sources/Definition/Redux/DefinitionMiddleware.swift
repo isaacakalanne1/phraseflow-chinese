@@ -37,7 +37,7 @@ let definitionMiddleware: Middleware<DefinitionState, DefinitionAction, Definiti
 
             try environment.saveDefinitions(definitions)
 
-            environment.viewStateEnvironment.setLoadingState(.complete)
+            environment.viewStateEnvironment.setLoadingStatus(.complete)
             if index >= 1 {
                 environment.definitionEnvironment.viewStateEnvironment.setIsWritingChapter(false)
             }
