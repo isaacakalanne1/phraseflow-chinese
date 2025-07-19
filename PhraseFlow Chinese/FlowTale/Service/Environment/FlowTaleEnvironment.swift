@@ -17,6 +17,7 @@ import SnackBar
 import Translation
 import Speech
 
+// IGNORE: THIS WILL BE DELETED SOON
 struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     private let service: FlowTaleServicesProtocol
     private let dataStore: FlowTaleDataStoreProtocol

@@ -17,6 +17,7 @@ import SnackBar
 import Translation
 import Speech
 
+// IGNORE: THIS WILL BE DELETED SOON
 protocol FlowTaleEnvironmentProtocol {
     var loadingSubject: CurrentValueSubject<LoadingState?, Never> { get }
     var chapterSubject: CurrentValueSubject<Chapter?, Never> { get }

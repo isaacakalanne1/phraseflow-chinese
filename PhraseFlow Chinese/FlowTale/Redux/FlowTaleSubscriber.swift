@@ -13,6 +13,7 @@ import Settings
 import Definition
 import SnackBar
 
+// IGNORE: THIS WILL BE DELETED SOON
 let flowTaleSubscriber: OnSubscribe<FlowTaleStore, FlowTaleEnvironmentProtocol> = { store, environment in
 
     store

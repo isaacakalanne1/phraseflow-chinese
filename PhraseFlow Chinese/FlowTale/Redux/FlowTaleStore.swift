@@ -8,4 +8,5 @@
 import Foundation
 import ReduxKit
 
+// IGNORE: THIS WILL BE DELETED SOON
 typealias FlowTaleStore = Store<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol>
