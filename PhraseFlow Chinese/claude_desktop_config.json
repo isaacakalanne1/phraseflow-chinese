@@ -1,0 +1,40 @@
+{
+  "mcpServers": {
+    "composio-server-00fc9365-6441-48ae-8907-8dc106d9798a-mcp": {
+      "command": "npx",
+      "args": [
+        "@composio/mcp@latest",
+        "start",
+        "--url",
+        "https://mcp.composio.dev/composio/server/00fc9365-6441-48ae-8907-8dc106d9798a/mcp"
+      ],
+      "env": {
+        "npm_config_yes": "true"
+      }
+    },
+    "FlowTale Jira": {
+      "command": "npx",
+      "args": [
+        "@composio/mcp@latest",
+        "start",
+        "--url",
+        "https://mcp.composio.dev/composio/server/cb547596-7918-46f0-8dcc-442d68a14782/mcp?include_composio_helper_actions=true"
+      ],
+      "env": {
+        "npm_config_yes": "true"
+      }
+    },
+    "composio-server-ef4bc574-002f-45ab-bb7e-da9b763e235d-mcp": {
+      "command": "npx",
+      "args": [
+        "@composio/mcp@latest",
+        "start",
+        "--url",
+        "https://mcp.composio.dev/composio/server/ef4bc574-002f-45ab-bb7e-da9b763e235d/mcp"
+      ],
+      "env": {
+        "npm_config_yes": "true"
+      }
+    }
+  }
+}

@@ -14,7 +14,12 @@
       "Bash(mv:*)",
       "Bash(find:*)",
       "Bash(mkdir:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(npx @composio/mcp@latest start:*)",
+      "Bash(claude mcp:*)",
+      "mcp__atlassian__getAccessibleAtlassianResources",
+      "mcp__atlassian__getVisibleJiraProjects",
+      "mcp__atlassian__createJiraIssue"
     ],
     "deny": []
   }
