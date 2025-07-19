@@ -15,9 +15,12 @@ struct DefinitionsProgressSheetView: View {
     @State private var showingCreations = true
     @State private var navigateToStudyView = false
     @State private var showLanguageSelector = false
+    
+    var filterLanguage: Language {
+        store.state.filterLanguage
+    }
 
     var body: some View {
-        let filterLanguage = store.state.settingsState.language
         let definitions = store.state.studyDefinitions(language: filterLanguage)
         let filteredDefinitions = removeDuplicates(from: definitions)
         let studiedDefinitions = filteredDefinitions.filter { !$0.studiedDates.isEmpty }

@@ -8,9 +8,9 @@
 import Foundation
 
 protocol ModerationEnvironmentProtocol {
-    var settingsEnvironment: SettingsEnvironmentProtocol { get }
-    var snackBarEnvironment: SnackBarEnvironmentProtocol { get }
-    
     func moderateText(_ text: String) async throws -> ModerationResponse
     func saveAppSettings()
+    func savePassedModerationPrompt(_ prompt: String)
+    func showModerationPassedSnackBar()
+    func showModerationFailedSnackBar()
 }

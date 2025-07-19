@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Settings
 
 enum DefinitionAction {
     case defineSentence(sentenceIndex: Int, previousDefinitions: [Definition])
@@ -21,4 +22,7 @@ enum DefinitionAction {
     case refreshDefinitionView
     
     case clearCurrentDefinition
+    
+    case onAppear
+    case onLoadAppSettings(SettingsState)
 }

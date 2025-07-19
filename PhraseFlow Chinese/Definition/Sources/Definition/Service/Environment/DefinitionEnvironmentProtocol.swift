@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import Settings
 
 protocol DefinitionEnvironmentProtocol {
     var clearDefinitionSubject: CurrentValueSubject<Void, Never> { get }
@@ -18,4 +19,5 @@ protocol DefinitionEnvironmentProtocol {
     func saveDefinitions(_ definitions: [Definition]) throws
     func saveSentenceAudio(_ audioData: Data, id: UUID) throws
     func loadSentenceAudio(id: UUID) throws -> Data
+    func getAppSettings() throws -> SettingsState
 }

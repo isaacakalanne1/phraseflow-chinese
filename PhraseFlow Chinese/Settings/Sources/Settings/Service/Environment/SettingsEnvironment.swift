@@ -37,6 +37,10 @@ struct SettingsEnvironment: SettingsEnvironmentProtocol {
         settingsSubject.send(())
     }
     
+    func loadAppSettings() throws -> SettingsState {
+        return try settingsDataStore.loadAppSettings()
+    }
+    
     func saveSpeechSpeed(_ speed: SpeechSpeed) {
         speechSpeedSubject.send(speed)
     }

@@ -12,6 +12,12 @@ let definitionReducer: Reducer<DefinitionState, DefinitionAction> = { state, act
     var newState = state
 
     switch action {
+    
+    case .onAppear:
+        break
+        
+    case .onLoadAppSettings(let settings):
+        newState.filterLanguage = settings.language
         
     case .onShownDefinition(var definition, _):
         newState.currentDefinition = definition

@@ -41,7 +41,6 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         // Create basic environments first
         storyEnvironment = StoryEnvironment()
         settingsEnvironment = SettingsEnvironment(settingsDataStore: dataStore)
-        viewStateEnvironment = ViewStateEnvironment()
         snackBarEnvironment = SnackBarEnvironment()
         
         // Create SpeechEnvironment
@@ -50,11 +49,11 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
         // AudioEnvironment depends on SettingsEnvironment
         audioEnvironment = AudioEnvironment(settingsEnvironment: settingsEnvironment)
         
-        // DefinitionEnvironment depends on ViewStateEnvironment, DefinitionServices, and DefinitionDataStore
+        // DefinitionEnvironment depends on DefinitionServices, DefinitionDataStore, and SettingsEnvironment
         definitionEnvironment = DefinitionEnvironment(
-            viewStateEnvironment: viewStateEnvironment,
             definitionServices: service,
-            definitionDataStore: dataStore
+            definitionDataStore: dataStore,
+            settingsEnvironment: settingsEnvironment
         )
         
         // TranslationEnvironment depends on multiple environments

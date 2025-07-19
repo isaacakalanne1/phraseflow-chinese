@@ -23,14 +23,13 @@ let moderationMiddleware: Middleware<ModerationState, ModerationAction, Moderati
         return response.didPassModeration ? .passedModeration(prompt) : .didNotPassModeration
         
     case .passedModeration(let prompt):
-        environment.settingsEnvironment.addCustomPrompt(prompt)
-        environment.settingsEnvironment.setStorySetting(.customPrompt(prompt))
-        environment.snackBarEnvironment.showSnackBar(.passedModeration)
+        environment.savePassedModerationPrompt(prompt)
+        environment.showModerationPassedSnackBar()
         environment.saveAppSettings()
         return nil
 
     case .didNotPassModeration:
-        environment.snackBarEnvironment.showSnackBar(.didNotPassModeration)
+        environment.showModerationFailedSnackBar()
         return nil
         
     case .failedToModerateText:

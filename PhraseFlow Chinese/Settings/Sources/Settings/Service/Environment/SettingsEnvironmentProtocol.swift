@@ -20,6 +20,7 @@ protocol SettingsEnvironmentProtocol {
     var speechSpeed: SpeechSpeed { get }
     
     func saveAppSettings()
+    func loadAppSettings() throws -> SettingsState
     func saveSpeechSpeed(_ speed: SpeechSpeed)
     func setIsPlayingMusic(_ isPlaying: Bool)
     func addCustomPrompt(_ prompt: String)

@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import Settings
 
 struct DefinitionState {
     var currentDefinition: Definition?
     var definitions: [Definition]
+    var filterLanguage: Language = .mandarinChinese
 
     func studyDefinitions(language: Language?) -> [Definition] {
         definitions
@@ -22,9 +24,11 @@ struct DefinitionState {
     }
 
     init(currentDefinition: Definition? = nil,
-         definitions: [Definition] = []) {
+         definitions: [Definition] = [],
+         filterLanguage: Language = .mandarinChinese) {
         self.currentDefinition = currentDefinition
         self.definitions = definitions
+        self.filterLanguage = filterLanguage
     }
 
     func definition(timestampData: WordTimeStampData?) -> Definition? {

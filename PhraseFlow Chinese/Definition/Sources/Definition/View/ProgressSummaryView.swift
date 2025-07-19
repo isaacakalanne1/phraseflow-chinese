@@ -26,5 +26,8 @@ public struct ProgressSummaryView: View {
     public var body: some View {
         DefinitionsProgressSheetView()
             .environmentObject(store)
+            .onAppear {
+                store.dispatch(.onAppear)
+            }
     }
 }

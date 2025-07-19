@@ -7,11 +7,21 @@
 
 import Foundation
 import Combine
+import Settings
 
 struct DefinitionEnvironment: DefinitionEnvironmentProtocol {
     let clearDefinitionSubject = CurrentValueSubject<Void, Never>(())
     let definitionServices: DefinitionServicesProtocol
     let definitionDataStore: DefinitionDataStoreProtocol
+    let settingsEnvironment: SettingsEnvironmentProtocol
+    
+    init(definitionServices: DefinitionServicesProtocol,
+         definitionDataStore: DefinitionDataStoreProtocol,
+         settingsEnvironment: SettingsEnvironmentProtocol) {
+        self.definitionServices = definitionServices
+        self.definitionDataStore = definitionDataStore
+        self.settingsEnvironment = settingsEnvironment
+    }
     
     func clearCurrentDefinition() {
         clearDefinitionSubject.send(())
@@ -31,5 +41,9 @@ struct DefinitionEnvironment: DefinitionEnvironmentProtocol {
     
     func loadSentenceAudio(id: UUID) throws -> Data {
         return try definitionDataStore.loadSentenceAudio(id: id)
+    }
+    
+    func getAppSettings() throws -> SettingsState {
+        return try settingsEnvironment.loadAppSettings()
     }
 }
