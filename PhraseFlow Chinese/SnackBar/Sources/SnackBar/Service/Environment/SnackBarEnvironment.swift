@@ -8,10 +8,12 @@
 import Foundation
 import Combine
 
-class SnackBarEnvironment: SnackBarEnvironmentProtocol {
-    let snackBarSubject = CurrentValueSubject<SnackBarType?, Never>(nil)
+public class SnackBarEnvironment: SnackBarEnvironmentProtocol {
+    public let snackBarSubject = CurrentValueSubject<SnackBarType?, Never>(nil)
     
-    func showSnackBar(_ type: SnackBarType) {
+    public init() {}
+    
+    public func showSnackBar(_ type: SnackBarType) {
         snackBarSubject.send(type)
     }
 }

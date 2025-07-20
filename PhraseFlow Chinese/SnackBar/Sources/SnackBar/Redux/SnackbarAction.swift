@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import TextGeneration
 
-enum SnackbarAction {
+public enum SnackBarAction {
     case showSnackBar(SnackBarType)
     case hideSnackbar
     case showSnackBarThenSaveChapter(SnackBarType, Chapter)

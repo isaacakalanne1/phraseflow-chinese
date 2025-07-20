@@ -8,9 +8,9 @@
 import Foundation
 import StoreKit
 
-struct SubscriptionState {
-    var isLoadingSubscriptionPurchase = false
-    var currentSubscription: SubscriptionLevel? {
+public struct SubscriptionState {
+    public var isLoadingSubscriptionPurchase = false
+    public var currentSubscription: SubscriptionLevel? {
 //        #if DEBUG
 //            .max
 //        #else
@@ -24,16 +24,18 @@ struct SubscriptionState {
 //        #endif
     }
 
-    var isSubscribed: Bool {
+    public var isSubscribed: Bool {
 //        #if DEBUG
 //            true
 //        #else
             currentSubscription != nil
 //        #endif
     }
-    var products: [Product]?
-    var purchasedProductIDs = Set<String>()
+    public var products: [Product]?
+    public var purchasedProductIDs = Set<String>()
 
-    var hasReachedFreeTrialLimit = false
-    var nextAvailableDescription = ""
+    public var hasReachedFreeTrialLimit = false
+    public var nextAvailableDescription = ""
+    
+    public init() {}
 }

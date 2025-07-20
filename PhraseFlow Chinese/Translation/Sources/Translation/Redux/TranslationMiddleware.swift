@@ -150,6 +150,37 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
 
         case .onDefinedTranslationWord:
             return nil
+
+        case .saveCurrentTranslation:
+            guard let chapter = state.chapter else {
+                return nil
+            }
+            
+            do {
+                try environment.translationDataStore.saveTranslation(chapter)
+                let updatedHistory = try environment.translationDataStore.loadTranslationHistory()
+                return .onTranslationsSaved(updatedHistory)
+            } catch {
+                return nil
+            }
+
+        case .loadTranslationHistory:
+            do {
+                let translations = try environment.translationDataStore.loadTranslationHistory()
+                return .onTranslationsLoaded(translations)
+            } catch {
+                return .onTranslationsLoaded([])
+            }
+
+        case .deleteTranslation(let id):
+            do {
+                try environment.translationDataStore.deleteTranslation(id: id)
+                let updatedHistory = try environment.translationDataStore.loadTranslationHistory()
+                return .onTranslationsLoaded(updatedHistory)
+            } catch {
+                return nil
+            }
+
         case .updateInputText,
                 .updateSourceLanguage,
                 .updateTargetLanguage,
@@ -163,7 +194,9 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
                 .failedToBreakdown,
                 .failedToDefineTranslationWord,
                 .clearTranslationDefinition,
-                .clearTranslation:
+                .clearTranslation,
+                .onTranslationsSaved,
+                .onTranslationsLoaded:
             return nil
         }
 }

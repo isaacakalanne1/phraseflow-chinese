@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-protocol SnackBarEnvironmentProtocol {
+public protocol SnackBarEnvironmentProtocol {
     var snackBarSubject: CurrentValueSubject<SnackBarType?, Never> { get }
     
     func showSnackBar(_ type: SnackBarType)

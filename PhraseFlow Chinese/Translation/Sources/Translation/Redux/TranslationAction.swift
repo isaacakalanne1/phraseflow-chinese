@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import TextGeneration
 
 enum TranslationAction {
     case updateInputText(String)
@@ -33,4 +34,9 @@ enum TranslationAction {
     case failedToDefineTranslationWord
     case clearTranslationDefinition
     case clearTranslation
+    case saveCurrentTranslation
+    case loadTranslationHistory
+    case deleteTranslation(UUID)
+    case onTranslationsSaved([Chapter])
+    case onTranslationsLoaded([Chapter])
 }

@@ -7,7 +7,9 @@
 
 import Foundation
 
-struct SnackBarState {
-    var isShowing = false
-    var type: SnackBarType = .chapterReady
+public struct SnackBarState {
+    public var isShowing = false
+    public var type: SnackBarType = .chapterReady
+    
+    public init() {}
 }

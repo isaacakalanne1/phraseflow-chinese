@@ -12,7 +12,7 @@ import SwiftUI
 // MARK: - Main View
 
 struct DefinitionsChartView: View {
-    @EnvironmentObject var store: FlowTaleStore // Replace with your own logic
+    @EnvironmentObject var store: DefinitionStore
     let definitions: [Definition]
     let isCreations: Bool
 

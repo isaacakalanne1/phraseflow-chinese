@@ -23,7 +23,10 @@
       "mcp__atlassian__getJiraIssue",
       "mcp__atlassian__getTransitionsForJiraIssue",
       "mcp__atlassian__transitionJiraIssue",
-      "mcp__atlassian__addCommentToJiraIssue"
+      "mcp__atlassian__addCommentToJiraIssue",
+      "mcp__atlassian__editJiraIssue",
+      "mcp__atlassian__updateConfluencePage",
+      "Bash(git checkout:*)"
     ],
     "deny": []
   }

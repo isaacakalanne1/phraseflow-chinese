@@ -7,6 +7,7 @@
 
 import Foundation
 import AVKit
+import TextGeneration
 
 struct TranslationState {
     var inputText: String = ""
@@ -22,6 +23,8 @@ struct TranslationState {
     var currentSentence: Sentence?
     var mode: TranslationMode = .translate
     var textLanguage: Language = .mandarinChinese
+    var savedTranslations: [Chapter] = []
+    var isLoadingHistory: Bool = false
     
     init() {}
     

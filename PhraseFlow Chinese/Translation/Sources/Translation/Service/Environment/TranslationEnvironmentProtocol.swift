@@ -15,6 +15,7 @@ protocol TranslationEnvironmentProtocol {
     var speechEnvironment: SpeechEnvironmentProtocol { get }
     var definitionEnvironment: DefinitionEnvironmentProtocol { get }
     var settingsEnvironment: SettingsEnvironmentProtocol { get }
+    var translationDataStore: TranslationDataStoreProtocol { get }
     
     func translateText(_ text: String, from sourceLanguage: Language?, to targetLanguage: Language) async throws -> Chapter
     func breakdownText(_ text: String, textLanguage: Language, deviceLanguage: Language) async throws -> Chapter

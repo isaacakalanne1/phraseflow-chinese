@@ -7,22 +7,22 @@
 
 import StoreKit
 
-struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
+public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
     private let repository: SubscriptionRepositoryProtocol
     
-    init(repository: SubscriptionRepositoryProtocol = SubscriptionRepository()) {
+    public init(repository: SubscriptionRepositoryProtocol = SubscriptionRepository()) {
         self.repository = repository
     }
     
-    func getProducts() async throws -> [Product] {
+    public func getProducts() async throws -> [Product] {
         return try await repository.getProducts()
     }
     
-    func purchase(_ product: Product) async throws {
+    public func purchase(_ product: Product) async throws {
         try await repository.purchase(product)
     }
     
-    func validateReceipt() {
+    public func validateReceipt() {
         repository.validateAppStoreReceipt()
     }
 }

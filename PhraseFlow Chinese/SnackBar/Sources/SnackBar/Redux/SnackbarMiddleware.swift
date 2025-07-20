@@ -1,6 +1,6 @@
 //
-//  SnackbarMiddleware.swift
-//  FlowTale
+//  SnackBarMiddleware.swift
+//  SnackBar
 //
 //  Created by iakalann on 15/06/2025.
 //
@@ -9,36 +9,34 @@ import AVKit
 import Foundation
 import ReduxKit
 
-let snackbarMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol> = { state, action, environment in
-    switch action {
-    case .snackbarAction(let snackbarAction):
-        switch snackbarAction {
+public struct SnackBarMiddleware: Middleware {
+    public typealias State = SnackBarState
+    public typealias Action = SnackBarAction
+    public typealias Environment = SnackBarEnvironmentProtocol
+    
+    public init() {}
+    
+    public func handle(state: State, action: Action, environment: Environment) async -> Action? {
+        switch action {
         case .showSnackBar(let type):
-            state.audioState.appSoundAudioPlayer.play()
+            environment.showSnackBar(type)
             if let duration = type.showDuration {
                 try? await Task.sleep(for: .seconds(duration))
-                return .snackbarAction(.hideSnackbar)
+                return .hideSnackbar
             }
             return nil
             
-        case .showSnackBarThenSaveChapter(let type, let chapter):
-            state.audioState.appSoundAudioPlayer.play()
-
+        case .showSnackBarThenSaveChapter(let type, _):
+            environment.showSnackBar(type)
             if let duration = type.showDuration {
                 try? await Task.sleep(for: .seconds(duration))
-                return .snackbarAction(.hideSnackbarThenSaveChapterAndSettings(chapter))
-            } else {
-                return .storyAction(.saveChapter(chapter))
+                return .hideSnackbar
             }
+            return nil
             
         case .hideSnackbarThenSaveChapterAndSettings(_):
-            if let currentChapter = state.storyState.currentChapter {
-                return .storyAction(.saveChapter(currentChapter))
-            } else if let firstStory = state.storyState.allStories.first,
-                      let firstChapter = state.storyState.storyChapters[firstStory.storyId]?.first {
-                return .storyAction(.saveChapter(firstChapter))
-            }
             return nil
+            
         case .checkDeviceVolumeZero:
             let audioSession = AVAudioSession.sharedInstance()
             do {
@@ -46,11 +44,10 @@ let snackbarMiddleware: Middleware<FlowTaleState, FlowTaleAction, FlowTaleEnviro
             } catch {
                 return nil
             }
-            return audioSession.outputVolume == 0.0 ? .snackbarAction(.showSnackBar(.deviceVolumeZero)) : nil
+            return audioSession.outputVolume == 0.0 ? .showSnackBar(.deviceVolumeZero) : nil
+            
         case .hideSnackbar:
             return nil
         }
-    default:
-        return nil
     }
 }

@@ -9,7 +9,18 @@ import Foundation
 import ReduxKit
 import StoreKit
 
-let subscriptionMiddleware: Middleware<SubscriptionState, SubscriptionAction, SubscriptionEnvironmentProtocol> = { state, action, environment in
+public struct SubscriptionMiddleware: Middleware {
+    public typealias State = SubscriptionState
+    public typealias Action = SubscriptionAction
+    public typealias Environment = SubscriptionEnvironmentProtocol
+    
+    public init() {}
+    
+    public func handle(
+        action: Action,
+        state: State,
+        environment: Environment
+    ) -> Action? {
     switch action {
     case .fetchSubscriptions:
         environment.validateReceipt()
@@ -83,5 +94,6 @@ let subscriptionMiddleware: Middleware<SubscriptionState, SubscriptionAction, Su
          .failedToRestoreSubscriptions,
          .onValidatedReceipt:
         return nil
+    }
     }
 }

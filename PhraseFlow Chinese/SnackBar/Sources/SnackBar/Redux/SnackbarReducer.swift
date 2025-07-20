@@ -1,37 +1,38 @@
 //
-//  SnackbarReducer.swift
-//  FlowTale
+//  SnackBarReducer.swift
+//  SnackBar
 //
 //  Created by iakalann on 15/06/2025.
 //
 
 import SwiftUI
 import ReduxKit
-import AVKit
 
-let snackbarReducer: Reducer<FlowTaleState, SnackbarAction> = { state, action in
-    var newState = state
+public struct SnackBarReducer: Reducer {
+    public typealias State = SnackBarState
+    public typealias Action = SnackBarAction
+    
+    public init() {}
+    
+    public func reduce(state: State, action: Action) -> State {
+        var newState = state
 
-    switch action {
-    case .showSnackBar(let type),
-          .showSnackBarThenSaveChapter(let type, _):
-        if let url = type.sound.fileURL,
-           let player = try? AVAudioPlayer(contentsOf: url) {
-            player.volume = 0.7
-            newState.appAudioState.audioPlayer = player
+        switch action {
+        case .showSnackBar(let type),
+              .showSnackBarThenSaveChapter(let type, _):
+            newState.type = type
+            newState.isShowing = true
+            
+        case .hideSnackbar:
+            newState.isShowing = false
+            
+        case .hideSnackbarThenSaveChapterAndSettings:
+            newState.isShowing = false
+
+        case .checkDeviceVolumeZero:
+            break
         }
-        newState.snackBarState.type = type
-        newState.snackBarState.isShowing = true
-        
-    case .hideSnackbar:
-        newState.snackBarState.isShowing = false
-        
-    case .hideSnackbarThenSaveChapterAndSettings:
-        newState.snackBarState.isShowing = false
 
-    case .checkDeviceVolumeZero:
-        break
+        return newState
     }
-
-    return newState
 }

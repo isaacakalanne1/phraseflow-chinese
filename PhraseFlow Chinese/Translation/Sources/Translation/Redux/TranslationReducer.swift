@@ -109,12 +109,25 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         newState.currentSentence = nil
         newState.audioPlayer.replaceCurrentItem(with: nil)
         // Don't reset source language as it should persist between translations
+        
+    case .loadTranslationHistory:
+        newState.isLoadingHistory = true
+        
+    case .onTranslationsLoaded(let translations):
+        newState.savedTranslations = translations
+        newState.isLoadingHistory = false
+        
+    case .onTranslationsSaved(let translations):
+        newState.savedTranslations = translations
+        
     case .playTranslationWord,
             .synthesizeAudio,
             .defineTranslationWord,
             .translationDefiningInProgress,
             .failedToDefineTranslationWord,
-            .failedToSynthesizeAudio:
+            .failedToSynthesizeAudio,
+            .saveCurrentTranslation,
+            .deleteTranslation:
         break
     }
     

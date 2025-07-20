@@ -7,7 +7,7 @@
 
 import StoreKit
 
-protocol SubscriptionEnvironmentProtocol {
+public protocol SubscriptionEnvironmentProtocol {
     func getProducts() async throws -> [Product]
     func purchase(_ product: Product) async throws
     func validateReceipt()
