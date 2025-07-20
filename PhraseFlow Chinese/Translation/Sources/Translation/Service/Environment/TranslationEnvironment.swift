@@ -15,6 +15,23 @@ struct TranslationEnvironment: TranslationEnvironmentProtocol {
     let speechEnvironment: SpeechEnvironmentProtocol
     let definitionEnvironment: DefinitionEnvironmentProtocol
     let settingsEnvironment: SettingsEnvironmentProtocol
+    let translationDataStore: TranslationDataStoreProtocol
+    
+    init(translationServices: TranslationServicesProtocol, speechEnvironment: SpeechEnvironmentProtocol, definitionEnvironment: DefinitionEnvironmentProtocol, settingsEnvironment: SettingsEnvironmentProtocol, translationDataStore: TranslationDataStoreProtocol) {
+        self.translationServices = translationServices
+        self.speechEnvironment = speechEnvironment
+        self.definitionEnvironment = definitionEnvironment
+        self.settingsEnvironment = settingsEnvironment
+        self.translationDataStore = translationDataStore
+    }
+    
+    init() {
+        self.translationServices = TranslationServices()
+        self.speechEnvironment = SpeechEnvironment()
+        self.definitionEnvironment = DefinitionEnvironment()
+        self.settingsEnvironment = SettingsEnvironment()
+        self.translationDataStore = TranslationDataStore()
+    }
     
     func translateText(_ text: String, from sourceLanguage: Language?, to targetLanguage: Language) async throws -> Chapter {
         return try await translationServices.translateText(text, from: sourceLanguage, to: targetLanguage)
