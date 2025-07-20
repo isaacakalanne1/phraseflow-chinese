@@ -11,7 +11,7 @@ import FTColor
 import Settings
 
 struct TranslationView: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: TranslationStore
     @State private var showLanguageSelector: Bool = false
     @State private var showSourceLanguageSelector: Bool = false
     @State private var showTextLanguageSelector: Bool = false
@@ -32,7 +32,7 @@ struct TranslationView: View {
                     showTextLanguageSelector: $showTextLanguageSelector
                 )
 
-                if let chapter = store.state.translationState.chapter {
+                if let chapter = store.state.chapter {
                     TranslationResultsSection(chapter: chapter)
                 }
             }
@@ -53,7 +53,7 @@ struct TranslationView: View {
             LanguageMenu(type: .translationTextLanguage)
         }
         .onChange(of: inputText, { oldValue, newValue in
-            store.dispatch(.translationAction(.updateInputText(newValue)))
+            store.dispatch(.updateInputText(newValue))
         })
     }
 }
