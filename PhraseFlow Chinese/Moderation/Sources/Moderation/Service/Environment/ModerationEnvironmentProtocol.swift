@@ -8,6 +8,8 @@
 import Foundation
 
 protocol ModerationEnvironmentProtocol {
+    var moderationDataStore: ModerationDataStoreProtocol { get }
+    
     func moderateText(_ text: String) async throws -> ModerationResponse
     func saveAppSettings()
     func savePassedModerationPrompt(_ prompt: String)
