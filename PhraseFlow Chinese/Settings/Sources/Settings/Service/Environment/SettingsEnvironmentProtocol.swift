@@ -19,7 +19,7 @@ protocol SettingsEnvironmentProtocol {
     var currentVoice: Voice { get }
     var speechSpeed: SpeechSpeed { get }
     
-    func saveAppSettings()
+    func saveAppSettings(_ settings: SettingsState) throws
     func loadAppSettings() throws -> SettingsState
     func saveSpeechSpeed(_ speed: SpeechSpeed)
     func setIsPlayingMusic(_ isPlaying: Bool)

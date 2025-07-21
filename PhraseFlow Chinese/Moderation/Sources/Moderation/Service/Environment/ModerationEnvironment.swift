@@ -33,13 +33,12 @@ struct ModerationEnvironment: ModerationEnvironmentProtocol {
         return try await moderationServices.moderateText(text)
     }
     
-    func saveAppSettings() {
-        settingsEnvironment.saveAppSettings()
-    }
     
     func savePassedModerationPrompt(_ prompt: String) {
         settingsEnvironment.addCustomPrompt(prompt)
         settingsEnvironment.setStorySetting(.customPrompt(prompt))
+        // Trigger save through the subject
+        settingsEnvironment.settingsSubject.send(())
     }
     
     func showModerationPassedSnackBar() {

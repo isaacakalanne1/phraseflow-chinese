@@ -21,6 +21,10 @@ struct SettingsEnvironment: SettingsEnvironmentProtocol {
         self.settingsDataStore = settingsDataStore
     }
     
+    init() {
+        self.settingsDataStore = SettingsDataStore()
+    }
+    
     var deviceLanguage: Language? {
         (try? settingsDataStore.loadAppSettings())?.deviceLanguage
     }
@@ -33,7 +37,8 @@ struct SettingsEnvironment: SettingsEnvironmentProtocol {
         speechSpeedSubject.value
     }
     
-    func saveAppSettings() {
+    func saveAppSettings(_ settings: SettingsState) throws {
+        try settingsDataStore.saveAppSettings(settings)
         settingsSubject.send(())
     }
     

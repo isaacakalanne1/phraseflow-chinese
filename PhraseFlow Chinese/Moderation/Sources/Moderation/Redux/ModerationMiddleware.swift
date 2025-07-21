@@ -25,7 +25,6 @@ let moderationMiddleware: Middleware<ModerationState, ModerationAction, Moderati
     case .passedModeration(let prompt):
         environment.savePassedModerationPrompt(prompt)
         environment.showModerationPassedSnackBar()
-        environment.saveAppSettings()
         return nil
 
     case .didNotPassModeration:
