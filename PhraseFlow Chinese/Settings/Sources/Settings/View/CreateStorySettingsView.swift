@@ -10,7 +10,7 @@ import Localization
 import SwiftUI
 
 struct CreateStorySettingsView: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: SettingsStore
 
     @State var isShowingLanguageSettings = false
     @State var isShowingDifficultySettings = false
@@ -18,9 +18,9 @@ struct CreateStorySettingsView: View {
     @State var isShowingVoiceSettings = false
 
     var body: some View {
-        let currentDifficulty = store.state.settingsState.difficulty
-        let currentLanguage = store.state.settingsState.language
-        let currentVoice = store.state.settingsState.voice
+        let currentDifficulty = store.state.difficulty
+        let currentLanguage = store.state.language
+        let currentVoice = store.state.voice
 
         return VStack {
             ScrollView {
@@ -98,7 +98,7 @@ struct CreateStorySettingsView: View {
         let promptImage: UIImage?
         let promptDisplayText: String
 
-        switch store.state.settingsState.storySetting {
+        switch store.state.storySetting {
         case .random:
             promptImage = UIImage(named: "StoryPrompt-Random")
             promptDisplayText = LocalizedString.random

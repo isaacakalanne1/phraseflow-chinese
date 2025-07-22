@@ -10,7 +10,7 @@ import FTColor
 import FTFont
 
 struct VoiceMenu: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: SettingsStore
     @Environment(\.dismiss) var dismiss
     var shouldDismissOnSelect = false
 

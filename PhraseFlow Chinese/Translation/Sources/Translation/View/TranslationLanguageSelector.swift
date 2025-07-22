@@ -10,7 +10,7 @@ import FTFont
 import FTColor
 
 struct TranslationLanguageSelector: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: TranslationStore
     @Binding var showLanguageSelector: Bool
     @Binding var showSourceLanguageSelector: Bool
     @Binding var showTextLanguageSelector: Bool

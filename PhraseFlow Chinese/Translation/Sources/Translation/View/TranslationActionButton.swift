@@ -11,7 +11,7 @@ import FTFont
 import FTColor
 
 struct TranslationActionButton: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: TranslationStore
     @FocusState.Binding var isInputFocused: Bool
     
     var body: some View {

@@ -9,7 +9,7 @@ import SwiftUI
 import FTColor
 
 struct SettingsView: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: SettingsStore
 
     var body: some View {
         let showDefinition: Binding<Bool> = .init {

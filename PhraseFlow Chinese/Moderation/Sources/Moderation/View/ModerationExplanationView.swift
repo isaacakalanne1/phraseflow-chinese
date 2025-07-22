@@ -11,8 +11,9 @@ import FTFont
 import Localization
 
 struct ModerationExplanationView: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: ModerationStore
     @Environment(\.dismiss) private var dismiss
+    let customPrompt: String
 
     var body: some View {
         VStack(spacing: 16) {
@@ -22,7 +23,7 @@ struct ModerationExplanationView: View {
                     .font(FTFont.flowTaleHeader())
                     .fontWeight(.semibold)
 
-                Text(store.state.settingsState.customPrompt)
+                Text(customPrompt)
                     .font(FTFont.flowTaleSubHeader())
                     .fontWeight(.light)
 

@@ -11,7 +11,7 @@ import Localization
 import SwiftUI
 
 struct LanguageOnboardingView: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: SettingsStore
     
     var body: some View {
         VStack(spacing: 0) {
@@ -28,7 +28,7 @@ struct LanguageOnboardingView: View {
 }
 
 public struct LanguageMenu: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: SettingsStore
     @Environment(\.dismiss) var dismiss
     var shouldDismissOnSelect = false
     let type: LanguageMenuType

@@ -11,7 +11,7 @@ import FTFont
 import FTColor
 
 struct TranslationResultsSection: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: TranslationStore
     let chapter: Chapter
     
     var body: some View {

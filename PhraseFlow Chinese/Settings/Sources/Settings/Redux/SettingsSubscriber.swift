@@ -8,7 +8,7 @@
 import Foundation
 import ReduxKit
 
-let settingsSubscriber: OnSubscribe<FlowTaleStore, SettingsEnvironmentProtocol> = { store, environment in
+let settingsSubscriber: OnSubscribe<SettingsStore, SettingsEnvironmentProtocol> = { store, environment in
     
     store
         .subscribe(

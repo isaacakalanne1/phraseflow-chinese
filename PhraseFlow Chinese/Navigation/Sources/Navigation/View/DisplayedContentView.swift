@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Settings
 
 struct DisplayedContentView: View {
     @EnvironmentObject var store: NavigationStore
@@ -29,7 +30,7 @@ struct DisplayedContentView: View {
                 Text("Subscribe View")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .settings:
-                Text("Settings View")
+                AppSettingsView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }

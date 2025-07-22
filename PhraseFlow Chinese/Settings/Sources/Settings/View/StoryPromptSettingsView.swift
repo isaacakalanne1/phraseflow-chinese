@@ -10,7 +10,7 @@ import FTColor
 import FTFont
 
 struct StoryPromptMenu: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: SettingsStore
     @Environment(\.dismiss) var dismiss
     var shouldDismissOnSelect = false
 
@@ -128,7 +128,7 @@ struct StoryPromptMenu: View {
 }
 
 struct StoryPromptSettingsView: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: SettingsStore
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
