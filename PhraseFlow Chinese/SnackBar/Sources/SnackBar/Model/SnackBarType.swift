@@ -89,7 +89,7 @@ enum SnackBarType: Equatable {
         return Text(emoji)
     }
 
-    func action(store: FlowTaleStore) {
+    func action(store: SnackBarStore) {
         store.dispatch(.snackbarAction(.hideSnackbar))
         switch self {
         case .couldNotModerateText:

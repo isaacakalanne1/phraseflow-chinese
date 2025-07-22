@@ -10,7 +10,7 @@ import SwiftUI
 import FTColor
 
 struct SnackBar: View {
-    @EnvironmentObject private var store: FlowTaleStore
+    @EnvironmentObject private var store: SnackBarStore
 
     var type: SnackBarType {
         store.state.snackBarState.type

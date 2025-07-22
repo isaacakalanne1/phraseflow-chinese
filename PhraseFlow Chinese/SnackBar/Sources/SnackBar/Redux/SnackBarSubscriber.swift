@@ -8,12 +8,12 @@
 import Foundation
 import ReduxKit
 
-class SnackBarSubscriber {
-    static func initialize(store: FlowTaleStore, environment: SnackBarEnvironmentProtocol) {
-        
-        store.subscribe(environment.snackBarSubject) { store, snackBarType in
+let snackBarSubscriber: OnSubscribe<SnackBarStore, SnackBarEnvironmentProtocol> = { store, environment in
+    store
+        .subscribe(
+            environment.snackBarSubject
+        ) { store, snackBarType in
             guard let snackBarType = snackBarType else { return }
             store.dispatch(.snackbarAction(.showSnackBar(snackBarType)))
         }
-    }
 }

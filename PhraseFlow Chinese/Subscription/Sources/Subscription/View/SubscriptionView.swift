@@ -12,7 +12,7 @@ import FTFont
 import FTColor
 
 struct SubscriptionView: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: SubscriptionStore
 
     var body: some View {
         VStack(spacing: 20) {

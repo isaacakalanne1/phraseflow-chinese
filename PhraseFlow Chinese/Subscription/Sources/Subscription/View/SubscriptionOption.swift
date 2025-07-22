@@ -11,7 +11,7 @@ import FTFont
 import FTColor
 
 struct SubscriptionOption: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: SubscriptionStore
 
     let title: String
     let detail: String
