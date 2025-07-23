@@ -8,21 +8,22 @@
 import SwiftUI
 import ReduxKit
 
-let userLimitReducer: Reducer<FlowTaleState, UserLimitAction> = { state, action in
+@MainActor
+let userLimitReducer: Reducer<UserLimitState, UserLimitAction> = { state, action in
     var newState = state
 
     switch action {
     case .hasReachedFreeTrialLimit:
-        newState.subscriptionState.hasReachedFreeTrialLimit = true
+        newState.hasReachedFreeTrialLimit = true
         
     case .onDailyChapterLimitReached(let nextAvailable):
-        newState.subscriptionState.nextAvailableDescription = nextAvailable
+        newState.nextAvailableDescription = nextAvailable
         
     case .showDailyLimitExplanationScreen(let isShowing):
-        newState.viewState.isShowingDailyLimitExplanation = isShowing
+        newState.isShowingDailyLimitExplanation = isShowing
         
     case .showFreeLimitExplanationScreen(let isShowing):
-        newState.viewState.isShowingFreeLimitExplanation = isShowing
+        newState.isShowingFreeLimitExplanation = isShowing
         
     case .checkFreeTrialLimit,
          .hasReachedDailyLimit:

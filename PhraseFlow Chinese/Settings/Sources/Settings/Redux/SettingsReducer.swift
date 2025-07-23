@@ -8,7 +8,7 @@
 import SwiftUI
 import ReduxKit
 
-let settingsReducer: Reducer<FlowTaleState, AppSettingsAction> = { state, action in
+let settingsReducer: Reducer<SettingsState, AppSettingsAction> = { state, action in
     var newState = state
 
     switch action {

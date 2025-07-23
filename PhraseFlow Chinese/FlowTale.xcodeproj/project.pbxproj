@@ -29,8 +29,6 @@
 		BB34C5442E2A4FB200238EA8 /* TextGeneration in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5432E2A4FB200238EA8 /* TextGeneration */; };
 		BB34C5462E2A4FB200238EA8 /* Translation in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5452E2A4FB200238EA8 /* Translation */; };
 		BB34C5482E2A4FB200238EA8 /* UserLimit in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5472E2A4FB200238EA8 /* UserLimit */; };
-		BB4EDB0A2C90C8F100699E7D /* FlowTaleEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDB092C90C8F100699E7D /* FlowTaleEnvironment.swift */; };
-		BBA94CCD2D19AAE000EB4A7E /* FlowTaleStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA94CCC2D19AAE000EB4A7E /* FlowTaleStateTests.swift */; };
 		BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */; };
 		BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF282C8C86240079D135 /* ContentView.swift */; };
 		BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBB6EF2A2C8C86290079D135 /* Assets.xcassets */; };
@@ -38,7 +36,6 @@
 		BBB6EF382C8C862A0079D135 /* FlowTaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF372C8C862A0079D135 /* FlowTaleTests.swift */; };
 		BBB6EF422C8C862A0079D135 /* FlowTaleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF412C8C862A0079D135 /* FlowTaleUITests.swift */; };
 		BBB6EF442C8C862A0079D135 /* FlowTaleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB6EF432C8C862A0079D135 /* FlowTaleUITestsLaunchTests.swift */; };
-		BBE521FA2DE9D81300ADACA8 /* FlowTaleEnvironmentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE521F92DE9D81300ADACA8 /* FlowTaleEnvironmentProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,8 +79,6 @@
 		BB34C51A2E2905B700238EA8 /* APIRequest */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = APIRequest; sourceTree = "<group>"; };
 		BB34C51B2E290A2300238EA8 /* AppleIcon */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AppleIcon; sourceTree = "<group>"; };
 		BB34C51C2E290A7C00238EA8 /* FTColor */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FTColor; sourceTree = "<group>"; };
-		BB4EDB092C90C8F100699E7D /* FlowTaleEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleEnvironment.swift; sourceTree = "<group>"; };
-		BBA94CCC2D19AAE000EB4A7E /* FlowTaleStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleStateTests.swift; sourceTree = "<group>"; };
 		BBB6EF232C8C86240079D135 /* FlowTale.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowTale.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleApp.swift; sourceTree = "<group>"; };
 		BBB6EF282C8C86240079D135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -94,7 +89,6 @@
 		BBB6EF3D2C8C862A0079D135 /* FlowTaleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowTaleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6EF412C8C862A0079D135 /* FlowTaleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleUITests.swift; sourceTree = "<group>"; };
 		BBB6EF432C8C862A0079D135 /* FlowTaleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		BBE521F92DE9D81300ADACA8 /* FlowTaleEnvironmentProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleEnvironmentProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,14 +138,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		BB4EDB082C90C8E100699E7D /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				BBE521FB2DE9D82A00ADACA8 /* Environment */,
-			);
-			path = Service;
-			sourceTree = "<group>";
-		};
 		BBB6EF1A2C8C86240079D135 = {
 			isa = PBXGroup;
 			children = (
@@ -199,8 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */,
-				BB4EDB082C90C8E100699E7D /* Service */,
-				BBB6EF562C8C87540079D135 /* View */,
+				BBB6EF282C8C86240079D135 /* ContentView.swift */,
 				BBB6EF2A2C8C86290079D135 /* Assets.xcassets */,
 				BBB6EF2C2C8C86290079D135 /* Preview Content */,
 			);
@@ -219,7 +204,6 @@
 			isa = PBXGroup;
 			children = (
 				BBB6EF372C8C862A0079D135 /* FlowTaleTests.swift */,
-				BBA94CCC2D19AAE000EB4A7E /* FlowTaleStateTests.swift */,
 			);
 			path = FlowTaleTests;
 			sourceTree = "<group>";
@@ -231,23 +215,6 @@
 				BBB6EF432C8C862A0079D135 /* FlowTaleUITestsLaunchTests.swift */,
 			);
 			path = FlowTaleUITests;
-			sourceTree = "<group>";
-		};
-		BBB6EF562C8C87540079D135 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				BBB6EF282C8C86240079D135 /* ContentView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		BBE521FB2DE9D82A00ADACA8 /* Environment */ = {
-			isa = PBXGroup;
-			children = (
-				BB4EDB092C90C8F100699E7D /* FlowTaleEnvironment.swift */,
-				BBE521F92DE9D81300ADACA8 /* FlowTaleEnvironmentProtocol.swift */,
-			);
-			path = Environment;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -419,9 +386,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */,
-				BBE521FA2DE9D81300ADACA8 /* FlowTaleEnvironmentProtocol.swift in Sources */,
 				BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */,
-				BB4EDB0A2C90C8F100699E7D /* FlowTaleEnvironment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,7 +395,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBB6EF382C8C862A0079D135 /* FlowTaleTests.swift in Sources */,
-				BBA94CCD2D19AAE000EB4A7E /* FlowTaleStateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

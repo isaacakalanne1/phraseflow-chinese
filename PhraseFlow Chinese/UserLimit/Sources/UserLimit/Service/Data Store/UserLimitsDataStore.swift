@@ -5,7 +5,9 @@
 //  Created by iakalann on 15/06/2025.
 //
 
+import DataStorage
 import Foundation
+import Subscription
 
 class UserLimitsDataStore: UserLimitsDataStoreProtocol {
     private let keychain = KeychainManager.shared
@@ -24,7 +26,8 @@ class UserLimitsDataStore: UserLimitsDataStoreProtocol {
         return encoder
     }()
 
-    func trackSSMLCharacterUsage(characterCount: Int, subscription: SubscriptionLevel?) throws {
+    func trackSSMLCharacterUsage(characterCount: Int,
+                                 subscription: SubscriptionLevel?) throws {
         if let subscription = subscription {
             try trackSubscribedUser(characterCount, level: subscription)
         } else {

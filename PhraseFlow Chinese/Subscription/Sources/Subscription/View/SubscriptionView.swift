@@ -10,6 +10,7 @@ import StoreKit
 import SwiftUI
 import FTFont
 import FTColor
+import Navigation
 
 struct SubscriptionView: View {
     @EnvironmentObject var store: SubscriptionStore

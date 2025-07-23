@@ -18,6 +18,7 @@ let package = Package(
         .package(name: "Audio", path: "../Audio"),
         .package(name: "ReduxKit", path: "../ReduxKit"),
         .package(name: "Localization", path: "../Localization"),
+        .package(name: "Loading", path: "../Loading"),
         .package(name: "FTColor", path: "../FTColor")
     ],
     targets: [
@@ -28,6 +29,7 @@ let package = Package(
             dependencies: [
                 "Audio",
                 "Localization",
+                "Loading",
                 "ReduxKit",
                 "FTColor"
             ]),

@@ -7,13 +7,13 @@
 
 import Foundation
 
-final class KeychainManager: @unchecked Sendable {
-    static let shared = KeychainManager()
+final public class KeychainManager: @unchecked Sendable {
+    static public let shared = KeychainManager()
 
-    private init() {}
+    public init() {}
 
     // Store data in keychain
-    func setData(_ data: Data, forKey key: String) throws {
+    public func setData(_ data: Data, forKey key: String) throws {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: key,
@@ -30,7 +30,7 @@ final class KeychainManager: @unchecked Sendable {
     }
 
     // Retrieve data from keychain
-    func getData(forKey key: String) -> Data? {
+    public func getData(forKey key: String) -> Data? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: key,

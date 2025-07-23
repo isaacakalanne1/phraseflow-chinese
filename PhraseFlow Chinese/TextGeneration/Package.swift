@@ -16,6 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "APIRequest", path: "../APIRequest"),
+        .package(name: "Settings", path: "../Settings"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -23,7 +24,8 @@ let package = Package(
         .target(
             name: "TextGeneration",
             dependencies: [
-                "APIRequest"
+                "APIRequest",
+                "Settings"
             ]
         ),
         .testTarget(

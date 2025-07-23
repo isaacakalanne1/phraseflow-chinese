@@ -15,7 +15,9 @@ let package = Package(
             targets: ["UserLimit"]),
     ],
     dependencies: [
-        .package(name: "ReduxKit", path: "../ReduxKit")
+        .package(name: "ReduxKit", path: "../ReduxKit"),
+        .package(name: "DataStorage", path: "../DataStorage"),
+        .package(name: "Subscription", path: "../Subscription")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -23,7 +25,9 @@ let package = Package(
         .target(
             name: "UserLimit",
             dependencies: [
-                .product(name: "ReduxKit", package: "ReduxKit")
+                "ReduxKit",
+                "DataStorage",
+                "Subscription"
             ]),
         .testTarget(
             name: "UserLimitTests",

@@ -9,7 +9,7 @@ import SwiftUI
 import ReduxKit
 import AVKit
 
-let storyReducer: Reducer<FlowTaleState, StoryAction> = { state, action in
+let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
     var newState = state
 
     switch action {
