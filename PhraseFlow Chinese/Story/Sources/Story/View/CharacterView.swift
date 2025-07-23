@@ -10,7 +10,7 @@ import FTFont
 import FTColor
 
 struct CharacterView: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: StoryStore
 
     let word: WordTimeStampData
     let sentence: Sentence

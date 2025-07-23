@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CreateStoryButton: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: StoryStore
 
     var body: some View {
         MainButton(title: LocalizedString.newStory.uppercased()) {

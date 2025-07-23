@@ -10,7 +10,7 @@ import FTFont
 import FTColor
 
 struct TranslatedSentenceView: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: StoryStore
 
     var body: some View {
         VStack(spacing: 8) {

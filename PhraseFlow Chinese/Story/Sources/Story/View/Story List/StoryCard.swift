@@ -9,7 +9,7 @@ import SwiftUI
 import FTColor
 
 struct StoryCard: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: StoryStore
     let storyID: UUID
 
     private var firstChapter: Chapter? {

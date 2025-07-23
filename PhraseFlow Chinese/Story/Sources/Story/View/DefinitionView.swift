@@ -10,7 +10,7 @@ import FTFont
 import FTColor
 
 struct DefinitionView: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: StoryStore
     let definition: Definition?
 
     var body: some View {

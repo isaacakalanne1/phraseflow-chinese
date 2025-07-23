@@ -9,7 +9,7 @@ import SwiftUI
 import FTColor
 
 struct ActionButtonsView: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: StoryStore
 
     var body: some View {
         var tabs = ContentTab.allCases

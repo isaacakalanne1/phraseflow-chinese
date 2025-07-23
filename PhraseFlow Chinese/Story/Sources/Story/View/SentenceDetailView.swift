@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SentenceDetailView: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: StoryStore
 
     var body: some View {
         Group {

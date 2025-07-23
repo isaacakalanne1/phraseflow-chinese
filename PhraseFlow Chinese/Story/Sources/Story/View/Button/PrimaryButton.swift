@@ -9,7 +9,7 @@ import SwiftUI
 import FTColor
 
 struct PrimaryButton<Content: View>: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: StoryStore
     
     @ViewBuilder let icon: Content
     let title: String

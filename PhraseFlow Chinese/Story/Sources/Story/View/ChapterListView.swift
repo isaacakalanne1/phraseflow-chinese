@@ -10,7 +10,7 @@ import FTFont
 import FTColor
 
 struct ChapterListView: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: StoryStore
     let storyId: UUID
     @State private var navigationPath = NavigationPath()
 

@@ -11,7 +11,7 @@ import FTFont
 import TextGeneration
 
 public struct ReaderView: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: StoryStore
     let chapter: Chapter
 
     public var body: some View {

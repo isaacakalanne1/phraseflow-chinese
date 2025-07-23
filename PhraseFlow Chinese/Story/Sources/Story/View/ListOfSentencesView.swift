@@ -9,7 +9,7 @@ import SwiftUI
 import FTFont
 
 struct ListOfSentencesView: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: StoryStore
     @State private var opacity: Double = 0
     @State private var currentPage: Int = 0
 

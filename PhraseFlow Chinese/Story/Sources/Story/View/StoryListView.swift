@@ -10,7 +10,7 @@ import FTFont
 import FTColor
 
 struct StoryListView: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: StoryStore
     @State private var showCreateStorySettings = false
     
     var body: some View {

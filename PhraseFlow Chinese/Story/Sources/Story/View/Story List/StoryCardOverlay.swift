@@ -10,7 +10,7 @@ import FTFont
 import FTColor
 
 struct StoryCardOverlay: View {
-    @EnvironmentObject var store: FlowTaleStore
+    @EnvironmentObject var store: StoryStore
     let storyID: UUID
     
     private var firstChapter: Chapter? {
