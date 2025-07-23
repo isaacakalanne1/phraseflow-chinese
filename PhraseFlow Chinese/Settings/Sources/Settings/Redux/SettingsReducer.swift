@@ -8,67 +8,67 @@
 import SwiftUI
 import ReduxKit
 
-let settingsReducer: Reducer<SettingsState, AppSettingsAction> = { state, action in
+@MainActor
+let settingsReducer: Reducer<SettingsState, SettingsAction> = { state, action in
     var newState = state
 
     switch action {
     case .onLoadedAppSettings(let settings):
-        newState.settingsState = settings
-        newState.translationState.targetLanguage = settings.language
+        newState = settings
         
     case .updateSpeechSpeed(let speed):
-        newState.settingsState.speechSpeed = speed
+        newState.speechSpeed = speed
         // Audio player logic now handled in AudioReducer
         
     case .updateShowDefinition(let isShowing):
-        newState.settingsState.isShowingDefinition = isShowing
+        newState.isShowingDefinition = isShowing
         
     case .updateShowEnglish(let isShowing):
-        newState.settingsState.isShowingEnglish = isShowing
+        newState.isShowingEnglish = isShowing
         
     case .selectVoice(let voice):
-        newState.settingsState.voice = voice
+        newState.voice = voice
         
     case .updateDifficulty(let difficulty):
-        newState.settingsState.difficulty = difficulty
+        newState.difficulty = difficulty
         
     case .updateLanguage(let language):
-        if language != newState.settingsState.language {
-            newState.settingsState.language = language
+        if language != newState.language {
+            newState.language = language
             if let voice = language.voices.first {
-                newState.settingsState.voice = voice
+                newState.voice = voice
             }
         }
         
     case .updateCustomPrompt(let prompt):
-        newState.settingsState.customPrompt = prompt
+        newState.customPrompt = prompt
         
     case .updateStorySetting(let setting):
         switch setting {
         case .random:
-            newState.settingsState.storySetting = setting
+            newState.storySetting = setting
         case .customPrompt(let prompt):
-            let isExistingPrompt = state.settingsState.customPrompts.contains(prompt)
+            let isExistingPrompt = state.customPrompts.contains(prompt)
             if isExistingPrompt {
-                newState.settingsState.storySetting = setting
+                newState.storySetting = setting
             }
         }
-        newState.settingsState.storySetting = setting
+        newState.storySetting = setting
         
     case .updateIsShowingCustomPromptAlert(let isShowing):
-        newState.viewState.isShowingCustomPromptAlert = isShowing
+        newState.isShowingCustomPromptAlert = isShowing
         
     case .deleteCustomPrompt(let prompt):
-        newState.settingsState.customPrompts.removeAll(where: { $0 == prompt })
-        if newState.settingsState.storySetting == .customPrompt(prompt) {
-            newState.settingsState.storySetting = .random
+        newState.customPrompts.removeAll(where: { $0 == prompt })
+        if newState.storySetting == .customPrompt(prompt) {
+            newState.storySetting = .random
         }
         
     case .updateColorScheme(let colorScheme):
-        newState.settingsState.appColorScheme = colorScheme
+        newState.appColorScheme = colorScheme
         
     case .updateShouldPlaySound(let shouldPlaySound):
-        newState.settingsState.shouldPlaySound = shouldPlaySound
+        newState.shouldPlaySound = shouldPlaySound
         
     case .loadAppSettings,
          .saveAppSettings,

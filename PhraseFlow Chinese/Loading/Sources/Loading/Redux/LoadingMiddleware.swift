@@ -9,7 +9,7 @@ import Foundation
 import ReduxKit
 
 @MainActor
-let loadingMiddleware: Middleware<LoadingStatus, LoadingAction, LoadingEnvironmentProtocol> = { store, action, environment in
+let loadingMiddleware: Middleware<LoadingState, LoadingAction, LoadingEnvironmentProtocol> = { state, action, environment in
     switch action {
     case .updateLoadingStatus:
         return nil

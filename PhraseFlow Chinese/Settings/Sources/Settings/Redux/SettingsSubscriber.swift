@@ -8,28 +8,30 @@
 import Foundation
 import ReduxKit
 
+@MainActor
 let settingsSubscriber: OnSubscribe<SettingsStore, SettingsEnvironmentProtocol> = { store, environment in
     
     store
         .subscribe(
             environment.settingsSubject
         ) { store, _ in
-            store.dispatch(.appSettingsAction(.saveAppSettings))
+            store.dispatch(.saveAppSettings)
         }
     
     store
         .subscribe(
             environment.speechSpeedSubject
         ) { store, speed in
-            store.dispatch(.appSettingsAction(.updateSpeechSpeed(speed)))
+            store.dispatch(.updateSpeechSpeed(speed))
         }
     
     store
         .subscribe(
             environment.isPlayingMusicSubject
         ) { store, isPlaying in
-            var newState = store.state
-            newState.settingsState.isPlayingMusic = isPlaying
+            var newSettingsState = store.state.settingsState
+            newSettingsState.isPlayingMusic = isPlaying
+            store.dispatch(.onLoadedAppSettings(newSettingsState))
         }
     
     store
@@ -37,15 +39,17 @@ let settingsSubscriber: OnSubscribe<SettingsStore, SettingsEnvironmentProtocol> 
             environment.customPromptSubject
         ) { store, prompt in
             guard !prompt.isEmpty else { return }
-            var newState = store.state
-            newState.settingsState.customPrompts.append(prompt)
+            var newSettingsState = store.state.settingsState
+            newSettingsState.customPrompts.append(prompt)
+            store.dispatch(.onLoadedAppSettings(newSettingsState))
         }
     
     store
         .subscribe(
             environment.storySettingSubject
         ) { store, setting in
-            var newState = store.state
-            newState.settingsState.storySetting = setting
+            var newSettingsState = store.state.settingsState
+            newSettingsState.storySetting = setting
+            store.dispatch(.onLoadedAppSettings(newSettingsState))
         }
 }

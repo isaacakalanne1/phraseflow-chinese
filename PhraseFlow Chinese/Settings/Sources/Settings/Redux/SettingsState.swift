@@ -21,6 +21,7 @@ struct SettingsState: Codable, Equatable, Sendable {
     var customPrompts: [String]
     var appColorScheme: FlowTaleColorScheme?
     var shouldPlaySound: Bool
+    var isShowingCustomPromptAlert: Bool
 
     init(isShowingDefinition: Bool = true,
          isShowingEnglish: Bool = true,
@@ -34,6 +35,7 @@ struct SettingsState: Codable, Equatable, Sendable {
          customPrompts: [String] = [],
          colorScheme: FlowTaleColorScheme = .dark,
          shouldPlaySound: Bool = true,
+         isShowingCustomPromptAlert: Bool = true,
          confirmedCustomPrompt: String = "") {
         self.isShowingDefinition = isShowingDefinition
         self.isShowingEnglish = isShowingEnglish
@@ -48,6 +50,7 @@ struct SettingsState: Codable, Equatable, Sendable {
         self.confirmedCustomPrompt = confirmedCustomPrompt
         self.appColorScheme = colorScheme
         self.shouldPlaySound = shouldPlaySound
+        self.isShowingCustomPromptAlert = isShowingCustomPromptAlert
     }
 
     init(from decoder: any Decoder) throws {
@@ -66,5 +69,6 @@ struct SettingsState: Codable, Equatable, Sendable {
         
         self.appColorScheme = (try? container.decode(FlowTaleColorScheme?.self, forKey: .appColorScheme)) ?? .dark
         self.shouldPlaySound = (try? container.decode(Bool.self, forKey: .shouldPlaySound)) ?? true
+        self.isShowingCustomPromptAlert = (try? container.decode(Bool.self, forKey: .isShowingCustomPromptAlert)) ?? false
     }
 }
