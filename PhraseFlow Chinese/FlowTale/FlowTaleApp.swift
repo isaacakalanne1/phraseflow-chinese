@@ -10,25 +10,12 @@ import SwiftUI
 
 @main
 struct FlowTaleApp: App {
-    private var store: FlowTaleStore
 
-    init() {
-        let state = FlowTaleState()
-        let environment = FlowTaleEnvironment()
-
-        store = FlowTaleStore(
-            initial: state,
-            reducer: flowTaleReducer,
-            environment: environment,
-            middleware: flowTaleMiddleware,
-            subscriber: flowTaleSubscriber
-        )
-    }
+    init() { }
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(store)
                 .onAppear {
                     UIApplication.shared.isIdleTimerDisabled = true
                     try? AVAudioSession.sharedInstance().setCategory(.playback)

@@ -12,7 +12,6 @@ import Navigation
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var store: FlowTaleStore
 
     var body: some View {
         let isShowingSubscriptionView: Binding<Bool> = .init {

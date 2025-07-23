@@ -15,7 +15,9 @@ let package = Package(
             targets: ["SnackBar"]),
     ],
     dependencies: [
+        .package(name: "Audio", path: "../Audio"),
         .package(name: "ReduxKit", path: "../ReduxKit"),
+        .package(name: "Localization", path: "../Localization"),
         .package(name: "FTColor", path: "../FTColor")
     ],
     targets: [
@@ -24,7 +26,9 @@ let package = Package(
         .target(
             name: "SnackBar",
             dependencies: [
-                .product(name: "ReduxKit", package: "ReduxKit"),
+                "Audio",
+                "Localization",
+                "ReduxKit",
                 "FTColor"
             ]),
         .testTarget(

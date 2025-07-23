@@ -5,8 +5,10 @@
 //  Created by iakalann on 27/12/2024.
 //
 
+import Audio
 import SwiftUI
 import FTColor
+import Localization
 
 enum SnackBarType: Equatable {
     case welcomeBack
@@ -87,18 +89,6 @@ enum SnackBarType: Equatable {
             emoji = "🔇"
         }
         return Text(emoji)
-    }
-
-    func action(store: SnackBarStore) {
-        store.dispatch(.snackbarAction(.hideSnackbar))
-        switch self {
-        case .couldNotModerateText:
-            store.dispatch(.appSettingsAction(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt))))
-        case .dailyChapterLimitReached:
-            store.dispatch(.userLimitAction(.showDailyLimitExplanationScreen(isShowing: true)))
-        default:
-            break
-        }
     }
 
     var isError: Bool {

@@ -35,7 +35,7 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
          .updateDifficulty,
          .updateColorScheme,
          .updateShouldPlaySound:
-        return .appSettingsAction(.saveAppSettings)
+        return .saveAppSettings
         
     case .onLoadedAppSettings:
         if state.settingsState.isPlayingMusic {
