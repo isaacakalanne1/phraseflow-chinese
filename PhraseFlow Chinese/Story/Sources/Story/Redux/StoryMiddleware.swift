@@ -8,6 +8,7 @@
 import AVKit
 import Foundation
 import ReduxKit
+import UserLimit
 
 let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtocol> = { state, action, environment in
     switch action {
@@ -40,9 +41,9 @@ let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtoco
             }
             
             return .onCreatedChapter(chapter)
-        } catch FlowTaleDataStoreError.freeUserCharacterLimitReached {
+        } catch UserLimitsDataStoreError.freeUserCharacterLimitReached {
             return nil
-        } catch FlowTaleDataStoreError.characterLimitReached(let nextAvailable) {
+        } catch UserLimitsDataStoreError.characterLimitReached(let nextAvailable) {
             return nil
         } catch {
             return nil

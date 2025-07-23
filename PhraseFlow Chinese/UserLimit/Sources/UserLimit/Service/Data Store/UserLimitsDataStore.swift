@@ -9,6 +9,11 @@ import DataStorage
 import Foundation
 import Subscription
 
+enum UserLimitsDataStoreError: Error {
+    case freeUserCharacterLimitReached
+    case characterLimitReached(timeUntilNextAvailable: String)
+}
+
 class UserLimitsDataStore: UserLimitsDataStoreProtocol {
     private let keychain = KeychainManager.shared
     private let dailyUsageKey = "dailyCharacterUsageData"
@@ -44,7 +49,7 @@ class UserLimitsDataStore: UserLimitsDataStoreProtocol {
         #endif
         
         guard current + count <= limit else {
-            throw FlowTaleDataStoreError.freeUserCharacterLimitReached
+            throw UserLimitsDataStoreError.freeUserCharacterLimitReached
         }
         
         try keychain.setData(Data("\(current + count)".utf8), forKey: freeCountKey)
@@ -61,7 +66,7 @@ class UserLimitsDataStore: UserLimitsDataStoreProtocol {
         guard totalUsage + count <= limit else {
             let timeString = records.compactMap(\.timestamp).min()
                 .map(timeRemaining) ?? "24 hours"
-            throw FlowTaleDataStoreError.characterLimitReached(timeUntilNextAvailable: timeString)
+            throw UserLimitsDataStoreError.characterLimitReached(timeUntilNextAvailable: timeString)
         }
         
         records.append(CharacterUsageRecord(timestamp: now, characterCount: count))

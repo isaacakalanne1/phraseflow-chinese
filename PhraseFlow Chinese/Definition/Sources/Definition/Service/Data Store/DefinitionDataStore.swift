@@ -8,6 +8,11 @@
 import Combine
 import Foundation
 
+enum DefinitionDataStoreError: Error {
+    case failedToCreateUrl
+    case failedToDecodeData
+}
+
 class DefinitionDataStore: DefinitionDataStoreProtocol {
 
     private let fileManager = FileManager.default
@@ -41,7 +46,7 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
 
     func cleanupOrphanedDefinitionFiles() throws {
         guard let dir = documentsDirectory else {
-            throw FlowTaleDataStoreError.failedToCreateUrl
+            throw DefinitionDataStoreError.failedToCreateUrl
         }
 
         let contents = try fileManager.contentsOfDirectory(atPath: dir.path)
@@ -67,19 +72,19 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
 
     func loadSentenceAudio(id: UUID) throws -> Data {
         guard let fileURL = sentenceAudioFileURL(id: id) else {
-            throw FlowTaleDataStoreError.failedToCreateUrl
+            throw DefinitionDataStoreError.failedToCreateUrl
         }
 
         do {
             return try Data(contentsOf: fileURL)
         } catch {
-            throw FlowTaleDataStoreError.failedToDecodeData
+            throw DefinitionDataStoreError.failedToDecodeData
         }
     }
 
     func cleanupOrphanedSentenceAudioFiles() throws {
         guard let dir = documentsDirectory else {
-            throw FlowTaleDataStoreError.failedToCreateUrl
+            throw DefinitionDataStoreError.failedToCreateUrl
         }
 
         let definitions = try loadDefinitions()
@@ -118,7 +123,7 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
 
     func loadDefinitions() throws -> [Definition] {
         guard let dir = definitionsDirectory else {
-            throw FlowTaleDataStoreError.failedToCreateUrl
+            throw DefinitionDataStoreError.failedToCreateUrl
         }
         
         let files = try fileManager.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil)

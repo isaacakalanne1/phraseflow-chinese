@@ -7,6 +7,12 @@
 
 import Foundation
 
+enum SettingsDataStoreError: Error {
+    case failedToCreateUrl
+    case failedToDecodeData
+    case failedToSaveData
+}
+
 class SettingsDataStore: SettingsDataStoreProtocol {
     private var documentsDirectory: URL? {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
@@ -14,7 +20,7 @@ class SettingsDataStore: SettingsDataStoreProtocol {
 
     func loadAppSettings() throws -> SettingsState {
         guard let fileURL = documentsDirectory?.appendingPathComponent("settingsState.json") else {
-            throw FlowTaleDataStoreError.failedToCreateUrl
+            throw SettingsDataStoreError.failedToCreateUrl
         }
         do {
             let data = try Data(contentsOf: fileURL)
@@ -22,20 +28,20 @@ class SettingsDataStore: SettingsDataStoreProtocol {
             let appSettings = try decoder.decode(SettingsState.self, from: data)
             return appSettings
         } catch {
-            throw FlowTaleDataStoreError.failedToDecodeData
+            throw SettingsDataStoreError.failedToDecodeData
         }
     }
 
     func saveAppSettings(_ settings: SettingsState) throws {
         guard let fileURL = documentsDirectory?.appendingPathComponent("settingsState.json") else {
-            throw FlowTaleDataStoreError.failedToCreateUrl
+            throw SettingsDataStoreError.failedToCreateUrl
         }
         let encoder = JSONEncoder()
         do {
             let encodedData = try encoder.encode(settings)
             try encodedData.write(to: fileURL)
         } catch {
-            throw FlowTaleDataStoreError.failedToSaveData
+            throw SettingsDataStoreError.failedToSaveData
         }
     }
 }

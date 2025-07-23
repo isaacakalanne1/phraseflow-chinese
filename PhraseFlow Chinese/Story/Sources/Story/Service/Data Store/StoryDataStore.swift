@@ -8,6 +8,11 @@
 import Combine
 import Foundation
 
+enum StoryDataStoreError: Error {
+    case failedToCreateUrl
+    case failedToSaveData
+}
+
 class StoryDataStore: StoryDataStoreProtocol {
     private let fileManager = FileManager.default
     private var documentsDirectory: URL? {
@@ -18,7 +23,7 @@ class StoryDataStore: StoryDataStoreProtocol {
 
     private func fileURL(for chapter: Chapter) throws -> URL {
         guard let dir = documentsDirectory else {
-            throw FlowTaleDataStoreError.failedToCreateUrl
+            throw StoryDataStoreError.failedToCreateUrl
         }
         let fileName = "\(chapter.id.uuidString).json"
         return dir.appendingPathComponent(fileName)
@@ -33,13 +38,13 @@ class StoryDataStore: StoryDataStoreProtocol {
             try data.write(to: url)
             chapterSubject.send(chapter)
         } catch {
-            throw FlowTaleDataStoreError.failedToSaveData
+            throw StoryDataStoreError.failedToSaveData
         }
     }
 
     func loadAllChapters() throws -> [Chapter] {
         guard let dir = documentsDirectory else {
-            throw FlowTaleDataStoreError.failedToCreateUrl
+            throw StoryDataStoreError.failedToCreateUrl
         }
         let files = try fileManager.contentsOfDirectory(atPath: dir.path)
         let chapterFiles = files.filter { $0.hasSuffix(".json") }
