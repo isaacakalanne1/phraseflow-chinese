@@ -13,16 +13,16 @@ import SwiftUI
 public struct LoadingProgressBar: View {
     @EnvironmentObject var store: LoadingStore
     
-    private var loadingState: LoadingStatus {
-        store.state
+    private var loadingStatus: LoadingStatus {
+        store.state.loadingStatus
     }
     
     private var progress: Double {
-        return Double(loadingState.progressInt) / 3.0
+        return Double(loadingStatus.progressInt) / 3.0
     }
     
     private var statusText: String {
-        switch loadingState {
+        switch loadingStatus {
         case .writing:
             return LocalizedString.writingChapter
         case .generatingImage:
@@ -47,24 +47,24 @@ public struct LoadingProgressBar: View {
                     ProgressStep(
                         icon: "doc.text",
                         title: "Writing",
-                        isCompleted: loadingState.progressInt > 0,
-                        isCurrent: loadingState == .writing,
+                        isCompleted: loadingStatus.progressInt > 0,
+                        isCurrent: loadingStatus == .writing,
                         isCompact: true
                     )
                     
                     ProgressStep(
                         icon: "photo",
                         title: "Image",
-                        isCompleted: loadingState.progressInt > 1,
-                        isCurrent: loadingState == .generatingImage,
+                        isCompleted: loadingStatus.progressInt > 1,
+                        isCurrent: loadingStatus == .generatingImage,
                         isCompact: true
                     )
                     
                     ProgressStep(
                         icon: "speaker.wave.3",
                         title: "Audio",
-                        isCompleted: loadingState.progressInt > 2,
-                        isCurrent: loadingState == .generatingSpeech,
+                        isCompleted: loadingStatus.progressInt > 2,
+                        isCurrent: loadingStatus == .generatingSpeech,
                         isCompact: true
                     )
                 }

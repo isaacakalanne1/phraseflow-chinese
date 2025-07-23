@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum LoadingStatus {
+public enum LoadingStatus: Sendable {
     case complete, writing, generatingImage, generatingSpeech
 
     var progressInt: Int {

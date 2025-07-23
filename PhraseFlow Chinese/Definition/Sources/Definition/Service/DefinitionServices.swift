@@ -7,13 +7,18 @@
 
 import Foundation
 
+enum DefinitionServicesError: Error {
+    case failedToGetTimestamps
+    case invalidJSON
+}
+
 class DefinitionServices: DefinitionServicesProtocol {
     func fetchDefinitions(in sentence: Sentence?,
                           chapter: Chapter,
                           deviceLanguage: Language) async throws -> [Definition] {
         guard let sentence,
               !sentence.timestamps.isEmpty else {
-            throw FlowTaleServicesError.failedToGetTimestamps
+            throw DefinitionServicesError.failedToGetTimestamps
         }
 
         let systemPrompt = """
@@ -39,7 +44,7 @@ class DefinitionServices: DefinitionServicesProtocol {
         let jsonString = try await RequestFactory.makeRequest(type: .openRouter(.geminiFlash), requestBody: requestBody)
 
         guard let data = jsonString.data(using: .utf8) else {
-            throw FlowTaleServicesError.invalidJSON
+            throw DefinitionServicesError.invalidJSON
         }
 
         let multipleWordsResponse = try JSONDecoder().decode(MultipleWordsResponse.self, from: data)

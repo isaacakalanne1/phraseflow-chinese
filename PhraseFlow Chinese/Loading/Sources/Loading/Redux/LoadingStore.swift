@@ -8,4 +8,4 @@
 import Foundation
 import ReduxKit
 
-typealias LoadingStore = Store<LoadingStatus, LoadingAction, LoadingEnvironmentProtocol>
+typealias LoadingStore = Store<LoadingState, LoadingAction, LoadingEnvironmentProtocol>

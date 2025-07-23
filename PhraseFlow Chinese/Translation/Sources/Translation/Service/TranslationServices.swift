@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum TranslationServicesError: Error {
+    case failedToGetDeviceLanguage
+    case failedToGetResponseData
+}
+
 class TranslationServices: TranslationServicesProtocol {
     func translateText(
         _ text: String,
@@ -15,7 +20,7 @@ class TranslationServices: TranslationServicesProtocol {
     ) async throws -> Chapter {
         let model = APIRequestType.openRouter(.geminiFlash)
         guard let deviceLanguage else {
-            throw FlowTaleServicesError.failedToGetDeviceLanguage
+            throw TranslationServicesError.failedToGetDeviceLanguage
         }
 
         let prompt = """
@@ -34,7 +39,7 @@ class TranslationServices: TranslationServicesProtocol {
         let jsonString = try await RequestFactory.makeRequest(type: model, requestBody: requestBody)
 
         guard let jsonData = jsonString.data(using: .utf8) else {
-            throw FlowTaleServicesError.failedToGetResponseData
+            throw TranslationServicesError.failedToGetResponseData
         }
         let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguageKey: deviceLanguage.rawValue, targetLanguageKey: targetLanguage.rawValue)
         let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
@@ -75,7 +80,7 @@ class TranslationServices: TranslationServicesProtocol {
         let jsonString = try await RequestFactory.makeRequest(type: model, requestBody: requestBody)
 
         guard let jsonData = jsonString.data(using: .utf8) else {
-            throw FlowTaleServicesError.failedToGetResponseData
+            throw TranslationServicesError.failedToGetResponseData
         }
         let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguageKey: textLanguage.rawValue, targetLanguageKey: deviceLanguage.rawValue)
         let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)

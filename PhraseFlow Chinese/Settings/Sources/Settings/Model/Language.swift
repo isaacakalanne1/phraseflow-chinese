@@ -8,7 +8,7 @@
 import Localization
 import SwiftUI
 
-public enum Language: String, Codable, CaseIterable {
+public enum Language: String, Codable, CaseIterable, Sendable {
     case english,
          englishUK,
          mandarinChinese,

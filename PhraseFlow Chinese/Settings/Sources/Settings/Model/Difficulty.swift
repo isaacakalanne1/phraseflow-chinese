@@ -8,7 +8,7 @@
 import Localization
 import SwiftUI
 
-public enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable {
+public enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable, Sendable {
     case beginner, intermediate, advanced, expert
 
     var maxIntValue: Int {

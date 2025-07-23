@@ -8,7 +8,7 @@
 import Localization
 import SwiftUI
 
-public enum Voice: String, Codable, CaseIterable, Equatable {
+public enum Voice: String, Codable, CaseIterable, Equatable, Sendable {
     case xiaoxiao, // Chinese
          yunjian,
          denise, // French

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum SettingsAction {
+enum SettingsAction: Sendable {
     case loadAppSettings
     case onLoadedAppSettings(SettingsState)
     case failedToLoadAppSettings

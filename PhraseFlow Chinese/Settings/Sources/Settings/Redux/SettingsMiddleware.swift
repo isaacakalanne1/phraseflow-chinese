@@ -38,7 +38,7 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
         return .saveAppSettings
         
     case .onLoadedAppSettings:
-        if state.settingsState.isPlayingMusic {
+        if state.isPlayingMusic {
             return .audioAction(.playMusic(.whispersOfTheForest))
         }
         return nil
@@ -48,7 +48,7 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
         case .random:
             return nil
         case .customPrompt(let prompt):
-            let isNewPrompt = !state.settingsState.customPrompts.contains(prompt)
+            let isNewPrompt = !state.customPrompts.contains(prompt)
             return isNewPrompt ? .moderationAction(.moderateText(prompt)) : nil
         }
         

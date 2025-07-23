@@ -9,6 +9,7 @@ import AVKit
 import Foundation
 import ReduxKit
 import UserLimit
+import TextGeneration
 
 let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtocol> = { state, action, environment in
     switch action {
@@ -35,7 +36,7 @@ let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtoco
                         currentSubscription: state.subscriptionState.currentSubscription
                     )
                 } else {
-                    throw FlowTaleServicesError.failedToGetResponseData
+                    throw TextGenerationServicesError.failedToGetResponseData
                 }
 
             }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SettingsState: Codable {
+struct SettingsState: Codable, Equatable, Sendable {
     var isShowingDefinition: Bool
     var isShowingEnglish: Bool
     var isPlayingMusic: Bool

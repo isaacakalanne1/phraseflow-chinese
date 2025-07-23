@@ -1,6 +1,5 @@
 import SwiftUI
 import ReduxKit
-import Navigation
 import Localization
 
 public struct AppSettingsView: View {

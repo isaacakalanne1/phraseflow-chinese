@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SpeechSpeed: CaseIterable, Codable, Equatable {
+public enum SpeechSpeed: CaseIterable, Codable, Equatable, Sendable {
     case slow, normal, fast
 
     var title: String {
