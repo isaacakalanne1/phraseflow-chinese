@@ -28,7 +28,8 @@
       "mcp__atlassian__updateConfluencePage",
       "Bash(git checkout:*)",
       "mcp__atlassian__atlassianUserInfo",
-      "mcp__atlassian__searchJiraIssuesUsingJql"
+      "mcp__atlassian__searchJiraIssuesUsingJql",
+      "Bash(touch:*)"
     ],
     "deny": []
   }

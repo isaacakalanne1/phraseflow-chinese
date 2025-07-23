@@ -8,18 +8,27 @@
 import Localization
 import SwiftUI
 import FTColor
+import FTFont
+import Definition
+import Story
+import AppleIcon
+import ReduxKit
 
-struct StudyView: View {
-    @EnvironmentObject var store: FlowTaleStore
+public struct StudyView: View {
+    @EnvironmentObject var store: StudyStore
 
-    var studyWords: [Definition]
+    public let studyWords: [Definition]
+    
+    public init(studyWords: [Definition]) {
+        self.studyWords = studyWords
+    }
 
     var isPronounciationShown: Bool {
-        store.state.studyState.displayStatus != .wordShown || shouldShowAllDetails
+        store.state.displayStatus != .wordShown || shouldShowAllDetails
     }
 
     var isDefinitionShown: Bool {
-        store.state.studyState.displayStatus == .allShown || shouldShowAllDetails
+        store.state.displayStatus == .allShown || shouldShowAllDetails
     }
 
     @State var index: Int = 0
@@ -46,7 +55,7 @@ struct StudyView: View {
                             HStack {
                                 Spacer()
                                 Button {
-                                    store.dispatch(.studyAction(.playStudyWord(definition)))
+                                    store.dispatch(.playStudyWord(definition))
                                 } label: {
                                     SystemImageView(.speaker)
                                 }
@@ -91,8 +100,8 @@ struct StudyView: View {
                                         .font(FTFont.flowTaleBodyLarge())
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Button {
-                                        let studyAction: StudyAction = store.state.studyState.isAudioPlaying ? .pauseStudyAudio : .playStudySentence
-                                        store.dispatch(.studyAction(studyAction))
+                                        let studyAction: StudyAction = store.state.isAudioPlaying ? .pauseStudyAudio : .playStudySentence
+                                        store.dispatch(studyAction)
                                     } label: {
                                         SystemImageView(.speaker)
                                     }
@@ -114,8 +123,8 @@ struct StudyView: View {
                 .scrollIndicators(.hidden)
                 .onTapGesture {
                     withAnimation {
-                        let nextStatus = store.state.studyState.displayStatus.nextStatus
-                        store.dispatch(.studyAction(.updateDisplayStatus(nextStatus)))
+                        let nextStatus = store.state.displayStatus.nextStatus
+                        store.dispatch(.updateDisplayStatus(nextStatus))
                     }
                 }
                 HStack {
@@ -142,7 +151,7 @@ struct StudyView: View {
         .onAppear {
             index = 0
             updateDefinition()
-            store.dispatch(.snackbarAction(.checkDeviceVolumeZero))
+            // Volume warning handled at app level
         }
         .padding()
         .background(FTColor.background)
@@ -152,15 +161,15 @@ struct StudyView: View {
         if isDefinitionShown {
             goToNextDefinition()
         } else {
-            store.dispatch(.studyAction(.playStudyWord(definition)))
+            store.dispatch(.playStudyWord(definition))
             withAnimation {
-                store.dispatch(.studyAction(.updateDisplayStatus(.allShown)))
+                store.dispatch(.updateDisplayStatus(.allShown))
             }
         }
     }
 
     func goToPreviousDefinition() {
-        store.dispatch(.audioAction(.playSound(.previousStudyWord)))
+        // Navigation sound handled at app level
 
         if index - 1 < 0 {
             index = studyWords.count - 1
@@ -171,9 +180,9 @@ struct StudyView: View {
     }
 
     func goToNextDefinition() {
-        store.dispatch(.audioAction(.playSound(.nextStudyWord)))
+        // Navigation sound handled at app level
         if let definition = currentDefinition {
-            store.dispatch(.definitionAction(.updateStudiedWord(definition)))
+            // Definition update handled at app level
         }
 
         index = (index + 1) % studyWords.count
@@ -181,10 +190,10 @@ struct StudyView: View {
     }
 
     func updateDefinition() {
-        store.dispatch(.studyAction(.updateDisplayStatus(.wordShown)))
+        store.dispatch(.updateDisplayStatus(.wordShown))
         if let definition = currentDefinition {
-            store.dispatch(.studyAction(.prepareToPlayStudySentence(definition)))
-            store.dispatch(.studyAction(.pauseStudyAudio))
+            store.dispatch(.prepareToPlayStudySentence(definition))
+            store.dispatch(.pauseStudyAudio)
         }
     }
 

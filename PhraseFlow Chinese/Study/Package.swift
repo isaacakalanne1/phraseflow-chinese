@@ -18,7 +18,9 @@ let package = Package(
         .package(name: "Definition", path: "../Definition"),
         .package(name: "Localization", path: "../Localization"),
         .package(name: "FTColor", path: "../FTColor"),
-        .package(name: "FTFont", path: "../FTFont")
+        .package(name: "FTFont", path: "../FTFont"),
+        .package(name: "Story", path: "../Story"),
+        .package(name: "AppleIcon", path: "../AppleIcon")
     ],
     targets: [
         .target(
@@ -28,7 +30,9 @@ let package = Package(
                 "Definition",
                 "Localization",
                 "FTColor",
-                "FTFont"
+                "FTFont",
+                "Story",
+                "AppleIcon"
             ]
         ),
         .testTarget(
