@@ -8,7 +8,7 @@
 import Foundation
 import ReduxKit
 
-let storySubscriber: OnSubscribe<FlowTaleStore, StoryEnvironmentProtocol> = { store, environment in
+let storySubscriber: OnSubscribe<StoryStore, StoryEnvironmentProtocol> = { store, environment in
     store
         .subscribe(
             environment.storySubject
