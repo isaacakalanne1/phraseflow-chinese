@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum StorySetting: Codable, Equatable {
+public enum StorySetting: Codable, Equatable, Sendable {
     case random, customPrompt(String)
 
     var emoji: String {

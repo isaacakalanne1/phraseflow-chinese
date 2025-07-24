@@ -5,7 +5,7 @@
 //  Created by iakalann on 06/04/2025.
 //
 
-enum MusicVolume {
+public enum MusicVolume {
     case normal, quiet
 
     var float: Float {

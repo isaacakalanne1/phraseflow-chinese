@@ -5,7 +5,7 @@
 //  Created by iakalann on 17/04/2025.
 //
 
-struct ModerationResponse: Codable {
+public struct ModerationResponse: Codable {
     let id: String
     let model: String
     let results: [ModerationResult]

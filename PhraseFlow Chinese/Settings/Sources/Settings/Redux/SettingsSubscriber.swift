@@ -29,9 +29,9 @@ let settingsSubscriber: OnSubscribe<SettingsStore, SettingsEnvironmentProtocol> 
         .subscribe(
             environment.isPlayingMusicSubject
         ) { store, isPlaying in
-            var newSettingsState = store.state.settingsState
-            newSettingsState.isPlayingMusic = isPlaying
-            store.dispatch(.onLoadedAppSettings(newSettingsState))
+            var newSettings = store.state
+            newSettings.isPlayingMusic = isPlaying
+            store.dispatch(.onLoadedAppSettings(newSettings))
         }
     
     store
@@ -39,17 +39,17 @@ let settingsSubscriber: OnSubscribe<SettingsStore, SettingsEnvironmentProtocol> 
             environment.customPromptSubject
         ) { store, prompt in
             guard !prompt.isEmpty else { return }
-            var newSettingsState = store.state.settingsState
-            newSettingsState.customPrompts.append(prompt)
-            store.dispatch(.onLoadedAppSettings(newSettingsState))
+            var newSettings = store.state
+            newSettings.customPrompts.append(prompt)
+            store.dispatch(.onLoadedAppSettings(newSettings))
         }
     
     store
         .subscribe(
             environment.storySettingSubject
         ) { store, setting in
-            var newSettingsState = store.state.settingsState
-            newSettingsState.storySetting = setting
-            store.dispatch(.onLoadedAppSettings(newSettingsState))
+            var newSettings = store.state
+            newSettings.storySetting = setting
+            store.dispatch(.onLoadedAppSettings(newSettings))
         }
 }

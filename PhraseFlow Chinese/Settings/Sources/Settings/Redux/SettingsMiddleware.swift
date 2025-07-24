@@ -39,7 +39,7 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
         
     case .onLoadedAppSettings:
         if state.isPlayingMusic {
-            return .audioAction(.playMusic(.whispersOfTheForest))
+            return .audioAction(.playMusic(.whispersOfTheForest)) // TODO: In Audio Package, getAppSettings, then play music if needed
         }
         return nil
         
@@ -53,7 +53,7 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
         }
         
     case .deleteCustomPrompt:
-        return .appSettingsAction(.saveAppSettings)
+        return .saveAppSettings
         
     case .failedToLoadAppSettings,
          .failedToSaveAppSettings,

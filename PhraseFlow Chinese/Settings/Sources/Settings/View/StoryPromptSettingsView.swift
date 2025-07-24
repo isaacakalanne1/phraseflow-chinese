@@ -8,6 +8,7 @@
 import SwiftUI
 import FTColor
 import FTFont
+import Localization
 
 struct StoryPromptMenu: View {
     @EnvironmentObject var store: SettingsStore
@@ -15,18 +16,18 @@ struct StoryPromptMenu: View {
     var shouldDismissOnSelect = false
 
     var body: some View {
-        let isRandomPromptSelected = store.state.settingsState.storySetting == .random
+        let isRandomPromptSelected = store.state.storySetting == .random
 
         let isShowingAlert: Binding<Bool> = .init {
             store.state.viewState.isShowingCustomPromptAlert
         } set: { newValue in
-            store.dispatch(.appSettingsAction(.updateIsShowingCustomPromptAlert(newValue)))
+            store.dispatch(.updateIsShowingCustomPromptAlert(newValue))
         }
 
         let customPrompt: Binding<String> = .init {
-            store.state.settingsState.customPrompt
+            store.state.customPrompt
         } set: { newValue in
-            store.dispatch(.appSettingsAction(.updateCustomPrompt(newValue)))
+            store.dispatch(.updateCustomPrompt(newValue))
         }
 
         ScrollView {
@@ -44,14 +45,14 @@ struct StoryPromptMenu: View {
                             action: {
                                 withAnimation(.easeInOut) {
                                     store.dispatch(.audioAction(.playSound(.changeSettings)))
-                                    store.dispatch(.appSettingsAction(.updateStorySetting(.random)))
+                                    store.dispatch(.updateStorySetting(.random))
                                     if shouldDismissOnSelect {
                                         dismiss()
                                     }
                                 }
                             }
                         )
-                        .disabled(store.state.viewState.isWritingChapter)
+                        .disabled(store.state.isWritingChapter)
 
                         // Create Custom Story Button
                         ImageButton(
@@ -61,15 +62,15 @@ struct StoryPromptMenu: View {
                             action: {
                                 withAnimation(.easeInOut) {
                                     store.dispatch(.audioAction(.playSound(.changeSettings)))
-                                    store.dispatch(.appSettingsAction(.updateIsShowingCustomPromptAlert(true)))
+                                    store.dispatch(.updateIsShowingCustomPromptAlert(true))
                                 }
                             }
                         )
-                        .disabled(store.state.viewState.isWritingChapter)
+                        .disabled(store.state.isWritingChapter)
 
                         // Previously Created Custom Stories
-                        ForEach(store.state.settingsState.customPrompts, id: \.self) { prompt in
-                            let isSelectedPrompt = store.state.settingsState.storySetting == .customPrompt(prompt)
+                        ForEach(store.state.customPrompts, id: \.self) { prompt in
+                            let isSelectedPrompt = store.state.storySetting == .customPrompt(prompt)
                             let firstLetter = prompt.prefix(1).capitalized
                             let remainingLetters = prompt.dropFirst()
                             let displayPrompt = firstLetter + remainingLetters
@@ -82,7 +83,7 @@ struct StoryPromptMenu: View {
                                 action: {
                                     withAnimation(.easeInOut) {
                                         store.dispatch(.audioAction(.playSound(.changeSettings)))
-                                        store.dispatch(.appSettingsAction(.updateStorySetting(.customPrompt(prompt))))
+                                        store.dispatch(.updateStorySetting(.customPrompt(prompt)))
                                         if shouldDismissOnSelect {
                                             dismiss()
                                         }
@@ -92,7 +93,7 @@ struct StoryPromptMenu: View {
                             .disabled(store.state.viewState.isWritingChapter)
                             .contextMenu {
                                 Button(role: .destructive) {
-                                    store.dispatch(.appSettingsAction(.deleteCustomPrompt(prompt)))
+                                    store.dispatch(.deleteCustomPrompt(prompt))
                                 } label: {
                                     Label("Delete", systemImage: "trash")
                                 }
@@ -113,7 +114,7 @@ struct StoryPromptMenu: View {
             TextField(LocalizedString.customStoryTextfieldPlaceholder, text: customPrompt)
             Button(LocalizedString.customStoryOkButton, action: submitCustomPrompt)
             Button(LocalizedString.customStoryCancelButton, role: .cancel) {
-                store.dispatch(.appSettingsAction(.updateIsShowingCustomPromptAlert(false)))
+                store.dispatch(.updateIsShowingCustomPromptAlert(false))
             }
         } message: {
             Text(LocalizedString.customStoryAlertMessage)
@@ -122,8 +123,8 @@ struct StoryPromptMenu: View {
 
     private func submitCustomPrompt() {
         store.dispatch(.snackbarAction(.showSnackBar(.moderatingText)))
-        store.dispatch(.appSettingsAction(.updateIsShowingCustomPromptAlert(false)))
-        store.dispatch(.appSettingsAction(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt))))
+        store.dispatch(.updateIsShowingCustomPromptAlert(false))
+        store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))
     }
 }
 
@@ -146,7 +147,7 @@ struct StoryPromptSettingsView: View {
         .alert(
             LocalizedString.storyDidNotPassModeration,
             isPresented: Binding<Bool>(
-                get: { store.state.viewState.isShowingModerationFailedAlert },
+                get: { store.state.isShowingModerationFailedAlert },
                 set: { newValue in
                     if !newValue {
                         store.dispatch(.moderationAction(.dismissFailedModerationAlert))

@@ -92,13 +92,10 @@ class AudioPlayer {
     
     // MARK: - Sound Effect Methods
     
-    func playSound(_ sound: AppSound, shouldPlaySounds: Bool) throws {
-        guard shouldPlaySounds else { return }
-        
+    func playSound(_ sound: AppSound) throws {
         guard let url = sound.fileURL else {
             throw AudioPlayerError.soundFileNotFound
         }
-        
         let player = try AVAudioPlayer(contentsOf: url)
         player.volume = 0.7
         self.appSoundAudioPlayer = player

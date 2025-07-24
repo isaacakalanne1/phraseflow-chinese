@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Localization
 
 public enum SpeechSpeed: CaseIterable, Codable, Equatable, Sendable {
     case slow, normal, fast

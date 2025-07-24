@@ -13,79 +13,67 @@ import Speech
 import TextGeneration
 
 public struct AudioEnvironment: AudioEnvironmentProtocol {
-    let appSoundSubject = CurrentValueSubject<AppSound?, Never>(nil)
-    let clearDefinitionSubject = CurrentValueSubject<Void, Never>(())
-    let chapterSubject = CurrentValueSubject<Void, Never>(())
     let settingsEnvironment: SettingsEnvironmentProtocol
     private let audioPlayer: AudioPlayer
     
-    init(settingsEnvironment: SettingsEnvironmentProtocol) {
+    public init(settingsEnvironment: SettingsEnvironmentProtocol) {
         self.settingsEnvironment = settingsEnvironment
         self.audioPlayer = AudioPlayer()
+        if let settings = try? settingsEnvironment.loadAppSettings(),
+           settings.isPlayingMusic {
+            try? playMusic(.whispersOfTranquility, volume: .normal)
+        }
     }
     
-    func playSound(_ sound: AppSound) {
-        appSoundSubject.send(sound)
-    }
-    
-    func saveSpeechSpeed(_ speed: SpeechSpeed) {
+    public func saveSpeechSpeed(_ speed: SpeechSpeed) {
         settingsEnvironment.saveSpeechSpeed(speed)
-    }
-    
-    func clearCurrentDefinition() {
-        clearDefinitionSubject.send(())
     }
     
     // MARK: - AudioPlayer Wrapper Methods
     
-    func playChapterAudio(from time: Double?, rate: Float) async {
-        await audioPlayer.playAudio(from: time, playRate: rate)
-        clearCurrentDefinition()
-        chapterSubject.send(())
+    public func playChapterAudio(from time: Double?, rate: Float) async {
+        await audioPlayer.playAudio(from: time,
+                                    playRate: rate)
     }
     
-    func pauseChapterAudio() {
+    public func pauseChapterAudio() {
         audioPlayer.pauseAudio()
-        chapterSubject.send(())
     }
     
-    func playWord(_ word: WordTimeStampData, rate: Float) async {
+    public func playWord(_ word: WordTimeStampData, rate: Float) async {
         await audioPlayer.playWord(word, playRate: rate)
-        chapterSubject.send(())
     }
     
-    func playSound(_ sound: AppSound, shouldPlay: Bool) {
-        guard shouldPlay else { return }
-        try? audioPlayer.playSound(sound, shouldPlaySounds: shouldPlay)
+    public func playSound(_ sound: AppSound) {
+        try? audioPlayer.playSound(sound)
     }
-    
-    @discardableResult
-    func playMusic(_ music: MusicType, volume: MusicVolume) throws -> AVAudioPlayer {
-        let player = try audioPlayer.playMusic(music, volume: volume)
+
+    public func playMusic(
+        _ music: MusicType,
+        volume: MusicVolume
+    ) throws {
+        try audioPlayer.playMusic(music, volume: volume)
         settingsEnvironment.setIsPlayingMusic(true)
-        chapterSubject.send(())
-        return player
     }
     
-    func stopMusic() {
+    public func stopMusic() {
         audioPlayer.stopMusic()
         settingsEnvironment.setIsPlayingMusic(false)
-        chapterSubject.send(())
     }
     
-    func setMusicVolume(_ volume: MusicVolume) {
+    public func setMusicVolume(_ volume: MusicVolume) {
         audioPlayer.setMusicVolume(volume)
     }
     
-    func isNearEndOfTrack(chapter: Chapter?) -> Bool {
-        return audioPlayer.isNearEndOfTrack(chapter: chapter)
+    public func isNearEndOfTrack(chapter: Chapter?) -> Bool {
+        audioPlayer.isNearEndOfTrack(chapter: chapter)
     }
     
-    func getCurrentPlaybackTime() -> Double {
-        return audioPlayer.getCurrentPlaybackTime()
+    public func getCurrentPlaybackTime() -> Double {
+        audioPlayer.getCurrentPlaybackTime()
     }
     
-    func updatePlaybackRate(_ playRate: Float) {
+    public func updatePlaybackRate(_ playRate: Float) {
         audioPlayer.updatePlaybackRate(playRate)
     }
 }

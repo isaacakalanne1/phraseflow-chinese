@@ -8,13 +8,7 @@
 import Foundation
 import Combine
 
-protocol SettingsEnvironmentProtocol {
-    var settingsSubject: CurrentValueSubject<Void, Never> { get }
-    var speechSpeedSubject: CurrentValueSubject<SpeechSpeed, Never> { get }
-    var isPlayingMusicSubject: CurrentValueSubject<Bool, Never> { get }
-    var customPromptSubject: CurrentValueSubject<String, Never> { get }
-    var storySettingSubject: CurrentValueSubject<StorySetting, Never> { get }
-    
+public protocol SettingsEnvironmentProtocol {
     var deviceLanguage: Language? { get }
     var currentVoice: Voice { get }
     var speechSpeed: SpeechSpeed { get }
