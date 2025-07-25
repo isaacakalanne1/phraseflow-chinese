@@ -9,7 +9,7 @@ import AVFoundation
 import Foundation
 
 /// Utility functions for handling audio extraction - created as standalone functions instead of Data extensions
-class AudioExtractor {
+public class AudioExtractor {
 
     /// Extracts a segment of audio data based on specified time range
     /// - Parameters:

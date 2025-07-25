@@ -10,9 +10,9 @@ import Settings
 
 public struct Sentence: Codable, Equatable, Hashable {
     let id: UUID
-    let translation: String
+    public let translation: String
     let original: String
-    var timestamps: [WordTimeStampData]
+    public var timestamps: [WordTimeStampData]
 
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

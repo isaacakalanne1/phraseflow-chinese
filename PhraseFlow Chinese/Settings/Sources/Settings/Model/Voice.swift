@@ -93,7 +93,7 @@ public enum Voice: String, Codable, CaseIterable, Equatable, Sendable {
         }
     }
 
-    var speechSynthesisVoiceName: String {
+    public var speechSynthesisVoiceName: String {
         switch self {
         case .xiaoxiao:
             "zh-CN-XiaoxiaoNeural"
@@ -154,7 +154,7 @@ public enum Voice: String, Codable, CaseIterable, Equatable, Sendable {
         UIImage(named: "thumbnail-\(rawValue)")
     }
 
-    var language: Language {
+    public var language: Language {
         switch self {
         case .xiaoxiao,
                 .yunjian:

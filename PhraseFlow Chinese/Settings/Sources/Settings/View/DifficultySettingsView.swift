@@ -32,7 +32,7 @@ struct DifficultyMenu: View {
                             action: {
                                 withAnimation(.easeInOut) {
                                     store.dispatch(.playSound(.changeSettings))
-                                    store.dispatch(.appSettingsAction(.updateDifficulty(difficulty)))
+                                    store.dispatch(.updateDifficulty(difficulty))
                                     if shouldDismissOnSelect {
                                         dismiss()
                                     }

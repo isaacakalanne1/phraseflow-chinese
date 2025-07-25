@@ -103,10 +103,10 @@ public struct LanguageMenu: View {
     }
 }
 
-struct LanguageSettingsView: View {
+public struct LanguageSettingsView: View {
     @Environment(\.dismiss) var dismiss
 
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 0) {
             LanguageMenu(shouldDismissOnSelect: true)
 

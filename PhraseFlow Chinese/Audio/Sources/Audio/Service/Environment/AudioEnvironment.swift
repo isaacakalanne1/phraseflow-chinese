@@ -8,7 +8,6 @@
 import Foundation
 import Combine
 import AVKit
-import Speech
 
 public struct AudioEnvironment: AudioEnvironmentProtocol {
     private let audioPlayer: AudioPlayer

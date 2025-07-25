@@ -9,6 +9,7 @@ import Audio
 import Foundation
 import Combine
 import Settings
+import TextGeneration
 
 struct DefinitionEnvironment: DefinitionEnvironmentProtocol {
     let clearDefinitionSubject = CurrentValueSubject<Void, Never>(())

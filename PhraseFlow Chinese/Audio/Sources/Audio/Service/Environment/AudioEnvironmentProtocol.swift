@@ -8,7 +8,6 @@
 import Foundation
 import Combine
 import AVKit
-import Speech
 
 public protocol AudioEnvironmentProtocol {
     func playChapterAudio(from time: Double?, rate: Float) async

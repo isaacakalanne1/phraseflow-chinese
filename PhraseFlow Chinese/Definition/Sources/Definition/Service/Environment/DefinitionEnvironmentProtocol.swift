@@ -5,14 +5,14 @@
 //  Created by iakalann on 18/07/2025.
 //
 
+import Audio
 import Foundation
 import Combine
 import Settings
+import TextGeneration
 
 protocol DefinitionEnvironmentProtocol {
     var clearDefinitionSubject: CurrentValueSubject<Void, Never> { get }
-    var definitionServices: DefinitionServicesProtocol { get }
-    var definitionDataStore: DefinitionDataStoreProtocol { get }
     
     func clearCurrentDefinition()
     func fetchDefinitions(in sentence: Sentence?, chapter: Chapter, deviceLanguage: Language) async throws -> [Definition]

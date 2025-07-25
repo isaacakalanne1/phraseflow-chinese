@@ -7,6 +7,7 @@
 
 import Charts
 import FTColor
+import FTFont
 import SwiftUI
 import Localization
 
@@ -21,7 +22,7 @@ struct DefinitionsChartView: View {
         // 1) Compute dailyCumulativeCount. You might do this in your store or here:
         // Example: let dailyCumulativeCount = makeDailyCumulativeCount(from: definitions)
         // But in your code, you said you have:
-        let dailyCumulativeCount = store.state.dailyCreationAndStudyCumulative(from: definitions)
+        let dailyCumulativeCount: [DailyCreationAndStudyStats] = store.state.dailyCreationAndStudyCumulative(from: definitions)
 
         // 2) Get the maximum cumulative count
         let maxCount = dailyCumulativeCount
@@ -317,17 +318,22 @@ struct DefinitionsChartView: View {
 
     // MARK: - Next Two Checkpoints Logic
 
+    struct Checkpoint {
+        let value: Int
+        let label: String
+    }
+    
     /// Returns up to two upcoming checkpoints based on the user's current maxCount.
     ///
     /// - If maxCount < 400 => returns [ (400, "Intermediate"), (1000, "Advanced") ]
     /// - If 400 <= maxCount < 1000 => returns [ (1000, "Advanced"), (2000, "Expert") ]
     /// - If 1000 <= maxCount < 2000 => returns [ (2000, "Expert") ]
     /// - If maxCount >= 2000 => returns []
-    private func checkpoints(for maxCount: Int) -> [(value: Int, label: String)] {
+    private func checkpoints(for maxCount: Int) -> [Checkpoint] {
         let allCheckpoints = [
-            (value: 400, label: "Intermediate"),
-            (value: 1000, label: "Advanced"),
-            (value: 2000, label: "Expert"),
+            Checkpoint(value: 400, label: "Intermediate"),
+            Checkpoint(value: 1000, label: "Advanced"),
+            Checkpoint(value: 2000, label: "Expert"),
         ]
 
         // Find the first checkpoint that is strictly above the user's max
@@ -337,7 +343,7 @@ struct DefinitionsChartView: View {
         }
 
         // Return that checkpoint plus the next one (if it exists)
-        var result: [(Int, String)] = []
+        var result: [Checkpoint] = []
         result.append(allCheckpoints[firstIndex])
 
         let nextIndex = firstIndex + 1

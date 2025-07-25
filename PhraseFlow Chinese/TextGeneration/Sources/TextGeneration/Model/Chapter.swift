@@ -11,11 +11,11 @@ import UIKit
 
 public struct Chapter: Codable, Equatable, Hashable {
     var id: UUID
-    let storyId: UUID
+    public let storyId: UUID
     var title: String
     public var sentences: [Sentence]
-    var audioVoice: Voice
-    var audio: ChapterAudio
+    public var audioVoice: Voice
+    public var audio: ChapterAudio
     var passage: String
     
     // Story-level properties moved to Chapter

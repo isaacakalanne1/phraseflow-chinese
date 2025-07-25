@@ -11,7 +11,7 @@ public struct WordTimeStampData: Codable, Equatable, Hashable {
     let id: UUID
     let storyId: UUID
     let chapterIndex: Int
-    var word: String
+    public var word: String
     public let time: Double
     public var duration: Double
 

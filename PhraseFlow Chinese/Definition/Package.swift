@@ -15,12 +15,14 @@ let package = Package(
             targets: ["Definition"]),
     ],
     dependencies: [
+        .package(name: "Audio", path: "../Audio"),
         .package(name: "FTColor", path: "../FTColor"),
         .package(name: "FTFont", path: "../FTFont"),
         .package(name: "Localization", path: "../Localization"),
         .package(name: "Settings", path: "../Settings"),
         .package(name: "Speech", path: "../Speech"),
         .package(name: "Story", path: "../Story"),
+        .package(name: "TextGeneration", path: "../TextGeneration"),
         .package(name: "ReduxKit", path: "../ReduxKit"),
     ],
     targets: [
@@ -29,13 +31,15 @@ let package = Package(
         .target(
             name: "Definition",
             dependencies: [
+                "Audio",
                 "FTColor",
                 "FTFont",
                 "Localization",
                 "Settings",
                 "Speech",
                 "Story",
-                .product(name: "ReduxKit", package: "ReduxKit")
+                "TextGeneration",
+                "ReduxKit"
             ]
         ),
         .testTarget(

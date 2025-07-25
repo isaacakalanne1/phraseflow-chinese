@@ -17,6 +17,7 @@ let package = Package(
     dependencies: [
         .package(name: "Audio", path: "../Audio"),
         .package(name: "ReduxKit", path: "../ReduxKit"),
+        .package(name: "Definition", path: "../Definition"),
         .package(name: "FTColor", path: "../FTColor"),
         .package(name: "FTFont", path: "../FTFont"),
         .package(name: "FTStyleKit", path: "../FTStyleKit"),
@@ -33,6 +34,7 @@ let package = Package(
             dependencies: [
                 "Audio",
                 "ReduxKit",
+                "Definition",
                 "FTColor",
                 "FTFont",
                 "FTStyleKit",

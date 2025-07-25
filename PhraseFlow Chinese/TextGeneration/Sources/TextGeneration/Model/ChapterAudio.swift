@@ -9,4 +9,8 @@ import SwiftUI
 
 public struct ChapterAudio: Codable, Equatable, Hashable {
     let data: Data
+    
+    public init(data: Data) {
+        self.data = data
+    }
 }

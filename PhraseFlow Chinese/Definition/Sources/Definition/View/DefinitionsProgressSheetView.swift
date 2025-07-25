@@ -8,7 +8,9 @@
 import Audio
 import FTColor
 import FTFont
+import FTStyleKit
 import Localization
+import Settings
 import SwiftUI
 
 struct DefinitionsProgressSheetView: View {

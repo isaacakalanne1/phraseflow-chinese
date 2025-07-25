@@ -87,7 +87,7 @@ public enum Language: String, Codable, CaseIterable, Sendable {
         }
     }
 
-    var speechCode: String {
+    public var speechCode: String {
         switch self {
         case .arabicGulf:
             "ar-AE"
