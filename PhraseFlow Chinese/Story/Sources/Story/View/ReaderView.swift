@@ -6,8 +6,9 @@
 //
 
 import FTColor
-import SwiftUI
 import FTFont
+import FTStyleKit
+import SwiftUI
 import TextGeneration
 
 public struct ReaderView: View {

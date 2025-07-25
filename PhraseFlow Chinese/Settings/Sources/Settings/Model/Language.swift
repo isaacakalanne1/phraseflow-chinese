@@ -50,7 +50,7 @@ public enum Language: String, Codable, CaseIterable, Sendable {
         }
     }
 
-    var key: String {
+    public var key: String {
         let firstLetter = rawValue.prefix(1).capitalized
         let remainingLetters = rawValue.dropFirst()
         return firstLetter + remainingLetters
@@ -182,7 +182,7 @@ public enum Language: String, Codable, CaseIterable, Sendable {
         }
     }
 
-    var schemaKey: String {
+    public var schemaKey: String {
         switch self {
         case .english, .englishUK:
             rawValue + "Only"

@@ -24,6 +24,9 @@ let package = Package(
             name: "FTStyleKit",
             dependencies: [
                 "FTColor"
+            ],
+            resources: [
+                .process("Resources")
             ]
         ),
         .testTarget(

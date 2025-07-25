@@ -8,6 +8,7 @@
 import SwiftUI
 import ReduxKit
 
+@MainActor
 public let snackBarReducer: Reducer<SnackBarState, SnackBarAction> = { state, action in
     var newState = state
 

@@ -8,6 +8,7 @@
 import SwiftUI
 import FTColor
 import FTFont
+import Localization
 
 struct DifficultyMenu: View {
     @EnvironmentObject var store: SettingsStore

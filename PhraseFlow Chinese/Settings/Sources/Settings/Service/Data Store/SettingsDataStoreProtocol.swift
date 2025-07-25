@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol SettingsDataStoreProtocol {
+public protocol SettingsDataStoreProtocol {
     func loadAppSettings() throws -> SettingsState
     func saveAppSettings(_ settings: SettingsState) throws
 }

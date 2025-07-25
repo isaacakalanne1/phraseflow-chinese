@@ -21,7 +21,6 @@ let package = Package(
         .package(name: "FTFont", path: "../FTFont"),
         .package(name: "FTStyleKit", path: "../FTStyleKit"),
         .package(name: "Loading", path: "../Loading"),
-        .package(name: "Media", path: "../Media"),
         .package(name: "Speech", path: "../Speech"),
         .package(name: "Settings", path: "../Settings"),
         .package(name: "TextGeneration", path: "../TextGeneration")
@@ -38,7 +37,6 @@ let package = Package(
                 "FTFont",
                 "FTStyleKit",
                 "Loading",
-                "Media",
                 "Speech",
                 "Settings",
                 "TextGeneration"

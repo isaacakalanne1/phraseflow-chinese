@@ -29,7 +29,7 @@ public struct ImageButton: View {
         self.action = action
     }
     
-    var body: some View {
+    public var body: some View {
         Button(action: action) {
             ZStack {
                 if let image = image {

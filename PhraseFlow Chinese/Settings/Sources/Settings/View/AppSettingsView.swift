@@ -1,3 +1,11 @@
+//
+//  CreateStorySettingsView.swift
+//  FlowTale
+//
+//  Created by iakalann on 25/07/2025.
+//
+
+import Audio
 import SwiftUI
 import ReduxKit
 import Localization
@@ -5,9 +13,13 @@ import Localization
 public struct AppSettingsView: View {
     private var store: SettingsStore
     
-    public init() {
+    public init(
+        settingsDataStore: SettingsDataStoreProtocol,
+        audioEnvironment: AudioEnvironmentProtocol
+    ) {
         let state = SettingsState()
-        let environment = SettingsEnvironment()
+        let environment = SettingsEnvironment(settingsDataStore: settingsDataStore,
+                                              audioEnvironment: audioEnvironment)
         
         store = SettingsStore(
             initial: state,

@@ -8,6 +8,8 @@
 import SwiftUI
 import FTColor
 import FTFont
+import FTStyleKit
+import Localization
 
 struct VoiceMenu: View {
     @EnvironmentObject var store: SettingsStore

@@ -26,7 +26,6 @@ enum SettingsAction: Sendable {
     case updateShouldPlaySound(Bool)
     
     case updateStorySetting(StorySetting)
-    case addCustomPrompt(String)
     case updateCustomPrompt(String)
     case deleteCustomPrompt(String)
     case updateIsShowingCustomPromptAlert(Bool)

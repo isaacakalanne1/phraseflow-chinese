@@ -5,9 +5,9 @@
 //  Created by iakalann on 18/07/2025.
 //
 
+import Audio
 import Foundation
 import Combine
-import Moderation
 
 public protocol SettingsEnvironmentProtocol {
     var deviceLanguage: Language? { get }
@@ -16,8 +16,7 @@ public protocol SettingsEnvironmentProtocol {
     
     func saveAppSettings(_ settings: SettingsState) throws
     func loadAppSettings() throws -> SettingsState
-    func moderateText(_ text: String) async throws -> ModerationResponse
     func playSound(_ sound: AppSound)
-    func playMusic(_ music: MusicType)
+    func playMusic(_ music: MusicType) throws 
     func stopMusic()
 }

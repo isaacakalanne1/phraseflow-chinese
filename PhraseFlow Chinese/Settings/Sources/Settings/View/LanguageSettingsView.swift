@@ -39,7 +39,7 @@ public struct LanguageMenu: View {
         self.type = type
     }
 
-    var body: some View {
+    public var body: some View {
         ScrollView {
             Section {
                 LazyVGrid(columns: [

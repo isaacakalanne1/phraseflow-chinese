@@ -10,6 +10,7 @@ import Foundation
 public struct SnackBarState: Equatable {
     public var isShowing = false
     public var type: SnackBarType = .chapterReady
+    var shouldShowImageSpinner = false
     
     public init() {}
 }

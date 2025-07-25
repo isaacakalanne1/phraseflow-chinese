@@ -10,10 +10,17 @@ import FTFont
 import AVKit
 import FTColor
 
-struct MainButton: View {
+public struct MainButton: View {
     let title: String
     let action: () -> Void
-    var body: some View {
+    
+    public init(title: String,
+                action: @escaping () -> Void) {
+        self.title = title
+        self.action = action
+    }
+    
+    public var body: some View {
         Button {
             action()
         } label: {

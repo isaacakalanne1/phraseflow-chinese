@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum AppSound: String {
+public enum AppSound: String, Sendable {
     case actionButtonPress,
          changeSettings,
          togglePress,

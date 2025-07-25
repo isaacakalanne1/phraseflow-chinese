@@ -5,7 +5,7 @@
 //  Created by iakalann on 04/11/2024.
 //
 
-import Foundation
+import Localization
 
 enum Gender: String {
     case male, female

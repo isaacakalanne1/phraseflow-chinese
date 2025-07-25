@@ -53,7 +53,7 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.isShowingCustomPromptAlert = isShowingCustomPromptAlert
     }
 
-    init(from decoder: any Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.isShowingDefinition = try container.decode(Bool.self, forKey: .isShowingDefinition)
         self.isShowingEnglish = try container.decode(Bool.self, forKey: .isShowingEnglish)

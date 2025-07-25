@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension JSONDecoder {
+public extension JSONDecoder {
     static func createChapterResponseDecoder(
         deviceLanguageKey: String,
         targetLanguageKey: String

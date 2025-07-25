@@ -40,39 +40,26 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
     case .onLoadedAppSettings(let settings):
         return settings.isPlayingMusic ? .playMusic(.whispersOfTheForest) : nil
         
-    case .updateStorySetting(let setting):
-        switch setting {
-        case .random:
-            break
-        case .customPrompt(let prompt):
-            if !state.customPrompts.contains(prompt) {
-                do {
-                    let response = try await environment.moderateText(prompt)
-                    return response.didPassModeration ? .addCustomPrompt(prompt) : nil
-                } catch {
-                    return nil
-                }
-            }
-        }
-        return nil
-        
     case .playSound(let sound):
         environment.playSound(sound)
+        return nil
         
     case .playMusic(let music):
-        environment.playMusic(music)
+        try? environment.playMusic(music)
+        return nil
         
     case .stopMusic:
         environment.stopMusic()
+        return nil
         
-    case .deleteCustomPrompt,
-            .addCustomPrompt:
+    case .deleteCustomPrompt:
         return .saveAppSettings
         
     case .failedToLoadAppSettings,
          .failedToSaveAppSettings,
          .updateCustomPrompt,
-         .updateIsShowingCustomPromptAlert:
+         .updateIsShowingCustomPromptAlert,
+         .updateStorySetting:
         return nil
     }
 }

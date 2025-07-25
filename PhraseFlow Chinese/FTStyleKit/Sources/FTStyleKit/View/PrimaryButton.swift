@@ -8,12 +8,12 @@
 import SwiftUI
 import FTColor
 
-struct PrimaryButton<Content: View>: View {
+public struct PrimaryButton<Content: View>: View {
     @ViewBuilder let icon: Content
     let title: String
     let action: (() -> Void)
 
-    init(@ViewBuilder icon: () -> Content = { EmptyView() },
+    public init(@ViewBuilder icon: () -> Content = { EmptyView() },
          title: String,
          action: @escaping (() -> Void)) {
         self.icon = icon()
@@ -21,7 +21,7 @@ struct PrimaryButton<Content: View>: View {
         self.action = action
     }
 
-    var body: some View {
+    public var body: some View {
         Button {
             action()
         } label: {

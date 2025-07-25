@@ -10,7 +10,6 @@
 		BB34C51E2E29525B00238EA8 /* FTColor in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C51D2E29525B00238EA8 /* FTColor */; };
 		BB34C5202E29526700238EA8 /* Localization in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C51F2E29526700238EA8 /* Localization */; };
 		BB34C5222E29526C00238EA8 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5212E29526C00238EA8 /* Navigation */; };
-		BB34C5242E29BF3500238EA8 /* Media in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5232E29BF3500238EA8 /* Media */; };
 		BB34C5262E29BF4700238EA8 /* APIRequest in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5252E29BF4700238EA8 /* APIRequest */; };
 		BB34C5282E29BF4700238EA8 /* AppleIcon in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5272E29BF4700238EA8 /* AppleIcon */; };
 		BB34C52A2E29BF4700238EA8 /* Audio in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5292E29BF4700238EA8 /* Audio */; };
@@ -69,7 +68,6 @@
 		BB34C50B2E28373F00238EA8 /* Subscription */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Subscription; sourceTree = "<group>"; };
 		BB34C50C2E285EEC00238EA8 /* ImageGeneration */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ImageGeneration; sourceTree = "<group>"; };
 		BB34C5112E28615700238EA8 /* TextGeneration */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TextGeneration; sourceTree = "<group>"; };
-		BB34C5122E286C6E00238EA8 /* Media */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Media; sourceTree = "<group>"; };
 		BB34C5132E28F62B00238EA8 /* FTFont */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FTFont; sourceTree = "<group>"; };
 		BB34C5142E28F6F800238EA8 /* Audio */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Audio; sourceTree = "<group>"; };
 		BB34C5152E28F97000238EA8 /* SnackBar */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SnackBar; sourceTree = "<group>"; };
@@ -116,7 +114,6 @@
 				BB34C5382E2A4FB200238EA8 /* Settings in Frameworks */,
 				BB34C5282E29BF4700238EA8 /* AppleIcon in Frameworks */,
 				BB34C53E2E2A4FB200238EA8 /* Story in Frameworks */,
-				BB34C5242E29BF3500238EA8 /* Media in Frameworks */,
 				BB34C5222E29526C00238EA8 /* Navigation in Frameworks */,
 				BB34C5302E29BF4700238EA8 /* FTFont in Frameworks */,
 			);
@@ -153,7 +150,6 @@
 				BB34C50C2E285EEC00238EA8 /* ImageGeneration */,
 				BB34C5162E28FA1900238EA8 /* Loading */,
 				BB34C5072E28264C00238EA8 /* Localization */,
-				BB34C5122E286C6E00238EA8 /* Media */,
 				BB34C50A2E2836E000238EA8 /* Moderation */,
 				BB34C5192E29012A00238EA8 /* Navigation */,
 				112BE27B2E2AE3E0006E80FC /* ReduxKit */,

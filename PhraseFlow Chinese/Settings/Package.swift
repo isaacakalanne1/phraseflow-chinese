@@ -34,7 +34,8 @@ let package = Package(
                 "FTColor",
                 "FTFont",
                 "FTStyleKit"
-            ]),
+            ]
+        ),
         .testTarget(
             name: "SettingsTests",
             dependencies: ["Settings"]

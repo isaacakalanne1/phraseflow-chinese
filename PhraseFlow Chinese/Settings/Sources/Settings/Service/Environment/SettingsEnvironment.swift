@@ -17,15 +17,12 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
     
     private let settingsDataStore: SettingsDataStoreProtocol
     private let audioEnvironment: AudioEnvironmentProtocol
-    private let moderationEnvironment: ModerationEnvironmentProtocol
     
     init(
         settingsDataStore: SettingsDataStoreProtocol,
-        moderationEnvironment: ModerationEnvironmentProtocol,
         audioEnvironment: AudioEnvironmentProtocol
     ) {
         self.settingsDataStore = settingsDataStore
-        self.moderationEnvironment = moderationEnvironment
         self.audioEnvironment = audioEnvironment
     }
     
@@ -51,23 +48,19 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
         return try settingsDataStore.loadAppSettings()
     }
     
-    func moderateText(_ text: String) async throws -> ModerationResponse {
-        try await moderationEnvironment.moderateText(text)
-    }
-    
     func updateSpeechSpeed(_ newSpeed: SpeechSpeed) throws {
         playSound(.togglePress)
-        var settings = try settingsEnvironment.loadAppSettings()
+        var settings = try loadAppSettings()
         settings.speechSpeed = newSpeed
-        settingsEnvironment.saveAppSettings(settings)
+        try saveAppSettings(settings)
     }
     
-    func playSound(_ sound: AppSound) {
+    public func playSound(_ sound: AppSound) {
         audioEnvironment.playSound(sound)
     }
     
-    func playMusic(_ music: MusicType) {
-        audioEnvironment.playMusic(music, volume: .normal)
+    public func playMusic(_ music: MusicType) throws {
+        try audioEnvironment.playMusic(music, volume: .normal)
     }
     
     public func stopMusic() {

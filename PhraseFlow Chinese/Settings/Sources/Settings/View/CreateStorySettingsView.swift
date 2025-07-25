@@ -6,6 +6,7 @@
 //
 
 import AVKit
+import FTStyleKit
 import Localization
 import SwiftUI
 
@@ -65,10 +66,6 @@ struct CreateStorySettingsView: View {
                 }
             }
             .frame(maxHeight: .infinity)
-
-            CreateStoryButton()
-                .frame(maxWidth: .infinity)
-                .padding([.horizontal, .bottom])
         }
         .backgroundImage(type: .createStory)
         .navigationTitle(LocalizedString.createStory)

@@ -20,6 +20,14 @@ struct StoryListView: View {
             } else {
                 StoryListContent()
             }
+            
+            MainButton(title: LocalizedString.newStory.uppercased()) {
+                store.dispatch(.playSound(.largeBoom))
+                store.dispatch(.createChapter(.newStory))
+            }
+            .disabled(store.state.isWritingChapter)
+            .frame(maxWidth: .infinity)
+            .padding([.horizontal, .bottom])
 
             PrimaryButton(
                 icon: {

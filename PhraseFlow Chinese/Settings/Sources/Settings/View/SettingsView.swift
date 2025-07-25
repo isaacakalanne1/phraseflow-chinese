@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FTColor
+import Localization
 
 struct SettingsView: View {
     @EnvironmentObject var store: SettingsStore
@@ -66,7 +67,6 @@ struct SettingsView: View {
                 }
             }
         }
-        .navigationTitle(ContentTab.settings.title)
         .navigationBarTitleDisplayMode(.inline)
         .background(FTColor.background)
         .scrollContentBackground(.hidden)

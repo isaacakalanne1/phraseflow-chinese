@@ -19,7 +19,7 @@ public struct SnackbarView: View {
             initial: state,
             reducer: snackBarReducer,
             environment: environment,
-            middleware: SnackBarMiddleware(),
+            middleware: snackBarMiddleware,
             subscriber: snackBarSubscriber
         )
     }
