@@ -21,7 +21,6 @@ let package = Package(
         .package(name: "Localization", path: "../Localization"),
         .package(name: "Settings", path: "../Settings"),
         .package(name: "Speech", path: "../Speech"),
-        .package(name: "Story", path: "../Story"),
         .package(name: "TextGeneration", path: "../TextGeneration"),
         .package(name: "ReduxKit", path: "../ReduxKit"),
     ],
@@ -37,7 +36,6 @@ let package = Package(
                 "Localization",
                 "Settings",
                 "Speech",
-                "Story",
                 "TextGeneration",
                 "ReduxKit"
             ]

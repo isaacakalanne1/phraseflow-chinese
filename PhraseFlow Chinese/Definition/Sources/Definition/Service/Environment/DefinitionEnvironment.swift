@@ -16,15 +16,15 @@ struct DefinitionEnvironment: DefinitionEnvironmentProtocol {
     
     private let definitionServices: DefinitionServicesProtocol
     private let audioEnvironment: AudioEnvironmentProtocol
-    private let definitionDataStore: DefinitionDataStoreProtocol
+    private let dataStore: DefinitionDataStoreProtocol
     private let settingsEnvironment: SettingsEnvironmentProtocol
     
     init(definitionServices: DefinitionServicesProtocol,
-         definitionDataStore: DefinitionDataStoreProtocol,
+         dataStore: DefinitionDataStoreProtocol,
          audioEnvironment: AudioEnvironmentProtocol,
          settingsEnvironment: SettingsEnvironmentProtocol) {
         self.definitionServices = definitionServices
-        self.definitionDataStore = definitionDataStore
+        self.dataStore = dataStore
         self.audioEnvironment = audioEnvironment
         self.settingsEnvironment = settingsEnvironment
     }
@@ -38,15 +38,15 @@ struct DefinitionEnvironment: DefinitionEnvironmentProtocol {
     }
     
     func saveDefinitions(_ definitions: [Definition]) throws {
-        try definitionDataStore.saveDefinitions(definitions)
+        try dataStore.saveDefinitions(definitions)
     }
     
     func saveSentenceAudio(_ audioData: Data, id: UUID) throws {
-        try definitionDataStore.saveSentenceAudio(audioData, id: id)
+        try dataStore.saveSentenceAudio(audioData, id: id)
     }
     
     func loadSentenceAudio(id: UUID) throws -> Data {
-        return try definitionDataStore.loadSentenceAudio(id: id)
+        return try dataStore.loadSentenceAudio(id: id)
     }
     
     func getAppSettings() throws -> SettingsState {

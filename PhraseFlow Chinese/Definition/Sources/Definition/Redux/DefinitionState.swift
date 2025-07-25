@@ -7,8 +7,9 @@
 
 import Foundation
 import Settings
+import TextGeneration
 
-struct DefinitionState {
+struct DefinitionState: Equatable {
     var currentDefinition: Definition?
     var definitions: [Definition]
     var filterLanguage: Language = .mandarinChinese

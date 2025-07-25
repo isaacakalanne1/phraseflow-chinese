@@ -8,7 +8,7 @@
 import Foundation
 import Settings
 
-public struct Sentence: Codable, Equatable, Hashable {
+public struct Sentence: Codable, Equatable, Hashable, Sendable {
     let id: UUID
     public let translation: String
     let original: String

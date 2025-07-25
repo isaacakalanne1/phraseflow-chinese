@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-protocol DefinitionDataStoreProtocol {
+public protocol DefinitionDataStoreProtocol {
     func loadDefinitions() throws -> [Definition]
     func saveDefinitions(_ definitions: [Definition]) throws
     func deleteDefinition(with id: UUID) throws

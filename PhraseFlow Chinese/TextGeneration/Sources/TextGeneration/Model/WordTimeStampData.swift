@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct WordTimeStampData: Codable, Equatable, Hashable {
+public struct WordTimeStampData: Codable, Equatable, Hashable, Sendable {
     let id: UUID
     let storyId: UUID
     let chapterIndex: Int

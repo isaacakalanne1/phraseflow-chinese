@@ -9,7 +9,7 @@ import Audio
 import Foundation
 import Settings
 
-enum DefinitionAction {
+enum DefinitionAction: Sendable {
     case defineSentence(sentenceIndex: Int, previousDefinitions: [Definition])
     case failedToLoadDefinitions
 

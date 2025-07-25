@@ -8,9 +8,9 @@
 import Foundation
 import Settings
 import Speech
-import Story
+import TextGeneration
 
-public struct Definition: Codable, Equatable, Hashable {
+public struct Definition: Codable, Equatable, Hashable, Sendable {
     var id: UUID // Unique identifier for this definition
     var creationDate: Date
     var studiedDates: [Date]
