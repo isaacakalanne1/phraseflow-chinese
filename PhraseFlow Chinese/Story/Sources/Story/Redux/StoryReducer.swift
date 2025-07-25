@@ -180,7 +180,9 @@ let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
             .deleteStory,
             .saveChapter,
             .failedToDeleteStory,
-            .failedToSaveChapter:
+            .failedToSaveChapter,
+            .playChapter,
+            .pauseChapter:
         break
     }
 

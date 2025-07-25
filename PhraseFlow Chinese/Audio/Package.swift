@@ -15,8 +15,7 @@ let package = Package(
             targets: ["Audio"]),
     ],
     dependencies: [
-        .package(name: "ReduxKit", path: "../ReduxKit"),
-        .package(name: "Settings", path: "../Settings"),
+        .package(name: "ReduxKit", path: "../ReduxKit")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -24,8 +23,7 @@ let package = Package(
         .target(
             name: "Audio",
             dependencies: [
-                .product(name: "ReduxKit", package: "ReduxKit"),
-                "Settings"
+                "ReduxKit"
             ],
             resources: [
                 .process("Resources")

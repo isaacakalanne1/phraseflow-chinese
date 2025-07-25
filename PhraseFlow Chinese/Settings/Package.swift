@@ -15,10 +15,12 @@ let package = Package(
             targets: ["Settings"]),
     ],
     dependencies: [
+        .package(name: "Audio", path: "../Audio"),
         .package(name: "ReduxKit", path: "../ReduxKit"),
         .package(name: "Localization", path: "../Localization"),
         .package(name: "FTColor", path: "../FTColor"),
-        .package(name: "FTFont", path: "../FTFont")
+        .package(name: "FTFont", path: "../FTFont"),
+        .package(name: "FTStyleKit", path: "../FTStyleKit")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -26,10 +28,12 @@ let package = Package(
         .target(
             name: "Settings",
             dependencies: [
-                .product(name: "ReduxKit", package: "ReduxKit"),
+                "Audio",
+                "ReduxKit",
                 "Localization",
                 "FTColor",
-                "FTFont"
+                "FTFont",
+                "FTStyleKit"
             ]),
         .testTarget(
             name: "SettingsTests",

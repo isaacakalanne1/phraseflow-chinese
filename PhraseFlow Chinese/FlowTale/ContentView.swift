@@ -55,7 +55,7 @@ struct ContentView: View {
         .onChange(of: store.state.viewState.loadingState) { _, newValue in
             if newValue != .complete,
                newValue != .writing {
-                store.dispatch(.audioAction(.playSound(.progressUpdate)))
+                store.dispatch(.playSound(.progressUpdate))
             }
         }
         .background(FTColor.background)

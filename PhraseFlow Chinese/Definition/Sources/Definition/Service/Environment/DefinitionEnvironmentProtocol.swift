@@ -20,4 +20,5 @@ protocol DefinitionEnvironmentProtocol {
     func saveSentenceAudio(_ audioData: Data, id: UUID) throws
     func loadSentenceAudio(id: UUID) throws -> Data
     func getAppSettings() throws -> SettingsState
+    func playSound(_ sound: AppSound)
 }

@@ -81,13 +81,16 @@ let definitionMiddleware: Middleware<DefinitionState, DefinitionAction, Definiti
     case .onShownDefinition(let definition, let shouldPlay):
         try? environment.saveDefinitions([definition])
         environment.viewStateEnvironment.setIsDefining(false)
-        return shouldPlay ? .audioAction(.playWord(definition.timestampData)) : nil
+        return nil
     case .updateStudiedWord:
         return nil
 
     case .refreshDefinitionView:
         environment.viewStateEnvironment.refreshDefinitionView()
         return nil
+        
+    case .playSound(let appSound):
+        environment.playSound(appSound)
         
     case .failedToLoadDefinitions,
          .failedToDeleteDefinition,

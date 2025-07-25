@@ -8,6 +8,7 @@
 import SwiftUI
 import FTColor
 import FTFont
+import FTStyleKit
 import Localization
 
 struct StoryPromptMenu: View {
@@ -19,7 +20,7 @@ struct StoryPromptMenu: View {
         let isRandomPromptSelected = store.state.storySetting == .random
 
         let isShowingAlert: Binding<Bool> = .init {
-            store.state.viewState.isShowingCustomPromptAlert
+            store.state.isShowingCustomPromptAlert
         } set: { newValue in
             store.dispatch(.updateIsShowingCustomPromptAlert(newValue))
         }
@@ -44,7 +45,7 @@ struct StoryPromptMenu: View {
                             isSelected: isRandomPromptSelected,
                             action: {
                                 withAnimation(.easeInOut) {
-                                    store.dispatch(.audioAction(.playSound(.changeSettings)))
+                                    store.dispatch(.playSound(.changeSettings))
                                     store.dispatch(.updateStorySetting(.random))
                                     if shouldDismissOnSelect {
                                         dismiss()
@@ -61,7 +62,7 @@ struct StoryPromptMenu: View {
                             isSelected: false,
                             action: {
                                 withAnimation(.easeInOut) {
-                                    store.dispatch(.audioAction(.playSound(.changeSettings)))
+                                    store.dispatch(.playSound(.changeSettings))
                                     store.dispatch(.updateIsShowingCustomPromptAlert(true))
                                 }
                             }
@@ -82,7 +83,7 @@ struct StoryPromptMenu: View {
                                 isTextCentered: true,
                                 action: {
                                     withAnimation(.easeInOut) {
-                                        store.dispatch(.audioAction(.playSound(.changeSettings)))
+                                        store.dispatch(.playSound(.changeSettings))
                                         store.dispatch(.updateStorySetting(.customPrompt(prompt)))
                                         if shouldDismissOnSelect {
                                             dismiss()
@@ -124,7 +125,7 @@ struct StoryPromptMenu: View {
     private func submitCustomPrompt() {
         store.dispatch(.snackbarAction(.showSnackBar(.moderatingText)))
         store.dispatch(.updateIsShowingCustomPromptAlert(false))
-        store.dispatch(.updateStorySetting(.customPrompt(store.state.settingsState.customPrompt)))
+        store.dispatch(.updateStorySetting(.customPrompt(store.state.customPrompt)))
     }
 }
 

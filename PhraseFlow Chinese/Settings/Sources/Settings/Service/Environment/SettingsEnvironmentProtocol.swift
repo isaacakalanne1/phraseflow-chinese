@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import Moderation
 
 public protocol SettingsEnvironmentProtocol {
     var deviceLanguage: Language? { get }
@@ -15,8 +16,8 @@ public protocol SettingsEnvironmentProtocol {
     
     func saveAppSettings(_ settings: SettingsState) throws
     func loadAppSettings() throws -> SettingsState
-    func saveSpeechSpeed(_ speed: SpeechSpeed)
-    func setIsPlayingMusic(_ isPlaying: Bool)
-    func addCustomPrompt(_ prompt: String)
-    func setStorySetting(_ setting: StorySetting)
+    func moderateText(_ text: String) async throws -> ModerationResponse
+    func playSound(_ sound: AppSound)
+    func playMusic(_ music: MusicType)
+    func stopMusic()
 }

@@ -57,6 +57,7 @@
 
 /* Begin PBXFileReference section */
 		112BE27B2E2AE3E0006E80FC /* ReduxKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ReduxKit; sourceTree = "<group>"; };
+		112BE27C2E32C39F006E80FC /* FTStyleKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FTStyleKit; sourceTree = "<group>"; };
 		BB34C5022E2430BA00238EA8 /* Study */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Study; sourceTree = "<group>"; };
 		BB34C5032E25259C00238EA8 /* Definition */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Definition; sourceTree = "<group>"; };
 		BB34C5042E25279800238EA8 /* Story */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Story; sourceTree = "<group>"; };
@@ -148,6 +149,7 @@
 				BB34C5032E25259C00238EA8 /* Definition */,
 				BB34C51C2E290A7C00238EA8 /* FTColor */,
 				BB34C5132E28F62B00238EA8 /* FTFont */,
+				112BE27C2E32C39F006E80FC /* FTStyleKit */,
 				BB34C50C2E285EEC00238EA8 /* ImageGeneration */,
 				BB34C5162E28FA1900238EA8 /* Loading */,
 				BB34C5072E28264C00238EA8 /* Localization */,

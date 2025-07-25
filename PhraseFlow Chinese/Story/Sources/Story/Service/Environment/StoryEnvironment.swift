@@ -5,16 +5,27 @@
 //  Created by iakalann on 18/07/2025.
 //
 
+import Audio
 import Foundation
 import Combine
 import Loading
+import Settings
 import TextGeneration
 
 public struct StoryEnvironment: StoryEnvironmentProtocol {
     public let storySubject = CurrentValueSubject<UUID?, Never>(nil)
     public let loadingSubject: CurrentValueSubject<LoadingStatus?, Never> = .init(nil)
     
-    public init() {}
+    private let audioEnvironment: AudioEnvironmentProtocol
+    private let settingsEnvironment: SettingsEnvironmentProtocol
+    
+    public init(
+        audioEnvironment: AudioEnvironmentProtocol,
+        settingsEnvironment: SettingsEnvironmentProtocol
+    ) {
+        self.audioEnvironment = audioEnvironment
+        self.settingsEnvironment = settingsEnvironment
+    }
     
     public func selectChapter(storyId: UUID) {
         storySubject.send(storyId)
@@ -108,5 +119,29 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         }
         
         try dataStore.saveChapter(chapterToSave)
+    }
+    
+    func playWord(
+        _ word: WordTimeStampData,
+        rate: Float
+    ) {
+        audioEnvironment.playWord(word, rate: rate)
+    }
+    
+    public func getAppSettings() throws -> SettingsState {
+        try settingsEnvironment.loadAppSettings()
+    }
+    
+    func playChapter(from word: WordTimeStampData) {
+        audioEnvironment.playChapterAudio(from: word.time,
+                                          rate: SpeechSpeed.normal.playRate)
+    }
+    
+    func pauseChapter() {
+        audioEnvironment.pauseChapterAudio()
+    }
+    
+    func setMusicVolume(_ volume: MusicVolume) {
+        audioEnvironment.setMusicVolume(volume)
     }
 }

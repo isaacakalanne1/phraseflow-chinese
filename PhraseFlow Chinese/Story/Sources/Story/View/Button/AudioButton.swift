@@ -15,11 +15,12 @@ struct AudioButton: View {
     var body: some View {
         Button {
             if store.state.audioState.isPlayingAudio {
-                store.dispatch(.audioAction(.pauseAudio))
+                store.dispatch(.pauseChapter)
             } else {
-                let timestamps = store.state.storyState.currentChapter?.currentSentence?.timestamps ?? []
-                let currentSpokenWord = store.state.storyState.currentChapter?.currentSpokenWord ?? timestamps.first
-                store.dispatch(.audioAction(.playAudio(time: currentSpokenWord?.time)))
+                let timestamps = store.state.currentChapter?.currentSentence?.timestamps ?? []
+                if let currentSpokenWord = store.state.currentChapter?.currentSpokenWord ?? timestamps.first {
+                    store.dispatch(.playChapter(fromWord: currentSpokenWord))
+                }
             }
         } label: {
             audioButtonLabel(systemImage: store.state.audioState.isPlayingAudio ? .pause : .play)

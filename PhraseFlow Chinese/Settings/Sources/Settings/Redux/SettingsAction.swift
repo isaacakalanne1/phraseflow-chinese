@@ -5,6 +5,7 @@
 //  Created by iakalann on 15/06/2025.
 //
 
+import Audio
 import Foundation
 
 enum SettingsAction: Sendable {
@@ -25,7 +26,12 @@ enum SettingsAction: Sendable {
     case updateShouldPlaySound(Bool)
     
     case updateStorySetting(StorySetting)
+    case addCustomPrompt(String)
     case updateCustomPrompt(String)
     case deleteCustomPrompt(String)
     case updateIsShowingCustomPromptAlert(Bool)
+    
+    case playSound(AppSound)
+    case playMusic(MusicType)
+    case stopMusic
 }

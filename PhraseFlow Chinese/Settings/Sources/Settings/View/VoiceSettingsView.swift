@@ -16,7 +16,7 @@ struct VoiceMenu: View {
 
     var body: some View {
         ScrollView {
-            let voices = store.state.settingsState.language.voices
+            let voices = store.state.language.voices
             let sortedVoices = voices.sorted(by: { $0.gender.title < $1.gender.title })
             Section {
                 LazyVGrid(columns: [
@@ -24,7 +24,7 @@ struct VoiceMenu: View {
                     GridItem(.flexible()),
                 ], spacing: 8) {
                     ForEach(sortedVoices, id: \.self) { voice in
-                        let isSelectedVoice = store.state.settingsState.voice == voice
+                        let isSelectedVoice = store.state.voice == voice
 
                         ImageButton(
                             title: voice.title,
@@ -32,8 +32,8 @@ struct VoiceMenu: View {
                             isSelected: isSelectedVoice,
                             action: {
                                 withAnimation(.easeInOut) {
-                                    store.dispatch(.audioAction(.playSound(.changeSettings)))
-                                    store.dispatch(.appSettingsAction(.selectVoice(voice)))
+                                    store.dispatch(.playSound(.changeSettings))
+                                    store.dispatch(.selectVoice(voice))
                                     if shouldDismissOnSelect {
                                         dismiss()
                                     }

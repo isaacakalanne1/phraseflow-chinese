@@ -5,6 +5,7 @@
 //  Created by iakalann on 15/06/2025.
 //
 
+import Audio
 import Definition
 import Foundation
 import Loading
@@ -36,4 +37,8 @@ enum StoryAction {
     case selectWord(WordTimeStampData, playAudio: Bool)
     case setPlaybackTime(Double)
     case selectChapter(storyId: UUID)
+    
+    case playWord(WordTimeStampData)
+    case playChapter(fromWord: WordTimeStampData)
+    case pauseChapter
 }

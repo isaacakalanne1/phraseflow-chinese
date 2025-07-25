@@ -35,7 +35,7 @@ struct CreateStorySettingsView: View {
                             isSelected: false,
                             action: {
                                 isShowingLanguageSettings = true
-                                store.dispatch(.audioAction(.playSound(.openStorySettings)))
+                                store.dispatch(.playSound(.openStorySettings))
                             }
                         )
 
@@ -45,7 +45,7 @@ struct CreateStorySettingsView: View {
                             isSelected: false,
                             action: {
                                 isShowingDifficultySettings = true
-                                store.dispatch(.audioAction(.playSound(.openStorySettings)))
+                                store.dispatch(.playSound(.openStorySettings))
                             }
                         )
 
@@ -57,7 +57,7 @@ struct CreateStorySettingsView: View {
                             isSelected: false,
                             action: {
                                 isShowingVoiceSettings = true
-                                store.dispatch(.audioAction(.playSound(.openStorySettings)))
+                                store.dispatch(.playSound(.openStorySettings))
                             }
                         )
                     }
@@ -116,7 +116,7 @@ struct CreateStorySettingsView: View {
             isTextCentered: promptDisplayText.count > 20,
             action: {
                 isShowingPromptSettings = true
-                store.dispatch(.audioAction(.playSound(.openStorySettings)))
+                store.dispatch(.playSound(.openStorySettings))
             }
         )
     }

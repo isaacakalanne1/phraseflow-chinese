@@ -5,21 +5,26 @@
 //  Created by iakalann on 18/07/2025.
 //
 
+import Audio
 import Foundation
 import Combine
 import Settings
 
 struct DefinitionEnvironment: DefinitionEnvironmentProtocol {
     let clearDefinitionSubject = CurrentValueSubject<Void, Never>(())
-    let definitionServices: DefinitionServicesProtocol
-    let definitionDataStore: DefinitionDataStoreProtocol
-    let settingsEnvironment: SettingsEnvironmentProtocol
+    
+    private let definitionServices: DefinitionServicesProtocol
+    private let audioEnvironment: AudioEnvironmentProtocol
+    private let definitionDataStore: DefinitionDataStoreProtocol
+    private let settingsEnvironment: SettingsEnvironmentProtocol
     
     init(definitionServices: DefinitionServicesProtocol,
          definitionDataStore: DefinitionDataStoreProtocol,
+         audioEnvironment: AudioEnvironmentProtocol,
          settingsEnvironment: SettingsEnvironmentProtocol) {
         self.definitionServices = definitionServices
         self.definitionDataStore = definitionDataStore
+        self.audioEnvironment = audioEnvironment
         self.settingsEnvironment = settingsEnvironment
     }
     
@@ -45,5 +50,9 @@ struct DefinitionEnvironment: DefinitionEnvironmentProtocol {
     
     func getAppSettings() throws -> SettingsState {
         return try settingsEnvironment.loadAppSettings()
+    }
+    
+    func playSound(_ sound: AppSound) {
+        audioEnvironment.playSound(sound)
     }
 }

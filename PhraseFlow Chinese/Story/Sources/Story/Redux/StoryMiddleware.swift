@@ -20,11 +20,11 @@ let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtoco
             switch type {
             case .newStory:
                 chapter = try await environment.generateFirstChapter(
-                    language: state.settingsState.language,
-                    difficulty: state.settingsState.difficulty,
-                    voice: state.settingsState.voice,
+                    language: state.language,
+                    difficulty: state.difficulty,
+                    voice: state.voice,
                     deviceLanguage: state.deviceLanguage,
-                    storyPrompt: state.settingsState.storySetting.prompt,
+                    storyPrompt: state.storySetting.prompt,
                     currentSubscription: state.subscriptionState.currentSubscription
                 )
                 
@@ -98,7 +98,7 @@ let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtoco
     case .saveChapter(let chapter):
         do {
             try environment.saveChapter(chapter)
-            try environment.saveAppSettings(state.settingsState)
+            try environment.saveAppSettings(state)
             return .onSavedChapter(chapter)
         } catch {
             return .failedToSaveChapter
@@ -119,7 +119,7 @@ let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtoco
         if let definition = state.definitionState.definition(timestampData: word) {
             return .definitionAction(.showDefinition(definition, shouldPlay: shouldPlay))
         }
-        return shouldPlay ? .audioAction(.playWord(word)) : nil
+        return shouldPlay ? .playWord(word) : nil
     case .selectChapter(let storyId):
         if let chapters = state.storyState.storyChapters[storyId], !chapters.isEmpty {
             let selectedChapter = chapters.last ?? chapters[0]
@@ -142,6 +142,19 @@ let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtoco
             }
         }
         return nil
+        
+    case .playWord(let timestamp):
+//        var speechSpeed = SpeechSpeed.normal
+//        if let settings = try? environment.getAppSettings() {
+//            speechSpeed = settings.speechSpeed
+//        } // TODO: Get app settings on store initialization/on appear, and update local app settings whenever updated in settings package
+        environment.playWord(timestamp, rate: SpeechSpeed.normal.playRate)
+    case .playChapter(let word):
+        environment.playChapter(from: word)
+        environment.setMusicVolume(.quiet)
+    case .pauseChapter:
+        environment.pauseChapter()
+        environment.setMusicVolume(.normal)
     case .failedToLoadStoriesAndDefinitions,
             .failedToDeleteStory,
             .failedToSaveChapter,

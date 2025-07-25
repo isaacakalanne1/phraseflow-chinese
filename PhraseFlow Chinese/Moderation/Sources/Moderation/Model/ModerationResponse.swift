@@ -10,7 +10,7 @@ public struct ModerationResponse: Codable {
     let model: String
     let results: [ModerationResult]
 
-    var didPassModeration: Bool {
+    public var didPassModeration: Bool {
         guard let firstResult = results.first else {
             return true
         }

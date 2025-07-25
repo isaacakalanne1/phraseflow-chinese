@@ -13,36 +13,36 @@ struct SettingsView: View {
 
     var body: some View {
         let showDefinition: Binding<Bool> = .init {
-            store.state.settingsState.isShowingDefinition
+            store.state.isShowingDefinition
         } set: { newValue in
-            store.dispatch(.audioAction(.playSound(.togglePress)))
-            store.dispatch(.appSettingsAction(.updateShowDefinition(newValue)))
+            store.dispatch(.playSound(.togglePress))
+            store.dispatch(.updateShowDefinition(newValue))
         }
 
         let showEnglish: Binding<Bool> = .init {
-            store.state.settingsState.isShowingEnglish
+            store.state.isShowingEnglish
         } set: { newValue in
-            store.dispatch(.audioAction(.playSound(.togglePress)))
-            store.dispatch(.appSettingsAction(.updateShowEnglish(newValue)))
+            store.dispatch(.playSound(.togglePress))
+            store.dispatch(.updateShowEnglish(newValue))
         }
 
         let playMusic: Binding<Bool> = .init {
-            store.state.settingsState.isPlayingMusic
+            store.state.isPlayingMusic
         } set: { newValue in
-            store.dispatch(.audioAction(.playSound(.togglePress)))
+            store.dispatch(.playSound(.togglePress))
             if newValue {
-                store.dispatch(.audioAction(.playMusic(.whispersOfTheForest)))
+                store.dispatch(.playMusic(.whispersOfTheForest))
             } else {
-                store.dispatch(.audioAction(.stopMusic))
+                store.dispatch(.stopMusic)
             }
         }
 
         let shouldPlayButtonSounds: Binding<Bool> = .init {
-            store.state.settingsState.shouldPlaySound
+            store.state.shouldPlaySound
         } set: { newValue in
-            store.dispatch(.appSettingsAction(.updateShouldPlaySound(newValue)))
+            store.dispatch(.updateShouldPlaySound(newValue))
             if newValue {
-                store.dispatch(.audioAction(.playSound(.togglePress)))
+                store.dispatch(.playSound(.togglePress))
             }
         }
 

@@ -5,60 +5,72 @@
 //  Created by iakalann on 18/07/2025.
 //
 
+import Audio
 import Foundation
 import Combine
 
-struct SettingsEnvironment: SettingsEnvironmentProtocol {
-    let settingsSubject = CurrentValueSubject<Void, Never>(())
+public struct SettingsEnvironment: SettingsEnvironmentProtocol {
+    public let settingsUpdatedSubject = CurrentValueSubject<Void, Never>(())
     let speechSpeedSubject = CurrentValueSubject<SpeechSpeed, Never>(.normal)
     let isPlayingMusicSubject = CurrentValueSubject<Bool, Never>(false)
-    let customPromptSubject = CurrentValueSubject<String, Never>("")
     let storySettingSubject = CurrentValueSubject<StorySetting, Never>(.random)
     
     private let settingsDataStore: SettingsDataStoreProtocol
+    private let audioEnvironment: AudioEnvironmentProtocol
+    private let moderationEnvironment: ModerationEnvironmentProtocol
     
-    init(settingsDataStore: SettingsDataStoreProtocol) {
+    init(
+        settingsDataStore: SettingsDataStoreProtocol,
+        moderationEnvironment: ModerationEnvironmentProtocol,
+        audioEnvironment: AudioEnvironmentProtocol
+    ) {
         self.settingsDataStore = settingsDataStore
+        self.moderationEnvironment = moderationEnvironment
+        self.audioEnvironment = audioEnvironment
     }
     
-    init() {
-        self.settingsDataStore = SettingsDataStore()
+    public var deviceLanguage: Language? {
+        (try? settingsDataStore.loadAppSettings())?.language.deviceLanguage
     }
     
-    var deviceLanguage: Language? {
-        (try? settingsDataStore.loadAppSettings())?.deviceLanguage
+    public var currentVoice: Voice {
+        (try? settingsDataStore.loadAppSettings())?.voice ?? .ava
     }
     
-    var currentVoice: Voice {
-        (try? settingsDataStore.loadAppSettings())?.voice ?? .english.voices.first!
+    public var speechSpeed: SpeechSpeed {
+        (try? settingsDataStore.loadAppSettings())?.speechSpeed ?? .normal
     }
     
-    var speechSpeed: SpeechSpeed {
-        speechSpeedSubject.value
-    }
-    
-    func saveAppSettings(_ settings: SettingsState) throws {
+    public func saveAppSettings(_ settings: SettingsState) throws {
+        audioEnvironment.playSound(.changeSettings)
         try settingsDataStore.saveAppSettings(settings)
-        settingsSubject.send(())
+        settingsUpdatedSubject.send(())
     }
     
-    func loadAppSettings() throws -> SettingsState {
+    public func loadAppSettings() throws -> SettingsState {
         return try settingsDataStore.loadAppSettings()
     }
     
-    func saveSpeechSpeed(_ speed: SpeechSpeed) {
-        speechSpeedSubject.send(speed)
+    func moderateText(_ text: String) async throws -> ModerationResponse {
+        try await moderationEnvironment.moderateText(text)
     }
     
-    func setIsPlayingMusic(_ isPlaying: Bool) {
-        isPlayingMusicSubject.send(isPlaying)
+    func updateSpeechSpeed(_ newSpeed: SpeechSpeed) throws {
+        playSound(.togglePress)
+        var settings = try settingsEnvironment.loadAppSettings()
+        settings.speechSpeed = newSpeed
+        settingsEnvironment.saveAppSettings(settings)
     }
     
-    func addCustomPrompt(_ prompt: String) {
-        customPromptSubject.send(prompt)
+    func playSound(_ sound: AppSound) {
+        audioEnvironment.playSound(sound)
     }
     
-    func setStorySetting(_ setting: StorySetting) {
-        storySettingSubject.send(setting)
+    func playMusic(_ music: MusicType) {
+        audioEnvironment.playMusic(music, volume: .normal)
+    }
+    
+    public func stopMusic() {
+        audioEnvironment.stopMusic()
     }
 }

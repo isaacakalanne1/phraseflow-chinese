@@ -4,31 +4,31 @@
 import PackageDescription
 
 let package = Package(
-    name: "DataStorage",
+    name: "FTStyleKit",
     platforms: [
         .iOS("17.4")
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "DataStorage",
-            targets: ["DataStorage"]),
+            name: "FTStyleKit",
+            targets: ["FTStyleKit"]),
     ],
     dependencies: [
-        .package(name: "Localization", path: "../Localization")
+        .package(name: "FTColor", path: "../FTColor")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "DataStorage",
+            name: "FTStyleKit",
             dependencies: [
-                "Localization"
+                "FTColor"
             ]
         ),
         .testTarget(
-            name: "DataStorageTests",
-            dependencies: ["DataStorage"]
+            name: "FTStyleKitTests",
+            dependencies: ["FTStyleKit"]
         ),
     ]
 )

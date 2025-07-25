@@ -36,16 +36,6 @@ let settingsSubscriber: OnSubscribe<SettingsStore, SettingsEnvironmentProtocol> 
     
     store
         .subscribe(
-            environment.customPromptSubject
-        ) { store, prompt in
-            guard !prompt.isEmpty else { return }
-            var newSettings = store.state
-            newSettings.customPrompts.append(prompt)
-            store.dispatch(.onLoadedAppSettings(newSettings))
-        }
-    
-    store
-        .subscribe(
             environment.storySettingSubject
         ) { store, setting in
             var newSettings = store.state

@@ -12,7 +12,7 @@ public struct SettingsState: Codable, Equatable, Sendable {
     var isShowingEnglish: Bool
     public var isPlayingMusic: Bool
     var voice: Voice
-    var speechSpeed: SpeechSpeed
+    public var speechSpeed: SpeechSpeed
     var difficulty: Difficulty
     var language: Language
     var customPrompt: String

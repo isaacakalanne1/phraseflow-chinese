@@ -35,24 +35,16 @@ class AudioPlayer {
         chapterAudioPlayer.pause()
     }
     
-    func playWord(_ wordData: WordTimeStampData, playRate: Float) async {
-        await chapterAudioPlayer.playAudio(fromSeconds: wordData.time,
-                                         toSeconds: wordData.time + wordData.duration,
+    func playSection(startTime: Double,
+                     duration: Double,
+                     playRate: Float) async {
+        await chapterAudioPlayer.playAudio(fromSeconds: startTime,
+                                         toSeconds: startTime + duration,
                                          playRate: playRate)
     }
     
-    func isNearEndOfTrack(chapter: Chapter?) -> Bool {
-        guard let chapter = chapter,
-              let lastSentence = chapter.sentences.last,
-              let lastWordTime = lastSentence.timestamps.last?.time,
-              let lastWordDuration = lastSentence.timestamps.last?.duration else {
-            return false
-        }
-        
-        let currentTime = chapterAudioPlayer.currentTime().seconds
-        let endTime = lastWordTime + lastWordDuration - 0.5
-        
-        return currentTime >= endTime
+    func isNearEndOfTrack(endTimeOfLastWord: Double) -> Bool {
+        chapterAudioPlayer.currentTime().seconds >= endTimeOfLastWord
     }
     
     func getCurrentPlaybackTime() -> Double {

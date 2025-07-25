@@ -67,7 +67,7 @@ struct ListOfSentencesView: View {
 
                         switch isLastChapter {
                         case true:
-                            store.dispatch(.audioAction(.playSound(.goToNextChapter)))
+                            store.dispatch(.playSound(.goToNextChapter))
                             store.dispatch(.storyAction(.goToNextChapter))
                         case false:
                             store.dispatch(.snackbarAction(.showSnackBar(.writingChapter)))

@@ -22,7 +22,7 @@ struct DifficultyMenu: View {
                     GridItem(.flexible()),
                 ], spacing: 8) {
                     ForEach(Difficulty.allCases, id: \.self) { difficulty in
-                        let isSelectedDifficulty = store.state.settingsState.difficulty == difficulty
+                        let isSelectedDifficulty = store.state.difficulty == difficulty
 
                         ImageButton(
                             title: difficulty.title,
@@ -30,7 +30,7 @@ struct DifficultyMenu: View {
                             isSelected: isSelectedDifficulty,
                             action: {
                                 withAnimation(.easeInOut) {
-                                    store.dispatch(.audioAction(.playSound(.changeSettings)))
+                                    store.dispatch(.playSound(.changeSettings))
                                     store.dispatch(.appSettingsAction(.updateDifficulty(difficulty)))
                                     if shouldDismissOnSelect {
                                         dismiss()

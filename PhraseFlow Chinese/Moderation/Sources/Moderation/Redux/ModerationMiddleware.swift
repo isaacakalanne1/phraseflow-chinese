@@ -23,7 +23,6 @@ let moderationMiddleware: Middleware<ModerationState, ModerationAction, Moderati
         return response.didPassModeration ? .passedModeration(prompt) : .didNotPassModeration
         
     case .passedModeration(let prompt):
-        environment.savePassedModerationPrompt(prompt)
         environment.showModerationPassedSnackBar()
         return nil
 

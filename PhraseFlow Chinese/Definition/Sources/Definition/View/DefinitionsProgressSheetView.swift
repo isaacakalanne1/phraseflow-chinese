@@ -5,6 +5,7 @@
 //  Created by iakalann on 28/12/2024.
 //
 
+import Audio
 import FTColor
 import FTFont
 import Localization
@@ -47,7 +48,7 @@ struct DefinitionsProgressSheetView: View {
                     }
                     .pickerStyle(.segmented)
                     .onChange(of: showingCreations) { _, _ in
-                        store.dispatch(.audioAction(.playSound(.togglePress)))
+                        store.dispatch(.playSound(.togglePress))
                     }
 
                     Spacer()
@@ -125,7 +126,7 @@ struct DefinitionsProgressSheetView: View {
                             .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
                                 Button(role: .destructive) {
                                     store.dispatch(.definitionAction(.deleteDefinition(definition)))
-                                    store.dispatch(.audioAction(.playSound(.actionButtonPress)))
+                                    store.dispatch(.playSound(.actionButtonPress))
                                 } label: {
                                     Label("Delete", systemImage: "trash")
                                         .tint(FTColor.error)

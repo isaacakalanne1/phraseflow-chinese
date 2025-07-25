@@ -8,6 +8,7 @@
 import Charts
 import FTColor
 import SwiftUI
+import Localization
 
 // MARK: - Main View
 

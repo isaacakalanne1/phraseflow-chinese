@@ -52,7 +52,8 @@ let definitionReducer: Reducer<DefinitionState, DefinitionAction> = { state, act
         newState.currentDefinition = nil
 
     case .failedToLoadDefinitions,
-         .failedToDeleteDefinition:
+         .failedToDeleteDefinition,
+         .playSound:
         break
     }
 

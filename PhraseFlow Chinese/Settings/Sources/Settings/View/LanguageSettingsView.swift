@@ -55,7 +55,7 @@ public struct LanguageMenu: View {
                             isSelected: store.state.translationState.sourceLanguage == nil,
                             action: {
                                 withAnimation(.easeInOut) {
-                                    store.dispatch(.audioAction(.playSound(.changeSettings)))
+                                    store.dispatch(.playSound(.changeSettings))
                                     store.dispatch(.translationAction(.updateSourceLanguage(nil)))
                                     dismiss()
                                 }
@@ -63,7 +63,7 @@ public struct LanguageMenu: View {
                         )
                     }
                     ForEach(Language.allCases, id: \.self) { language in
-                        let isSelectedLanguage = store.state.settingsState.language == language
+                        let isSelectedLanguage = store.state.language == language
 
                         ImageButton(
                             title: language.displayName,
@@ -71,10 +71,10 @@ public struct LanguageMenu: View {
                             isSelected: isSelectedLanguage,
                             action: {
                                 withAnimation(.easeInOut) {
-                                    store.dispatch(.audioAction(.playSound(.changeSettings)))
+                                    store.dispatch(.playSound(.changeSettings))
                                     switch type {
                                     case .normal:
-                                        store.dispatch(.appSettingsAction(.updateLanguage(language)))
+                                        store.dispatch(.updateLanguage(language))
                                     case .translationSourceLanguage:
                                         store.dispatch(.translationAction(.updateSourceLanguage(language)))
                                     case .translationTargetLanguage:

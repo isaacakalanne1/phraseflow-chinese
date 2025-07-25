@@ -13,7 +13,7 @@ public struct Chapter: Codable, Equatable, Hashable {
     var id: UUID
     let storyId: UUID
     var title: String
-    var sentences: [Sentence]
+    public var sentences: [Sentence]
     var audioVoice: Voice
     var audio: ChapterAudio
     var passage: String

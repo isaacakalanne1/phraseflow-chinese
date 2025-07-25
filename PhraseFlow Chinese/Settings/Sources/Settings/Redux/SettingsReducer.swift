@@ -55,6 +55,11 @@ let settingsReducer: Reducer<SettingsState, SettingsAction> = { state, action in
         }
         newState.storySetting = setting
         
+    case .addCustomPrompt(let prompt):
+        if !state.customPrompts.contains(prompt) {
+            state.customPrompts.append(prompt)
+        }
+        
     case .updateIsShowingCustomPromptAlert(let isShowing):
         newState.isShowingCustomPromptAlert = isShowing
         
@@ -73,7 +78,8 @@ let settingsReducer: Reducer<SettingsState, SettingsAction> = { state, action in
     case .loadAppSettings,
          .saveAppSettings,
          .failedToLoadAppSettings,
-         .failedToSaveAppSettings:
+         .failedToSaveAppSettings,
+         .stopMusic:
         break
     }
 

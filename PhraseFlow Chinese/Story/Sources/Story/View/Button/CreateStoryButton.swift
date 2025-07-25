@@ -12,7 +12,7 @@ struct CreateStoryButton: View {
 
     var body: some View {
         MainButton(title: LocalizedString.newStory.uppercased()) {
-            store.dispatch(.audioAction(.playSound(.largeBoom)))
+            store.dispatch(.playSound(.largeBoom))
             store.dispatch(.storyAction(.createChapter(.newStory)))
         }
         .disabled(store.state.viewState.isWritingChapter)

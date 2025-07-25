@@ -137,7 +137,7 @@ struct ChapterListView: View {
                 .background(FTColor.background)
                 .scrollContentBackground(.hidden)
                 .onAppear {
-                    store.dispatch(.audioAction(.playSound(.openStory)))
+                    store.dispatch(.playSound(.openStory))
                 }
                 .navigationDestination(for: Chapter.self) { chapter in
                     ReaderView(chapter: chapter)
@@ -175,7 +175,7 @@ struct ChapterListView: View {
     private func chapterCard(for chapter: Chapter, at index: Int) -> some View {
         Button {
             withAnimation(.easeInOut) {
-                store.dispatch(.audioAction(.playSound(.openChapter)))
+                store.dispatch(.playSound(.openChapter))
                 navigationPath.append(chapter)
             }
         } label: {

@@ -5,6 +5,7 @@
 //  Created by iakalann on 15/06/2025.
 //
 
+import Audio
 import Foundation
 import Settings
 
@@ -25,4 +26,6 @@ enum DefinitionAction {
     
     case onAppear
     case onLoadAppSettings(SettingsState)
+    
+    case playSound(AppSound)
 }

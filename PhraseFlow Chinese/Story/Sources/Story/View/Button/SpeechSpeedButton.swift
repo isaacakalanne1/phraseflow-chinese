@@ -14,8 +14,8 @@ struct SpeechSpeedButton: View {
 
     var body: some View {
         Button {
-            store.dispatch(.appSettingsAction(.updateSpeechSpeed(store.state.settingsState.speechSpeed.nextSpeed)))
-            store.dispatch(.audioAction(.playSound(.changeSettings)))
+            store.dispatch(.updateSpeechSpeed(store.state.settingsState.speechSpeed.nextSpeed))
+            store.dispatch(.playSound(.changeSettings))
         } label: {
             Text(store.state.settingsState.speechSpeed.text)
                 .font(FTFont.flowTaleBodyMedium())

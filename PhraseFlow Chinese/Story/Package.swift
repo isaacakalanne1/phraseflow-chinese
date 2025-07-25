@@ -15,9 +15,11 @@ let package = Package(
             targets: ["Story"]),
     ],
     dependencies: [
+        .package(name: "Audio", path: "../Audio"),
         .package(name: "ReduxKit", path: "../ReduxKit"),
         .package(name: "FTColor", path: "../FTColor"),
         .package(name: "FTFont", path: "../FTFont"),
+        .package(name: "FTStyleKit", path: "../FTStyleKit"),
         .package(name: "Loading", path: "../Loading"),
         .package(name: "Media", path: "../Media"),
         .package(name: "Speech", path: "../Speech"),
@@ -30,9 +32,11 @@ let package = Package(
         .target(
             name: "Story",
             dependencies: [
-                .product(name: "ReduxKit", package: "ReduxKit"),
+                "Audio",
+                "ReduxKit",
                 "FTColor",
                 "FTFont",
+                "FTStyleKit",
                 "Loading",
                 "Media",
                 "Speech",
