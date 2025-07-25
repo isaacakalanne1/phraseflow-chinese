@@ -8,6 +8,7 @@
 import Foundation
 import ReduxKit
 
+@MainActor
 let definitionSubscriber: OnSubscribe<DefinitionStore, DefinitionEnvironmentProtocol> = { store, environment in
 
     store

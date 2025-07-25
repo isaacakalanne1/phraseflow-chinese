@@ -9,7 +9,7 @@ import Foundation
 import Settings
 import UIKit
 
-public struct Chapter: Codable, Equatable, Hashable {
+public struct Chapter: Codable, Equatable, Hashable, Sendable {
     var id: UUID
     public let storyId: UUID
     var title: String
@@ -21,7 +21,7 @@ public struct Chapter: Codable, Equatable, Hashable {
     // Story-level properties moved to Chapter
     var chapterSummary: String
     let difficulty: Difficulty
-    let language: Language
+    public let language: Language
     var storyTitle: String
     var currentPlaybackTime: Double = 0
     var currentSentence: Sentence?

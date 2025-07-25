@@ -235,7 +235,6 @@
 				BB34C51D2E29525B00238EA8 /* FTColor */,
 				BB34C51F2E29526700238EA8 /* Localization */,
 				BB34C5212E29526C00238EA8 /* Navigation */,
-				BB34C5232E29BF3500238EA8 /* Media */,
 				BB34C5252E29BF4700238EA8 /* APIRequest */,
 				BB34C5272E29BF4700238EA8 /* AppleIcon */,
 				BB34C5292E29BF4700238EA8 /* Audio */,
@@ -732,10 +731,6 @@
 		BB34C5212E29526C00238EA8 /* Navigation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Navigation;
-		};
-		BB34C5232E29BF3500238EA8 /* Media */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Media;
 		};
 		BB34C5252E29BF4700238EA8 /* APIRequest */ = {
 			isa = XCSwiftPackageProductDependency;

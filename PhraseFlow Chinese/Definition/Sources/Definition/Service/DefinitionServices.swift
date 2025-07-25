@@ -6,6 +6,9 @@
 //
 
 import Foundation
+import TextGeneration
+import Settings
+import APIRequest
 
 enum DefinitionServicesError: Error {
     case failedToGetTimestamps

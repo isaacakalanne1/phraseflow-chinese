@@ -23,7 +23,7 @@ let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtoco
                     language: state.language,
                     difficulty: state.difficulty,
                     voice: state.voice,
-                    deviceLanguage: state.deviceLanguage,
+                    deviceLanguage: nil,
                     storyPrompt: state.storySetting.prompt,
                     currentSubscription: state.subscriptionState.currentSubscription
                 )
@@ -32,7 +32,7 @@ let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtoco
                 if let existingChapters = state.storyState.storyChapters[storyId] {
                     chapter = try await environment.generateChapter(
                         previousChapters: existingChapters,
-                        deviceLanguage: state.deviceLanguage,
+                        deviceLanguage: nil,
                         currentSubscription: state.subscriptionState.currentSubscription
                     )
                 } else {
@@ -76,7 +76,7 @@ let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtoco
             }
 
             if let sentenceIndex = firstMissingSentenceIndex {
-                return .definitionAction(.defineSentence(sentenceIndex: sentenceIndex, previousDefinitions: []))
+                return .definitionAction(.defineSentence(sentenceIndex: sentenceIndex, previousDefinitions: [], chapter: currentChapter, deviceLanguage: nil))
             }
         }
         return .navigationAction(.selectTab(.reader, shouldPlaySound: false))
@@ -114,7 +114,7 @@ let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtoco
         return .snackbarAction(.showSnackBar(.failedToWriteChapter))
     case .onCreatedChapter(let chapter):
         try? environment.saveChapter(chapter)
-        return .definitionAction(.defineSentence(sentenceIndex: 0, previousDefinitions: []))
+        return .definitionAction(.defineSentence(sentenceIndex: 0, previousDefinitions: [], chapter: chapter, deviceLanguage: nil))
     case .selectWord(let word, let shouldPlay):
         if let definition = state.definitionState.definition(timestampData: word) {
             return .definitionAction(.showDefinition(definition, shouldPlay: shouldPlay))
@@ -138,7 +138,7 @@ let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtoco
             }
 
             if let sentenceIndex = firstMissingSentenceIndex {
-                return .definitionAction(.defineSentence(sentenceIndex: sentenceIndex, previousDefinitions: []))
+                return .definitionAction(.defineSentence(sentenceIndex: sentenceIndex, previousDefinitions: [], chapter: currentChapter, deviceLanguage: nil))
             }
         }
         return nil

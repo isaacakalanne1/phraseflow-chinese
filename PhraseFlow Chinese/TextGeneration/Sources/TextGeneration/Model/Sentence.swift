@@ -11,7 +11,7 @@ import Settings
 public struct Sentence: Codable, Equatable, Hashable, Sendable {
     let id: UUID
     public let translation: String
-    let original: String
+    public let original: String
     public var timestamps: [WordTimeStampData]
 
     public init(from decoder: any Decoder) throws {

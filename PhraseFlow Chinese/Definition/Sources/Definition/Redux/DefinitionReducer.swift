@@ -8,6 +8,7 @@
 import SwiftUI
 import ReduxKit
 
+@MainActor
 let definitionReducer: Reducer<DefinitionState, DefinitionAction> = { state, action in
     var newState = state
 
@@ -28,7 +29,7 @@ let definitionReducer: Reducer<DefinitionState, DefinitionAction> = { state, act
     case .showDefinition:
         break
 
-    case .defineSentence(let index, let definitions):
+    case .defineSentence(let index, let definitions, _, _):
         // viewState.loadingState = .complete handled at FlowTaleReducer level
         // viewState.isWritingChapter = false handled at FlowTaleReducer level
         newState.definitions.addDefinitions(definitions)
@@ -47,6 +48,7 @@ let definitionReducer: Reducer<DefinitionState, DefinitionAction> = { state, act
         
     case .refreshDefinitionView:
         // viewState.definitionViewId = UUID() handled at FlowTaleReducer level
+        break
 
     case .clearCurrentDefinition:
         newState.currentDefinition = nil

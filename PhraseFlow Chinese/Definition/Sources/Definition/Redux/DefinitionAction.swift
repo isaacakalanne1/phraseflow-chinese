@@ -8,9 +8,10 @@
 import Audio
 import Foundation
 import Settings
+import TextGeneration
 
 enum DefinitionAction: Sendable {
-    case defineSentence(sentenceIndex: Int, previousDefinitions: [Definition])
+    case defineSentence(sentenceIndex: Int, previousDefinitions: [Definition], chapter: Chapter?, deviceLanguage: Language?)
     case failedToLoadDefinitions
 
     case showDefinition(Definition, shouldPlay: Bool)

@@ -56,7 +56,7 @@ public enum Language: String, Codable, CaseIterable, Sendable {
         return firstLetter + remainingLetters
     }
 
-    var displayName: String {
+    public var displayName: String {
         switch self {
         case .mandarinChinese:
             LocalizedString.chineseMandarin
@@ -264,7 +264,7 @@ enum TranslationMode: String, CaseIterable {
     case translate
     case breakdown
     
-    var displayName: String {
+    public var displayName: String {
         switch self {
         case .translate:
             return LocalizedString.translate

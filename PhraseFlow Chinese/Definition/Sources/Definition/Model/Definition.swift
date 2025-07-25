@@ -45,7 +45,7 @@ public struct Definition: Codable, Equatable, Hashable, Sendable {
         self.audioData = audioData
     }
 
-    init(from decoder: any Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = (try? container.decode(UUID.self, forKey: .id)) ?? UUID()
         creationDate = try container.decode(Date.self, forKey: .creationDate)

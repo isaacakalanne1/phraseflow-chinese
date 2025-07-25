@@ -24,9 +24,10 @@ let definitionMiddleware: Middleware<DefinitionState, DefinitionAction, Definiti
     case .onLoadAppSettings:
         return nil
         
-    case .defineSentence(let index, _):
+    case .defineSentence(let index, _, let chapter, let deviceLanguage):
         do {
-            guard let chapter = state.storyState.currentChapter,
+            guard let chapter = chapter,
+                  let deviceLanguage = deviceLanguage,
                   index < chapter.sentences.count else {
                 return nil
             }
@@ -34,7 +35,7 @@ let definitionMiddleware: Middleware<DefinitionState, DefinitionAction, Definiti
             let definitions = try await environment.fetchDefinitions(
                 in: chapter.sentences[index],
                 chapter: chapter,
-                deviceLanguage: state.deviceLanguage
+                deviceLanguage: deviceLanguage
             )
 
             try environment.saveDefinitions(definitions)
@@ -44,7 +45,9 @@ let definitionMiddleware: Middleware<DefinitionState, DefinitionAction, Definiti
                 environment.definitionEnvironment.viewStateEnvironment.setIsWritingChapter(false)
             }
             return .defineSentence(sentenceIndex: index + 1,
-                                                     previousDefinitions: definitions)
+                                                     previousDefinitions: definitions,
+                                                     chapter: chapter,
+                                                     deviceLanguage: deviceLanguage)
         } catch {
             return .failedToLoadDefinitions
         }
@@ -60,25 +63,27 @@ let definitionMiddleware: Middleware<DefinitionState, DefinitionAction, Definiti
     case .showDefinition(var definition, let shouldPlay):
         definition.hasBeenSeen = true
         definition.creationDate = .now
-        if definition.audioData == nil,
-           let extractedAudio = AudioExtractor.extractAudioSegment(
-               from: state.audioState.chapterAudioPlayer,
-               startTime: definition.timestampData.time,
-               duration: definition.timestampData.duration
-           ) {
-            definition.audioData = extractedAudio
-        }
-        if let sentence = state.storyState.currentChapter?.currentSentence,
-           let firstWord = sentence.timestamps.first,
-           let lastWord = sentence.timestamps.last,
-           let sentenceAudio = AudioExtractor.extractAudioSegment(
-               from: state.audioState.chapterAudioPlayer,
-               startTime: firstWord.time,
-               duration: lastWord.time + lastWord.duration - firstWord.time
-           ){
-            definition.sentenceId = sentence.id
-            try? environment.saveSentenceAudio(sentenceAudio, id: definition.sentenceId)
-        }
+        // TODO: Audio extraction needs to be handled at the app level where we have access to audioState
+        // if definition.audioData == nil,
+        //    let extractedAudio = AudioExtractor.extractAudioSegment(
+        //        from: state.audioState.chapterAudioPlayer,
+        //        startTime: definition.timestampData.time,
+        //        duration: definition.timestampData.duration
+        //    ) {
+        //     definition.audioData = extractedAudio
+        // }
+        // TODO: Sentence audio extraction needs access to storyState
+        // if let sentence = state.storyState.currentChapter?.currentSentence,
+        //    let firstWord = sentence.timestamps.first,
+        //    let lastWord = sentence.timestamps.last,
+        //    let sentenceAudio = AudioExtractor.extractAudioSegment(
+        //        from: state.audioState.chapterAudioPlayer,
+        //        startTime: firstWord.time,
+        //        duration: lastWord.time + lastWord.duration - firstWord.time
+        //    ){
+        //     definition.sentenceId = sentence.id
+        //     try? environment.saveSentenceAudio(sentenceAudio, id: definition.sentenceId)
+        // }
         return .onShownDefinition(definition, shouldPlay: shouldPlay)
     case .onShownDefinition(let definition, let shouldPlay):
         try? environment.saveDefinitions([definition])
