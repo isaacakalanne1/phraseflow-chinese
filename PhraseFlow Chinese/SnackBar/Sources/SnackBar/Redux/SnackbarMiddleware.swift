@@ -26,17 +26,6 @@ public struct SnackBarMiddleware: Middleware {
             }
             return nil
             
-        case .showSnackBarThenSaveChapter(let type, _):
-            environment.showSnackBar(type)
-            if let duration = type.showDuration {
-                try? await Task.sleep(for: .seconds(duration))
-                return .hideSnackbar
-            }
-            return nil
-            
-        case .hideSnackbarThenSaveChapterAndSettings(_):
-            return nil
-            
         case .checkDeviceVolumeZero:
             let audioSession = AVAudioSession.sharedInstance()
             do {

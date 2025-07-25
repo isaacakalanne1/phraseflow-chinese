@@ -8,7 +8,6 @@
 import Foundation
 import AVKit
 import Speech
-import TextGeneration
 
 class AudioPlayer {
     private let chapterAudioPlayer: AVPlayer

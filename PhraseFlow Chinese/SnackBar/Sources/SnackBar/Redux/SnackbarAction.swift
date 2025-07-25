@@ -6,12 +6,9 @@
 //
 
 import Foundation
-import TextGeneration
 
-public enum SnackBarAction {
+public enum SnackBarAction: Sendable {
     case showSnackBar(SnackBarType)
     case hideSnackbar
-    case showSnackBarThenSaveChapter(SnackBarType, Chapter)
-    case hideSnackbarThenSaveChapterAndSettings(Chapter)
     case checkDeviceVolumeZero
 }

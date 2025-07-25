@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SnackBarState {
+public struct SnackBarState: Equatable {
     public var isShowing = false
     public var type: SnackBarType = .chapterReady
     

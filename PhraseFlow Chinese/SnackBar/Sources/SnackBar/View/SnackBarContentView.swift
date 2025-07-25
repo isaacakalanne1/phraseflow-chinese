@@ -10,14 +10,14 @@ import SwiftUI
 import FTColor
 import Loading
 
-struct SnackBar: View {
+public struct SnackBarContentView: View {
     @EnvironmentObject private var store: SnackBarStore
 
     var type: SnackBarType {
         store.state.snackBarState.type
     }
 
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 8) {
             HStack {
                 type.iconView

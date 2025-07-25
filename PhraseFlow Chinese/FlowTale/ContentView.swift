@@ -9,6 +9,7 @@ import FTColor
 import FTFont
 import Localization
 import Navigation
+import SnackBar
 import SwiftUI
 
 struct ContentView: View {
@@ -150,7 +151,7 @@ struct ContentView: View {
     private func snackbarView() -> some View {
         VStack(alignment: .trailing) {
             if store.state.snackBarState.isShowing {
-                SnackBar()
+                SnackbarView()
                     .transition(.push(from: .leading))
             }
             Spacer()

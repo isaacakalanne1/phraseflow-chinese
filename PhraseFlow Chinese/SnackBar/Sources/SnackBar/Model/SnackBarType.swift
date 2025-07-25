@@ -10,7 +10,7 @@ import SwiftUI
 import FTColor
 import Localization
 
-enum SnackBarType: Equatable {
+public enum SnackBarType: Equatable, Sendable {
     case welcomeBack
     case writingChapter
     case chapterReady
