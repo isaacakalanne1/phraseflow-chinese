@@ -15,16 +15,10 @@ struct FlowTaleApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            FlowTaleRootView()
                 .onAppear {
                     UIApplication.shared.isIdleTimerDisabled = true
                     try? AVAudioSession.sharedInstance().setCategory(.playback)
-                    store.dispatch(.loadAppSettings)
-                    store.dispatch(.storyAction(.loadStoriesAndDefinitions))
-                    store.dispatch(.subscriptionAction(.fetchSubscriptions))
-                    store.dispatch(.subscriptionAction(.getCurrentEntitlements))
-                    store.dispatch(.subscriptionAction(.observeTransactionUpdates))
-                    store.dispatch(.userLimitAction(.checkFreeTrialLimit))
                 }
         }
     }

@@ -5,14 +5,23 @@
 //  Created by iakalann on 07/09/2024.
 //
 
+import Audio
 import FTColor
 import FTFont
 import Localization
+import Loading
 import Navigation
+import Settings
 import SnackBar
+import Story
+import Study
+import Subscription
 import SwiftUI
+import Translation
+import UserLimit
 
 struct ContentView: View {
+    @EnvironmentObject var store: FlowTaleStore
 
     var body: some View {
         let isShowingSubscriptionView: Binding<Bool> = .init {
@@ -22,8 +31,6 @@ struct ContentView: View {
                 store.dispatch(.subscriptionAction(.setSubscriptionSheetShowing(newValue)))
             }
         }
-        MainContentView()
-
         VStack {
             if !store.state.subscriptionState.isSubscribed {
                 Text(LocalizedString.freeTrial)
