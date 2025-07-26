@@ -8,6 +8,7 @@
 import Foundation
 import ReduxKit
 
+@MainActor
 let translationSubscriber: OnSubscribe<TranslationStore, TranslationEnvironmentProtocol> = { store, environment in
     // Add any reactive subscriptions if needed in future
 }

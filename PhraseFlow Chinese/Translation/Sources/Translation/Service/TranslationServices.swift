@@ -5,7 +5,10 @@
 //  Created by iakalann on 15/06/2025.
 //
 
+import APIRequest
 import Foundation
+import Settings
+import TextGeneration
 
 enum TranslationServicesError: Error {
     case failedToGetDeviceLanguage

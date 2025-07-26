@@ -9,7 +9,7 @@ import Foundation
 import TextGeneration
 import Settings
 
-protocol SpeechRepositoryProtocol {
+public protocol SpeechRepositoryProtocol {
     func synthesizeSpeech(_ chapter: Chapter,
                           voice: Voice,
                           language: Language) async throws -> (Chapter, Int)

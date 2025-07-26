@@ -15,13 +15,15 @@ let package = Package(
             targets: ["Translation"]),
     ],
     dependencies: [
+        .package(name: "APIRequest", path: "../APIRequest"),
         .package(name: "ReduxKit", path: "../ReduxKit"),
         .package(name: "Localization", path: "../Localization"),
         .package(name: "FTColor", path: "../FTColor"),
         .package(name: "FTFont", path: "../FTFont"),
         .package(name: "Settings", path: "../Settings"),
         .package(name: "Speech", path: "../Speech"),
-        .package(name: "Definition", path: "../Definition")
+        .package(name: "Study", path: "../Study"),
+        .package(name: "TextGeneration", path: "../TextGeneration")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -29,13 +31,15 @@ let package = Package(
         .target(
             name: "Translation",
             dependencies: [
-                .product(name: "ReduxKit", package: "ReduxKit"),
+                "APIRequest",
+                "ReduxKit",
                 "Localization",
                 "FTColor",
                 "FTFont",
                 "Settings",
                 "Speech",
-                "Definition"
+                "Study",
+                "TextGeneration"
             ]),
         .testTarget(
             name: "TranslationTests",

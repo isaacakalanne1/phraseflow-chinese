@@ -5,14 +5,52 @@
 //  Created by iakalann on 18/07/2025.
 //
 
+import Audio
 import Foundation
-import Definition
+import Settings
+import TextGeneration
 
-struct StudyEnvironment: StudyEnvironmentProtocol {
-    let definitionEnvironment: DefinitionEnvironmentProtocol
-    let speechPlayRate: Float
+public struct StudyEnvironment: StudyEnvironmentProtocol {
+    private let definitionServices: DefinitionServicesProtocol
+    private let audioEnvironment: AudioEnvironmentProtocol
+    private let dataStore: DefinitionDataStoreProtocol
+    private let settingsEnvironment: SettingsEnvironmentProtocol
     
-    func loadSentenceAudio(id: UUID) throws -> Data {
-        return try definitionEnvironment.loadSentenceAudio(id: id)
+    public init(definitionServices: DefinitionServicesProtocol,
+                dataStore: DefinitionDataStoreProtocol,
+                audioEnvironment: AudioEnvironmentProtocol,
+                settingsEnvironment: SettingsEnvironmentProtocol) {
+        self.definitionServices = definitionServices
+        self.dataStore = dataStore
+        self.audioEnvironment = audioEnvironment
+        self.settingsEnvironment = settingsEnvironment
+    }
+    
+    public func loadSentenceAudio(id: UUID) throws -> Data {
+        return try dataStore.loadSentenceAudio(id: id)
+    }
+    
+    public func fetchDefinitions(in sentence: Sentence?, chapter: Chapter, deviceLanguage: Language) async throws -> [Definition] {
+        return try await definitionServices.fetchDefinitions(in: sentence, chapter: chapter, deviceLanguage: deviceLanguage)
+    }
+    
+    public func saveDefinitions(_ definitions: [Definition]) throws {
+        try dataStore.saveDefinitions(definitions)
+    }
+    
+    public func deleteDefinition(with id: UUID) throws {
+        try dataStore.deleteDefinition(with: id)
+    }
+    
+    public func saveSentenceAudio(_ audioData: Data, id: UUID) throws {
+        try dataStore.saveSentenceAudio(audioData, id: id)
+    }
+    
+    public func getAppSettings() throws -> SettingsState {
+        return try settingsEnvironment.loadAppSettings()
+    }
+    
+    public func playSound(_ sound: AppSound) {
+        audioEnvironment.playSound(sound)
     }
 }

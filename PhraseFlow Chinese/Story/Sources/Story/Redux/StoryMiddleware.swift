@@ -8,9 +8,10 @@
 import AVKit
 import Foundation
 import ReduxKit
-import UserLimit
+import Subscription
 import TextGeneration
 
+@MainActor
 let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtocol> = { state, action, environment in
     switch action {
     case .createChapter(let type):

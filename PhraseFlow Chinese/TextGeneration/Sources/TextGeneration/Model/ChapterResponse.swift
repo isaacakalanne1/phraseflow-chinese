@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct ChapterResponse: Codable {
+public struct ChapterResponse: Codable {
     let titleOfNovel: String?
-    let chapterNumberAndTitle: String?
+    public let chapterNumberAndTitle: String?
     let briefLatestStorySummary: String
-    let sentences: [Sentence]
+    public let sentences: [Sentence]
 
-    init(from decoder: any Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.titleOfNovel = (try? container.decode(String.self, forKey: .titleOfNovel)) ?? nil
         self.chapterNumberAndTitle = (try? container.decode(String.self, forKey: .chapterNumberAndTitle)) ?? nil

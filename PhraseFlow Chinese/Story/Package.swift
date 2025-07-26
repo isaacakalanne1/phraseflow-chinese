@@ -17,13 +17,14 @@ let package = Package(
     dependencies: [
         .package(name: "Audio", path: "../Audio"),
         .package(name: "ReduxKit", path: "../ReduxKit"),
-        .package(name: "Definition", path: "../Definition"),
+        .package(name: "Study", path: "../Study"),
         .package(name: "FTColor", path: "../FTColor"),
         .package(name: "FTFont", path: "../FTFont"),
         .package(name: "FTStyleKit", path: "../FTStyleKit"),
         .package(name: "Loading", path: "../Loading"),
         .package(name: "Speech", path: "../Speech"),
         .package(name: "Settings", path: "../Settings"),
+        .package(name: "Subscription", path: "../Subscription"),
         .package(name: "TextGeneration", path: "../TextGeneration")
     ],
     targets: [
@@ -34,13 +35,14 @@ let package = Package(
             dependencies: [
                 "Audio",
                 "ReduxKit",
-                "Definition",
+                "Study",
                 "FTColor",
                 "FTFont",
                 "FTStyleKit",
                 "Loading",
                 "Speech",
                 "Settings",
+                "Subscription",
                 "TextGeneration"
             ]
         ),

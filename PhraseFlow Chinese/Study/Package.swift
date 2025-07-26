@@ -14,24 +14,28 @@ let package = Package(
             targets: ["Study"]),
     ],
     dependencies: [
+        .package(name: "Audio", path: "../Audio"),
         .package(name: "ReduxKit", path: "../ReduxKit"),
-        .package(name: "Definition", path: "../Definition"),
         .package(name: "Localization", path: "../Localization"),
         .package(name: "FTColor", path: "../FTColor"),
         .package(name: "FTFont", path: "../FTFont"),
-        .package(name: "Story", path: "../Story"),
+        .package(name: "FTStyleKit", path: "../FTStyleKit"),
+        .package(name: "Settings", path: "../Settings"),
+        .package(name: "TextGeneration", path: "../TextGeneration"),
         .package(name: "AppleIcon", path: "../AppleIcon")
     ],
     targets: [
         .target(
             name: "Study",
             dependencies: [
-                .product(name: "ReduxKit", package: "ReduxKit"),
-                "Definition",
+                "Audio",
+                "ReduxKit",
                 "Localization",
                 "FTColor",
                 "FTFont",
-                "Story",
+                "FTStyleKit",
+                "Settings",
+                "TextGeneration",
                 "AppleIcon"
             ]
         ),

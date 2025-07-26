@@ -8,7 +8,7 @@
 import Foundation
 
 public struct WordTimeStampData: Codable, Equatable, Hashable, Sendable {
-    let id: UUID
+    public let id: UUID
     let storyId: UUID
     let chapterIndex: Int
     public var word: String

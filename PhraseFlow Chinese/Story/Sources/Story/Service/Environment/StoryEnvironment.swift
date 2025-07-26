@@ -125,23 +125,23 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         _ word: WordTimeStampData,
         rate: Float
     ) {
-        audioEnvironment.playWord(word, rate: rate)
+        await audioEnvironment.playWord(startTime: word.time, duration: word.duration, playRate: rate)
     }
     
     public func getAppSettings() throws -> SettingsState {
         try settingsEnvironment.loadAppSettings()
     }
     
-    func playChapter(from word: WordTimeStampData) {
-        audioEnvironment.playChapterAudio(from: word.time,
+    func playChapter(from word: WordTimeStampData) async {
+        await audioEnvironment.playChapterAudio(from: word.time,
                                           rate: SpeechSpeed.normal.playRate)
     }
     
-    func pauseChapter() {
+    public func pauseChapter() {
         audioEnvironment.pauseChapterAudio()
     }
     
-    func setMusicVolume(_ volume: MusicVolume) {
+    public func setMusicVolume(_ volume: MusicVolume) {
         audioEnvironment.setMusicVolume(volume)
     }
 }

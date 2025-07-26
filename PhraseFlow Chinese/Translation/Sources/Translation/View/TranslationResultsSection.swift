@@ -9,6 +9,7 @@ import Localization
 import SwiftUI
 import FTFont
 import FTColor
+import TextGeneration
 
 struct TranslationResultsSection: View {
     @EnvironmentObject var store: TranslationStore

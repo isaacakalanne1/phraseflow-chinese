@@ -7,9 +7,11 @@
 
 import Foundation
 import AVKit
+import Settings
+import Study
 import TextGeneration
 
-struct TranslationState {
+struct TranslationState: Equatable {
     var inputText: String = ""
     var isTranslating: Bool = false
     var chapter: Chapter?

@@ -18,7 +18,7 @@ public class AudioExtractor {
     ///   - duration: Duration of the segment in seconds
     /// - Returns: Audio data for the specified segment or nil if extraction fails
     @MainActor
-    static func extractAudioSegment(
+    static public func extractAudioSegment(
         from player: AVPlayer,
         startTime: Double,
         duration: Double

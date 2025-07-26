@@ -19,6 +19,7 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
     private var pendingWrites: [UUID: Definition] = [:]
+    private var writeTimer: Timer?
 
     private var documentsDirectory: URL? {
         return fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
@@ -33,6 +34,10 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
         decoder.dateDecodingStrategy = .iso8601
         createDefinitionsDirectory()
         scheduleWrite()
+    }
+    
+    deinit {
+        writeTimer?.invalidate()
     }
     
     private func createDefinitionsDirectory() {
@@ -104,8 +109,9 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
     }
 
     private func scheduleWrite() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.flushPendingWrites()
+        writeTimer?.invalidate()
+        writeTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { [weak self] _ in
+            self?.flushPendingWrites()
         }
     }
     

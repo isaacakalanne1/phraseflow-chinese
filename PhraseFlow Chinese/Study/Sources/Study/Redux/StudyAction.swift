@@ -5,17 +5,27 @@
 //  Created by iakalann on 30/05/2025.
 //
 
-import Definition
+import Audio
+import AVKit
 import Foundation
+import Settings
 
 enum StudyAction {
     case failedToPrepareStudyWord
-    case playStudyWord(Definition)
+    case playStudyWord
     case prepareToPlayStudySentence(Definition)
+    case prepareToPlayStudyWord(Definition)
     case failedToPrepareStudySentence
-    case onPreparedStudySentence(Data)
+    case onPreparedStudyWord(AVPlayer)
+    case onPreparedStudySentence(AVPlayer)
     case playStudySentence
     case pauseStudyAudio
     case updateStudyAudioPlaying(Bool)
     case updateDisplayStatus(StudyDisplayStatus)
+    
+    case deleteDefinition(Definition)
+    case failedToDeleteDefinition
+    case updateStudiedWord(Definition)
+    case onLoadAppSettings(SettingsState)
+    case playSound(AppSound)
 }

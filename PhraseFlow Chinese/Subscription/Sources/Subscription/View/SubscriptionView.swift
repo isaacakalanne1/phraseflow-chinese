@@ -10,7 +10,6 @@ import StoreKit
 import SwiftUI
 import FTFont
 import FTColor
-import Navigation
 
 struct SubscriptionView: View {
     @EnvironmentObject var store: SubscriptionStore
@@ -18,11 +17,11 @@ struct SubscriptionView: View {
     var body: some View {
         VStack(spacing: 20) {
             Spacer()
-            Text(store.state.subscriptionState.isSubscribed ? LocalizedString.manageSubscription : LocalizedString.subscribe)
+            Text(store.state.isSubscribed ? LocalizedString.manageSubscription : LocalizedString.subscribe)
                 .font(FTFont.flowTaleHeader())
                 .bold()
                 .foregroundColor(FTColor.primary)
-            if !store.state.subscriptionState.isSubscribed {
+            if !store.state.isSubscribed {
                 Text(LocalizedString.subscriptionSubscribeNow)
                     .multilineTextAlignment(.center)
                     .font(FTFont.flowTaleSecondaryHeader())
@@ -30,7 +29,7 @@ struct SubscriptionView: View {
                     .foregroundColor(FTColor.primary)
             }
 
-            ForEach(store.state.subscriptionState.products?.sorted(by: { $0.price > $1.price }) ?? []) { product in
+            ForEach(store.state.products?.sorted(by: { $0.price > $1.price }) ?? []) { product in
                 let limitString: String
                 if let characterLimit = SubscriptionLevel(id: product.id)?.ssmlCharacterLimitPerDay {
                     // Use subscription_characters_per_day localization key
@@ -44,9 +43,9 @@ struct SubscriptionView: View {
                                           action: {
                                               Task {
                                                   // First validate receipt to ensure proper sandbox handling
-                                                  store.dispatch(.subscriptionAction(.validateReceipt))
+                                                  store.dispatch(.validateReceipt)
                                                   // Then attempt to purchase
-                                                  store.dispatch(.subscriptionAction(.purchaseSubscription(product)))
+                                                  store.dispatch(.purchaseSubscription(product))
                                               }
                                           })
             }
@@ -64,8 +63,8 @@ struct SubscriptionView: View {
 
             Button {
                 Task {
-                    store.dispatch(.subscriptionAction(.validateReceipt))
-                    store.dispatch(.subscriptionAction(.restoreSubscriptions))
+                    store.dispatch(.validateReceipt)
+                    store.dispatch(.restoreSubscriptions)
                 }
             } label: {
                 Text(LocalizedString.restoreSubscription)
@@ -109,17 +108,16 @@ struct SubscriptionView: View {
         // Validate receipt whenever subscription view appears to ensure we handle sandbox receipts properly
         .onAppear {
             Task {
-                store.dispatch(.subscriptionAction(.validateReceipt))
+                store.dispatch(.validateReceipt)
             }
         }
         .padding(20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(FTColor.background)
-        .navigationTitle(ContentTab.subscribe.title)
         .navigationBarTitleDisplayMode(.inline)
         .overlay(content: {
             Group {
-                if store.state.subscriptionState.isLoadingSubscriptionPurchase {
+                if store.state.isLoadingSubscriptionPurchase {
                     ZStack {
                         Color.black.opacity(0.5)
                         ProgressView()

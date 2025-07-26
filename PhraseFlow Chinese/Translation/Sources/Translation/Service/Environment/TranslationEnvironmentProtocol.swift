@@ -7,13 +7,14 @@
 
 import Foundation
 import Speech
-import Definition
+import Study
 import Settings
+import TextGeneration
 
 protocol TranslationEnvironmentProtocol {
     var translationServices: TranslationServicesProtocol { get }
     var speechEnvironment: SpeechEnvironmentProtocol { get }
-    var definitionEnvironment: DefinitionEnvironmentProtocol { get }
+    var studyEnvironment: StudyEnvironmentProtocol { get }
     var settingsEnvironment: SettingsEnvironmentProtocol { get }
     var translationDataStore: TranslationDataStoreProtocol { get }
     

@@ -2,6 +2,19 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+# PhraseFlow Chinese Refactoring Guide
+
+- Each package should have a RootView
+- The RootView is where the store is initialized with the environment, etc
+- The Environment dependencies, which are passed into the Environment init, should also come in from the RootView init
+- This will cause a chain where, ultimately, all environments, servies, etc will be initialised in the ContentView of FlowTale, and be passed in, so that there is one source of truth for each
+- Only use subscriber to dispatch a store action
+- Only use subscriber to dispatch a store action when this will result in functionality affecting a screen
+- Otherwise, if you need functionality from another package, such as data, etc, use environment functions to call another package's environment
+- Store dispatch is only used to update the state via reducer, and dispatch other actions via middleware
+- State logic should only ever be involved if a view will be involved, otherwise use the environment for using functionality or data from other packages
+- If there are references to a different state in a package (e.g, story package has a reference to definitionState), don't try to get the definition state, instead use the environment function to get the necessary data
+
 # PhraseFlow Chinese Development Guide
 
 ## Build & Test Commands
@@ -21,8 +34,8 @@ The app is built with 18+ Swift Packages for modularity:
 
 ### Redux Architecture
 Strict Redux pattern with architectural constraints:
-- **State composition**: `FlowTaleState` combines all feature states
-- **Action hierarchy**: `FlowTaleAction` wraps feature-specific actions
+- **State composition**: `State` Contains view state information
+- **Action hierarchy**: `Action` refers to specific package actions, use when view logic is involved
 - **Middleware limitations**: Can only return single action per case, no store.dispatch(...)
 - **Pure reducers**: All state changes happen only in reducers
 - **Async handling**: Side effects handled exclusively in middleware

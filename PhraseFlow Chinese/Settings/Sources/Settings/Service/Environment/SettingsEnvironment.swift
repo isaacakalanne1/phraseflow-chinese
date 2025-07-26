@@ -18,7 +18,7 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
     private let settingsDataStore: SettingsDataStoreProtocol
     private let audioEnvironment: AudioEnvironmentProtocol
     
-    init(
+    public init(
         settingsDataStore: SettingsDataStoreProtocol,
         audioEnvironment: AudioEnvironmentProtocol
     ) {

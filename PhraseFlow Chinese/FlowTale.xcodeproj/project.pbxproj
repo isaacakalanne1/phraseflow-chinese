@@ -14,7 +14,6 @@
 		BB34C5282E29BF4700238EA8 /* AppleIcon in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5272E29BF4700238EA8 /* AppleIcon */; };
 		BB34C52A2E29BF4700238EA8 /* Audio in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5292E29BF4700238EA8 /* Audio */; };
 		BB34C52C2E29BF4700238EA8 /* DataStorage in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C52B2E29BF4700238EA8 /* DataStorage */; };
-		BB34C52E2E29BF4700238EA8 /* Definition in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C52D2E29BF4700238EA8 /* Definition */; };
 		BB34C5302E29BF4700238EA8 /* FTFont in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C52F2E29BF4700238EA8 /* FTFont */; };
 		BB34C5322E29BF4700238EA8 /* ImageGeneration in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5312E29BF4700238EA8 /* ImageGeneration */; };
 		BB34C5342E29BF4700238EA8 /* Loading in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5332E29BF4700238EA8 /* Loading */; };
@@ -58,7 +57,6 @@
 		112BE27B2E2AE3E0006E80FC /* ReduxKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ReduxKit; sourceTree = "<group>"; };
 		112BE27C2E32C39F006E80FC /* FTStyleKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FTStyleKit; sourceTree = "<group>"; };
 		BB34C5022E2430BA00238EA8 /* Study */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Study; sourceTree = "<group>"; };
-		BB34C5032E25259C00238EA8 /* Definition */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Definition; sourceTree = "<group>"; };
 		BB34C5042E25279800238EA8 /* Story */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Story; sourceTree = "<group>"; };
 		BB34C5052E252D7100238EA8 /* Speech */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Speech; sourceTree = "<group>"; };
 		BB34C5062E28258A00238EA8 /* Settings */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Settings; sourceTree = "<group>"; };
@@ -109,7 +107,6 @@
 				BB34C5202E29526700238EA8 /* Localization in Frameworks */,
 				BB34C5422E2A4FB200238EA8 /* Subscription in Frameworks */,
 				BB34C5402E2A4FB200238EA8 /* Study in Frameworks */,
-				BB34C52E2E29BF4700238EA8 /* Definition in Frameworks */,
 				BB34C5442E2A4FB200238EA8 /* TextGeneration in Frameworks */,
 				BB34C5382E2A4FB200238EA8 /* Settings in Frameworks */,
 				BB34C5282E29BF4700238EA8 /* AppleIcon in Frameworks */,
@@ -143,7 +140,6 @@
 				BB34C51B2E290A2300238EA8 /* AppleIcon */,
 				BB34C5142E28F6F800238EA8 /* Audio */,
 				BB34C5172E28FCD300238EA8 /* DataStorage */,
-				BB34C5032E25259C00238EA8 /* Definition */,
 				BB34C51C2E290A7C00238EA8 /* FTColor */,
 				BB34C5132E28F62B00238EA8 /* FTFont */,
 				112BE27C2E32C39F006E80FC /* FTStyleKit */,
@@ -239,7 +235,6 @@
 				BB34C5272E29BF4700238EA8 /* AppleIcon */,
 				BB34C5292E29BF4700238EA8 /* Audio */,
 				BB34C52B2E29BF4700238EA8 /* DataStorage */,
-				BB34C52D2E29BF4700238EA8 /* Definition */,
 				BB34C52F2E29BF4700238EA8 /* FTFont */,
 				BB34C5312E29BF4700238EA8 /* ImageGeneration */,
 				BB34C5332E29BF4700238EA8 /* Loading */,
@@ -747,10 +742,6 @@
 		BB34C52B2E29BF4700238EA8 /* DataStorage */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DataStorage;
-		};
-		BB34C52D2E29BF4700238EA8 /* Definition */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Definition;
 		};
 		BB34C52F2E29BF4700238EA8 /* FTFont */ = {
 			isa = XCSwiftPackageProductDependency;

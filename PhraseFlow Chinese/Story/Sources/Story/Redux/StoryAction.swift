@@ -6,7 +6,7 @@
 //
 
 import Audio
-import Definition
+import Study
 import Foundation
 import Loading
 import Speech

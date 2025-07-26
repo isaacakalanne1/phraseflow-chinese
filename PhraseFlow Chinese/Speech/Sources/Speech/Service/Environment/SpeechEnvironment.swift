@@ -9,15 +9,19 @@ import Foundation
 import TextGeneration
 import Settings
 
-struct SpeechEnvironment: SpeechEnvironmentProtocol {
-    let speechRepository: SpeechRepositoryProtocol
+public struct SpeechEnvironment: SpeechEnvironmentProtocol {
+    public let speechRepository: SpeechRepositoryProtocol
     
-    func synthesizeSpeech(for chapter: Chapter, voice: Voice, language: Language) async throws -> Chapter {
+    public init(speechRepository: SpeechRepositoryProtocol) {
+        self.speechRepository = speechRepository
+    }
+    
+    public func synthesizeSpeech(for chapter: Chapter, voice: Voice, language: Language) async throws -> Chapter {
         let (processedChapter, _) = try await speechRepository.synthesizeSpeech(chapter, voice: voice, language: language)
         return processedChapter
     }
     
-    func synthesizeSpeechWithCharacterCount(for chapter: Chapter, voice: Voice, language: Language) async throws -> (Chapter, Int) {
+    public func synthesizeSpeechWithCharacterCount(for chapter: Chapter, voice: Voice, language: Language) async throws -> (Chapter, Int) {
         return try await speechRepository.synthesizeSpeech(chapter, voice: voice, language: language)
     }
 }

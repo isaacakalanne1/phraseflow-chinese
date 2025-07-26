@@ -5,27 +5,47 @@
 //  Created by iakalann on 06/04/2025.
 //
 
+import Audio
 import AVKit
 import ReduxKit
 
+@MainActor
 let studyReducer: Reducer<StudyState, StudyAction> = { state, action in
     var newState = state
 
     switch action {
-    case .playStudyWord(let definition):
-        newState.audioPlayer = definition.audioData?.createAVPlayer(fileExtension: "m4a") ?? AVPlayer()
-    case .onPreparedStudySentence(let data):
-        newState.sentenceAudioPlayer = data.createAVPlayer(fileExtension: "m4a") ?? AVPlayer()
+    case .onPreparedStudySentence(let player):
+        newState.sentenceAudioPlayer = player
+    case .onPreparedStudyWord(let player):
+        newState.audioPlayer = player
     case .failedToPrepareStudySentence:
         newState.sentenceAudioPlayer = AVPlayer()
     case .updateStudyAudioPlaying(let isPlaying):
         newState.isAudioPlaying = isPlaying
     case let .updateDisplayStatus(displayStatus):
         newState.displayStatus = displayStatus
+    case .onLoadAppSettings(let settings):
+        newState.filterLanguage = settings.language
+        
+    case .deleteDefinition(let definition):
+        newState.definitions.removeAll(where: { $0.id == definition.id })
+        
+    case .updateStudiedWord(var definition):
+        definition.studiedDates.append(.now)
+
+        if let index = newState.definitions.firstIndex(where: { $0.timestampData == definition.timestampData }) {
+            newState.definitions.replaceSubrange(index...index, with: [definition])
+        } else {
+            newState.definitions.append(definition)
+        }
     case .failedToPrepareStudyWord,
             .prepareToPlayStudySentence,
             .playStudySentence,
-            .pauseStudyAudio:
+            .pauseStudyAudio,
+            .prepareToPlayStudyWord,
+            .playStudyWord,
+            .failedToDeleteDefinition,
+            .playSound:
         break
     }
 

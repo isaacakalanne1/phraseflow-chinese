@@ -14,7 +14,7 @@ import Localization
 // MARK: - Main View
 
 struct DefinitionsChartView: View {
-    @EnvironmentObject var store: DefinitionStore
+    @EnvironmentObject var store: StudyStore
     let definitions: [Definition]
     let isCreations: Bool
 

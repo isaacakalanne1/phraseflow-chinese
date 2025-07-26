@@ -16,7 +16,6 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "ReduxKit", path: "../ReduxKit"),
-        .package(name: "Navigation", path: "../Navigation"),
         .package(name: "Localization", path: "../Localization"),
         .package(name: "FTColor", path: "../FTColor"),
         .package(name: "FTFont", path: "../FTFont")
@@ -28,7 +27,6 @@ let package = Package(
             name: "Subscription",
             dependencies: [
                 "ReduxKit",
-                "Navigation",
                 "Localization",
                 "FTColor",
                 "FTFont"

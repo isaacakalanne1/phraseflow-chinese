@@ -14,7 +14,7 @@ import Settings
 import SwiftUI
 
 struct DefinitionsProgressSheetView: View {
-    @EnvironmentObject var store: DefinitionStore
+    @EnvironmentObject var store: StudyStore
     @State private var showingCreations = true
     @State private var navigateToStudyView = false
     @State private var showLanguageSelector = false
@@ -142,7 +142,6 @@ struct DefinitionsProgressSheetView: View {
                     }
                 }
                 .listStyle(.insetGrouped)
-                .navigationTitle(ContentTab.progress.title)
                 .navigationBarTitleDisplayMode(.inline)
                 .background(FTColor.background)
                 .scrollContentBackground(.hidden)

@@ -8,7 +8,7 @@
 import AVFoundation
 import AVKit
 
-extension Data {
+public extension Data {
     func createAVPlayer(fileExtension: String = "mp3") async -> AVPlayer? {
         // 1. Create a temporary file URL
         let tempDirectory = FileManager.default.temporaryDirectory

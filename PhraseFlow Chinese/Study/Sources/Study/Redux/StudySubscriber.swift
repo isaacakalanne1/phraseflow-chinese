@@ -8,6 +8,7 @@
 import Foundation
 import ReduxKit
 
+@MainActor
 let studySubscriber: OnSubscribe<StudyStore, StudyEnvironmentProtocol> = { store, environment in
     // No reactive subscriptions needed for basic study functionality
 }

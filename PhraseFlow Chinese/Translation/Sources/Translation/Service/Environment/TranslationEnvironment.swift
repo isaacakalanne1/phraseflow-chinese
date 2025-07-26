@@ -5,31 +5,39 @@
 //  Created by iakalann on 18/07/2025.
 //
 
+import Audio
 import Foundation
 import Speech
-import Definition
+import Study
 import Settings
+import TextGeneration
 
 struct TranslationEnvironment: TranslationEnvironmentProtocol {
     let translationServices: TranslationServicesProtocol
     let speechEnvironment: SpeechEnvironmentProtocol
-    let definitionEnvironment: DefinitionEnvironmentProtocol
+    let studyEnvironment: StudyEnvironmentProtocol
     let settingsEnvironment: SettingsEnvironmentProtocol
     let translationDataStore: TranslationDataStoreProtocol
     
-    init(translationServices: TranslationServicesProtocol, speechEnvironment: SpeechEnvironmentProtocol, definitionEnvironment: DefinitionEnvironmentProtocol, settingsEnvironment: SettingsEnvironmentProtocol, translationDataStore: TranslationDataStoreProtocol) {
-        self.translationServices = translationServices
-        self.speechEnvironment = speechEnvironment
-        self.definitionEnvironment = definitionEnvironment
-        self.settingsEnvironment = settingsEnvironment
-        self.translationDataStore = translationDataStore
-    }
-    
-    init() {
+    init(
+        speechRepository: SpeechRepositoryProtocol,
+        definitionServices: DefinitionServicesProtocol,
+        definitionDataStore: DefinitionDataStoreProtocol,
+        audioEnvironment: AudioEnvironmentProtocol,
+        settingsEnvironment: SettingsEnvironmentProtocol,
+        settingsDataStore: SettingsDataStoreProtocol
+    ) {
         self.translationServices = TranslationServices()
-        self.speechEnvironment = SpeechEnvironment()
-        self.definitionEnvironment = DefinitionEnvironment()
-        self.settingsEnvironment = SettingsEnvironment()
+        self.speechEnvironment = SpeechEnvironment(speechRepository: speechRepository)
+        self.studyEnvironment = StudyEnvironment(
+            definitionServices: definitionServices,
+            dataStore: definitionDataStore,
+            audioEnvironment: audioEnvironment,
+            settingsEnvironment: settingsEnvironment)
+        self.settingsEnvironment = SettingsEnvironment(
+            settingsDataStore: settingsDataStore,
+            audioEnvironment: audioEnvironment
+        )
         self.translationDataStore = TranslationDataStore()
     }
     
@@ -46,14 +54,14 @@ struct TranslationEnvironment: TranslationEnvironmentProtocol {
     }
     
     func fetchDefinitions(in sentence: Sentence?, chapter: Chapter, deviceLanguage: Language) async throws -> [Definition] {
-        return try await definitionEnvironment.fetchDefinitions(in: sentence, chapter: chapter, deviceLanguage: deviceLanguage)
+        return try await studyEnvironment.fetchDefinitions(in: sentence, chapter: chapter, deviceLanguage: deviceLanguage)
     }
     
     func saveDefinitions(_ definitions: [Definition]) throws {
-        try definitionEnvironment.saveDefinitions(definitions)
+        try studyEnvironment.saveDefinitions(definitions)
     }
     
     func saveSentenceAudio(_ audioData: Data, id: UUID) throws {
-        try definitionEnvironment.saveSentenceAudio(audioData, id: id)
+        try studyEnvironment.saveSentenceAudio(audioData, id: id)
     }
 }

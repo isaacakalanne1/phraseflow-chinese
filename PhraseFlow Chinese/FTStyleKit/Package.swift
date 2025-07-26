@@ -15,7 +15,8 @@ let package = Package(
             targets: ["FTStyleKit"]),
     ],
     dependencies: [
-        .package(name: "FTColor", path: "../FTColor")
+        .package(name: "FTColor", path: "../FTColor"),
+        .package(name: "Localization", path: "../Localization"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -23,7 +24,8 @@ let package = Package(
         .target(
             name: "FTStyleKit",
             dependencies: [
-                "FTColor"
+                "FTColor",
+                "Localization"
             ],
             resources: [
                 .process("Resources")

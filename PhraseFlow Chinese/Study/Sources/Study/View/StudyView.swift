@@ -9,8 +9,7 @@ import Localization
 import SwiftUI
 import FTColor
 import FTFont
-import Definition
-import Story
+import FTStyleKit
 import AppleIcon
 import ReduxKit
 
@@ -40,7 +39,7 @@ public struct StudyView: View {
         studyWords.count == 1
     }
 
-    var body: some View {
+    public var body: some View {
         VStack {
             if let definition = currentDefinition {
                 ScrollView {
@@ -55,7 +54,7 @@ public struct StudyView: View {
                             HStack {
                                 Spacer()
                                 Button {
-                                    store.dispatch(.playStudyWord(definition))
+                                    store.dispatch(.playStudyWord)
                                 } label: {
                                     SystemImageView(.speaker)
                                 }
@@ -130,15 +129,13 @@ public struct StudyView: View {
                 HStack {
                     if !shouldShowAllDetails {
                         PrimaryButton(
-                            title: LocalizedString.previous,
-                            shouldPlaySound: false
+                            title: LocalizedString.previous
                         ) {
                             goToPreviousDefinition()
                         }
 
                         PrimaryButton(
-                            title: isDefinitionShown ? LocalizedString.next : LocalizedString.reveal,
-                            shouldPlaySound: false
+                            title: isDefinitionShown ? LocalizedString.next : LocalizedString.reveal
                         ) {
                             nextTapped(definition: definition)
                         }
@@ -161,7 +158,7 @@ public struct StudyView: View {
         if isDefinitionShown {
             goToNextDefinition()
         } else {
-            store.dispatch(.playStudyWord(definition))
+            store.dispatch(.playStudyWord)
             withAnimation {
                 store.dispatch(.updateDisplayStatus(.allShown))
             }
@@ -192,6 +189,7 @@ public struct StudyView: View {
     func updateDefinition() {
         store.dispatch(.updateDisplayStatus(.wordShown))
         if let definition = currentDefinition {
+            store.dispatch(.prepareToPlayStudyWord(definition))
             store.dispatch(.prepareToPlayStudySentence(definition))
             store.dispatch(.pauseStudyAudio)
         }

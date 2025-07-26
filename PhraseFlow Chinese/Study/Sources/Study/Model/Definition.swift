@@ -12,15 +12,15 @@ import TextGeneration
 
 public struct Definition: Codable, Equatable, Hashable, Sendable {
     var id: UUID // Unique identifier for this definition
-    var creationDate: Date
+    public var creationDate: Date
     var studiedDates: [Date]
-    var timestampData: WordTimeStampData
+    public var timestampData: WordTimeStampData
     var sentence: Sentence
     var detail: WordDefinition
     var language: Language
-    var hasBeenSeen: Bool
+    public var hasBeenSeen: Bool
     var sentenceId: UUID // ID for the extracted sentence audio
-    var audioData: Data?
+    public var audioData: Data?
 
     init(id: UUID = UUID(),
          creationDate: Date = Date(),
@@ -61,7 +61,7 @@ public struct Definition: Codable, Equatable, Hashable, Sendable {
 
 }
 
-extension [Definition] {
+public extension [Definition] {
     mutating func addDefinitions(_ definitions: [Definition]) {
         for definition in definitions {
             self.removeAll(where: { $0.id == definition.id })
@@ -70,7 +70,7 @@ extension [Definition] {
     }
 }
 
-func definitionSchema() -> [String: Any] {
+public func definitionSchema() -> [String: Any] {
     let wordProperties: [String: Any] = [
         "word": ["type": "string"],
         "pronunciation": ["type": "string"],

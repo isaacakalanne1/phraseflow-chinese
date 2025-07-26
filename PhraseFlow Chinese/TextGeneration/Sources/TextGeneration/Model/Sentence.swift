@@ -9,7 +9,7 @@ import Foundation
 import Settings
 
 public struct Sentence: Codable, Equatable, Hashable, Sendable {
-    let id: UUID
+    public let id: UUID
     public let translation: String
     public let original: String
     public var timestamps: [WordTimeStampData]
@@ -23,9 +23,9 @@ public struct Sentence: Codable, Equatable, Hashable, Sendable {
     }
 }
 
-func sentenceSchema(originalLanguage: Language,
-                    translationLanguage: Language,
-                    shouldCreateTitle: Bool) -> [String: Any] {
+public func sentenceSchema(originalLanguage: Language,
+                           translationLanguage: Language,
+                           shouldCreateTitle: Bool) -> [String: Any] {
     var properties: [String: Any] = [
         "briefLatestStorySummaryIn\(originalLanguage.key)": ["type": "string"],
         "chapterNumberAndTitleIn\(originalLanguage.key)": ["type": "string"],

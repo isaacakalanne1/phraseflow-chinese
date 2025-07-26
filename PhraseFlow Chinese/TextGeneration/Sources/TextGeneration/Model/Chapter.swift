@@ -10,7 +10,7 @@ import Settings
 import UIKit
 
 public struct Chapter: Codable, Equatable, Hashable, Sendable {
-    var id: UUID
+    public var id: UUID
     public let storyId: UUID
     var title: String
     public var sentences: [Sentence]
@@ -27,7 +27,7 @@ public struct Chapter: Codable, Equatable, Hashable, Sendable {
     var currentSentence: Sentence?
     var lastUpdated: Date
     var storyPrompt: String?
-    var imageData: Data?
+    public var imageData: Data?
     
     var coverArt: UIImage? {
         if let data = imageData {

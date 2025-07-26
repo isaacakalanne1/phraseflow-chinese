@@ -191,7 +191,7 @@ public enum Language: String, Codable, CaseIterable, Sendable {
         }
     }
 
-    var voices: [Voice] {
+    public var voices: [Voice] {
         switch self {
         case .mandarinChinese:
             [.xiaoxiao,
@@ -256,20 +256,6 @@ public enum Language: String, Codable, CaseIterable, Sendable {
             .trailing
         default:
             .leading
-        }
-    }
-}
-
-enum TranslationMode: String, CaseIterable {
-    case translate
-    case breakdown
-    
-    public var displayName: String {
-        switch self {
-        case .translate:
-            return LocalizedString.translate
-        case .breakdown:
-            return LocalizedString.breakdown
         }
     }
 }

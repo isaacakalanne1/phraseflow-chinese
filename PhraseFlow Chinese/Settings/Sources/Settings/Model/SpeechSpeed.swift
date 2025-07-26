@@ -33,7 +33,7 @@ public enum SpeechSpeed: CaseIterable, Codable, Equatable, Sendable {
         }
     }
 
-    var playRate: Float {
+    public var playRate: Float {
         switch self {
         case .slow:
             0.5
