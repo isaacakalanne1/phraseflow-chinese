@@ -9,13 +9,7 @@ import SwiftUI
 import ReduxKit
 import StoreKit
 
-public struct SubscriptionReducer: Reducer {
-    public typealias State = SubscriptionState
-    public typealias Action = SubscriptionAction
-    
-    public init() {}
-    
-    public func reduce(state: State, action: Action) -> State {
+public let subscriptionReducer: @Sendable (SubscriptionState, SubscriptionAction) -> SubscriptionState = { state, action in
         var newState = state
 
         switch action {
@@ -59,5 +53,4 @@ public struct SubscriptionReducer: Reducer {
         }
 
         return newState
-    }
 }

@@ -14,7 +14,7 @@ let storySubscriber: OnSubscribe<StoryStore, StoryEnvironmentProtocol> = { store
             environment.storySubject
         ) { store, storyId in
             if let storyId = storyId {
-                store.dispatch(.storyAction(.selectChapter(storyId: storyId)))
+                store.dispatch(.selectChapter(storyId: storyId))
             }
         }
 }

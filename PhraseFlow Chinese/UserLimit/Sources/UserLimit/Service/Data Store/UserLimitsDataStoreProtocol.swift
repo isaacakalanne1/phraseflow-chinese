@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Subscription
 
 protocol UserLimitsDataStoreProtocol {
     func trackSSMLCharacterUsage(characterCount: Int, subscription: SubscriptionLevel?) throws

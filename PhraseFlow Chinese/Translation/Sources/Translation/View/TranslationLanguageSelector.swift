@@ -17,7 +17,7 @@ struct TranslationLanguageSelector: View {
     
     var body: some View {
         VStack(spacing: 8) {
-            if store.state.translationState.mode == .translate {
+            if store.state.mode == .translate {
                 Text("Translate between languages")
                     .font(FTFont.flowTaleSubHeader())
                     .foregroundColor(FTColor.secondary)
@@ -47,7 +47,7 @@ struct TranslationLanguageSelector: View {
         Button {
             showSourceLanguageSelector = true
         } label: {
-            let sourceLanguage = store.state.translationState.sourceLanguage
+            let sourceLanguage = store.state.sourceLanguage
 
             HStack(spacing: 6) {
                 if sourceLanguage != nil {
@@ -84,28 +84,28 @@ struct TranslationLanguageSelector: View {
     
     private var swapLanguagesButton: some View {
         Button {
-            store.dispatch(.translationAction(.swapLanguages))
+            store.dispatch(.swapLanguages)
         } label: {
-            Image(systemName: store.state.translationState.sourceLanguage == nil ?
+            Image(systemName: store.state.sourceLanguage == nil ?
                   "arrow.right" : "arrow.left.arrow.right")
                 .font(FTFont.flowTaleBodyXSmall())
-                .foregroundColor(store.state.translationState.sourceLanguage == nil ?
+                .foregroundColor(store.state.sourceLanguage == nil ?
                                 FTColor.secondary : FTColor.accent)
                 .frame(width: 36, height: 36)
                 .background(
                     Circle()
-                        .strokeBorder(store.state.translationState.sourceLanguage == nil ?
+                        .strokeBorder(store.state.sourceLanguage == nil ?
                                      FTColor.secondary : FTColor.accent, lineWidth: 1)
                 )
         }
-        .disabled(store.state.translationState.sourceLanguage == nil)
+        .disabled(store.state.sourceLanguage == nil)
     }
     
     private var targetLanguageButton: some View {
         Button {
             showLanguageSelector = true
         } label: {
-            let targetLanguage = store.state.translationState.targetLanguage
+            let targetLanguage = store.state.targetLanguage
             HStack(spacing: 6) {
                 Text(targetLanguage.flagEmoji)
                     .font(FTFont.flowTaleBodyXSmall())
@@ -134,7 +134,7 @@ struct TranslationLanguageSelector: View {
         Button {
             showTextLanguageSelector = true
         } label: {
-            let textLanguage = store.state.translationState.textLanguage
+            let textLanguage = store.state.textLanguage
             HStack(spacing: 6) {
                 Text(textLanguage.flagEmoji)
                     .font(FTFont.flowTaleBodyXSmall())

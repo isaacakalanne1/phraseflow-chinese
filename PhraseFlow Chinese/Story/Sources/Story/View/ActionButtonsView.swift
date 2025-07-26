@@ -13,7 +13,7 @@ struct ActionButtonsView: View {
 
     var body: some View {
         var tabs = ContentTab.allCases
-        if store.state.definitionState.definitions.isEmpty {
+        if store.environment.getDefinitions().isEmpty {
             tabs.removeAll(where: { $0 == .progress })
         }
         tabs.removeAll(where: { $0 == .translate })

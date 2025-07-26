@@ -8,6 +8,7 @@
 import SwiftUI
 import FTFont
 import FTColor
+import TextGeneration
 
 struct CharacterView: View {
     @EnvironmentObject var store: StoryStore
@@ -17,19 +18,19 @@ struct CharacterView: View {
     let isTranslation: Bool
 
     var isTappedWord: Bool {
-        store.state.definitionState.currentDefinition?.timestampData == word
+        store.environment.getCurrentDefinition()?.timestampData == word
     }
 
     var spokenWord: WordTimeStampData? {
-        isTranslation ? store.state.translationState.currentSpokenWord : store.state.storyState.currentChapter?.currentSpokenWord
+        isTranslation ? store.environment.getCurrentSpokenWord() : store.state.storyState.currentChapter?.currentSpokenWord
     }
 
     var currentSentence: Sentence? {
-        isTranslation ? store.state.translationState.currentSentence : store.state.storyState.currentChapter?.currentSentence
+        isTranslation ? store.environment.getCurrentTranslationSentence() : store.state.storyState.currentChapter?.currentSentence
     }
 
     var hasDefinition: Bool {
-        store.state.definitionState.definition(timestampData: word) != nil
+        store.environment.hasDefinition(for: word)
     }
 
     var body: some View {

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AppleIcon
 
 struct ActionButton: View {
     let systemImage: SystemImage

@@ -16,15 +16,15 @@ struct TranslationActionButton: View {
     
     var body: some View {
         Button {
-            if store.state.translationState.mode == .translate {
-                store.dispatch(.translationAction(.translateText))
+            if store.state.mode == .translate {
+                store.dispatch(.translateText)
             } else {
-                store.dispatch(.translationAction(.breakdownText))
+                store.dispatch(.breakdownText)
             }
             isInputFocused = false // Dismiss the keyboard when button is tapped
         } label: {
             HStack {
-                if store.state.translationState.isTranslating {
+                if store.state.isTranslating {
                     ProgressView()
                         .tint(.white)
                         .frame(width: 20, height: 20)
@@ -35,9 +35,9 @@ struct TranslationActionButton: View {
                         .padding(.trailing, 8)
                 }
                 
-                let buttonText = store.state.translationState.isTranslating ? 
+                let buttonText = store.state.isTranslating ? 
                     LocalizedString.translating : 
-                    (store.state.translationState.mode == .translate ? LocalizedString.translate : LocalizedString.breakdown)
+                    (store.state.mode == .translate ? LocalizedString.translate : LocalizedString.breakdown)
                 
                 Text(buttonText)
                     .font(FTFont.flowTaleSecondaryHeader())
@@ -47,13 +47,13 @@ struct TranslationActionButton: View {
             .frame(maxWidth: .infinity)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(store.state.translationState.inputText.isEmpty ||
-                          store.state.translationState.isTranslating ?
+                    .fill(store.state.inputText.isEmpty ||
+                          store.state.isTranslating ?
                           Color.gray.opacity(0.5) : FTColor.accent)
             )
         }
-        .disabled(store.state.translationState.inputText.isEmpty ||
-                  store.state.translationState.isTranslating)
+        .disabled(store.state.inputText.isEmpty ||
+                  store.state.isTranslating)
         .padding(.horizontal)
         .padding(.top, 10)
         .padding(.bottom, 16)

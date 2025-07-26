@@ -7,7 +7,7 @@
 
 import Settings
 
-protocol TextGenerationServicesProtocol {
+public protocol TextGenerationServicesProtocol {
     func generateChapter(
         previousChapters: [Chapter],
         deviceLanguage: Language?

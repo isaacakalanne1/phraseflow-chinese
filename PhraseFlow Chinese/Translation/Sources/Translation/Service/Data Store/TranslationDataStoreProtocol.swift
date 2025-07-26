@@ -9,7 +9,7 @@ import Combine
 import Foundation
 import TextGeneration
 
-protocol TranslationDataStoreProtocol {
+public protocol TranslationDataStoreProtocol {
     func saveTranslation(_ chapter: Chapter) throws
     func loadTranslationHistory() throws -> [Chapter]
     func deleteTranslation(id: UUID) throws

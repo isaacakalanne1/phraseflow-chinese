@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TextGeneration
 
 struct StoryInfoView: View {
     let chapter: Chapter

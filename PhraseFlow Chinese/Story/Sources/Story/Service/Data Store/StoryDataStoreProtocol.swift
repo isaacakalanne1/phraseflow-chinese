@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import TextGeneration
 
 protocol StoryDataStoreProtocol {
     func saveChapter(_ chapter: Chapter) throws

@@ -25,7 +25,9 @@ let package = Package(
         .package(name: "Speech", path: "../Speech"),
         .package(name: "Settings", path: "../Settings"),
         .package(name: "Subscription", path: "../Subscription"),
-        .package(name: "TextGeneration", path: "../TextGeneration")
+        .package(name: "TextGeneration", path: "../TextGeneration"),
+        .package(name: "Translation", path: "../Translation"),
+        .package(name: "Localization", path: "../Localization")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -43,7 +45,9 @@ let package = Package(
                 "Speech",
                 "Settings",
                 "Subscription",
-                "TextGeneration"
+                "TextGeneration",
+                "Translation",
+                "Localization"
             ]
         ),
         .testTarget(

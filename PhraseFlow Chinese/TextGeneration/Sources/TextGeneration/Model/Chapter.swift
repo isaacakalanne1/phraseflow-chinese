@@ -20,12 +20,12 @@ public struct Chapter: Codable, Equatable, Hashable, Sendable {
     
     // Story-level properties moved to Chapter
     var chapterSummary: String
-    let difficulty: Difficulty
+    public let difficulty: Difficulty
     public let language: Language
     var storyTitle: String
-    var currentPlaybackTime: Double = 0
-    var currentSentence: Sentence?
-    var lastUpdated: Date
+    public var currentPlaybackTime: Double = 0
+    public var currentSentence: Sentence?
+    public var lastUpdated: Date
     var storyPrompt: String?
     public var imageData: Data?
     

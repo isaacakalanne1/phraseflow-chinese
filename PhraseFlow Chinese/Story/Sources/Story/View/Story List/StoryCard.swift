@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FTColor
+import TextGeneration
 
 struct StoryCard: View {
     @EnvironmentObject var store: StoryStore

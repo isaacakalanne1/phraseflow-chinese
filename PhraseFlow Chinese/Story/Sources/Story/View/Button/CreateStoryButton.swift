@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Localization
 
 struct CreateStoryButton: View {
     @EnvironmentObject var store: StoryStore

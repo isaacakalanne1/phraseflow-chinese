@@ -7,6 +7,8 @@
 
 import SwiftUI
 import FTFont
+import TextGeneration
+import Localization
 
 struct ListOfSentencesView: View {
     @EnvironmentObject var store: StoryStore
@@ -16,7 +18,7 @@ struct ListOfSentencesView: View {
     private let isTranslation: Bool
 
     var spokenWord: WordTimeStampData? {
-        isTranslation ? store.state.translationState.currentSpokenWord : store.state.storyState.currentChapter?.currentSpokenWord
+        isTranslation ? store.environment.getCurrentSpokenWord() : store.state.storyState.currentChapter?.currentSpokenWord
     }
 
     init(isTranslation: Bool = false) {
@@ -35,7 +37,7 @@ struct ListOfSentencesView: View {
         let chapter: Chapter?
         switch isTranslation {
         case true:
-            chapter = store.state.translationState.chapter
+            chapter = store.environment.getTranslationChapter()
         case false:
             chapter = store.state.storyState.currentChapter
         }

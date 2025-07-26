@@ -8,7 +8,7 @@
 import Foundation
 import StoreKit
 
-public enum SubscriptionAction {
+public enum SubscriptionAction: Sendable {
     case fetchSubscriptions
     case onFetchedSubscriptions([Product])
     case failedToFetchSubscriptions

@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import TextGeneration
 
 enum StoryDataStoreError: Error {
     case failedToCreateUrl

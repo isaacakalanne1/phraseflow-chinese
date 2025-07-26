@@ -18,6 +18,7 @@ public enum LocalizedString {
         return LocalizedString.tr("Localizable", "chapter_number", p1)
     }
 
+    public static let chapter = LocalizedString.tr("Localizable", "chapter")
     public static let chapterReady = LocalizedString.tr("Localizable", "chapter_ready")
     public static let chapters = LocalizedString.tr("Localizable", "chapters")
     public static func chaptersPerStory(_ p1: String) -> String {
@@ -143,6 +144,7 @@ public enum LocalizedString {
     public static let reveal = LocalizedString.tr("Localizable", "reveal")
     public static let russian = LocalizedString.tr("Localizable", "russian")
     public static let saved = LocalizedString.tr("Localizable", "saved")
+    public static let selectSentenceToSeeTranslation = LocalizedString.tr("Localizable", "select_sentence_to_see_translation")
     public static let sentence = LocalizedString.tr("Localizable", "sentence")
     public static let settings = LocalizedString.tr("Localizable", "settings")
     public static let settingsAppearance = LocalizedString.tr("Localizable", "settings_appearance")

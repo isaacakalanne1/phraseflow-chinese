@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TextGeneration
 
 struct FlowLayout: Layout {
     var spacing: CGFloat = 4

@@ -8,6 +8,7 @@
 import SwiftUI
 import FTFont
 import FTColor
+import Localization
 
 struct StoryListContent: View {
     @EnvironmentObject var store: StoryStore
@@ -22,7 +23,7 @@ struct StoryListContent: View {
                     .padding(.horizontal, 20)
                     .padding(.top, 8)
                 
-                ForEach(store.state.storyState.allStories, id: \.storyId) { storyInfo in
+                ForEach(store.state.allStories, id: \.storyId) { storyInfo in
                     StoryCard(storyID: storyInfo.storyId)
                         .padding(.horizontal, 16)
                 }

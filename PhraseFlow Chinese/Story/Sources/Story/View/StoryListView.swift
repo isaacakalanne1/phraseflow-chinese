@@ -9,6 +9,9 @@ import SwiftUI
 import FTFont
 import FTColor
 import FTStyleKit
+import TextGeneration
+import Localization
+import Settings
 
 struct StoryListView: View {
     @EnvironmentObject var store: StoryStore
@@ -16,14 +19,13 @@ struct StoryListView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            if store.state.storyState.allStories.isEmpty {
+            if store.state.allStories.isEmpty {
                 StoryListEmptyState()
             } else {
                 StoryListContent()
             }
             
             MainButton(title: LocalizedString.newStory.uppercased()) {
-                store.dispatch(.playSound(.largeBoom))
                 store.dispatch(.createChapter(.newStory))
             }
             .disabled(store.state.isWritingChapter)
@@ -45,7 +47,7 @@ struct StoryListView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(FTColor.background)
-        .navigationTitle(ContentTab.storyList.title)
+        .navigationTitle(LocalizedString.stories)
         .navigationDestination(isPresented: $showCreateStorySettings) {
             CreateStorySettingsView()
                 .background(FTColor.background)

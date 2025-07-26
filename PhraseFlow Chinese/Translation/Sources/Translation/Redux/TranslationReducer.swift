@@ -51,8 +51,6 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         newState.isTranslating = isInProgress
     case .onSynthesizedTranslationAudio(let chapter):
         newState.chapter = chapter
-        let player = chapter.audio.data.createAVPlayer()
-        newState.audioPlayer = player ?? AVPlayer()
         newState.isTranslating = false
         
     case .failedToTranslate,

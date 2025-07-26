@@ -8,7 +8,7 @@
 import Foundation
 import StoreKit
 
-public struct SubscriptionState {
+public struct SubscriptionState: Equatable {
     public var isLoadingSubscriptionPurchase = false
     public var currentSubscription: SubscriptionLevel? {
 //        #if DEBUG
@@ -38,4 +38,12 @@ public struct SubscriptionState {
     public var nextAvailableDescription = ""
     
     public init() {}
+    
+    public static func == (lhs: SubscriptionState, rhs: SubscriptionState) -> Bool {
+        lhs.isLoadingSubscriptionPurchase == rhs.isLoadingSubscriptionPurchase &&
+        lhs.products?.map(\.id) == rhs.products?.map(\.id) &&
+        lhs.purchasedProductIDs == rhs.purchasedProductIDs &&
+        lhs.hasReachedFreeTrialLimit == rhs.hasReachedFreeTrialLimit &&
+        lhs.nextAvailableDescription == rhs.nextAvailableDescription
+    }
 }

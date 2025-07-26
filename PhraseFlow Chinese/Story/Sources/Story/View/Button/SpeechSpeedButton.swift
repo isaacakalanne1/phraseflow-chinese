@@ -14,10 +14,12 @@ struct SpeechSpeedButton: View {
 
     var body: some View {
         Button {
-            store.dispatch(.updateSpeechSpeed(store.state.settingsState.speechSpeed.nextSpeed))
+            if let currentSpeed = try? store.environment.getSpeechSpeed() {
+                store.dispatch(.updateSpeechSpeed(currentSpeed.nextSpeed))
+            }
             store.dispatch(.playSound(.changeSettings))
         } label: {
-            Text(store.state.settingsState.speechSpeed.text)
+            Text((try? store.environment.getSpeechSpeed())?.text ?? "")
                 .font(FTFont.flowTaleBodyMedium())
                 .fontWeight(.medium)
                 .foregroundStyle(FTColor.primary)

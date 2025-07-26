@@ -8,6 +8,7 @@
 import SwiftUI
 import FTFont
 import FTColor
+import Localization
 
 struct StoryListEmptyState: View {
     var body: some View {

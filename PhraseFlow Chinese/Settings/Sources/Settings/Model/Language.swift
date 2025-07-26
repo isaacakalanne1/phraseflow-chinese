@@ -235,7 +235,7 @@ public enum Language: String, Codable, CaseIterable, Sendable {
         }
     }
 
-    var flagEmoji: String {
+    public var flagEmoji: String {
         let flagBase = UnicodeScalar("🇦").value - UnicodeScalar("A").value
         var flags: [String] = []
 

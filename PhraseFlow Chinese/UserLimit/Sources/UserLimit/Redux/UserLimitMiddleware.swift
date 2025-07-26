@@ -12,7 +12,7 @@ import ReduxKit
 let userLimitMiddleware: Middleware<UserLimitState, UserLimitAction, UserLimitEnvironmentProtocol> = { state, action, environment in
     switch action {
     case .onDailyChapterLimitReached(let nextAvailable):
-        return .snackbarAction(.showSnackBar(.dailyChapterLimitReached(nextAvailable: nextAvailable)))
+        return .showDailyLimitExplanationScreen(isShowing: true)
         
     case .checkFreeTrialLimit,
          .hasReachedFreeTrialLimit,

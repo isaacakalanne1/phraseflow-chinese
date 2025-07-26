@@ -9,6 +9,8 @@ import SwiftUI
 import FTFont
 import FTColor
 import FTStyleKit
+import TextGeneration
+import Localization
 
 struct ChapterListView: View {
     @EnvironmentObject var store: StoryStore

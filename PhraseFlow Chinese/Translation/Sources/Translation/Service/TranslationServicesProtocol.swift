@@ -8,7 +8,7 @@
 import Settings
 import TextGeneration
 
-protocol TranslationServicesProtocol {
+public protocol TranslationServicesProtocol {
     func translateText(_ text: String, from sourceLanguage: Language?, to targetLanguage: Language) async throws -> Chapter
     func breakdownText(_ text: String, textLanguage: Language, deviceLanguage: Language) async throws -> Chapter
 }

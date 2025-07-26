@@ -7,9 +7,11 @@
 
 import StoreKit
 
-class SubscriptionRepository: SubscriptionRepositoryProtocol {
+public class SubscriptionRepository: SubscriptionRepositoryProtocol {
+    
+    public init() {}
 
-    func getProducts() async throws -> [Product] {
+    public func getProducts() async throws -> [Product] {
         return try await Product.products(for: [
             "com.flowtale.level_1",
             "com.flowtale.level_2",
@@ -17,7 +19,7 @@ class SubscriptionRepository: SubscriptionRepositoryProtocol {
         ])
     }
 
-    func purchase(_ product: Product) async throws {
+    public func purchase(_ product: Product) async throws {
         do {
             validateAppStoreReceipt()
 
@@ -38,7 +40,7 @@ class SubscriptionRepository: SubscriptionRepositoryProtocol {
     }
 
     /// Validates the App Store receipt
-    func validateAppStoreReceipt() {
+    public func validateAppStoreReceipt() {
         guard let receiptURL = Bundle.main.appStoreReceiptURL,
               FileManager.default.fileExists(atPath: receiptURL.path)
         else {

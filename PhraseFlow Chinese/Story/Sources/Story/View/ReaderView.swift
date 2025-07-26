@@ -19,7 +19,7 @@ public struct ReaderView: View {
         VStack(spacing: 16) {
             AIStatementView()
 
-            if store.state.settingsState.isShowingDefinition || store.state.settingsState.isShowingEnglish {
+            if (try? store.environment.isShowingDefinition()) == true || (try? store.environment.isShowingEnglish()) == true {
                 SentenceDetailView()
             }
 

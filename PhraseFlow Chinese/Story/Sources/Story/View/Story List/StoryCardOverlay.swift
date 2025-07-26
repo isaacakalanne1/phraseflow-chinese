@@ -8,6 +8,8 @@
 import SwiftUI
 import FTFont
 import FTColor
+import TextGeneration
+import Localization
 
 struct StoryCardOverlay: View {
     @EnvironmentObject var store: StoryStore
@@ -96,7 +98,7 @@ struct StoryCardOverlay: View {
                 .font(FTFont.flowTaleSecondaryHeader())
                 .foregroundColor(FTColor.primary)
 
-            Text("\(allChaptersForStory.count) \(allChaptersForStory.count == 1 ? "chapter" : "chapters")")
+            Text("\(allChaptersForStory.count) \(allChaptersForStory.count == 1 ? LocalizedString.chapter : LocalizedString.chapters)")
                 .font(FTFont.flowTaleSecondaryHeader())
                 .foregroundColor(FTColor.primary)
         }

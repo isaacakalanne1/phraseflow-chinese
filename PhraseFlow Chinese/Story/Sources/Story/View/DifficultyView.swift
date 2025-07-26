@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import TextGeneration
+import Settings
 
 struct DifficultyView: View {
     let difficulty: Difficulty

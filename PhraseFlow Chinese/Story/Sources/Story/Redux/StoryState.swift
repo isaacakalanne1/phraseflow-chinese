@@ -6,18 +6,22 @@
 //
 
 import Foundation
+import TextGeneration
 
-struct StoryState {
-    var currentChapter: Chapter?
-    var storyChapters: [UUID: [Chapter]] = [:]
+public struct StoryState: Equatable {
+    public var currentChapter: Chapter?
+    public var storyChapters: [UUID: [Chapter]] = [:]
+    public var isWritingChapter: Bool = false
 
-    init(currentChapter: Chapter? = nil,
-         storyChapters: [UUID: [Chapter]] = [:]) {
+    public init(currentChapter: Chapter? = nil,
+         storyChapters: [UUID: [Chapter]] = [:],
+         isWritingChapter: Bool = false) {
         self.currentChapter = currentChapter
         self.storyChapters = storyChapters
+        self.isWritingChapter = isWritingChapter
     }
     
-    var allStories: [(storyId: UUID, chapters: [Chapter])] {
+    public var allStories: [(storyId: UUID, chapters: [Chapter])] {
         return storyChapters.map { (storyId: $0.key, chapters: $0.value) }
             .sorted { first, second in
                 guard let firstLatest = first.chapters.max(by: { $0.lastUpdated < $1.lastUpdated }),
@@ -28,9 +32,13 @@ struct StoryState {
             }
     }
     
-    func firstChapter(for storyId: UUID) -> Chapter? {
+    public func firstChapter(for storyId: UUID) -> Chapter? {
         guard let chapters = storyChapters[storyId] else { return nil }
         return chapters.min(by: { $0.lastUpdated < $1.lastUpdated })
     }
-
+    
+    public static func == (lhs: StoryState, rhs: StoryState) -> Bool {
+        lhs.currentChapter?.id == rhs.currentChapter?.id &&
+        lhs.storyChapters.count == rhs.storyChapters.count
+    }
 }

@@ -8,6 +8,8 @@
 import SwiftUI
 import FTFont
 import FTColor
+import TextGeneration
+import Localization
 
 struct TranslatedSentenceView: View {
     @EnvironmentObject var store: StoryStore
@@ -15,7 +17,7 @@ struct TranslatedSentenceView: View {
     var body: some View {
         VStack(spacing: 8) {
             if store.state.storyState.currentChapter?.currentSentence != nil {
-                if store.state.settingsState.isShowingEnglish {
+                if (try? store.environment.isShowingEnglish()) == true {
                     // Show translation with scroll indicators
                     Text(store.state.storyState.currentChapter?.currentSentence?.original ?? "")
                         .font(FTFont.flowTaleBodyMedium())
@@ -39,7 +41,7 @@ struct TranslatedSentenceView: View {
             } else {
                 // No sentence selected state
                 VStack {
-                    Text("Select a sentence to see the translation")
+                    Text(LocalizedString.selectSentenceToSeeTranslation)
                         .font(FTFont.flowTaleSecondaryHeader())
                         .foregroundColor(FTColor.secondary)
                         .multilineTextAlignment(.center)

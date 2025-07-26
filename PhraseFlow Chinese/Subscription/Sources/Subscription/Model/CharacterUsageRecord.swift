@@ -7,7 +7,12 @@
 
 import Foundation
 
-struct CharacterUsageRecord: Codable {
-    let timestamp: Date
-    let characterCount: Int
+public struct CharacterUsageRecord: Codable {
+    public let timestamp: Date
+    public let characterCount: Int
+    
+    public init(timestamp: Date, characterCount: Int) {
+        self.timestamp = timestamp
+        self.characterCount = characterCount
+    }
 }

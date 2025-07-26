@@ -11,7 +11,7 @@ import Study
 import Settings
 import TextGeneration
 
-protocol TranslationEnvironmentProtocol {
+public protocol TranslationEnvironmentProtocol {
     var translationServices: TranslationServicesProtocol { get }
     var speechEnvironment: SpeechEnvironmentProtocol { get }
     var studyEnvironment: StudyEnvironmentProtocol { get }

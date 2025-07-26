@@ -7,7 +7,7 @@
 
 import StoreKit
 
-protocol SubscriptionRepositoryProtocol {
+public protocol SubscriptionRepositoryProtocol {
     func getProducts() async throws -> [Product]
     func purchase(_ product: Product) async throws
     func validateAppStoreReceipt()

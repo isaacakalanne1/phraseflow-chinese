@@ -8,6 +8,7 @@
 import AVKit
 import Foundation
 import ReduxKit
+import Settings
 import Subscription
 import TextGeneration
 
@@ -20,35 +21,32 @@ let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtoco
 
             switch type {
             case .newStory:
+                // For now, we'll use default values since we can't access other package state
                 chapter = try await environment.generateFirstChapter(
-                    language: state.language,
-                    difficulty: state.difficulty,
-                    voice: state.voice,
+                    language: .mandarinChinese,
+                    difficulty: .beginner,
+                    voice: .xiaoxiao,
                     deviceLanguage: nil,
-                    storyPrompt: state.storySetting.prompt,
-                    currentSubscription: state.subscriptionState.currentSubscription
+                    storyPrompt: nil,
+                    currentSubscription: nil
                 )
                 
             case .existingStory(let storyId):
-                if let existingChapters = state.storyState.storyChapters[storyId] {
+                if let existingChapters = state.storyChapters[storyId] {
                     chapter = try await environment.generateChapter(
                         previousChapters: existingChapters,
                         deviceLanguage: nil,
-                        currentSubscription: state.subscriptionState.currentSubscription
+                        currentSubscription: nil
                     )
                 } else {
-                    throw TextGenerationServicesError.failedToGetResponseData
+                    return .failedToCreateChapter
                 }
 
             }
             
             return .onCreatedChapter(chapter)
-        } catch UserLimitsDataStoreError.freeUserCharacterLimitReached {
-            return nil
-        } catch UserLimitsDataStoreError.characterLimitReached(let nextAvailable) {
-            return nil
         } catch {
-            return nil
+            return .failedToCreateChapter
         }
     
     case .loadStoriesAndDefinitions:
@@ -60,32 +58,14 @@ let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtoco
         } catch {
             return .failedToLoadStoriesAndDefinitions
         }
-    case .onLoadedStoriesAndDefitions(let chapters, let definitions):
-        if let currentChapter = state.storyState.currentChapter {
-            let existingDefinitions = state.definitionState.definitions
-            var firstMissingSentenceIndex: Int?
-
-            for (sentenceIndex, sentence) in currentChapter.sentences.enumerated() {
-                let sentenceHasDefinitions = sentence.timestamps.allSatisfy { timestamp in
-                    existingDefinitions.contains { $0.timestampData == timestamp }
-                }
-
-                if !sentenceHasDefinitions {
-                    firstMissingSentenceIndex = sentenceIndex
-                    break
-                }
-            }
-
-            if let sentenceIndex = firstMissingSentenceIndex {
-                return .definitionAction(.defineSentence(sentenceIndex: sentenceIndex, previousDefinitions: [], chapter: currentChapter, deviceLanguage: nil))
-            }
-        }
-        return .navigationAction(.selectTab(.reader, shouldPlaySound: false))
+    case .onLoadedStoriesAndDefitions:
+        // Simply return nil - cross-package actions should be handled by the main app
+        return nil
 
     case .deleteStory(let storyId):
         do {
             // Delete all chapters for this story
-            if let chapters = state.storyState.storyChapters[storyId] {
+            if let chapters = state.storyChapters[storyId] {
                 for chapter in chapters {
                     try environment.deleteChapter(chapter)
                 }
@@ -106,42 +86,26 @@ let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtoco
         }
 
     case .goToNextChapter:
-        if let currentChapter = state.storyState.currentChapter {
+        if let currentChapter = state.currentChapter {
             return .saveChapter(currentChapter)
         }
         return nil
 
     case .failedToCreateChapter:
-        return .snackbarAction(.showSnackBar(.failedToWriteChapter))
+        // Cross-package actions should be handled by the main app
+        return nil
+        
     case .onCreatedChapter(let chapter):
         try? environment.saveChapter(chapter)
-        return .definitionAction(.defineSentence(sentenceIndex: 0, previousDefinitions: [], chapter: chapter, deviceLanguage: nil))
+        // Cross-package actions should be handled by the main app
+        return nil
+        
     case .selectWord(let word, let shouldPlay):
-        if let definition = state.definitionState.definition(timestampData: word) {
-            return .definitionAction(.showDefinition(definition, shouldPlay: shouldPlay))
-        }
+        // Cross-package definition logic should be handled by the main app
         return shouldPlay ? .playWord(word) : nil
-    case .selectChapter(let storyId):
-        if let chapters = state.storyState.storyChapters[storyId], !chapters.isEmpty {
-            let selectedChapter = chapters.last ?? chapters[0]
-            let existingDefinitions = state.definitionState.definitions
-            var firstMissingSentenceIndex: Int?
-
-            for (sentenceIndex, sentence) in selectedChapter.sentences.enumerated() {
-                let sentenceHasDefinitions = sentence.timestamps.allSatisfy { timestamp in
-                    existingDefinitions.contains { $0.timestampData == timestamp }
-                }
-
-                if !sentenceHasDefinitions {
-                    firstMissingSentenceIndex = sentenceIndex
-                    break
-                }
-            }
-
-            if let sentenceIndex = firstMissingSentenceIndex {
-                return .definitionAction(.defineSentence(sentenceIndex: sentenceIndex, previousDefinitions: [], chapter: currentChapter, deviceLanguage: nil))
-            }
-        }
+        
+    case .selectChapter:
+        // Cross-package definition logic should be handled by the main app
         return nil
         
     case .playWord(let timestamp):

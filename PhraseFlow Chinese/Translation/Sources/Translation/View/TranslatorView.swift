@@ -8,23 +8,13 @@
 import SwiftUI
 
 public struct TranslatorView: View {
-    private var store: TranslationStore
+    private let environment: TranslationEnvironmentProtocol
 
-    public init() {
-        let state = TranslationState()
-        let environment = TranslationEnvironment()
-
-        store = TranslationStore(
-            initial: state,
-            reducer: translationReducer,
-            environment: environment,
-            middleware: translationMiddleware,
-            subscriber: translationSubscriber
-        )
+    public init(environment: TranslationEnvironmentProtocol) {
+        self.environment = environment
     }
     
     public var body: some View {
-        TranslationView()
-            .environmentObject(store)
+        TranslationRootView(environment: environment)
     }
 }

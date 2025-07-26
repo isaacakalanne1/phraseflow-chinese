@@ -10,6 +10,7 @@ import SwiftUI
 import FTFont
 import FTColor
 import TextGeneration
+import Study
 
 struct TranslationResultsSection: View {
     @EnvironmentObject var store: TranslationStore
@@ -21,7 +22,7 @@ struct TranslationResultsSection: View {
                 .font(FTFont.flowTaleSecondaryHeader())
                 .foregroundColor(FTColor.primary)
 
-            DefinitionView(definition: store.state.translationState.currentDefinition)
+            DefinitionView(definition: store.state.currentDefinition)
                 .frame(height: 150)
                 .background(
                     RoundedRectangle(cornerRadius: 12)
@@ -37,16 +38,16 @@ struct TranslationResultsSection: View {
                 .foregroundColor(FTColor.primary)
 
             HStack(alignment: .top) {
-                ListOfSentencesView(isTranslation: true)
+                TranslationSentencesView(chapter: chapter)
 
                 Button {
-                    if store.state.translationState.isPlayingAudio {
-                        store.dispatch(.translationAction(.pauseTranslationAudio))
+                    if store.state.isPlayingAudio {
+                        store.dispatch(.pauseTranslationAudio)
                     } else {
-                        store.dispatch(.translationAction(.playTranslationAudio))
+                        store.dispatch(.playTranslationAudio)
                     }
                 } label: {
-                    Image(systemName: store.state.translationState.isPlayingAudio ?
+                    Image(systemName: store.state.isPlayingAudio ?
                           "pause.circle.fill" : "play.circle.fill")
                     .resizable()
                     .frame(width: 40, height: 40)
@@ -63,5 +64,29 @@ struct TranslationResultsSection: View {
                     )
             )
         }
+    }
+}
+
+struct TranslationSentencesView: View {
+    @EnvironmentObject var store: TranslationStore
+    let chapter: Chapter
+    
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 8) {
+                ForEach(chapter.sentences, id: \.id) { sentence in
+                    Text(sentence.text)
+                        .font(FTFont.flowTaleBodyMedium())
+                        .foregroundColor(FTColor.primary)
+                        .padding(.vertical, 4)
+                        .background(
+                            store.state.currentSentence?.id == sentence.id ? 
+                            FTColor.accent.opacity(0.1) : Color.clear
+                        )
+                        .cornerRadius(4)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

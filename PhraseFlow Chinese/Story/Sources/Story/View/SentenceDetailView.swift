@@ -7,6 +7,7 @@
 
 import FTStyleKit
 import SwiftUI
+import TextGeneration
 
 struct SentenceDetailView: View {
     @EnvironmentObject var store: StoryStore
@@ -16,12 +17,12 @@ struct SentenceDetailView: View {
             if (store.state.isDefining || store.state.currentDefinition != nil) && store.state.isShowingDefinition {
                 DefinitionView(
                     isLoading: store.state.viewState.isDefining,
-                    viewData: createViewData(definition: store.state.definitionState.currentDefinition)
+                    viewData: createViewData(definition: store.environment.getCurrentDefinition())
                 )
                 .frame(maxHeight: .infinity)
                 .cardBackground()
                     
-            } else if store.state.settingsState.isShowingEnglish {
+            } else if (try? store.environment.isShowingEnglish()) == true {
                 TranslatedSentenceView()
                     .frame(maxHeight: .infinity)
                     .cardBackground()

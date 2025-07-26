@@ -129,33 +129,3 @@ struct SubscriptionView: View {
         })
     }
 }
-
-enum SubscriptionLevel: CaseIterable {
-    case level1, level2
-
-    var ssmlCharacterLimitPerDay: Int {
-        switch self {
-        case .level1:
-            15000
-        case .level2:
-            30000
-        }
-    }
-    
-
-    var idString: String {
-        switch self {
-        case .level1:
-            "com.flowtale.level_1"
-        case .level2:
-            "com.flowtale.level_2"
-        }
-    }
-
-    init?(id: String) {
-        guard let level = SubscriptionLevel.allCases.first(where: { $0.idString == id }) else {
-            return nil
-        }
-        self = level
-    }
-}

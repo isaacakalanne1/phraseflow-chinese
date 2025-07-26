@@ -8,13 +8,14 @@
 import SwiftUI
 import FTFont
 import FTColor
+import AppleIcon
 
 struct AudioButton: View {
     @EnvironmentObject var store: StoryStore
 
     var body: some View {
         Button {
-            if store.state.audioState.isPlayingAudio {
+            if store.environment.isPlayingAudio() {
                 store.dispatch(.pauseChapter)
             } else {
                 let timestamps = store.state.currentChapter?.currentSentence?.timestamps ?? []
@@ -23,7 +24,7 @@ struct AudioButton: View {
                 }
             }
         } label: {
-            audioButtonLabel(systemImage: store.state.audioState.isPlayingAudio ? .pause : .play)
+            audioButtonLabel(systemImage: store.environment.isPlayingAudio() ? .pause : .play)
         }
     }
 

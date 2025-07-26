@@ -10,7 +10,7 @@ import FTStyleKit
 import Localization
 import SwiftUI
 
-struct CreateStorySettingsView: View {
+public struct CreateStorySettingsView: View {
     @EnvironmentObject var store: SettingsStore
 
     @State var isShowingLanguageSettings = false
@@ -18,7 +18,9 @@ struct CreateStorySettingsView: View {
     @State var isShowingPromptSettings = false
     @State var isShowingVoiceSettings = false
 
-    var body: some View {
+    public init() {}
+
+    public var body: some View {
         let currentDifficulty = store.state.difficulty
         let currentLanguage = store.state.language
         let currentVoice = store.state.voice

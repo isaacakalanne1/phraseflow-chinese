@@ -35,8 +35,8 @@ struct TranslationInputSection: View {
                 .focused($isInputFocused)
 
             Picker("Translation Mode", selection: Binding(
-                get: { store.state.translationState.mode },
-                set: { store.dispatch(.translationAction(.updateTranslationMode($0))) }
+                get: { store.state.mode },
+                set: { store.dispatch(.updateTranslationMode($0)) }
             )) {
                 ForEach(TranslationMode.allCases, id: \.self) { mode in
                     Text(mode.displayName).tag(mode)
