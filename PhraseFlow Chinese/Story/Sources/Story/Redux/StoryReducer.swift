@@ -9,7 +9,7 @@ import SwiftUI
 import ReduxKit
 import TextGeneration
 
-let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { state, action in
+public let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { state, action in
     var newState = state
 
     switch action {
@@ -130,7 +130,8 @@ let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { state, a
          .updateLoadingStatus,
          .playWord,
          .playChapter,
-         .pauseChapter:
+         .pauseChapter,
+         .updateSpeechSpeed:
         break
     }
 

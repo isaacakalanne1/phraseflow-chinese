@@ -10,15 +10,19 @@ import FTColor
 import TextGeneration
 import ReduxKit
 
-struct StoryCard: View {
+public struct StoryCard: View {
     @EnvironmentObject var store: StoryStore
     let storyID: UUID
-
-    private var firstChapter: Chapter? {
-        store.state.storyState.firstChapter(for: storyID)
+    
+    public init(storyID: UUID) {
+        self.storyID = storyID
     }
 
-    var body: some View {
+    private var firstChapter: Chapter? {
+        store.state.firstChapter(for: storyID)
+    }
+
+    public var body: some View {
         NavigationLink(destination: ChapterListView(storyId: storyID)) {
             ZStack {
                 // Background image or fallback
@@ -35,7 +39,7 @@ struct StoryCard: View {
             .clipShape(RoundedRectangle(cornerRadius: 20))
             .contextMenu {
                 DeleteButton {
-                    store.dispatch(.storyAction(.deleteStory(storyID)))
+                    store.dispatch(.deleteStory(storyID))
                 }
             }
         }

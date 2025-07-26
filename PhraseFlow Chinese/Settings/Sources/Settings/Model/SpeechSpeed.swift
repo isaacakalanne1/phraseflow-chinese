@@ -11,7 +11,7 @@ import Localization
 public enum SpeechSpeed: CaseIterable, Codable, Equatable, Sendable {
     case slow, normal, fast
 
-    var title: String {
+    public var title: String {
         switch self {
         case .slow:
             LocalizedString.slow
@@ -22,7 +22,7 @@ public enum SpeechSpeed: CaseIterable, Codable, Equatable, Sendable {
         }
     }
 
-    var nextSpeed: SpeechSpeed {
+    public var nextSpeed: SpeechSpeed {
         switch self {
         case .slow:
                 .normal
@@ -44,7 +44,7 @@ public enum SpeechSpeed: CaseIterable, Codable, Equatable, Sendable {
         }
     }
 
-    var rate: String {
+    public var rate: String {
         switch self {
         case .slow:
             "x-slow"
@@ -55,7 +55,7 @@ public enum SpeechSpeed: CaseIterable, Codable, Equatable, Sendable {
         }
     }
 
-    var emoji: String {
+    public var emoji: String {
         switch self {
         case .slow:
             "🐌"
@@ -66,7 +66,7 @@ public enum SpeechSpeed: CaseIterable, Codable, Equatable, Sendable {
         }
     }
 
-    var text: String {
+    public var text: String {
         switch self {
         case .slow:
             "0.5X"

@@ -23,11 +23,9 @@ let moderationMiddleware: Middleware<ModerationState, ModerationAction, Moderati
         return response.didPassModeration ? .passedModeration(prompt) : .didNotPassModeration
         
     case .passedModeration(let prompt):
-        environment.showModerationPassedSnackBar()
         return nil
 
     case .didNotPassModeration:
-        environment.showModerationFailedSnackBar()
         return nil
         
     case .failedToModerateText:

@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct ModerationState {
+public struct ModerationState: Equatable {
     var moderationResponse: ModerationResponse?
     var moderationRecord: ModerationRecord?
     var isShowingModerationFailedAlert = false
     var isShowingModerationDetails = false
     
-    init(moderationResponse: ModerationResponse? = nil,
+    public init(moderationResponse: ModerationResponse? = nil,
          moderationRecord: ModerationRecord? = nil,
          isShowingModerationFailedAlert: Bool = false,
          isShowingModerationDetails: Bool = false) {

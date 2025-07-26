@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct ModerationRecord: Codable, Identifiable {
-    let id: UUID
+public struct ModerationRecord: Codable, Identifiable, Equatable {
+    public let id: UUID
     let timestamp: Date
     let prompt: String
     let moderationResponse: ModerationResponse
     let didPass: Bool
     
-    init(prompt: String, moderationResponse: ModerationResponse) {
+    public init(prompt: String, moderationResponse: ModerationResponse) {
         self.id = UUID()
         self.timestamp = Date()
         self.prompt = prompt

@@ -8,4 +8,4 @@
 import Foundation
 import ReduxKit
 
-typealias StoryStore = Store<StoryState, StoryAction, StoryEnvironmentProtocol>
+public typealias StoryStore = Store<StoryState, StoryAction, StoryEnvironmentProtocol>

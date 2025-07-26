@@ -5,6 +5,6 @@
 //  Created by iakalann on 17/07/2025.
 //
 
-struct NavigationState {
+struct NavigationState: Equatable {
     var contentTab: ContentTab = .reader
 }

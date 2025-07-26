@@ -28,7 +28,7 @@ public enum SystemImage {
          translate(isSelected: Bool),
          xmark
 
-    var systemName: String {
+    public var systemName: String {
         switch self {
         case ._repeat:
             "repeat.circle.fill"

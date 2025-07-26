@@ -10,12 +10,14 @@ import SwiftUI
 import TextGeneration
 import Study
 
-struct SentenceDetailView: View {
+public struct SentenceDetailView: View {
     @EnvironmentObject var store: StoryStore
 
-    var body: some View {
+    public init() {}
+    
+    public var body: some View {
         Group {
-            if (store.state.isDefining || store.state.currentDefinition != nil) && store.state.isShowingDefinition {
+            if store.environment.getCurrentDefinition() != nil {
                 DefinitionView(
                     isLoading: store.state.viewState.isDefining,
                     viewData: createViewData(definition: store.environment.getCurrentDefinition())

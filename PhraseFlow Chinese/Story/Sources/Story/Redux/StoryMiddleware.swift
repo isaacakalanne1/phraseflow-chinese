@@ -13,7 +13,7 @@ import Subscription
 import TextGeneration
 
 @MainActor
-let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtocol> = { state, action, environment in
+public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtocol> = { state, action, environment in
     switch action {
     case .createChapter(let type):
         do {
@@ -123,6 +123,14 @@ let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtoco
         environment.pauseChapter()
         environment.setMusicVolume(.normal)
         return nil
+    case .updateSpeechSpeed(let speed):
+        do {
+            try environment.updateSpeechSpeed(speed)
+        } catch {
+            // Handle error silently for now
+        }
+        return nil
+        
     case .failedToLoadStoriesAndDefinitions,
             .failedToDeleteStory,
             .failedToSaveChapter,

@@ -5,7 +5,7 @@
 //  Created by iakalann on 17/04/2025.
 //
 
-public struct ModerationResponse: Codable {
+public struct ModerationResponse: Codable, Equatable, Sendable {
     let id: String
     let model: String
     let results: [ModerationResult]
@@ -23,7 +23,7 @@ public struct ModerationResponse: Codable {
         return true
     }
 
-    var categoryResults: [CategoryResult] {
+    public var categoryResults: [CategoryResult] {
         guard let firstResult = results.first else {
             return []
         }

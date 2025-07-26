@@ -8,4 +8,4 @@
 import Foundation
 import ReduxKit
 
-typealias ModerationStore = Store<ModerationState, ModerationAction, ModerationEnvironmentProtocol>
+public typealias ModerationStore = Store<ModerationState, ModerationAction, ModerationEnvironmentProtocol>

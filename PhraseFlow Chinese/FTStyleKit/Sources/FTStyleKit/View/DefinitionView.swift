@@ -15,6 +15,13 @@ public struct DefinitionViewData {
     public let pronounciation: String
     public let definition: String
     public let definitionInContextOfSentence: String
+    
+    public init(word: String, pronounciation: String, definition: String, definitionInContextOfSentence: String) {
+        self.word = word
+        self.pronounciation = pronounciation
+        self.definition = definition
+        self.definitionInContextOfSentence = definitionInContextOfSentence
+    }
 }
 
 public struct DefinitionView: View {

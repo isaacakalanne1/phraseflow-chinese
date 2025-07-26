@@ -5,7 +5,9 @@
 //  Created by iakalann on 17/04/2025.
 //
 
-enum ModerationCategories: CaseIterable {
+import Localization
+
+public enum ModerationCategories: CaseIterable, Sendable {
     case sexual
     case sexualMinors
     case violenceGraphic
@@ -14,7 +16,7 @@ enum ModerationCategories: CaseIterable {
     case illicitViolent
 
     /// Human-readable name you want to display in the UI
-    var name: String {
+    public var name: String {
         switch self {
         case .sexual:
             return LocalizedString.moderationCategorySexual
@@ -32,7 +34,7 @@ enum ModerationCategories: CaseIterable {
     }
 
     /// Key to use when looking up the category_scores dictionary from the API
-    var key: String {
+    public var key: String {
         switch self {
         case .sexual:
             return "sexual"
@@ -50,7 +52,7 @@ enum ModerationCategories: CaseIterable {
     }
 
     /// The threshold above which the story fails moderation
-    var thresholdScore: Double {
+    public var thresholdScore: Double {
         switch self {
         case .sexual:
             return 0.8

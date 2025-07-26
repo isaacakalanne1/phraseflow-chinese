@@ -11,21 +11,26 @@ import FTColor
 import FTStyleKit
 import TextGeneration
 import Localization
+import Audio
 
-struct ChapterListView: View {
+public struct ChapterListView: View {
     @EnvironmentObject var store: StoryStore
     let storyId: UUID
     @State private var navigationPath = NavigationPath()
+    
+    public init(storyId: UUID) {
+        self.storyId = storyId
+    }
 
     private var firstChapter: Chapter? {
-        store.state.storyState.firstChapter(for: storyId)
+        store.state.firstChapter(for: storyId)
     }
     
     private var allChaptersForStory: [Chapter] {
-        store.state.storyState.storyChapters[storyId] ?? []
+        store.state.storyChapters[storyId] ?? []
     }
 
-    var body: some View {
+    public var body: some View {
         NavigationStack(path: $navigationPath) {
             if let firstChapter = firstChapter {
                 VStack(spacing: 0) {
@@ -140,7 +145,7 @@ struct ChapterListView: View {
                 .background(FTColor.background)
                 .scrollContentBackground(.hidden)
                 .onAppear {
-                    store.dispatch(.playSound(.openStory))
+                    store.environment.playSound(.openStory)
                 }
                 .navigationDestination(for: Chapter.self) { chapter in
                     ReaderView(chapter: chapter)
@@ -178,7 +183,7 @@ struct ChapterListView: View {
     private func chapterCard(for chapter: Chapter, at index: Int) -> some View {
         Button {
             withAnimation(.easeInOut) {
-                store.dispatch(.playSound(.openChapter))
+                store.environment.playSound(.openChapter)
                 navigationPath.append(chapter)
             }
         } label: {

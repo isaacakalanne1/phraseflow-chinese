@@ -12,7 +12,7 @@ import UIKit
 public struct Chapter: Codable, Equatable, Hashable, Sendable {
     public var id: UUID
     public let storyId: UUID
-    var title: String
+    public var title: String
     public var sentences: [Sentence]
     public var audioVoice: Voice
     public var audio: ChapterAudio
@@ -29,7 +29,7 @@ public struct Chapter: Codable, Equatable, Hashable, Sendable {
     var storyPrompt: String?
     public var imageData: Data?
     
-    var coverArt: UIImage? {
+    public var coverArt: UIImage? {
         if let data = imageData {
             return UIImage(data: data)
         }

@@ -7,10 +7,8 @@
 
 import Foundation
 
-protocol ModerationEnvironmentProtocol {
+public protocol ModerationEnvironmentProtocol {
     var moderationDataStore: ModerationDataStoreProtocol { get }
     
     func moderateText(_ text: String) async throws -> ModerationResponse
-    func showModerationPassedSnackBar()
-    func showModerationFailedSnackBar()
 }

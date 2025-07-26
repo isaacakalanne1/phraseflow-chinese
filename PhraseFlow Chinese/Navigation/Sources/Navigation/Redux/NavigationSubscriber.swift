@@ -8,6 +8,6 @@
 import Foundation
 import ReduxKit
 
-let navigationSubscriber: OnSubscribe<NavigationStore, NavigationEnvironmentProtocol> = { store, environment in
+nonisolated(unsafe) let navigationSubscriber: OnSubscribe<NavigationStore, NavigationEnvironmentProtocol> = { store, environment in
     // No reactive subscriptions needed for basic navigation
 }

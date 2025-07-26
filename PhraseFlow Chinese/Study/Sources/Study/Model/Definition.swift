@@ -58,6 +58,22 @@ public struct Definition: Codable, Equatable, Hashable, Sendable {
         sentenceId = (try? container.decode(UUID.self, forKey: .sentenceId)) ?? UUID()
         audioData = try? container.decode(Data.self, forKey: .audioData)
     }
+    
+    public var word: String {
+        detail.word
+    }
+    
+    public var pronunciation: String {
+        detail.pronunciation
+    }
+    
+    public var definition: String {
+        detail.definition
+    }
+    
+    public var definitionInContextOfSentence: String {
+        detail.definitionInContextOfSentence
+    }
 
 }
 

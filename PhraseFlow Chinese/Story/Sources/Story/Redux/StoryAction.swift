@@ -9,10 +9,11 @@ import Audio
 import Study
 import Foundation
 import Loading
+import Settings
 import Speech
 import TextGeneration
 
-enum StoryAction {
+public enum StoryAction: Sendable {
     case createChapter(CreateChapterType)
     case onCreatedChapter(Chapter)
     case failedToCreateChapter
@@ -41,4 +42,6 @@ enum StoryAction {
     case playWord(WordTimeStampData)
     case playChapter(fromWord: WordTimeStampData)
     case pauseChapter
+    
+    case updateSpeechSpeed(SpeechSpeed)
 }

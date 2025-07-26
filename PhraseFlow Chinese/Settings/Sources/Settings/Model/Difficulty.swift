@@ -15,7 +15,7 @@ public enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable, Send
         10
     }
 
-    var index: Int {
+    public var index: Int {
         switch self {
         case .beginner:
             0

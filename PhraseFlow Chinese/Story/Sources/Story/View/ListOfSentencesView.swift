@@ -11,21 +11,23 @@ import TextGeneration
 import Localization
 import Settings
 import FTStyleKit
+import Audio
 
-struct ListOfSentencesView: View {
+public struct ListOfSentencesView: View {
     @EnvironmentObject var store: StoryStore
     @State private var opacity: Double = 0
     @State private var currentPage: Int = 0
 
     private let isTranslation: Bool
+    
+    public init(isTranslation: Bool = false) {
+        self.isTranslation = isTranslation
+    }
 
     var spokenWord: WordTimeStampData? {
         store.state.currentChapter?.currentSpokenWord
     }
 
-    init(isTranslation: Bool = false) {
-        self.isTranslation = isTranslation
-    }
     
     private func sentenceIndex(_ targetSentence: Sentence?, in sentences: [Sentence]) -> Int {
         guard let targetSentence,
@@ -35,7 +37,7 @@ struct ListOfSentencesView: View {
         return sentenceIndex
     }
 
-    var body: some View {
+    public var body: some View {
         let chapter: Chapter?
         switch isTranslation {
         case true:
@@ -71,11 +73,11 @@ struct ListOfSentencesView: View {
 
                         switch isLastChapter {
                         case true:
-                            store.dispatch(.playSound(.goToNextChapter))
-                            store.dispatch(.storyAction(.goToNextChapter))
+                            store.environment.playSound(.goToNextChapter)
+                            store.dispatch(.goToNextChapter)
                         case false:
-                            store.dispatch(.snackbarAction(.showSnackBar(.writingChapter)))
-                            store.dispatch(.storyAction(.createChapter(.existingStory(chapter.storyId))))
+                            // TODO: Handle snackbar via main app store dispatch
+                            store.dispatch(.createChapter(.existingStory(chapter.storyId)))
                         }
                     }
                     .disabled(store.state.isWritingChapter)

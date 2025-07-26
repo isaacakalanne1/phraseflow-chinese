@@ -9,14 +9,17 @@ import SwiftUI
 import Localization
 import ReduxKit
 import FTStyleKit
+import Audio
 
-struct CreateStoryButton: View {
+public struct CreateStoryButton: View {
     @EnvironmentObject var store: StoryStore
+    
+    public init() {}
 
-    var body: some View {
+    public var body: some View {
         MainButton(title: LocalizedString.newStory.uppercased()) {
-            store.dispatch(.playSound(.largeBoom))
-            store.dispatch(.storyAction(.createChapter(.newStory)))
+            store.environment.playSound(.largeBoom)
+            store.dispatch(.createChapter(.newStory))
         }
         .disabled(store.state.viewState.isWritingChapter)
     }

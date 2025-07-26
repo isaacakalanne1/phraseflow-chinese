@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ModerationAction {
+public enum ModerationAction: Sendable {
     case moderateText(String)
     case onModeratedText(ModerationResponse, String)
     case failedToModerateText

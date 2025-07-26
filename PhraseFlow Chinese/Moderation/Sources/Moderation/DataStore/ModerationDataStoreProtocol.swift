@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-protocol ModerationDataStoreProtocol {
+public protocol ModerationDataStoreProtocol {
     func saveModerationRecord(_ record: ModerationRecord) throws
     func loadModerationHistory() throws -> [ModerationRecord]
     func deleteModerationRecord(id: UUID) throws

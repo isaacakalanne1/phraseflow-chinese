@@ -21,12 +21,12 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     public let loadingSubject: CurrentValueSubject<LoadingStatus?, Never> = .init(nil)
     private let chapterSubject = CurrentValueSubject<Chapter?, Never>(nil)
     
-    private let audioEnvironment: AudioEnvironmentProtocol
-    private let settingsEnvironment: SettingsEnvironmentProtocol
-    private let studyEnvironment: StudyEnvironmentProtocol
-    private let translationEnvironment: TranslationEnvironmentProtocol
-    private let service: TextGenerationServicesProtocol
-    private let dataStore: StoryDataStoreProtocol
+    nonisolated(unsafe) private let audioEnvironment: AudioEnvironmentProtocol
+    nonisolated(unsafe) private let settingsEnvironment: SettingsEnvironmentProtocol
+    nonisolated(unsafe) private let studyEnvironment: StudyEnvironmentProtocol
+    nonisolated(unsafe) private let translationEnvironment: TranslationEnvironmentProtocol
+    nonisolated(unsafe) private let service: TextGenerationServicesProtocol
+    nonisolated(unsafe) private let dataStore: StoryDataStoreProtocol
     
     public init(
         audioEnvironment: AudioEnvironmentProtocol,
@@ -235,6 +235,10 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         // we'll need to implement this differently or add it to AudioEnvironmentProtocol
         // For now, return false as a placeholder
         return false
+    }
+    
+    public func playSound(_ sound: AppSound) {
+        audioEnvironment.playSound(sound)
     }
     
     // MARK: - Definition Environment Functions

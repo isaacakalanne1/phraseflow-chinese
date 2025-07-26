@@ -9,16 +9,19 @@ import SwiftUI
 import FTFont
 import FTColor
 import ReduxKit
+import Audio
 
-struct SpeechSpeedButton: View {
+public struct SpeechSpeedButton: View {
     @EnvironmentObject var store: StoryStore
 
-    var body: some View {
+    public init() {}
+    
+    public var body: some View {
         Button {
             if let currentSpeed = try? store.environment.getSpeechSpeed() {
                 store.dispatch(.updateSpeechSpeed(currentSpeed.nextSpeed))
             }
-            store.dispatch(.playSound(.changeSettings))
+            store.environment.playSound(.changeSettings)
         } label: {
             Text((try? store.environment.getSpeechSpeed())?.text ?? "")
                 .font(FTFont.flowTaleBodyMedium())

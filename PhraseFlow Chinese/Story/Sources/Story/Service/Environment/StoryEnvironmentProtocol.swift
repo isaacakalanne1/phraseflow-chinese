@@ -38,6 +38,7 @@ public protocol StoryEnvironmentProtocol {
     
     // Audio Environment Functions
     func isPlayingAudio() -> Bool
+    func playSound(_ sound: AppSound)
     
     // Definition Environment Functions
     func getCurrentDefinition() -> Definition?

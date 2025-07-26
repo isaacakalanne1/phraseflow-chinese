@@ -5,9 +5,9 @@
 //  Created by iakalann on 17/04/2025.
 //
 
-struct WordDefinition: Codable, Equatable, Hashable {
-    let word: String
-    let pronunciation: String
-    let definition: String
-    let definitionInContextOfSentence: String
+public struct WordDefinition: Codable, Equatable, Hashable, Sendable {
+    public let word: String
+    public let pronunciation: String
+    public let definition: String
+    public let definitionInContextOfSentence: String
 }
