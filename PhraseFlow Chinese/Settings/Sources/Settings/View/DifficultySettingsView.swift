@@ -8,6 +8,7 @@
 import SwiftUI
 import FTColor
 import FTFont
+import FTStyleKit
 import Localization
 
 struct DifficultyMenu: View {

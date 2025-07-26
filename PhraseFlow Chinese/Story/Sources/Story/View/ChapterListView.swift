@@ -8,6 +8,7 @@
 import SwiftUI
 import FTFont
 import FTColor
+import FTStyleKit
 
 struct ChapterListView: View {
     @EnvironmentObject var store: StoryStore

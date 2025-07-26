@@ -30,7 +30,8 @@
       "mcp__atlassian__atlassianUserInfo",
       "mcp__atlassian__searchJiraIssuesUsingJql",
       "Bash(touch:*)",
-      "Bash(true)"
+      "Bash(true)",
+      "Bash(cat:*)"
     ],
     "deny": []
   }

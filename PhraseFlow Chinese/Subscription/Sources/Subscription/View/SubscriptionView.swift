@@ -98,7 +98,7 @@ struct SubscriptionView: View {
                 }
             }
 
-            if store.state.subscriptionState.isSubscribed {
+            if store.state.isSubscribed {
                 Text(LocalizedString.manageSubscriptionsInstructions)
                     .multilineTextAlignment(.center)
                     .font(FTFont.flowTaleSecondaryHeader())
