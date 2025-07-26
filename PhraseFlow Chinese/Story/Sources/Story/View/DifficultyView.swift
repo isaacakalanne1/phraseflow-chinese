@@ -8,6 +8,7 @@
 import SwiftUI
 import TextGeneration
 import Settings
+import AppleIcon
 
 struct DifficultyView: View {
     let difficulty: Difficulty

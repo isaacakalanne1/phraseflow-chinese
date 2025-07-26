@@ -20,7 +20,7 @@ struct ListOfSentencesView: View {
     private let isTranslation: Bool
 
     var spokenWord: WordTimeStampData? {
-        isTranslation ? store.environment.getCurrentSpokenWord() : store.state.currentChapter?.currentSpokenWord
+        store.state.currentChapter?.currentSpokenWord
     }
 
     init(isTranslation: Bool = false) {

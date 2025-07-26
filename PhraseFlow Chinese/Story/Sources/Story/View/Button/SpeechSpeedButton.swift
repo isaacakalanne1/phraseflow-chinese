@@ -8,6 +8,7 @@
 import SwiftUI
 import FTFont
 import FTColor
+import ReduxKit
 
 struct SpeechSpeedButton: View {
     @EnvironmentObject var store: StoryStore

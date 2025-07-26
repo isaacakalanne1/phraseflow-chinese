@@ -13,6 +13,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Otherwise, if you need functionality from another package, such as data, etc, use environment functions to call another package's environment
 - Store dispatch is only used to update the state via reducer, and dispatch other actions via middleware
 - State logic should only ever be involved if a view will be involved, otherwise use the environment for using functionality or data from other packages
+- If there are references to the same state, use the state as expected (e.g, if there is a reference in the story package to a variable in StoryState, use this variable)
 - If there are references to a different state in a package (e.g, story package has a reference to definitionState), don't try to get the definition state, instead use the environment function to get the necessary data
 
 # PhraseFlow Chinese Development Guide

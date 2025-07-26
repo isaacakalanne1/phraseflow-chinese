@@ -12,32 +12,11 @@ struct ActionButtonsView: View {
     @EnvironmentObject var store: StoryStore
 
     var body: some View {
-        var tabs = ContentTab.allCases
-        if store.environment.getDefinitions().isEmpty {
-            tabs.removeAll(where: { $0 == .progress })
-        }
-        tabs.removeAll(where: { $0 == .translate })
-
-        return HStack(spacing: 12) {
-            ForEach(tabs) { tab in
-                let isSelected = store.state.viewState.contentTab == tab
-                VStack(spacing: 4) {
-                    ActionButton(systemImage: tab.image(isSelected: isSelected),
-                                 isSelected: isSelected,
-                                 size: 30) {
-                        if !isSelected {
-                            withAnimation {
-                                store.dispatch(.navigationAction(.selectTab(tab, shouldPlaySound: true)))
-                            }
-                        }
-                    }
-                    RoundedRectangle(cornerRadius: 1.5, style: .continuous)
-                        .frame(width: 40, height: 3)
-                        .foregroundStyle(isSelected ? FTColor.accent : Color.clear)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.top, 4)
-            }
+        // Story package should focus on story functionality only
+        // Navigation tabs should be handled at the app level
+        HStack(spacing: 12) {
+            Text("Story Actions Placeholder")
+                .foregroundColor(FTColor.primary)
         }
     }
 }

@@ -7,11 +7,13 @@
 
 import Foundation
 import TextGeneration
+import Loading
 
 public struct StoryState: Equatable {
     public var currentChapter: Chapter?
     public var storyChapters: [UUID: [Chapter]] = [:]
     public var isWritingChapter: Bool = false
+    public var viewState: StoryViewState = StoryViewState()
 
     public init(currentChapter: Chapter? = nil,
          storyChapters: [UUID: [Chapter]] = [:],
@@ -19,6 +21,7 @@ public struct StoryState: Equatable {
         self.currentChapter = currentChapter
         self.storyChapters = storyChapters
         self.isWritingChapter = isWritingChapter
+        self.viewState = StoryViewState()
     }
     
     public var allStories: [(storyId: UUID, chapters: [Chapter])] {
@@ -40,5 +43,19 @@ public struct StoryState: Equatable {
     public static func == (lhs: StoryState, rhs: StoryState) -> Bool {
         lhs.currentChapter?.id == rhs.currentChapter?.id &&
         lhs.storyChapters.count == rhs.storyChapters.count
+    }
+}
+
+public struct StoryViewState: Equatable {
+    public var loadingState: LoadingStatus? = .complete
+    public var isDefining: Bool = false
+    public var isWritingChapter: Bool = false
+    
+    public init(loadingState: LoadingStatus? = .complete,
+                isDefining: Bool = false,
+                isWritingChapter: Bool = false) {
+        self.loadingState = loadingState
+        self.isDefining = isDefining
+        self.isWritingChapter = isWritingChapter
     }
 }

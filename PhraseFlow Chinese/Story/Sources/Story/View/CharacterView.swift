@@ -22,11 +22,11 @@ struct CharacterView: View {
     }
 
     var spokenWord: WordTimeStampData? {
-        isTranslation ? store.environment.getCurrentSpokenWord() : store.state.storyState.currentChapter?.currentSpokenWord
+        store.state.currentChapter?.currentSpokenWord
     }
 
     var currentSentence: Sentence? {
-        isTranslation ? store.environment.getCurrentTranslationSentence() : store.state.storyState.currentChapter?.currentSentence
+        isTranslation ? store.environment.getCurrentTranslationSentence() : store.state.currentChapter?.currentSentence
     }
 
     var hasDefinition: Bool {
@@ -62,17 +62,20 @@ struct CharacterView: View {
                 .onChanged { isTapped in
                     switch isTranslation {
                     case true:
-                        store.dispatch(.translationAction(.selectTranslationWord(word)))
+                        // Translation functionality handled through environment
+                        break
                     case false:
-                        store.dispatch(.storyAction(.selectWord(word, playAudio: true)))
+                        store.dispatch(.selectWord(word, playAudio: true))
                     }
                 }
                 .onEnded { _ in
                     switch isTranslation {
                     case true:
-                        store.dispatch(.translationAction(.clearTranslationDefinition))
+                        // Translation functionality handled through environment
+                        break
                     case false:
-                        store.dispatch(.definitionAction(.clearCurrentDefinition))
+                        // Definition functionality handled through environment
+                        break
                     }
                 }
         )

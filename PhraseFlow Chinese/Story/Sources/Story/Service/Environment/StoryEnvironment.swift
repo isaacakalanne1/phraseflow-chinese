@@ -15,6 +15,7 @@ import Subscription
 import Study
 import Translation
 
+@MainActor
 public struct StoryEnvironment: StoryEnvironmentProtocol {
     public let storySubject = CurrentValueSubject<UUID?, Never>(nil)
     public let loadingSubject: CurrentValueSubject<LoadingStatus?, Never> = .init(nil)
@@ -92,7 +93,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
                               currentSubscription: SubscriptionLevel?) async throws -> Chapter {
         loadingSubject.send(.writing)
 
-        var newChapter = try await service.generateFirstChapter(language: language,
+        let newChapter = try await service.generateFirstChapter(language: language,
                                                                difficulty: difficulty,
                                                                voice: voice,
                                                                deviceLanguage: deviceLanguage,
@@ -261,12 +262,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     }
     
     // MARK: - Translation Environment Functions
-    
-    public func getCurrentSpokenWord() -> WordTimeStampData? {
-        // This would need to track current spoken word in translation
-        // For now, return nil as a placeholder
-        return nil
-    }
     
     public func getCurrentTranslationSentence() -> Sentence? {
         // This would need to track current translation sentence

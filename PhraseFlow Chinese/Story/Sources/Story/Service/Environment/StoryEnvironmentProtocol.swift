@@ -13,6 +13,7 @@ import TextGeneration
 import Study
 import Subscription
 
+@MainActor
 public protocol StoryEnvironmentProtocol {
     var storySubject: CurrentValueSubject<UUID?, Never> { get }
     func selectChapter(storyId: UUID)
@@ -45,7 +46,6 @@ public protocol StoryEnvironmentProtocol {
     func getDefinitions() -> [Definition]
     
     // Translation Environment Functions
-    func getCurrentSpokenWord() -> WordTimeStampData?
     func getCurrentTranslationSentence() -> Sentence?
     func getTranslationChapter() -> Chapter?
 }
