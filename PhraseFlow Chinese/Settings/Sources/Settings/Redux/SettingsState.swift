@@ -8,8 +8,8 @@
 import SwiftUI
 
 public struct SettingsState: Codable, Equatable, Sendable {
-    var isShowingDefinition: Bool
-    var isShowingEnglish: Bool
+    public var isShowingDefinition: Bool
+    public var isShowingEnglish: Bool
     public var isPlayingMusic: Bool
     var voice: Voice
     public var speechSpeed: SpeechSpeed

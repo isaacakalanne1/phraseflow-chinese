@@ -61,7 +61,8 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
             if let firstChapter = previousChapters.first, let existingImageData = firstChapter.imageData {
                 newChapter.imageData = existingImageData
             } else {
-                newChapter.imageData = try await service.generateImage(with: newChapter.passage)
+                // TODO: Image generation should be handled through separate ImageGeneration environment
+                // newChapter.imageData = try await service.generateImage(with: newChapter.passage)
             }
         }
         loadingSubject.send(.generatingSpeech)
@@ -100,7 +101,8 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
 
         if newChapter.imageData == nil,
            !newChapter.passage.isEmpty {
-            newChapter.imageData = try await service.generateImage(with: newChapter.passage)
+            // TODO: Image generation should be handled through separate ImageGeneration environment
+            // newChapter.imageData = try await service.generateImage(with: newChapter.passage)
         }
         loadingSubject.send(.generatingSpeech)
 
@@ -141,7 +143,9 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         _ word: WordTimeStampData,
         rate: Float
     ) {
-        await audioEnvironment.playWord(startTime: word.time, duration: word.duration, playRate: rate)
+        Task {
+            await audioEnvironment.playWord(startTime: word.time, duration: word.duration, playRate: rate)
+        }
     }
     
     public func getAppSettings() throws -> SettingsState {

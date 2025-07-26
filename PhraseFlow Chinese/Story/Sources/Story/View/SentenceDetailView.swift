@@ -8,6 +8,7 @@
 import FTStyleKit
 import SwiftUI
 import TextGeneration
+import Study
 
 struct SentenceDetailView: View {
     @EnvironmentObject var store: StoryStore

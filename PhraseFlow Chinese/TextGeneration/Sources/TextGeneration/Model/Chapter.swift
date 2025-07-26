@@ -16,13 +16,13 @@ public struct Chapter: Codable, Equatable, Hashable, Sendable {
     public var sentences: [Sentence]
     public var audioVoice: Voice
     public var audio: ChapterAudio
-    var passage: String
+    public var passage: String
     
     // Story-level properties moved to Chapter
-    var chapterSummary: String
+    public var chapterSummary: String
     public let difficulty: Difficulty
     public let language: Language
-    var storyTitle: String
+    public var storyTitle: String
     public var currentPlaybackTime: Double = 0
     public var currentSentence: Sentence?
     public var lastUpdated: Date
@@ -36,7 +36,7 @@ public struct Chapter: Codable, Equatable, Hashable, Sendable {
         return nil
     }
 
-    var currentSpokenWord: WordTimeStampData? {
+    public var currentSpokenWord: WordTimeStampData? {
         return sentences.flatMap({ $0.timestamps}).last(where: { currentPlaybackTime >= $0.time })
     }
 

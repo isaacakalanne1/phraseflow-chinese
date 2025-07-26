@@ -32,7 +32,7 @@ public enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable, Send
         UIImage(named: "difficulty-\(rawValue)")
     }
 
-    var title: String {
+    public var title: String {
         switch self {
         case .beginner:
             LocalizedString.beginner

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import TextGeneration
+import Settings
 
 struct FlowLayout: Layout {
     var spacing: CGFloat = 4
@@ -22,7 +23,7 @@ struct FlowLayout: Layout {
         var currentLineHeight: CGFloat = 0
 
         // Maximum width based on proposal or default to screen width
-        let maxWidth = proposal.width ?? UIScreen.main.bounds.width
+        let maxWidth = proposal.width ?? 400
 
         for subview in subviews {
             let subviewSize = subview.sizeThatFits(.unspecified)

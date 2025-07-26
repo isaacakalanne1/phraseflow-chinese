@@ -9,6 +9,8 @@ import SwiftUI
 import FTFont
 import TextGeneration
 import Localization
+import Settings
+import FTStyleKit
 
 struct ListOfSentencesView: View {
     @EnvironmentObject var store: StoryStore
@@ -18,7 +20,7 @@ struct ListOfSentencesView: View {
     private let isTranslation: Bool
 
     var spokenWord: WordTimeStampData? {
-        isTranslation ? store.environment.getCurrentSpokenWord() : store.state.storyState.currentChapter?.currentSpokenWord
+        isTranslation ? store.environment.getCurrentSpokenWord() : store.state.currentChapter?.currentSpokenWord
     }
 
     init(isTranslation: Bool = false) {
@@ -39,7 +41,7 @@ struct ListOfSentencesView: View {
         case true:
             chapter = store.environment.getTranslationChapter()
         case false:
-            chapter = store.state.storyState.currentChapter
+            chapter = store.state.currentChapter
         }
         return Group {
             if let chapter {
@@ -64,7 +66,7 @@ struct ListOfSentencesView: View {
                 let isLastPage = currentPage == chapter.sentences.count - 1
                 if isLastPage {
                     MainButton(title: LocalizedString.newChapter.uppercased()) {
-                        let allChaptersForStory = store.state.storyState.storyChapters[chapter.storyId] ?? []
+                        let allChaptersForStory = store.state.storyChapters[chapter.storyId] ?? []
                         let isLastChapter = chapter.id == allChaptersForStory.last?.id
 
                         switch isLastChapter {
@@ -76,19 +78,19 @@ struct ListOfSentencesView: View {
                             store.dispatch(.storyAction(.createChapter(.existingStory(chapter.storyId))))
                         }
                     }
-                    .disabled(store.state.viewState.isWritingChapter)
+                    .disabled(store.state.isWritingChapter)
                 }
             }
         }
         .onAppear {
             opacity = 1
-            store.dispatch(.snackbarAction(.checkDeviceVolumeZero))
+            // TODO: Handle snackbar actions through environment or main app
             updateCurrentSentence(chapter: chapter)
         }
         .onChange(of: spokenWord) {
             updateCurrentSentence(chapter: chapter)
         }
-        .onChange(of: store.state.storyState.currentChapter) {
+        .onChange(of: store.state.currentChapter) {
             updateCurrentSentence(chapter: chapter)
         }
     }
@@ -98,7 +100,7 @@ struct ListOfSentencesView: View {
             let targetPage = sentenceIndex(sentence, in: chapter.sentences)
             currentPage = targetPage
             if !isTranslation {
-                store.dispatch(.storyAction(.updateCurrentSentence(sentence)))
+                store.dispatch(.updateCurrentSentence(sentence))
             }
         }
     }
@@ -148,9 +150,9 @@ struct ListOfSentencesView: View {
 
     private func updateSelectedSentenceAndWord(chapter: Chapter) {
         let sentence = chapter.sentences[currentPage]
-        store.dispatch(.storyAction(.updateCurrentSentence(sentence)))
+        store.dispatch(.updateCurrentSentence(sentence))
         if let timestamp = sentence.timestamps.first {
-            store.dispatch(.storyAction(.setPlaybackTime(timestamp.time)))
+            store.dispatch(.setPlaybackTime(timestamp.time))
         }
     }
 

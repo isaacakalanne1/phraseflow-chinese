@@ -114,12 +114,15 @@ let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtoco
 //            speechSpeed = settings.speechSpeed
 //        } // TODO: Get app settings on store initialization/on appear, and update local app settings whenever updated in settings package
         environment.playWord(timestamp, rate: SpeechSpeed.normal.playRate)
+        return nil
     case .playChapter(let word):
         environment.playChapter(from: word)
         environment.setMusicVolume(.quiet)
+        return nil
     case .pauseChapter:
         environment.pauseChapter()
         environment.setMusicVolume(.normal)
+        return nil
     case .failedToLoadStoriesAndDefinitions,
             .failedToDeleteStory,
             .failedToSaveChapter,

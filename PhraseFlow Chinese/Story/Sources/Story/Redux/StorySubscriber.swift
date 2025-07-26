@@ -8,6 +8,7 @@
 import Foundation
 import ReduxKit
 
+@MainActor
 let storySubscriber: OnSubscribe<StoryStore, StoryEnvironmentProtocol> = { store, environment in
     store
         .subscribe(

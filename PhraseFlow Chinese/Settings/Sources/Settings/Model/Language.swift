@@ -250,7 +250,7 @@ public enum Language: String, Codable, CaseIterable, Sendable {
         return flags.reduce("") { $0 + $1 }
     }
 
-    var alignment: Alignment {
+    public var alignment: Alignment {
         switch self {
         case .arabicGulf:
             .trailing

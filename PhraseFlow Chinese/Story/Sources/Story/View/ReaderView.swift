@@ -33,7 +33,7 @@ public struct ReaderView: View {
     
     private var storyHeaderSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            if let chapter = store.state.storyState.currentChapter {
+            if let chapter = store.state.currentChapter {
                 HStack(spacing: 12) {
                     StoryInfoView(chapter: chapter)
                     

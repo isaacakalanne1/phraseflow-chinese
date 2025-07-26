@@ -9,7 +9,7 @@ import Combine
 import Foundation
 import TextGeneration
 
-protocol StoryDataStoreProtocol {
+public protocol StoryDataStoreProtocol {
     func saveChapter(_ chapter: Chapter) throws
     func loadAllChapters() throws -> [Chapter]
     func deleteChapter(_ chapter: Chapter) throws

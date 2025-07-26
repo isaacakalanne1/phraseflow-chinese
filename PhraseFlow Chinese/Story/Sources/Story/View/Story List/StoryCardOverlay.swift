@@ -16,11 +16,11 @@ struct StoryCardOverlay: View {
     let storyID: UUID
     
     private var firstChapter: Chapter? {
-        store.state.storyState.firstChapter(for: storyID)
+        store.state.firstChapter(for: storyID)
     }
     
     private var allChaptersForStory: [Chapter] {
-        store.state.storyState.storyChapters[storyID] ?? []
+        store.state.storyChapters[storyID] ?? []
     }
     
     var body: some View {
