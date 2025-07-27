@@ -7,6 +7,17 @@
 
 import SwiftUI
 
+public struct SettingsViewState: Codable, Equatable, Sendable {
+    var isShowingModerationDetails: Bool
+    var isWritingChapter: Bool
+    
+    init(isShowingModerationDetails: Bool = false,
+         isWritingChapter: Bool = false) {
+        self.isShowingModerationDetails = isShowingModerationDetails
+        self.isWritingChapter = isWritingChapter
+    }
+}
+
 public struct SettingsState: Codable, Equatable, Sendable {
     public var isShowingDefinition: Bool
     public var isShowingEnglish: Bool
@@ -22,6 +33,10 @@ public struct SettingsState: Codable, Equatable, Sendable {
     var appColorScheme: FlowTaleColorScheme?
     var shouldPlaySound: Bool
     var isShowingCustomPromptAlert: Bool
+    
+    // Moderation related properties
+    var isShowingModerationFailedAlert: Bool
+    var viewState: SettingsViewState
 
     init(isShowingDefinition: Bool = true,
          isShowingEnglish: Bool = true,

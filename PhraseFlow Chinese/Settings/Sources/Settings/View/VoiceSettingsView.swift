@@ -56,8 +56,10 @@ struct VoiceMenu: View {
     }
 }
 
-struct VoiceSettingsView: View {
+public struct VoiceSettingsView: View {
     @Environment(\.dismiss) var dismiss
+    
+    public init() {}
 
     var body: some View {
         VStack(spacing: 0) {

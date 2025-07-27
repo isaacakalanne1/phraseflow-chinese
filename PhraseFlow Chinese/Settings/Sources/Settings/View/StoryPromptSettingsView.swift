@@ -129,9 +129,11 @@ struct StoryPromptMenu: View {
     }
 }
 
-struct StoryPromptSettingsView: View {
+public struct StoryPromptSettingsView: View {
     @EnvironmentObject var store: SettingsStore
     @Environment(\.dismiss) var dismiss
+    
+    public init() {}
 
     var body: some View {
         VStack(spacing: 0) {
@@ -151,16 +153,16 @@ struct StoryPromptSettingsView: View {
                 get: { store.state.isShowingModerationFailedAlert },
                 set: { newValue in
                     if !newValue {
-                        store.dispatch(.moderationAction(.dismissFailedModerationAlert))
+                        store.dispatch(.updateIsShowingModerationFailedAlert(false))
                     }
                 }
             ),
             actions: {
                 Button(LocalizedString.failedModerationWhyButton) {
-                    store.dispatch(.moderationAction(.showModerationDetails))
+                    store.dispatch(.updateIsShowingModerationDetails(true))
                 }
                 Button(LocalizedString.failedModerationOkButton) {
-                    store.dispatch(.moderationAction(.dismissFailedModerationAlert))
+                    store.dispatch(.updateIsShowingModerationFailedAlert(false))
                 }
             },
             message: {
@@ -173,12 +175,48 @@ struct StoryPromptSettingsView: View {
                 get: { store.state.viewState.isShowingModerationDetails },
                 set: {
                     if !$0 {
-                        store.dispatch(.moderationAction(.updateIsShowingModerationDetails(isShowing: false)))
+                        store.dispatch(.updateIsShowingModerationDetails(false))
                     }
                 }
             )
         ) {
-            ModerationExplanationView()
+            SimpleModerationExplanationView()
         }
+    }
+}
+
+struct SimpleModerationExplanationView: View {
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            VStack(spacing: 12) {
+                Image(systemName: "shield.checkered")
+                    .font(.largeTitle)
+                    .foregroundColor(FTColor.accent)
+                
+                Text("Content Moderation")
+                    .font(FTFont.flowTaleHeadlineMedium())
+                    .foregroundColor(FTColor.primaryText)
+                
+                Text("Your custom prompt didn't meet our content guidelines. Please review and modify your prompt to ensure it's appropriate for all audiences.")
+                    .font(FTFont.flowTaleBodyMedium())
+                    .foregroundColor(FTColor.secondaryText)
+                    .multilineTextAlignment(.center)
+            }
+            .padding(.horizontal, 24)
+            
+            Spacer()
+            
+            PrimaryButton(title: LocalizedString.done) {
+                dismiss()
+            }
+            .padding(.horizontal, 20)
+            .padding(.bottom, 20)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(FTColor.background)
+        .navigationTitle("Moderation")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

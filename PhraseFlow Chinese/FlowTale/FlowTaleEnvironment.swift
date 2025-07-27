@@ -2,7 +2,7 @@
 //  FlowTaleEnvironment.swift
 //  FlowTale
 //
-//  Created by iakalann on 27/07/2025.
+//  Created by iakalann on 07/09/2024.
 //
 
 import Foundation
@@ -17,6 +17,9 @@ import UserLimit
 import Moderation
 import Navigation
 import Loading
+import DataStorage
+import TextGeneration
+import Speech
 
 protocol FlowTaleEnvironmentProtocol {
     var audioEnvironment: AudioEnvironmentProtocol { get }
@@ -44,4 +47,18 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     let moderationEnvironment: ModerationEnvironmentProtocol
     let navigationEnvironment: NavigationEnvironmentProtocol
     let loadingEnvironment: LoadingEnvironmentProtocol
+}
+
+struct MockFlowTaleEnvironment: FlowTaleEnvironmentProtocol {
+    let audioEnvironment: AudioEnvironmentProtocol = MockAudioEnvironment()
+    let storyEnvironment: StoryEnvironmentProtocol = MockStoryEnvironment()
+    let settingsEnvironment: SettingsEnvironmentProtocol = MockSettingsEnvironment()
+    let studyEnvironment: StudyEnvironmentProtocol = MockStudyEnvironment()
+    let translationEnvironment: TranslationEnvironmentProtocol = MockTranslationEnvironment()
+    let subscriptionEnvironment: SubscriptionEnvironmentProtocol = MockSubscriptionEnvironment()
+    let snackBarEnvironment: SnackBarEnvironmentProtocol = MockSnackBarEnvironment()
+    let userLimitEnvironment: UserLimitEnvironmentProtocol = MockUserLimitEnvironment()
+    let moderationEnvironment: ModerationEnvironmentProtocol = MockModerationEnvironment()
+    let navigationEnvironment: NavigationEnvironmentProtocol = MockNavigationEnvironment()
+    let loadingEnvironment: LoadingEnvironmentProtocol = MockLoadingEnvironment()
 }

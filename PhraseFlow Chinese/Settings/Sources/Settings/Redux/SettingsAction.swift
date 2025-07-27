@@ -7,6 +7,7 @@
 
 import Audio
 import Foundation
+import SnackBar
 
 enum SettingsAction: Sendable {
     case loadAppSettings
@@ -33,4 +34,11 @@ enum SettingsAction: Sendable {
     case playSound(AppSound)
     case playMusic(MusicType)
     case stopMusic
+    
+    // SnackBar actions
+    case snackbarAction(SnackBarAction)
+    
+    // Simple moderation actions without dependency
+    case updateIsShowingModerationFailedAlert(Bool)
+    case updateIsShowingModerationDetails(Bool)
 }

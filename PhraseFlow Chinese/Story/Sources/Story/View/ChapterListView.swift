@@ -118,7 +118,7 @@ public struct ChapterListView: View {
                             },
                             title: LocalizedString.newChapter
                         ) {
-                            store.dispatch(.storyAction(.createChapter(.existingStory(storyId))))
+                            store.dispatch(.createChapter(.existingStory(storyId)))
                         }
                         .disabled(store.state.viewState.isWritingChapter)
                         .padding(.horizontal, 20)

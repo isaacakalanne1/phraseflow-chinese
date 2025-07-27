@@ -55,8 +55,10 @@ struct DifficultyMenu: View {
     }
 }
 
-struct DifficultySettingsView: View {
+public struct DifficultySettingsView: View {
     @Environment(\.dismiss) var dismiss
+    
+    public init() {}
 
     var body: some View {
         VStack(spacing: 0) {

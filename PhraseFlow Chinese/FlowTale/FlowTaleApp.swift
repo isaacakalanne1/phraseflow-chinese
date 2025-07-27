@@ -21,6 +21,7 @@ import Loading
 import DataStorage
 import TextGeneration
 import Speech
+import ImageGeneration
 
 public struct FlowTaleRootView: View {
     private let flowTaleEnvironment: FlowTaleEnvironmentProtocol

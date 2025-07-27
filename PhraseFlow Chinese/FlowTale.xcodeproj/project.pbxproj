@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11BAFA982E364D9A00502C14 /* FlowTaleEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BAFA972E364D9A00502C14 /* FlowTaleEnvironment.swift */; };
 		BB34C51E2E29525B00238EA8 /* FTColor in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C51D2E29525B00238EA8 /* FTColor */; };
 		BB34C5202E29526700238EA8 /* Localization in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C51F2E29526700238EA8 /* Localization */; };
 		BB34C5222E29526C00238EA8 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5212E29526C00238EA8 /* Navigation */; };
@@ -56,6 +57,7 @@
 /* Begin PBXFileReference section */
 		112BE27B2E2AE3E0006E80FC /* ReduxKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ReduxKit; sourceTree = "<group>"; };
 		112BE27C2E32C39F006E80FC /* FTStyleKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FTStyleKit; sourceTree = "<group>"; };
+		11BAFA972E364D9A00502C14 /* FlowTaleEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleEnvironment.swift; sourceTree = "<group>"; };
 		BB34C5022E2430BA00238EA8 /* Study */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Study; sourceTree = "<group>"; };
 		BB34C5042E25279800238EA8 /* Story */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Story; sourceTree = "<group>"; };
 		BB34C5052E252D7100238EA8 /* Speech */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Speech; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */,
+				11BAFA972E364D9A00502C14 /* FlowTaleEnvironment.swift */,
 				BBB6EF282C8C86240079D135 /* ContentView.swift */,
 				BBB6EF2A2C8C86290079D135 /* Assets.xcassets */,
 				BBB6EF2C2C8C86290079D135 /* Preview Content */,
@@ -379,6 +382,7 @@
 			files = (
 				BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */,
 				BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */,
+				11BAFA982E364D9A00502C14 /* FlowTaleEnvironment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
