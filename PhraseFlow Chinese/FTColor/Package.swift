@@ -20,7 +20,7 @@ let package = Package(
         .target(
             name: "FTColor",
             resources: [
-                .process("../Media.xcassets")
+                .process("Media.xcassets")
             ]
         ),
         .testTarget(

@@ -12,8 +12,8 @@ import Settings
 import DataStorage
 
 public struct NavigationEnvironment: NavigationEnvironmentProtocol {
-    let storyEnvironment: StoryEnvironmentProtocol
-    let audioEnvironment: AudioEnvironmentProtocol
+    public let storyEnvironment: StoryEnvironmentProtocol
+    public let audioEnvironment: AudioEnvironmentProtocol
     
     public init(storyEnvironment: StoryEnvironmentProtocol, audioEnvironment: AudioEnvironmentProtocol) {
         self.storyEnvironment = storyEnvironment

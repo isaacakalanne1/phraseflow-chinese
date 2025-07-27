@@ -14,7 +14,6 @@ enum ContentTab: CaseIterable, Equatable, Identifiable, Hashable {
     var id: String {
         switch self {
         case .reader: return "reader"
-        case .storyList: return "storyList"
         case .progress: return "progress"
         case .translate: return "translate"
         case .subscribe: return "subscribe"
@@ -22,14 +21,12 @@ enum ContentTab: CaseIterable, Equatable, Identifiable, Hashable {
         }
     }
 
-    case reader, storyList, progress, translate, subscribe, settings
+    case reader, progress, translate, subscribe, settings
 
     var title: String {
         switch self {
         case .reader:
             ""
-        case .storyList:
-            LocalizedString.chooseStory
         case .progress:
             LocalizedString.progress
         case .translate:
@@ -45,8 +42,6 @@ enum ContentTab: CaseIterable, Equatable, Identifiable, Hashable {
         switch self {
         case .reader:
             .book(isSelected: isSelected)
-        case .storyList:
-            .list(isSelected: isSelected)
         case .progress:
             .chartLine(isSelected: isSelected)
         case .translate:

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Story
 import Settings
 
 struct DisplayedContentView: View {
@@ -15,10 +16,7 @@ struct DisplayedContentView: View {
         Group {
             switch store.state.contentTab {
             case .reader:
-                Text("Reader View")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            case .storyList:
-                Text("Story List View")
+                StoryRootView(environment: store.environment.storyEnvironment)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .progress:
                 Text("Progress View")
