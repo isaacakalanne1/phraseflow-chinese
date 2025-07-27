@@ -26,7 +26,7 @@ public struct MainButton: View {
         } label: {
             ZStack {
                 // Video background
-                if let url = Bundle.main.url(forResource: "ButtonBackground", withExtension: "mp4") {
+                if let url = Bundle.module.url(forResource: "ButtonBackground", withExtension: "mp4") {
                     let player = AVPlayer(url: url)
                     VideoBackgroundView(player: player, autoPlay: true)
                         .frame(height: 70)
