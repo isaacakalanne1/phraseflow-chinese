@@ -15,6 +15,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - State logic should only ever be involved if a view will be involved, otherwise use the environment for using functionality or data from other packages
 - If there are references to the same state, use the state as expected (e.g, if there is a reference in the story package to a variable in StoryState, use this variable)
 - If there are references to a different state in a package (e.g, story package has a reference to definitionState), don't try to get the definition state, instead use the environment function to get the necessary data
+- In the root of FlowTale, it's currently using flowtalemiddleware,    flowtalereducer, flowtalestate, etc. I don't want to use these, instead I want the reducers and middlewares to be handled internally by each package, as they are now. I simply want each rootview to be shown as expected (e.g, MainContentView should be shown within ContentView), and same with the stores. The only thing that happens at the app root level is all the environments being passed down, to be used by the other root views in the chain. This allows there to be a single source of truth for    each of the environments. But the reducers, middlewares, and states are only handled internally by each package
 
 # PhraseFlow Chinese Development Guide
 

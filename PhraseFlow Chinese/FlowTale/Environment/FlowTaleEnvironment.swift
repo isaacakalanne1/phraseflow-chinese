@@ -2,7 +2,7 @@
 //  FlowTaleEnvironment.swift
 //  FlowTale
 //
-//  Created by Claude on 26/07/2025.
+//  Created by iakalann on 27/07/2025.
 //
 
 import Foundation
@@ -44,30 +44,4 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     let moderationEnvironment: ModerationEnvironmentProtocol
     let navigationEnvironment: NavigationEnvironmentProtocol
     let loadingEnvironment: LoadingEnvironmentProtocol
-    
-    init(
-        audioEnvironment: AudioEnvironmentProtocol,
-        storyEnvironment: StoryEnvironmentProtocol,
-        settingsEnvironment: SettingsEnvironmentProtocol,
-        studyEnvironment: StudyEnvironmentProtocol,
-        translationEnvironment: TranslationEnvironmentProtocol,
-        subscriptionEnvironment: SubscriptionEnvironmentProtocol,
-        snackBarEnvironment: SnackBarEnvironmentProtocol,
-        userLimitEnvironment: UserLimitEnvironmentProtocol,
-        moderationEnvironment: ModerationEnvironmentProtocol,
-        navigationEnvironment: NavigationEnvironmentProtocol,
-        loadingEnvironment: LoadingEnvironmentProtocol
-    ) {
-        self.audioEnvironment = audioEnvironment
-        self.storyEnvironment = storyEnvironment
-        self.settingsEnvironment = settingsEnvironment
-        self.studyEnvironment = studyEnvironment
-        self.translationEnvironment = translationEnvironment
-        self.subscriptionEnvironment = subscriptionEnvironment
-        self.snackBarEnvironment = snackBarEnvironment
-        self.userLimitEnvironment = userLimitEnvironment
-        self.moderationEnvironment = moderationEnvironment
-        self.navigationEnvironment = navigationEnvironment
-        self.loadingEnvironment = loadingEnvironment
-    }
 }
