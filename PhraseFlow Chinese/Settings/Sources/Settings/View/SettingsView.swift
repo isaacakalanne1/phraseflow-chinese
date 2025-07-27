@@ -46,29 +46,76 @@ struct SettingsView: View {
                 store.dispatch(.playSound(.togglePress))
             }
         }
-
-        VStack(spacing: 0) {
-            List {
-                Section {
-                    Toggle(LocalizedString.definitionToggle, isOn: showDefinition)
-                        .fontWeight(.light)
-                    Toggle(LocalizedString.translation, isOn: showEnglish)
-                        .fontWeight(.light)
-                } header: {
-                    Text(LocalizedString.settingsAppearance)
-                }
-                Section {
-                    Toggle(LocalizedString.music, isOn: playMusic)
-                        .fontWeight(.light)
-                    Toggle(LocalizedString.settingsSounds, isOn: shouldPlayButtonSounds)
-                        .fontWeight(.light)
-                } header: {
-                    Text(LocalizedString.settingsSoundHeader)
+        NavigationStack {
+            VStack(spacing: 0) {
+                List {
+                    Section {
+                        NavigationLink(destination: LanguageSettingsView()) {
+                            HStack {
+                                Text(LocalizedString.language)
+                                    .fontWeight(.light)
+                                Spacer()
+                                Text(store.state.language.displayName)
+                                    .foregroundColor(FTColor.secondary)
+                                    .fontWeight(.light)
+                            }
+                        }
+                        
+                        NavigationLink(destination: VoiceSettingsView()) {
+                            HStack {
+                                Text(LocalizedString.voice)
+                                    .fontWeight(.light)
+                                Spacer()
+                                Text(store.state.voice.title)
+                                    .foregroundColor(FTColor.secondary)
+                                    .fontWeight(.light)
+                            }
+                        }
+                        
+                        NavigationLink(destination: DifficultySettingsView()) {
+                            HStack {
+                                Text(LocalizedString.difficulty)
+                                    .fontWeight(.light)
+                                Spacer()
+                                Text(store.state.difficulty.title)
+                                    .foregroundColor(FTColor.secondary)
+                                    .fontWeight(.light)
+                            }
+                        }
+                        
+                        NavigationLink(destination: StoryPromptSettingsView()) {
+                            HStack {
+                                Text(LocalizedString.storySettings)
+                                    .fontWeight(.light)
+                                Spacer()
+                                Text(store.state.storySetting.title)
+                                    .foregroundColor(FTColor.secondary)
+                                    .fontWeight(.light)
+                            }
+                        }
+                    }
+                    
+                    Section {
+                        Toggle(LocalizedString.definitionToggle, isOn: showDefinition)
+                            .fontWeight(.light)
+                        Toggle(LocalizedString.translation, isOn: showEnglish)
+                            .fontWeight(.light)
+                    } header: {
+                        Text(LocalizedString.settingsAppearance)
+                    }
+                    Section {
+                        Toggle(LocalizedString.music, isOn: playMusic)
+                            .fontWeight(.light)
+                        Toggle(LocalizedString.settingsSounds, isOn: shouldPlayButtonSounds)
+                            .fontWeight(.light)
+                    } header: {
+                        Text(LocalizedString.settingsSoundHeader)
+                    }
                 }
             }
+            .background(FTColor.background)
         }
         .navigationBarTitleDisplayMode(.inline)
-        .background(FTColor.background)
         .scrollContentBackground(.hidden)
         .scrollIndicators(.hidden)
     }
