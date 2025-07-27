@@ -32,22 +32,8 @@ struct StoryListView: View {
             .disabled(store.state.isWritingChapter)
             .frame(maxWidth: .infinity)
             .padding([.horizontal, .bottom])
-
-            PrimaryButton(
-                icon: {
-                    Image(systemName: "plus")
-                        .font(FTFont.flowTaleBodySmall())
-                },
-                title: LocalizedString.createStory
-            ) {
-                showCreateStorySettings = true
-            }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 16)
-            .shadow(color: FTColor.accent.opacity(0.3), radius: 10, x: 0, y: 5)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(FTColor.background)
         .navigationTitle(LocalizedString.stories)
         .navigationDestination(isPresented: $showCreateStorySettings) {
             CreateStorySettingsView()

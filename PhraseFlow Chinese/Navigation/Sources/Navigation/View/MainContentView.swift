@@ -5,6 +5,7 @@
 //  Created by iakalann on 17/07/2025.
 //
 
+import FTColor
 import SwiftUI
 
 public struct MainContentView: View {
@@ -25,8 +26,12 @@ public struct MainContentView: View {
     public var body: some View {
         VStack {
             DisplayedContentView()
+            Divider()
+                .background(FTColor.secondary)
+                .padding(.horizontal)
             TabBarView()
         }
+        .background(FTColor.background)
         .environmentObject(store)
     }
 }

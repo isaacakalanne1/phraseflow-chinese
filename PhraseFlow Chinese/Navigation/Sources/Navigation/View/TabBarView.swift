@@ -47,6 +47,7 @@ struct TabBarView: View {
                 .padding(.top, 4)
             }
         }
+        .background(FTColor.background)
     }
 }
 

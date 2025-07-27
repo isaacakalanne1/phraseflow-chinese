@@ -7,9 +7,11 @@
 
 import Foundation
 import Audio
+import Settings
 import Story
 
 public protocol NavigationEnvironmentProtocol {
+    var settingsEnvironment: SettingsEnvironmentProtocol { get }
     var storyEnvironment: StoryEnvironmentProtocol { get }
     var audioEnvironment: AudioEnvironmentProtocol { get }
     @MainActor func selectChapter(storyId: UUID)

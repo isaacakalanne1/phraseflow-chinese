@@ -12,10 +12,16 @@ import Settings
 import DataStorage
 
 public struct NavigationEnvironment: NavigationEnvironmentProtocol {
+    public let settingsEnvironment: SettingsEnvironmentProtocol
     public let storyEnvironment: StoryEnvironmentProtocol
     public let audioEnvironment: AudioEnvironmentProtocol
     
-    public init(storyEnvironment: StoryEnvironmentProtocol, audioEnvironment: AudioEnvironmentProtocol) {
+    public init(
+        settingsEnvironment: SettingsEnvironmentProtocol,
+        storyEnvironment: StoryEnvironmentProtocol,
+        audioEnvironment: AudioEnvironmentProtocol
+    ) {
+        self.settingsEnvironment = settingsEnvironment
         self.storyEnvironment = storyEnvironment
         self.audioEnvironment = audioEnvironment
     }

@@ -28,7 +28,7 @@ struct DisplayedContentView: View {
                 Text("Subscribe View")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .settings:
-                Text("Settings are handled at the app level")
+                SettingsRootView(environment: store.environment.settingsEnvironment)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
