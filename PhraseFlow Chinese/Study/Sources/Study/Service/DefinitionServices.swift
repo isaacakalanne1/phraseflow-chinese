@@ -15,8 +15,10 @@ enum DefinitionServicesError: Error {
     case invalidJSON
 }
 
-class DefinitionServices: DefinitionServicesProtocol {
-    func fetchDefinitions(in sentence: Sentence?,
+public class DefinitionServices: DefinitionServicesProtocol {
+    public init() {}
+    
+    public func fetchDefinitions(in sentence: Sentence?,
                           chapter: Chapter,
                           deviceLanguage: Language) async throws -> [Definition] {
         guard let sentence,

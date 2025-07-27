@@ -24,7 +24,7 @@ public enum StorySetting: Codable, Equatable, Sendable {
         case .random:
             return "Random story"
         case .customPrompt(let prompt):
-            return "Custom story (\(prompt)"
+            return "Custom story (\(prompt))"
         }
     }
 

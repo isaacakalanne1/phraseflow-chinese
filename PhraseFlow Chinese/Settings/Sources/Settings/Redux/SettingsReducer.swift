@@ -72,13 +72,20 @@ let settingsReducer: Reducer<SettingsState, SettingsAction> = { state, action in
     case .updateShouldPlaySound(let shouldPlaySound):
         newState.shouldPlaySound = shouldPlaySound
         
+    case .updateIsShowingModerationFailedAlert(let isShowing):
+        newState.isShowingModerationFailedAlert = isShowing
+        
+    case .updateIsShowingModerationDetails(let isShowing):
+        newState.viewState.isShowingModerationDetails = isShowing
+        
     case .loadAppSettings,
          .saveAppSettings,
          .failedToLoadAppSettings,
          .failedToSaveAppSettings,
          .playMusic,
          .playSound,
-         .stopMusic:
+         .stopMusic,
+         .snackbarAction:
         break
     }
 

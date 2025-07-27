@@ -11,7 +11,9 @@ import StoreKit
 import TextGeneration
 import Settings
 
-class SpeechRepository: SpeechRepositoryProtocol {
+public class SpeechRepository: SpeechRepositoryProtocol {
+    public init() {}
+    
     private let speechCharacters = ["“", "”", "«", "»", "「", "」", "\"", "''"]
     let subscriptionKey = "Fp11D0CAMjjAcf03VNqe2IsKfqycenIKcrAm4uGV8RSiaqMX15NWJQQJ99AKACYeBjFXJ3w3AAAYACOG6Orb"
     let region = "eastus"
@@ -19,7 +21,7 @@ class SpeechRepository: SpeechRepositoryProtocol {
 
     private var speechMarkCounter: Int = 0
 
-    func synthesizeSpeech(_ chapter: Chapter,
+    public func synthesizeSpeech(_ chapter: Chapter,
                           voice: Voice,
                           language: Language) async throws -> (Chapter, Int)
     {

@@ -49,16 +49,10 @@ struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
     let loadingEnvironment: LoadingEnvironmentProtocol
 }
 
-struct MockFlowTaleEnvironment: FlowTaleEnvironmentProtocol {
-    let audioEnvironment: AudioEnvironmentProtocol = MockAudioEnvironment()
-    let storyEnvironment: StoryEnvironmentProtocol = MockStoryEnvironment()
-    let settingsEnvironment: SettingsEnvironmentProtocol = MockSettingsEnvironment()
-    let studyEnvironment: StudyEnvironmentProtocol = MockStudyEnvironment()
-    let translationEnvironment: TranslationEnvironmentProtocol = MockTranslationEnvironment()
-    let subscriptionEnvironment: SubscriptionEnvironmentProtocol = MockSubscriptionEnvironment()
-    let snackBarEnvironment: SnackBarEnvironmentProtocol = MockSnackBarEnvironment()
-    let userLimitEnvironment: UserLimitEnvironmentProtocol = MockUserLimitEnvironment()
-    let moderationEnvironment: ModerationEnvironmentProtocol = MockModerationEnvironment()
-    let navigationEnvironment: NavigationEnvironmentProtocol = MockNavigationEnvironment()
-    let loadingEnvironment: LoadingEnvironmentProtocol = MockLoadingEnvironment()
+// TODO: Implement proper mock environment according to refactoring guide
+// For now, this is a placeholder to get the project compiling
+extension FlowTaleEnvironment {
+    static var mock: FlowTaleEnvironment {
+        fatalError("Mock FlowTaleEnvironment not implemented - refactoring needed")
+    }
 }

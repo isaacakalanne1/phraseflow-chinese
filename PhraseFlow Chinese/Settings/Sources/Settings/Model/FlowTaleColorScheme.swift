@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum FlowTaleColorScheme: Codable {
+public enum FlowTaleColorScheme: Codable, Sendable {
     case light, dark
 
     var colorScheme: ColorScheme {

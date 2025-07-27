@@ -8,8 +8,10 @@
 import Foundation
 import APIRequest
 
-class ModerationServices: ModerationServicesProtocol {
-    func moderateText(_ text: String) async throws -> ModerationResponse {
+public class ModerationServices: ModerationServicesProtocol {
+    public init() {}
+    
+    public func moderateText(_ text: String) async throws -> ModerationResponse {
         var request = RequestFactory.createURLRequest(
             baseUrl: "https://api.openai.com/v1/moderations",
             authKey: APIRequestType.openAI.authKey

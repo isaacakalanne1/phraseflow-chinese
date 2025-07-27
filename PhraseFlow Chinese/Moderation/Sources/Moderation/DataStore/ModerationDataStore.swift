@@ -14,7 +14,7 @@ enum ModerationDataStoreError: Error {
     case failedToDecodeData
 }
 
-class ModerationDataStore: ModerationDataStoreProtocol {
+public class ModerationDataStore: ModerationDataStoreProtocol {
     private let fileManager = FileManager.default
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
@@ -27,7 +27,7 @@ class ModerationDataStore: ModerationDataStoreProtocol {
         documentsDirectory?.appendingPathComponent("moderation")
     }
     
-    init() {
+    public init() {
         encoder.dateEncodingStrategy = .iso8601
         decoder.dateDecodingStrategy = .iso8601
         createModerationDirectory()
@@ -42,7 +42,7 @@ class ModerationDataStore: ModerationDataStoreProtocol {
         moderationDirectory?.appendingPathComponent("\(id.uuidString).json")
     }
     
-    func saveModerationRecord(_ record: ModerationRecord) throws {
+    public func saveModerationRecord(_ record: ModerationRecord) throws {
         guard let fileURL = moderationFileURL(for: record.id) else {
             throw ModerationDataStoreError.failedToCreateUrl
         }
@@ -55,7 +55,7 @@ class ModerationDataStore: ModerationDataStoreProtocol {
         }
     }
     
-    func loadModerationHistory() throws -> [ModerationRecord] {
+    public func loadModerationHistory() throws -> [ModerationRecord] {
         guard let dir = moderationDirectory else {
             throw ModerationDataStoreError.failedToCreateUrl
         }
@@ -72,12 +72,12 @@ class ModerationDataStore: ModerationDataStoreProtocol {
         }.sorted { $0.timestamp > $1.timestamp }
     }
     
-    func deleteModerationRecord(id: UUID) throws {
+    public func deleteModerationRecord(id: UUID) throws {
         guard let fileURL = moderationFileURL(for: id) else { return }
         try? fileManager.removeItem(at: fileURL)
     }
     
-    func cleanupOrphanedModerationFiles() throws {
+    public func cleanupOrphanedModerationFiles() throws {
         guard let dir = documentsDirectory else {
             throw ModerationDataStoreError.failedToCreateUrl
         }

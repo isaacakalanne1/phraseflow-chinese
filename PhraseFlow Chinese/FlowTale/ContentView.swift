@@ -17,5 +17,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(flowTaleEnvironment: MockFlowTaleEnvironment())
+    ContentView(flowTaleEnvironment: FlowTaleEnvironment.mock)
 }

@@ -15,9 +15,11 @@ enum TextGenerationServicesError: Error {
     case failedToDecodeSentences
 }
 
-class TextGenerationServices: TextGenerationServicesProtocol {
+public class TextGenerationServices: TextGenerationServicesProtocol {
+    public init() {}
+    
 
-    func generateFirstChapter(
+    public func generateFirstChapter(
         language: Language,
         difficulty: Difficulty,
         voice: Voice,
@@ -64,7 +66,7 @@ class TextGenerationServices: TextGenerationServicesProtocol {
         }
     }
 
-    func generateChapter(previousChapters: [Chapter], deviceLanguage: Language?) async throws -> Chapter {
+    public func generateChapter(previousChapters: [Chapter], deviceLanguage: Language?) async throws -> Chapter {
         do {
             guard let deviceLanguage else {
                 throw TextGenerationServicesError.failedToGetDeviceLanguage

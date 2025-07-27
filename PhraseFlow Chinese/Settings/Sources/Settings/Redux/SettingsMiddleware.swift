@@ -59,7 +59,10 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
          .failedToSaveAppSettings,
          .updateCustomPrompt,
          .updateIsShowingCustomPromptAlert,
-         .updateStorySetting:
+         .updateStorySetting,
+         .updateIsShowingModerationFailedAlert,
+         .updateIsShowingModerationDetails,
+         .snackbarAction:
         return nil
     }
 }

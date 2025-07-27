@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 public struct SettingsViewState: Codable, Equatable, Sendable {
     var isShowingModerationDetails: Bool
@@ -37,6 +38,25 @@ public struct SettingsState: Codable, Equatable, Sendable {
     // Moderation related properties
     var isShowingModerationFailedAlert: Bool
     var viewState: SettingsViewState
+    
+    enum CodingKeys: String, CodingKey {
+        case isShowingDefinition
+        case isShowingEnglish
+        case isPlayingMusic
+        case voice
+        case speechSpeed
+        case difficulty
+        case language
+        case customPrompt
+        case storySetting
+        case confirmedCustomPrompt
+        case customPrompts
+        case appColorScheme
+        case shouldPlaySound
+        case isShowingCustomPromptAlert
+        case isShowingModerationFailedAlert
+        case viewState
+    }
 
     init(isShowingDefinition: Bool = true,
          isShowingEnglish: Bool = true,
@@ -51,7 +71,9 @@ public struct SettingsState: Codable, Equatable, Sendable {
          colorScheme: FlowTaleColorScheme = .dark,
          shouldPlaySound: Bool = true,
          isShowingCustomPromptAlert: Bool = true,
-         confirmedCustomPrompt: String = "") {
+         confirmedCustomPrompt: String = "",
+         isShowingModerationFailedAlert: Bool = false,
+         viewState: SettingsViewState = SettingsViewState()) {
         self.isShowingDefinition = isShowingDefinition
         self.isShowingEnglish = isShowingEnglish
         self.isPlayingMusic = isPlayingMusic
@@ -66,6 +88,8 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.appColorScheme = colorScheme
         self.shouldPlaySound = shouldPlaySound
         self.isShowingCustomPromptAlert = isShowingCustomPromptAlert
+        self.isShowingModerationFailedAlert = isShowingModerationFailedAlert
+        self.viewState = viewState
     }
 
     public init(from decoder: any Decoder) throws {
@@ -85,5 +109,7 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.appColorScheme = (try? container.decode(FlowTaleColorScheme?.self, forKey: .appColorScheme)) ?? .dark
         self.shouldPlaySound = (try? container.decode(Bool.self, forKey: .shouldPlaySound)) ?? true
         self.isShowingCustomPromptAlert = (try? container.decode(Bool.self, forKey: .isShowingCustomPromptAlert)) ?? false
+        self.isShowingModerationFailedAlert = (try? container.decode(Bool.self, forKey: .isShowingModerationFailedAlert)) ?? false
+        self.viewState = (try? container.decode(SettingsViewState.self, forKey: .viewState)) ?? SettingsViewState()
     }
 }

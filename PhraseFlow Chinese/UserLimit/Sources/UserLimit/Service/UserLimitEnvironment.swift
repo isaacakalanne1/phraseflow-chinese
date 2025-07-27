@@ -5,4 +5,6 @@
 //  Created by Isaac Akalanne on 24/07/2025.
 //
 
-struct UserLimitEnvironment: UserLimitEnvironmentProtocol { }
+public struct UserLimitEnvironment: UserLimitEnvironmentProtocol { 
+    public init() {}
+}

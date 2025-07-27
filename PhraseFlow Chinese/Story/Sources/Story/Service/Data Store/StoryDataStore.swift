@@ -14,7 +14,9 @@ enum StoryDataStoreError: Error {
     case failedToSaveData
 }
 
-class StoryDataStore: StoryDataStoreProtocol {
+public class StoryDataStore: StoryDataStoreProtocol {
+    public init() {}
+    
     private let fileManager = FileManager.default
     private var documentsDirectory: URL? {
         return fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
@@ -30,7 +32,7 @@ class StoryDataStore: StoryDataStoreProtocol {
         return dir.appendingPathComponent(fileName)
     }
 
-    func saveChapter(_ chapter: Chapter) throws {
+    public func saveChapter(_ chapter: Chapter) throws {
         let url = try fileURL(for: chapter)
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
@@ -43,7 +45,7 @@ class StoryDataStore: StoryDataStoreProtocol {
         }
     }
 
-    func loadAllChapters() throws -> [Chapter] {
+    public func loadAllChapters() throws -> [Chapter] {
         guard let dir = documentsDirectory else {
             throw StoryDataStoreError.failedToCreateUrl
         }
@@ -65,12 +67,12 @@ class StoryDataStore: StoryDataStoreProtocol {
         return chapters.sorted { $0.lastUpdated < $1.lastUpdated }
     }
     
-    func deleteChapter(_ chapter: Chapter) throws {
+    public func deleteChapter(_ chapter: Chapter) throws {
         let url = try fileURL(for: chapter)
         try fileManager.removeItem(at: url)
     }
 
-    func loadAllChapters(for storyId: UUID) throws -> [Chapter] {
+    public func loadAllChapters(for storyId: UUID) throws -> [Chapter] {
         let allChapters = try loadAllChapters()
         return allChapters.filter { $0.storyId == storyId }
             .sorted { $0.lastUpdated < $1.lastUpdated }

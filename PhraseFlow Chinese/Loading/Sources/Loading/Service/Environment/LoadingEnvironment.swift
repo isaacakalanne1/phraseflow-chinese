@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct LoadingEnvironment: LoadingEnvironmentProtocol {
-    
+public struct LoadingEnvironment: LoadingEnvironmentProtocol {
+    public init() {}
 }

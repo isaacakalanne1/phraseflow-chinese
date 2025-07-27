@@ -7,7 +7,7 @@
 
 import Localization
 
-enum Gender: String {
+public enum Gender: String {
     case male, female
 
     var title: String {

@@ -39,114 +39,114 @@ public enum Voice: String, Codable, CaseIterable, Equatable, Sendable {
     var title: String {
         switch self {
         case .xiaoxiao:
-            LocalizedString.voiceXiaoxiao
+            return LocalizedString.voiceXiaoxiao
         case .yunjian:
-            LocalizedString.voiceYunjian
+            return LocalizedString.voiceYunjian
         case .denise:
-            LocalizedString.voiceDenise
+            return LocalizedString.voiceDenise
         case .henri:
-            LocalizedString.voiceHenri
+            return LocalizedString.voiceHenri
         case .mayu:
-            LocalizedString.voiceMayu
+            return LocalizedString.voiceMayu
         case .keita:
-            LocalizedString.voiceKeita
+            return LocalizedString.voiceKeita
         case .sunhi:
-            LocalizedString.voiceSunHi
+            return LocalizedString.voiceSunHi
         case .hyunsu:
-            LocalizedString.voiceHyunSu
+            return LocalizedString.voiceHyunSu
         case .dariya:
-            LocalizedString.voiceDariya
+            return LocalizedString.voiceDariya
         case .dmitry:
-            LocalizedString.voiceDmitry
+            return LocalizedString.voiceDmitry
         case .elvira:
-            LocalizedString.voiceElvira
+            return LocalizedString.voiceElvira
         case .alvaro:
-            LocalizedString.voiceAlvaro
+            return LocalizedString.voiceAlvaro
         case .fatima:
-            LocalizedString.voiceFatima
+            return LocalizedString.voiceFatima
         case .hamdan:
-            LocalizedString.voiceHamdan
+            return LocalizedString.voiceHamdan
         case .raquel:
-            LocalizedString.voiceRaquel
+            return LocalizedString.voiceRaquel
         case .duarte:
-            LocalizedString.voiceDuarte
+            return LocalizedString.voiceDuarte
         case .thalita:
-            LocalizedString.voiceThalita
+            return LocalizedString.voiceThalita
         case .donato:
-            LocalizedString.voiceDonato
+            return LocalizedString.voiceDonato
         case .ava:
-            LocalizedString.voiceAva
+            return LocalizedString.voiceAva
         case .andrew:
-            LocalizedString.voiceAndrew
+            return LocalizedString.voiceAndrew
         case .sonia:
-            LocalizedString.voiceSonia
+            return LocalizedString.voiceSonia
         case .ryan:
-            LocalizedString.voiceRyan
+            return LocalizedString.voiceRyan
         case .ananya:
-            LocalizedString.voiceAnanya
+            return LocalizedString.voiceAnanya
         case .aarav:
-            LocalizedString.voiceAarav
+            return LocalizedString.voiceAarav
         case .amala:
-            LocalizedString.voiceAmala
+            return LocalizedString.voiceAmala
         case .conrad:
-            LocalizedString.voiceConrad
+            return LocalizedString.voiceConrad
         }
     }
 
     public var speechSynthesisVoiceName: String {
         switch self {
         case .xiaoxiao:
-            "zh-CN-XiaoxiaoNeural"
+            return "zh-CN-XiaoxiaoNeural"
         case .yunjian:
-            "zh-CN-YunjianNeural"
+            return "zh-CN-YunjianNeural"
         case .denise:
-            "fr-FR-DeniseNeural"
+            return "fr-FR-DeniseNeural"
         case .henri:
-            "fr-FR-HenriNeural"
+            return "fr-FR-HenriNeural"
         case .mayu:
-            "ja-JP-MayuNeural"
+            return "ja-JP-MayuNeural"
         case .keita:
-            "ja-JP-KeitaNeural"
+            return "ja-JP-KeitaNeural"
         case .sunhi:
-            "ko-KR-SunHiNeural"
+            return "ko-KR-SunHiNeural"
         case .hyunsu:
-            "ko-KR-HyunsuNeural"
+            return "ko-KR-HyunsuNeural"
         case .dariya:
-            "ru-RU-DariyaNeural"
+            return "ru-RU-DariyaNeural"
         case .dmitry:
-            "ru-RU-DmitryNeural"
+            return "ru-RU-DmitryNeural"
         case .elvira:
-            "es-ES-ElviraNeural"
+            return "es-ES-ElviraNeural"
         case .alvaro:
-            "es-ES-AlvaroNeural"
+            return "es-ES-AlvaroNeural"
         case .fatima:
-            "ar-AE-FatimaNeural"
+            return "ar-AE-FatimaNeural"
         case .hamdan:
-            "ar-AE-HamdanNeural"
+            return "ar-AE-HamdanNeural"
         case .raquel:
-            "pt-PT-RaquelNeural"
+            return "pt-PT-RaquelNeural"
         case .duarte:
-            "pt-PT-DuarteNeural"
+            return "pt-PT-DuarteNeural"
         case .thalita:
-            "pt-BR-ThalitaNeural"
+            return "pt-BR-ThalitaNeural"
         case .donato:
-            "pt-BR-DonatoNeural"
+            return "pt-BR-DonatoNeural"
         case .ava:
-            "en-US-AvaNeural"
+            return "en-US-AvaNeural"
         case .andrew:
-            "en-US-AndrewNeural"
+            return "en-US-AndrewNeural"
         case .sonia:
-            "en-GB-SoniaNeural"
+            return "en-GB-SoniaNeural"
         case .ryan:
-            "en-GB-RyanNeural"
+            return "en-GB-RyanNeural"
         case .ananya:
-            "hi-IN-AnanyaNeural"
+            return "hi-IN-AnanyaNeural"
         case .aarav:
-            "hi-IN-AaravNeural"
+            return "hi-IN-AaravNeural"
         case .amala:
-            "de-DE-AmalaNeural"
+            return "de-DE-AmalaNeural"
         case .conrad:
-            "de-DE-ConradNeural"
+            return "de-DE-ConradNeural"
         }
     }
 
@@ -158,43 +158,43 @@ public enum Voice: String, Codable, CaseIterable, Equatable, Sendable {
         switch self {
         case .xiaoxiao,
                 .yunjian:
-                .mandarinChinese
+                return .mandarinChinese
         case .denise,
                 .henri:
-                .french
+                return .french
         case .mayu,
                 .keita:
-                .japanese
+                return .japanese
         case .sunhi,
                 .hyunsu:
-                .korean
+                return .korean
         case .dariya,
                 .dmitry:
-                .russian
+                return .russian
         case .elvira,
                 .alvaro:
-                .spanish
+                return .spanish
         case .fatima,
                 .hamdan:
-                .arabicGulf
+                return .arabicGulf
         case .raquel,
                 .duarte:
-                .europeanPortuguese
+                return .europeanPortuguese
         case .thalita,
                 .donato:
-                .brazilianPortuguese
+                return .brazilianPortuguese
         case .ava,
                 .andrew:
-                .english
+                return .english
         case .sonia,
                 .ryan:
-                .englishUK
+                return .englishUK
         case .ananya,
                 .aarav:
-                .hindi
+                return .hindi
         case .amala,
                 .conrad:
-                .german
+                return .german
         }
     }
 
@@ -213,7 +213,7 @@ public enum Voice: String, Codable, CaseIterable, Equatable, Sendable {
                 .sonia,
                 .ananya,
                 .amala:
-                .female
+                return .female
         case .yunjian,
                 .henri,
                 .keita,
@@ -227,7 +227,7 @@ public enum Voice: String, Codable, CaseIterable, Equatable, Sendable {
                 .ryan,
                 .aarav,
                 .conrad:
-                .male
+                return .male
         }
     }
 }

@@ -13,12 +13,14 @@ enum SettingsDataStoreError: Error {
     case failedToSaveData
 }
 
-class SettingsDataStore: SettingsDataStoreProtocol {
+public class SettingsDataStore: SettingsDataStoreProtocol {
     private var documentsDirectory: URL? {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
     }
+    
+    public init() {}
 
-    func loadAppSettings() throws -> SettingsState {
+    public func loadAppSettings() throws -> SettingsState {
         guard let fileURL = documentsDirectory?.appendingPathComponent("settingsState.json") else {
             throw SettingsDataStoreError.failedToCreateUrl
         }
@@ -32,7 +34,7 @@ class SettingsDataStore: SettingsDataStoreProtocol {
         }
     }
 
-    func saveAppSettings(_ settings: SettingsState) throws {
+    public func saveAppSettings(_ settings: SettingsState) throws {
         guard let fileURL = documentsDirectory?.appendingPathComponent("settingsState.json") else {
             throw SettingsDataStoreError.failedToCreateUrl
         }

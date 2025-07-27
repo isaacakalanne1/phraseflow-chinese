@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol LoadingEnvironmentProtocol {
+public protocol LoadingEnvironmentProtocol {
     
 }

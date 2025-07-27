@@ -13,7 +13,7 @@ enum DefinitionDataStoreError: Error {
     case failedToDecodeData
 }
 
-class DefinitionDataStore: DefinitionDataStoreProtocol {
+public class DefinitionDataStore: DefinitionDataStoreProtocol {
 
     private let fileManager = FileManager.default
     private let encoder = JSONEncoder()
@@ -29,7 +29,7 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
         documentsDirectory?.appendingPathComponent("definitions")
     }
     
-    init() {
+    public init() {
         encoder.dateEncodingStrategy = .iso8601
         decoder.dateDecodingStrategy = .iso8601
         createDefinitionsDirectory()
@@ -49,7 +49,7 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
         definitionsDirectory?.appendingPathComponent("\(id.uuidString).json")
     }
 
-    func cleanupOrphanedDefinitionFiles() throws {
+    public func cleanupOrphanedDefinitionFiles() throws {
         guard let dir = documentsDirectory else {
             throw DefinitionDataStoreError.failedToCreateUrl
         }
@@ -69,13 +69,13 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
         return documentsDirectory?.appendingPathComponent("sentence-audio-\(id.uuidString).m4a")
     }
 
-    func saveSentenceAudio(_ audioData: Data, id: UUID) throws {
+    public func saveSentenceAudio(_ audioData: Data, id: UUID) throws {
         if let fileURL = sentenceAudioFileURL(id: id) {
             try? audioData.write(to: fileURL)
         }
     }
 
-    func loadSentenceAudio(id: UUID) throws -> Data {
+    public func loadSentenceAudio(id: UUID) throws -> Data {
         guard let fileURL = sentenceAudioFileURL(id: id) else {
             throw DefinitionDataStoreError.failedToCreateUrl
         }
@@ -87,7 +87,7 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
         }
     }
 
-    func cleanupOrphanedSentenceAudioFiles() throws {
+    public func cleanupOrphanedSentenceAudioFiles() throws {
         guard let dir = documentsDirectory else {
             throw DefinitionDataStoreError.failedToCreateUrl
         }
@@ -127,7 +127,7 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
         scheduleWrite()
     }
 
-    func loadDefinitions() throws -> [Definition] {
+    public func loadDefinitions() throws -> [Definition] {
         guard let dir = definitionsDirectory else {
             throw DefinitionDataStoreError.failedToCreateUrl
         }
@@ -144,14 +144,14 @@ class DefinitionDataStore: DefinitionDataStoreProtocol {
         }
     }
 
-    func saveDefinitions(_ definitions: [Definition]) throws {
+    public func saveDefinitions(_ definitions: [Definition]) throws {
         for definition in definitions {
             pendingWrites[definition.id] = definition
         }
         print("Scheduling write for \(definitions.count) definitions")
     }
 
-    func deleteDefinition(with id: UUID) throws {
+    public func deleteDefinition(with id: UUID) throws {
         pendingWrites.removeValue(forKey: id)
         guard let fileURL = definitionFileURL(for: id) else { return }
         try? fileManager.removeItem(at: fileURL)

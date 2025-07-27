@@ -12,14 +12,14 @@ import Study
 import Settings
 import TextGeneration
 
-struct TranslationEnvironment: TranslationEnvironmentProtocol {
-    let translationServices: TranslationServicesProtocol
-    let speechEnvironment: SpeechEnvironmentProtocol
-    let studyEnvironment: StudyEnvironmentProtocol
-    let settingsEnvironment: SettingsEnvironmentProtocol
-    let translationDataStore: TranslationDataStoreProtocol
+public struct TranslationEnvironment: TranslationEnvironmentProtocol {
+    public let translationServices: TranslationServicesProtocol
+    public let speechEnvironment: SpeechEnvironmentProtocol
+    public let studyEnvironment: StudyEnvironmentProtocol
+    public let settingsEnvironment: SettingsEnvironmentProtocol
+    public let translationDataStore: TranslationDataStoreProtocol
     
-    init(
+    public init(
         speechRepository: SpeechRepositoryProtocol,
         definitionServices: DefinitionServicesProtocol,
         definitionDataStore: DefinitionDataStoreProtocol,
@@ -41,27 +41,27 @@ struct TranslationEnvironment: TranslationEnvironmentProtocol {
         self.translationDataStore = TranslationDataStore()
     }
     
-    func translateText(_ text: String, from sourceLanguage: Language?, to targetLanguage: Language) async throws -> Chapter {
+    public func translateText(_ text: String, from sourceLanguage: Language?, to targetLanguage: Language) async throws -> Chapter {
         return try await translationServices.translateText(text, from: sourceLanguage, to: targetLanguage)
     }
     
-    func breakdownText(_ text: String, textLanguage: Language, deviceLanguage: Language) async throws -> Chapter {
+    public func breakdownText(_ text: String, textLanguage: Language, deviceLanguage: Language) async throws -> Chapter {
         return try await translationServices.breakdownText(text, textLanguage: textLanguage, deviceLanguage: deviceLanguage)
     }
     
-    func synthesizeSpeech(for chapter: Chapter, voice: Voice, language: Language) async throws -> Chapter {
+    public func synthesizeSpeech(for chapter: Chapter, voice: Voice, language: Language) async throws -> Chapter {
         return try await speechEnvironment.synthesizeSpeech(for: chapter, voice: voice, language: language)
     }
     
-    func fetchDefinitions(in sentence: Sentence?, chapter: Chapter, deviceLanguage: Language) async throws -> [Definition] {
+    public func fetchDefinitions(in sentence: Sentence?, chapter: Chapter, deviceLanguage: Language) async throws -> [Definition] {
         return try await studyEnvironment.fetchDefinitions(in: sentence, chapter: chapter, deviceLanguage: deviceLanguage)
     }
     
-    func saveDefinitions(_ definitions: [Definition]) throws {
+    public func saveDefinitions(_ definitions: [Definition]) throws {
         try studyEnvironment.saveDefinitions(definitions)
     }
     
-    func saveSentenceAudio(_ audioData: Data, id: UUID) throws {
+    public func saveSentenceAudio(_ audioData: Data, id: UUID) throws {
         try studyEnvironment.saveSentenceAudio(audioData, id: id)
     }
 }

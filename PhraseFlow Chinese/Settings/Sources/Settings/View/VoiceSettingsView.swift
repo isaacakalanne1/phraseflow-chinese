@@ -61,7 +61,7 @@ public struct VoiceSettingsView: View {
     
     public init() {}
 
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 0) {
             VoiceMenu(shouldDismissOnSelect: true)
 
