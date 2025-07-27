@@ -99,8 +99,7 @@ struct DefinitionsProgressSheetView: View {
             )
         }
         .navigationDestination(isPresented: $navigateToStudyView) {
-            let language = store.state.storyState.currentChapter?.language
-            StudyView(studyWords: store.state.studyDefinitions(language: language))
+            StudyView(studyWords: store.state.studyDefinitions(language: filterLanguage))
         }
         .navigationDestination(isPresented: $showLanguageSelector) {
             LanguageSettingsView()
@@ -115,39 +114,60 @@ struct DefinitionsProgressSheetView: View {
                 DefinitionsChartView(definitions: definitions, isCreations: isCreations)
                     .frame(height: 300)
 
-                List {
-                    Section {
-                        ForEach(definitions, id: \.self) { definition in
-                            NavigationLink {
-                                StudyView(studyWords: [definition])
-                            } label: {
-                                Text(definition.timestampData.word)
-                                    .fontWeight(.light)
-                                    .foregroundStyle(FTColor.primary)
-                            }
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
-                                Button(role: .destructive) {
-                                    store.dispatch(.definitionAction(.deleteDefinition(definition)))
-                                    store.dispatch(.playSound(.actionButtonPress))
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                        .tint(FTColor.error)
-                                }
-                            })
-                        }
-                    } header: {
-                        Text(isCreations ?
-                            LocalizedString.wordsSaved("\(definitions.count)") :
-                            LocalizedString.wordsStudied("\(definitions.reduce(0) { $0 + $1.studiedDates.count })"))
-                    }
-                }
-                .listStyle(.insetGrouped)
-                .navigationBarTitleDisplayMode(.inline)
-                .background(FTColor.background)
-                .scrollContentBackground(.hidden)
+                definitionsList(definitions: definitions, isCreations: isCreations)
             }
             .background(FTColor.background)
         }
+    }
+    
+    @ViewBuilder
+    private func definitionsList(definitions: [Definition], isCreations: Bool) -> some View {
+        List {
+            Section {
+                ForEach(definitions, id: \.self) { definition in
+                    definitionRow(definition: definition)
+                }
+            } header: {
+                sectionHeader(definitions: definitions, isCreations: isCreations)
+            }
+        }
+        .listStyle(.insetGrouped)
+        .navigationBarTitleDisplayMode(.inline)
+        .background(FTColor.background)
+        .scrollContentBackground(.hidden)
+    }
+    
+    @ViewBuilder
+    private func definitionRow(definition: Definition) -> some View {
+        NavigationLink {
+            StudyView(studyWords: [definition])
+        } label: {
+            Text(definition.timestampData.word)
+                .fontWeight(.light)
+                .foregroundStyle(FTColor.primary)
+        }
+        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+            Button(role: .destructive) {
+                store.dispatch(.deleteDefinition(definition))
+                store.dispatch(.playSound(.actionButtonPress))
+            } label: {
+                Label("Delete", systemImage: "trash")
+                    .tint(FTColor.error)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func sectionHeader(definitions: [Definition], isCreations: Bool) -> some View {
+        let headerText: String = {
+            if isCreations {
+                return LocalizedString.wordsSaved("\(definitions.count)")
+            } else {
+                let totalStudiedCount = definitions.reduce(0) { $0 + $1.studiedDates.count }
+                return LocalizedString.wordsStudied("\(totalStudiedCount)")
+            }
+        }()
+        Text(headerText)
     }
 
     func removeDuplicates(from definitions: [Definition]) -> [Definition] {

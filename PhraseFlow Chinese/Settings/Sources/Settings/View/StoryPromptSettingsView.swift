@@ -53,7 +53,7 @@ struct StoryPromptMenu: View {
                                 }
                             }
                         )
-                        .disabled(store.state.isWritingChapter)
+                        .disabled(store.state.viewState.isWritingChapter)
 
                         // Create Custom Story Button
                         ImageButton(
@@ -67,7 +67,7 @@ struct StoryPromptMenu: View {
                                 }
                             }
                         )
-                        .disabled(store.state.isWritingChapter)
+                        .disabled(store.state.viewState.isWritingChapter)
 
                         // Previously Created Custom Stories
                         ForEach(store.state.customPrompts, id: \.self) { prompt in
@@ -196,12 +196,12 @@ struct SimpleModerationExplanationView: View {
                     .foregroundColor(FTColor.accent)
                 
                 Text("Content Moderation")
-                    .font(FTFont.flowTaleHeadlineMedium())
-                    .foregroundColor(FTColor.primaryText)
+                    .font(FTFont.flowTaleHeader())
+                    .foregroundColor(FTColor.primary)
                 
                 Text("Your custom prompt didn't meet our content guidelines. Please review and modify your prompt to ensure it's appropriate for all audiences.")
                     .font(FTFont.flowTaleBodyMedium())
-                    .foregroundColor(FTColor.secondaryText)
+                    .foregroundColor(FTColor.secondary)
                     .multilineTextAlignment(.center)
             }
             .padding(.horizontal, 24)

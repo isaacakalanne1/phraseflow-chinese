@@ -7,6 +7,7 @@
 
 import FTColor
 import FTFont
+import FTStyleKit
 import Localization
 import SwiftUI
 
@@ -16,10 +17,6 @@ struct LanguageOnboardingView: View {
     var body: some View {
         VStack(spacing: 0) {
             LanguageMenu()
-
-            CreateStoryButton()
-                .padding(.horizontal)
-                .padding(.bottom)
         }
         .background(FTColor.background)
         .opacity(store.state.viewState.isWritingChapter ? 0.3 : 1.0)
@@ -42,58 +39,9 @@ public struct LanguageMenu: View {
     public var body: some View {
         ScrollView {
             Section {
-                LazyVGrid(columns: [
-                    GridItem(.flexible()),
-                    GridItem(.flexible()),
-                    GridItem(.flexible()),
-                ], spacing: 8) {
-
-                    if type == .translationSourceLanguage {
-                        ImageButton(
-                            title: "Auto-detect",
-                            image: UIImage(),
-                            isSelected: store.state.translationState.sourceLanguage == nil,
-                            action: {
-                                withAnimation(.easeInOut) {
-                                    store.dispatch(.playSound(.changeSettings))
-                                    store.dispatch(.translationAction(.updateSourceLanguage(nil)))
-                                    dismiss()
-                                }
-                            }
-                        )
-                    }
-                    ForEach(Language.allCases, id: \.self) { language in
-                        let isSelectedLanguage = store.state.language == language
-
-                        ImageButton(
-                            title: language.displayName,
-                            image: language.thumbnail,
-                            isSelected: isSelectedLanguage,
-                            action: {
-                                withAnimation(.easeInOut) {
-                                    store.dispatch(.playSound(.changeSettings))
-                                    switch type {
-                                    case .normal:
-                                        store.dispatch(.updateLanguage(language))
-                                    case .translationSourceLanguage:
-                                        store.dispatch(.translationAction(.updateSourceLanguage(language)))
-                                    case .translationTargetLanguage:
-                                        store.dispatch(.translationAction(.updateTargetLanguage(language)))
-                                    case .translationTextLanguage:
-                                        store.dispatch(.translationAction(.updateTextLanguage(language)))
-                                    }
-                                    if shouldDismissOnSelect {
-                                        dismiss()
-                                    }
-                                }
-                            }
-                        )
-                        .disabled(store.state.viewState.isWritingChapter)
-                    }
-                }
+                languageGrid
             } header: {
-                Text(LocalizedString.whichLanguageLearn.uppercased())
-                    .font(FTFont.flowTaleSubHeader())
+                sectionHeader
             }
         }
         .padding()
@@ -101,10 +49,64 @@ public struct LanguageMenu: View {
         .background(FTColor.background)
         .scrollContentBackground(.hidden)
     }
+    
+    @ViewBuilder
+    private var languageGrid: some View {
+        LazyVGrid(columns: [
+            GridItem(.flexible()),
+            GridItem(.flexible()),
+            GridItem(.flexible()),
+        ], spacing: 8) {
+            
+            ForEach(Language.allCases, id: \.self) { language in
+                languageButton(for: language)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func languageButton(for language: Language) -> some View {
+        let isSelectedLanguage = store.state.language == language
+        
+        ImageButton(
+            title: language.displayName,
+            image: language.thumbnail,
+            isSelected: isSelectedLanguage,
+            action: {
+                languageButtonAction(for: language)
+            }
+        )
+        .disabled(store.state.viewState.isWritingChapter)
+    }
+    
+    @ViewBuilder
+    private var sectionHeader: some View {
+        Text(LocalizedString.whichLanguageLearn.uppercased())
+            .font(FTFont.flowTaleSubHeader())
+    }
+    
+    private func languageButtonAction(for language: Language) {
+        withAnimation(.easeInOut) {
+            store.dispatch(.playSound(.changeSettings))
+            
+            switch type {
+            case .normal:
+                store.dispatch(.updateLanguage(language))
+            case .translationSourceLanguage, .translationTargetLanguage, .translationTextLanguage:
+                break
+            }
+            
+            if shouldDismissOnSelect {
+                dismiss()
+            }
+        }
+    }
 }
 
 public struct LanguageSettingsView: View {
     @Environment(\.dismiss) var dismiss
+
+    public init() {}
 
     public var body: some View {
         VStack(spacing: 0) {
