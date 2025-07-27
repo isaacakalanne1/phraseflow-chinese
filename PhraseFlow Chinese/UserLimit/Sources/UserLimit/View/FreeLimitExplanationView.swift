@@ -25,12 +25,12 @@ public struct FreeLimitExplanationView: View {
                     .foregroundColor(FTColor.accent)
                 
                 Text(LocalizedString.freeTrialReachedLimit)
-                    .font(FTFont.flowTaleHeadline())
+                    .font(FTFont.flowTaleHeader())
                     .foregroundColor(FTColor.primary)
                     .multilineTextAlignment(.center)
                 
                 Text(LocalizedString.freeTrialExplanation)
-                    .font(FTFont.flowTaleBody())
+                    .font(FTFont.flowTaleBodyMedium())
                     .foregroundColor(FTColor.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
@@ -41,7 +41,7 @@ public struct FreeLimitExplanationView: View {
                     dismiss()
                 }) {
                     Text("OK")
-                        .font(FTFont.flowTaleBody())
+                        .font(FTFont.flowTaleBodyMedium())
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding()

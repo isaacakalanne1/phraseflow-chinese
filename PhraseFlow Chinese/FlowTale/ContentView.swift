@@ -11,6 +11,7 @@ import FTFont
 import Localization
 import Loading
 import Navigation
+import ReduxKit
 import Settings
 import SnackBar
 import Story
@@ -19,6 +20,102 @@ import Subscription
 import SwiftUI
 import Translation
 import UserLimit
+
+// Temporary Redux types until infrastructure is properly integrated
+struct FlowTaleState {
+    // Commenting out missing state types for now
+    // var audioState: AudioState
+    var storyState: StoryState
+    var settingsState: SettingsState
+    // var studyState: StudyState
+    // var translationState: TranslationState
+    var subscriptionState: SubscriptionState
+    var snackBarState: SnackBarState
+    // var userLimitState: UserLimitState
+    // var moderationState: ModerationState
+    // var navigationState: NavigationState
+    var viewState: ViewState
+    
+    init() {
+        self.settingsState = SettingsState()
+        // self.audioState = AudioState(speechSpeed: self.settingsState.speechSpeed)
+        self.storyState = StoryState()
+        // self.studyState = StudyState()
+        // self.translationState = TranslationState()
+        self.subscriptionState = SubscriptionState()
+        self.snackBarState = SnackBarState()
+        // self.userLimitState = UserLimitState()
+        // self.moderationState = ModerationState()
+        // self.navigationState = NavigationState()
+        self.viewState = ViewState()
+    }
+    
+    var deviceLanguage: Language? {
+        settingsState.deviceLanguage
+    }
+}
+
+struct ViewState {
+    var isInitialisingApp: Bool = true
+    var contentTab: Int = 0 // Temporary: reader tab
+    var isShowingSubscriptionSheet: Bool = false
+    var isShowingDailyLimitExplanation: Bool = false
+    var isShowingFreeLimitExplanation: Bool = false
+    var isDefining: Bool = false
+    var isWritingChapter: Bool = false
+    var definitionViewId: UUID = UUID()
+    var isShowingCustomPromptAlert: Bool = false
+}
+
+enum FlowTaleAction {
+    // Commenting out missing action types
+    // case audioAction(AudioAction)
+    case storyAction(StoryAction)
+    case settingsAction(SettingsAction)
+    // case studyAction(StudyAction)
+    // case translationAction(TranslationAction)
+    case subscriptionAction(SubscriptionAction)
+    case snackBarAction(SnackbarAction)
+    // case userLimitAction(UserLimitAction)
+    // case moderationAction(ModerationAction)
+    // case navigationAction(NavigationAction)
+    // case loadingAction(LoadingAction)
+    case viewAction(ViewAction)
+    case loadAppSettings
+    case playSound(SoundEffect)
+}
+
+enum ViewAction {
+    case setInitializingApp(Bool)
+    case setContentTab(Int) // Temporary: using Int instead of ContentTab
+    case setSubscriptionSheetShowing(Bool)
+    case setDailyLimitExplanationShowing(Bool)
+    case setFreeLimitExplanationShowing(Bool)
+    case setDefining(Bool)
+    case setWritingChapter(Bool)
+    case setDefinitionViewId(UUID)
+    case setShowingCustomPromptAlert(Bool)
+}
+
+enum SoundEffect {
+    case progressUpdate
+}
+
+protocol FlowTaleEnvironmentProtocol {
+    var audioEnvironment: AudioEnvironmentProtocol { get }
+    var storyEnvironment: StoryEnvironmentProtocol { get }
+    var settingsEnvironment: SettingsEnvironmentProtocol { get }
+    var studyEnvironment: StudyEnvironmentProtocol { get }
+    var translationEnvironment: TranslationEnvironmentProtocol { get }
+    var subscriptionEnvironment: SubscriptionEnvironmentProtocol { get }
+    var snackBarEnvironment: SnackBarEnvironmentProtocol { get }
+    var userLimitEnvironment: UserLimitEnvironmentProtocol { get }
+    var moderationEnvironment: ModerationEnvironmentProtocol { get }
+    var navigationEnvironment: NavigationEnvironmentProtocol { get }
+    var loadingEnvironment: LoadingEnvironmentProtocol { get }
+}
+
+typealias FlowTaleStore = Store<FlowTaleState, FlowTaleAction, FlowTaleEnvironmentProtocol>
 
 struct ContentView: View {
     @EnvironmentObject var store: FlowTaleStore

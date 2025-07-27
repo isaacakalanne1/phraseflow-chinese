@@ -25,12 +25,12 @@ public struct DailyLimitExplanationView: View {
                     .foregroundColor(FTColor.accent)
                 
                 Text(LocalizedString.dailyLimitReached)
-                    .font(FTFont.flowTaleHeadline())
+                    .font(FTFont.flowTaleHeader())
                     .foregroundColor(FTColor.primary)
                     .multilineTextAlignment(.center)
                 
                 Text(LocalizedString.dailyLimitExplanation)
-                    .font(FTFont.flowTaleBody())
+                    .font(FTFont.flowTaleBodyMedium())
                     .foregroundColor(FTColor.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
@@ -41,7 +41,7 @@ public struct DailyLimitExplanationView: View {
                     dismiss()
                 }) {
                     Text("OK")
-                        .font(FTFont.flowTaleBody())
+                        .font(FTFont.flowTaleBodyMedium())
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding()

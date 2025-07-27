@@ -8,16 +8,16 @@
 import SwiftUI
 import AppleIcon
 
-struct ActionButton: View {
+public struct ActionButton: View {
     let systemImage: SystemImage
     let isSelected: Bool
     let size: CGFloat
     let action: () -> Void
 
-    init(systemImage: SystemImage,
-         isSelected: Bool,
-         size: CGFloat = 35,
-         action: @escaping () -> Void)
+    public init(systemImage: SystemImage,
+                isSelected: Bool,
+                size: CGFloat = 35,
+                action: @escaping () -> Void)
     {
         self.systemImage = systemImage
         self.isSelected = isSelected
@@ -25,7 +25,7 @@ struct ActionButton: View {
         self.action = action
     }
 
-    var body: some View {
+    public var body: some View {
         Button(action: {
             action()
         }) {

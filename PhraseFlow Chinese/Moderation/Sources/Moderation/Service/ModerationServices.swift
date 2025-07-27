@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import APIRequest
 
 class ModerationServices: ModerationServicesProtocol {
     func moderateText(_ text: String) async throws -> ModerationResponse {

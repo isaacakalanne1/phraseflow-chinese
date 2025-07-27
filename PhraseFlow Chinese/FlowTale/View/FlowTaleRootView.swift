@@ -18,23 +18,80 @@ import UserLimit
 import Moderation
 import Navigation
 import Loading
+import DataStorage
+import TextGeneration
+import Speech
 
 public struct FlowTaleRootView: View {
     private let store: FlowTaleStore
     
     public init() {
+        let audioEnvironment = AudioEnvironment()
+        let snackBarEnvironment = SnackBarEnvironment()
+        let userLimitEnvironment = UserLimitEnvironment()
+        let loadingEnvironment = LoadingEnvironment()
+        let subscriptionEnvironment = SubscriptionEnvironment()
+        
+        let settingsDataStore = SettingsDataStore()
+        let settingsEnvironment = SettingsEnvironment(
+            settingsDataStore: settingsDataStore,
+            audioEnvironment: audioEnvironment
+        )
+        
+        let moderationServices = ModerationServices()
+        let moderationDataStore = ModerationDataStore()
+        let moderationEnvironment = ModerationEnvironment(
+            moderationServices: moderationServices,
+            moderationDataStore: moderationDataStore
+        )
+        
+        let definitionServices = DefinitionServices()
+        let definitionDataStore = DefinitionDataStore()
+        let studyEnvironment = StudyEnvironment(
+            definitionServices: definitionServices,
+            dataStore: definitionDataStore,
+            audioEnvironment: audioEnvironment,
+            settingsEnvironment: settingsEnvironment
+        )
+        
+        let speechRepository = SpeechRepository()
+        let translationEnvironment = TranslationEnvironment(
+            speechRepository: speechRepository,
+            definitionServices: definitionServices,
+            definitionDataStore: definitionDataStore,
+            audioEnvironment: audioEnvironment,
+            settingsEnvironment: settingsEnvironment,
+            settingsDataStore: settingsDataStore
+        )
+        
+        let textGenerationServices = TextGenerationServices()
+        let storyDataStore = StoryDataStore()
+        let storyEnvironment = StoryEnvironment(
+            audioEnvironment: audioEnvironment,
+            settingsEnvironment: settingsEnvironment,
+            studyEnvironment: studyEnvironment,
+            translationEnvironment: translationEnvironment,
+            service: textGenerationServices,
+            dataStore: storyDataStore
+        )
+        
+        let navigationEnvironment = NavigationEnvironment(
+            storyEnvironment: storyEnvironment,
+            audioEnvironment: audioEnvironment
+        )
+        
         let environment = FlowTaleEnvironment(
-            audioEnvironment: AudioEnvironment(),
-            storyEnvironment: StoryEnvironment(),
-            settingsEnvironment: SettingsEnvironment(),
-            studyEnvironment: StudyEnvironment(),
-            translationEnvironment: TranslationEnvironment(),
-            subscriptionEnvironment: SubscriptionEnvironment(),
-            snackBarEnvironment: SnackBarEnvironment(),
-            userLimitEnvironment: UserLimitEnvironment(),
-            moderationEnvironment: ModerationEnvironment(),
-            navigationEnvironment: NavigationEnvironment(),
-            loadingEnvironment: LoadingEnvironment()
+            audioEnvironment: audioEnvironment,
+            storyEnvironment: storyEnvironment,
+            settingsEnvironment: settingsEnvironment,
+            studyEnvironment: studyEnvironment,
+            translationEnvironment: translationEnvironment,
+            subscriptionEnvironment: subscriptionEnvironment,
+            snackBarEnvironment: snackBarEnvironment,
+            userLimitEnvironment: userLimitEnvironment,
+            moderationEnvironment: moderationEnvironment,
+            navigationEnvironment: navigationEnvironment,
+            loadingEnvironment: loadingEnvironment
         )
         
         self.store = Store(

@@ -9,6 +9,7 @@ import Localization
 import SwiftUI
 import FTFont
 import FTColor
+import FTStyleKit
 import TextGeneration
 import Study
 
@@ -22,7 +23,17 @@ struct TranslationResultsSection: View {
                 .font(FTFont.flowTaleSecondaryHeader())
                 .foregroundColor(FTColor.primary)
 
-            DefinitionView(definition: store.state.currentDefinition)
+            DefinitionView(
+                isLoading: false,
+                viewData: store.state.currentDefinition.map { definition in
+                    DefinitionViewData(
+                        word: definition.word,
+                        pronounciation: definition.pronunciation,
+                        definition: definition.definition,
+                        definitionInContextOfSentence: definition.definitionInContextOfSentence
+                    )
+                }
+            )
                 .frame(height: 150)
                 .background(
                     RoundedRectangle(cornerRadius: 12)
@@ -75,7 +86,7 @@ struct TranslationSentencesView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 8) {
                 ForEach(chapter.sentences, id: \.id) { sentence in
-                    Text(sentence.text)
+                    Text(sentence.translation)
                         .font(FTFont.flowTaleBodyMedium())
                         .foregroundColor(FTColor.primary)
                         .padding(.vertical, 4)

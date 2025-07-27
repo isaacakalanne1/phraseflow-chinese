@@ -17,6 +17,7 @@ let package = Package(
     dependencies: [
         .package(name: "FTColor", path: "../FTColor"),
         .package(name: "FTFont", path: "../FTFont"),
+        .package(name: "FTStyleKit", path: "../FTStyleKit"),
         .package(name: "Localization", path: "../Localization"),
         .package(name: "APIRequest", path: "../APIRequest"),
         .package(name: "Story", path: "../Story"),
@@ -30,6 +31,7 @@ let package = Package(
             dependencies: [
                 "FTColor", 
                 "FTFont",
+                "FTStyleKit",
                 "Localization",
                 "APIRequest",
                 "Story",

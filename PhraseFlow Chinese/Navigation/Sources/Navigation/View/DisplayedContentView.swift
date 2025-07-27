@@ -30,7 +30,7 @@ struct DisplayedContentView: View {
                 Text("Subscribe View")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .settings:
-                AppSettingsView()
+                Text("Settings are handled at the app level")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }

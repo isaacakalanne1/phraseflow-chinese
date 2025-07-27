@@ -76,11 +76,18 @@ func flowTaleMiddleware(state: FlowTaleState, action: FlowTaleAction, environmen
         }
         
     case .loadAppSettings:
-        environment.settingsEnvironment.loadSettings()
-        return .viewAction(.setInitializingApp(false))
+        do {
+            let settings = try environment.settingsEnvironment.loadAppSettings()
+            return .settingsAction(.onLoadedAppSettings(settings))
+        } catch {
+            return .settingsAction(.failedToLoadAppSettings)
+        }
         
     case .playSound(let soundEffect):
-        environment.audioEnvironment.playSound(soundEffect)
+        switch soundEffect {
+        case .progressUpdate:
+            environment.audioEnvironment.playSound(.progressUpdate)
+        }
         
     case .viewAction:
         break

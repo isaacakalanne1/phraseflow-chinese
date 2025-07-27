@@ -15,7 +15,12 @@ public struct ModerationView: View {
     public init(moderationResponse: ModerationResponse? = nil,
                 customPrompt: String = "") {
         let state = ModerationState(moderationResponse: moderationResponse)
-        let environment = ModerationEnvironment()
+        let moderationServices = ModerationServices()
+        let moderationDataStore = ModerationDataStore()
+        let environment = ModerationEnvironment(
+            moderationServices: moderationServices,
+            moderationDataStore: moderationDataStore
+        )
         self.customPrompt = customPrompt
 
         store = ModerationStore(

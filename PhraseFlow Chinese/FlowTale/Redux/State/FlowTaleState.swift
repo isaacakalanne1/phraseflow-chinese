@@ -9,7 +9,6 @@ import Foundation
 import Audio
 import Story
 import Settings
-import Definition
 import Study
 import Translation
 import Subscription
@@ -23,7 +22,6 @@ struct FlowTaleState {
     var audioState: AudioState
     var storyState: StoryState
     var settingsState: SettingsState
-    var definitionState: DefinitionState
     var studyState: StudyState
     var translationState: TranslationState
     var subscriptionState: SubscriptionState
@@ -38,7 +36,6 @@ struct FlowTaleState {
         self.settingsState = SettingsState()
         self.audioState = AudioState(speechSpeed: self.settingsState.speechSpeed)
         self.storyState = StoryState()
-        self.definitionState = DefinitionState()
         self.studyState = StudyState()
         self.translationState = TranslationState()
         self.subscriptionState = SubscriptionState()

@@ -11,27 +11,22 @@ import Audio
 import Settings
 import DataStorage
 
-struct NavigationEnvironment: NavigationEnvironmentProtocol {
+public struct NavigationEnvironment: NavigationEnvironmentProtocol {
     let storyEnvironment: StoryEnvironmentProtocol
     let audioEnvironment: AudioEnvironmentProtocol
     
-    init(storyEnvironment: StoryEnvironmentProtocol, audioEnvironment: AudioEnvironmentProtocol) {
+    public init(storyEnvironment: StoryEnvironmentProtocol, audioEnvironment: AudioEnvironmentProtocol) {
         self.storyEnvironment = storyEnvironment
         self.audioEnvironment = audioEnvironment
     }
     
-    init() {
-        self.storyEnvironment = StoryEnvironment()
-        let settingsDataStore = SettingsDataStore()
-        let settingsEnvironment = SettingsEnvironment(settingsDataStore: settingsDataStore)
-        self.audioEnvironment = AudioEnvironment(settingsEnvironment: settingsEnvironment)
-    }
     
-    func selectChapter(storyId: UUID) {
+    @MainActor
+    public func selectChapter(storyId: UUID) {
         storyEnvironment.selectChapter(storyId: storyId)
     }
     
-    func playSound(_ sound: AppSound) {
+    public func playSound(_ sound: AppSound) {
         audioEnvironment.playSound(sound)
     }
 }

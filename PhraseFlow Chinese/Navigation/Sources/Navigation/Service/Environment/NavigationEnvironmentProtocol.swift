@@ -8,7 +8,7 @@
 import Foundation
 import Audio
 
-protocol NavigationEnvironmentProtocol {
-    func selectChapter(storyId: UUID)
+public protocol NavigationEnvironmentProtocol {
+    @MainActor func selectChapter(storyId: UUID)
     func playSound(_ sound: AppSound)
 }

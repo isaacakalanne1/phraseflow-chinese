@@ -10,9 +10,8 @@ import SwiftUI
 public struct MainContentView: View {
     private var store: NavigationStore
 
-    public init() {
+    public init(environment: NavigationEnvironmentProtocol) {
         let state = NavigationState()
-        let environment = NavigationEnvironment()
 
         store = NavigationStore(
             initial: state,
@@ -32,6 +31,9 @@ public struct MainContentView: View {
     }
 }
 
-#Preview {
-    MainContentView()
-}
+// #Preview {
+//     MainContentView(environment: NavigationEnvironment(
+//         storyEnvironment: MockStoryEnvironment(),
+//         audioEnvironment: MockAudioEnvironment()
+//     ))
+// }
