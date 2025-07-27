@@ -79,6 +79,9 @@ public struct FlowTaleRootView: View {
         let navigationEnvironment = NavigationEnvironment(
             settingsEnvironment: settingsEnvironment,
             storyEnvironment: storyEnvironment,
+            studyEnvironment: studyEnvironment,
+            subscriptionEnvironment: subscriptionEnvironment,
+            translationEnvironment: translationEnvironment,
             audioEnvironment: audioEnvironment
         )
         

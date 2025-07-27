@@ -7,7 +7,10 @@
 
 import SwiftUI
 import Story
+import Study
 import Settings
+import Subscription
+import Translation
 
 struct DisplayedContentView: View {
     @EnvironmentObject var store: NavigationStore
@@ -19,13 +22,13 @@ struct DisplayedContentView: View {
                 StoryRootView(environment: store.environment.storyEnvironment)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .progress:
-                Text("Progress View")
+                ProgressSummaryView(environment: store.environment.studyEnvironment)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .translate:
-                Text("Translate View")
+                TranslationRootView(environment: store.environment.translationEnvironment)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .subscribe:
-                Text("Subscribe View")
+                SubscriptionRootView(environment: store.environment.subscriptionEnvironment)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .settings:
                 SettingsRootView(environment: store.environment.settingsEnvironment)

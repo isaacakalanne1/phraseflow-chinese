@@ -18,9 +18,12 @@ let package = Package(
         .package(name: "Localization", path: "../Localization"),
         .package(name: "AppleIcon", path: "../AppleIcon"),
         .package(name: "FTColor", path: "../FTColor"),
+        .package(name: "Study", path: "../Study"),
         .package(name: "Story", path: "../Story"),
         .package(name: "Audio", path: "../Audio"),
         .package(name: "Settings", path: "../Settings"),
+        .package(name: "Subscription", path: "../Subscription"),
+        .package(name: "Translation", path: "../Translation"),
         .package(name: "DataStorage", path: "../DataStorage"),
         .package(name: "ReduxKit", path: "../ReduxKit"),
     ],
@@ -33,11 +36,14 @@ let package = Package(
                 "Localization",
                 "AppleIcon",
                 "FTColor",
+                "Study",
                 "Story",
                 "Audio",
                 "Settings",
+                "Subscription",
+                "Translation",
                 "DataStorage",
-                .product(name: "ReduxKit", package: "ReduxKit")
+                "ReduxKit"
             ]),
         .testTarget(
             name: "NavigationTests",

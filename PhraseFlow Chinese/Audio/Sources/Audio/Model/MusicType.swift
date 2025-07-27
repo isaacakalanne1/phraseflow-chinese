@@ -13,7 +13,7 @@ public enum MusicType: String, CaseIterable, Sendable {
     case whispersOfTheEnchantedGrove = "Whispers of the Enchanted Grove"
 
     var fileURL: URL? {
-        return Bundle.main.url(forResource: rawValue, withExtension: "mp3")
+        return Bundle.module.url(forResource: rawValue, withExtension: "mp3")
     }
 
     static func next(after current: MusicType) -> MusicType {

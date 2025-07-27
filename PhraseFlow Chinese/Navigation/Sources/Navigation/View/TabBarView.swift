@@ -15,8 +15,6 @@ struct TabBarView: View {
     private var filteredTabs: [ContentTab] {
         ContentTab.allCases.filter { tab in
             switch tab {
-            case .translate:
-                return false
             default:
                 return true
             }

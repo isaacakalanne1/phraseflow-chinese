@@ -41,7 +41,9 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
         return settings.isPlayingMusic ? .playMusic(.whispersOfTheForest) : nil
         
     case .playSound(let sound):
-        environment.playSound(sound)
+        if state.shouldPlaySound {
+            environment.playSound(sound)
+        }
         return nil
         
     case .playMusic(let music):

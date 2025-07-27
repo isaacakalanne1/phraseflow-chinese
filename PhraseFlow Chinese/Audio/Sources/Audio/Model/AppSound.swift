@@ -30,6 +30,6 @@ public enum AppSound: String, Sendable {
 
     var fileURL: URL? {
         let fileName = rawValue.prefix(1).uppercased() + rawValue.dropFirst()
-        return Bundle.main.url(forResource: fileName, withExtension: "mp3")
+        return Bundle.module.url(forResource: fileName, withExtension: "mp3")
     }
 }
