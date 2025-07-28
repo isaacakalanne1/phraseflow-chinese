@@ -23,7 +23,7 @@ public enum Language: String, Codable, CaseIterable, Sendable {
          russian,
          german
 
-    var deviceLanguage: Language {
+    public static var deviceLanguage: Language {
         Language.allCases.first(where: { $0.identifier == Locale.current.language.languageCode?.identifier }) ?? .english
     }
 

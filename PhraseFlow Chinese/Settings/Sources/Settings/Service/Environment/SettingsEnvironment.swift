@@ -26,10 +26,6 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
         self.audioEnvironment = audioEnvironment
     }
     
-    public var deviceLanguage: Language? {
-        (try? settingsDataStore.loadAppSettings())?.language.deviceLanguage
-    }
-    
     public var currentVoice: Voice {
         (try? settingsDataStore.loadAppSettings())?.voice ?? .ava
     }

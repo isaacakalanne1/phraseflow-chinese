@@ -9,6 +9,7 @@ import Audio
 import Foundation
 import ReduxKit
 import AVKit
+import Settings
 
 @MainActor
 let translationMiddleware: Middleware<TranslationState, TranslationAction, TranslationEnvironmentProtocol> = { state, action, environment in
@@ -19,14 +20,10 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             return .translationInProgress(false)
         }
         
-        // Get device and target language from settings environment
-        let deviceLanguage = environment.settingsEnvironment.deviceLanguage
-        let targetLanguage = state.targetLanguage
-        
         guard let chapter = try? await environment.translateText(
             inputText,
-            from: deviceLanguage,
-            to: targetLanguage
+            from: Language.deviceLanguage,
+            to: state.targetLanguage
         ) else {
             return .failedToTranslate
         }
@@ -42,11 +39,10 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         // Get device language from settings environment
         
         
-        guard let deviceLanguage = environment.settingsEnvironment.deviceLanguage,
-              let chapter = try? await environment.breakdownText(
+        guard let chapter = try? await environment.breakdownText(
                 inputText,
                 textLanguage: state.textLanguage,
-                deviceLanguage: deviceLanguage
+                deviceLanguage: Language.deviceLanguage
               ) else {
             return .failedToBreakdown
         }
@@ -87,11 +83,10 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         
         
         
-        guard let deviceLanguage = environment.settingsEnvironment.deviceLanguage,
-              var definitionsForSentence = try? await environment.fetchDefinitions(
+        guard var definitionsForSentence = try? await environment.fetchDefinitions(
                 in: sentence,
                 chapter: chapter,
-                deviceLanguage: deviceLanguage
+                deviceLanguage: Language.deviceLanguage
               ) else {
             return .failedToDefineTranslationWord
         }

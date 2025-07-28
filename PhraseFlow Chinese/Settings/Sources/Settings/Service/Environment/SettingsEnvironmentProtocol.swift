@@ -10,7 +10,6 @@ import Foundation
 import Combine
 
 public protocol SettingsEnvironmentProtocol {
-    var deviceLanguage: Language? { get }
     var currentVoice: Voice { get }
     var speechSpeed: SpeechSpeed { get }
     

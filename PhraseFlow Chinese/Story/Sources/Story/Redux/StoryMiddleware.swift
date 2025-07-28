@@ -26,7 +26,7 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
                     language: .mandarinChinese,
                     difficulty: .beginner,
                     voice: .xiaoxiao,
-                    deviceLanguage: nil,
+                    deviceLanguage: Language.deviceLanguage,
                     storyPrompt: nil,
                     currentSubscription: nil
                 )
