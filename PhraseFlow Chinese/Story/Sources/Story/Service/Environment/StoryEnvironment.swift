@@ -21,12 +21,12 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     public let loadingSubject: CurrentValueSubject<LoadingStatus?, Never> = .init(nil)
     private let chapterSubject = CurrentValueSubject<Chapter?, Never>(nil)
     
-    nonisolated(unsafe) private let audioEnvironment: AudioEnvironmentProtocol
-    nonisolated(unsafe) private let settingsEnvironment: SettingsEnvironmentProtocol
-    nonisolated(unsafe) private let studyEnvironment: StudyEnvironmentProtocol
-    nonisolated(unsafe) private let translationEnvironment: TranslationEnvironmentProtocol
-    nonisolated(unsafe) private let service: TextGenerationServicesProtocol
-    nonisolated(unsafe) private let dataStore: StoryDataStoreProtocol
+    private let audioEnvironment: AudioEnvironmentProtocol
+    private let settingsEnvironment: SettingsEnvironmentProtocol
+    private let studyEnvironment: StudyEnvironmentProtocol
+    private let translationEnvironment: TranslationEnvironmentProtocol
+    private let service: TextGenerationServicesProtocol
+    private let dataStore: StoryDataStoreProtocol
     
     public init(
         audioEnvironment: AudioEnvironmentProtocol,
@@ -53,36 +53,45 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
                          currentSubscription: SubscriptionLevel?) async throws -> Chapter {
         loadingSubject.send(.writing)
 
-        var newChapter = try await service.generateChapter(previousChapters: previousChapters,
-                                                           deviceLanguage: deviceLanguage)
-        loadingSubject.send(.generatingImage)
+        return try await withCheckedThrowingContinuation { continuation in
+            Task { @MainActor [service] in
+                do {
+                    var newChapter = try await service.generateChapter(previousChapters: previousChapters,
+                                                                       deviceLanguage: deviceLanguage)
+                    loadingSubject.send(.generatingImage)
 
-        if newChapter.imageData == nil,
-           !newChapter.passage.isEmpty {
-            if let firstChapter = previousChapters.first, let existingImageData = firstChapter.imageData {
-                newChapter.imageData = existingImageData
-            } else {
-                // TODO: Image generation should be handled through separate ImageGeneration environment
-                // newChapter.imageData = try await service.generateImage(with: newChapter.passage)
+                    if newChapter.imageData == nil,
+                       !newChapter.passage.isEmpty {
+                        if let firstChapter = previousChapters.first, let existingImageData = firstChapter.imageData {
+                            newChapter.imageData = existingImageData
+                        } else {
+                            // TODO: Image generation should be handled through separate ImageGeneration environment
+                            // newChapter.imageData = try await service.generateImage(with: newChapter.passage)
+                        }
+                    }
+                    loadingSubject.send(.generatingSpeech)
+
+                    let voiceToUse = newChapter.audioVoice
+                    let (processedChapter, ssmlCharacterCount) = try await synthesizeSpeechWithCharacterCount(
+                        newChapter,
+                        voice: voiceToUse,
+                        language: newChapter.language
+                    )
+
+                    try trackSSMLCharacterUsage(
+                        characterCount: ssmlCharacterCount,
+                        subscription: currentSubscription
+                    )
+
+                    chapterSubject.send(processedChapter)
+                    loadingSubject.send(.complete)
+                    continuation.resume(returning: processedChapter)
+                } catch {
+                    loadingSubject.send(nil)
+                    continuation.resume(throwing: error)
+                }
             }
         }
-        loadingSubject.send(.generatingSpeech)
-
-        let voiceToUse = newChapter.audioVoice
-        let (processedChapter, ssmlCharacterCount) = try await synthesizeSpeechWithCharacterCount(
-            newChapter,
-            voice: voiceToUse,
-            language: newChapter.language
-        )
-
-        try trackSSMLCharacterUsage(
-            characterCount: ssmlCharacterCount,
-            subscription: currentSubscription
-        )
-
-        chapterSubject.send(processedChapter)
-        loadingSubject.send(.complete)
-        return processedChapter
     }
 
     public func generateFirstChapter(language: Language,
@@ -93,35 +102,45 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
                               currentSubscription: SubscriptionLevel?) async throws -> Chapter {
         loadingSubject.send(.writing)
 
-        let newChapter = try await service.generateFirstChapter(language: language,
-                                                               difficulty: difficulty,
-                                                               voice: voice,
-                                                               deviceLanguage: deviceLanguage,
-                                                               storyPrompt: storyPrompt)
-        loadingSubject.send(.generatingImage)
+        return try await withCheckedThrowingContinuation { continuation in
+            Task { @MainActor [service] in
+                do {
+                    let newChapter = try await service.generateFirstChapter(language: language,
+                                                                           difficulty: difficulty,
+                                                                           voice: voice,
+                                                                           deviceLanguage: deviceLanguage,
+                                                                           storyPrompt: storyPrompt)
+                    loadingSubject.send(.generatingImage)
 
-        if newChapter.imageData == nil,
-           !newChapter.passage.isEmpty {
-            // TODO: Image generation should be handled through separate ImageGeneration environment
-            // newChapter.imageData = try await service.generateImage(with: newChapter.passage)
+                    let processedChapter = newChapter
+                    if processedChapter.imageData == nil,
+                       !processedChapter.passage.isEmpty {
+                        // TODO: Image generation should be handled through separate ImageGeneration environment
+                        // processedChapter.imageData = try await service.generateImage(with: processedChapter.passage)
+                    }
+                    loadingSubject.send(.generatingSpeech)
+
+                    let voiceToUse = processedChapter.audioVoice
+                    let (finalChapter, ssmlCharacterCount) = try await synthesizeSpeechWithCharacterCount(
+                        processedChapter,
+                        voice: voiceToUse,
+                        language: processedChapter.language
+                    )
+
+                    try trackSSMLCharacterUsage(
+                        characterCount: ssmlCharacterCount,
+                        subscription: currentSubscription
+                    )
+
+                    chapterSubject.send(finalChapter)
+                    loadingSubject.send(.complete)
+                    continuation.resume(returning: finalChapter)
+                } catch {
+                    loadingSubject.send(nil)
+                    continuation.resume(throwing: error)
+                }
+            }
         }
-        loadingSubject.send(.generatingSpeech)
-
-        let voiceToUse = newChapter.audioVoice
-        let (processedChapter, ssmlCharacterCount) = try await synthesizeSpeechWithCharacterCount(
-            newChapter,
-            voice: voiceToUse,
-            language: newChapter.language
-        )
-
-        try trackSSMLCharacterUsage(
-            characterCount: ssmlCharacterCount,
-            subscription: currentSubscription
-        )
-
-        chapterSubject.send(processedChapter)
-        loadingSubject.send(.complete)
-        return processedChapter
     }
 
     // MARK: Chapters
@@ -144,7 +163,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         _ word: WordTimeStampData,
         rate: Float
     ) {
-        Task {
+        Task { @MainActor [audioEnvironment] in
             await audioEnvironment.playWord(startTime: word.time, duration: word.duration, playRate: rate)
         }
     }
@@ -154,7 +173,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     }
     
     public func playChapter(from word: WordTimeStampData) {
-        Task {
+        Task { @MainActor [audioEnvironment] in
             await audioEnvironment.playChapterAudio(from: word.time,
                                               rate: SpeechSpeed.normal.playRate)
         }
