@@ -151,7 +151,7 @@ public enum Voice: String, Codable, CaseIterable, Equatable, Sendable {
     }
 
     var thumbnail: UIImage? {
-        UIImage(named: "thumbnail-\(rawValue)")
+        return UIImage(named: "thumbnail-\(rawValue)")
     }
 
     public var language: Language {

@@ -29,7 +29,7 @@ public enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable, Send
     }
 
     var thumbnail: UIImage? {
-        UIImage(named: "difficulty-\(rawValue)")
+        return UIImage(named: "difficulty-\(rawValue)")
     }
 
     public var title: String {

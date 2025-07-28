@@ -28,7 +28,8 @@ let package = Package(
                 "Localization"
             ],
             resources: [
-                .process("Resources")
+                .process("Resources"),
+                .process("Assets.xcassets")
             ]
         ),
         .testTarget(
