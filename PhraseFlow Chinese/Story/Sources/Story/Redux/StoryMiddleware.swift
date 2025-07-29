@@ -76,24 +76,11 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
 
 
     case .saveChapter(let chapter):
-        print("[StoryMiddleware] saveChapter action received")
-        print("[StoryMiddleware] Chapter ID: \(chapter.id)")
-        print("[StoryMiddleware] Story ID: \(chapter.storyId)")
-        
         do {
-            print("[StoryMiddleware] About to call environment.saveChapter")
-            print("[StoryMiddleware] Environment type: \(type(of: environment))")
-            print("[StoryMiddleware] Calling environment.saveChapter directly")
-            
             try environment.saveChapter(chapter)
-            print("[StoryMiddleware] saveChapter completed, calling saveAppSettings")
             try environment.saveAppSettings(state)
-            print("[StoryMiddleware] saveAppSettings completed")
             return .onSavedChapter(chapter)
         } catch {
-            print("[StoryMiddleware] Error saving chapter: \(error)")
-            print("[StoryMiddleware] Error type: \(type(of: error))")
-            print("[StoryMiddleware] Error localized: \(error.localizedDescription)")
             return .failedToSaveChapter
         }
 

@@ -22,8 +22,8 @@ public class SpeechRepository: SpeechRepositoryProtocol {
     private var speechMarkCounter: Int = 0
 
     public func synthesizeSpeech(_ chapter: Chapter,
-                          voice: Voice,
-                          language: Language) async throws -> (Chapter, Int)
+                                 voice: Voice,
+                                 language: Language) async throws -> (Chapter, Int)
     {
         var newChapter = chapter
 

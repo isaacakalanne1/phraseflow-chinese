@@ -11,6 +11,7 @@ import Combine
 import Loading
 import Settings
 import TextGeneration
+import Speech
 import Subscription
 import Study
 import Translation
@@ -22,6 +23,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     
     private let audioEnvironment: AudioEnvironmentProtocol
     private let settingsEnvironment: SettingsEnvironmentProtocol
+    private let speechEnvironment: SpeechEnvironmentProtocol
     private let studyEnvironment: StudyEnvironmentProtocol
     private let translationEnvironment: TranslationEnvironmentProtocol
     private let service: TextGenerationServicesProtocol
@@ -30,6 +32,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     public init(
         audioEnvironment: AudioEnvironmentProtocol,
         settingsEnvironment: SettingsEnvironmentProtocol,
+        speechEnvironment: SpeechEnvironmentProtocol,
         studyEnvironment: StudyEnvironmentProtocol,
         translationEnvironment: TranslationEnvironmentProtocol,
         service: TextGenerationServicesProtocol,
@@ -37,6 +40,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     ) {
         self.audioEnvironment = audioEnvironment
         self.settingsEnvironment = settingsEnvironment
+        self.speechEnvironment = speechEnvironment
         self.studyEnvironment = studyEnvironment
         self.translationEnvironment = translationEnvironment
         self.service = service
@@ -68,8 +72,8 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         loadingSubject.send(.generatingSpeech)
 
         let voiceToUse = newChapter.audioVoice
-        let (processedChapter, ssmlCharacterCount) = try await synthesizeSpeechWithCharacterCount(
-            newChapter,
+        let (processedChapter, ssmlCharacterCount) = try await speechEnvironment.synthesizeSpeechWithCharacterCount(
+            for: newChapter,
             voice: voiceToUse,
             language: newChapter.language
         )
@@ -92,26 +96,25 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
                               currentSubscription: SubscriptionLevel?) async throws -> Chapter {
         loadingSubject.send(.writing)
 
-        let newChapter = try await service.generateFirstChapter(language: language,
+        var newChapter = try await service.generateFirstChapter(language: language,
                                                                difficulty: difficulty,
                                                                voice: voice,
                                                                deviceLanguage: deviceLanguage,
                                                                storyPrompt: storyPrompt)
         loadingSubject.send(.generatingImage)
 
-        let processedChapter = newChapter
-        if processedChapter.imageData == nil,
-           !processedChapter.passage.isEmpty {
+        if newChapter.imageData == nil,
+           !newChapter.passage.isEmpty {
             // TODO: Image generation should be handled through separate ImageGeneration environment
             // processedChapter.imageData = try await service.generateImage(with: processedChapter.passage)
         }
         loadingSubject.send(.generatingSpeech)
 
-        let voiceToUse = processedChapter.audioVoice
-        let (finalChapter, ssmlCharacterCount) = try await synthesizeSpeechWithCharacterCount(
-            processedChapter,
+        let voiceToUse = newChapter.audioVoice
+        let (processedChapter, ssmlCharacterCount) = try await speechEnvironment.synthesizeSpeechWithCharacterCount(
+            for: newChapter,
             voice: voiceToUse,
-            language: processedChapter.language
+            language: newChapter.language
         )
 
         try trackSSMLCharacterUsage(
@@ -119,54 +122,30 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
             subscription: currentSubscription
         )
 
-        chapterSubject.send(finalChapter)
+        chapterSubject.send(processedChapter)
         loadingSubject.send(.complete)
-        return finalChapter
+        return processedChapter
     }
 
     // MARK: Chapters
 
     public func saveChapter(_ chapter: Chapter) throws {
-        print("[StoryEnvironment] === ENTERING saveChapter METHOD ===")
-        
-        print("[StoryEnvironment] Accessing chapter.id...")
         let chapterId = chapter.id
-        print("[StoryEnvironment] saveChapter called for chapter: \(chapterId)")
-        
-        print("[StoryEnvironment] Accessing chapter.storyId...")  
         let storyId = chapter.storyId
-        print("[StoryEnvironment] Chapter storyId: \(storyId)")
-        
-        print("[StoryEnvironment] Accessing chapter.title...")
         let title = chapter.title
-        print("[StoryEnvironment] Chapter title: '\(title)'")
-        
-        // Check if dataStore exists
-        print("[StoryEnvironment] Checking dataStore...")
-        print("[StoryEnvironment] dataStore type: \(type(of: dataStore))")
         
         var chapterToSave = chapter
-        print("[StoryEnvironment] Created chapterToSave copy")
         
         do {
-            // Only save cover art in the first chapter to save memory
-            print("[StoryEnvironment] About to call dataStore.loadAllChapters(for: \(chapter.storyId))")
             let allChapters = try dataStore.loadAllChapters(for: chapter.storyId)
-            print("[StoryEnvironment] Found \(allChapters.count) existing chapters")
             let isFirstChapter = allChapters.isEmpty || allChapters.allSatisfy { $0.id == chapter.id }
-            print("[StoryEnvironment] isFirstChapter: \(isFirstChapter)")
             
             if !isFirstChapter {
-                print("[StoryEnvironment] Removing imageData from chapter")
                 chapterToSave.imageData = nil
             }
             
-            print("[StoryEnvironment] About to call dataStore.saveChapter")
             try dataStore.saveChapter(chapterToSave)
-            print("[StoryEnvironment] dataStore.saveChapter completed successfully")
         } catch {
-            print("[StoryEnvironment] Error in saveChapter: \(error)")
-            print("[StoryEnvironment] Error type: \(type(of: error))")
             throw error
         }
     }
@@ -194,16 +173,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     
     public func setMusicVolume(_ volume: MusicVolume) {
         audioEnvironment.setMusicVolume(volume)
-    }
-    
-    private func synthesizeSpeechWithCharacterCount(
-        _ chapter: Chapter,
-        voice: Voice,
-        language: Language
-    ) async throws -> (Chapter, Int) {
-        // This would normally synthesize speech and return the processed chapter with character count
-        // For now, return the chapter as-is with 0 character count to fix compilation
-        return (chapter, 0)
     }
     
     private func trackSSMLCharacterUsage(
