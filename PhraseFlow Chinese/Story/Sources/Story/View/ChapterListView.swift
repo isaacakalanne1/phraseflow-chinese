@@ -16,7 +16,7 @@ import Audio
 public struct ChapterListView: View {
     @EnvironmentObject var store: StoryStore
     let storyId: UUID
-    @State private var navigationPath = NavigationPath()
+    @State private var selectedChapter: Chapter?
     
     public init(storyId: UUID) {
         self.storyId = storyId
@@ -147,9 +147,14 @@ public struct ChapterListView: View {
                 .onAppear {
                     store.environment.playSound(.openStory)
                 }
-                .navigationDestination(for: Chapter.self) { chapter in
-                    ReaderView(chapter: chapter)
-                        .environmentObject(store)
+                .navigationDestination(isPresented: Binding<Bool>(
+                    get: { selectedChapter != nil },
+                    set: { if !$0 { selectedChapter = nil } }
+                )) {
+                    if let chapter = selectedChapter {
+                        ReaderView(chapter: chapter)
+                            .environmentObject(store)
+                    }
                 }
             } else {
                 Text(LocalizedString.chapterListStoryNotFound)
@@ -185,7 +190,7 @@ public struct ChapterListView: View {
         Button {
             withAnimation(.easeInOut) {
                 store.environment.playSound(.openChapter)
-                navigationPath.append(chapter)
+                selectedChapter = chapter
             }
         } label: {
             HStack(spacing: 12) {
