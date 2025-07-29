@@ -10,13 +10,17 @@ import Combine
 import AVKit
 
 public struct AudioEnvironment: AudioEnvironmentProtocol {
-    private let audioPlayer: AudioPlayer
+    public let audioPlayer: AudioPlayer
     
     public init() {
         self.audioPlayer = AudioPlayer()
     }
     
     // MARK: - AudioPlayer Wrapper Methods
+    
+    public func setChapterAudioData(_ audioData: Data) async {
+        await audioPlayer.setChapterAudioData(audioData)
+    }
     
     public func playChapterAudio(from time: Double?, rate: Float) async {
         await audioPlayer.playAudio(from: time, playRate: rate)

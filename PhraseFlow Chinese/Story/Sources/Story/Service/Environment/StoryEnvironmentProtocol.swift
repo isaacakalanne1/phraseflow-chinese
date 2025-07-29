@@ -15,10 +15,12 @@ import Subscription
 
 public protocol StoryEnvironmentProtocol {
     var storySubject: CurrentValueSubject<UUID?, Never> { get }
+    var audioEnvironment: AudioEnvironmentProtocol { get }
     func selectChapter(storyId: UUID)
-    func playWord(_ word: WordTimeStampData, rate: Float)
+    func prepareToPlayChapter(_ chapter: Chapter) async
+    func playWord(_ word: WordTimeStampData, rate: Float) async
     func getAppSettings() throws -> SettingsState
-    func playChapter(from word: WordTimeStampData)
+    func playChapter(from word: WordTimeStampData) async
     func pauseChapter()
     func setMusicVolume(_ volume: MusicVolume)
     func loadAllChapters() throws -> [Chapter]
@@ -36,7 +38,6 @@ public protocol StoryEnvironmentProtocol {
     func updateSpeechSpeed(_ speed: SpeechSpeed) throws
     
     // Audio Environment Functions
-    func isPlayingAudio() -> Bool
     func playSound(_ sound: AppSound)
     
     // Definition Environment Functions

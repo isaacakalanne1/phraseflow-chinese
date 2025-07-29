@@ -21,7 +21,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     public let loadingSubject: CurrentValueSubject<LoadingStatus?, Never> = .init(nil)
     private let chapterSubject = CurrentValueSubject<Chapter?, Never>(nil)
     
-    private let audioEnvironment: AudioEnvironmentProtocol
+    public let audioEnvironment: AudioEnvironmentProtocol
     private let settingsEnvironment: SettingsEnvironmentProtocol
     private let speechEnvironment: SpeechEnvironmentProtocol
     private let studyEnvironment: StudyEnvironmentProtocol
@@ -130,9 +130,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     // MARK: Chapters
 
     public func saveChapter(_ chapter: Chapter) throws {
-        let chapterId = chapter.id
-        let storyId = chapter.storyId
-        let title = chapter.title
         
         var chapterToSave = chapter
         
@@ -150,21 +147,26 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         }
     }
     
+    public func prepareToPlayChapter(_ chapter: Chapter) async {
+        await audioEnvironment.setChapterAudioData(chapter.audio.data)
+    }
+    
     public func playWord(
         _ word: WordTimeStampData,
         rate: Float
-    ) {
-        // Simplified implementation for testing
-        print("[StoryEnvironment] playWord called for word at time: \(word.time)")
+    ) async {
+        await audioEnvironment.playWord(startTime: word.time, duration: word.duration, playRate: rate)
+
     }
     
     public func getAppSettings() throws -> SettingsState {
         try settingsEnvironment.loadAppSettings()
     }
     
-    public func playChapter(from word: WordTimeStampData) {
-        // Simplified implementation for testing
-        print("[StoryEnvironment] playChapter called from time: \(word.time)")
+    public func playChapter(from word: WordTimeStampData) async {
+        await audioEnvironment.playChapterAudio(from: word.time,
+                                                rate: SpeechSpeed.normal.playRate)
+
     }
     
     public func pauseChapter() {
@@ -226,13 +228,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     }
     
     // MARK: - Audio Environment Functions
-    
-    public func isPlayingAudio() -> Bool {
-        // Since AudioEnvironmentProtocol doesn't have this method,
-        // we'll need to implement this differently or add it to AudioEnvironmentProtocol
-        // For now, return false as a placeholder
-        return false
-    }
     
     public func playSound(_ sound: AppSound) {
         audioEnvironment.playSound(sound)

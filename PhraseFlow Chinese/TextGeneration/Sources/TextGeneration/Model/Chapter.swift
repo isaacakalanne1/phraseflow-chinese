@@ -37,7 +37,8 @@ public struct Chapter: Codable, Equatable, Hashable, Sendable {
     }
 
     public var currentSpokenWord: WordTimeStampData? {
-        return sentences.flatMap({ $0.timestamps}).last(where: { currentPlaybackTime >= $0.time })
+        let allTimestamps = sentences.flatMap({ $0.timestamps})
+        return allTimestamps.last(where: { currentPlaybackTime >= $0.time }) ?? allTimestamps.first
     }
 
     public init(

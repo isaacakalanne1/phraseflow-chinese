@@ -13,19 +13,25 @@ import ReduxKit
 
 struct AudioButton: View {
     @EnvironmentObject var store: StoryStore
+    
+    var isPlayingAudio: Bool {
+        store.state.isPlayingChapterAudio
+    }
 
     var body: some View {
         Button {
-            if store.environment.isPlayingAudio() {
+            if isPlayingAudio {
                 store.dispatch(.pauseChapter)
             } else {
-                let timestamps = store.state.currentChapter?.currentSentence?.timestamps ?? []
-                if let currentSpokenWord = store.state.currentChapter?.currentSpokenWord ?? timestamps.first {
+                if let currentSpokenWord = store.state.currentChapter?.currentSpokenWord {
                     store.dispatch(.playChapter(fromWord: currentSpokenWord))
+                    Task {
+                        await updatePlayTime()
+                    }
                 }
             }
         } label: {
-            audioButtonLabel(systemImage: store.environment.isPlayingAudio() ? .pause : .play)
+            audioButtonLabel(systemImage: isPlayingAudio ? .pause : .play)
         }
     }
 
@@ -41,5 +47,14 @@ struct AudioButton: View {
                     .overlay(Circle().strokeBorder(FTColor.accent, lineWidth: 2))
                     .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
             )
+    }
+    
+    private func updatePlayTime() async {
+        let playbackTime = store.environment.audioEnvironment.audioPlayer.chapterAudioPlayer.currentTime().seconds
+        store.dispatch(.setPlaybackTime(playbackTime))
+        try? await Task.sleep(for: .seconds(0.1))
+        if store.state.isPlayingChapterAudio {
+            await updatePlayTime()
+        }
     }
 }

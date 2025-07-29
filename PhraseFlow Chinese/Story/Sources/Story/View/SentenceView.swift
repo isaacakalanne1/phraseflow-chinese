@@ -13,7 +13,7 @@ import Settings
 import FTStyleKit
 import Audio
 
-public struct ListOfSentencesView: View {
+public struct SentenceView: View {
     @EnvironmentObject var store: StoryStore
     @State private var opacity: Double = 0
     @State private var currentPage: Int = 0

@@ -10,6 +10,8 @@ import Combine
 import AVKit
 
 public protocol AudioEnvironmentProtocol {
+    var audioPlayer: AudioPlayer { get }
+    func setChapterAudioData(_ audioData: Data) async
     func playChapterAudio(from time: Double?, rate: Float) async
     func pauseChapterAudio()
     func playWord(startTime: Double,

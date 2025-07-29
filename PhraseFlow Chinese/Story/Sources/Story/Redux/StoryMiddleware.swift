@@ -111,10 +111,13 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
 //        if let settings = try? environment.getAppSettings() {
 //            speechSpeed = settings.speechSpeed
 //        } // TODO: Get app settings on store initialization/on appear, and update local app settings whenever updated in settings package
-        environment.playWord(timestamp, rate: SpeechSpeed.normal.playRate)
+        await environment.playWord(timestamp, rate: SpeechSpeed.normal.playRate)
+        return nil
+    case .prepareToPlayChapter(let chapter):
+        await environment.prepareToPlayChapter(chapter)
         return nil
     case .playChapter(let word):
-        environment.playChapter(from: word)
+        await environment.playChapter(from: word)
         environment.setMusicVolume(.quiet)
         return nil
     case .pauseChapter:
@@ -127,6 +130,10 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         } catch {
             // Handle error silently for now
         }
+        return nil
+        
+    case .playSound(let sound):
+        environment.playSound(sound)
         return nil
         
     case .failedToLoadStoriesAndDefinitions,

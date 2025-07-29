@@ -38,12 +38,4 @@ public struct SubscriptionState: Equatable {
     public var nextAvailableDescription = ""
     
     public init() {}
-    
-    public static func == (lhs: SubscriptionState, rhs: SubscriptionState) -> Bool {
-        lhs.isLoadingSubscriptionPurchase == rhs.isLoadingSubscriptionPurchase &&
-        lhs.products?.map(\.id) == rhs.products?.map(\.id) &&
-        lhs.purchasedProductIDs == rhs.purchasedProductIDs &&
-        lhs.hasReachedFreeTrialLimit == rhs.hasReachedFreeTrialLimit &&
-        lhs.nextAvailableDescription == rhs.nextAvailableDescription
-    }
 }

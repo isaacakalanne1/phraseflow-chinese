@@ -14,10 +14,13 @@ public struct StoryState: Equatable {
     public var storyChapters: [UUID: [Chapter]] = [:]
     public var isWritingChapter: Bool = false
     public var viewState: StoryViewState = StoryViewState()
+    public var isPlayingChapterAudio = false
 
-    public init(currentChapter: Chapter? = nil,
+    public init(
+        currentChapter: Chapter? = nil,
          storyChapters: [UUID: [Chapter]] = [:],
-         isWritingChapter: Bool = false) {
+         isWritingChapter: Bool = false
+    ) {
         self.currentChapter = currentChapter
         self.storyChapters = storyChapters
         self.isWritingChapter = isWritingChapter
@@ -38,11 +41,6 @@ public struct StoryState: Equatable {
     public func firstChapter(for storyId: UUID) -> Chapter? {
         guard let chapters = storyChapters[storyId] else { return nil }
         return chapters.min(by: { $0.lastUpdated < $1.lastUpdated })
-    }
-    
-    public static func == (lhs: StoryState, rhs: StoryState) -> Bool {
-        lhs.currentChapter?.id == rhs.currentChapter?.id &&
-        lhs.storyChapters.count == rhs.storyChapters.count
     }
 }
 

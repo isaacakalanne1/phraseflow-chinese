@@ -189,7 +189,8 @@ public struct ChapterListView: View {
     private func chapterCard(for chapter: Chapter, at index: Int) -> some View {
         Button {
             withAnimation(.easeInOut) {
-                store.environment.playSound(.openChapter)
+                store.dispatch(.playSound(.openChapter))
+                store.dispatch(.prepareToPlayChapter(chapter))
                 selectedChapter = chapter
             }
         } label: {

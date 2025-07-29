@@ -40,8 +40,10 @@ public enum StoryAction: Sendable {
     case selectChapter(storyId: UUID)
     
     case playWord(WordTimeStampData)
+    case prepareToPlayChapter(Chapter)
     case playChapter(fromWord: WordTimeStampData)
     case pauseChapter
     
     case updateSpeechSpeed(SpeechSpeed)
+    case playSound(AppSound)
 }

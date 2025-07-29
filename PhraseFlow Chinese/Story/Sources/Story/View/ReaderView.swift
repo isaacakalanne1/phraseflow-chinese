@@ -55,7 +55,7 @@ public struct ReaderView: View {
     
     private var storyContentSection: some View {
         VStack {
-            ListOfSentencesView()
+            SentenceView()
                 .padding()
         }
         .cardBackground()

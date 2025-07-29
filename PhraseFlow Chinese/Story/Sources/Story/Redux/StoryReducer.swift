@@ -118,7 +118,10 @@ public let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { s
         
     case .failedToCreateChapter:
         newState.isWritingChapter = false
-        
+    case .playChapter:
+        newState.isPlayingChapterAudio = true
+    case .pauseChapter:
+        newState.isPlayingChapterAudio = false
     case .loadStoriesAndDefinitions,
          .failedToLoadStoriesAndDefinitions,
          .deleteStory,
@@ -127,9 +130,9 @@ public let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { s
          .failedToSaveChapter,
          .updateLoadingStatus,
          .playWord,
-         .playChapter,
-         .pauseChapter,
-         .updateSpeechSpeed:
+         .updateSpeechSpeed,
+         .prepareToPlayChapter,
+         .playSound:
         break
     }
 

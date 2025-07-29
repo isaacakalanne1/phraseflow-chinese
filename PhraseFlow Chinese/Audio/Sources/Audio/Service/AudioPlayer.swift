@@ -8,8 +8,8 @@
 import Foundation
 import AVKit
 
-class AudioPlayer {
-    private let chapterAudioPlayer: AVPlayer
+public class AudioPlayer {
+    public var chapterAudioPlayer: AVPlayer
     private var musicAudioPlayer: AVAudioPlayer?
     private var appSoundAudioPlayer: AVAudioPlayer?
     
@@ -20,6 +20,12 @@ class AudioPlayer {
     }
     
     // MARK: - Chapter Audio Methods
+    
+    func setChapterAudioData(_ audioData: Data) async {
+        if let player = await audioData.createAVPlayer() {
+            chapterAudioPlayer = player
+        }
+    }
     
     func playAudio(from time: Double? = nil, playRate: Float) async {
         if let time = time {
