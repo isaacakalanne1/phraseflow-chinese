@@ -5,6 +5,7 @@
 //  Created by iakalann on 17/07/2025.
 //
 
+import FTColor
 import SwiftUI
 import Story
 import Study
@@ -19,8 +20,11 @@ struct DisplayedContentView: View {
         Group {
             switch store.state.contentTab {
             case .reader:
-                StoryRootView(environment: store.environment.storyEnvironment)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                NavigationStack {
+                    StoryRootView(environment: store.environment.storyEnvironment)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(FTColor.background)
+                }
             case .progress:
                 ProgressSummaryView(environment: store.environment.studyEnvironment)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)

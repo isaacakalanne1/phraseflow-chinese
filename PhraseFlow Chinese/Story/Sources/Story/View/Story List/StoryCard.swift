@@ -13,9 +13,11 @@ import ReduxKit
 public struct StoryCard: View {
     @EnvironmentObject var store: StoryStore
     let storyID: UUID
+    let onTap: () -> Void
     
-    public init(storyID: UUID) {
+    public init(storyID: UUID, onTap: @escaping () -> Void = {}) {
         self.storyID = storyID
+        self.onTap = onTap
     }
 
     private var firstChapter: Chapter? {
@@ -23,7 +25,7 @@ public struct StoryCard: View {
     }
 
     public var body: some View {
-        NavigationLink(destination: ChapterListView(storyId: storyID)) {
+        Button(action: onTap) {
             ZStack {
                 // Background image or fallback
                 backgroundImage
@@ -43,6 +45,7 @@ public struct StoryCard: View {
                 }
             }
         }
+        .buttonStyle(PlainButtonStyle())
     }
     
     private var backgroundImage: some View {

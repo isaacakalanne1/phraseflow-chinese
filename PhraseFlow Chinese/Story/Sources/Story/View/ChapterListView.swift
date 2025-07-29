@@ -31,7 +31,7 @@ public struct ChapterListView: View {
     }
 
     public var body: some View {
-        NavigationStack(path: $navigationPath) {
+        Group {
             if let firstChapter = firstChapter {
                 VStack(spacing: 0) {
                     GeometryReader { proxy in
@@ -149,6 +149,7 @@ public struct ChapterListView: View {
                 }
                 .navigationDestination(for: Chapter.self) { chapter in
                     ReaderView(chapter: chapter)
+                        .environmentObject(store)
                 }
             } else {
                 Text(LocalizedString.chapterListStoryNotFound)
