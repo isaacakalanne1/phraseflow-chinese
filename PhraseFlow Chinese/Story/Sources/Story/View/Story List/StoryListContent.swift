@@ -21,6 +21,7 @@ struct StoryListContent: View {
                 ForEach(store.state.allStories, id: \.storyId) { storyInfo in
                     StoryCard(storyID: storyInfo.storyId) {
                         selectedStoryID = storyInfo.storyId
+                        store.environment.playSound(.openStory)
                     }
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)

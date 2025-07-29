@@ -144,9 +144,6 @@ public struct ChapterListView: View {
                 .navigationTitle(LocalizedString.chooseChapter)
                 .background(FTColor.background)
                 .scrollContentBackground(.hidden)
-                .onAppear {
-                    store.environment.playSound(.openStory)
-                }
                 .navigationDestination(isPresented: Binding<Bool>(
                     get: { selectedChapter != nil },
                     set: { if !$0 { selectedChapter = nil } }
