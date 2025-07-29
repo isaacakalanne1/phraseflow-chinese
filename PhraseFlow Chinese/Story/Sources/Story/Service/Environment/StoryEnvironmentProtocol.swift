@@ -13,7 +13,6 @@ import TextGeneration
 import Study
 import Subscription
 
-@MainActor
 public protocol StoryEnvironmentProtocol {
     var storySubject: CurrentValueSubject<UUID?, Never> { get }
     func selectChapter(storyId: UUID)

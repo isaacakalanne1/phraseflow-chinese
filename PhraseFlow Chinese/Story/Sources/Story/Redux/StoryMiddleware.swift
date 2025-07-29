@@ -12,8 +12,7 @@ import Settings
 import Subscription
 import TextGeneration
 
-@MainActor
-public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtocol> = { state, action, environment in
+nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryAction, any StoryEnvironmentProtocol> = { state, action, environment in
     switch action {
     case .createChapter(let type):
         do {
@@ -77,11 +76,24 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
 
 
     case .saveChapter(let chapter):
+        print("[StoryMiddleware] saveChapter action received")
+        print("[StoryMiddleware] Chapter ID: \(chapter.id)")
+        print("[StoryMiddleware] Story ID: \(chapter.storyId)")
+        
         do {
+            print("[StoryMiddleware] About to call environment.saveChapter")
+            print("[StoryMiddleware] Environment type: \(type(of: environment))")
+            print("[StoryMiddleware] Calling environment.saveChapter directly")
+            
             try environment.saveChapter(chapter)
+            print("[StoryMiddleware] saveChapter completed, calling saveAppSettings")
             try environment.saveAppSettings(state)
+            print("[StoryMiddleware] saveAppSettings completed")
             return .onSavedChapter(chapter)
         } catch {
+            print("[StoryMiddleware] Error saving chapter: \(error)")
+            print("[StoryMiddleware] Error type: \(type(of: error))")
+            print("[StoryMiddleware] Error localized: \(error.localizedDescription)")
             return .failedToSaveChapter
         }
 
@@ -96,9 +108,8 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
         return nil
         
     case .onCreatedChapter(let chapter):
-        try? environment.saveChapter(chapter)
-        // Cross-package actions should be handled by the main app
-        return nil
+        // Return a save action to handle the save operation properly
+        return .saveChapter(chapter)
         
     case .selectWord(let word, let shouldPlay):
         // Cross-package definition logic should be handled by the main app

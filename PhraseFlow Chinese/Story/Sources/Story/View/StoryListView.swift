@@ -27,7 +27,9 @@ struct StoryListView: View {
             }
             
             MainButton(title: LocalizedString.newStory.uppercased()) {
-                store.dispatch(.createChapter(.newStory))
+                DispatchQueue.main.async {
+                    store.dispatch(.createChapter(.newStory))
+                }
             }
             .disabled(store.state.isWritingChapter)
             .frame(maxWidth: .infinity)

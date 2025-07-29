@@ -14,7 +14,7 @@ enum StoryDataStoreError: Error {
     case failedToSaveData
 }
 
-public class StoryDataStore: StoryDataStoreProtocol {
+public class StoryDataStore: @preconcurrency StoryDataStoreProtocol {
     public init() {}
     
     private let fileManager = FileManager.default
@@ -38,9 +38,10 @@ public class StoryDataStore: StoryDataStoreProtocol {
         encoder.dateEncodingStrategy = .iso8601
         do {
             let data = try encoder.encode(chapter)
-            try data.write(to: url)
+            try data.write(to: url, options: .atomic)
             chapterSubject.send(chapter)
         } catch {
+            print("Failed to save chapter: \(error)")
             throw StoryDataStoreError.failedToSaveData
         }
     }
@@ -49,15 +50,15 @@ public class StoryDataStore: StoryDataStoreProtocol {
         guard let dir = documentsDirectory else {
             throw StoryDataStoreError.failedToCreateUrl
         }
-        let files = try fileManager.contentsOfDirectory(atPath: dir.path)
-        let chapterFiles = files.filter { $0.hasSuffix(".json") }
+        
+        let fileURLs = try fileManager.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil)
+        let chapterFileURLs = fileURLs.filter { $0.pathExtension == "json" }
 
         var chapters: [Chapter] = []
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
 
-        for file in chapterFiles {
-            let fileURL = dir.appendingPathComponent(file)
+        for fileURL in chapterFileURLs {
             if let data = try? Data(contentsOf: fileURL),
                let chapter = try? decoder.decode(Chapter.self, from: data) {
                 chapters.append(chapter)

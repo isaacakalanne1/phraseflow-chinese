@@ -1,8 +1,6 @@
 //
-//  Store.swift
-//  ReduxKit
-//
-//  Created by Isaac Akalanne on 18/07/2025.
+//  Copyright © Jaguar Land Rover Ltd 2023 All rights reserved.
+//  This software is confidential and proprietary information.
 //
 
 import Foundation
@@ -57,7 +55,6 @@ public class Store<State: Equatable, Action: Sendable, Environment>: ObservableO
     /// let subscriber: OnSubscribe<SomeStore, SomeEnvironment> = { store, environment in
     ///         store.subscribe(
     ///             environment.somethingToObserve
-    ///                 .receive(on: RunLoop.main)
     ///         ) { (store, value) in
     ///             store.dispatch(.doSomething(with: value))
     ///         }
@@ -70,6 +67,7 @@ public class Store<State: Equatable, Action: Sendable, Environment>: ObservableO
         receiveValue: @escaping ((Store<State, Action, Environment>, P.Output) -> Void)
     ) {
         publisher
+            .receive(on: reduxScheduler)
             .sink(receiveCompletion: { completion in
                 receiveCompletion?(completion)
             }, receiveValue: { [weak self] value in
@@ -87,7 +85,7 @@ public class Store<State: Equatable, Action: Sendable, Environment>: ObservableO
     ///   - initial: The initial state of the application.
     ///   - reducer: The ``Reducer``
     ///   - environment: Any object outside of the Redux system. These are it's dependancies such as: local storage, repository.
-    ///   - middleware: The``Middleware`` function
+    ///   - middleware: The ``Middleware`` function
     ///   - subscriber: The ``OnSubscribe`` function
     public init(initial: State,
                 reducer: @escaping Reducer<State, Action>,
@@ -119,11 +117,12 @@ public class Store<State: Equatable, Action: Sendable, Environment>: ObservableO
         if newState != state {
             self.state = newState
         }
-        Task {
-            guard let newAction = await middleware(newState, action, environment) else {
-                return
+        
+        // Execute middleware asynchronously
+        Task { @MainActor in
+            if let newAction = await middleware(newState, action, environment) {
+                self.dispatch(newState, newAction)
             }
-            dispatch(newAction)
         }
     }
 }

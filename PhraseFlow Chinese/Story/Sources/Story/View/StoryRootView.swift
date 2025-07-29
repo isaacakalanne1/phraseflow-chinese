@@ -23,5 +23,8 @@ public struct StoryRootView: View {
     public var body: some View {
         StoryListView()
             .environmentObject(store)
+            .onAppear {
+                store.dispatch(.loadStoriesAndDefinitions)
+            }
     }
 }

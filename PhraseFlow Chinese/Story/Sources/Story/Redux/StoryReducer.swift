@@ -45,6 +45,7 @@ public let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { s
         }
 
     case .onCreatedChapter(var chapter):
+        newState.isWritingChapter = false
         chapter.currentPlaybackTime = chapter.sentences.first?.timestamps.first?.time ?? 0.1
 
         // Add chapter to story
@@ -114,9 +115,6 @@ public let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { s
         
     case .createChapter:
         newState.isWritingChapter = true
-        
-    case .onCreatedChapter:
-        newState.isWritingChapter = false
         
     case .failedToCreateChapter:
         newState.isWritingChapter = false
