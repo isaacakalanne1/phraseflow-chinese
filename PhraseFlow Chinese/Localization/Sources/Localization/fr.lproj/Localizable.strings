@@ -610,3 +610,6 @@
 
 // Text describing your language learning journey
 "your_journey_in_language" = "Votre parcours d'apprentissage des langues";
+
+// Instruction to select a sentence to see its translation
+"select_sentence_to_see_translation" = "Sélectionnez une phrase pour voir la traduction";

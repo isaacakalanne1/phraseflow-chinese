@@ -610,3 +610,6 @@
 
 // Text describing your language learning journey
 "your_journey_in_language" = "당신의 언어 학습 여정";
+
+// Instruction to select a sentence to see its translation
+"select_sentence_to_see_translation" = "번역을 보려면 문장을 선택하세요";

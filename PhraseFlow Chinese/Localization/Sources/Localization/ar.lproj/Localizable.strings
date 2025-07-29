@@ -614,3 +614,6 @@
 
 // Text describing your language learning journey
 "your_journey_in_language" = "رحلتك في تعلم اللغة";
+
+// Instruction to select a sentence to see its translation
+"select_sentence_to_see_translation" = "حدد جملة لرؤية الترجمة";

@@ -610,3 +610,6 @@
 
 // Text describing your language learning journey
 "your_journey_in_language" = "あなたの言語学習の旅";
+
+// Instruction to select a sentence to see its translation
+"select_sentence_to_see_translation" = "翻訳を見るには文を選択してください";

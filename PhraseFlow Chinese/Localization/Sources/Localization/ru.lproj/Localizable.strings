@@ -610,3 +610,6 @@
 
 // Text describing your language learning journey
 "your_journey_in_language" = "Ваше путешествие в изучении языка";
+
+// Instruction to select a sentence to see its translation
+"select_sentence_to_see_translation" = "Выберите предложение, чтобы увидеть перевод";

@@ -610,3 +610,6 @@
 
 // Text describing your language learning journey
 "your_journey_in_language" = "您的语言学习之旅";
+
+// Instruction to select a sentence to see its translation
+"select_sentence_to_see_translation" = "选择句子查看翻译";

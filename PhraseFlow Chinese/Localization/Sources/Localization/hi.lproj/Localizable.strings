@@ -610,3 +610,6 @@
 
 // Text describing your language learning journey
 "your_journey_in_language" = "भाषा सीखने की आपकी यात्रा";
+
+// Instruction to select a sentence to see its translation
+"select_sentence_to_see_translation" = "अनुवाद देखने के लिए एक वाक्य चुनें";
