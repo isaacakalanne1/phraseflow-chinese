@@ -28,8 +28,15 @@ public protocol StoryEnvironmentProtocol {
     func saveChapter(_ chapter: Chapter) throws
     func deleteChapter(_ chapter: Chapter) throws
     func saveAppSettings(_ state: StoryState) throws
-    func generateFirstChapter(language: Language, difficulty: Difficulty, voice: Voice, deviceLanguage: Language?, storyPrompt: String?, currentSubscription: SubscriptionLevel?) async throws -> Chapter
-    func generateChapter(previousChapters: [Chapter], deviceLanguage: Language?, currentSubscription: SubscriptionLevel?) async throws -> Chapter
+    func generateChapter(
+        previousChapters: [Chapter],
+        language: Language?,
+        difficulty: Difficulty?,
+        voice: Voice?,
+        deviceLanguage: Language?,
+        storyPrompt: String?,
+        currentSubscription: SubscriptionLevel?
+    ) async throws -> Chapter
     
     // Settings Environment Functions
     func isShowingEnglish() throws -> Bool
@@ -50,3 +57,4 @@ public protocol StoryEnvironmentProtocol {
     func getCurrentTranslationSentence() -> Sentence?
     func getTranslationChapter() -> Chapter?
 }
+

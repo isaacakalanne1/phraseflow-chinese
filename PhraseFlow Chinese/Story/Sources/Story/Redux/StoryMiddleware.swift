@@ -21,7 +21,8 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
             switch type {
             case .newStory:
                 // For now, we'll use default values since we can't access other package state
-                chapter = try await environment.generateFirstChapter(
+                chapter = try await environment.generateChapter(
+                    previousChapters: [],
                     language: .mandarinChinese,
                     difficulty: .beginner,
                     voice: .xiaoxiao,
@@ -34,7 +35,11 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
                 if let existingChapters = state.storyChapters[storyId] {
                     chapter = try await environment.generateChapter(
                         previousChapters: existingChapters,
+                        language: nil,
+                        difficulty: nil,
+                        voice: nil,
                         deviceLanguage: nil,
+                        storyPrompt: nil,
                         currentSubscription: nil
                     )
                 } else {

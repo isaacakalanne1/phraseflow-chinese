@@ -51,32 +51,56 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     }
     
     public func generateChapter(
-        previousChapters: [Chapter],
+        previousChapters: [Chapter] = [],
+        language: Language? = nil,
+        difficulty: Difficulty? = nil,
+        voice: Voice? = nil,
         deviceLanguage: Language?,
+        storyPrompt: String? = nil,
         currentSubscription: SubscriptionLevel?
     ) async throws -> Chapter {
         loadingSubject.send(.writing)
 
-        var newChapter = try await service.generateChapter(previousChapters: previousChapters,
-                                                           deviceLanguage: deviceLanguage)
+        let newChapter: Chapter
+        if previousChapters.isEmpty {
+            guard let language = language,
+                  let difficulty = difficulty,
+                  let voice = voice else {
+                throw NSError(domain: "StoryEnvironment", code: 0, userInfo: [NSLocalizedDescriptionKey: "Missing required parameters for first chapter"])
+            }
+            newChapter = try await service.generateFirstChapter(
+                language: language,
+                difficulty: difficulty,
+                voice: voice,
+                deviceLanguage: deviceLanguage,
+                storyPrompt: storyPrompt
+            )
+        } else {
+            newChapter = try await service.generateChapter(
+                previousChapters: previousChapters,
+                deviceLanguage: deviceLanguage
+            )
+        }
+        
         loadingSubject.send(.generatingImage)
 
-        if newChapter.imageData == nil,
-           !newChapter.passage.isEmpty {
+        var processedChapter = newChapter
+        if processedChapter.imageData == nil && !processedChapter.passage.isEmpty {
             if let firstChapter = previousChapters.first, let existingImageData = firstChapter.imageData {
-                newChapter.imageData = existingImageData
+                processedChapter.imageData = existingImageData
             } else {
                 // TODO: Image generation should be handled through separate ImageGeneration environment
-                // newChapter.imageData = try await service.generateImage(with: newChapter.passage)
+                // processedChapter.imageData = try await service.generateImage(with: processedChapter.passage)
             }
         }
+        
         loadingSubject.send(.generatingSpeech)
 
-        let voiceToUse = newChapter.audioVoice
-        let (processedChapter, ssmlCharacterCount) = try await speechEnvironment.synthesizeSpeechWithCharacterCount(
-            for: newChapter,
+        let voiceToUse = processedChapter.audioVoice
+        let (finalChapter, ssmlCharacterCount) = try await speechEnvironment.synthesizeSpeechWithCharacterCount(
+            for: processedChapter,
             voice: voiceToUse,
-            language: newChapter.language
+            language: processedChapter.language
         )
 
         try trackSSMLCharacterUsage(
@@ -85,47 +109,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         )
 
         loadingSubject.send(.complete)
-        return processedChapter
-    }
-
-    public func generateFirstChapter(
-        language: Language,
-        difficulty: Difficulty,
-        voice: Voice,
-        deviceLanguage: Language?,
-        storyPrompt: String?,
-        currentSubscription: SubscriptionLevel?
-    ) async throws -> Chapter {
-        loadingSubject.send(.writing)
-
-        let newChapter = try await service.generateFirstChapter(language: language,
-                                                               difficulty: difficulty,
-                                                               voice: voice,
-                                                               deviceLanguage: deviceLanguage,
-                                                               storyPrompt: storyPrompt)
-        loadingSubject.send(.generatingImage)
-
-        if newChapter.imageData == nil,
-           !newChapter.passage.isEmpty {
-            // TODO: Image generation should be handled through separate ImageGeneration environment
-            // processedChapter.imageData = try await service.generateImage(with: processedChapter.passage)
-        }
-        loadingSubject.send(.generatingSpeech)
-
-        let voiceToUse = newChapter.audioVoice
-        let (processedChapter, ssmlCharacterCount) = try await speechEnvironment.synthesizeSpeechWithCharacterCount(
-            for: newChapter,
-            voice: voiceToUse,
-            language: newChapter.language
-        )
-
-        try trackSSMLCharacterUsage(
-            characterCount: ssmlCharacterCount,
-            subscription: currentSubscription
-        )
-
-        loadingSubject.send(.complete)
-        return processedChapter
+        return finalChapter
     }
 
     // MARK: Chapters
