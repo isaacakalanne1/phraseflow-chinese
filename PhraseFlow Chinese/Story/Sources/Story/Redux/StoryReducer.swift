@@ -149,7 +149,6 @@ public let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { s
          .saveChapter,
          .failedToSaveChapter,
          .updateLoadingStatus,
-         .playWord,
          .updateSpeechSpeed,
          .prepareToPlayChapter,
          .playSound,

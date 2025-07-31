@@ -39,7 +39,6 @@ public enum StoryAction: Sendable {
     case setPlaybackTime(Double)
     case selectChapter(storyId: UUID)
     
-    case playWord(WordTimeStampData)
     case prepareToPlayChapter(Chapter)
     case playChapter(fromWord: WordTimeStampData)
     case pauseChapter

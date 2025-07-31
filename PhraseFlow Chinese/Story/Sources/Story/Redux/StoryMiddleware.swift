@@ -89,8 +89,8 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         return .loadDefinitionsForChapter(chapter)
         
     case .selectWord(let word, let shouldPlay):
-        // Cross-package definition logic should be handled by the main app
-        return shouldPlay ? .playWord(word) : nil
+        await environment.playWord(word, rate: SpeechSpeed.normal.playRate)
+        return nil
         
     case .selectChapter(let storyId):
         // Load definitions for the selected chapter if available
@@ -98,14 +98,6 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
            let selectedChapter = chapters.last {
             return .loadDefinitionsForChapter(selectedChapter)
         }
-        return nil
-        
-    case .playWord(let timestamp):
-//        var speechSpeed = SpeechSpeed.normal
-//        if let settings = try? environment.getAppSettings() {
-//            speechSpeed = settings.speechSpeed
-//        } // TODO: Get app settings on store initialization/on appear, and update local app settings whenever updated in settings package
-        await environment.playWord(timestamp, rate: SpeechSpeed.normal.playRate)
         return nil
     case .prepareToPlayChapter(let chapter):
         await environment.prepareToPlayChapter(chapter)
