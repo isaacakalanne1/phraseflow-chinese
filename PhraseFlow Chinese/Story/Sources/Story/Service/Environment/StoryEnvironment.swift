@@ -21,9 +21,9 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     public let loadingSubject: CurrentValueSubject<LoadingStatus?, Never> = .init(nil)
     
     public let audioEnvironment: AudioEnvironmentProtocol
+    public let studyEnvironment: StudyEnvironmentProtocol
     private let settingsEnvironment: SettingsEnvironmentProtocol
     private let speechEnvironment: SpeechEnvironmentProtocol
-    private let studyEnvironment: StudyEnvironmentProtocol
     private let translationEnvironment: TranslationEnvironmentProtocol
     private let service: TextGenerationServicesProtocol
     private let dataStore: StoryDataStoreProtocol
@@ -107,6 +107,31 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
             characterCount: ssmlCharacterCount,
             subscription: currentSubscription
         )
+        
+        // Generate definitions for the first 3 sentences
+        loadingSubject.send(.generatingDefinitions)
+        
+        let sentencesToProcess = Array(finalChapter.sentences.prefix(3))
+        var allDefinitions: [Definition] = []
+        
+        for sentence in sentencesToProcess {
+            do {
+                let definitions = try await studyEnvironment.fetchDefinitions(
+                    in: sentence,
+                    chapter: finalChapter,
+                    deviceLanguage: deviceLanguage ?? Language.deviceLanguage
+                )
+                allDefinitions.append(contentsOf: definitions)
+            } catch {
+                // Continue with other sentences even if one fails
+                print("Failed to fetch definitions for sentence: \(error)")
+            }
+        }
+        
+        // Save the definitions if any were generated
+        if !allDefinitions.isEmpty {
+            try studyEnvironment.saveDefinitions(allDefinitions)
+        }
 
         loadingSubject.send(.complete)
         return finalChapter
@@ -175,9 +200,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     }
     
     public func loadDefinitions() throws -> [Definition] {
-        // This would normally load definitions from another environment
-        // For now, return empty array to fix compilation
-        return []
+        return try studyEnvironment.loadDefinitions()
     }
     
     public func deleteChapter(_ chapter: Chapter) throws {

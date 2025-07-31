@@ -22,4 +22,5 @@ public protocol StudyEnvironmentProtocol {
         chapter: Chapter,
         deviceLanguage: Language
     ) async throws -> [Definition]
+    func loadDefinitions() throws -> [Definition]
 }

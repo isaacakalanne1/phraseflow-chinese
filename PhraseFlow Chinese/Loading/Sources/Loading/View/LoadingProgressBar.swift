@@ -26,11 +26,13 @@ public struct LoadingProgressBar: View {
         case .writing:
             return LocalizedString.writingChapter
         case .generatingImage:
-            return "Generating image..."
+            return "Generating image..." // TODO: Localize
         case .generatingSpeech:
             return "Generating speech..."
         case .complete:
             return LocalizedString.chapterReady
+        case .generatingDefinitions:
+            return "Generating definitions..."
         }
     }
     

@@ -8,6 +8,7 @@
 import Foundation
 import TextGeneration
 import Loading
+import Study
 
 public struct StoryState: Equatable {
     public var currentChapter: Chapter?
@@ -15,16 +16,22 @@ public struct StoryState: Equatable {
     public var isWritingChapter: Bool = false
     public var viewState: StoryViewState = StoryViewState()
     public var isPlayingChapterAudio = false
+    public var definitions: [String: Definition] = [:]
+    public var selectedDefinition: Definition?
 
     public init(
         currentChapter: Chapter? = nil,
          storyChapters: [UUID: [Chapter]] = [:],
-         isWritingChapter: Bool = false
+         isWritingChapter: Bool = false,
+         definitions: [String: Definition] = [:],
+         selectedDefinition: Definition? = nil
     ) {
         self.currentChapter = currentChapter
         self.storyChapters = storyChapters
         self.isWritingChapter = isWritingChapter
         self.viewState = StoryViewState()
+        self.definitions = definitions
+        self.selectedDefinition = selectedDefinition
     }
     
     public var allStories: [(storyId: UUID, chapters: [Chapter])] {

@@ -8,7 +8,7 @@
 import Foundation
 
 public enum LoadingStatus: Sendable {
-    case complete, writing, generatingImage, generatingSpeech
+    case complete, writing, generatingImage, generatingSpeech, generatingDefinitions
 
     var progressInt: Int {
         switch self {
@@ -18,8 +18,10 @@ public enum LoadingStatus: Sendable {
             1
         case .generatingSpeech:
             2
-        case .complete:
+        case .generatingDefinitions:
             3
+        case .complete:
+            4
         }
     }
 }

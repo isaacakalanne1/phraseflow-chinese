@@ -13,12 +13,17 @@ public let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { s
     var newState = state
 
     switch action {
-    case .onLoadedStoriesAndDefitions(let chapters, _):
+    case .onLoadedStoriesAndDefitions(let chapters, let definitions):
         for chapter in chapters {
             if newState.storyChapters[chapter.storyId] == nil {
                 newState.storyChapters[chapter.storyId] = []
             }
             newState.storyChapters[chapter.storyId]?.append(chapter)
+        }
+        
+        // Load definitions into state
+        for definition in definitions {
+            newState.definitions[definition.word] = definition
         }
         
         // Sort chapters by last updated for each story
@@ -122,6 +127,21 @@ public let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { s
         newState.isPlayingChapterAudio = true
     case .pauseChapter:
         newState.isPlayingChapterAudio = false
+    case .onLoadedDefinitions(let definitions):
+        for definition in definitions {
+            newState.definitions[definition.word] = definition
+        }
+        
+    case .showDefinition(let wordTimestamp):
+        if let definition = newState.definitions[wordTimestamp.word] {
+            newState.selectedDefinition = definition
+            newState.viewState.isDefining = true
+        }
+        
+    case .hideDefinition:
+        newState.selectedDefinition = nil
+        newState.viewState.isDefining = false
+        
     case .loadStoriesAndDefinitions,
          .failedToLoadStoriesAndDefinitions,
          .deleteStory,
@@ -132,7 +152,9 @@ public let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { s
          .playWord,
          .updateSpeechSpeed,
          .prepareToPlayChapter,
-         .playSound:
+         .playSound,
+         .loadDefinitionsForChapter,
+         .failedToLoadDefinitions:
         break
     }
 

@@ -17,10 +17,10 @@ public struct SentenceDetailView: View {
     
     public var body: some View {
         Group {
-            if store.environment.getCurrentDefinition() != nil {
+            if store.state.selectedDefinition != nil {
                 DefinitionView(
-                    isLoading: store.state.viewState.isDefining,
-                    viewData: createViewData(definition: store.environment.getCurrentDefinition())
+                    isLoading: store.state.viewState.isDefining && store.state.selectedDefinition == nil,
+                    viewData: createViewData(definition: store.state.selectedDefinition)
                 )
                 .frame(maxHeight: .infinity)
                 .cardBackground()

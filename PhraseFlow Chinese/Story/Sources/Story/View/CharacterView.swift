@@ -18,7 +18,7 @@ struct CharacterView: View {
     let isTranslation: Bool
 
     var isTappedWord: Bool {
-        store.environment.getCurrentDefinition()?.timestampData == word
+        store.state.selectedDefinition?.timestampData == word
     }
 
     var spokenWord: WordTimeStampData? {
@@ -30,7 +30,7 @@ struct CharacterView: View {
     }
 
     var hasDefinition: Bool {
-        store.environment.hasDefinition(for: word)
+        store.state.definitions[word.word] != nil
     }
 
     var body: some View {
@@ -59,13 +59,14 @@ struct CharacterView: View {
         }
         .simultaneousGesture(
             DragGesture(minimumDistance: 0)
-                .onChanged { isTapped in
+                .onChanged { _ in
                     switch isTranslation {
                     case true:
                         // Translation functionality handled through environment
                         break
                     case false:
                         store.dispatch(.selectWord(word, playAudio: true))
+                        store.dispatch(.showDefinition(word))
                     }
                 }
                 .onEnded { _ in
@@ -74,8 +75,7 @@ struct CharacterView: View {
                         // Translation functionality handled through environment
                         break
                     case false:
-                        // Definition functionality handled through environment
-                        break
+                        store.dispatch(.hideDefinition)
                     }
                 }
         )

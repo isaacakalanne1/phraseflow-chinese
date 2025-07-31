@@ -53,4 +53,8 @@ public struct StudyEnvironment: StudyEnvironmentProtocol {
     public func playSound(_ sound: AppSound) {
         audioEnvironment.playSound(sound)
     }
+    
+    public func loadDefinitions() throws -> [Definition] {
+        return try dataStore.loadDefinitions()
+    }
 }

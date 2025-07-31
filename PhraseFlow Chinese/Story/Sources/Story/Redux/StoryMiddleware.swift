@@ -9,6 +9,7 @@ import AVKit
 import Foundation
 import ReduxKit
 import Settings
+import Study
 import Subscription
 import TextGeneration
 
@@ -16,37 +17,21 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
     switch action {
     case .createChapter(let type):
         do {
-            let chapter: Chapter
-
-            switch type {
-            case .newStory:
-                // For now, we'll use default values since we can't access other package state
-                chapter = try await environment.generateChapter(
-                    previousChapters: [],
-                    language: .mandarinChinese,
-                    difficulty: .beginner,
-                    voice: .xiaoxiao,
-                    deviceLanguage: Language.deviceLanguage,
-                    storyPrompt: nil,
-                    currentSubscription: nil
-                )
-                
-            case .existingStory(let storyId):
-                if let existingChapters = state.storyChapters[storyId] {
-                    chapter = try await environment.generateChapter(
-                        previousChapters: existingChapters,
-                        language: nil,
-                        difficulty: nil,
-                        voice: nil,
-                        deviceLanguage: nil,
-                        storyPrompt: nil,
-                        currentSubscription: nil
-                    )
-                } else {
-                    return .failedToCreateChapter
-                }
-
+            var chapters: [Chapter] = []
+            if case .existingStory(let storyId) = type,
+               let existingChapters = state.storyChapters[storyId] {
+                chapters = existingChapters
             }
+            
+            let chapter = try await environment.generateChapter(
+                previousChapters: chapters,
+                language: .mandarinChinese,
+                difficulty: .beginner,
+                voice: .xiaoxiao,
+                deviceLanguage: Language.deviceLanguage,
+                storyPrompt: nil,
+                currentSubscription: nil
+            )
             
             return .onCreatedChapter(chapter)
         } catch {
@@ -100,15 +85,19 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         return nil
         
     case .onCreatedChapter(let chapter):
-        // Return a save action to handle the save operation properly
-        return .saveChapter(chapter)
+        // Load definitions for the chapter after creation
+        return .loadDefinitionsForChapter(chapter)
         
     case .selectWord(let word, let shouldPlay):
         // Cross-package definition logic should be handled by the main app
         return shouldPlay ? .playWord(word) : nil
         
-    case .selectChapter:
-        // Cross-package definition logic should be handled by the main app
+    case .selectChapter(let storyId):
+        // Load definitions for the selected chapter if available
+        if let chapters = state.storyChapters[storyId],
+           let selectedChapter = chapters.last {
+            return .loadDefinitionsForChapter(selectedChapter)
+        }
         return nil
         
     case .playWord(let timestamp):
@@ -141,6 +130,38 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         environment.playSound(sound)
         return nil
         
+    case .loadDefinitionsForChapter(let chapter):
+        // Get unique characters from all sentences
+        var uniqueCharacters = Set<String>()
+        for sentence in chapter.sentences {
+            for timestamp in sentence.timestamps {
+                uniqueCharacters.insert(timestamp.word)
+            }
+        }
+        
+        // Fetch definitions through study environment
+        do {
+            var definitions: [Definition] = []
+            for sentence in chapter.sentences {
+                let sentenceDefinitions = try await environment.studyEnvironment.fetchDefinitions(
+                    in: sentence,
+                    chapter: chapter,
+                    deviceLanguage: Language.deviceLanguage
+                )
+                definitions.append(contentsOf: sentenceDefinitions)
+            }
+            return .onLoadedDefinitions(definitions)
+        } catch {
+            return .failedToLoadDefinitions
+        }
+        
+    case .onLoadedDefinitions:
+        // Save chapter after definitions are loaded
+        if let currentChapter = state.currentChapter {
+            return .saveChapter(currentChapter)
+        }
+        return nil
+        
     case .failedToLoadStoriesAndDefinitions,
             .failedToDeleteStory,
             .failedToSaveChapter,
@@ -148,7 +169,10 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
             .onSavedChapter,
             .onDeletedStory,
             .setPlaybackTime,
-            .updateLoadingStatus:
+            .updateLoadingStatus,
+            .failedToLoadDefinitions,
+            .showDefinition,
+            .hideDefinition:
         return nil
     }
 }
