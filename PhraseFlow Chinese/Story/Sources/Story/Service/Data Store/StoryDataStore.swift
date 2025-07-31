@@ -22,7 +22,6 @@ public class StoryDataStore: @preconcurrency StoryDataStoreProtocol {
         return fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
     }
 
-    public let chapterSubject: CurrentValueSubject<Chapter?, Never> = .init(nil)
 
     private func fileURL(for chapter: Chapter) throws -> URL {
         guard let dir = documentsDirectory else {
@@ -39,7 +38,6 @@ public class StoryDataStore: @preconcurrency StoryDataStoreProtocol {
         do {
             let data = try encoder.encode(chapter)
             try data.write(to: url, options: .atomic)
-            chapterSubject.send(chapter)
         } catch {
             print("Failed to save chapter: \(error)")
             throw StoryDataStoreError.failedToSaveData

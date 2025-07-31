@@ -19,7 +19,6 @@ import Translation
 public struct StoryEnvironment: StoryEnvironmentProtocol {
     public let storySubject = CurrentValueSubject<UUID?, Never>(nil)
     public let loadingSubject: CurrentValueSubject<LoadingStatus?, Never> = .init(nil)
-    private let chapterSubject = CurrentValueSubject<Chapter?, Never>(nil)
     
     public let audioEnvironment: AudioEnvironmentProtocol
     private let settingsEnvironment: SettingsEnvironmentProtocol
@@ -51,9 +50,11 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         storySubject.send(storyId)
     }
     
-    public func generateChapter(previousChapters: [Chapter],
-                         deviceLanguage: Language?,
-                         currentSubscription: SubscriptionLevel?) async throws -> Chapter {
+    public func generateChapter(
+        previousChapters: [Chapter],
+        deviceLanguage: Language?,
+        currentSubscription: SubscriptionLevel?
+    ) async throws -> Chapter {
         loadingSubject.send(.writing)
 
         var newChapter = try await service.generateChapter(previousChapters: previousChapters,
@@ -83,20 +84,21 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
             subscription: currentSubscription
         )
 
-        chapterSubject.send(processedChapter)
         loadingSubject.send(.complete)
         return processedChapter
     }
 
-    public func generateFirstChapter(language: Language,
-                              difficulty: Difficulty,
-                              voice: Voice,
-                              deviceLanguage: Language?,
-                              storyPrompt: String?,
-                              currentSubscription: SubscriptionLevel?) async throws -> Chapter {
+    public func generateFirstChapter(
+        language: Language,
+        difficulty: Difficulty,
+        voice: Voice,
+        deviceLanguage: Language?,
+        storyPrompt: String?,
+        currentSubscription: SubscriptionLevel?
+    ) async throws -> Chapter {
         loadingSubject.send(.writing)
 
-        var newChapter = try await service.generateFirstChapter(language: language,
+        let newChapter = try await service.generateFirstChapter(language: language,
                                                                difficulty: difficulty,
                                                                voice: voice,
                                                                deviceLanguage: deviceLanguage,
@@ -122,7 +124,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
             subscription: currentSubscription
         )
 
-        chapterSubject.send(processedChapter)
         loadingSubject.send(.complete)
         return processedChapter
     }
