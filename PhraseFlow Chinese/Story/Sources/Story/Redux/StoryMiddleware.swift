@@ -101,7 +101,7 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         return nil
     case .prepareToPlayChapter(let chapter):
         await environment.prepareToPlayChapter(chapter)
-        return nil
+        return .loadDefinitionsForChapter(chapter)
     case .playChapter(let word):
         await environment.playChapter(from: word)
         environment.setMusicVolume(.quiet)
@@ -123,26 +123,51 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         return nil
         
     case .loadDefinitionsForChapter(let chapter):
-        // Get unique characters from all sentences
-        var uniqueCharacters = Set<String>()
+        // Get unique words from all sentences
+        var uniqueWords = Set<String>()
         for sentence in chapter.sentences {
             for timestamp in sentence.timestamps {
-                uniqueCharacters.insert(timestamp.word)
+                uniqueWords.insert(timestamp.word)
             }
         }
         
-        // Fetch definitions through study environment
+        // Filter out words that already have definitions
+        let wordsNeedingDefinitions = uniqueWords.filter { word in
+            state.definitions[word] == nil
+        }
+        
+        // If all words already have definitions, no need to fetch
+        guard !wordsNeedingDefinitions.isEmpty else {
+            return nil
+        }
+        
+        // Fetch definitions only for sentences containing words without definitions
         do {
             var definitions: [Definition] = []
             for sentence in chapter.sentences {
-                let sentenceDefinitions = try await environment.studyEnvironment.fetchDefinitions(
-                    in: sentence,
-                    chapter: chapter,
-                    deviceLanguage: Language.deviceLanguage
-                )
-                definitions.append(contentsOf: sentenceDefinitions)
+                // Check if any word in this sentence needs definitions
+                let sentenceNeedsDefinitions = sentence.timestamps.contains { timestamp in
+                    wordsNeedingDefinitions.contains(timestamp.word)
+                }
+                
+                if sentenceNeedsDefinitions {
+                    let sentenceDefinitions = try await environment.studyEnvironment.fetchDefinitions(
+                        in: sentence,
+                        chapter: chapter,
+                        deviceLanguage: Language.deviceLanguage
+                    )
+                    // Only add new definitions (not already in state)
+                    let newDefinitions = sentenceDefinitions.filter { definition in
+                        state.definitions[definition.word] == nil
+                    }
+                    definitions.append(contentsOf: newDefinitions)
+                }
             }
-            return .onLoadedDefinitions(definitions)
+            
+            if !definitions.isEmpty {
+                return .onLoadedDefinitions(definitions)
+            }
+            return nil
         } catch {
             return .failedToLoadDefinitions
         }

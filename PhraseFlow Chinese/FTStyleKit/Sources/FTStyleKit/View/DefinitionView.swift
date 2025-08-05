@@ -50,12 +50,14 @@ public struct DefinitionView: View {
 
                     Text(viewData.definition)
                         .font(FTFont.flowTaleBodyMedium())
+                        .foregroundColor(FTColor.primary)
                         .padding(.horizontal, 4)
 
                     Divider()
 
                     Text(viewData.definitionInContextOfSentence)
                         .font(FTFont.flowTaleBodyMedium())
+                        .foregroundColor(FTColor.primary)
                         .multilineTextAlignment(.leading)
                         .frame(maxHeight: .infinity)
                 }
