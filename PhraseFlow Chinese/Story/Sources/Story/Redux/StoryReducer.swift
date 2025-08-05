@@ -15,9 +15,9 @@ public let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { s
     switch action {
     case .onLoadedStoriesAndDefitions(let chapters, let definitions):
         for chapter in chapters {
-            if newState.storyChapters[chapter.storyId] == nil {
-                newState.storyChapters[chapter.storyId] = []
-            }
+            newState.storyChapters[chapter.storyId] = []
+        }
+        for chapter in chapters {
             newState.storyChapters[chapter.storyId]?.append(chapter)
         }
         
