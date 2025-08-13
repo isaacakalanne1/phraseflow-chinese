@@ -122,61 +122,61 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         environment.playSound(sound)
         return nil
         
-    case .loadDefinitionsForChapter(let chapter):
-        // Get unique words from all sentences
-        var uniqueWords = Set<String>()
-        for sentence in chapter.sentences {
-            for timestamp in sentence.timestamps {
-                uniqueWords.insert(timestamp.word)
-            }
-        }
-        
-        // Filter out words that already have definitions
-        let wordsNeedingDefinitions = uniqueWords.filter { word in
-            state.definitions[word] == nil
-        }
-        
-        // If all words already have definitions, no need to fetch
-        guard !wordsNeedingDefinitions.isEmpty else {
+    case .loadDefinitionsForChapter(let chapter, let sentenceIndex):
+        // Check if we're within bounds
+        guard sentenceIndex < chapter.sentences.count else {
             return nil
         }
         
-        // Fetch definitions only for sentences containing words without definitions
+        let sentence = chapter.sentences[sentenceIndex]
+        
+        // Check if any word in this sentence needs definitions
+        let wordsNeedingDefinitions = sentence.timestamps.filter { timestamp in
+            state.definitions[timestamp.word] == nil
+        }
+        
+        // Skip to next sentence if all words already have definitions
+        guard !wordsNeedingDefinitions.isEmpty else {
+            return .loadDefinitionsForChapter(chapter, sentenceIndex: sentenceIndex + 1)
+        }
+        
+        // Fetch definitions for this sentence
         do {
-            var definitions: [Definition] = []
-            for sentence in chapter.sentences {
-                // Check if any word in this sentence needs definitions
-                let sentenceNeedsDefinitions = sentence.timestamps.contains { timestamp in
-                    wordsNeedingDefinitions.contains(timestamp.word)
-                }
-                
-                if sentenceNeedsDefinitions {
-                    let sentenceDefinitions = try await environment.studyEnvironment.fetchDefinitions(
-                        in: sentence,
-                        chapter: chapter,
-                        deviceLanguage: Language.deviceLanguage
-                    )
-                    // Only add new definitions (not already in state)
-                    let newDefinitions = sentenceDefinitions.filter { definition in
-                        state.definitions[definition.word] == nil
-                    }
-                    definitions.append(contentsOf: newDefinitions)
-                }
+            let sentenceDefinitions = try await environment.studyEnvironment.fetchDefinitions(
+                in: sentence,
+                chapter: chapter,
+                deviceLanguage: Language.deviceLanguage
+            )
+            
+            // Only include new definitions (not already in state)
+            let newDefinitions = sentenceDefinitions.filter { definition in
+                state.definitions[definition.word] == nil
             }
             
-            if !definitions.isEmpty {
-                return .onLoadedDefinitions(definitions)
+            // Save definitions incrementally to persistent storage
+            if !newDefinitions.isEmpty {
+                try? environment.saveDefinitions(newDefinitions)
             }
-            return nil
+            
+            // Return definitions to update state immediately
+            return .onLoadedDefinitions(newDefinitions, sentenceIndex: sentenceIndex, totalSentences: chapter.sentences.count)
         } catch {
-            return .failedToLoadDefinitions
+            // Continue to next sentence on error
+            return .loadDefinitionsForChapter(chapter, sentenceIndex: sentenceIndex + 1)
         }
         
-    case .onLoadedDefinitions:
-        // Save chapter after definitions are loaded
-        if let currentChapter = state.currentChapter {
-            return .saveChapter(currentChapter)
+    case .onLoadedDefinitions(_, let sentenceIndex, let totalSentences):
+        // Check if this is the last sentence
+        if sentenceIndex + 1 >= totalSentences {
+            // All sentences processed
+            return nil
         }
+        
+        // Continue with the next sentence
+        if let currentChapter = state.currentChapter {
+            return .loadDefinitionsForChapter(currentChapter, sentenceIndex: sentenceIndex + 1)
+        }
+        
         return nil
         
     case .failedToLoadStoriesAndDefinitions,

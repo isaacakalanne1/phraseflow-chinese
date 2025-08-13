@@ -136,6 +136,10 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         loadingSubject.send(.complete)
         return finalChapter
     }
+    
+    public func saveDefinitions(_ definitions: [Definition]) throws {
+        try studyEnvironment.saveDefinitions(definitions)
+    }
 
     // MARK: Chapters
 
