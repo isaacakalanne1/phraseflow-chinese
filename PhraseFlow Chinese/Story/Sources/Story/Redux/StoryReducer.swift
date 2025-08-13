@@ -128,7 +128,7 @@ public let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { s
         newState.isPlayingChapterAudio = true
     case .pauseChapter:
         newState.isPlayingChapterAudio = false
-    case .onLoadedDefinitions(let definitions, _, _):
+    case .onLoadedDefinitions(let definitions):
         for definition in definitions {
             newState.definitions[definition.word] = definition
         }

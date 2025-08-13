@@ -57,6 +57,5 @@ public protocol StoryEnvironmentProtocol {
     // Translation Environment Functions
     func getCurrentTranslationSentence() -> Sentence?
     func getTranslationChapter() -> Chapter?
-    func saveDefinitions(_ definitions: [Definition]) throws
 }
 

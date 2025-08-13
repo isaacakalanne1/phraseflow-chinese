@@ -46,8 +46,8 @@ public enum StoryAction: Sendable {
     case updateSpeechSpeed(SpeechSpeed)
     case playSound(AppSound)
     
-    case loadDefinitionsForChapter(Chapter, sentenceIndex: Int = 0)
-    case onLoadedDefinitions([Definition], sentenceIndex: Int, totalSentences: Int)
+    case loadDefinitionsForChapter(Chapter)
+    case onLoadedDefinitions([Definition])
     case failedToLoadDefinitions
     
     case showDefinition(WordTimeStampData)
