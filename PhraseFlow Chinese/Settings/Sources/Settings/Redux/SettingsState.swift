@@ -23,12 +23,12 @@ public struct SettingsState: Codable, Equatable, Sendable {
     public var isShowingDefinition: Bool
     public var isShowingEnglish: Bool
     public var isPlayingMusic: Bool
-    var voice: Voice
+    public var voice: Voice
     public var speechSpeed: SpeechSpeed
-    var difficulty: Difficulty
+    public var difficulty: Difficulty
     public var language: Language
     var customPrompt: String
-    var storySetting: StorySetting
+    public var storySetting: StorySetting
     var confirmedCustomPrompt: String
     var customPrompts: [String]
     var appColorScheme: FlowTaleColorScheme?

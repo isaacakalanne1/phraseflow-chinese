@@ -28,7 +28,7 @@ public enum StorySetting: Codable, Equatable, Sendable {
         }
     }
 
-    var prompt: String? {
+    public var prompt: String? {
         switch self {
         case .random:
             return nil

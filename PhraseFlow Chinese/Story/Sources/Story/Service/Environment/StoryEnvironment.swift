@@ -15,6 +15,7 @@ import Speech
 import Subscription
 import Study
 import Translation
+import ImageGeneration
 
 public struct StoryEnvironment: StoryEnvironmentProtocol {
     public let storySubject = CurrentValueSubject<UUID?, Never>(nil)
@@ -26,6 +27,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     private let speechEnvironment: SpeechEnvironmentProtocol
     private let translationEnvironment: TranslationEnvironmentProtocol
     private let service: TextGenerationServicesProtocol
+    private let imageGenerationService: ImageGenerationServicesProtocol
     private let dataStore: StoryDataStoreProtocol
     
     public init(
@@ -35,6 +37,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         studyEnvironment: StudyEnvironmentProtocol,
         translationEnvironment: TranslationEnvironmentProtocol,
         service: TextGenerationServicesProtocol,
+        imageGenerationService: ImageGenerationServicesProtocol,
         dataStore: StoryDataStoreProtocol
     ) {
         self.audioEnvironment = audioEnvironment
@@ -43,6 +46,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         self.studyEnvironment = studyEnvironment
         self.translationEnvironment = translationEnvironment
         self.service = service
+        self.imageGenerationService = imageGenerationService
         self.dataStore = dataStore
     }
     
@@ -89,8 +93,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
             if let firstChapter = previousChapters.first, let existingImageData = firstChapter.imageData {
                 processedChapter.imageData = existingImageData
             } else {
-                // TODO: Image generation should be handled through separate ImageGeneration environment
-                // processedChapter.imageData = try await service.generateImage(with: processedChapter.passage)
+                processedChapter.imageData = try await imageGenerationService.generateImage(with: processedChapter.passage)
             }
         }
         
@@ -169,10 +172,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
 
     }
     
-    public func getAppSettings() throws -> SettingsState {
-        try settingsEnvironment.loadAppSettings()
-    }
-    
     public func playChapter(from word: WordTimeStampData) async {
         await audioEnvironment.playChapterAudio(from: word.time,
                                                 rate: SpeechSpeed.normal.playRate)
@@ -213,6 +212,10 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     }
     
     // MARK: - Settings Environment Functions
+    
+    public func getAppSettings() throws -> SettingsState {
+        try settingsEnvironment.loadAppSettings()
+    }
     
     public func isShowingEnglish() throws -> Bool {
         let settings = try settingsEnvironment.loadAppSettings()

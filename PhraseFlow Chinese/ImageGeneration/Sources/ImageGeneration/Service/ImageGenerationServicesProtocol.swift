@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol ImageGenerationServicesProtocol {
+public protocol ImageGenerationServicesProtocol {
     func generateImage(with prompt: String) async throws -> Data
 }

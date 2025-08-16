@@ -146,7 +146,9 @@ public struct ChapterListView: View {
                 .scrollContentBackground(.hidden)
                 .navigationDestination(isPresented: Binding<Bool>(
                     get: { selectedChapter != nil },
-                    set: { if !$0 { selectedChapter = nil } }
+                    set: { if !$0 {
+                        selectedChapter = nil
+                    } }
                 )) {
                     if let chapter = selectedChapter {
                         ReaderView(chapter: chapter)

@@ -32,6 +32,7 @@ public struct FlowTaleRootView: View {
         let userLimitEnvironment = UserLimitEnvironment()
         let loadingEnvironment = LoadingEnvironment()
         let subscriptionEnvironment = SubscriptionEnvironment()
+        let imageGenerationService = ImageGenerationServices()
         
         let settingsDataStore = SettingsDataStore()
         let settingsEnvironment = SettingsEnvironment(
@@ -75,6 +76,7 @@ public struct FlowTaleRootView: View {
             studyEnvironment: studyEnvironment,
             translationEnvironment: translationEnvironment,
             service: textGenerationServices,
+            imageGenerationService: imageGenerationService,
             dataStore: storyDataStore
         )
         

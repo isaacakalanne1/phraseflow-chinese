@@ -27,6 +27,7 @@ let package = Package(
         .package(name: "Subscription", path: "../Subscription"),
         .package(name: "TextGeneration", path: "../TextGeneration"),
         .package(name: "Translation", path: "../Translation"),
+        .package(name: "ImageGeneration", path: "../ImageGeneration"),
         .package(name: "Localization", path: "../Localization")
     ],
     targets: [
@@ -47,6 +48,7 @@ let package = Package(
                 "Subscription",
                 "TextGeneration",
                 "Translation",
+                "ImageGeneration",
                 "Localization"
             ]
         ),
