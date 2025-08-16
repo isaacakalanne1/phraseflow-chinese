@@ -38,12 +38,6 @@ public struct NavigationEnvironment: NavigationEnvironmentProtocol {
         self.audioEnvironment = audioEnvironment
     }
     
-    
-    @MainActor
-    public func selectChapter(storyId: UUID) {
-        storyEnvironment.selectChapter(storyId: storyId)
-    }
-    
     public func playSound(_ sound: AppSound) {
         audioEnvironment.playSound(sound)
     }

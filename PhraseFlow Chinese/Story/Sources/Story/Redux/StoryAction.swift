@@ -37,7 +37,7 @@ public enum StoryAction: Sendable {
 
     case selectWord(WordTimeStampData, playAudio: Bool)
     case setPlaybackTime(Double)
-    case selectChapter(storyId: UUID)
+    case selectChapter(Chapter)
     
     case prepareToPlayChapter(Chapter)
     case playChapter(fromWord: WordTimeStampData)
@@ -47,7 +47,7 @@ public enum StoryAction: Sendable {
     case playSound(AppSound)
     
     case loadDefinitionsForChapter(Chapter, sentenceIndex: Int)
-    case onLoadedDefinitions([Definition])
+    case onLoadedDefinitions([Definition], chapter: Chapter, sentenceIndex: Int)
     case failedToLoadDefinitions
     
     case showDefinition(WordTimeStampData)

@@ -18,7 +18,6 @@ import Translation
 import ImageGeneration
 
 public struct StoryEnvironment: StoryEnvironmentProtocol {
-    public let storySubject = CurrentValueSubject<UUID?, Never>(nil)
     public let loadingSubject: CurrentValueSubject<LoadingStatus?, Never> = .init(nil)
     
     public let audioEnvironment: AudioEnvironmentProtocol
@@ -48,10 +47,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         self.service = service
         self.imageGenerationService = imageGenerationService
         self.dataStore = dataStore
-    }
-    
-    public func selectChapter(storyId: UUID) {
-        storySubject.send(storyId)
     }
     
     public func generateChapter(

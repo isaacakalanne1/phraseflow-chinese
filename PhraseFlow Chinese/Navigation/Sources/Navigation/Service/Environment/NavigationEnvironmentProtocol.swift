@@ -20,6 +20,5 @@ public protocol NavigationEnvironmentProtocol {
     var subscriptionEnvironment: SubscriptionEnvironmentProtocol { get }
     var translationEnvironment: TranslationEnvironmentProtocol { get }
     var audioEnvironment: AudioEnvironmentProtocol { get }
-    @MainActor func selectChapter(storyId: UUID)
     func playSound(_ sound: AppSound)
 }

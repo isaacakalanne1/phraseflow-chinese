@@ -113,11 +113,8 @@ public let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { s
             }
         }
         
-    case .selectChapter(let storyId):
-        if let chapters = newState.storyChapters[storyId], !chapters.isEmpty {
-            let selectedChapter = chapters.last ?? chapters[0]
-            newState.currentChapter = selectedChapter
-        }
+    case .selectChapter(let chapter):
+        newState.currentChapter = chapter
         
     case .createChapter:
         newState.isWritingChapter = true
@@ -128,7 +125,7 @@ public let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { s
         newState.isPlayingChapterAudio = true
     case .pauseChapter:
         newState.isPlayingChapterAudio = false
-    case .onLoadedDefinitions(let definitions):
+    case .onLoadedDefinitions(let definitions, _, _):
         for definition in definitions {
             newState.definitions[definition.word] = definition
         }

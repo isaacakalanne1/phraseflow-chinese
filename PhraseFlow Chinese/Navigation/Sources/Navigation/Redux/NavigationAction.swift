@@ -8,6 +8,5 @@
 import Foundation
 
 enum NavigationAction {
-    case selectChapter(UUID, chapterIndex: Int)
     case selectTab(ContentTab, shouldPlaySound: Bool)
 }

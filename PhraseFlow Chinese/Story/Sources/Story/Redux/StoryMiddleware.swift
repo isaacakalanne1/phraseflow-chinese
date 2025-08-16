@@ -96,13 +96,8 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         await environment.playWord(word, rate: SpeechSpeed.normal.playRate)
         return nil
         
-    case .selectChapter(let storyId):
-        // Load definitions for the selected chapter if available, starting with first sentence
-        if let chapters = state.storyChapters[storyId],
-           let selectedChapter = chapters.last {
-            return .loadDefinitionsForChapter(selectedChapter, sentenceIndex: 0)
-        }
-        return nil
+    case .selectChapter(let chapter):
+        return .loadDefinitionsForChapter(chapter, sentenceIndex: 0)
     case .prepareToPlayChapter(let chapter):
         await environment.prepareToPlayChapter(chapter)
         return .loadDefinitionsForChapter(chapter, sentenceIndex: 0)
@@ -134,21 +129,7 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         
         let sentence = chapter.sentences[sentenceIndex]
         
-        // Check if any word in this sentence needs definitions
-        let sentenceNeedsDefinitions = sentence.timestamps.contains { timestamp in
-            state.definitions[timestamp.word] == nil
-        }
-        
-        // If all words in this sentence have definitions, move to next sentence
-        if !sentenceNeedsDefinitions {
-            let nextIndex = sentenceIndex + 1
-            if nextIndex < chapter.sentences.count {
-                return .loadDefinitionsForChapter(chapter, sentenceIndex: nextIndex)
-            }
-            return nil
-        }
-        
-        // Fetch definitions for this sentence
+        // Fetch definitions for this sentence - the environment will handle checking what's already loaded
         do {
             let sentenceDefinitions = try await environment.studyEnvironment.fetchDefinitions(
                 in: sentence,
@@ -156,16 +137,11 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
                 deviceLanguage: Language.deviceLanguage
             )
             
-            // Only add new definitions (not already in state)
-            let newDefinitions = sentenceDefinitions.filter { definition in
-                state.definitions[definition.word] == nil
-            }
-            
-            if !newDefinitions.isEmpty {
-                // Return the loaded definitions
-                return .onLoadedDefinitions(newDefinitions)
+            if !sentenceDefinitions.isEmpty {
+                // Return the loaded definitions with context
+                return .onLoadedDefinitions(sentenceDefinitions, chapter: chapter, sentenceIndex: sentenceIndex)
             } else {
-                // No new definitions for this sentence, continue with next sentence
+                // No definitions returned for this sentence, continue with next sentence
                 let nextIndex = sentenceIndex + 1
                 if nextIndex < chapter.sentences.count {
                     return .loadDefinitionsForChapter(chapter, sentenceIndex: nextIndex)
@@ -176,20 +152,16 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
             return .failedToLoadDefinitions
         }
         
-    case .onLoadedDefinitions(let definitions):
-        // After loading definitions, continue loading for the next sentence
-        if let currentChapter = state.currentChapter {
-            // Find the next sentence that needs definitions
-            for (index, sentence) in currentChapter.sentences.enumerated() {
-                let needsDefinitions = sentence.timestamps.contains { timestamp in
-                    state.definitions[timestamp.word] == nil && !definitions.contains { $0.word == timestamp.word }
-                }
-                if needsDefinitions {
-                    return .loadDefinitionsForChapter(currentChapter, sentenceIndex: index)
-                }
+    case .onLoadedDefinitions(let definitions, let chapter, let sentenceIndex):
+        // Continue loading definitions for the next sentence
+        let nextIndex = sentenceIndex + 1
+        if nextIndex < chapter.sentences.count {
+            return .loadDefinitionsForChapter(chapter, sentenceIndex: nextIndex)
+        } else {
+            // All sentences processed, save the chapter if it's the current one
+            if state.currentChapter?.id == chapter.id {
+                return .saveChapter(chapter)
             }
-            // All definitions loaded, save the chapter
-            return .saveChapter(currentChapter)
         }
         return nil
         

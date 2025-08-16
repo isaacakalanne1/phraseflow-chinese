@@ -14,10 +14,8 @@ import Study
 import Subscription
 
 public protocol StoryEnvironmentProtocol {
-    var storySubject: CurrentValueSubject<UUID?, Never> { get }
     var audioEnvironment: AudioEnvironmentProtocol { get }
     var studyEnvironment: StudyEnvironmentProtocol { get }
-    func selectChapter(storyId: UUID)
     func prepareToPlayChapter(_ chapter: Chapter) async
     func playWord(_ word: WordTimeStampData, rate: Float) async
     func getAppSettings() throws -> SettingsState

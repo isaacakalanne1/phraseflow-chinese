@@ -146,9 +146,7 @@ public struct ChapterListView: View {
                 .scrollContentBackground(.hidden)
                 .navigationDestination(isPresented: Binding<Bool>(
                     get: { selectedChapter != nil },
-                    set: { if !$0 {
-                        selectedChapter = nil
-                    } }
+                    set: { if !$0 { selectedChapter = nil } }
                 )) {
                     if let chapter = selectedChapter {
                         ReaderView(chapter: chapter)
@@ -190,6 +188,7 @@ public struct ChapterListView: View {
             withAnimation(.easeInOut) {
                 store.dispatch(.playSound(.openChapter))
                 store.dispatch(.prepareToPlayChapter(chapter))
+                store.dispatch(.selectChapter(chapter))
                 selectedChapter = chapter
             }
         } label: {
