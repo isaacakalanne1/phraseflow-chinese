@@ -153,6 +153,7 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         }
         
     case .onLoadedDefinitions(let definitions, let chapter, let sentenceIndex):
+        try? environment.saveDefinitions(definitions)
         // Continue loading definitions for the next sentence
         let nextIndex = sentenceIndex + 1
         if nextIndex < chapter.sentences.count {

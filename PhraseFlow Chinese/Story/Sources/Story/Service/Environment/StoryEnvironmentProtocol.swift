@@ -37,6 +37,8 @@ public protocol StoryEnvironmentProtocol {
         currentSubscription: SubscriptionLevel?
     ) async throws -> Chapter
     
+    func saveDefinitions(_ definitions: [Definition]) throws
+    
     // Settings Environment Functions
     func isShowingEnglish() throws -> Bool
     func isShowingDefinition() throws -> Bool
