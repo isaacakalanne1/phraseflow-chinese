@@ -24,7 +24,7 @@ public let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { s
         
         // Load definitions into state
         for definition in definitions {
-            newState.definitions[definition.word] = definition
+            newState.definitions[definition.timestampData.word] = definition
         }
         
         // Sort chapters by last updated for each story
@@ -127,7 +127,7 @@ public let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { s
         newState.isPlayingChapterAudio = false
     case .onLoadedDefinitions(let definitions, _, _):
         for definition in definitions {
-            newState.definitions[definition.word] = definition
+            newState.definitions[definition.timestampData.word] = definition
         }
         
     case .showDefinition(let wordTimestamp):
