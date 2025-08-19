@@ -114,14 +114,15 @@ public class Store<State: Equatable, Action: Sendable, Environment>: ObservableO
     @MainActor
     private func dispatch(_ currentState: State, _ action: Action) {
         let newState = self.reducer(currentState, action)
-        if newState != state {
+        let stateChanged = newState != state
+        if stateChanged {
             self.state = newState
         }
         
         // Execute middleware asynchronously
         Task { @MainActor in
-            if let newAction = await middleware(newState, action, environment) {
-                self.dispatch(newState, newAction)
+            if let newAction = await middleware(stateChanged ? newState : self.state, action, environment) {
+                self.dispatch(self.state, newAction)
             }
         }
     }

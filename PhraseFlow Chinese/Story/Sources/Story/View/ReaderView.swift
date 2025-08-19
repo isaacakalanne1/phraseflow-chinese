@@ -25,7 +25,10 @@ public struct ReaderView: View {
 
             storyHeaderSection
 
-            storyContentSection
+            SentenceView()
+                .padding()
+                .cardBackground()
+            
         }
         .padding(10)
         .backgroundImage(type: .main)
@@ -51,13 +54,5 @@ public struct ReaderView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal)
-    }
-    
-    private var storyContentSection: some View {
-        VStack {
-            SentenceView()
-                .padding()
-        }
-        .cardBackground()
     }
 }

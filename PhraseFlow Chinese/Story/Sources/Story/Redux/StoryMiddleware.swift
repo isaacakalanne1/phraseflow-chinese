@@ -136,7 +136,6 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
                 chapter: chapter,
                 deviceLanguage: Language.deviceLanguage
             )
-            
             if !sentenceDefinitions.isEmpty {
                 // Return the loaded definitions with context
                 return .onLoadedDefinitions(sentenceDefinitions, chapter: chapter, sentenceIndex: sentenceIndex)
