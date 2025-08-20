@@ -23,7 +23,7 @@ public struct ProgressSummaryView: View {
     }
     
     public var body: some View {
-        DefinitionsProgressSheetView()
+        DefinitionsProgressView()
             .environmentObject(store)
     }
 }

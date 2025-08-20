@@ -1,5 +1,5 @@
 //
-//  DefinitionsProgressSheetView.swift
+//  DefinitionsProgressView.swift
 //  FlowTale
 //
 //  Created by iakalann on 28/12/2024.
@@ -13,7 +13,7 @@ import Localization
 import Settings
 import SwiftUI
 
-struct DefinitionsProgressSheetView: View {
+struct DefinitionsProgressView: View {
     @EnvironmentObject var store: StudyStore
     @State private var showingCreations = true
     @State private var navigateToStudyView = false
