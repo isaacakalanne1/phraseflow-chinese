@@ -9,6 +9,7 @@ import SwiftUI
 import FTFont
 import FTColor
 import FTStyleKit
+import Loading
 import TextGeneration
 import Localization
 import Settings
@@ -20,6 +21,7 @@ struct StoryListView: View {
     
     var body: some View {
         VStack(spacing: 0) {
+            LoadingProgressView()
             if store.state.allStories.isEmpty {
                 StoryListEmptyState()
             } else {
