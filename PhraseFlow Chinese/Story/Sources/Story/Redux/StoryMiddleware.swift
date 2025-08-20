@@ -141,6 +141,7 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
                 return .onLoadedDefinitions(sentenceDefinitions, chapter: chapter, sentenceIndex: sentenceIndex)
             } else {
                 // No definitions returned for this sentence, continue with next sentence
+                try? environment.saveDefinitions(sentenceDefinitions)
                 let nextIndex = sentenceIndex + 1
                 if nextIndex < chapter.sentences.count {
                     return .loadDefinitionsForChapter(chapter, sentenceIndex: nextIndex)
@@ -152,7 +153,6 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         }
         
     case .onLoadedDefinitions(let definitions, let chapter, let sentenceIndex):
-        try? environment.saveDefinitions(definitions)
         // Continue loading definitions for the next sentence
         let nextIndex = sentenceIndex + 1
         if nextIndex < chapter.sentences.count {
