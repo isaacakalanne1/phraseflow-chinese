@@ -25,5 +25,8 @@ public struct ProgressSummaryView: View {
     public var body: some View {
         DefinitionsProgressView()
             .environmentObject(store)
+            .onAppear {
+                store.dispatch(.loadDefinitions)
+            }
     }
 }

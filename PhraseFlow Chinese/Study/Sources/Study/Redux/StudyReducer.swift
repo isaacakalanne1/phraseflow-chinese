@@ -38,6 +38,10 @@ let studyReducer: Reducer<StudyState, StudyAction> = { state, action in
         } else {
             newState.definitions.append(definition)
         }
+        
+    case .onLoadDefinitions(let definitions):
+        newState.definitions = definitions
+        
     case .failedToPrepareStudyWord,
             .prepareToPlayStudySentence,
             .playStudySentence,
@@ -45,7 +49,9 @@ let studyReducer: Reducer<StudyState, StudyAction> = { state, action in
             .prepareToPlayStudyWord,
             .playStudyWord,
             .failedToDeleteDefinition,
-            .playSound:
+            .playSound,
+            .loadDefinitions,
+            .failedToLoadDefinitions:
         break
     }
 

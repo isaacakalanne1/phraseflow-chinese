@@ -28,4 +28,8 @@ enum StudyAction {
     case updateStudiedWord(Definition)
     case onLoadAppSettings(SettingsState)
     case playSound(AppSound)
+    
+    case loadDefinitions
+    case onLoadDefinitions([Definition])
+    case failedToLoadDefinitions
 }

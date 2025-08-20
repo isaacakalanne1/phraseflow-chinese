@@ -48,6 +48,14 @@ let studyMiddleware: Middleware<StudyState, StudyAction, StudyEnvironmentProtoco
         environment.playSound(appSound)
         return nil
         
+    case .loadDefinitions:
+        do {
+            let definitions = try environment.loadDefinitions()
+            return .onLoadDefinitions(definitions)
+        } catch {
+            return .failedToLoadDefinitions
+        }
+        
     case .failedToDeleteDefinition,
             .updateStudiedWord,
             .failedToPrepareStudyWord,
@@ -55,7 +63,9 @@ let studyMiddleware: Middleware<StudyState, StudyAction, StudyEnvironmentProtoco
             .onPreparedStudySentence,
             .updateDisplayStatus,
             .updateStudyAudioPlaying,
-            .onPreparedStudyWord:
+            .onPreparedStudyWord,
+            .onLoadDefinitions,
+            .failedToLoadDefinitions:
         return nil
     }
 }
