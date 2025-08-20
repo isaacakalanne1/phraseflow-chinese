@@ -127,20 +127,45 @@ extension StudyState {
             .union(studiedCountsByDay.keys)
         let sortedDays = allDays.sorted()
 
-        // 3) Build cumulative totals for past days
+        // 3) Build cumulative totals for past days, filling in missing days
         var results: [DailyCreationAndStudyStats] = []
         var runningCreations = 0
         var runningStudied = 0
-        for day in sortedDays {
-            runningCreations += creationCountsByDay[day] ?? 0
-            runningStudied += studiedCountsByDay[day] ?? 0
-            results.append(
-                DailyCreationAndStudyStats(
-                    date: day,
-                    cumulativeCreations: runningCreations,
-                    cumulativeStudied: runningStudied
+        
+        // If we have sorted days, fill in all days from first to yesterday
+        if let firstDay = sortedDays.first {
+            // Extend to yesterday (not today, as today is handled separately)
+            let yesterday = calendar.date(byAdding: .day, value: -1, to: todayStart) ?? todayStart
+            let endDay = max(sortedDays.last ?? firstDay, yesterday)
+            
+            var currentDay = firstDay
+            
+            while currentDay <= endDay {
+                // Check if there's activity on this day
+                let dayCreations = creationCountsByDay[currentDay] ?? 0
+                let dayStudied = studiedCountsByDay[currentDay] ?? 0
+                
+                // Update running totals
+                runningCreations += dayCreations
+                runningStudied += dayStudied
+                
+                // Add data point for this day (even if no activity)
+                results.append(
+                    DailyCreationAndStudyStats(
+                        date: currentDay,
+                        cumulativeCreations: runningCreations,
+                        cumulativeStudied: runningStudied
+                    )
                 )
-            )
+                
+                // Move to next day
+                currentDay = calendar.date(byAdding: .day, value: 1, to: currentDay) ?? currentDay
+                
+                // Safety check to prevent infinite loop
+                if currentDay > endDay {
+                    break
+                }
+            }
         }
 
         // 4) Insert a day-before entry so the chart can start at 0
