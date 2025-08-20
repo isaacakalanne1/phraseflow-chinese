@@ -17,7 +17,6 @@ struct DefinitionsProgressView: View {
     @EnvironmentObject var store: StudyStore
     @State private var showingCreations = true
     @State private var navigateToStudyView = false
-    @State private var showLanguageSelector = false
     
     var filterLanguage: Language {
         store.state.filterLanguage
@@ -42,45 +41,14 @@ struct DefinitionsProgressView: View {
             // Bottom control area
             VStack(spacing: 16) {
                 // Top row: Tabs and Language selector
-                HStack {
-                    // Segmented control
-                    Picker("", selection: $showingCreations) {
-                        Text(LocalizedString.saved).tag(true)
-                        Text(LocalizedString.studied).tag(false)
-                    }
-                    .pickerStyle(.segmented)
-                    .onChange(of: showingCreations) { _, _ in
-                        store.dispatch(.playSound(.togglePress))
-                    }
-
-                    Spacer()
-
-                    // Language selector
-                    Button {
-                        showLanguageSelector = true
-                    } label: {
-                        HStack(spacing: 6) {
-                            Text(languageIcon)
-                                .font(FTFont.flowTaleBodyXSmall())
-                            Text(languageName)
-                                .font(FTFont.flowTaleSubHeader())
-                                .fontWeight(.medium)
-                                .lineLimit(1)
-                            Image(systemName: "chevron.down")
-                                .font(FTFont.flowTaleSecondaryHeader())
-                        }
-                        .foregroundColor(FTColor.primary)
-                        .padding(.vertical, 6)
-                        .padding(.horizontal, 10)
-                        .background(
-                            Capsule()
-                                .fill(FTColor.background)
-                                .overlay(
-                                    Capsule()
-                                        .strokeBorder(FTColor.secondary, lineWidth: 1)
-                                )
-                        )
-                    }
+                // Segmented control
+                Picker("", selection: $showingCreations) {
+                    Text(LocalizedString.saved).tag(true)
+                    Text(LocalizedString.studied).tag(false)
+                }
+                .pickerStyle(.segmented)
+                .onChange(of: showingCreations) { _, _ in
+                    store.dispatch(.playSound(.togglePress))
                 }
 
                 // Practice button
@@ -100,9 +68,7 @@ struct DefinitionsProgressView: View {
         }
         .navigationDestination(isPresented: $navigateToStudyView) {
             StudyView(studyWords: store.state.studyDefinitions(language: filterLanguage))
-        }
-        .navigationDestination(isPresented: $showLanguageSelector) {
-            LanguageSettingsView()
+                .environmentObject(store)
         }
         .background(FTColor.background)
     }
@@ -141,11 +107,14 @@ struct DefinitionsProgressView: View {
     private func definitionRow(definition: Definition) -> some View {
         NavigationLink {
             StudyView(studyWords: [definition])
+                .environmentObject(store)
         } label: {
             Text(definition.timestampData.word)
                 .fontWeight(.light)
                 .foregroundStyle(FTColor.primary)
         }
+        .foregroundStyle(FTColor.secondary)
+        .listRowBackground(Color.clear)
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             Button(role: .destructive) {
                 store.dispatch(.deleteDefinition(definition))
@@ -168,6 +137,7 @@ struct DefinitionsProgressView: View {
             }
         }()
         Text(headerText)
+            .foregroundStyle(FTColor.secondary)
     }
 
     func removeDuplicates(from definitions: [Definition]) -> [Definition] {

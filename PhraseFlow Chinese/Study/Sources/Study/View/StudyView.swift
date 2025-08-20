@@ -152,6 +152,7 @@ public struct StudyView: View {
         }
         .padding()
         .background(FTColor.background)
+        .foregroundStyle(FTColor.primary)
     }
 
     private func nextTapped(definition: Definition) {
