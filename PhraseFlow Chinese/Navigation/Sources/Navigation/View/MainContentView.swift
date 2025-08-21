@@ -6,6 +6,7 @@
 //
 
 import FTColor
+import Loading
 import SwiftUI
 
 public struct MainContentView: View {
@@ -25,6 +26,7 @@ public struct MainContentView: View {
     
     public var body: some View {
         VStack {
+            LoadingProgressView()
             DisplayedContentView()
             Divider()
                 .background(FTColor.secondary)

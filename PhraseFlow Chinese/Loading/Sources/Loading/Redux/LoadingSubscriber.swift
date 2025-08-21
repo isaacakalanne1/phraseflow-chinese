@@ -10,5 +10,13 @@ import ReduxKit
 
 @MainActor
 let loadingSubscriber: OnSubscribe<LoadingStore, LoadingEnvironmentProtocol> = { store, environment in
-    // No reactive subscriptions needed for basic navigation
+    environment.loadingStatus
+            .receive(on: DispatchQueue.main)
+            .sink { [weak store] loadingStatus in
+                guard let store else {
+                    return
+                }
+                store.dispatch(.updateLoadingStatus(loadingStatus ?? .none))
+            }
+            .store(in: &store.subscriptions)
 }

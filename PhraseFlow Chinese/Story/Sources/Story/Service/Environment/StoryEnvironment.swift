@@ -18,10 +18,9 @@ import Translation
 import ImageGeneration
 
 public struct StoryEnvironment: StoryEnvironmentProtocol {
-    public let loadingSubject: CurrentValueSubject<LoadingStatus?, Never> = .init(nil)
-    
     public let audioEnvironment: AudioEnvironmentProtocol
     public let studyEnvironment: StudyEnvironmentProtocol
+    public let loadingEnvironment: LoadingEnvironmentProtocol
     private let settingsEnvironment: SettingsEnvironmentProtocol
     private let speechEnvironment: SpeechEnvironmentProtocol
     private let translationEnvironment: TranslationEnvironmentProtocol
@@ -34,6 +33,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         settingsEnvironment: SettingsEnvironmentProtocol,
         speechEnvironment: SpeechEnvironmentProtocol,
         studyEnvironment: StudyEnvironmentProtocol,
+        loadingEnvironment: LoadingEnvironmentProtocol,
         translationEnvironment: TranslationEnvironmentProtocol,
         service: TextGenerationServicesProtocol,
         imageGenerationService: ImageGenerationServicesProtocol,
@@ -43,6 +43,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         self.settingsEnvironment = settingsEnvironment
         self.speechEnvironment = speechEnvironment
         self.studyEnvironment = studyEnvironment
+        self.loadingEnvironment = loadingEnvironment
         self.translationEnvironment = translationEnvironment
         self.service = service
         self.imageGenerationService = imageGenerationService
@@ -58,7 +59,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         storyPrompt: String? = nil,
         currentSubscription: SubscriptionLevel?
     ) async throws -> Chapter {
-        loadingSubject.send(.writing)
+        loadingEnvironment.updateLoadingStatus(.writing)
 
         let newChapter: Chapter
         if previousChapters.isEmpty {
@@ -81,7 +82,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
             )
         }
         
-        loadingSubject.send(.generatingImage)
+        loadingEnvironment.updateLoadingStatus(.generatingImage)
 
         var processedChapter = newChapter
         if processedChapter.imageData == nil && !processedChapter.passage.isEmpty {
@@ -92,7 +93,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
             }
         }
         
-        loadingSubject.send(.generatingSpeech)
+        loadingEnvironment.updateLoadingStatus(.generatingSpeech)
 
         let voiceToUse = processedChapter.audioVoice
         let (finalChapter, ssmlCharacterCount) = try await speechEnvironment.synthesizeSpeechWithCharacterCount(
@@ -106,8 +107,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
             subscription: currentSubscription
         )
         
-        // Generate definitions for the first 3 sentences
-        loadingSubject.send(.generatingDefinitions)
+        loadingEnvironment.updateLoadingStatus(.generatingDefinitions)
         
         let sentencesToProcess = Array(finalChapter.sentences.prefix(3))
         var allDefinitions: [Definition] = []
@@ -131,7 +131,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
             try studyEnvironment.saveDefinitions(allDefinitions)
         }
 
-        loadingSubject.send(.complete)
+        loadingEnvironment.updateLoadingStatus(.complete)
         return finalChapter
     }
     

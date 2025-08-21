@@ -6,7 +6,16 @@
 //
 
 import Foundation
+import Combine
 
 public struct LoadingEnvironment: LoadingEnvironmentProtocol {
-    public init() {}
+    public var loadingStatus: CurrentValueSubject<LoadingStatus?, Never>
+    
+    public init() {
+        loadingStatus = .init(nil)
+    }
+    
+    public func updateLoadingStatus(_ status: LoadingStatus) {
+        loadingStatus.send(status)
+    }
 }

@@ -8,10 +8,12 @@
 import Foundation
 
 public enum LoadingStatus: Sendable {
-    case complete, writing, generatingImage, generatingSpeech, generatingDefinitions
+    case complete, writing, generatingImage, generatingSpeech, generatingDefinitions, none
 
     var progressInt: Int {
         switch self {
+        case .none:
+            -1
         case .writing:
             0
         case .generatingImage:

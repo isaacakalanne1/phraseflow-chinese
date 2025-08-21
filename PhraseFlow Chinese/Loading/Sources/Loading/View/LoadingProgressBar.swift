@@ -23,6 +23,8 @@ public struct LoadingProgressBar: View {
     
     private var statusText: String {
         switch loadingStatus {
+        case .none:
+            return ""
         case .writing:
             return LocalizedString.writingChapter
         case .generatingImage:
@@ -37,6 +39,16 @@ public struct LoadingProgressBar: View {
     }
     
     public var body: some View {
+        switch store.state.loadingStatus {
+        case .none:
+            EmptyView()
+        default:
+            loadingView()
+        }
+    }
+    
+    @ViewBuilder
+    func loadingView() -> some View {
         VStack(spacing: 4) {
             HStack {
                 Text(statusText)

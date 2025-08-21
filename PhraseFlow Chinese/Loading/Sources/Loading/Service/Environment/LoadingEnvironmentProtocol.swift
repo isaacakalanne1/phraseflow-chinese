@@ -6,7 +6,10 @@
 //
 
 import Foundation
+import Combine
 
 public protocol LoadingEnvironmentProtocol {
+    var loadingStatus: CurrentValueSubject<LoadingStatus?, Never> { get }
     
+    func updateLoadingStatus(_ status: LoadingStatus)
 }

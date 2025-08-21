@@ -74,6 +74,7 @@ public struct FlowTaleRootView: View {
             settingsEnvironment: settingsEnvironment,
             speechEnvironment: speechEnvironment,
             studyEnvironment: studyEnvironment,
+            loadingEnvironment: loadingEnvironment,
             translationEnvironment: translationEnvironment,
             service: textGenerationServices,
             imageGenerationService: imageGenerationService,

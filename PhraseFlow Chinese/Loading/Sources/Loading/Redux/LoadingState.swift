@@ -6,5 +6,5 @@
 //
 
 struct LoadingState: Equatable {
-    var loadingStatus: LoadingStatus = .writing
+    var loadingStatus: LoadingStatus = .none
 }
