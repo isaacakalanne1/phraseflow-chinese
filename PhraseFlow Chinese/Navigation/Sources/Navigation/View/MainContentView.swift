@@ -11,9 +11,11 @@ import SwiftUI
 
 public struct MainContentView: View {
     private var store: NavigationStore
+    private let environment: NavigationEnvironmentProtocol
 
     public init(environment: NavigationEnvironmentProtocol) {
         let state = NavigationState()
+        self.environment = environment
 
         store = NavigationStore(
             initial: state,
@@ -26,7 +28,7 @@ public struct MainContentView: View {
     
     public var body: some View {
         VStack {
-            LoadingProgressView()
+            LoadingProgressView(environment: environment.loadingEnvironment)
             DisplayedContentView()
             Divider()
                 .background(FTColor.secondary)

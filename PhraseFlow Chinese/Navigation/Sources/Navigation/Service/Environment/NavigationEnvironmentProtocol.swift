@@ -7,6 +7,7 @@
 
 import Foundation
 import Audio
+import Loading
 import Settings
 import Story
 import Study
@@ -20,5 +21,6 @@ public protocol NavigationEnvironmentProtocol {
     var subscriptionEnvironment: SubscriptionEnvironmentProtocol { get }
     var translationEnvironment: TranslationEnvironmentProtocol { get }
     var audioEnvironment: AudioEnvironmentProtocol { get }
+    var loadingEnvironment: LoadingEnvironmentProtocol { get }
     func playSound(_ sound: AppSound)
 }

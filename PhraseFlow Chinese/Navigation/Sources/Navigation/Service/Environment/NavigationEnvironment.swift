@@ -8,6 +8,7 @@
 import Foundation
 import Story
 import Audio
+import Loading
 import Study
 import Settings
 import Subscription
@@ -21,6 +22,7 @@ public struct NavigationEnvironment: NavigationEnvironmentProtocol {
     public let subscriptionEnvironment: SubscriptionEnvironmentProtocol
     public let translationEnvironment: TranslationEnvironmentProtocol
     public let audioEnvironment: AudioEnvironmentProtocol
+    public let loadingEnvironment: LoadingEnvironmentProtocol
     
     public init(
         settingsEnvironment: SettingsEnvironmentProtocol,
@@ -28,7 +30,8 @@ public struct NavigationEnvironment: NavigationEnvironmentProtocol {
         studyEnvironment: StudyEnvironmentProtocol,
         subscriptionEnvironment: SubscriptionEnvironmentProtocol,
         translationEnvironment: TranslationEnvironmentProtocol,
-        audioEnvironment: AudioEnvironmentProtocol
+        audioEnvironment: AudioEnvironmentProtocol,
+        loadingEnvironment: LoadingEnvironmentProtocol
     ) {
         self.settingsEnvironment = settingsEnvironment
         self.storyEnvironment = storyEnvironment
@@ -36,6 +39,7 @@ public struct NavigationEnvironment: NavigationEnvironmentProtocol {
         self.subscriptionEnvironment = subscriptionEnvironment
         self.translationEnvironment = translationEnvironment
         self.audioEnvironment = audioEnvironment
+        self.loadingEnvironment = loadingEnvironment
     }
     
     public func playSound(_ sound: AppSound) {

@@ -10,9 +10,8 @@ import SwiftUI
 public struct LoadingProgressView: View {
     private var store: LoadingStore
     
-    public init() {
+    public init(environment: LoadingEnvironmentProtocol) {
         let state = LoadingState()
-        let environment = LoadingEnvironment()
         
         store = LoadingStore(
             initial: state,

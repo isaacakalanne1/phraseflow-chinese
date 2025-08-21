@@ -87,7 +87,8 @@ public struct FlowTaleRootView: View {
             studyEnvironment: studyEnvironment,
             subscriptionEnvironment: subscriptionEnvironment,
             translationEnvironment: translationEnvironment,
-            audioEnvironment: audioEnvironment
+            audioEnvironment: audioEnvironment,
+            loadingEnvironment: loadingEnvironment
         )
         
         self.flowTaleEnvironment = FlowTaleEnvironment(
