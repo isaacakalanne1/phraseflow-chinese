@@ -18,7 +18,7 @@ public struct LoadingProgressBar: View {
     }
     
     private var progress: Double {
-        return Double(loadingStatus.progressInt) / 3.0
+        return Double(loadingStatus.progressInt) / 4.0
     }
     
     private var statusText: String {
@@ -79,6 +79,14 @@ public struct LoadingProgressBar: View {
                         title: "Audio",
                         isCompleted: loadingStatus.progressInt > 2,
                         isCurrent: loadingStatus == .generatingSpeech,
+                        isCompact: true
+                    )
+                    
+                    ProgressStep(
+                        icon: "book.closed",
+                        title: "Definitions",
+                        isCompleted: loadingStatus.progressInt > 3,
+                        isCurrent: loadingStatus == .generatingDefinitions,
                         isCompact: true
                     )
                 }

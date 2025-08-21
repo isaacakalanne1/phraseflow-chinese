@@ -11,7 +11,13 @@ import ReduxKit
 @MainActor
 let loadingMiddleware: Middleware<LoadingState, LoadingAction, LoadingEnvironmentProtocol> = { state, action, environment in
     switch action {
-    case .updateLoadingStatus:
-        return nil
+    case .updateLoadingStatus(let status):
+        switch status {
+        case .complete:
+            try? await Task.sleep(for: .seconds(2))
+            return .updateLoadingStatus(.none)
+        default:
+            return nil
+        }
     }
 }
