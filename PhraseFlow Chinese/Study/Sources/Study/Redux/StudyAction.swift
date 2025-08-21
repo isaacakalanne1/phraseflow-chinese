@@ -26,7 +26,9 @@ enum StudyAction {
     case deleteDefinition(Definition)
     case failedToDeleteDefinition
     case updateStudiedWord(Definition)
+    case loadAppSettings
     case onLoadAppSettings(SettingsState)
+    case failedToLoadAppSettings
     case playSound(AppSound)
     
     case loadDefinitions

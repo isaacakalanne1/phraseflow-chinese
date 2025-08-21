@@ -51,7 +51,9 @@ let studyReducer: Reducer<StudyState, StudyAction> = { state, action in
             .failedToDeleteDefinition,
             .playSound,
             .loadDefinitions,
-            .failedToLoadDefinitions:
+            .loadAppSettings,
+            .failedToLoadDefinitions,
+            .failedToLoadAppSettings:
         break
     }
 

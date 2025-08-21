@@ -23,5 +23,8 @@ public struct SettingsRootView: View {
     public var body: some View {
         SettingsView()
             .environmentObject(store)
+            .onAppear {
+                store.dispatch(.loadAppSettings)
+            }
     }
 }

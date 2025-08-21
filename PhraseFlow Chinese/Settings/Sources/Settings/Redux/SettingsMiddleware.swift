@@ -48,11 +48,11 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
         
     case .playMusic(let music):
         try? environment.playMusic(music)
-        return nil
+        return .saveAppSettings
         
     case .stopMusic:
         environment.stopMusic()
-        return nil
+        return .saveAppSettings
         
     case .deleteCustomPrompt:
         return .saveAppSettings
