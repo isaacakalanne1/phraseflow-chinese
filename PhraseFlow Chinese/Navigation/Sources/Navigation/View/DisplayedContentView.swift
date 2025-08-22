@@ -26,7 +26,7 @@ struct DisplayedContentView: View {
                         .background(FTColor.background)
                 }
             case .progress:
-                ProgressSummaryView(environment: store.environment.studyEnvironment)
+                StudyRootView(environment: store.environment.studyEnvironment)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .translate:
                 TranslationRootView(environment: store.environment.translationEnvironment)

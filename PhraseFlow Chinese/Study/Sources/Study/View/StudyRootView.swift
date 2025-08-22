@@ -1,5 +1,5 @@
 //
-//  ProgressSummaryView.swift
+//  StudyRootView.swift
 //  Definition
 //
 //  Created by Isaac Akalanne on 19/07/2025.
@@ -9,7 +9,7 @@ import Audio
 import Settings
 import SwiftUI
 
-public struct ProgressSummaryView: View {
+public struct StudyRootView: View {
     private var store: StudyStore
 
     public init(environment: StudyEnvironmentProtocol) {
@@ -27,6 +27,7 @@ public struct ProgressSummaryView: View {
             DefinitionsProgressView()
                 .environmentObject(store)
                 .onAppear {
+                    store.dispatch(.loadAppSettings)
                     store.dispatch(.loadDefinitions)
                 }
         }
