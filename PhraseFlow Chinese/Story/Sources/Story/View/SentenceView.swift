@@ -76,7 +76,6 @@ public struct SentenceView: View {
                             store.environment.playSound(.goToNextChapter)
                             store.dispatch(.goToNextChapter)
                         case false:
-                            // TODO: Handle snackbar via main app store dispatch
                             store.dispatch(.createChapter(.existingStory(chapter.storyId)))
                         }
                     }

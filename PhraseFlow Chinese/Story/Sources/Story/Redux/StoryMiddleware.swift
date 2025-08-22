@@ -165,6 +165,14 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         }
         return nil
         
+    case .showDefinition(let wordTimestamp):
+        if let definition = state.definitions[wordTimestamp.word] {
+            try? environment.saveDefinitions([definition])
+            // TODO: Save sentence audio
+            // TODO: Get definition (word) audio to play (may also need to be saved if not already)
+        }
+        return nil
+        
     case .failedToLoadStoriesAndDefinitions,
             .failedToDeleteStory,
             .failedToSaveChapter,
@@ -174,7 +182,6 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
             .setPlaybackTime,
             .updateLoadingStatus,
             .failedToLoadDefinitions,
-            .showDefinition,
             .hideDefinition:
         return nil
     }

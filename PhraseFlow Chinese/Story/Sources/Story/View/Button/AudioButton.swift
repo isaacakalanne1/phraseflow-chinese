@@ -38,7 +38,7 @@ struct AudioButton: View {
     @ViewBuilder
     private func audioButtonLabel(systemImage: SystemImage) -> some View {
         Image(systemName: systemImage.systemName)
-            .font(FTFont.flowTaleBodyLarge()) // TODO: Remove if not needed
+            .font(FTFont.flowTaleBodyLarge())
             .foregroundColor(FTColor.primary)
             .frame(width: 60, height: 60)
             .background(

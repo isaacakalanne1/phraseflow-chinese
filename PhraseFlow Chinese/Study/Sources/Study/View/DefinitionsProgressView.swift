@@ -52,7 +52,7 @@ struct DefinitionsProgressView: View {
                 }
 
                 // Practice button
-                if filteredDefinitions.count > 1 {
+                if filteredDefinitions.count > 0 {
                     PrimaryButton(title: LocalizedString.studyNavTitle) {
                         navigateToStudyView = true
                     }

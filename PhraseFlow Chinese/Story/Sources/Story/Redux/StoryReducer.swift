@@ -134,6 +134,7 @@ public let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { s
         if let definition = newState.definitions[wordTimestamp.word] {
             newState.selectedDefinition = definition
             newState.viewState.isDefining = true
+            newState.definitions[wordTimestamp.word]?.hasBeenSeen = true
         }
         
     case .hideDefinition:

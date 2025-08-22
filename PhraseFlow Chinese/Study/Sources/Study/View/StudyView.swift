@@ -141,7 +141,6 @@ public struct StudyView: View {
                         }
                     }
                 }
-                .frame(maxWidth: .infinity, alignment: .bottom) // TODO: Remove if unneeded
             }
         }
         .navigationTitle(LocalizedString.studyNavTitle)
