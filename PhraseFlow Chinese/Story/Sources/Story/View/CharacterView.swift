@@ -31,7 +31,8 @@ struct CharacterView: View {
     }
 
     var hasDefinition: Bool {
-        store.state.definitions[word.word] != nil
+        let key = DefinitionKey(word: word.word, sentenceId: sentence.id)
+        return store.state.definitions[key] != nil
     }
 
     var body: some View {

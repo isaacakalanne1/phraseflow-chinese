@@ -131,7 +131,10 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         
         // Check if definitions already exist for all words in this sentence
         let wordsInSentence = sentence.timestamps.map { $0.word }
-        let existingDefinitions = wordsInSentence.compactMap { state.definitions[$0] }
+        let existingDefinitions = wordsInSentence.compactMap { word in
+            let key = DefinitionKey(word: word, sentenceId: sentence.id)
+            return state.definitions[key]
+        }
         
         // If we have definitions for all words in the sentence, skip fetching
         if existingDefinitions.count == wordsInSentence.count {
@@ -164,10 +167,14 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         return nil
         
     case .showDefinition(let wordTimestamp):
-        if let definition = state.definitions[wordTimestamp.word] {
-            try? environment.saveDefinitions([definition])
-            // TODO: Save sentence audio
-            // TODO: Get definition (word) audio to play (may also need to be saved if not already)
+        // Find the definition for this word in the current sentence
+        if let currentSentence = state.currentChapter?.currentSentence {
+            let key = DefinitionKey(word: wordTimestamp.word, sentenceId: currentSentence.id)
+            if let definition = state.definitions[key] {
+                try? environment.saveDefinitions([definition])
+                // TODO: Save sentence audio
+                // TODO: Get definition (word) audio to play (may also need to be saved if not already)
+            }
         }
         return nil
         

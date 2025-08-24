@@ -15,7 +15,7 @@ public struct Definition: Codable, Equatable, Hashable, Sendable {
     public var creationDate: Date
     var studiedDates: [Date]
     public var timestampData: WordTimeStampData
-    var sentence: Sentence
+    public var sentence: Sentence
     var detail: WordDefinition
     var language: Language
     public var hasBeenSeen: Bool

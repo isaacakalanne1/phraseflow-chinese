@@ -16,14 +16,14 @@ public struct StoryState: Equatable {
     public var isWritingChapter: Bool = false
     public var viewState: StoryViewState = StoryViewState()
     public var isPlayingChapterAudio = false
-    public var definitions: [String: Definition] = [:]
+    public var definitions: [DefinitionKey: Definition] = [:]
     public var selectedDefinition: Definition?
 
     public init(
         currentChapter: Chapter? = nil,
          storyChapters: [UUID: [Chapter]] = [:],
          isWritingChapter: Bool = false,
-         definitions: [String: Definition] = [:],
+         definitions: [DefinitionKey: Definition] = [:],
          selectedDefinition: Definition? = nil
     ) {
         self.currentChapter = currentChapter
