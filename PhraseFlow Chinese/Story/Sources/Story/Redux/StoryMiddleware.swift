@@ -129,25 +129,23 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         
         let sentence = chapter.sentences[sentenceIndex]
         
-        // Fetch definitions for this sentence - the environment will handle checking what's already loaded
+        // Check if definitions already exist for all words in this sentence
+        let wordsInSentence = sentence.timestamps.map { $0.word }
+        let existingDefinitions = wordsInSentence.compactMap { state.definitions[$0] }
+        
+        // If we have definitions for all words in the sentence, skip fetching
+        if existingDefinitions.count == wordsInSentence.count {
+            return .onLoadedDefinitions(existingDefinitions, chapter: chapter, sentenceIndex: sentenceIndex)
+        }
+
         do {
             let sentenceDefinitions = try await environment.studyEnvironment.fetchDefinitions(
                 in: sentence,
                 chapter: chapter,
                 deviceLanguage: Language.deviceLanguage
             )
-            if !sentenceDefinitions.isEmpty {
-                // Return the loaded definitions with context
-                return .onLoadedDefinitions(sentenceDefinitions, chapter: chapter, sentenceIndex: sentenceIndex)
-            } else {
-                // No definitions returned for this sentence, continue with next sentence
-                try? environment.saveDefinitions(sentenceDefinitions)
-                let nextIndex = sentenceIndex + 1
-                if nextIndex < chapter.sentences.count {
-                    return .loadDefinitionsForChapter(chapter, sentenceIndex: nextIndex)
-                }
-                return nil
-            }
+            try? environment.saveDefinitions(sentenceDefinitions)
+            return .onLoadedDefinitions(sentenceDefinitions, chapter: chapter, sentenceIndex: sentenceIndex)
         } catch {
             return .failedToLoadDefinitions
         }

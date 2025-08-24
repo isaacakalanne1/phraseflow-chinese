@@ -12,6 +12,7 @@ import TextGeneration
 
 struct CharacterView: View {
     @EnvironmentObject var store: StoryStore
+    @State private var shimmerOffset: CGFloat = -1
 
     let word: WordTimeStampData
     let sentence: Sentence
@@ -41,7 +42,30 @@ struct CharacterView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .foregroundStyle(isTappedWord ? FTColor.primary : (word == spokenWord ? FTColor.wordHighlight : FTColor.primary))
                     .background {
-                        if isTappedWord {
+                        if !hasDefinition {
+                            GeometryReader { geometry in
+                                LinearGradient(
+                                    gradient: Gradient(colors: [
+                                        FTColor.highlight.opacity(0.3),
+                                        FTColor.highlight.opacity(0.6),
+                                        FTColor.highlight.opacity(0.3)
+                                    ]),
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                                .frame(width: geometry.size.width, height: geometry.size.height * 2)
+                                .offset(y: shimmerOffset * geometry.size.height)
+                                .animation(
+                                    Animation.linear(duration: 1.5)
+                                        .repeatForever(autoreverses: true),
+                                    value: shimmerOffset
+                                )
+                                .onAppear {
+                                    shimmerOffset = 1
+                                }
+                            }
+                            .clipped()
+                        } else if isTappedWord {
                             FTColor.wordHighlight
                         } else if sentence.id == currentSentence?.id {
                             FTColor.highlight
