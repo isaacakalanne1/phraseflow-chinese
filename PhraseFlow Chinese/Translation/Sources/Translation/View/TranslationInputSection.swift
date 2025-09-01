@@ -21,18 +21,35 @@ struct TranslationInputSection: View {
                 .font(FTFont.flowTaleSubHeader())
                 .foregroundColor(FTColor.primary)
 
-            TextEditor(text: $inputText)
-                .frame(height: 120)
-                .padding(10)
-                .scrollContentBackground(.hidden)
-                .background(FTColor.background)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .strokeBorder(FTColor.secondary, lineWidth: 1)
-                )
-                .foregroundColor(FTColor.primary)
-                .focused($isInputFocused)
+            ZStack(alignment: .topTrailing) {
+                TextEditor(text: $inputText)
+                    .frame(height: 120)
+                    .padding(10)
+                    .scrollContentBackground(.hidden)
+                    .background(FTColor.background)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .strokeBorder(FTColor.secondary, lineWidth: 1)
+                    )
+                    .foregroundColor(FTColor.primary)
+                    .focused($isInputFocused)
+                
+                if isInputFocused {
+                    Button(action: {
+                        isInputFocused = false
+                    }) {
+                        Image(systemName: "keyboard.chevron.compact.down")
+                            .font(.system(size: 16))
+                            .foregroundColor(FTColor.secondary)
+                            .padding(8)
+                            .background(FTColor.background)
+                            .clipShape(Circle())
+                            .shadow(radius: 2)
+                    }
+                    .padding(8)
+                }
+            }
 
             Picker("Translation Mode", selection: Binding(
                 get: { store.state.mode },

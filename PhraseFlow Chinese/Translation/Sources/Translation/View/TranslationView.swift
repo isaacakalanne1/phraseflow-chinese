@@ -55,6 +55,7 @@ struct TranslationView: View {
         .onChange(of: inputText, { oldValue, newValue in
             store.dispatch(.updateInputText(newValue))
         })
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
 
