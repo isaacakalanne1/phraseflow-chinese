@@ -93,7 +93,8 @@ public struct StudyView: View {
                             isShown: true,
                             content:
                                 HStack {
-                                    let highlighted = boldSubstring(in: baseString, at: characterCount, length: definition.timestampData.word.count) ?? AttributedString(definition.sentence.translation)
+                                    let wordToHighlight = definition.timestampData.word
+                                    let highlighted = highlightWord(wordToHighlight, in: baseString) ?? AttributedString(definition.sentence.translation)
 
                                     Text(highlighted)
                                         .font(FTFont.flowTaleBodyLarge())
@@ -195,28 +196,26 @@ public struct StudyView: View {
         }
     }
 
-    func boldSubstring(in baseString: String,
-                       at characterOffset: Int,
-                       length: Int) -> AttributedString?
-    {
-        guard characterOffset >= 0,
-              length > 0,
-              characterOffset + length <= baseString.count
-        else {
-            return nil
+    func highlightWord(_ word: String, in sentence: String) -> AttributedString? {
+        var attributed = AttributedString(sentence)
+        
+        let lowercasedWord = word.lowercased()
+        let lowercasedSentence = sentence.lowercased()
+        
+        if let range = lowercasedSentence.range(of: lowercasedWord) {
+            let startIndex = sentence.distance(from: sentence.startIndex, to: range.lowerBound)
+            let endIndex = sentence.distance(from: sentence.startIndex, to: range.upperBound)
+            
+            let nsRange = NSRange(location: startIndex, length: endIndex - startIndex)
+            
+            if let attributedRange = Range(nsRange, in: attributed) {
+                attributed[attributedRange].font = .system(size: 30, weight: .bold)
+            }
+            
+            return attributed
         }
-
-        let startIndex = baseString.index(baseString.startIndex, offsetBy: characterOffset)
-        let endIndex = baseString.index(startIndex, offsetBy: length)
-        let substring = baseString[startIndex ..< endIndex]
-
-        var attributed = AttributedString(baseString)
-
-        if let rangeInAttributed = attributed.range(of: String(substring)) {
-            attributed[rangeInAttributed].font = .system(size: 30, weight: .bold)
-        }
-
-        return attributed
+        
+        return nil
     }
 
 }
