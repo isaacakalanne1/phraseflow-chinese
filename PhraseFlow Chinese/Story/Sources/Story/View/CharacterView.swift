@@ -47,22 +47,24 @@ struct CharacterView: View {
                             GeometryReader { geometry in
                                 LinearGradient(
                                     gradient: Gradient(colors: [
-                                        FTColor.highlight.opacity(0.3),
-                                        FTColor.highlight.opacity(0.6),
-                                        FTColor.highlight.opacity(0.3)
+                                        Color.clear,
+                                        FTColor.highlight.opacity(0.4),
+                                        FTColor.highlight.opacity(0.8),
+                                        FTColor.highlight.opacity(0.4),
+                                        Color.clear
                                     ]),
-                                    startPoint: .top,
-                                    endPoint: .bottom
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
                                 )
-                                .frame(width: geometry.size.width, height: geometry.size.height * 2)
-                                .offset(y: shimmerOffset * geometry.size.height)
-                                .animation(
-                                    Animation.linear(duration: 1.5)
-                                        .repeatForever(autoreverses: true),
-                                    value: shimmerOffset
-                                )
+                                .frame(width: geometry.size.width * 2, height: geometry.size.height)
+                                .offset(x: shimmerOffset * (geometry.size.width + 50) - geometry.size.width - 25)
                                 .onAppear {
-                                    shimmerOffset = 1
+                                    withAnimation(
+                                        Animation.linear(duration: 1.2)
+                                            .repeatForever(autoreverses: false)
+                                    ) {
+                                        shimmerOffset = 1
+                                    }
                                 }
                             }
                             .clipped()
