@@ -180,6 +180,14 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             return nil
         }
         
+    case .loadAppSettings:
+        do {
+            let settings = try environment.getAppSettings()
+            return .onLoadAppSettings(settings)
+        } catch {
+            return nil
+        }
+        
     case .updateInputText,
             .updateSourceLanguage,
             .updateTargetLanguage,
@@ -195,7 +203,8 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             .clearTranslationDefinition,
             .clearTranslation,
             .onTranslationsSaved,
-            .onTranslationsLoaded:
+            .onTranslationsLoaded,
+            .onLoadAppSettings:
         return nil
     }
 }

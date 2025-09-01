@@ -34,10 +34,7 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
             dataStore: definitionDataStore,
             audioEnvironment: audioEnvironment,
             settingsEnvironment: settingsEnvironment)
-        self.settingsEnvironment = SettingsEnvironment(
-            settingsDataStore: settingsDataStore,
-            audioEnvironment: audioEnvironment
-        )
+        self.settingsEnvironment = settingsEnvironment
         self.translationDataStore = TranslationDataStore()
     }
     
@@ -63,5 +60,9 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
     
     public func saveSentenceAudio(_ audioData: Data, id: UUID) throws {
         try studyEnvironment.saveSentenceAudio(audioData, id: id)
+    }
+    
+    public func getAppSettings() throws -> SettingsState {
+        return try settingsEnvironment.loadAppSettings()
     }
 }

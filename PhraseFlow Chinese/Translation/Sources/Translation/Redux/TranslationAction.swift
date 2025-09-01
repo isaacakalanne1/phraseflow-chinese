@@ -41,4 +41,6 @@ enum TranslationAction {
     case deleteTranslation(UUID)
     case onTranslationsSaved([Chapter])
     case onTranslationsLoaded([Chapter])
+    case loadAppSettings
+    case onLoadAppSettings(SettingsState)
 }

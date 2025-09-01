@@ -23,5 +23,8 @@ public struct TranslationRootView: View {
     public var body: some View {
         TranslationView()
             .environmentObject(store)
+            .onAppear {
+                store.dispatch(.loadAppSettings)
+            }
     }
 }

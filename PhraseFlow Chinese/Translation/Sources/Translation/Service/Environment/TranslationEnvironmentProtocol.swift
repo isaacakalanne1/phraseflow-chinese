@@ -24,4 +24,5 @@ public protocol TranslationEnvironmentProtocol {
     func fetchDefinitions(in sentence: Sentence?, chapter: Chapter, deviceLanguage: Language) async throws -> [Definition]
     func saveDefinitions(_ definitions: [Definition]) throws
     func saveSentenceAudio(_ audioData: Data, id: UUID) throws
+    func getAppSettings() throws -> SettingsState
 }

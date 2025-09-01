@@ -118,6 +118,9 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
     case .onTranslationsSaved(let translations):
         newState.savedTranslations = translations
         
+    case .onLoadAppSettings(let settings):
+        newState.targetLanguage = settings.language
+        
     case .playTranslationWord,
             .synthesizeAudio,
             .defineTranslationWord,
@@ -125,7 +128,8 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
             .failedToDefineTranslationWord,
             .failedToSynthesizeAudio,
             .saveCurrentTranslation,
-            .deleteTranslation:
+            .deleteTranslation,
+            .loadAppSettings:
         break
     }
     
