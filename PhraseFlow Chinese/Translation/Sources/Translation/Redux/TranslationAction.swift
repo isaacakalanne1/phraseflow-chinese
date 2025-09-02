@@ -21,7 +21,7 @@ enum TranslationAction {
     case breakdownText
     case translationInProgress(Bool)
     case synthesizeAudio(Chapter, Language)
-    case onSynthesizedTranslationAudio(Chapter)
+    case onSynthesizedTranslationAudio(Chapter, initialDefinitions: [Definition])
     case failedToSynthesizeAudio
     case failedToTranslate
     case failedToBreakdown

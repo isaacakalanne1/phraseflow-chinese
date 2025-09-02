@@ -46,8 +46,34 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
         return try await translationServices.breakdownText(text, textLanguage: textLanguage, deviceLanguage: deviceLanguage)
     }
     
-    public func synthesizeSpeech(for chapter: Chapter, voice: Voice, language: Language) async throws -> Chapter {
-        return try await speechEnvironment.synthesizeSpeech(for: chapter, voice: voice, language: language)
+    public func synthesizeSpeech(for chapter: Chapter, voice: Voice, language: Language) async throws -> (chapter: Chapter, initialDefinitions: [Definition]) {
+        // First synthesize the speech
+        let synthesizedChapter = try await speechEnvironment.synthesizeSpeech(for: chapter, voice: voice, language: language)
+        
+        // Then load definitions for the first 3 sentences to speed up initial display
+        let sentencesToProcess = Array(synthesizedChapter.sentences.prefix(3))
+        var allDefinitions: [Definition] = []
+        
+        for sentence in sentencesToProcess {
+            do {
+                let definitions = try await fetchDefinitions(
+                    in: sentence,
+                    chapter: synthesizedChapter,
+                    deviceLanguage: Language.deviceLanguage
+                )
+                allDefinitions.append(contentsOf: definitions)
+            } catch {
+                // Continue even if one sentence fails
+                print("Failed to load definitions for sentence: \(error)")
+            }
+        }
+        
+        // Save the definitions we loaded
+        if !allDefinitions.isEmpty {
+            try? saveDefinitions(allDefinitions)
+        }
+        
+        return (chapter: synthesizedChapter, initialDefinitions: allDefinitions)
     }
     
     public func fetchDefinitions(in sentence: Sentence?, chapter: Chapter, deviceLanguage: Language) async throws -> [Definition] {

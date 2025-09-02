@@ -60,7 +60,7 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             return .failedToBreakdown
         }
         
-        guard let newChapter = try? await environment.synthesizeSpeech(for: chapter,
+        guard let (newChapter, initialDefinitions) = try? await environment.synthesizeSpeech(for: chapter,
                                                                        voice: selectedVoice,
                                                                        language: language) else {
             return .failedToSynthesizeAudio
@@ -85,7 +85,8 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         } catch {
             print("Error creating AVPlayerItem from audio data: \(error)")
         }
-        return .onSynthesizedTranslationAudio(newChapter)
+        
+        return .onSynthesizedTranslationAudio(newChapter, initialDefinitions: initialDefinitions)
         
     case .defineTranslationWord(let wordTimeStampData):
         return .translationDefiningInProgress(true)
@@ -237,8 +238,13 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         }
         return nil
         
-    case .onSynthesizedTranslationAudio(let chapter):
-        return .loadDefinitionsForTranslation(chapter, sentenceIndex: 0)
+    case .onSynthesizedTranslationAudio(let chapter, _):
+        // Start loading from index 3 since first 3 sentences are already loaded during synthesis
+        let startIndex = min(3, chapter.sentences.count)
+        if startIndex < chapter.sentences.count {
+            return .loadDefinitionsForTranslation(chapter, sentenceIndex: startIndex)
+        }
+        return nil
         
     case .updateInputText,
             .updateSourceLanguage,

@@ -50,12 +50,17 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         
     case .translationInProgress(let isInProgress):
         newState.isTranslating = isInProgress
-    case .onSynthesizedTranslationAudio(let chapter):
+    case .onSynthesizedTranslationAudio(let chapter, let initialDefinitions):
         newState.chapter = chapter
         newState.isTranslating = false
         newState.currentSentenceIndex = 0
         if !chapter.sentences.isEmpty {
             newState.currentSentence = chapter.sentences[0]
+        }
+        // Store the initial definitions that were loaded for the first 3 sentences
+        for definition in initialDefinitions {
+            let key = DefinitionKey(word: definition.word, sentenceId: definition.sentenceId)
+            newState.definitions[key] = definition
         }
         
     case .failedToTranslate,
