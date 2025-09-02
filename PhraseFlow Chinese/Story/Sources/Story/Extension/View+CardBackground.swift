@@ -24,7 +24,7 @@ struct CardBackground: ViewModifier {
     }
 }
 
-extension View {
+public extension View {
     func cardBackground() -> some View {
         modifier(CardBackground())
     }

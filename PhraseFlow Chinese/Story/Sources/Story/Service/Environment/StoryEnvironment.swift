@@ -14,7 +14,6 @@ import TextGeneration
 import Speech
 import Subscription
 import Study
-import Translation
 import ImageGeneration
 
 public struct StoryEnvironment: StoryEnvironmentProtocol {
@@ -23,7 +22,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     public let loadingEnvironment: LoadingEnvironmentProtocol
     private let settingsEnvironment: SettingsEnvironmentProtocol
     private let speechEnvironment: SpeechEnvironmentProtocol
-    private let translationEnvironment: TranslationEnvironmentProtocol
     private let service: TextGenerationServicesProtocol
     private let imageGenerationService: ImageGenerationServicesProtocol
     private let dataStore: StoryDataStoreProtocol
@@ -34,7 +32,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         speechEnvironment: SpeechEnvironmentProtocol,
         studyEnvironment: StudyEnvironmentProtocol,
         loadingEnvironment: LoadingEnvironmentProtocol,
-        translationEnvironment: TranslationEnvironmentProtocol,
         service: TextGenerationServicesProtocol,
         imageGenerationService: ImageGenerationServicesProtocol,
         dataStore: StoryDataStoreProtocol
@@ -44,7 +41,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         self.speechEnvironment = speechEnvironment
         self.studyEnvironment = studyEnvironment
         self.loadingEnvironment = loadingEnvironment
-        self.translationEnvironment = translationEnvironment
         self.service = service
         self.imageGenerationService = imageGenerationService
         self.dataStore = dataStore

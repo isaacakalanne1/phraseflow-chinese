@@ -26,7 +26,6 @@ let package = Package(
         .package(name: "Settings", path: "../Settings"),
         .package(name: "Subscription", path: "../Subscription"),
         .package(name: "TextGeneration", path: "../TextGeneration"),
-        .package(name: "Translation", path: "../Translation"),
         .package(name: "ImageGeneration", path: "../ImageGeneration"),
         .package(name: "Localization", path: "../Localization")
     ],
@@ -47,7 +46,6 @@ let package = Package(
                 "Settings",
                 "Subscription",
                 "TextGeneration",
-                "Translation",
                 "ImageGeneration",
                 "Localization"
             ]

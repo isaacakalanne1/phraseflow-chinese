@@ -9,11 +9,17 @@ import SwiftUI
 import TextGeneration
 import Settings
 
-struct FlowLayout: Layout {
+public struct FlowLayout: Layout {
     var spacing: CGFloat = 4
     var language: Language?
+    
+    public init(spacing: CGFloat,
+                language: Language? = nil) {
+        self.spacing = spacing
+        self.language = language
+    }
 
-    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache _: inout ()) -> CGSize {
+    public func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache _: inout ()) -> CGSize {
         // Variables to track size
         var width: CGFloat = 0
         var height: CGFloat = 0
@@ -46,7 +52,7 @@ struct FlowLayout: Layout {
         return CGSize(width: width, height: height)
     }
 
-    func placeSubviews(in bounds: CGRect, proposal _: ProposedViewSize, subviews: Subviews, cache _: inout ()) {
+    public func placeSubviews(in bounds: CGRect, proposal _: ProposedViewSize, subviews: Subviews, cache _: inout ()) {
         var x: CGFloat = bounds.minX
         var y: CGFloat = bounds.minY
 

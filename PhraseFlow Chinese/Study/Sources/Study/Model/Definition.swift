@@ -19,7 +19,7 @@ public struct Definition: Codable, Equatable, Hashable, Sendable {
     var detail: WordDefinition
     var language: Language
     public var hasBeenSeen: Bool
-    var sentenceId: UUID // ID for the extracted sentence audio
+    public var sentenceId: UUID // ID for the extracted sentence audio
     public var audioData: Data?
 
     init(id: UUID = UUID(),

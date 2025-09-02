@@ -9,7 +9,9 @@ import Audio
 import Foundation
 import ReduxKit
 import AVKit
+import AVFoundation
 import Settings
+import Story
 
 @MainActor
 let translationMiddleware: Middleware<TranslationState, TranslationAction, TranslationEnvironmentProtocol> = { state, action, environment in
@@ -64,6 +66,25 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             return .failedToSynthesizeAudio
         }
         
+        let audioData = newChapter.audio.data
+        let tempDirectory = FileManager.default.temporaryDirectory
+        let tempFileName = UUID().uuidString + ".m4a"
+        let tempFileURL = tempDirectory.appendingPathComponent(tempFileName)
+        
+        do {
+            try audioData.write(to: tempFileURL)
+            let asset = AVAsset(url: tempFileURL)
+            let playerItem = AVPlayerItem(asset: asset)
+            playerItem.audioTimePitchAlgorithm = .timeDomain
+            
+            state.audioPlayer.replaceCurrentItem(with: playerItem)
+            
+            DispatchQueue.global().asyncAfter(deadline: .now() + 5) {
+                try? FileManager.default.removeItem(at: tempFileURL)
+            }
+        } catch {
+            print("Error creating AVPlayerItem from audio data: \(error)")
+        }
         return .onSynthesizedTranslationAudio(newChapter)
         
     case .defineTranslationWord(let wordTimeStampData):
@@ -98,19 +119,14 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         definitionOfTappedWord.hasBeenSeen = true
         definitionOfTappedWord.creationDate = .now
         
-        let extractedAudio = AudioExtractor.extractAudioSegment(
-            from: state.audioPlayer,
-            startTime: definitionOfTappedWord.timestampData.time,
-            duration: definitionOfTappedWord.timestampData.duration
-        )
-        definitionOfTappedWord.audioData = extractedAudio
+        // TODO: Extract audio segment for word playback if needed
+        // For now, skip audio extraction to avoid crashes
+        definitionOfTappedWord.audioData = nil
         
         definitionsForSentence.addDefinitions([definitionOfTappedWord])
         
         try? environment.saveDefinitions(definitionsForSentence)
-        if let data = definitionOfTappedWord.audioData {
-            try? environment.saveSentenceAudio(data, id: sentence.id)
-        }
+        // Audio data is nil for now, so no sentence audio to save
         
         return .onDefinedTranslationWord(definitionOfTappedWord)
         
@@ -188,6 +204,42 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             return nil
         }
         
+    case .loadDefinitionsForTranslation(let chapter, let sentenceIndex):
+        guard sentenceIndex < chapter.sentences.count else {
+            return nil
+        }
+        
+        let sentence = chapter.sentences[sentenceIndex]
+        let existingDefinitions = sentence.timestamps.compactMap { timestamp in
+            let key = DefinitionKey(word: timestamp.word, sentenceId: sentence.id)
+            return state.definitions[key]
+        }
+        
+        if existingDefinitions.count == sentence.timestamps.count {
+            return .onLoadedTranslationDefinitions(existingDefinitions, chapter: chapter, sentenceIndex: sentenceIndex)
+        }
+        
+        do {
+            let definitions = try await environment.fetchDefinitions(
+                in: sentence,
+                chapter: chapter,
+                deviceLanguage: Language.deviceLanguage
+            )
+            return .onLoadedTranslationDefinitions(definitions, chapter: chapter, sentenceIndex: sentenceIndex)
+        } catch {
+            return .failedToLoadTranslationDefinitions
+        }
+        
+    case .onLoadedTranslationDefinitions(_, let chapter, let sentenceIndex):
+        let nextIndex = sentenceIndex + 1
+        if nextIndex < chapter.sentences.count {
+            return .loadDefinitionsForTranslation(chapter, sentenceIndex: nextIndex)
+        }
+        return nil
+        
+    case .onSynthesizedTranslationAudio(let chapter):
+        return .loadDefinitionsForTranslation(chapter, sentenceIndex: 0)
+        
     case .updateInputText,
             .updateSourceLanguage,
             .updateTargetLanguage,
@@ -195,7 +247,6 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             .updateTranslationMode,
             .swapLanguages,
             .translationInProgress,
-            .onSynthesizedTranslationAudio,
             .failedToSynthesizeAudio,
             .failedToTranslate,
             .failedToBreakdown,
@@ -204,7 +255,9 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             .clearTranslation,
             .onTranslationsSaved,
             .onTranslationsLoaded,
-            .onLoadAppSettings:
+            .onLoadAppSettings,
+            .failedToLoadTranslationDefinitions,
+            .updateCurrentSentenceIndex:
         return nil
     }
 }

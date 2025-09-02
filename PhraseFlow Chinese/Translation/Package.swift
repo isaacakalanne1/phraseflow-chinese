@@ -23,6 +23,7 @@ let package = Package(
         .package(name: "FTStyleKit", path: "../FTStyleKit"),
         .package(name: "Settings", path: "../Settings"),
         .package(name: "Speech", path: "../Speech"),
+        .package(name: "Story", path: "../Story"),
         .package(name: "Study", path: "../Study"),
         .package(name: "TextGeneration", path: "../TextGeneration")
     ],
@@ -40,6 +41,7 @@ let package = Package(
                 "FTStyleKit",
                 "Settings",
                 "Speech",
+                "Story",
                 "Study",
                 "TextGeneration"
             ]),

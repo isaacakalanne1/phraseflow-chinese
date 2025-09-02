@@ -9,6 +9,7 @@ import Foundation
 import AVKit
 import Settings
 import Study
+import Story
 import TextGeneration
 
 struct TranslationState: Equatable {
@@ -27,6 +28,9 @@ struct TranslationState: Equatable {
     var textLanguage: Language = .mandarinChinese
     var savedTranslations: [Chapter] = []
     var isLoadingHistory: Bool = false
+    var currentSentenceIndex: Int = 0
+    var isLoadingDefinitions: Bool = false
+    var definitions: [DefinitionKey: Definition] = [:]
     
     init() {}
     
