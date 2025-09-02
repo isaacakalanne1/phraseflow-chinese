@@ -1,21 +1,16 @@
 //
-//  ReaderView.swift
-//  FlowTale
+//  TextPracticeView.swift
+//  TextPractice
 //
-//  Created by iakalann on 25/10/2024.
+//  Created by Isaac Akalanne on 02/09/2025.
 //
 
-import FTColor
-import FTFont
-import FTStyleKit
 import SwiftUI
-import TextGeneration
 
-public struct ReaderView: View {
-    @EnvironmentObject var store: StoryStore
-    let chapter: Chapter
+struct TextPracticeView: View {
+    @EnvironmentObject var store: TextPracticeStore
 
-    public var body: some View {
+    var body: some View {
         VStack(spacing: 16) {
             AIStatementView()
 

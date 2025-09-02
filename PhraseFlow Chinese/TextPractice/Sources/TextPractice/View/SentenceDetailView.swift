@@ -11,7 +11,7 @@ import TextGeneration
 import Study
 
 public struct SentenceDetailView: View {
-    @EnvironmentObject var store: StoryStore
+    @EnvironmentObject var store: TextPracticeStore
 
     public init() {}
     

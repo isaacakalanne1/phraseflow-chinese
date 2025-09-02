@@ -7,14 +7,14 @@
 
 import SwiftUI
 import FTFont
+import FTStyleKit
 import TextGeneration
 import Localization
 import Settings
-import FTStyleKit
 import Audio
 
 public struct SentenceView: View {
-    @EnvironmentObject var store: StoryStore
+    @EnvironmentObject var store: TextPracticeStore
     @State private var opacity: Double = 0
     @State private var currentPage: Int = 0
 
