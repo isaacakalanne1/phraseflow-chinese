@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import TextGeneration
 
 struct TextPracticeView: View {
     @EnvironmentObject var store: TextPracticeStore
+    let chapter: Chapter
 
     var body: some View {
         VStack(spacing: 16) {
@@ -18,7 +20,7 @@ struct TextPracticeView: View {
                 SentenceDetailView()
             }
 
-            ChapterHeaderView()
+            ChapterHeaderView(chapter: chapter)
 
             SentenceView()
                 .padding()

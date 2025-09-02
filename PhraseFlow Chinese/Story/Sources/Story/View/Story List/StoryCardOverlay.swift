@@ -8,6 +8,7 @@
 import SwiftUI
 import FTFont
 import FTColor
+import FTStyleKit
 import TextGeneration
 import Localization
 import ReduxKit
@@ -76,7 +77,7 @@ struct StoryCardOverlay: View {
             
             // Difficulty indicator
             HStack(spacing: 8) {
-                DifficultyView(difficulty: firstChapter?.difficulty ?? .beginner, isSelected: true)
+                DifficultyView(difficultyIndex: (firstChapter?.difficulty ?? .beginner).index)
 
                 Text(firstChapter?.difficulty.title ?? "")
                     .font(FTFont.flowTaleSecondaryHeader())

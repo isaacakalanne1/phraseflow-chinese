@@ -5,6 +5,7 @@
 //  Created by iakalann on 26/12/2024.
 //
 
+import FTStyleKit
 import SwiftUI
 import TextGeneration
 
@@ -17,7 +18,7 @@ struct StoryInfoView: View {
 
     var body: some View {
         HStack {
-            DifficultyView(difficulty: chapter.difficulty, isSelected: true)
+            DifficultyView(difficultyIndex: chapter.difficulty.index)
             Text(chapter.language.flagEmoji)
         }
     }

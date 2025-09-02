@@ -8,27 +8,27 @@
 import FTColor
 import FTFont
 import SwiftUI
+import TextGeneration
 
 struct ChapterHeaderView: View {
     @EnvironmentObject var store: TextPracticeStore
+    let chapter: Chapter
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            if let chapter = store.state.currentChapter {
-                HStack(spacing: 12) {
-                    StoryInfoView(chapter: chapter)
-                    
-                    Text(chapter.storyTitle)
-                        .font(FTFont.flowTaleSecondaryHeader())
-                        .foregroundColor(FTColor.primary)
-                        .lineLimit(1)
-                }
+            HStack(spacing: 12) {
+                StoryInfoView(chapter: chapter)
                 
-                Text(chapter.title)
+                Text(chapter.storyTitle)
                     .font(FTFont.flowTaleSecondaryHeader())
-                    .foregroundColor(FTColor.primary.opacity(0.9))
+                    .foregroundColor(FTColor.primary)
                     .lineLimit(1)
             }
+            
+            Text(chapter.title)
+                .font(FTFont.flowTaleSecondaryHeader())
+                .foregroundColor(FTColor.primary.opacity(0.9))
+                .lineLimit(1)
         }
     }
 }

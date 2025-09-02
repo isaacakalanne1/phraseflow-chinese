@@ -20,6 +20,7 @@ import Navigation
 import Loading
 import DataStorage
 import TextGeneration
+import TextPractice
 import Speech
 import ImageGeneration
 
@@ -69,11 +70,13 @@ public struct FlowTaleRootView: View {
         
         let textGenerationServices = TextGenerationServices()
         let storyDataStore = StoryDataStore()
+        let textPracticeEnvironment = TextPracticeEnvironment()
         let storyEnvironment = StoryEnvironment(
             audioEnvironment: audioEnvironment,
             settingsEnvironment: settingsEnvironment,
             speechEnvironment: speechEnvironment,
             studyEnvironment: studyEnvironment,
+            textPracticeEnvironment: textPracticeEnvironment,
             loadingEnvironment: loadingEnvironment,
             service: textGenerationServices,
             imageGenerationService: imageGenerationService,

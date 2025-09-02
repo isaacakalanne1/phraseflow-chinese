@@ -5,4 +5,8 @@
 //  Created by Isaac Akalanne on 02/09/2025.
 //
 
-public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol { }
+public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
+    public init() {
+        
+    }
+}

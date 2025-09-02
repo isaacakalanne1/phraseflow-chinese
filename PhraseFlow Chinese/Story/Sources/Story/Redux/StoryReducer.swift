@@ -9,7 +9,8 @@ import SwiftUI
 import ReduxKit
 import TextGeneration
 
-public let storyReducer: @Sendable (StoryState, StoryAction) -> StoryState = { state, action in
+@MainActor
+let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
     var newState = state
 
     switch action {

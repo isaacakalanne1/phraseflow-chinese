@@ -12,6 +12,7 @@ import FTStyleKit
 import TextGeneration
 import Localization
 import Audio
+import TextPractice
 
 public struct ChapterListView: View {
     @EnvironmentObject var store: StoryStore
@@ -66,7 +67,7 @@ public struct ChapterListView: View {
                             Spacer()
                             
                             HStack(spacing: 4) {
-                                DifficultyView(difficulty: firstChapter.difficulty, isSelected: true)
+                                DifficultyView(difficultyIndex: firstChapter.difficulty.index)
                                 Text(firstChapter.difficulty.title)
                                     .font(FTFont.flowTaleSecondaryHeader())
                                     .foregroundColor(FTColor.secondary)
@@ -149,8 +150,7 @@ public struct ChapterListView: View {
                     set: { if !$0 { selectedChapter = nil } }
                 )) {
                     if let chapter = selectedChapter {
-                        ReaderView(chapter: chapter)
-                            .environmentObject(store)
+                        TextPracticeRootView(environment: store.environment.textPracticeEnvironment)
                     }
                 }
             } else {

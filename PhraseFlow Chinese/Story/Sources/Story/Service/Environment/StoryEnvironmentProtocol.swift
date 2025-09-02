@@ -12,10 +12,12 @@ import Settings
 import TextGeneration
 import Study
 import Subscription
+import TextPractice
 
 public protocol StoryEnvironmentProtocol {
     var audioEnvironment: AudioEnvironmentProtocol { get }
     var studyEnvironment: StudyEnvironmentProtocol { get }
+    var textPracticeEnvironment: TextPracticeEnvironmentProtocol { get }
     func prepareToPlayChapter(_ chapter: Chapter) async
     func playWord(_ word: WordTimeStampData, rate: Float) async
     func getAppSettings() throws -> SettingsState

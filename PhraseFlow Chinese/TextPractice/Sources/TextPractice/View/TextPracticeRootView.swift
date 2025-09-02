@@ -21,7 +21,7 @@ public struct TextPracticeRootView: View {
     }
     
     public var body: some View {
-        StoryListView()
+        TextPracticeView()
             .environmentObject(store)
             .onAppear {
                 store.dispatch(.loadStoriesAndDefinitions)
