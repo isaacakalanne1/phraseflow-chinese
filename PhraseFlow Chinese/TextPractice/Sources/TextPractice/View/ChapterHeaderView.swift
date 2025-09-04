@@ -12,23 +12,24 @@ import TextGeneration
 
 struct ChapterHeaderView: View {
     @EnvironmentObject var store: TextPracticeStore
-    let chapter: Chapter
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(spacing: 12) {
-                StoryInfoView(chapter: chapter)
+        if let chapter = store.state.chapter {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(spacing: 12) {
+                    StoryInfoView(chapter: chapter)
+                    
+                    Text(chapter.storyTitle)
+                        .font(FTFont.flowTaleSecondaryHeader())
+                        .foregroundColor(FTColor.primary)
+                        .lineLimit(1)
+                }
                 
-                Text(chapter.storyTitle)
+                Text(chapter.title)
                     .font(FTFont.flowTaleSecondaryHeader())
-                    .foregroundColor(FTColor.primary)
+                    .foregroundColor(FTColor.primary.opacity(0.9))
                     .lineLimit(1)
             }
-            
-            Text(chapter.title)
-                .font(FTFont.flowTaleSecondaryHeader())
-                .foregroundColor(FTColor.primary.opacity(0.9))
-                .lineLimit(1)
         }
     }
 }

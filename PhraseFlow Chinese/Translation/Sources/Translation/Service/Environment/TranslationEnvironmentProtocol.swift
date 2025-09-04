@@ -10,12 +10,14 @@ import Speech
 import Study
 import Settings
 import TextGeneration
+import TextPractice
 
 public protocol TranslationEnvironmentProtocol {
     var translationServices: TranslationServicesProtocol { get }
     var speechEnvironment: SpeechEnvironmentProtocol { get }
     var studyEnvironment: StudyEnvironmentProtocol { get }
     var settingsEnvironment: SettingsEnvironmentProtocol { get }
+    var textPracticeEnvironment: TextPracticeEnvironmentProtocol { get }
     var translationDataStore: TranslationDataStoreProtocol { get }
     
     func translateText(_ text: String, from sourceLanguage: Language?, to targetLanguage: Language) async throws -> Chapter

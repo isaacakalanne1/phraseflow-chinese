@@ -9,6 +9,7 @@ import Localization
 import SwiftUI
 import FTColor
 import Settings
+import TextPractice
 
 struct TranslationView: View {
     @EnvironmentObject var store: TranslationStore
@@ -33,7 +34,7 @@ struct TranslationView: View {
                 )
 
                 if let chapter = store.state.chapter {
-                    TranslationResultsSection(chapter: chapter)
+                    TextPracticeRootView(environment: store.environment.textPracticeEnvironment)
                 }
             }
 

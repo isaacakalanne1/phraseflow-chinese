@@ -7,24 +7,26 @@
 
 import SwiftUI
 import ReduxKit
+import TextGeneration
+import Study
 
 public struct TextPracticeRootView: View {
     private let store: TextPracticeStore
     
-    public init(environment: TextPracticeEnvironmentProtocol) {
+    public init(
+        environment: TextPracticeEnvironmentProtocol
+    ) {
         self.store = Store(
             initial: TextPracticeState(),
             reducer: textPracticeReducer,
             environment: environment,
-            middleware: textPracticeMiddleware
+            middleware: textPracticeMiddleware,
+            subscriber: textPracticeSubscriber
         )
     }
     
     public var body: some View {
         TextPracticeView()
             .environmentObject(store)
-            .onAppear {
-                store.dispatch(.loadStoriesAndDefinitions)
-            }
     }
 }

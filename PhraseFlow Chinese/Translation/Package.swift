@@ -25,6 +25,7 @@ let package = Package(
         .package(name: "Speech", path: "../Speech"),
         .package(name: "Story", path: "../Story"),
         .package(name: "Study", path: "../Study"),
+        .package(name: "TextPractice", path: "../TextPractice"),
         .package(name: "TextGeneration", path: "../TextGeneration")
     ],
     targets: [
@@ -43,6 +44,7 @@ let package = Package(
                 "Speech",
                 "Story",
                 "Study",
+                "TextPractice",
                 "TextGeneration"
             ]),
         .testTarget(

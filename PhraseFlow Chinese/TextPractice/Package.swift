@@ -19,6 +19,7 @@ let package = Package(
         .package(name: "FTFont", path: "../FTFont"),
         .package(name: "FTStyleKit", path: "../FTStyleKit"),
         .package(name: "Settings", path: "../Settings"),
+        .package(name: "Study", path: "../Study"),
         .package(name: "TextGeneration", path: "../TextGeneration"),
         .package(name: "Localization", path: "../Localization")
     ],
@@ -32,6 +33,7 @@ let package = Package(
                 "FTFont",
                 "FTStyleKit",
                 "Settings",
+                "Study",
                 "TextGeneration",
                 "Localization"
             ]

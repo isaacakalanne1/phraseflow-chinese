@@ -10,11 +10,8 @@ import SwiftUI
 import TextGeneration
 
 struct StoryInfoView: View {
+    @EnvironmentObject var store: TextPracticeStore
     let chapter: Chapter
-    
-    init(chapter: Chapter) {
-        self.chapter = chapter
-    }
 
     var body: some View {
         HStack {

@@ -17,18 +17,20 @@ public struct SentenceDetailView: View {
     
     public var body: some View {
         Group {
-            if store.state.selectedDefinition != nil {
+            switch store.state.viewState {
+            case .normal:
+                if store.state.isShowingOriginalSentence {
+                    TranslatedSentenceView()
+                        .frame(maxHeight: .infinity)
+                        .cardBackground()
+                }
+            case .showDefinition:
                 DefinitionView(
-                    isLoading: store.state.viewState.isDefining && store.state.selectedDefinition == nil,
+                    isLoading: store.state.selectedDefinition == nil,
                     viewData: createViewData(definition: store.state.selectedDefinition)
                 )
                 .frame(maxHeight: .infinity)
                 .cardBackground()
-                    
-            } else if (try? store.environment.isShowingEnglish()) == true {
-                TranslatedSentenceView()
-                    .frame(maxHeight: .infinity)
-                    .cardBackground()
             }
         }
     }

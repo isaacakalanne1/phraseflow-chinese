@@ -11,12 +11,14 @@ import Speech
 import Study
 import Settings
 import TextGeneration
+import TextPractice
 
 public struct TranslationEnvironment: TranslationEnvironmentProtocol {
     public let translationServices: TranslationServicesProtocol
     public let speechEnvironment: SpeechEnvironmentProtocol
     public let studyEnvironment: StudyEnvironmentProtocol
     public let settingsEnvironment: SettingsEnvironmentProtocol
+    public let textPracticeEnvironment: TextPracticeEnvironmentProtocol
     public let translationDataStore: TranslationDataStoreProtocol
     
     public init(
@@ -25,6 +27,7 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
         definitionDataStore: DefinitionDataStoreProtocol,
         audioEnvironment: AudioEnvironmentProtocol,
         settingsEnvironment: SettingsEnvironmentProtocol,
+        textPracticeEnvironment: TextPracticeEnvironmentProtocol,
         settingsDataStore: SettingsDataStoreProtocol
     ) {
         self.translationServices = TranslationServices()
@@ -35,6 +38,7 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
             audioEnvironment: audioEnvironment,
             settingsEnvironment: settingsEnvironment)
         self.settingsEnvironment = settingsEnvironment
+        self.textPracticeEnvironment = textPracticeEnvironment
         self.translationDataStore = TranslationDataStore()
     }
     

@@ -10,17 +10,16 @@ import TextGeneration
 
 struct TextPracticeView: View {
     @EnvironmentObject var store: TextPracticeStore
-    let chapter: Chapter
 
     var body: some View {
         VStack(spacing: 16) {
             AIStatementView()
 
-            if (try? store.environment.isShowingDefinition()) == true || (try? store.environment.isShowingEnglish()) == true {
+            if store.state.isShowingOriginalSentence {
                 SentenceDetailView()
             }
 
-            ChapterHeaderView(chapter: chapter)
+            ChapterHeaderView()
 
             SentenceView()
                 .padding()

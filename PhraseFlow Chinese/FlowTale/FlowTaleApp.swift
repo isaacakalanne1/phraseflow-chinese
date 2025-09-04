@@ -57,6 +57,8 @@ public struct FlowTaleRootView: View {
             settingsEnvironment: settingsEnvironment
         )
         
+        let textPracticeEnvironment = TextPracticeEnvironment()
+        
         let speechRepository = SpeechRepository()
         let speechEnvironment = SpeechEnvironment(speechRepository: speechRepository)
         let translationEnvironment = TranslationEnvironment(
@@ -65,12 +67,12 @@ public struct FlowTaleRootView: View {
             definitionDataStore: definitionDataStore,
             audioEnvironment: audioEnvironment,
             settingsEnvironment: settingsEnvironment,
+            textPracticeEnvironment: textPracticeEnvironment,
             settingsDataStore: settingsDataStore
         )
         
         let textGenerationServices = TextGenerationServices()
         let storyDataStore = StoryDataStore()
-        let textPracticeEnvironment = TextPracticeEnvironment()
         let storyEnvironment = StoryEnvironment(
             audioEnvironment: audioEnvironment,
             settingsEnvironment: settingsEnvironment,

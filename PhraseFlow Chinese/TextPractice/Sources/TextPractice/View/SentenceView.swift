@@ -25,7 +25,7 @@ public struct SentenceView: View {
     }
 
     var spokenWord: WordTimeStampData? {
-        store.state.currentChapter?.currentSpokenWord
+        store.state.chapter?.currentSpokenWord
     }
 
     
@@ -43,7 +43,7 @@ public struct SentenceView: View {
         case true:
             chapter = store.environment.getTranslationChapter()
         case false:
-            chapter = store.state.currentChapter
+            chapter = store.state.chapter
         }
         return Group {
             if let chapter {

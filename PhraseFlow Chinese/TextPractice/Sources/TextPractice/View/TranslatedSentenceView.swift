@@ -12,14 +12,14 @@ import TextGeneration
 import Localization
 
 struct TranslatedSentenceView: View {
-    @EnvironmentObject var store: StoryStore
+    @EnvironmentObject var store: TextPracticeStore
 
     var body: some View {
         VStack(spacing: 8) {
-            if store.state.currentChapter?.currentSentence != nil {
-                if (try? store.environment.isShowingEnglish()) == true {
+            if store.state.chapter?.currentSentence != nil {
+                if store.state.isShowingOriginalSentence {
                     // Show translation with scroll indicators
-                    Text(store.state.currentChapter?.currentSentence?.original ?? "")
+                    Text(store.state.chapter?.currentSentence?.original ?? "")
                         .font(FTFont.flowTaleBodyMedium())
                         .foregroundColor(FTColor.primary)
                         .padding(.horizontal, 12)
