@@ -17,14 +17,15 @@ struct TranslatedSentenceView: View {
     var body: some View {
         VStack(spacing: 8) {
             if let sentence = store.state.chapter.currentSentence {
-                if store.state.isShowingOriginalSentence {
+                switch store.state.viewState {
+                case .showDefinition:
                     // Show translation with scroll indicators
                     Text(sentence.original)
                         .font(FTFont.flowTaleBodyMedium())
                         .foregroundColor(FTColor.primary)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 8)
-                } else {
+                case .normal:
                     // Show hidden state
                     VStack {
                         Image(systemName: "eye.slash")

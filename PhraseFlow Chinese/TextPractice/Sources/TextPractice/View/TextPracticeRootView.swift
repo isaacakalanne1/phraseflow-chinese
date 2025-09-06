@@ -17,6 +17,7 @@ public struct TextPracticeRootView: View {
     public init(
         environment: TextPracticeEnvironmentProtocol,
         chapter: Chapter,
+        definitions: [DefinitionKey: Definition],
         type: TextPracticeType,
         isViewingLastChapter: Bool = false
     ) {
@@ -24,6 +25,7 @@ public struct TextPracticeRootView: View {
             initial: TextPracticeState(
                 isViewingLastChapter: isViewingLastChapter,
                 chapter: chapter,
+                definitions: definitions,
                 textPracticeType: type
             ),
             reducer: textPracticeReducer,

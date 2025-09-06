@@ -15,9 +15,7 @@ struct TextPracticeView: View {
         VStack(spacing: 16) {
             AIStatementView()
 
-            if store.state.isShowingOriginalSentence {
-                SentenceDetailView()
-            }
+            SentenceDetailView()
 
             ChapterHeaderView()
 

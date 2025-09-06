@@ -86,6 +86,7 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
     
     public func saveDefinitions(_ definitions: [Definition]) throws {
         try studyEnvironment.saveDefinitions(definitions)
+        textPracticeEnvironment.addDefinitions(definitions)
     }
     
     public func saveSentenceAudio(_ audioData: Data, id: UUID) throws {

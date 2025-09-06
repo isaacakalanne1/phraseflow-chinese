@@ -33,6 +33,7 @@ let textPracticeReducer: Reducer<TextPracticeState, TextPracticeAction> = { stat
         }
     case .hideDefinition:
         newState.selectedDefinition = nil
+        newState.viewState = .normal
     case .selectWord(let word, _):
         newState.chapter.currentPlaybackTime = word.time
     case .setPlaybackTime(let time):

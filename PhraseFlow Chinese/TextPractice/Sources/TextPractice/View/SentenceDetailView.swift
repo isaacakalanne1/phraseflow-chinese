@@ -19,17 +19,15 @@ public struct SentenceDetailView: View {
         Group {
             switch store.state.viewState {
             case .normal:
-                if store.state.isShowingOriginalSentence {
-                    TranslatedSentenceView()
-                        .frame(maxHeight: .infinity)
-                        .cardBackground()
-                }
+                TranslatedSentenceView()
+                    .frame(maxHeight: .infinity)
+                    .cardBackground()
             case .showDefinition:
                 DefinitionView(
                     isLoading: store.state.selectedDefinition == nil,
                     viewData: createViewData(definition: store.state.selectedDefinition)
                 )
-                .frame(maxHeight: .infinity)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .cardBackground()
             }
         }

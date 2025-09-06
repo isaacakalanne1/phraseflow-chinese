@@ -152,6 +152,7 @@ public struct ChapterListView: View {
                     if let chapter = selectedChapter {
                         TextPracticeRootView(environment: store.environment.textPracticeEnvironment,
                                              chapter: chapter,
+                                             definitions: store.state.definitions,
                                              type: .story)
                     }
                 }
