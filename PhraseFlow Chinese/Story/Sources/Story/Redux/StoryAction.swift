@@ -30,18 +30,14 @@ public enum StoryAction: Sendable {
     case onSavedChapter(Chapter)
     case failedToSaveChapter
     
+    case beginGetNextChapter
     case goToNextChapter
 
     case updateCurrentSentence(Sentence)
     case updateLoadingStatus(LoadingStatus)
 
     case selectWord(WordTimeStampData, playAudio: Bool)
-    case setPlaybackTime(Double)
     case selectChapter(Chapter)
-    
-    case prepareToPlayChapter(Chapter)
-    case playChapter(fromWord: WordTimeStampData)
-    case pauseChapter
     
     case updateSpeechSpeed(SpeechSpeed)
     case playSound(AppSound)

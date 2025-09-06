@@ -11,4 +11,13 @@ import ReduxKit
 @MainActor
 let storySubscriber: OnSubscribe<StoryStore, StoryEnvironmentProtocol> = { store, environment in
     
+    environment.textPracticeEnvironment.goToNextChapterSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak store] _ in
+                guard let store else {
+                    return
+                }
+                store.dispatch(.beginGetNextChapter)
+            }
+            .store(in: &store.subscriptions)
 }

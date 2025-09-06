@@ -98,17 +98,6 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         
     case .selectChapter(let chapter):
         return .loadDefinitionsForChapter(chapter, sentenceIndex: 0)
-    case .prepareToPlayChapter(let chapter):
-        await environment.prepareToPlayChapter(chapter)
-        return .loadDefinitionsForChapter(chapter, sentenceIndex: 0)
-    case .playChapter(let word):
-        await environment.playChapter(from: word)
-        environment.setMusicVolume(.quiet)
-        return nil
-    case .pauseChapter:
-        environment.pauseChapter()
-        environment.setMusicVolume(.normal)
-        return nil
     case .updateSpeechSpeed(let speed):
         do {
             try environment.updateSpeechSpeed(speed)
@@ -165,6 +154,12 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
             }
         }
         return nil
+    case .beginGetNextChapter:
+        if state.isLastChapter,
+           let id = state.currentChapter?.storyId {
+            return .createChapter(.existingStory(id))
+        }
+        return .goToNextChapter
         
     case .showDefinition(let wordTimestamp):
         // Find the definition for this word in the current sentence
@@ -184,7 +179,6 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
             .updateCurrentSentence,
             .onSavedChapter,
             .onDeletedStory,
-            .setPlaybackTime,
             .updateLoadingStatus,
             .failedToLoadDefinitions,
             .hideDefinition:

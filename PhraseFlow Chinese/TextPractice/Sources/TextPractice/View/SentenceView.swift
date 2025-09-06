@@ -1,5 +1,5 @@
 //
-//  ChapterView.swift
+//  SentenceView.swift
 //  FlowTale
 //
 //  Created by iakalann on 25/10/2024.
@@ -18,16 +18,9 @@ public struct SentenceView: View {
     @State private var opacity: Double = 0
     @State private var currentPage: Int = 0
 
-    private let isTranslation: Bool
-    
-    public init(isTranslation: Bool = false) {
-        self.isTranslation = isTranslation
-    }
-
     var spokenWord: WordTimeStampData? {
         store.state.chapter?.currentSpokenWord
     }
-
     
     private func sentenceIndex(_ targetSentence: Sentence?, in sentences: [Sentence]) -> Int {
         guard let targetSentence,
@@ -38,15 +31,8 @@ public struct SentenceView: View {
     }
 
     public var body: some View {
-        let chapter: Chapter?
-        switch isTranslation {
-        case true:
-            chapter = store.environment.getTranslationChapter()
-        case false:
-            chapter = store.state.chapter
-        }
-        return Group {
-            if let chapter {
+        Group {
+            if let chapter = store.state.chapter {
                 paginatedView(chapter: chapter)
             } else {
                 EmptyView()
@@ -62,36 +48,26 @@ public struct SentenceView: View {
 
             paginationControls(totalPages: chapter.sentences.count, chapter: chapter)
 
-            if !isTranslation {
+            if store.state.textPracticeType == .story {
                 playbackControls
                 
                 let isLastPage = currentPage == chapter.sentences.count - 1
                 if isLastPage {
                     MainButton(title: LocalizedString.newChapter.uppercased()) {
-                        let allChaptersForStory = store.state.storyChapters[chapter.storyId] ?? []
-                        let isLastChapter = chapter.id == allChaptersForStory.last?.id
-
-                        switch isLastChapter {
-                        case true:
-                            store.environment.playSound(.goToNextChapter)
-                            store.dispatch(.goToNextChapter)
-                        case false:
-                            store.dispatch(.createChapter(.existingStory(chapter.storyId)))
-                        }
+                        store.dispatch(.goToNextChapter)
                     }
-                    .disabled(store.state.isWritingChapter)
+                    .disabled(store.state.isWritingNewChapter)
                 }
             }
         }
         .onAppear {
             opacity = 1
-            // TODO: Handle snackbar actions through environment or main app
             updateCurrentSentence(chapter: chapter)
         }
         .onChange(of: spokenWord) {
             updateCurrentSentence(chapter: chapter)
         }
-        .onChange(of: store.state.currentChapter) {
+        .onChange(of: store.state.chapter) {
             updateCurrentSentence(chapter: chapter)
         }
     }
@@ -100,9 +76,7 @@ public struct SentenceView: View {
         if let sentence = chapter.sentences.first(where: { $0.timestamps.contains { $0.id == spokenWord?.id } }) {
             let targetPage = sentenceIndex(sentence, in: chapter.sentences)
             currentPage = targetPage
-            if !isTranslation {
-                store.dispatch(.updateCurrentSentence(sentence))
-            }
+            store.dispatch(.updateCurrentSentence(sentence))
         }
     }
 
@@ -161,7 +135,7 @@ public struct SentenceView: View {
                             language: Language) -> some View {
         FlowLayout(spacing: 0, language: language) {
             ForEach(Array(sentence.timestamps.enumerated()), id: \.offset) { index, word in
-                CharacterView(word: word, sentence: sentence, isTranslation: isTranslation)
+                CharacterView(word: word, sentence: sentence, isTranslation: store.state.textPracticeType == .translator)
                     .id(word.id)
                     .opacity(opacity)
                     .animation(.easeInOut.delay(Double(index) * 0.02), value: opacity)

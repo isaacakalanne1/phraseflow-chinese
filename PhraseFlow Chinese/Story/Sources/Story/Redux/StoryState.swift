@@ -49,6 +49,19 @@ public struct StoryState: Equatable {
         guard let chapters = storyChapters[storyId] else { return nil }
         return chapters.min(by: { $0.lastUpdated < $1.lastUpdated })
     }
+    
+    var isLastChapter: Bool {
+        guard let currentChapter = currentChapter,
+              let chapters = storyChapters[currentChapter.storyId],
+              let currentIndex = chapters.firstIndex(where: { $0.id == currentChapter.id }) else { return false }
+        return currentIndex >= chapters.count - 1
+    }
+    
+    var currentChapterIndex: Int? {
+        guard let currentChapter = currentChapter else { return nil}
+        let chapters = storyChapters[currentChapter.storyId]
+        return chapters?.firstIndex(where: { $0.id == currentChapter.id })
+    }
 }
 
 public struct StoryViewState: Equatable {

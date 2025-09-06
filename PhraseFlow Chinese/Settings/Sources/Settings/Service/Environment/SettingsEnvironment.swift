@@ -10,10 +10,7 @@ import Foundation
 import Combine
 
 public struct SettingsEnvironment: SettingsEnvironmentProtocol {
-    public let settingsUpdatedSubject = CurrentValueSubject<Void, Never>(())
-    let speechSpeedSubject = CurrentValueSubject<SpeechSpeed, Never>(.normal)
-    let isPlayingMusicSubject = CurrentValueSubject<Bool, Never>(false)
-    let storySettingSubject = CurrentValueSubject<StorySetting, Never>(.random)
+    public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never>
     
     private let settingsDataStore: SettingsDataStoreProtocol
     private let audioEnvironment: AudioEnvironmentProtocol
@@ -24,6 +21,7 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
     ) {
         self.settingsDataStore = settingsDataStore
         self.audioEnvironment = audioEnvironment
+        settingsUpdatedSubject = .init(nil)
     }
     
     public var currentVoice: Voice {
@@ -37,7 +35,7 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
     public func saveAppSettings(_ settings: SettingsState) throws {
         audioEnvironment.playSound(.changeSettings)
         try settingsDataStore.saveAppSettings(settings)
-        settingsUpdatedSubject.send(())
+        settingsUpdatedSubject.send(settings)
     }
     
     public func loadAppSettings() throws -> SettingsState {

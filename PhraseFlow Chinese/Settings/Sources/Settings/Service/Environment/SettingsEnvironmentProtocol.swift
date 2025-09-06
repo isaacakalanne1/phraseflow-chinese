@@ -10,6 +10,7 @@ import Foundation
 import Combine
 
 public protocol SettingsEnvironmentProtocol {
+    var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> { get }
     var currentVoice: Voice { get }
     var speechSpeed: SpeechSpeed { get }
     

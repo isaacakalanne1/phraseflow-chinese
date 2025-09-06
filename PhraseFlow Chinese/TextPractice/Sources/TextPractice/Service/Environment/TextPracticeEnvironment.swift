@@ -5,14 +5,42 @@
 //  Created by Isaac Akalanne on 02/09/2025.
 //
 
+import Audio
 import Combine
 import TextGeneration
+import Settings
 import Study
 
 public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
-    public var chapterSubject: CurrentValueSubject<TextGeneration.Chapter?, Never>
+    public var chapterSubject: CurrentValueSubject<Chapter?, Never>
+    public var definitionsSubject: CurrentValueSubject<[Definition]?, Never>
+    public var goToNextChapterSubject: CurrentValueSubject<Void?, Never>
+    public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> {
+        settingsEnvironment.settingsUpdatedSubject
+    }
     
-    public var definitionsSubject: CurrentValueSubject<[Study.Definition]?, Never>
+    public let audioEnvironment: AudioEnvironmentProtocol
+    public let settingsEnvironment: SettingsEnvironmentProtocol
+    
+    public init(
+        audioEnvironment: AudioEnvironmentProtocol,
+        settingsEnvironment: SettingsEnvironmentProtocol
+    ) {
+        self.audioEnvironment = audioEnvironment
+        self.settingsEnvironment = settingsEnvironment
+        
+        chapterSubject = .init(nil)
+        definitionsSubject = .init(nil)
+        goToNextChapterSubject = .init(nil)
+    }
+    
+    public func getAppSettings() throws -> SettingsState {
+        try settingsEnvironment.loadAppSettings()
+    }
+    
+    public func saveAppSettings(_ settings: SettingsState) throws {
+        try settingsEnvironment.saveAppSettings(settings)
+    }
     
     public func setChapter(_ chapter: Chapter?) {
         chapterSubject.send(chapter)
@@ -22,8 +50,37 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
         definitionsSubject.send(definitions)
     }
     
-    public init() {
-        chapterSubject = .init(nil)
-        definitionsSubject = .init(nil)
+    public func goToNextChapter() {
+        goToNextChapterSubject.send(())
+    }
+    
+    public func prepareToPlayChapter(_ chapter: Chapter) async {
+        await audioEnvironment.setChapterAudioData(chapter.audio.data)
+    }
+    
+    public func playWord(
+        _ word: WordTimeStampData,
+        rate: Float
+    ) async {
+        await audioEnvironment.playWord(startTime: word.time, duration: word.duration, playRate: rate)
+
+    }
+    
+    public func playChapter(from word: WordTimeStampData) async {
+        await audioEnvironment.playChapterAudio(from: word.time,
+                                                rate: SpeechSpeed.normal.playRate)
+
+    }
+    
+    public func pauseChapter() {
+        audioEnvironment.pauseChapterAudio()
+    }
+    
+    public func setMusicVolume(_ volume: MusicVolume) {
+        audioEnvironment.setMusicVolume(volume)
+    }
+    
+    public func playSound(_ sound: AppSound) {
+        audioEnvironment.playSound(sound)
     }
 }

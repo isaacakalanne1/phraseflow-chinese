@@ -12,7 +12,7 @@ import AppleIcon
 import ReduxKit
 
 struct AudioButton: View {
-    @EnvironmentObject var store: StoryStore
+    @EnvironmentObject var store: TextPracticeStore
     
     var isPlayingAudio: Bool {
         store.state.isPlayingChapterAudio
@@ -23,7 +23,7 @@ struct AudioButton: View {
             if isPlayingAudio {
                 store.dispatch(.pauseChapter)
             } else {
-                if let currentSpokenWord = store.state.currentChapter?.currentSpokenWord {
+                if let currentSpokenWord = store.state.chapter?.currentSpokenWord {
                     store.dispatch(.playChapter(fromWord: currentSpokenWord))
                     Task {
                         await updatePlayTime()

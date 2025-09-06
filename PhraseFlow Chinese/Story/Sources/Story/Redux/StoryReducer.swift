@@ -40,17 +40,6 @@ let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
                 newState.currentChapter = newState.storyChapters[firstStory.storyId]?.last
             }
         }
-        
-    case .setPlaybackTime(let time):
-        if var currentChapter = newState.currentChapter {
-            currentChapter.currentPlaybackTime = time
-            newState.currentChapter = currentChapter
-            if let storyId = currentChapter.storyId as UUID?,
-               let chapters = newState.storyChapters[storyId],
-               let index = chapters.firstIndex(where: { $0.id == currentChapter.id }) {
-                newState.storyChapters[storyId]?[index] = currentChapter
-            }
-        }
 
     case .onCreatedChapter(var chapter):
         newState.isWritingChapter = false
@@ -84,15 +73,13 @@ let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
         
     case .goToNextChapter:
         guard let currentChapter = newState.currentChapter,
-              let chapters = newState.storyChapters[currentChapter.storyId],
-              let currentIndex = chapters.firstIndex(where: { $0.id == currentChapter.id }),
-              currentIndex < chapters.count - 1 else { break }
+              let storyChapters = newState.storyChapters[currentChapter.storyId],
+              let currentIndex = storyChapters.firstIndex(where: { $0.id == currentChapter.id }),
+              !newState.isLastChapter else { break }
+        let nextIndex = currentIndex + 1
         
-        var nextChapter = chapters[currentIndex + 1]
-        let sentence = newState.currentChapter?.currentSentence
-        nextChapter.currentPlaybackTime = sentence?.timestamps.first?.time ?? 0.1
-        newState.currentChapter = nextChapter
-        newState.storyChapters[currentChapter.storyId]?[currentIndex + 1] = nextChapter
+        newState.currentChapter = storyChapters[nextIndex]
+        newState.storyChapters[currentChapter.storyId]?[nextIndex] = storyChapters[nextIndex]
         
     case .updateCurrentSentence(let sentence):
         if var currentChapter = newState.currentChapter {
@@ -123,10 +110,6 @@ let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
         
     case .failedToCreateChapter:
         newState.isWritingChapter = false
-    case .playChapter:
-        newState.isPlayingChapterAudio = true
-    case .pauseChapter:
-        newState.isPlayingChapterAudio = false
     case .onLoadedDefinitions(let definitions, _, _):
         for definition in definitions {
             let key = DefinitionKey(word: definition.timestampData.word, sentenceId: definition.sentence.id)
@@ -156,10 +139,10 @@ let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
          .failedToSaveChapter,
          .updateLoadingStatus,
          .updateSpeechSpeed,
-         .prepareToPlayChapter,
          .playSound,
          .loadDefinitionsForChapter,
-         .failedToLoadDefinitions:
+         .failedToLoadDefinitions,
+         .beginGetNextChapter:
         break
     }
 

@@ -12,18 +12,18 @@ import ReduxKit
 import Audio
 
 public struct SpeechSpeedButton: View {
-    @EnvironmentObject var store: StoryStore
+    @EnvironmentObject var store: TextPracticeStore
 
     public init() {}
     
     public var body: some View {
         Button {
-            if let currentSpeed = try? store.environment.getSpeechSpeed() {
-                store.dispatch(.updateSpeechSpeed(currentSpeed.nextSpeed))
-            }
+            var settings = store.state.settings
+            settings.speechSpeed = settings.speechSpeed.nextSpeed
+            store.dispatch(.saveAppSettings(settings))
             store.environment.playSound(.changeSettings)
         } label: {
-            Text((try? store.environment.getSpeechSpeed())?.text ?? "")
+            Text(store.state.settings.speechSpeed.text)
                 .font(FTFont.flowTaleBodyMedium())
                 .fontWeight(.medium)
                 .foregroundStyle(FTColor.primary)

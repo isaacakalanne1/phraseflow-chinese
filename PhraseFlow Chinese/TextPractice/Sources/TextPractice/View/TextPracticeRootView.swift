@@ -8,16 +8,24 @@
 import SwiftUI
 import ReduxKit
 import TextGeneration
+import Settings
 import Study
 
 public struct TextPracticeRootView: View {
     private let store: TextPracticeStore
     
     public init(
-        environment: TextPracticeEnvironmentProtocol
+        environment: TextPracticeEnvironmentProtocol,
+        settings: SettingsState,
+        type: TextPracticeType,
+        isViewingLastChapter: Bool = false
     ) {
         self.store = Store(
-            initial: TextPracticeState(),
+            initial: TextPracticeState(
+                isViewingLastChapter: isViewingLastChapter,
+                settings: settings,
+                textPracticeType: type
+            ),
             reducer: textPracticeReducer,
             environment: environment,
             middleware: textPracticeMiddleware,
