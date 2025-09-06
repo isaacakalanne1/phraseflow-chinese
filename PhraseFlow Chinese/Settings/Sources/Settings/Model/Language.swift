@@ -147,10 +147,6 @@ public enum Language: String, Codable, CaseIterable, Sendable {
         }
     }
 
-    var locale: Locale {
-        Locale(identifier: speechCode)
-    }
-
     var flagCodes: [String] {
         switch self {
         case .arabicGulf:

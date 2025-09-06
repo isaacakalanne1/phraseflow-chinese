@@ -66,9 +66,6 @@ let settingsReducer: Reducer<SettingsState, SettingsAction> = { state, action in
             newState.storySetting = .random
         }
         
-    case .updateColorScheme(let colorScheme):
-        newState.appColorScheme = colorScheme
-        
     case .updateShouldPlaySound(let shouldPlaySound):
         newState.shouldPlaySound = shouldPlaySound
         

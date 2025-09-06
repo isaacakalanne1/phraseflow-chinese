@@ -28,7 +28,6 @@ public protocol StoryEnvironmentProtocol {
     func loadDefinitions() throws -> [Definition]
     func saveChapter(_ chapter: Chapter) throws
     func deleteChapter(_ chapter: Chapter) throws
-    func saveAppSettings(_ state: StoryState) throws
     func generateChapter(
         previousChapters: [Chapter],
         language: Language?,

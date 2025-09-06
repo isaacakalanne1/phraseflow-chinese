@@ -33,7 +33,6 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
          .updateShowDefinition,
          .updateShowEnglish,
          .updateDifficulty,
-         .updateColorScheme,
          .updateShouldPlaySound:
         return .saveAppSettings
         

@@ -9,6 +9,7 @@ import Foundation
 
 public struct ModerationState: Equatable {
     var moderationResponse: ModerationResponse?
+    var moderationRecord: ModerationRecord?
     var isShowingModerationFailedAlert = false
     var isShowingModerationDetails = false
     

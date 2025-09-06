@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 import FTColor
-import Loading
 
 public struct SnackBarContentView: View {
     @EnvironmentObject private var store: SnackBarStore

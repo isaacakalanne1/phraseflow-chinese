@@ -10,15 +10,6 @@ import Foundation
 public enum StorySetting: Codable, Equatable, Sendable {
     case random, customPrompt(String)
 
-    var emoji: String {
-        switch self {
-        case .random:
-            return "🎲"
-        case .customPrompt:
-            return "✏️"
-        }
-    }
-
     var title: String {
         switch self {
         case .random:

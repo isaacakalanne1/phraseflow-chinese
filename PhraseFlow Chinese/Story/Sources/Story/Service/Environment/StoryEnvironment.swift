@@ -205,11 +205,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         try dataStore.deleteChapter(chapter)
     }
     
-    public func saveAppSettings(_ state: StoryState) throws {
-        // This would normally save app settings through settings environment
-        // For now, do nothing to fix compilation
-    }
-    
     // MARK: - Settings Environment Functions
     
     public func getAppSettings() throws -> SettingsState {

@@ -10,7 +10,6 @@ import Foundation
 import ReduxKit
 import Settings
 import Study
-import Subscription
 import TextGeneration
 import TextPractice
 
@@ -73,7 +72,6 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
     case .saveChapter(let chapter):
         do {
             try environment.saveChapter(chapter)
-            try environment.saveAppSettings(state)
             return .onSavedChapter(chapter)
         } catch {
             return .failedToSaveChapter

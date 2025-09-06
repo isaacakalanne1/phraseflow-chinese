@@ -42,13 +42,6 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
         return try settingsDataStore.loadAppSettings()
     }
     
-    func updateSpeechSpeed(_ newSpeed: SpeechSpeed) throws {
-        playSound(.togglePress)
-        var settings = try loadAppSettings()
-        settings.speechSpeed = newSpeed
-        try saveAppSettings(settings)
-    }
-    
     public func playSound(_ sound: AppSound) {
         audioEnvironment.playSound(sound)
     }

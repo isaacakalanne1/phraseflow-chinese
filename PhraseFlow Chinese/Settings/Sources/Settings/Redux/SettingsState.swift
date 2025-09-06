@@ -33,7 +33,6 @@ public struct SettingsState: Codable, Equatable, Sendable {
     public var storySetting: StorySetting
     var confirmedCustomPrompt: String
     var customPrompts: [String]
-    var appColorScheme: FlowTaleColorScheme?
     var shouldPlaySound: Bool
     var isShowingCustomPromptAlert: Bool
     
@@ -53,7 +52,6 @@ public struct SettingsState: Codable, Equatable, Sendable {
         case storySetting
         case confirmedCustomPrompt
         case customPrompts
-        case appColorScheme
         case shouldPlaySound
         case isShowingCustomPromptAlert
         case isShowingModerationFailedAlert
@@ -71,7 +69,6 @@ public struct SettingsState: Codable, Equatable, Sendable {
         customPrompt: String = "",
         storySetting: StorySetting = .random,
         customPrompts: [String] = [],
-        colorScheme: FlowTaleColorScheme = .dark,
         shouldPlaySound: Bool = true,
         isShowingCustomPromptAlert: Bool = true,
         confirmedCustomPrompt: String = "",
@@ -89,7 +86,6 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.customPrompts = customPrompts
         self.storySetting = storySetting
         self.confirmedCustomPrompt = confirmedCustomPrompt
-        self.appColorScheme = colorScheme
         self.shouldPlaySound = shouldPlaySound
         self.isShowingCustomPromptAlert = isShowingCustomPromptAlert
         self.isShowingModerationFailedAlert = isShowingModerationFailedAlert
@@ -110,7 +106,6 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.confirmedCustomPrompt = try container.decode(String.self, forKey: .confirmedCustomPrompt)
         self.customPrompts = try container.decode([String].self, forKey: .customPrompts)
         
-        self.appColorScheme = (try? container.decode(FlowTaleColorScheme?.self, forKey: .appColorScheme)) ?? .dark
         self.shouldPlaySound = (try? container.decode(Bool.self, forKey: .shouldPlaySound)) ?? true
         self.isShowingCustomPromptAlert = (try? container.decode(Bool.self, forKey: .isShowingCustomPromptAlert)) ?? false
         self.isShowingModerationFailedAlert = (try? container.decode(Bool.self, forKey: .isShowingModerationFailedAlert)) ?? false

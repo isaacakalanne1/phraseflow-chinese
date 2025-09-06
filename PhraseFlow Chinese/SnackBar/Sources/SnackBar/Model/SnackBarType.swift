@@ -105,15 +105,4 @@ public enum SnackBarType: Equatable, Sendable {
     var backgroundColor: Color {
         isError ? FTColor.error : FTColor.accent
     }
-
-    var sound: AppSound {
-        switch self {
-        case .writingChapter:
-            return .largeBoom
-        case _ where isError:
-            return .errorSnackbar
-        default:
-            return .snackbar
-        }
-    }
 }

@@ -23,7 +23,6 @@ enum SettingsAction: Sendable {
     case updateShowDefinition(Bool)
     case updateShowEnglish(Bool)
     case updateDifficulty(Difficulty)
-    case updateColorScheme(FlowTaleColorScheme)
     case updateShouldPlaySound(Bool)
     
     case updateStorySetting(StorySetting)

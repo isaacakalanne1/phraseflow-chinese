@@ -57,12 +57,6 @@ public struct StoryState: Equatable {
               let currentIndex = chapters.firstIndex(where: { $0.id == currentChapter.id }) else { return false }
         return currentIndex >= chapters.count - 1
     }
-    
-    var currentChapterIndex: Int? {
-        guard let currentChapter = currentChapter else { return nil}
-        let chapters = storyChapters[currentChapter.storyId]
-        return chapters?.firstIndex(where: { $0.id == currentChapter.id })
-    }
 }
 
 public struct StoryViewState: Equatable {

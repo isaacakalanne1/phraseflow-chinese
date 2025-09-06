@@ -16,7 +16,8 @@ public struct StoryRootView: View {
             initial: StoryState(),
             reducer: storyReducer,
             environment: environment,
-            middleware: storyMiddleware
+            middleware: storyMiddleware,
+            subscriber: storySubscriber
         )
     }
     
