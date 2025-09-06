@@ -16,10 +16,10 @@ struct TranslatedSentenceView: View {
 
     var body: some View {
         VStack(spacing: 8) {
-            if store.state.chapter?.currentSentence != nil {
+            if let sentence = store.state.chapter.currentSentence {
                 if store.state.isShowingOriginalSentence {
                     // Show translation with scroll indicators
-                    Text(store.state.chapter?.currentSentence?.original ?? "")
+                    Text(sentence.original)
                         .font(FTFont.flowTaleBodyMedium())
                         .foregroundColor(FTColor.primary)
                         .padding(.horizontal, 12)

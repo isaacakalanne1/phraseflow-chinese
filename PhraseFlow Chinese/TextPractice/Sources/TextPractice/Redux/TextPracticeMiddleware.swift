@@ -27,11 +27,19 @@ nonisolated(unsafe) let textPracticeMiddleware: Middleware<TextPracticeState, Te
     case .saveAppSettings(let settings):
         try? environment.saveAppSettings(settings)
         return nil
+    case .loadAppSettings:
+        do {
+            let settings = try environment.getAppSettings()
+            return .refreshSettings(settings)
+        } catch {
+            return .failedToLoadAppSettings
+        }
     case .setChapter,
             .addDefinitions,
             .setPlaybackTime,
             .updateCurrentSentence,
-            .refreshSettings:
+            .refreshSettings,
+            .failedToLoadAppSettings:
         return nil
     }
 }

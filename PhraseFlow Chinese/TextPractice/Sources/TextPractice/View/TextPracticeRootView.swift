@@ -16,14 +16,14 @@ public struct TextPracticeRootView: View {
     
     public init(
         environment: TextPracticeEnvironmentProtocol,
-        settings: SettingsState,
+        chapter: Chapter,
         type: TextPracticeType,
         isViewingLastChapter: Bool = false
     ) {
         self.store = Store(
             initial: TextPracticeState(
                 isViewingLastChapter: isViewingLastChapter,
-                settings: settings,
+                chapter: chapter,
                 textPracticeType: type
             ),
             reducer: textPracticeReducer,
@@ -36,5 +36,8 @@ public struct TextPracticeRootView: View {
     public var body: some View {
         TextPracticeView()
             .environmentObject(store)
+            .onAppear {
+                store.dispatch(.loadAppSettings)
+            }
     }
 }

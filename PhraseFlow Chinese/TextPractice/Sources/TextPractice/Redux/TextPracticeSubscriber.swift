@@ -14,7 +14,8 @@ let textPracticeSubscriber: OnSubscribe<TextPracticeStore, TextPracticeEnvironme
     environment.chapterSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak store] chapter in
-                guard let store else {
+                guard let store,
+                      let chapter else {
                     return
                 }
                 store.dispatch(.setChapter(chapter))

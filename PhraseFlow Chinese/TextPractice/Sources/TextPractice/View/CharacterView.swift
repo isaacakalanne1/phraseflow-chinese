@@ -11,7 +11,7 @@ import FTColor
 import TextGeneration
 
 struct CharacterView: View {
-    @EnvironmentObject var store: StoryStore
+    @EnvironmentObject var store: TextPracticeStore
     @State private var shimmerOffset: CGFloat = -1
 
     let word: WordTimeStampData
@@ -23,11 +23,11 @@ struct CharacterView: View {
     }
 
     var spokenWord: WordTimeStampData? {
-        store.state.currentChapter?.currentSpokenWord
+        store.state.chapter.currentSpokenWord
     }
 
     var currentSentence: Sentence? {
-        isTranslation ? store.environment.getCurrentTranslationSentence() : store.state.currentChapter?.currentSentence
+        store.state.chapter.currentSentence
     }
 
     var hasDefinition: Bool {

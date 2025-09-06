@@ -15,9 +15,9 @@ struct TextPracticeState: Equatable {
     var isPlayingChapterAudio = false
     var isViewingLastChapter = false
     
-    var settings: SettingsState
-    var chapter: Chapter?
-    var definitions: [Definition] = []
+    var settings = SettingsState()
+    var chapter: Chapter
+    var definitions: [DefinitionKey: Definition] = [:]
     var selectedDefinition: Definition?
     var viewState: TextPracticeViewState = .normal
     var textPracticeType: TextPracticeType

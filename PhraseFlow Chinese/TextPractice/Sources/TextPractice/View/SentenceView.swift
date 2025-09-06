@@ -19,7 +19,7 @@ public struct SentenceView: View {
     @State private var currentPage: Int = 0
 
     var spokenWord: WordTimeStampData? {
-        store.state.chapter?.currentSpokenWord
+        store.state.chapter.currentSpokenWord
     }
     
     private func sentenceIndex(_ targetSentence: Sentence?, in sentences: [Sentence]) -> Int {
@@ -31,13 +31,7 @@ public struct SentenceView: View {
     }
 
     public var body: some View {
-        Group {
-            if let chapter = store.state.chapter {
-                paginatedView(chapter: chapter)
-            } else {
-                EmptyView()
-            }
-        }
+        paginatedView(chapter: store.state.chapter)
     }
 
     @ViewBuilder

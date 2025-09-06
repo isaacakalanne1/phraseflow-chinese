@@ -10,7 +10,7 @@ import Settings
 import Study
 
 public enum TextPracticeAction: Sendable {
-    case setChapter(Chapter?)
+    case setChapter(Chapter)
     case addDefinitions([Definition])
     case goToNextChapter
     case setPlaybackTime(Double)
@@ -24,4 +24,7 @@ public enum TextPracticeAction: Sendable {
     case refreshSettings(SettingsState)
     // Used to save settings in the Settings package
     case saveAppSettings(SettingsState)
+    // Initial loading of app settings
+    case loadAppSettings
+    case failedToLoadAppSettings
 }

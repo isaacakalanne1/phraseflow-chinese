@@ -17,17 +17,16 @@ let textPracticeReducer: Reducer<TextPracticeState, TextPracticeAction> = { stat
         newState.chapter = chapter
     case .addDefinitions(let definitions):
         for definition in definitions {
-            if !newState.definitions.contains(where: { $0 == definition }) {
-                newState.definitions.append(definition)
+            let key = DefinitionKey(word: definition.timestampData.word,
+                                    sentenceId: definition.sentence.id)
+            if !newState.definitions.contains(where: { $0.key == key }) {
+                newState.definitions[key] = definition
             }
         }
     case .setPlaybackTime(let time):
-        newState.chapter?.currentPlaybackTime = time
+        newState.chapter.currentPlaybackTime = time
     case .updateCurrentSentence(let sentence):
-        if var currentChapter = newState.chapter {
-            currentChapter.currentSentence = sentence
-            newState.chapter = currentChapter
-        }
+        newState.chapter.currentSentence = sentence
     case .playChapter:
         newState.isPlayingChapterAudio = true
     case .pauseChapter:
@@ -36,7 +35,9 @@ let textPracticeReducer: Reducer<TextPracticeState, TextPracticeAction> = { stat
         newState.settings = settings
     case .goToNextChapter,
             .prepareToPlayChapter,
-            .saveAppSettings:
+            .saveAppSettings,
+            .loadAppSettings,
+            .failedToLoadAppSettings:
         break
     }
     return newState

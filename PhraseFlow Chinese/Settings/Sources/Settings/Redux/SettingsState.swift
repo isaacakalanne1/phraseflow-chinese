@@ -12,8 +12,10 @@ public struct SettingsViewState: Codable, Equatable, Sendable {
     var isShowingModerationDetails: Bool
     var isWritingChapter: Bool
     
-    init(isShowingModerationDetails: Bool = false,
-         isWritingChapter: Bool = false) {
+    public init(
+        isShowingModerationDetails: Bool = false,
+        isWritingChapter: Bool = false
+    ) {
         self.isShowingModerationDetails = isShowingModerationDetails
         self.isWritingChapter = isWritingChapter
     }
@@ -58,22 +60,24 @@ public struct SettingsState: Codable, Equatable, Sendable {
         case viewState
     }
 
-    init(isShowingDefinition: Bool = true,
-         isShowingEnglish: Bool = true,
-         isPlayingMusic: Bool = true,
-         voice: Voice = .xiaoxiao,
-         speechSpeed: SpeechSpeed = .normal,
-         difficulty: Difficulty = .beginner,
-         language: Language = .mandarinChinese,
-         customPrompt: String = "",
-         storySetting: StorySetting = .random,
-         customPrompts: [String] = [],
-         colorScheme: FlowTaleColorScheme = .dark,
-         shouldPlaySound: Bool = true,
-         isShowingCustomPromptAlert: Bool = true,
-         confirmedCustomPrompt: String = "",
-         isShowingModerationFailedAlert: Bool = false,
-         viewState: SettingsViewState = SettingsViewState()) {
+    public init(
+        isShowingDefinition: Bool = true,
+        isShowingEnglish: Bool = true,
+        isPlayingMusic: Bool = true,
+        voice: Voice = .xiaoxiao,
+        speechSpeed: SpeechSpeed = .normal,
+        difficulty: Difficulty = .beginner,
+        language: Language = .mandarinChinese,
+        customPrompt: String = "",
+        storySetting: StorySetting = .random,
+        customPrompts: [String] = [],
+        colorScheme: FlowTaleColorScheme = .dark,
+        shouldPlaySound: Bool = true,
+        isShowingCustomPromptAlert: Bool = true,
+        confirmedCustomPrompt: String = "",
+        isShowingModerationFailedAlert: Bool = false,
+        viewState: SettingsViewState = SettingsViewState()
+    ) {
         self.isShowingDefinition = isShowingDefinition
         self.isShowingEnglish = isShowingEnglish
         self.isPlayingMusic = isPlayingMusic

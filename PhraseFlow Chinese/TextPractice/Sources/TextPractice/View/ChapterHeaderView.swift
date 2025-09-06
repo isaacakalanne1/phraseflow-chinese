@@ -14,22 +14,20 @@ struct ChapterHeaderView: View {
     @EnvironmentObject var store: TextPracticeStore
     
     var body: some View {
-        if let chapter = store.state.chapter {
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(spacing: 12) {
-                    StoryInfoView(chapter: chapter)
-                    
-                    Text(chapter.storyTitle)
-                        .font(FTFont.flowTaleSecondaryHeader())
-                        .foregroundColor(FTColor.primary)
-                        .lineLimit(1)
-                }
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 12) {
+                StoryInfoView(chapter: store.state.chapter)
                 
-                Text(chapter.title)
+                Text(store.state.chapter.storyTitle)
                     .font(FTFont.flowTaleSecondaryHeader())
-                    .foregroundColor(FTColor.primary.opacity(0.9))
+                    .foregroundColor(FTColor.primary)
                     .lineLimit(1)
             }
+            
+            Text(store.state.chapter.title)
+                .font(FTFont.flowTaleSecondaryHeader())
+                .foregroundColor(FTColor.primary.opacity(0.9))
+                .lineLimit(1)
         }
     }
 }

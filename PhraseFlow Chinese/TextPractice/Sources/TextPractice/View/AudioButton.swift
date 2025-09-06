@@ -23,7 +23,7 @@ struct AudioButton: View {
             if isPlayingAudio {
                 store.dispatch(.pauseChapter)
             } else {
-                if let currentSpokenWord = store.state.chapter?.currentSpokenWord {
+                if let currentSpokenWord = store.state.chapter.currentSpokenWord {
                     store.dispatch(.playChapter(fromWord: currentSpokenWord))
                     Task {
                         await updatePlayTime()
