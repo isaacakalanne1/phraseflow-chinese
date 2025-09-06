@@ -12,6 +12,7 @@ import AVKit
 import AVFoundation
 import Settings
 import Story
+import TextPractice
 
 @MainActor
 let translationMiddleware: Middleware<TranslationState, TranslationAction, TranslationEnvironmentProtocol> = { state, action, environment in

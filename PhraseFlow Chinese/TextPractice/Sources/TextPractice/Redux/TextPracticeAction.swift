@@ -11,7 +11,12 @@ import Study
 
 public enum TextPracticeAction: Sendable {
     case setChapter(Chapter)
+    
     case addDefinitions([Definition])
+    case showDefinition(WordTimeStampData)
+    case hideDefinition
+    case selectWord(WordTimeStampData, playAudio: Bool)
+    
     case goToNextChapter
     case setPlaybackTime(Double)
     case updateCurrentSentence(Sentence)

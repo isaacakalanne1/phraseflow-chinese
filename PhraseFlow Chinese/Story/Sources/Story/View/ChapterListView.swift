@@ -150,7 +150,9 @@ public struct ChapterListView: View {
                     set: { if !$0 { selectedChapter = nil } }
                 )) {
                     if let chapter = selectedChapter {
-                        TextPracticeRootView(environment: store.environment.textPracticeEnvironment)
+                        TextPracticeRootView(environment: store.environment.textPracticeEnvironment,
+                                             chapter: chapter,
+                                             type: .story)
                     }
                 }
             } else {
@@ -187,7 +189,6 @@ public struct ChapterListView: View {
         Button {
             withAnimation(.easeInOut) {
                 store.dispatch(.playSound(.openChapter))
-                store.dispatch(.prepareToPlayChapter(chapter))
                 store.dispatch(.selectChapter(chapter))
                 selectedChapter = chapter
             }

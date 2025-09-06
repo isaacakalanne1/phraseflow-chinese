@@ -11,6 +11,7 @@ import Settings
 import Study
 import Story
 import TextGeneration
+import TextPractice
 
 struct TranslationState: Equatable {
     var inputText: String = ""

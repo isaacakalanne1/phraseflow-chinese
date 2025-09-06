@@ -66,9 +66,10 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
 
     }
     
-    public func playChapter(from word: WordTimeStampData) async {
+    public func playChapter(from word: WordTimeStampData,
+                            speechSpeed: SpeechSpeed) async {
         await audioEnvironment.playChapterAudio(from: word.time,
-                                                rate: SpeechSpeed.normal.playRate)
+                                                rate: speechSpeed.playRate)
 
     }
     

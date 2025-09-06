@@ -12,6 +12,7 @@ import Settings
 import Study
 import Subscription
 import TextGeneration
+import TextPractice
 
 nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryAction, any StoryEnvironmentProtocol> = { state, action, environment in
     switch action {

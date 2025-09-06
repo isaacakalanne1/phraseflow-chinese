@@ -31,7 +31,8 @@ public protocol TextPracticeEnvironmentProtocol {
         _ word: WordTimeStampData,
         rate: Float
     ) async
-    func playChapter(from word: WordTimeStampData) async
+    func playChapter(from word: WordTimeStampData,
+                     speechSpeed: SpeechSpeed) async
     func pauseChapter()
     func setMusicVolume(_ volume: MusicVolume)
     func playSound(_ sound: AppSound)

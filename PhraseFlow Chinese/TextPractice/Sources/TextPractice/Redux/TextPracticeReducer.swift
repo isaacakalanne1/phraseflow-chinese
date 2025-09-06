@@ -23,6 +23,18 @@ let textPracticeReducer: Reducer<TextPracticeState, TextPracticeAction> = { stat
                 newState.definitions[key] = definition
             }
         }
+    case .showDefinition(let word):
+        // Find the definition for this word in the current sentence
+        if let currentSentence = newState.chapter.currentSentence {
+            let key = DefinitionKey(word: word.word, sentenceId: currentSentence.id)
+            newState.selectedDefinition = newState.definitions[key]
+            newState.viewState = .showDefinition
+            newState.definitions[key]?.hasBeenSeen = true
+        }
+    case .hideDefinition:
+        newState.selectedDefinition = nil
+    case .selectWord(let word, _):
+        newState.chapter.currentPlaybackTime = word.time
     case .setPlaybackTime(let time):
         newState.chapter.currentPlaybackTime = time
     case .updateCurrentSentence(let sentence):

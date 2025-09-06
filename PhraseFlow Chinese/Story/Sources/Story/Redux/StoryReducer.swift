@@ -8,6 +8,7 @@
 import SwiftUI
 import ReduxKit
 import TextGeneration
+import TextPractice
 
 @MainActor
 let storyReducer: Reducer<StoryState, StoryAction> = { state, action in

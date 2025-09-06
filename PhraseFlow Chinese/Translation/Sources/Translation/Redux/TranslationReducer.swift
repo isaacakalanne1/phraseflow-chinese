@@ -9,6 +9,7 @@ import Foundation
 import ReduxKit
 import AVKit
 import Story
+import TextPractice
 
 @MainActor
 let translationReducer: Reducer<TranslationState, TranslationAction> = { state, action in
