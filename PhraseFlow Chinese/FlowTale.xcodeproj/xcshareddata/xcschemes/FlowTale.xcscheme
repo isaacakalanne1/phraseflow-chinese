@@ -21,6 +21,20 @@
                ReferencedContainer = "container:PhraseFlow Chinese.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "BBB6EF222C8C86240079D135"
+               BuildableName = "FlowTale.app"
+               BlueprintName = "FlowTale"
+               ReferencedContainer = "container:FlowTale.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

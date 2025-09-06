@@ -13,7 +13,6 @@ import Study
 import Settings
 import Subscription
 import Translation
-import DataStorage
 
 public struct NavigationEnvironment: NavigationEnvironmentProtocol {
     public let settingsEnvironment: SettingsEnvironmentProtocol

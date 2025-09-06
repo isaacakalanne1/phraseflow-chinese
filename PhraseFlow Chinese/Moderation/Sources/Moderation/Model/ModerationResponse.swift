@@ -6,8 +6,6 @@
 //
 
 public struct ModerationResponse: Codable, Equatable, Sendable {
-    let id: String
-    let model: String
     let results: [ModerationResult]
 
     public var didPassModeration: Bool {

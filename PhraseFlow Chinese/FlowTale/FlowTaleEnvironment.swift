@@ -17,22 +17,9 @@ import UserLimit
 import Moderation
 import Navigation
 import Loading
-import DataStorage
-import TextGeneration
-import Speech
 
 protocol FlowTaleEnvironmentProtocol {
-    var audioEnvironment: AudioEnvironmentProtocol { get }
-    var storyEnvironment: StoryEnvironmentProtocol { get }
-    var settingsEnvironment: SettingsEnvironmentProtocol { get }
-    var studyEnvironment: StudyEnvironmentProtocol { get }
-    var translationEnvironment: TranslationEnvironmentProtocol { get }
-    var subscriptionEnvironment: SubscriptionEnvironmentProtocol { get }
-    var snackBarEnvironment: SnackBarEnvironmentProtocol { get }
-    var userLimitEnvironment: UserLimitEnvironmentProtocol { get }
-    var moderationEnvironment: ModerationEnvironmentProtocol { get }
     var navigationEnvironment: NavigationEnvironmentProtocol { get }
-    var loadingEnvironment: LoadingEnvironmentProtocol { get }
 }
 
 struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {

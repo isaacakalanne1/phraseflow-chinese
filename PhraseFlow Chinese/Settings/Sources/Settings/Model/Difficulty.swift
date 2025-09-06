@@ -11,10 +11,6 @@ import SwiftUI
 public enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable, Sendable {
     case beginner, intermediate, advanced, expert
 
-    var maxIntValue: Int {
-        10
-    }
-
     public var index: Int {
         switch self {
         case .beginner:
@@ -42,32 +38,6 @@ public enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable, Send
             LocalizedString.advanced
         case .expert:
             LocalizedString.expert
-        }
-    }
-
-    var emoji: String {
-        switch self {
-        case .beginner:
-            "👼"
-        case .intermediate:
-            "😊"
-        case .advanced:
-            "😎"
-        case .expert:
-            "😈"
-        }
-    }
-
-    var intValue: Int {
-        switch self {
-        case .beginner:
-            1
-        case .intermediate:
-            5
-        case .advanced:
-            8
-        case .expert:
-            maxIntValue
         }
     }
 

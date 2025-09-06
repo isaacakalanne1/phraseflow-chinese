@@ -16,7 +16,6 @@ struct CharacterView: View {
 
     let word: WordTimeStampData
     let sentence: Sentence
-    let isTranslation: Bool
 
     var isTappedWord: Bool {
         store.state.selectedDefinition?.timestampData == word
@@ -87,23 +86,11 @@ struct CharacterView: View {
         .simultaneousGesture(
             DragGesture(minimumDistance: 0)
                 .onChanged { _ in
-                    switch isTranslation {
-                    case true:
-                        // Translation functionality handled through environment
-                        break
-                    case false:
-                        store.dispatch(.selectWord(word, playAudio: true))
-                        store.dispatch(.showDefinition(word))
-                    }
+                    store.dispatch(.selectWord(word, playAudio: true))
+                    store.dispatch(.showDefinition(word))
                 }
                 .onEnded { _ in
-                    switch isTranslation {
-                    case true:
-                        // Translation functionality handled through environment
-                        break
-                    case false:
-                        store.dispatch(.hideDefinition)
-                    }
+                    store.dispatch(.hideDefinition)
                 }
         )
     }

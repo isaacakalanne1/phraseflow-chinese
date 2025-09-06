@@ -10,15 +10,9 @@ import Foundation
 public struct ModerationRecord: Codable, Identifiable, Equatable {
     public let id: UUID
     let timestamp: Date
-    let prompt: String
-    let moderationResponse: ModerationResponse
-    let didPass: Bool
     
     public init(prompt: String, moderationResponse: ModerationResponse) {
         self.id = UUID()
         self.timestamp = Date()
-        self.prompt = prompt
-        self.moderationResponse = moderationResponse
-        self.didPass = moderationResponse.didPassModeration
     }
 }

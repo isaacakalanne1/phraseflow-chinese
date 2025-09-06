@@ -8,6 +8,7 @@
 import SwiftUI
 import Story
 import FTColor
+import FTFont
 
 struct TabBarView: View {
     @EnvironmentObject var store: NavigationStore
@@ -24,21 +25,26 @@ struct TabBarView: View {
     var body: some View {
         HStack(spacing: 12) {
             ForEach(filteredTabs, id: \.self) { tab in
+                let isSelected = store.state.contentTab == tab
                 VStack(spacing: 4) {
                     ActionButton(
-                        systemImage: tab.image(isSelected: store.state.contentTab == tab),
+                        systemImage: tab.image(isSelected: isSelected),
                         isSelected: store.state.contentTab == tab,
                         size: 30
                     ) {
-                        if store.state.contentTab != tab {
+                        if !isSelected {
                             withAnimation {
                                 store.dispatch(.selectTab(tab, shouldPlaySound: true))
                             }
                         }
                     }
                     
+                    Text(tab.title)
+                        .font(FTFont.flowTaleBodyXSmall())
+                        .foregroundStyle(isSelected ? FTColor.accent : FTColor.primary)
+                    
                     RoundedRectangle(cornerRadius: 1.5)
-                        .fill(store.state.contentTab == tab ? FTColor.accent : Color.clear)
+                        .fill(isSelected ? FTColor.accent : Color.clear)
                         .frame(width: 40, height: 3)
                 }
                 .frame(maxWidth: .infinity)

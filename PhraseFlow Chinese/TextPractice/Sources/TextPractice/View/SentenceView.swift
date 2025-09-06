@@ -29,29 +29,37 @@ public struct SentenceView: View {
         }
         return sentenceIndex
     }
+    
+    var isLastPage: Bool {
+        currentPage == store.state.chapter.sentences.count - 1
+    }
+    
+    var chapter: Chapter {
+        store.state.chapter
+    }
 
     public var body: some View {
-        paginatedView(chapter: store.state.chapter)
+        paginatedView()
     }
 
     @ViewBuilder
-    func paginatedView(chapter: Chapter) -> some View {
+    func paginatedView() -> some View {
         VStack(spacing: 16) {
-            flowLayout(sentence: chapter.sentences[currentPage], language: chapter.language)
+            flowLayout(sentence: chapter.sentences[currentPage],
+                       language: chapter.language)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-            paginationControls(totalPages: chapter.sentences.count, chapter: chapter)
+            paginationControls(totalPages: chapter.sentences.count,
+                               chapter: chapter)
 
-            if store.state.textPracticeType == .story {
-                playbackControls
-                
-                let isLastPage = currentPage == chapter.sentences.count - 1
-                if isLastPage {
-                    MainButton(title: LocalizedString.newChapter.uppercased()) {
-                        store.dispatch(.goToNextChapter)
-                    }
-                    .disabled(store.state.isWritingNewChapter)
+            playbackControls
+            
+            if isLastPage,
+               store.state.textPracticeType == .story {
+                MainButton(title: LocalizedString.newChapter.uppercased()) {
+                    store.dispatch(.goToNextChapter)
                 }
+                .disabled(store.state.isWritingNewChapter)
             }
         }
         .onAppear {
@@ -129,7 +137,7 @@ public struct SentenceView: View {
                             language: Language) -> some View {
         FlowLayout(spacing: 0, language: language) {
             ForEach(Array(sentence.timestamps.enumerated()), id: \.offset) { index, word in
-                CharacterView(word: word, sentence: sentence, isTranslation: store.state.textPracticeType == .translator)
+                CharacterView(word: word, sentence: sentence)
                     .id(word.id)
                     .opacity(opacity)
                     .animation(.easeInOut.delay(Double(index) * 0.02), value: opacity)

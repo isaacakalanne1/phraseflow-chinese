@@ -9,13 +9,4 @@ import SwiftUI
 
 public enum FlowTaleColorScheme: Codable, Sendable {
     case light, dark
-
-    var colorScheme: ColorScheme {
-        switch self {
-        case .light:
-                .light
-        case .dark:
-                .dark
-        }
-    }
 }

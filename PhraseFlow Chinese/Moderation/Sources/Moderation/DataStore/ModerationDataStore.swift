@@ -11,6 +11,7 @@ import Foundation
 enum ModerationDataStoreError: Error {
     case failedToCreateUrl
     case failedToSaveData
+    case failedToEncodeData
     case failedToDecodeData
 }
 
@@ -63,13 +64,19 @@ public class ModerationDataStore: ModerationDataStoreProtocol {
         let files = try fileManager.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil)
         let jsonFiles = files.filter { $0.pathExtension == "json" }
         
-        return jsonFiles.compactMap { fileURL in
-            guard let data = try? Data(contentsOf: fileURL),
-                  let record = try? decoder.decode(ModerationRecord.self, from: data) else {
+        let history: [ModerationRecord] = try jsonFiles.compactMap { fileURL in
+            guard let data = try? Data(contentsOf: fileURL) else {
                 return nil
             }
-            return record
+            do {
+                let record = try decoder.decode(ModerationRecord.self, from: data)
+                return record
+            } catch {
+                throw ModerationDataStoreError.failedToDecodeData
+            }
         }.sorted { $0.timestamp > $1.timestamp }
+        
+        return history
     }
     
     public func deleteModerationRecord(id: UUID) throws {
