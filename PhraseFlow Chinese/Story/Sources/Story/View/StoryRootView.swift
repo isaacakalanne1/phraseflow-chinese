@@ -19,13 +19,11 @@ public struct StoryRootView: View {
             middleware: storyMiddleware,
             subscriber: storySubscriber
         )
+        store.dispatch(.loadStoriesAndDefinitions)
     }
     
     public var body: some View {
         StoryListView()
             .environmentObject(store)
-            .onAppear {
-                store.dispatch(.loadStoriesAndDefinitions)
-            }
     }
 }

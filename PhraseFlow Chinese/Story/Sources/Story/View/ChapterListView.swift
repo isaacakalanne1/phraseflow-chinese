@@ -154,6 +154,7 @@ public struct ChapterListView: View {
                                              chapter: chapter,
                                              definitions: store.state.definitions,
                                              type: .story)
+                        .background(FTColor.background)
                     }
                 }
             } else {

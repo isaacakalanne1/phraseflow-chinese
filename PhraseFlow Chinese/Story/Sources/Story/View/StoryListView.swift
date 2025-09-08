@@ -36,6 +36,7 @@ struct StoryListView: View {
             .padding([.horizontal, .bottom])
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(FTColor.background)
         .navigationTitle(LocalizedString.stories)
         .navigationDestination(isPresented: $showCreateStorySettings) {
             CreateStorySettingsView()
