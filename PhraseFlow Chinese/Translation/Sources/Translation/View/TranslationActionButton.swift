@@ -52,10 +52,6 @@ struct TranslationActionButton: View {
                           Color.gray.opacity(0.5) : FTColor.accent)
             )
         }
-        .disabled(store.state.inputText.isEmpty ||
-                  store.state.isTranslating)
-        .padding(.horizontal)
-        .padding(.top, 10)
-        .padding(.bottom, 16)
+        .disabled(store.state.inputText.isEmpty || store.state.isTranslating)
     }
 }
