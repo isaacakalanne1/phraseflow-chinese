@@ -16,13 +16,19 @@ struct TranslationView: View {
     @State private var showLanguageSelector: Bool = false
     @State private var showSourceLanguageSelector: Bool = false
     @State private var showTextLanguageSelector: Bool = false
-    @State private var inputText = ""
     @FocusState private var isInputFocused: Bool
 
     var body: some View {
+        
+        let inputText: Binding<String> = .init {
+            store.state.inputText
+        } set: { newValue in
+            store.dispatch(.updateInputText(newValue))
+        }
+
         VStack {
             TranslationInputSection(
-                inputText: $inputText,
+                inputText: inputText,
                 isInputFocused: $isInputFocused
             )
 
@@ -54,9 +60,6 @@ struct TranslationView: View {
         .navigationDestination(isPresented: $showTextLanguageSelector) {
             LanguageMenu(type: .translationTextLanguage)
         }
-        .onChange(of: inputText, { oldValue, newValue in
-            store.dispatch(.updateInputText(newValue))
-        })
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }

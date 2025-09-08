@@ -10,7 +10,7 @@ import Settings
 import Study
 import TextGeneration
 
-enum TranslationAction {
+public enum TranslationAction: Sendable {
     case updateInputText(String)
     case updateSourceLanguage(Language?)
     case updateTargetLanguage(Language)

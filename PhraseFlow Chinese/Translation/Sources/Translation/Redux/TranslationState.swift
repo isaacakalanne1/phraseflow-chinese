@@ -13,7 +13,7 @@ import Story
 import TextGeneration
 import TextPractice
 
-struct TranslationState: Equatable {
+public struct TranslationState: Equatable {
     var inputText: String = ""
     var isTranslating: Bool = false
     var chapter: Chapter?
@@ -33,7 +33,7 @@ struct TranslationState: Equatable {
     var isLoadingDefinitions: Bool = false
     var definitions: [DefinitionKey: Definition] = [:]
     
-    init() {}
+    public init() {}
     
     func sentence(containing timestampData: WordTimeStampData) -> Sentence? {
         chapter?.sentences.first(where: { $0.timestamps.contains(where: { $0.id == timestampData.id }) })

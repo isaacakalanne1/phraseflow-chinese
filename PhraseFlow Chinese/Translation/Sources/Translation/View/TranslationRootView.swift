@@ -11,13 +11,8 @@ import ReduxKit
 public struct TranslationRootView: View {
     private let store: TranslationStore
     
-    public init(environment: TranslationEnvironmentProtocol) {
-        self.store = Store(
-            initial: TranslationState(),
-            reducer: translationReducer,
-            environment: environment,
-            middleware: translationMiddleware
-        )
+    public init(store: TranslationStore) {
+        self.store = store
     }
     
     public var body: some View {
