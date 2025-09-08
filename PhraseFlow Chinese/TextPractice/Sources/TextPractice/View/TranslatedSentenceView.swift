@@ -17,28 +17,11 @@ struct TranslatedSentenceView: View {
     var body: some View {
         VStack(spacing: 8) {
             if let sentence = store.state.chapter.currentSentence {
-                switch store.state.viewState {
-                case .showDefinition:
-                    // Show translation with scroll indicators
-                    Text(sentence.original)
-                        .font(FTFont.flowTaleBodyMedium())
-                        .foregroundColor(FTColor.primary)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 8)
-                case .normal:
-                    // Show hidden state
-                    VStack {
-                        Image(systemName: "eye.slash")
-                            .font(FTFont.flowTaleBodyMedium())
-                            .foregroundColor(FTColor.secondary)
-                            .padding(.bottom, 4)
-                        
-                        Text(LocalizedString.tapRevealToShow)
-                            .font(FTFont.flowTaleSecondaryHeader())
-                            .foregroundColor(FTColor.secondary)
-                            .multilineTextAlignment(.center)
-                    }
-                }
+                Text(sentence.original)
+                    .font(FTFont.flowTaleBodyMedium())
+                    .foregroundColor(FTColor.primary)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
             } else {
                 // No sentence selected state
                 VStack {

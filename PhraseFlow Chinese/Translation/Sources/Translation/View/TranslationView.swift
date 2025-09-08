@@ -21,18 +21,17 @@ struct TranslationView: View {
 
     var body: some View {
         VStack {
+            TranslationInputSection(
+                inputText: $inputText,
+                isInputFocused: $isInputFocused
+            )
+
+            TranslationLanguageSelector(
+                showLanguageSelector: $showLanguageSelector,
+                showSourceLanguageSelector: $showSourceLanguageSelector,
+                showTextLanguageSelector: $showTextLanguageSelector
+            )
             ScrollView {
-                TranslationInputSection(
-                    inputText: $inputText,
-                    isInputFocused: $isInputFocused
-                )
-
-                TranslationLanguageSelector(
-                    showLanguageSelector: $showLanguageSelector,
-                    showSourceLanguageSelector: $showSourceLanguageSelector,
-                    showTextLanguageSelector: $showTextLanguageSelector
-                )
-
                 if let chapter = store.state.chapter {
                     TextPracticeRootView(environment: store.environment.textPracticeEnvironment,
                                          chapter: chapter,
@@ -40,7 +39,6 @@ struct TranslationView: View {
                                          type: .translator)
                 }
             }
-
             TranslationActionButton(isInputFocused: $isInputFocused)
         }
         .padding()

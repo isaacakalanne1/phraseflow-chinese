@@ -25,9 +25,6 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
     case .updateTargetLanguage(let language):
         newState.targetLanguage = language
         
-    case .updateTextLanguage(let language):
-        newState.textLanguage = language
-        
     case .updateTranslationMode(let mode):
         newState.mode = mode
         // Clear current translation when switching modes
@@ -133,6 +130,7 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         
     case .onLoadAppSettings(let settings):
         newState.targetLanguage = settings.language
+        newState.settings = settings
         
     case .loadDefinitionsForTranslation:
         newState.isLoadingDefinitions = true

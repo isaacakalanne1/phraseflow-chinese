@@ -31,7 +31,7 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             return .failedToTranslate
         }
         
-        return .synthesizeAudio(chapter, state.textLanguage)
+        return .synthesizeAudio(chapter, state.targetLanguage)
         
     case .breakdownText:
         let inputText = state.inputText
@@ -44,7 +44,7 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         
         guard let chapter = try? await environment.breakdownText(
                 inputText,
-                textLanguage: state.textLanguage,
+                textLanguage: state.targetLanguage,
                 deviceLanguage: Language.deviceLanguage
               ) else {
             return .failedToBreakdown
@@ -54,7 +54,7 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         
     case .synthesizeAudio(let chapter, let language):
         // Get voice from settings environment
-        let currentVoice = environment.settingsEnvironment.currentVoice
+        var currentVoice = state.settings.voice
         let voice = currentVoice.language == language ? currentVoice : language.voices.first
         
         guard let selectedVoice = voice else {
@@ -250,7 +250,6 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
     case .updateInputText,
             .updateSourceLanguage,
             .updateTargetLanguage,
-            .updateTextLanguage,
             .updateTranslationMode,
             .swapLanguages,
             .translationInProgress,

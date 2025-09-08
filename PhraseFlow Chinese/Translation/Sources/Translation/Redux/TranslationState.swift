@@ -24,9 +24,9 @@ struct TranslationState: Equatable {
     var currentDefinition: Definition?
     var sourceLanguage: Language?
     var targetLanguage: Language = .mandarinChinese
+    var settings: SettingsState = .init()
     var currentSentence: Sentence?
     var mode: TranslationMode = .translate
-    var textLanguage: Language = .mandarinChinese
     var savedTranslations: [Chapter] = []
     var isLoadingHistory: Bool = false
     var currentSentenceIndex: Int = 0

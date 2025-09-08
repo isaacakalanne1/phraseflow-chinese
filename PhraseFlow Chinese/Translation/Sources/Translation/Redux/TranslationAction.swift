@@ -14,7 +14,6 @@ enum TranslationAction {
     case updateInputText(String)
     case updateSourceLanguage(Language?)
     case updateTargetLanguage(Language)
-    case updateTextLanguage(Language)
     case updateTranslationMode(TranslationMode)
     case swapLanguages
     case translateText
