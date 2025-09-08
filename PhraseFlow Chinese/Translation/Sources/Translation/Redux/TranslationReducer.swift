@@ -12,7 +12,7 @@ import Story
 import TextPractice
 
 @MainActor
-public let translationReducer: Reducer<TranslationState, TranslationAction> = { state, action in
+let translationReducer: Reducer<TranslationState, TranslationAction> = { state, action in
     var newState = state
     
     switch action {

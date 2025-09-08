@@ -12,18 +12,11 @@ import Study
 import Settings
 import Subscription
 import Translation
-import ReduxKit
 
 struct DisplayedContentView: View {
     @EnvironmentObject var store: NavigationStore
     
     var body: some View {
-        let translationStore: TranslationStore = Store(
-            initial: TranslationState(),
-            reducer: translationReducer,
-            environment: store.environment.translationEnvironment,
-            middleware: translationMiddleware
-        )
         Group {
             switch store.state.contentTab {
             case .reader:
@@ -36,7 +29,7 @@ struct DisplayedContentView: View {
                 StudyRootView(environment: store.environment.studyEnvironment)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .translate:
-                TranslationRootView(store: translationStore)
+                TranslationRootView(environment: store.environment.translationEnvironment)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .subscribe:
                 SubscriptionRootView(environment: store.environment.subscriptionEnvironment)

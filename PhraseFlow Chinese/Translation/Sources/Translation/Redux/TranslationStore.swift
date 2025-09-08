@@ -8,4 +8,4 @@
 import Foundation
 import ReduxKit
 
-public typealias TranslationStore = Store<TranslationState, TranslationAction, TranslationEnvironmentProtocol>
+typealias TranslationStore = Store<TranslationState, TranslationAction, TranslationEnvironmentProtocol>

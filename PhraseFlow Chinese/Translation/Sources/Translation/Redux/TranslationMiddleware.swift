@@ -15,7 +15,7 @@ import Story
 import TextPractice
 
 @MainActor
-public let translationMiddleware: Middleware<TranslationState, TranslationAction, TranslationEnvironmentProtocol> = { state, action, environment in
+let translationMiddleware: Middleware<TranslationState, TranslationAction, TranslationEnvironmentProtocol> = { state, action, environment in
     switch action {
     case .translateText:
         let inputText = state.inputText

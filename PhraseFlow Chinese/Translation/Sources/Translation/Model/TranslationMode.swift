@@ -7,7 +7,7 @@
 
 import Localization
 
-public enum TranslationMode: String, CaseIterable, Sendable {
+enum TranslationMode: String, CaseIterable {
     case translate
     case breakdown
     
