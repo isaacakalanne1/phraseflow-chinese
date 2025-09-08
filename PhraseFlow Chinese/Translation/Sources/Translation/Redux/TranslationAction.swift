@@ -12,7 +12,7 @@ import TextGeneration
 
 enum TranslationAction {
     case updateInputText(String)
-    case updateSourceLanguage(Language?)
+    case updateSourceLanguage(Language)
     case updateTargetLanguage(Language)
     case updateTranslationMode(TranslationMode)
     case swapLanguages

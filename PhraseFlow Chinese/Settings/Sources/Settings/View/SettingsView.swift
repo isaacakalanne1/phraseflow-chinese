@@ -46,11 +46,18 @@ struct SettingsView: View {
                 store.dispatch(.playSound(.togglePress))
             }
         }
+
+        let selectedLanguage: Binding<Language> = .init {
+            store.state.language
+        } set: { newValue in
+            store.dispatch(.updateLanguage(newValue))
+        }
         NavigationStack {
             VStack(spacing: 0) {
                 List {
                     Section {
-                        NavigationLink(destination: LanguageSettingsView()) {
+                        NavigationLink(destination: LanguageSettingsView(selectedLanguage: selectedLanguage,
+                                                                         isEnabled: !store.state.viewState.isWritingChapter)) {
                             HStack {
                                 Text(LocalizedString.language)
                                     .fontWeight(.light)

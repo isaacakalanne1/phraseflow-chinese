@@ -13,12 +13,11 @@ struct TranslationLanguageSelector: View {
     @EnvironmentObject var store: TranslationStore
     @Binding var showLanguageSelector: Bool
     @Binding var showSourceLanguageSelector: Bool
-    @Binding var showTextLanguageSelector: Bool
     
     var body: some View {
         VStack(spacing: 8) {
             if store.state.mode == .translate {
-                Text("Translate between languages")
+                Text("Translate between languages") // TODO: Localize
                     .font(FTFont.flowTaleSubHeader())
                     .foregroundColor(FTColor.secondary)
 
@@ -34,11 +33,11 @@ struct TranslationLanguageSelector: View {
                 }
             } else {
                 // Breakdown mode - only show text language selector
-                Text("Select text language")
+                Text("Select text language") // TODO: Localize
                     .font(FTFont.flowTaleSubHeader())
                     .foregroundColor(FTColor.secondary)
 
-                textLanguageButton
+                targetLanguageButton
             }
         }
     }
@@ -50,21 +49,12 @@ struct TranslationLanguageSelector: View {
             let sourceLanguage = store.state.sourceLanguage
 
             HStack(spacing: 6) {
-                if let sourceLanguage {
-                    Text(sourceLanguage.flagEmoji)
-                        .font(FTFont.flowTaleBodyXSmall())
-                    Text(sourceLanguage.displayName)
-                        .font(FTFont.flowTaleSubHeader())
-                        .fontWeight(.medium)
-                        .lineLimit(1)
-                } else {
-                    Text("🔍")
-                        .font(FTFont.flowTaleBodyXSmall())
-                    Text("Auto-detect")
-                        .font(FTFont.flowTaleSubHeader())
-                        .fontWeight(.medium)
-                        .lineLimit(1)
-                }
+                Text(sourceLanguage.flagEmoji)
+                    .font(FTFont.flowTaleBodyXSmall())
+                Text(sourceLanguage.displayName)
+                    .font(FTFont.flowTaleSubHeader())
+                    .fontWeight(.medium)
+                    .lineLimit(1)
                 Image(systemName: "chevron.down")
                     .font(FTFont.flowTaleSecondaryHeader())
             }
@@ -86,19 +76,19 @@ struct TranslationLanguageSelector: View {
         Button {
             store.dispatch(.swapLanguages)
         } label: {
-            Image(systemName: store.state.sourceLanguage == nil ?
+            Image(systemName: store.state.sourceLanguage == .autoDetect ?
                   "arrow.right" : "arrow.left.arrow.right")
                 .font(FTFont.flowTaleBodyXSmall())
-                .foregroundColor(store.state.sourceLanguage == nil ?
+                .foregroundColor(store.state.sourceLanguage == .autoDetect ?
                                 FTColor.secondary : FTColor.accent)
                 .frame(width: 36, height: 36)
                 .background(
                     Circle()
-                        .strokeBorder(store.state.sourceLanguage == nil ?
+                        .strokeBorder(store.state.sourceLanguage == .autoDetect ?
                                      FTColor.secondary : FTColor.accent, lineWidth: 1)
                 )
         }
-        .disabled(store.state.sourceLanguage == nil)
+        .disabled(store.state.sourceLanguage == .autoDetect)
     }
     
     private var targetLanguageButton: some View {
@@ -110,35 +100,6 @@ struct TranslationLanguageSelector: View {
                 Text(targetLanguage.flagEmoji)
                     .font(FTFont.flowTaleBodyXSmall())
                 Text(targetLanguage.displayName)
-                    .font(FTFont.flowTaleSubHeader())
-                    .fontWeight(.medium)
-                    .lineLimit(1)
-                Image(systemName: "chevron.down")
-                    .font(FTFont.flowTaleSecondaryHeader())
-            }
-            .foregroundColor(FTColor.primary)
-            .padding(.vertical, 6)
-            .padding(.horizontal, 10)
-            .background(
-                Capsule()
-                    .fill(FTColor.background)
-                    .overlay(
-                        Capsule()
-                            .strokeBorder(FTColor.secondary, lineWidth: 1)
-                    )
-            )
-        }
-    }
-    
-    private var textLanguageButton: some View {
-        Button {
-            showTextLanguageSelector = true
-        } label: {
-            let textLanguage = store.state.targetLanguage
-            HStack(spacing: 6) {
-                Text(textLanguage.flagEmoji)
-                    .font(FTFont.flowTaleBodyXSmall())
-                Text(textLanguage.displayName)
                     .font(FTFont.flowTaleSubHeader())
                     .fontWeight(.medium)
                     .lineLimit(1)

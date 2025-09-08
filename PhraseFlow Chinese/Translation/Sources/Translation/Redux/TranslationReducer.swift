@@ -35,10 +35,9 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         newState.audioPlayer.replaceCurrentItem(with: nil)
         
     case .swapLanguages:
-        // Only swap if source language is not nil (not auto-detect)
-        if let sourceLanguage = newState.sourceLanguage {
+        if newState.sourceLanguage != .autoDetect {
             let tempTarget = newState.targetLanguage
-            newState.targetLanguage = sourceLanguage
+            newState.targetLanguage = newState.sourceLanguage
             newState.sourceLanguage = tempTarget
         }
         

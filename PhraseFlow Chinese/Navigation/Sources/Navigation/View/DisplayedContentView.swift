@@ -29,8 +29,10 @@ struct DisplayedContentView: View {
                 StudyRootView(environment: store.environment.studyEnvironment)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .translate:
-                TranslationRootView(environment: store.environment.translationEnvironment)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                NavigationStack {
+                    TranslationRootView(environment: store.environment.translationEnvironment)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
             case .subscribe:
                 SubscriptionRootView(environment: store.environment.subscriptionEnvironment)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)

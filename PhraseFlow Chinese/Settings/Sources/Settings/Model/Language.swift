@@ -9,7 +9,8 @@ import Localization
 import SwiftUI
 
 public enum Language: String, Codable, CaseIterable, Sendable {
-    case english,
+    case autoDetect,
+         english,
          englishUK,
          mandarinChinese,
          spanish,
@@ -33,6 +34,8 @@ public enum Language: String, Codable, CaseIterable, Sendable {
 
     public var descriptiveEnglishName: String {
         switch self {
+        case .autoDetect:
+            "Auto-Detect" // TODO: Localize
         case .brazilianPortuguese:
             "Brazilian Portuguese"
         case .europeanPortuguese:
@@ -58,6 +61,8 @@ public enum Language: String, Codable, CaseIterable, Sendable {
 
     public var displayName: String {
         switch self {
+        case .autoDetect:
+            "Auto-Detect" // TODO: Localize
         case .mandarinChinese:
             LocalizedString.chineseMandarin
         case .arabicGulf:
@@ -89,6 +94,8 @@ public enum Language: String, Codable, CaseIterable, Sendable {
 
     public var speechCode: String {
         switch self {
+        case .autoDetect:
+            ""
         case .arabicGulf:
             "ar-AE"
         case .mandarinChinese:
@@ -120,6 +127,8 @@ public enum Language: String, Codable, CaseIterable, Sendable {
 
     var identifier: String {
         switch self {
+        case .autoDetect:
+            ""
         case .arabicGulf:
             "ar"
         case .mandarinChinese:
@@ -149,6 +158,8 @@ public enum Language: String, Codable, CaseIterable, Sendable {
 
     var flagCodes: [String] {
         switch self {
+        case .autoDetect:
+            [""]
         case .arabicGulf:
             ["ae"]
         case .mandarinChinese:
@@ -189,6 +200,8 @@ public enum Language: String, Codable, CaseIterable, Sendable {
 
     public var voices: [Voice] {
         switch self {
+        case .autoDetect:
+            []
         case .mandarinChinese:
             [.xiaoxiao,
              .yunjian]

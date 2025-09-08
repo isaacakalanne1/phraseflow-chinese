@@ -13,10 +13,20 @@ import SwiftUI
 
 struct LanguageOnboardingView: View {
     @EnvironmentObject var store: SettingsStore
+    @Binding var selectedLanguage: Language
+    private var isEnabled: Bool
+    
+    public init(
+        selectedLanguage: Binding<Language>,
+        isEnabled: Bool
+    ) {
+        self._selectedLanguage = selectedLanguage
+        self.isEnabled = isEnabled
+    }
     
     var body: some View {
         VStack(spacing: 0) {
-            LanguageMenu()
+            LanguageMenu(selectedLanguage: $selectedLanguage, isEnabled: isEnabled)
         }
         .background(FTColor.background)
         .opacity(store.state.viewState.isWritingChapter ? 0.3 : 1.0)
@@ -25,14 +35,18 @@ struct LanguageOnboardingView: View {
 }
 
 public struct LanguageMenu: View {
-    @EnvironmentObject var store: SettingsStore
     @Environment(\.dismiss) var dismiss
-    var shouldDismissOnSelect = false
     let type: LanguageMenuType
+    @Binding private var selectedLanguage: Language
+    private var isEnabled: Bool
 
-    public init(shouldDismissOnSelect: Bool = false,
-         type: LanguageMenuType = .normal) {
-        self.shouldDismissOnSelect = shouldDismissOnSelect
+    public init(
+        selectedLanguage: Binding<Language>,
+        isEnabled: Bool,
+        type: LanguageMenuType = .normal
+    ) {
+        self._selectedLanguage = selectedLanguage
+        self.isEnabled = isEnabled
         self.type = type
     }
 
@@ -50,6 +64,14 @@ public struct LanguageMenu: View {
         .scrollContentBackground(.hidden)
     }
     
+    var languages: [Language] {
+        var languages = Language.allCases
+        if !type.shouldShowAutoDetect {
+            languages.removeAll(where: { $0 == .autoDetect})
+        }
+        return languages
+    }
+    
     @ViewBuilder
     private var languageGrid: some View {
         LazyVGrid(columns: [
@@ -58,7 +80,7 @@ public struct LanguageMenu: View {
             GridItem(.flexible()),
         ], spacing: 8) {
             
-            ForEach(Language.allCases, id: \.self) { language in
+            ForEach(languages, id: \.self) { language in
                 languageButton(for: language)
             }
         }
@@ -66,7 +88,7 @@ public struct LanguageMenu: View {
     
     @ViewBuilder
     private func languageButton(for language: Language) -> some View {
-        let isSelectedLanguage = store.state.language == language
+        let isSelectedLanguage = selectedLanguage == language
         
         ImageButton(
             title: language.displayName,
@@ -76,7 +98,7 @@ public struct LanguageMenu: View {
                 languageButtonAction(for: language)
             }
         )
-        .disabled(store.state.viewState.isWritingChapter)
+        .disabled(!isEnabled)
     }
     
     @ViewBuilder
@@ -87,30 +109,29 @@ public struct LanguageMenu: View {
     
     private func languageButtonAction(for language: Language) {
         withAnimation(.easeInOut) {
-            store.dispatch(.playSound(.changeSettings))
-            
-            switch type {
-            case .normal:
-                store.dispatch(.updateLanguage(language))
-            case .translationSourceLanguage, .translationTargetLanguage, .translationTextLanguage:
-                break
-            }
-            
-            if shouldDismissOnSelect {
-                dismiss()
-            }
+            selectedLanguage = language
+            dismiss()
         }
     }
 }
 
 public struct LanguageSettingsView: View {
     @Environment(\.dismiss) var dismiss
+    @Binding private var selectedLanguage: Language
+    private var isEnabled: Bool
 
-    public init() {}
+    public init(
+        selectedLanguage: Binding<Language>,
+        isEnabled: Bool
+    ) {
+        self._selectedLanguage = selectedLanguage
+        self.isEnabled = isEnabled
+    }
 
     public var body: some View {
         VStack(spacing: 0) {
-            LanguageMenu(shouldDismissOnSelect: true)
+            LanguageMenu(selectedLanguage: $selectedLanguage,
+                         isEnabled: isEnabled)
 
             PrimaryButton(title: LocalizedString.done) {
                 dismiss()

@@ -24,6 +24,13 @@ public struct CreateStorySettingsView: View {
         let currentDifficulty = store.state.difficulty
         let currentLanguage = store.state.language
         let currentVoice = store.state.voice
+        
+        let selectedLanguage: Binding<Language> = .init {
+            store.state.language
+        } set: { newValue in
+            store.dispatch(.updateLanguage(newValue))
+        }
+
 
         return VStack {
             ScrollView {
@@ -74,7 +81,8 @@ public struct CreateStorySettingsView: View {
         .navigationDestination(
             isPresented: $isShowingLanguageSettings
         ) {
-            LanguageSettingsView()
+            LanguageSettingsView(selectedLanguage: selectedLanguage,
+                                 isEnabled: !store.state.viewState.isWritingChapter)
         }
         .navigationDestination(
             isPresented: $isShowingDifficultySettings

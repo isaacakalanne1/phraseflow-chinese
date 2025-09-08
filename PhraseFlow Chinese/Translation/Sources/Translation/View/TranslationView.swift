@@ -15,11 +15,22 @@ struct TranslationView: View {
     @EnvironmentObject var store: TranslationStore
     @State private var showLanguageSelector: Bool = false
     @State private var showSourceLanguageSelector: Bool = false
-    @State private var showTextLanguageSelector: Bool = false
     @State private var inputText = ""
     @FocusState private var isInputFocused: Bool
 
     var body: some View {
+        let sourceLanguage: Binding<Language> = .init {
+            store.state.sourceLanguage
+        } set: { newValue in
+            store.dispatch(.updateSourceLanguage(newValue))
+        }
+        
+        let targetLanguage: Binding<Language> = .init {
+            store.state.targetLanguage
+        } set: { newValue in
+            store.dispatch(.updateTargetLanguage(newValue))
+        }
+
         VStack {
             TranslationInputSection(
                 inputText: $inputText,
@@ -28,8 +39,7 @@ struct TranslationView: View {
 
             TranslationLanguageSelector(
                 showLanguageSelector: $showLanguageSelector,
-                showSourceLanguageSelector: $showSourceLanguageSelector,
-                showTextLanguageSelector: $showTextLanguageSelector
+                showSourceLanguageSelector: $showSourceLanguageSelector
             )
             ScrollView {
                 if let chapter = store.state.chapter {
@@ -46,13 +56,14 @@ struct TranslationView: View {
         .navigationBarTitleDisplayMode(.inline)
         .background(FTColor.background)
         .navigationDestination(isPresented: $showLanguageSelector) {
-            LanguageMenu(type: .translationTargetLanguage)
+            LanguageMenu(selectedLanguage: targetLanguage,
+                         isEnabled: !store.state.isTranslating,
+                         type: .translationTargetLanguage)
         }
         .navigationDestination(isPresented: $showSourceLanguageSelector) {
-            LanguageMenu(type: .translationSourceLanguage)
-        }
-        .navigationDestination(isPresented: $showTextLanguageSelector) {
-            LanguageMenu(type: .translationTextLanguage)
+            LanguageMenu(selectedLanguage: sourceLanguage,
+                         isEnabled: !store.state.isTranslating,
+                         type: .translationSourceLanguage)
         }
         .onChange(of: inputText, { oldValue, newValue in
             store.dispatch(.updateInputText(newValue))
