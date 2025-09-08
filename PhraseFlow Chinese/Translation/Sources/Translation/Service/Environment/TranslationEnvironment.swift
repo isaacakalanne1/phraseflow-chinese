@@ -96,4 +96,8 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
     public func getAppSettings() throws -> SettingsState {
         return try settingsEnvironment.loadAppSettings()
     }
+    
+    public func saveAppSettings(_ settings: SettingsState) throws {
+        try settingsEnvironment.saveAppSettings(settings)
+    }
 }

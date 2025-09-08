@@ -20,13 +20,13 @@ struct TranslationView: View {
 
     var body: some View {
         let sourceLanguage: Binding<Language> = .init {
-            store.state.sourceLanguage
+            store.state.settings.sourceLanguage
         } set: { newValue in
             store.dispatch(.updateSourceLanguage(newValue))
         }
         
         let targetLanguage: Binding<Language> = .init {
-            store.state.targetLanguage
+            store.state.settings.targetLanguage
         } set: { newValue in
             store.dispatch(.updateTargetLanguage(newValue))
         }

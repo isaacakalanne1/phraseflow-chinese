@@ -27,4 +27,5 @@ public protocol TranslationEnvironmentProtocol {
     func saveDefinitions(_ definitions: [Definition]) throws
     func saveSentenceAudio(_ audioData: Data, id: UUID) throws
     func getAppSettings() throws -> SettingsState
+    func saveAppSettings(_ settings: SettingsState) throws
 }

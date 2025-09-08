@@ -20,10 +20,10 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         newState.inputText = text
     
     case .updateSourceLanguage(let language):
-        newState.sourceLanguage = language
+        newState.settings.sourceLanguage = language
         
     case .updateTargetLanguage(let language):
-        newState.targetLanguage = language
+        newState.settings.targetLanguage = language
         
     case .updateTranslationMode(let mode):
         newState.mode = mode
@@ -35,10 +35,10 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         newState.audioPlayer.replaceCurrentItem(with: nil)
         
     case .swapLanguages:
-        if newState.sourceLanguage != .autoDetect {
-            let tempTarget = newState.targetLanguage
-            newState.targetLanguage = newState.sourceLanguage
-            newState.sourceLanguage = tempTarget
+        if newState.settings.sourceLanguage != .autoDetect {
+            let tempTarget = newState.settings.targetLanguage
+            newState.settings.targetLanguage = newState.settings.sourceLanguage
+            newState.settings.sourceLanguage = tempTarget
         }
         
     case .translateText,
@@ -128,7 +128,6 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         newState.savedTranslations = translations
         
     case .onLoadAppSettings(let settings):
-        newState.targetLanguage = settings.language
         newState.settings = settings
         
     case .loadDefinitionsForTranslation:
@@ -159,7 +158,10 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
             .failedToSynthesizeAudio,
             .saveCurrentTranslation,
             .deleteTranslation,
-            .loadAppSettings:
+            .loadAppSettings,
+            .saveAppSettings,
+            .onSavedAppSettings,
+            .failedToSaveAppSettings:
         break
     }
     

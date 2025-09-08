@@ -26,12 +26,12 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         guard let chapter = try? await environment.translateText(
             inputText,
             from: Language.deviceLanguage,
-            to: state.targetLanguage
+            to: state.settings.targetLanguage
         ) else {
             return .failedToTranslate
         }
         
-        return .synthesizeAudio(chapter, state.targetLanguage)
+        return .synthesizeAudio(chapter, state.settings.targetLanguage)
         
     case .breakdownText:
         let inputText = state.inputText
@@ -44,13 +44,13 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         
         guard let chapter = try? await environment.breakdownText(
                 inputText,
-                textLanguage: state.targetLanguage,
+                textLanguage: state.settings.targetLanguage,
                 deviceLanguage: Language.deviceLanguage
               ) else {
             return .failedToBreakdown
         }
         
-        return .synthesizeAudio(chapter, state.targetLanguage)
+        return .synthesizeAudio(chapter, state.settings.targetLanguage)
         
     case .synthesizeAudio(let chapter, let language):
         // Get voice from settings environment
@@ -246,10 +246,18 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             return .loadDefinitionsForTranslation(chapter, sentenceIndex: startIndex)
         }
         return nil
+    case .updateSourceLanguage,
+            .updateTargetLanguage:
+        return .saveAppSettings
+    case .saveAppSettings:
+        do {
+            try environment.saveAppSettings(state.settings)
+            return .onSavedAppSettings
+        } catch {
+            return .failedToSaveAppSettings
+        }
         
     case .updateInputText,
-            .updateSourceLanguage,
-            .updateTargetLanguage,
             .updateTranslationMode,
             .swapLanguages,
             .translationInProgress,
@@ -263,7 +271,9 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             .onTranslationsLoaded,
             .onLoadAppSettings,
             .failedToLoadTranslationDefinitions,
-            .updateCurrentSentenceIndex:
+            .updateCurrentSentenceIndex,
+            .onSavedAppSettings,
+            .failedToSaveAppSettings:
         return nil
     }
 }

@@ -22,8 +22,6 @@ struct TranslationState: Equatable {
     var currentPlaybackTime: Double = 0
     var currentSpokenWord: WordTimeStampData?
     var currentDefinition: Definition?
-    var sourceLanguage: Language = .autoDetect
-    var targetLanguage: Language = .mandarinChinese
     var settings: SettingsState = .init()
     var currentSentence: Sentence?
     var mode: TranslationMode = .translate

@@ -46,12 +46,10 @@ struct TranslationLanguageSelector: View {
         Button {
             showSourceLanguageSelector = true
         } label: {
-            let sourceLanguage = store.state.sourceLanguage
-
             HStack(spacing: 6) {
-                Text(sourceLanguage.flagEmoji)
+                Text(store.state.settings.sourceLanguage.flagEmoji)
                     .font(FTFont.flowTaleBodyXSmall())
-                Text(sourceLanguage.displayName)
+                Text(store.state.settings.sourceLanguage.displayName)
                     .font(FTFont.flowTaleSubHeader())
                     .fontWeight(.medium)
                     .lineLimit(1)
@@ -76,30 +74,29 @@ struct TranslationLanguageSelector: View {
         Button {
             store.dispatch(.swapLanguages)
         } label: {
-            Image(systemName: store.state.sourceLanguage == .autoDetect ?
+            Image(systemName: store.state.settings.sourceLanguage == .autoDetect ?
                   "arrow.right" : "arrow.left.arrow.right")
                 .font(FTFont.flowTaleBodyXSmall())
-                .foregroundColor(store.state.sourceLanguage == .autoDetect ?
+                .foregroundColor(store.state.settings.sourceLanguage == .autoDetect ?
                                 FTColor.secondary : FTColor.accent)
                 .frame(width: 36, height: 36)
                 .background(
                     Circle()
-                        .strokeBorder(store.state.sourceLanguage == .autoDetect ?
+                        .strokeBorder(store.state.settings.sourceLanguage == .autoDetect ?
                                      FTColor.secondary : FTColor.accent, lineWidth: 1)
                 )
         }
-        .disabled(store.state.sourceLanguage == .autoDetect)
+        .disabled(store.state.settings.sourceLanguage == .autoDetect)
     }
     
     private var targetLanguageButton: some View {
         Button {
             showLanguageSelector = true
         } label: {
-            let targetLanguage = store.state.targetLanguage
             HStack(spacing: 6) {
-                Text(targetLanguage.flagEmoji)
+                Text(store.state.settings.targetLanguage.flagEmoji)
                     .font(FTFont.flowTaleBodyXSmall())
-                Text(targetLanguage.displayName)
+                Text(store.state.settings.targetLanguage.displayName)
                     .font(FTFont.flowTaleSubHeader())
                     .fontWeight(.medium)
                     .lineLimit(1)

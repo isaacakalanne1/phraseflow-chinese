@@ -42,6 +42,9 @@ enum TranslationAction {
     case onTranslationsLoaded([Chapter])
     case loadAppSettings
     case onLoadAppSettings(SettingsState)
+    case saveAppSettings
+    case onSavedAppSettings
+    case failedToSaveAppSettings
     case loadDefinitionsForTranslation(Chapter, sentenceIndex: Int)
     case onLoadedTranslationDefinitions([Definition], chapter: Chapter, sentenceIndex: Int)
     case failedToLoadTranslationDefinitions

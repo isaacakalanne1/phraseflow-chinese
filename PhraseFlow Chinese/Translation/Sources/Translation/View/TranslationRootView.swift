@@ -18,13 +18,11 @@ public struct TranslationRootView: View {
             environment: environment,
             middleware: translationMiddleware
         )
+        store.dispatch(.loadAppSettings)
     }
     
     public var body: some View {
         TranslationView()
             .environmentObject(store)
-            .onAppear {
-                store.dispatch(.loadAppSettings)
-            }
     }
 }

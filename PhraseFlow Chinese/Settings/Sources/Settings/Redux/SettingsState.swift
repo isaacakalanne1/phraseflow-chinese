@@ -28,7 +28,9 @@ public struct SettingsState: Codable, Equatable, Sendable {
     public var voice: Voice
     public var speechSpeed: SpeechSpeed
     public var difficulty: Difficulty
-    public var language: Language
+    public var sourceLanguage: Language = .autoDetect
+    public var targetLanguage: Language = .spanish
+    public var language: Language = .spanish
     var customPrompt: String
     public var storySetting: StorySetting
     var confirmedCustomPrompt: String
@@ -47,6 +49,8 @@ public struct SettingsState: Codable, Equatable, Sendable {
         case voice
         case speechSpeed
         case difficulty
+        case sourceLanguage
+        case targetLanguage
         case language
         case customPrompt
         case storySetting
@@ -65,7 +69,6 @@ public struct SettingsState: Codable, Equatable, Sendable {
         voice: Voice = .xiaoxiao,
         speechSpeed: SpeechSpeed = .normal,
         difficulty: Difficulty = .beginner,
-        language: Language = .mandarinChinese,
         customPrompt: String = "",
         storySetting: StorySetting = .random,
         customPrompts: [String] = [],
@@ -81,7 +84,6 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.voice = voice
         self.speechSpeed = speechSpeed
         self.difficulty = difficulty
-        self.language = language
         self.customPrompt = customPrompt
         self.customPrompts = customPrompts
         self.storySetting = storySetting
@@ -100,6 +102,8 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.voice = try container.decode(Voice.self, forKey: .voice)
         self.speechSpeed = try container.decode(SpeechSpeed.self, forKey: .speechSpeed)
         self.difficulty = try container.decode(Difficulty.self, forKey: .difficulty)
+        self.sourceLanguage = (try? container.decode(Language.self, forKey: .sourceLanguage)) ?? .autoDetect
+        self.targetLanguage = (try? container.decode(Language.self, forKey: .targetLanguage)) ?? .spanish
         self.language = try container.decode(Language.self, forKey: .language)
         self.customPrompt = try container.decode(String.self, forKey: .customPrompt)
         self.storySetting = try container.decode(StorySetting.self, forKey: .storySetting)
