@@ -76,8 +76,8 @@ class TranslationServices: TranslationServicesProtocol {
         """
         let messages: [[String: String]] = [["role": "system", "content": prompt]]
         var requestBody: [String: Any] = ["messages" : messages]
-        requestBody["response_format"] = sentenceSchema(originalLanguage: textLanguage,
-                                                        translationLanguage: deviceLanguage,
+        requestBody["response_format"] = sentenceSchema(originalLanguage: deviceLanguage,
+                                                        translationLanguage: textLanguage,
                                                         shouldCreateTitle: false)
 
         let jsonString = try await RequestFactory.makeRequest(type: model, requestBody: requestBody)
@@ -85,7 +85,7 @@ class TranslationServices: TranslationServicesProtocol {
         guard let jsonData = jsonString.data(using: .utf8) else {
             throw TranslationServicesError.failedToGetResponseData
         }
-        let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguageKey: textLanguage.rawValue, targetLanguageKey: deviceLanguage.rawValue)
+        let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguageKey: deviceLanguage.rawValue, targetLanguageKey: textLanguage.rawValue)
         let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
         let passage = chapterResponse.sentences.reduce("") { $0 + $1.original }
         return Chapter(storyId: UUID(),
