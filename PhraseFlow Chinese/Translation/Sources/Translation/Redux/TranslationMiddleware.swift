@@ -123,38 +123,6 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         definitionOfTappedWord.hasBeenSeen = true
         definitionOfTappedWord.creationDate = .now
         
-        // Extract audio for the word
-        let wordTime = timestampData.time
-        let wordDuration = timestampData.duration
-        let wordAudioData = AudioExtractor.extractAudioSegment(
-            from: state.audioPlayer,
-            startTime: wordTime,
-            duration: wordDuration
-        )
-        definitionOfTappedWord.audioData = wordAudioData
-        
-        // Extract sentence audio
-        if let firstWord = sentence.timestamps.first,
-           let lastWord = sentence.timestamps.last {
-            let sentenceStartTime = firstWord.time
-            let sentenceEndTime = lastWord.time + lastWord.duration
-            let sentenceDuration = sentenceEndTime - sentenceStartTime
-            
-            let sentenceAudioData = AudioExtractor.extractAudioSegment(
-                from: state.audioPlayer,
-                startTime: sentenceStartTime,
-                duration: sentenceDuration
-            )
-            
-            // Save sentence audio if extracted
-            if let sentenceAudio = sentenceAudioData {
-                try? environment.saveSentenceAudio(
-                    sentenceAudio,
-                    id: definitionOfTappedWord.sentenceId
-                )
-            }
-        }
-        
         definitionsForSentence.addDefinitions([definitionOfTappedWord])
         
         try? environment.saveDefinitions(definitionsForSentence)

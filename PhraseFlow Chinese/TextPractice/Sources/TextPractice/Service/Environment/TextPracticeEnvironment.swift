@@ -5,6 +5,7 @@
 //  Created by Isaac Akalanne on 02/09/2025.
 //
 
+import Foundation
 import Audio
 import Combine
 import TextGeneration
@@ -90,5 +91,9 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
     
     public func playSound(_ sound: AppSound) {
         audioEnvironment.playSound(sound)
+    }
+    
+    public func saveSentenceAudio(_ audio: Data, id: UUID) throws {
+        try studyEnvironment.saveSentenceAudio(audio, id: id)
     }
 }

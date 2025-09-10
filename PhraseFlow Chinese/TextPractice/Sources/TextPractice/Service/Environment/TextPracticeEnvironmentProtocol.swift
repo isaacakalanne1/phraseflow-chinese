@@ -5,6 +5,7 @@
 //  Created by Isaac Akalanne on 02/09/2025.
 //
 
+import Foundation
 import Audio
 import Combine
 import TextGeneration
@@ -38,4 +39,5 @@ public protocol TextPracticeEnvironmentProtocol {
     func pauseChapter()
     func setMusicVolume(_ volume: MusicVolume)
     func playSound(_ sound: AppSound)
+    func saveSentenceAudio(_ audio: Data, id: UUID) throws
 }

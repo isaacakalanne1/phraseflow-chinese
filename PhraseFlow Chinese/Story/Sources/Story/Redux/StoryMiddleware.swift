@@ -5,6 +5,7 @@
 //  Created by iakalann on 15/06/2025.
 //
 
+import Audio
 import AVKit
 import Foundation
 import ReduxKit
@@ -13,7 +14,8 @@ import Study
 import TextGeneration
 import TextPractice
 
-nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryAction, any StoryEnvironmentProtocol> = { state, action, environment in
+@MainActor
+public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtocol> = { state, action, environment in
     switch action {
     case .createChapter(let type):
         do {
@@ -159,8 +161,6 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
             let key = DefinitionKey(word: wordTimestamp.word, sentenceId: currentSentence.id)
             if let definition = state.definitions[key] {
                 try? environment.saveDefinitions([definition])
-                // TODO: Save sentence audio
-                // TODO: Get definition (word) audio to play (may also need to be saved if not already)
             }
         }
         return nil
