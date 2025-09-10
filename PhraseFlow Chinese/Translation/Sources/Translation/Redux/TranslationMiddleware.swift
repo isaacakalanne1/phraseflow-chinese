@@ -93,7 +93,9 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         return .translationDefiningInProgress(true)
         
     case .translationDefiningInProgress:
-        let timestampData = state.currentSpokenWord
+        guard let timestampData = state.currentSpokenWord else {
+            return .failedToDefineTranslationWord
+        }
         
         // Check if definition already exists through environment
         // Note: This would require a method to check existing definitions
@@ -121,14 +123,41 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         definitionOfTappedWord.hasBeenSeen = true
         definitionOfTappedWord.creationDate = .now
         
-        // TODO: Extract audio segment for word playback if needed
-        // For now, skip audio extraction to avoid crashes
-        definitionOfTappedWord.audioData = nil
+        // Extract audio for the word
+        let wordTime = timestampData.time
+        let wordDuration = timestampData.duration
+        let wordAudioData = AudioExtractor.extractAudioSegment(
+            from: state.audioPlayer,
+            startTime: wordTime,
+            duration: wordDuration
+        )
+        definitionOfTappedWord.audioData = wordAudioData
+        
+        // Extract sentence audio
+        if let firstWord = sentence.timestamps.first,
+           let lastWord = sentence.timestamps.last {
+            let sentenceStartTime = firstWord.time
+            let sentenceEndTime = lastWord.time + lastWord.duration
+            let sentenceDuration = sentenceEndTime - sentenceStartTime
+            
+            let sentenceAudioData = AudioExtractor.extractAudioSegment(
+                from: state.audioPlayer,
+                startTime: sentenceStartTime,
+                duration: sentenceDuration
+            )
+            
+            // Save sentence audio if extracted
+            if let sentenceAudio = sentenceAudioData {
+                try? environment.saveSentenceAudio(
+                    sentenceAudio,
+                    id: definitionOfTappedWord.sentenceId
+                )
+            }
+        }
         
         definitionsForSentence.addDefinitions([definitionOfTappedWord])
         
         try? environment.saveDefinitions(definitionsForSentence)
-        // Audio data is nil for now, so no sentence audio to save
         
         return .onDefinedTranslationWord(definitionOfTappedWord)
         

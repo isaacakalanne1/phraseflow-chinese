@@ -13,12 +13,12 @@ let studyMiddleware: Middleware<StudyState, StudyAction, StudyEnvironmentProtoco
     switch action {
     case .playStudyWord:
         await state.audioPlayer.playAudio(playRate: 1.0)
-        return nil
+        return .updateStudyAudioPlaying(true)
     case .prepareToPlayStudyWord(let definition):
         if let player = await definition.audioData?.createAVPlayer(fileExtension: "m4a") {
             return .onPreparedStudyWord(player)
         }
-        return nil
+        return .failedToPrepareStudyWord
     case .prepareToPlayStudySentence(let definition):
         if let audioData = try? environment.loadSentenceAudio(id: definition.sentenceId),
            let player = await audioData.createAVPlayer(fileExtension: "m4a") {

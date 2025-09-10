@@ -18,6 +18,8 @@ let studyReducer: Reducer<StudyState, StudyAction> = { state, action in
         newState.sentenceAudioPlayer = player
     case .onPreparedStudyWord(let player):
         newState.audioPlayer = player
+    case .failedToPrepareStudyWord:
+        newState.audioPlayer = AVPlayer()
     case .failedToPrepareStudySentence:
         newState.sentenceAudioPlayer = AVPlayer()
     case .updateStudyAudioPlaying(let isPlaying):
@@ -48,8 +50,7 @@ let studyReducer: Reducer<StudyState, StudyAction> = { state, action in
             newState.definitions.append(definition)
         }
         
-    case .failedToPrepareStudyWord,
-            .prepareToPlayStudySentence,
+    case .prepareToPlayStudySentence,
             .playStudySentence,
             .pauseStudyAudio,
             .prepareToPlayStudyWord,
