@@ -86,7 +86,7 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         
     case .selectWord(let word, let shouldPlay):
         await environment.playWord(word, rate: SpeechSpeed.normal.playRate)
-        return .showDefinition(word)
+        return nil
         
     case .selectChapter(let chapter):
         return .loadDefinitionsForChapter(chapter, sentenceIndex: 0)

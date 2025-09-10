@@ -87,6 +87,7 @@ struct CharacterView: View {
             DragGesture(minimumDistance: 0)
                 .onChanged { _ in
                     store.dispatch(.selectWord(word, playAudio: true))
+                    store.dispatch(.showDefinition(word))
                 }
                 .onEnded { _ in
                     store.dispatch(.hideDefinition)
