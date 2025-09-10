@@ -37,38 +37,32 @@ class TabContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
+        initializeAllTabs()
     }
     
-    func updateVisibleTab(_ tab: ContentTab) {
+    private func initializeAllTabs() {
         guard let store = store else { return }
         
-        // Create controller if not exists
-        if tabControllers[tab] == nil {
-            let hostingController: UIViewController
-            
-            switch tab {
-            case .reader:
-                hostingController = UIHostingController(rootView: NavigationStack {
-                    StoryRootView(environment: store.environment.storyEnvironment)
-                })
-            case .progress:
-                hostingController = UIHostingController(rootView: 
-                    StudyRootView(environment: store.environment.studyEnvironment)
-                )
-            case .translate:
-                hostingController = UIHostingController(rootView: NavigationStack {
-                    TranslationRootView(environment: store.environment.translationEnvironment)
-                })
-            case .subscribe:
-                hostingController = UIHostingController(rootView: 
-                    SubscriptionRootView(environment: store.environment.subscriptionEnvironment)
-                )
-            case .settings:
-                hostingController = UIHostingController(rootView: 
-                    SettingsRootView(environment: store.environment.settingsEnvironment)
-                )
-            }
-            
+        // Initialize all tabs at once
+        let tabs: [(ContentTab, UIViewController)] = [
+            (.reader, UIHostingController(rootView: NavigationStack {
+                StoryRootView(environment: store.environment.storyEnvironment)
+            })),
+            (.progress, UIHostingController(rootView: 
+                StudyRootView(environment: store.environment.studyEnvironment)
+            )),
+            (.translate, UIHostingController(rootView: NavigationStack {
+                TranslationRootView(environment: store.environment.translationEnvironment)
+            })),
+            (.subscribe, UIHostingController(rootView: 
+                SubscriptionRootView(environment: store.environment.subscriptionEnvironment)
+            )),
+            (.settings, UIHostingController(rootView: 
+                SettingsRootView(environment: store.environment.settingsEnvironment)
+            ))
+        ]
+        
+        for (tab, hostingController) in tabs {
             tabControllers[tab] = hostingController
             addChild(hostingController)
             view.addSubview(hostingController.view)
@@ -80,8 +74,11 @@ class TabContainerViewController: UIViewController {
                 hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
             hostingController.didMove(toParent: self)
+            hostingController.view.isHidden = true
         }
-        
+    }
+    
+    func updateVisibleTab(_ tab: ContentTab) {
         // Update visibility
         if currentTab != tab {
             if let previousController = currentTab.flatMap({ tabControllers[$0] }) {
