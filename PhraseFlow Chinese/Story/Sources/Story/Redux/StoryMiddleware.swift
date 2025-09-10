@@ -51,9 +51,6 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         } catch {
             return .failedToLoadStoriesAndDefinitions
         }
-    case .onLoadedStoriesAndDefitions:
-        // Simply return nil - cross-package actions should be handled by the main app
-        return nil
 
     case .deleteStory(let storyId):
         do {
@@ -82,10 +79,6 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
             return .saveChapter(currentChapter)
         }
         return nil
-
-    case .failedToCreateChapter:
-        // Cross-package actions should be handled by the main app
-        return nil
         
     case .onCreatedChapter(let chapter):
         // Load definitions for the chapter after creation, starting with first sentence
@@ -93,7 +86,7 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
         
     case .selectWord(let word, let shouldPlay):
         await environment.playWord(word, rate: SpeechSpeed.normal.playRate)
-        return nil
+        return .showDefinition(word)
         
     case .selectChapter(let chapter):
         return .loadDefinitionsForChapter(chapter, sentenceIndex: 0)
@@ -180,6 +173,8 @@ nonisolated(unsafe) public let storyMiddleware: Middleware<StoryState, StoryActi
             .onDeletedStory,
             .updateLoadingStatus,
             .failedToLoadDefinitions,
+            .failedToCreateChapter,
+            .onLoadedStoriesAndDefitions,
             .hideDefinition:
         return nil
     }
