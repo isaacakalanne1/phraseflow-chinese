@@ -44,7 +44,4 @@ public enum StoryAction: Sendable {
     case loadDefinitionsForChapter(Chapter, sentenceIndex: Int)
     case onLoadedDefinitions([Definition], chapter: Chapter, sentenceIndex: Int)
     case failedToLoadDefinitions
-    
-    case showDefinition(WordTimeStampData)
-    case hideDefinition
 }

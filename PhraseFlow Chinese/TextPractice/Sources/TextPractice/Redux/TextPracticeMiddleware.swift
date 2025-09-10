@@ -31,7 +31,7 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
         return nil
     case .selectWord(let word, let shouldPlay):
         await environment.playWord(word, rate: state.settings.speechSpeed.playRate)
-        return nil
+        return .showDefinition(word)
     case .saveAppSettings(let settings):
         try? environment.saveAppSettings(settings)
         return nil

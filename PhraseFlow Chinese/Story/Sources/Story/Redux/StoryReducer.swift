@@ -116,22 +116,6 @@ let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
             let key = DefinitionKey(word: definition.timestampData.word, sentenceId: definition.sentence.id)
             newState.definitions[key] = definition
         }
-        
-    case .showDefinition(let wordTimestamp):
-        // Find the definition for this word in the current sentence
-        if let currentSentence = newState.currentChapter?.currentSentence {
-            let key = DefinitionKey(word: wordTimestamp.word, sentenceId: currentSentence.id)
-            if let definition = newState.definitions[key] {
-                newState.selectedDefinition = definition
-                newState.viewState.isDefining = true
-                newState.definitions[key]?.hasBeenSeen = true
-            }
-        }
-        
-    case .hideDefinition:
-        newState.selectedDefinition = nil
-        newState.viewState.isDefining = false
-        
     case .loadStoriesAndDefinitions,
          .failedToLoadStoriesAndDefinitions,
          .deleteStory,

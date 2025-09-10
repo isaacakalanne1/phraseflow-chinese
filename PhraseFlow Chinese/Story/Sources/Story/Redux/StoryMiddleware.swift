@@ -155,16 +155,6 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
         }
         return .goToNextChapter
         
-    case .showDefinition(let wordTimestamp):
-        // Find the definition for this word in the current sentence
-        if let currentSentence = state.currentChapter?.currentSentence {
-            let key = DefinitionKey(word: wordTimestamp.word, sentenceId: currentSentence.id)
-            if let definition = state.definitions[key] {
-                try? environment.saveDefinitions([definition])
-            }
-        }
-        return nil
-        
     case .failedToLoadStoriesAndDefinitions,
             .failedToDeleteStory,
             .failedToSaveChapter,
@@ -174,8 +164,7 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
             .updateLoadingStatus,
             .failedToLoadDefinitions,
             .failedToCreateChapter,
-            .onLoadedStoriesAndDefitions,
-            .hideDefinition:
+            .onLoadedStoriesAndDefitions:
         return nil
     }
 }
