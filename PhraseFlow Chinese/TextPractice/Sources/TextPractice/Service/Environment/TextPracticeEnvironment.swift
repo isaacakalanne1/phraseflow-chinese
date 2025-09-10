@@ -14,7 +14,9 @@ import Study
 
 public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
     public var chapterSubject: CurrentValueSubject<Chapter?, Never>
-    public var definitionsSubject: CurrentValueSubject<[Definition]?, Never>
+    public var definitionsSubject: CurrentValueSubject<[Definition]?, Never> {
+        studyEnvironment.definitionsSubject
+    }
     public var goToNextChapterSubject: CurrentValueSubject<Void?, Never>
     public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> {
         settingsEnvironment.settingsUpdatedSubject
@@ -34,7 +36,6 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
         self.studyEnvironment = studyEnvironment
         
         chapterSubject = .init(nil)
-        definitionsSubject = .init(nil)
         goToNextChapterSubject = .init(nil)
     }
     
@@ -55,7 +56,7 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
     }
     
     public func addDefinitions(_ definitions: [Definition]) {
-        definitionsSubject.send(definitions)
+        studyEnvironment.definitionsSubject.send(definitions)
     }
     
     public func goToNextChapter() {
