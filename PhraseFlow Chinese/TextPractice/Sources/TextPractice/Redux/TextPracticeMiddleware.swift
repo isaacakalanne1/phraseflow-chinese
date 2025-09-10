@@ -38,13 +38,17 @@ nonisolated(unsafe) let textPracticeMiddleware: Middleware<TextPracticeState, Te
         } catch {
             return .failedToLoadAppSettings
         }
+    case .showDefinition:
+        if let definition = state.selectedDefinition {
+            try? environment.saveDefinitions([definition])
+        }
+        return nil
     case .setChapter,
             .addDefinitions,
             .setPlaybackTime,
             .updateCurrentSentence,
             .refreshSettings,
             .failedToLoadAppSettings,
-            .showDefinition,
             .hideDefinition:
         return nil
     }

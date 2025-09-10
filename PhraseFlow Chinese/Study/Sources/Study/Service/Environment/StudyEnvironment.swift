@@ -6,11 +6,14 @@
 //
 
 import Audio
+import Combine
 import Foundation
 import Settings
 import TextGeneration
 
 public struct StudyEnvironment: StudyEnvironmentProtocol {
+    public var definitionsSubject: CurrentValueSubject<[Definition]?, Never>
+    
     private let definitionServices: DefinitionServicesProtocol
     private let audioEnvironment: AudioEnvironmentProtocol
     private let dataStore: DefinitionDataStoreProtocol
@@ -20,6 +23,7 @@ public struct StudyEnvironment: StudyEnvironmentProtocol {
                 dataStore: DefinitionDataStoreProtocol,
                 audioEnvironment: AudioEnvironmentProtocol,
                 settingsEnvironment: SettingsEnvironmentProtocol) {
+        self.definitionsSubject = .init(nil)
         self.definitionServices = definitionServices
         self.dataStore = dataStore
         self.audioEnvironment = audioEnvironment
@@ -35,6 +39,7 @@ public struct StudyEnvironment: StudyEnvironmentProtocol {
     }
     
     public func saveDefinitions(_ definitions: [Definition]) throws {
+        definitionsSubject.send(definitions)
         try dataStore.saveDefinitions(definitions)
     }
     

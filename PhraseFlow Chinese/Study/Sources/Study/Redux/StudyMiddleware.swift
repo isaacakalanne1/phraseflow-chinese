@@ -72,7 +72,8 @@ let studyMiddleware: Middleware<StudyState, StudyAction, StudyEnvironmentProtoco
             .onLoadDefinitions,
             .failedToLoadDefinitions,
             .onLoadAppSettings,
-            .failedToLoadAppSettings:
+            .failedToLoadAppSettings,
+            .addDefinitions:
         return nil
     }
 }

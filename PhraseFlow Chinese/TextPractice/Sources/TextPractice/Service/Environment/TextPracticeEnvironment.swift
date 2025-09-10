@@ -21,13 +21,16 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
     
     public let audioEnvironment: AudioEnvironmentProtocol
     public let settingsEnvironment: SettingsEnvironmentProtocol
+    public let studyEnvironment: StudyEnvironmentProtocol
     
     public init(
         audioEnvironment: AudioEnvironmentProtocol,
-        settingsEnvironment: SettingsEnvironmentProtocol
+        settingsEnvironment: SettingsEnvironmentProtocol,
+        studyEnvironment: StudyEnvironmentProtocol
     ) {
         self.audioEnvironment = audioEnvironment
         self.settingsEnvironment = settingsEnvironment
+        self.studyEnvironment = studyEnvironment
         
         chapterSubject = .init(nil)
         definitionsSubject = .init(nil)
@@ -40,6 +43,10 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
     
     public func saveAppSettings(_ settings: SettingsState) throws {
         try settingsEnvironment.saveAppSettings(settings)
+    }
+    
+    public func saveDefinitions(_ definitions: [Definition]) throws {
+        try studyEnvironment.saveDefinitions(definitions)
     }
     
     public func setChapter(_ chapter: Chapter?) {

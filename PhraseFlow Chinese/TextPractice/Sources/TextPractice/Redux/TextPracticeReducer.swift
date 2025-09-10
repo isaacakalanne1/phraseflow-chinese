@@ -30,6 +30,7 @@ let textPracticeReducer: Reducer<TextPracticeState, TextPracticeAction> = { stat
             newState.selectedDefinition = newState.definitions[key]
             newState.viewState = .showDefinition
             newState.definitions[key]?.hasBeenSeen = true
+            newState.definitions[key]?.creationDate = .now
         }
     case .hideDefinition:
         newState.selectedDefinition = nil

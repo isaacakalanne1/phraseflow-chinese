@@ -23,7 +23,7 @@ struct TabBarView: View {
     }
     
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 0) {
             ForEach(filteredTabs, id: \.self) { tab in
                 let isSelected = store.state.contentTab == tab
                 VStack(spacing: 4) {
@@ -33,9 +33,7 @@ struct TabBarView: View {
                         size: 30
                     ) {
                         if !isSelected {
-                            withAnimation {
-                                store.dispatch(.selectTab(tab, shouldPlaySound: true))
-                            }
+                            tapAction(tab: tab)
                         }
                     }
                     
@@ -48,10 +46,20 @@ struct TabBarView: View {
                         .frame(width: 40, height: 3)
                 }
                 .frame(maxWidth: .infinity)
+                .background(FTColor.background)
                 .padding(.top, 4)
+                .onTapGesture {
+                    tapAction(tab: tab)
+                }
             }
         }
         .background(FTColor.background)
+    }
+    
+    private func tapAction(tab: ContentTab) {
+        withAnimation {
+            store.dispatch(.selectTab(tab, shouldPlaySound: true))
+        }
     }
 }
 

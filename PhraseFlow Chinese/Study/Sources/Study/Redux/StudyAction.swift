@@ -23,6 +23,8 @@ enum StudyAction {
     case updateStudyAudioPlaying(Bool)
     case updateDisplayStatus(StudyDisplayStatus)
     
+    case addDefinitions([Definition])
+    
     case deleteDefinition(Definition)
     case failedToDeleteDefinition
     case updateStudiedWord(Definition)

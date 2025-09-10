@@ -10,5 +10,14 @@ import ReduxKit
 
 @MainActor
 let studySubscriber: OnSubscribe<StudyStore, StudyEnvironmentProtocol> = { store, environment in
-    // No reactive subscriptions needed for basic study functionality
+    environment.definitionsSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak store] definitions in
+                guard let store,
+                      let definitions else {
+                    return
+                }
+                store.dispatch(.addDefinitions(definitions))
+            }
+            .store(in: &store.subscriptions)
 }

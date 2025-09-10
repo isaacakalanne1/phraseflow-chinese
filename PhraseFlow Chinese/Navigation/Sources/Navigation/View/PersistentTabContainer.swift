@@ -50,27 +50,22 @@ class TabContainerViewController: UIViewController {
             case .reader:
                 hostingController = UIHostingController(rootView: NavigationStack {
                     StoryRootView(environment: store.environment.storyEnvironment)
-                        .environmentObject(store)
                 })
             case .progress:
                 hostingController = UIHostingController(rootView: 
                     StudyRootView(environment: store.environment.studyEnvironment)
-                        .environmentObject(store)
                 )
             case .translate:
                 hostingController = UIHostingController(rootView: NavigationStack {
                     TranslationRootView(environment: store.environment.translationEnvironment)
-                        .environmentObject(store)
                 })
             case .subscribe:
                 hostingController = UIHostingController(rootView: 
                     SubscriptionRootView(environment: store.environment.subscriptionEnvironment)
-                        .environmentObject(store)
                 )
             case .settings:
                 hostingController = UIHostingController(rootView: 
                     SettingsRootView(environment: store.environment.settingsEnvironment)
-                        .environmentObject(store)
                 )
             }
             

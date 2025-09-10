@@ -6,11 +6,13 @@
 //
 
 import Audio
+import Combine
 import Foundation
 import Settings
 import TextGeneration
 
 public protocol StudyEnvironmentProtocol {
+    var definitionsSubject: CurrentValueSubject<[Definition]?, Never> { get }
     func loadSentenceAudio(id: UUID) throws -> Data
     func deleteDefinition(with id: UUID) throws
     func playSound(_ sound: AppSound)
