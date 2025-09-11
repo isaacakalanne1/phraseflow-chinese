@@ -37,7 +37,7 @@ struct StoryListView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(FTColor.background)
-        .navigationTitle(LocalizedString.stories)
+        .toolbar(.hidden)
         .navigationDestination(isPresented: $showCreateStorySettings) {
             CreateStorySettingsView()
                 .background(FTColor.background)

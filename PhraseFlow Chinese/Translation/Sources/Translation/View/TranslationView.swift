@@ -52,8 +52,7 @@ struct TranslationView: View {
             TranslationActionButton(isInputFocused: $isInputFocused)
         }
         .padding()
-        .navigationTitle(LocalizedString.translation)
-        .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.hidden)
         .background(FTColor.background)
         .navigationDestination(isPresented: $showLanguageSelector) {
             LanguageMenu(selectedLanguage: targetLanguage,

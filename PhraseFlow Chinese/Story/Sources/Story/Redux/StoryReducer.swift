@@ -122,7 +122,6 @@ let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
          .failedToDeleteStory,
          .saveChapter,
          .failedToSaveChapter,
-         .updateLoadingStatus,
          .updateSpeechSpeed,
          .playSound,
          .loadDefinitionsForChapter,

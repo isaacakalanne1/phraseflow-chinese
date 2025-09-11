@@ -25,7 +25,16 @@ public enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable, Send
     }
 
     var thumbnail: UIImage? {
-        return UIImage(named: "difficulty-\(rawValue)")
+        switch self {
+        case .beginner:
+            UIImage(named: "Difficulty-Beginner")
+        case .intermediate:
+            UIImage(named: "Difficulty-Intermediate")
+        case .advanced:
+            UIImage(named: "Difficulty-Advanced")
+        case .expert:
+            UIImage(named: "Difficulty-Expert")
+        }
     }
 
     public var title: String {

@@ -8,7 +8,6 @@
 import Audio
 import Study
 import Foundation
-import Loading
 import Settings
 import TextGeneration
 
@@ -33,7 +32,6 @@ public enum StoryAction: Sendable {
     case goToNextChapter
 
     case updateCurrentSentence(Sentence)
-    case updateLoadingStatus(LoadingStatus)
 
     case selectWord(WordTimeStampData, playAudio: Bool)
     case selectChapter(Chapter)

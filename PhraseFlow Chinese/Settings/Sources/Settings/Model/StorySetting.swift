@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 public enum StorySetting: Codable, Equatable, Sendable {
     case random, customPrompt(String)
@@ -25,6 +26,15 @@ public enum StorySetting: Codable, Equatable, Sendable {
             return nil
         case .customPrompt(let prompt):
             return prompt
+        }
+    }
+    
+    var thumbnail: UIImage? {
+        switch self {
+        case .random:
+            return UIImage(named: "StoryPrompt-Random")
+        case .customPrompt:
+            return UIImage(named: "StoryPrompt-Create")
         }
     }
 }

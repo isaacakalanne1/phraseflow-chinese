@@ -41,7 +41,7 @@ struct StoryPromptMenu: View {
                         // Random Story Button
                         ImageButton(
                             title: LocalizedString.random,
-                            image: UIImage(named: "StoryPrompt-Random"),
+                            image: StorySetting.random.thumbnail,
                             isSelected: isRandomPromptSelected,
                             action: {
                                 withAnimation(.easeInOut) {
@@ -58,7 +58,7 @@ struct StoryPromptMenu: View {
                         // Create Custom Story Button
                         ImageButton(
                             title: LocalizedString.customStory,
-                            image: UIImage(named: "StoryPrompt-Create"),
+                            image: StorySetting.customPrompt("").thumbnail,
                             isSelected: false,
                             action: {
                                 withAnimation(.easeInOut) {

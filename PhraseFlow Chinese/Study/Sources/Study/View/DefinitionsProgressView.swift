@@ -27,9 +27,6 @@ struct DefinitionsProgressView: View {
         let filteredDefinitions = removeDuplicates(from: definitions)
         let studiedDefinitions = filteredDefinitions.filter { !$0.studiedDates.isEmpty }
 
-        let languageIcon = filterLanguage.flagEmoji
-        let languageName = filterLanguage.displayName
-
         VStack(spacing: 0) {
             // Main content area
             if showingCreations {

@@ -161,7 +161,6 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
             .updateCurrentSentence,
             .onSavedChapter,
             .onDeletedStory,
-            .updateLoadingStatus,
             .failedToLoadDefinitions,
             .failedToCreateChapter,
             .onLoadedStoriesAndDefitions:
