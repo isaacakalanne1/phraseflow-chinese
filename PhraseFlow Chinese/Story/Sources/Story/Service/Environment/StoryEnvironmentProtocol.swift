@@ -39,7 +39,7 @@ public protocol StoryEnvironmentProtocol {
     
     func generateSpeechForChapter(
         _ chapter: Chapter
-    ) async throws -> (Chapter, Int)
+    ) async throws -> Chapter
     
     func generateDefinitionsForChapter(
         _ chapter: Chapter,

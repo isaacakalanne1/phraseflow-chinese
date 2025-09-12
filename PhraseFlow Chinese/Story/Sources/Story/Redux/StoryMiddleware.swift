@@ -64,13 +64,13 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
         
     case .generateSpeech(let chapter):
         do {
-            let (chapterWithSpeech, ssmlCharacterCount) = try await environment.generateSpeechForChapter(chapter)
-            return .onGeneratedSpeech(chapterWithSpeech, ssmlCharacterCount: ssmlCharacterCount)
+            let chapter = try await environment.generateSpeechForChapter(chapter)
+            return .onGeneratedSpeech(chapter)
         } catch {
             return .failedToCreateChapter
         }
         
-    case .onGeneratedSpeech(let chapter, _):
+    case .onGeneratedSpeech(let chapter):
         return .generateDefinitions(chapter)
         
     case .generateDefinitions(let chapter):

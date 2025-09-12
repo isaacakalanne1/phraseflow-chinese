@@ -18,7 +18,7 @@ public enum StoryAction: Sendable {
     case generateImage(Chapter)
     case onGeneratedImage(Chapter)
     case generateSpeech(Chapter)
-    case onGeneratedSpeech(Chapter, ssmlCharacterCount: Int)
+    case onGeneratedSpeech(Chapter)
     case generateDefinitions(Chapter)
     case onGeneratedDefinitions(Chapter)
     case onCreatedChapter(Chapter)

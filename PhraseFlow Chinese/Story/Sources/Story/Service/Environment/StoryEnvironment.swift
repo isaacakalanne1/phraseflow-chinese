@@ -103,17 +103,17 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     
     public func generateSpeechForChapter(
         _ chapter: Chapter
-    ) async throws -> (Chapter, Int) {
+    ) async throws -> Chapter {
         loadingEnvironment.updateLoadingStatus(.generatingSpeech)
 
         let voiceToUse = chapter.audioVoice
-        let (finalChapter, ssmlCharacterCount) = try await speechEnvironment.synthesizeSpeechWithCharacterCount(
+        let finalChapter = try await speechEnvironment.synthesizeSpeech(
             for: chapter,
             voice: voiceToUse,
             language: chapter.language
         )
         
-        return (finalChapter, ssmlCharacterCount)
+        return finalChapter
     }
     
     public func generateDefinitionsForChapter(
@@ -164,14 +164,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         } catch {
             throw error
         }
-    }
-    
-    private func trackSSMLCharacterUsage(
-        characterCount: Int,
-        subscription: SubscriptionLevel?
-    ) throws {
-        // This would normally track SSML character usage
-        // For now, do nothing to fix compilation
     }
     
     public func loadAllChapters() throws -> [Chapter] {

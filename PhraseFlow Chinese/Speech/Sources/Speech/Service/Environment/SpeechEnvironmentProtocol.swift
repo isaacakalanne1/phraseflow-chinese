@@ -16,5 +16,4 @@ public protocol SpeechEnvironmentProtocol {
     var speechRepository: SpeechRepositoryProtocol { get }
     
     func synthesizeSpeech(for chapter: Chapter, voice: Voice, language: Language) async throws -> Chapter
-    func synthesizeSpeechWithCharacterCount(for chapter: Chapter, voice: Voice, language: Language) async throws -> (Chapter, Int)
 }

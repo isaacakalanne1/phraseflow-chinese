@@ -26,8 +26,4 @@ public struct SpeechEnvironment: SpeechEnvironmentProtocol {
         synthesizedCharactersSubject.send(characterCount)
         return processedChapter
     }
-    
-    public func synthesizeSpeechWithCharacterCount(for chapter: Chapter, voice: Voice, language: Language) async throws -> (Chapter, Int) {
-        return try await speechRepository.synthesizeSpeech(chapter, voice: voice, language: language)
-    }
 }
