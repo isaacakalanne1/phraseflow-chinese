@@ -6,6 +6,7 @@
 //
 
 import Localization
+import DataStorage
 import StoreKit
 import SwiftUI
 import FTFont

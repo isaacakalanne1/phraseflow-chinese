@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Foundation
+import DataStorage
 
 public struct SettingsViewState: Codable, Equatable, Sendable {
     var isShowingModerationDetails: Bool
@@ -47,6 +48,7 @@ public struct SettingsState: Codable, Equatable, Sendable {
     public var isSubscribedUser: Bool?
     public var timeUntilReset: String?
     public var characterLimitPerDay: Int?
+    public var subscriptionLevel: SubscriptionLevel?
     
     enum CodingKeys: String, CodingKey {
         case isShowingDefinition
@@ -68,6 +70,7 @@ public struct SettingsState: Codable, Equatable, Sendable {
         case remainingCharacters
         case viewState
         case characterLimitPerDay
+        case subscriptionLevel
     }
 
     public init(
@@ -105,6 +108,7 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.isSubscribedUser = nil
         self.timeUntilReset = nil
         self.characterLimitPerDay = nil
+        self.subscriptionLevel = nil
     }
 
     public init(from decoder: any Decoder) throws {
@@ -129,6 +133,7 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.viewState = (try? container.decode(SettingsViewState.self, forKey: .viewState)) ?? SettingsViewState()
         self.characterLimitPerDay = try? container.decode(Int.self, forKey: .characterLimitPerDay)
         self.remainingCharacters = try? container.decode(Int.self, forKey: .remainingCharacters)
+        self.subscriptionLevel = try? container.decode(SubscriptionLevel.self, forKey: .subscriptionLevel)
         self.isSubscribedUser = nil
         self.timeUntilReset = nil
     }

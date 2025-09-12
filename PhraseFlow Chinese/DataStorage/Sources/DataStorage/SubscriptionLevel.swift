@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SubscriptionLevel: CaseIterable {
+public enum SubscriptionLevel: CaseIterable, Sendable, Equatable, Codable {
     case level1, level2
 
     public var ssmlCharacterLimitPerDay: Int {

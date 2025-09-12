@@ -49,4 +49,21 @@ public class SubscriptionRepository: SubscriptionRepositoryProtocol {
             return
         }
     }
+    
+    public func getCurrentEntitlements() async -> Set<String> {
+        var productIDs = Set<String>()
+        
+        for await result in Transaction.currentEntitlements {
+            switch result {
+            case let .verified(transaction):
+                productIDs.insert(transaction.productID)
+            case .unverified:
+                // Handle unverified transactions if needed
+                break
+            }
+        }
+        
+        return productIDs
+    }
+    
 }

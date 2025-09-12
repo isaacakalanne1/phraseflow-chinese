@@ -22,7 +22,8 @@ let package = Package(
         .package(name: "FTFont", path: "../FTFont"),
         .package(name: "FTStyleKit", path: "../FTStyleKit"),
         .package(name: "UserLimit", path: "../UserLimit"),
-        .package(name: "SnackBar", path: "../SnackBar")
+        .package(name: "SnackBar", path: "../SnackBar"),
+        .package(name: "DataStorage", path: "../DataStorage")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -37,7 +38,8 @@ let package = Package(
                 "FTFont",
                 "FTStyleKit",
                 "UserLimit",
-                "SnackBar"
+                "SnackBar",
+                "DataStorage"
             ]
         ),
         .testTarget(

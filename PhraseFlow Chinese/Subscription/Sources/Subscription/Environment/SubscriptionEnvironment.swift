@@ -6,6 +6,7 @@
 //
 
 import Combine
+import DataStorage
 import StoreKit
 import Speech
 import UserLimit
@@ -19,6 +20,8 @@ public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
         speechEnvironment.synthesizedCharactersSubject
     }
     
+    public let currentSubscriptionSubject: CurrentValueSubject<SubscriptionLevel?, Never>
+    
     public init(
         repository: SubscriptionRepositoryProtocol,
         speechEnvironment: SpeechEnvironmentProtocol,
@@ -27,6 +30,7 @@ public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
         self.repository = repository
         self.speechEnvironment = speechEnvironment
         self.userLimitsDataStore = userLimitsDataStore
+        self.currentSubscriptionSubject = CurrentValueSubject(nil)
     }
     
     public func getProducts() async throws -> [Product] {
@@ -45,5 +49,21 @@ public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
                                         subscription: SubscriptionLevel?) throws {
         try userLimitsDataStore.trackSSMLCharacterUsage(characterCount: characterCount,
                                                         characterLimitPerDay: subscription?.ssmlCharacterLimitPerDay)
+    }
+    
+    public func getCurrentSubscriptionLevel() -> SubscriptionLevel? {
+        return currentSubscriptionSubject.value
+    }
+    
+    public func fetchCurrentSubscriptionLevel() async -> SubscriptionLevel? {
+        let entitlements = await repository.getCurrentEntitlements()
+        
+        if entitlements.contains("com.flowtale.level_2") {
+            return .level2
+        } else if entitlements.contains("com.flowtale.level_1") {
+            return .level1
+        } else {
+            return nil
+        }
     }
 }

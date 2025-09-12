@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import DataStorage
 import StoreKit
 
 public struct SubscriptionState: Equatable {

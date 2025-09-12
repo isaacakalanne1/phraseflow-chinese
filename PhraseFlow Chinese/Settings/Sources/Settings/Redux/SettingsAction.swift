@@ -8,6 +8,7 @@
 import Audio
 import Foundation
 import SnackBar
+import DataStorage
 
 enum SettingsAction: Sendable {
     case loadAppSettings
@@ -43,4 +44,6 @@ enum SettingsAction: Sendable {
     // User limit actions
     case loadUsageData
     case onLoadedUsageData(remainingCharacters: Int, isSubscribed: Bool, timeUntilReset: String?)
+    case setCharacterLimit(Int)
+    case updateSubscriptionLevel(SubscriptionLevel?)
 }

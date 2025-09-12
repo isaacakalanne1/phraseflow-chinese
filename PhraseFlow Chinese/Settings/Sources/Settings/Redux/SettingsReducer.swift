@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ReduxKit
+import DataStorage
 
 @MainActor
 let settingsReducer: Reducer<SettingsState, SettingsAction> = { state, action in
@@ -80,6 +81,13 @@ let settingsReducer: Reducer<SettingsState, SettingsAction> = { state, action in
         newState.remainingCharacters = remainingCharacters
         newState.isSubscribedUser = isSubscribed
         newState.timeUntilReset = timeUntilReset
+        
+    case .setCharacterLimit(let limit):
+        newState.characterLimitPerDay = limit
+        
+    case .updateSubscriptionLevel(let subscriptionLevel):
+        newState.subscriptionLevel = subscriptionLevel
+        newState.characterLimitPerDay = subscriptionLevel?.ssmlCharacterLimitPerDay
         
     case .loadAppSettings,
          .saveAppSettings,

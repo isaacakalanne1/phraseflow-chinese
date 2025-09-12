@@ -9,9 +9,11 @@ import Audio
 import Foundation
 import Combine
 import UserLimit
+import DataStorage
 
 public protocol SettingsEnvironmentProtocol {
     var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> { get }
+    var subscriptionLevelSubject: CurrentValueSubject<SubscriptionLevel?, Never> { get }
     var currentVoice: Voice { get }
     var speechSpeed: SpeechSpeed { get }
     var userLimitEnvironment: UserLimitEnvironmentProtocol { get }

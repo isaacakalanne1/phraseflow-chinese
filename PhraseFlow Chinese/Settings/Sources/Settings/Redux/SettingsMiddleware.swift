@@ -8,6 +8,7 @@
 import Foundation
 import ReduxKit
 import UserLimit
+import DataStorage
 
 @MainActor
 let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvironmentProtocol> = { state, action, environment in
@@ -76,6 +77,10 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
                 timeUntilReset: nil
             )
         }
+    case .setCharacterLimit,
+         .updateSubscriptionLevel:
+        return .loadUsageData
+        
     case .onLoadedUsageData:
         return state.isPlayingMusic ? .playMusic(.whispersOfTheForest) : nil
     case .failedToLoadAppSettings,

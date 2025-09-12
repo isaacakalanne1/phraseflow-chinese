@@ -9,9 +9,11 @@ import Audio
 import Foundation
 import Combine
 import UserLimit
+import DataStorage
 
 public struct SettingsEnvironment: SettingsEnvironmentProtocol {
     public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never>
+    public var subscriptionLevelSubject: CurrentValueSubject<SubscriptionLevel?, Never>
     public let userLimitEnvironment: UserLimitEnvironmentProtocol
     
     private let settingsDataStore: SettingsDataStoreProtocol
@@ -26,6 +28,7 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
         self.audioEnvironment = audioEnvironment
         self.userLimitEnvironment = userLimitEnvironment
         settingsUpdatedSubject = .init(nil)
+        subscriptionLevelSubject = .init(nil)
     }
     
     public var currentVoice: Voice {
@@ -45,6 +48,7 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
     public func loadAppSettings() throws -> SettingsState {
         return try settingsDataStore.loadAppSettings()
     }
+    
     
     public func playSound(_ sound: AppSound) {
         audioEnvironment.playSound(sound)

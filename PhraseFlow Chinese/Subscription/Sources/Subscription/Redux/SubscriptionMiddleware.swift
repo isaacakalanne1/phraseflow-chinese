@@ -7,9 +7,11 @@
 
 import Foundation
 import ReduxKit
+import DataStorage
 import StoreKit
 
-public let subscriptionMiddleware: @Sendable (SubscriptionState, SubscriptionAction, any SubscriptionEnvironmentProtocol) async -> SubscriptionAction? = { state, action, environment in
+@MainActor
+public let subscriptionMiddleware: Middleware<SubscriptionState, SubscriptionAction, SubscriptionEnvironmentProtocol> = { state, action, environment in
     switch action {
     case .fetchSubscriptions:
         environment.validateReceipt()
@@ -56,10 +58,18 @@ public let subscriptionMiddleware: @Sendable (SubscriptionState, SubscriptionAct
         return .updatePurchasedProducts(entitlements, isOnLaunch: false)
         
     case .updatePurchasedProducts(let entitlements, let isOnLaunch):
+        // Calculate the new subscription level after updating purchased products
+        var newPurchasedProductIDs = state.purchasedProductIDs
+        
         for result in entitlements {
             switch result {
             case .unverified(let transaction, _),
                     .verified(let transaction):
+                if transaction.revocationDate == nil {
+                    newPurchasedProductIDs.insert(transaction.productID)
+                } else {
+                    newPurchasedProductIDs.remove(transaction.productID)
+                }
                 guard transaction.revocationDate == nil,
                       !isOnLaunch else {
                     return nil
@@ -67,6 +77,20 @@ public let subscriptionMiddleware: @Sendable (SubscriptionState, SubscriptionAct
                 return nil
             }
         }
+        
+        // Determine the new subscription level
+        let newSubscriptionLevel: SubscriptionLevel?
+        if newPurchasedProductIDs.contains("com.flowtale.level_2") {
+            newSubscriptionLevel = .level2
+        } else if newPurchasedProductIDs.contains("com.flowtale.level_1") {
+            newSubscriptionLevel = .level1
+        } else {
+            newSubscriptionLevel = nil
+        }
+        
+        // Publish the new subscription level
+        environment.currentSubscriptionSubject.send(newSubscriptionLevel)
+        
         return nil
 
     case .onPurchasedSubscription,
