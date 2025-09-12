@@ -50,16 +50,6 @@ struct TranslationInputSection: View {
                     .padding(8)
                 }
             }
-
-            Picker("Translation Mode", selection: Binding(
-                get: { store.state.mode },
-                set: { store.dispatch(.updateTranslationMode($0)) }
-            )) {
-                ForEach(TranslationMode.allCases, id: \.self) { mode in
-                    Text(mode.displayName).tag(mode)
-                }
-            }
-            .pickerStyle(.segmented)
         }
     }
 }

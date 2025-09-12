@@ -273,9 +273,6 @@
 // Translate button text (verb)
 "translate" = "Translate";
 
-// Breakdown button text (verb)
-"breakdown" = "Breakdown";
-
 // Definition title, of the "Definition" section of the study feature
 "definition" = "Definition";
 

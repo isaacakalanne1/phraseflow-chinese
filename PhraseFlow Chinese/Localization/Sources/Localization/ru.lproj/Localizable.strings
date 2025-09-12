@@ -261,9 +261,6 @@
 // Translate button text (verb)
 "translate" = "Перевести";
 
-// Breakdown button text (verb)
-"breakdown" = "Анализ";
-
 // Definition title, of the "Definition" section of the study feature
 "definition" = "Определение";
 

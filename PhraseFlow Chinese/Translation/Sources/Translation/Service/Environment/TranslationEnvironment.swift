@@ -56,10 +56,6 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
         return try await translationServices.translateText(text, from: sourceLanguage, to: targetLanguage)
     }
     
-    public func breakdownText(_ text: String, textLanguage: Language, deviceLanguage: Language) async throws -> Chapter {
-        return try await translationServices.breakdownText(text, textLanguage: textLanguage, deviceLanguage: deviceLanguage)
-    }
-    
     public func synthesizeSpeech(for chapter: Chapter, voice: Voice, language: Language) async throws -> Chapter {
         return try await speechEnvironment.synthesizeSpeech(for: chapter, voice: voice, language: language)
     }

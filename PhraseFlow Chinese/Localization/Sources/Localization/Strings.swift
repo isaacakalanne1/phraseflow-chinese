@@ -55,7 +55,6 @@ public enum LocalizedString {
     
     public static let translation = LocalizedString.tr("Localizable", "translation")
     public static let translate = LocalizedString.tr("Localizable", "translate")
-    public static let breakdown = LocalizedString.tr("Localizable", "breakdown")
     public static let translating = LocalizedString.tr("Localizable", "translating")
     public static let enterText = LocalizedString.tr("Localizable", "enterText")
 

@@ -16,11 +16,7 @@ struct TranslationActionButton: View {
     
     var body: some View {
         Button {
-            if store.state.mode == .translate {
-                store.dispatch(.translateText)
-            } else {
-                store.dispatch(.breakdownText)
-            }
+            store.dispatch(.translateText)
             isInputFocused = false // Dismiss the keyboard when button is tapped
         } label: {
             HStack {
@@ -35,9 +31,7 @@ struct TranslationActionButton: View {
                         .padding(.trailing, 8)
                 }
                 
-                let buttonText = store.state.isTranslating ? 
-                    LocalizedString.translating : 
-                    (store.state.mode == .translate ? LocalizedString.translate : LocalizedString.breakdown)
+                let buttonText = store.state.isTranslating ? LocalizedString.translating : LocalizedString.translate
                 
                 Text(buttonText)
                     .font(FTFont.flowTaleSecondaryHeader())

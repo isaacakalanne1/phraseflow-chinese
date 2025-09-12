@@ -25,14 +25,6 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
     case .updateTargetLanguage(let language):
         newState.settings.targetLanguage = language
         
-    case .updateTranslationMode(let mode):
-        newState.mode = mode
-        // Clear current translation when switching modes
-        newState.chapter = nil
-        newState.currentSpokenWord = nil
-        newState.currentSentence = nil
-        newState.audioPlayer.replaceCurrentItem(with: nil)
-        
     case .swapLanguages:
         if newState.settings.sourceLanguage != .autoDetect {
             let tempTarget = newState.settings.targetLanguage
@@ -40,8 +32,7 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
             newState.settings.sourceLanguage = tempTarget
         }
         
-    case .translateText,
-            .breakdownText:
+    case .translateText:
         newState.isTranslating = true
         
     case .translationInProgress(let isInProgress):
@@ -55,8 +46,7 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         }
         newState.showTextPractice = true
         
-    case .failedToTranslate,
-            .failedToBreakdown:
+    case .failedToTranslate:
         newState.isTranslating = false
         
     case .playTranslationAudio:

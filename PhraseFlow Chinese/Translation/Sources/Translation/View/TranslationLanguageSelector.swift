@@ -17,29 +17,19 @@ struct TranslationLanguageSelector: View {
     
     var body: some View {
         VStack(spacing: 8) {
-            if store.state.mode == .translate {
-                Text(LocalizedString.translateBetweenLanguages)
-                    .font(FTFont.flowTaleSubHeader())
-                    .foregroundColor(FTColor.secondary)
+            Text(LocalizedString.translateBetweenLanguages)
+                .font(FTFont.flowTaleSubHeader())
+                .foregroundColor(FTColor.secondary)
 
-                HStack(spacing: 8) {
-                    // Source language selector
-                    sourceLanguageButton
-                    
-                    // Swap languages button (or one-way arrow for auto-detect)
-                    swapLanguagesButton
-                    
-                    // Target language selector
-                    targetLanguageButton
-                }
-            } else {
-                // Breakdown mode - only show text language selector
-                Text(LocalizedString.selectTextLanguage)
-                    .font(FTFont.flowTaleSubHeader())
-                    .foregroundColor(FTColor.secondary)
-
+            HStack(spacing: 8) {
+                // Source language selector
+                sourceLanguageButton
+                
+                // Swap languages button (or one-way arrow for auto-detect)
+                swapLanguagesButton
+                
+                // Target language selector
                 targetLanguageButton
-            }
         }
     }
     

@@ -261,9 +261,6 @@
 // Translate button text (verb)
 "translate" = "अनुवाद करें";
 
-// Breakdown button text (verb)
-"breakdown" = "विश्लेषण";
-
 // Definition title, of the "Definition" section of the study feature
 "definition" = "परिभाषा";
 

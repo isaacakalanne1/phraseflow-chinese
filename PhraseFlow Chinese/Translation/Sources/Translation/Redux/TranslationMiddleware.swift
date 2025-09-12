@@ -50,47 +50,14 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         } catch {
             return .failedToTranslate
         }
-        
-    case .breakdownText:
-        let inputText = state.inputText
-        guard !inputText.isEmpty else {
-            return .translationInProgress(false)
-        }
-        
-        do {
-            let estimatedCharacterCount = inputText.count * 2 // Estimated characters for breakdown
-            
-            try environment.userLimitEnvironment.canCreateChapter(
-                estimatedCharacterCount: estimatedCharacterCount,
-                characterLimitPerDay: state.settings.characterLimitPerDay
-            )
-            
-            guard let chapter = try? await environment.breakdownText(
-                    inputText,
-                    textLanguage: state.settings.targetLanguage,
-                    deviceLanguage: Language.deviceLanguage
-                  ) else {
-                return .failedToBreakdown
-            }
-            
-            return .synthesizeAudio(chapter, state.settings.targetLanguage)
-        } catch UserLimitsDataStoreError.freeUserCharacterLimitReached {
-            environment.limitReachedSubject.send(.freeLimit)
-            return .failedToBreakdown
-        } catch UserLimitsDataStoreError.characterLimitReached(let timeUntilNextAvailable) {
-            environment.limitReachedSubject.send(.dailyLimit(nextAvailable: timeUntilNextAvailable))
-            return .failedToBreakdown
-        } catch {
-            return .failedToBreakdown
-        }
-        
+
     case .synthesizeAudio(let chapter, let language):
         // Get voice from settings environment
         var currentVoice = state.settings.voice
         let voice = currentVoice.language == language ? currentVoice : language.voices.first
         
         guard let selectedVoice = voice else {
-            return .failedToBreakdown
+            return .failedToTranslate
         }
         
         guard let newChapter = try? await environment.synthesizeSpeech(for: chapter,
@@ -198,12 +165,10 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         }
         
     case .updateInputText,
-            .updateTranslationMode,
             .swapLanguages,
             .translationInProgress,
             .failedToSynthesizeAudio,
             .failedToTranslate,
-            .failedToBreakdown,
             .clearTranslation,
             .onTranslationsSaved,
             .onTranslationsLoaded,

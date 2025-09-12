@@ -14,16 +14,13 @@ enum TranslationAction {
     case updateInputText(String)
     case updateSourceLanguage(Language)
     case updateTargetLanguage(Language)
-    case updateTranslationMode(TranslationMode)
     case swapLanguages
     case translateText
-    case breakdownText
     case translationInProgress(Bool)
     case synthesizeAudio(Chapter, Language)
     case onSynthesizedTranslationAudio(Chapter)
     case failedToSynthesizeAudio
     case failedToTranslate
-    case failedToBreakdown
     case playTranslationAudio
     case pauseTranslationAudio
     case updateTranslationPlayTime

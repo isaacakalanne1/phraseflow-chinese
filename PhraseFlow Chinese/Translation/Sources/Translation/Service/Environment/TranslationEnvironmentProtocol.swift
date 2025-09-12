@@ -26,7 +26,6 @@ public protocol TranslationEnvironmentProtocol {
     var limitReachedSubject: CurrentValueSubject<LimitReachedEvent, Never> { get }
     
     func translateText(_ text: String, from sourceLanguage: Language?, to targetLanguage: Language) async throws -> Chapter
-    func breakdownText(_ text: String, textLanguage: Language, deviceLanguage: Language) async throws -> Chapter
     func synthesizeSpeech(for chapter: Chapter, voice: Voice, language: Language) async throws -> Chapter
     func saveAppSettings(_ settings: SettingsState) throws
 }

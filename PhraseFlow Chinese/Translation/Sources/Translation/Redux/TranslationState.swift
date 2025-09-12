@@ -23,7 +23,6 @@ struct TranslationState: Equatable {
     var currentSpokenWord: WordTimeStampData?
     var settings: SettingsState = .init()
     var currentSentence: Sentence?
-    var mode: TranslationMode = .translate
     var savedTranslations: [Chapter] = []
     var isLoadingHistory: Bool = false
     var currentSentenceIndex: Int = 0

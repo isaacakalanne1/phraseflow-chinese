@@ -261,9 +261,6 @@
 // Translate button text (verb)
 "translate" = "翻訳する";
 
-// Breakdown button text (verb)
-"breakdown" = "分析";
-
 // Definition title, of the "Definition" section of the study feature
 "definition" = "定義";
 
