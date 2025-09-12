@@ -179,37 +179,70 @@ struct SettingsView: View {
         settingsSection(
             title: (store.state.isSubscribedUser == true) ? "DAILY USAGE" : "FREE TRIAL USAGE",
             content: {
-                HStack {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text((store.state.isSubscribedUser == true) ? "Characters Remaining Today" : "Characters Remaining")
-                            .font(.caption)
-                            .foregroundColor(FTColor.secondary)
-                        if let remainingCharacters = store.state.remainingCharacters {
-                            Text("\(remainingCharacters)")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .foregroundColor(remainingCharacters > 0 ? FTColor.primary : .red)
-                        } else {
-                            Text("Loading...")
-                                .font(.title2)
-                                .fontWeight(.bold)
+                VStack(spacing: 12) {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text((store.state.isSubscribedUser == true) ? "Characters Remaining Today" : "Characters Remaining")
+                                .font(.caption)
                                 .foregroundColor(FTColor.secondary)
+                            if let remainingCharacters = store.state.remainingCharacters {
+                                Text("\(remainingCharacters)")
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(remainingCharacters > 0 ? FTColor.primary : .red)
+                            } else {
+                                Text("Loading...")
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(FTColor.secondary)
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        if store.state.isSubscribedUser == true,
+                           let timeUntilReset = store.state.timeUntilReset {
+                            VStack(alignment: .trailing, spacing: 4) {
+                                Text("Resets in")
+                                    .font(.caption)
+                                    .foregroundColor(FTColor.secondary)
+                                
+                                Text(timeUntilReset)
+                                    .font(.caption)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(FTColor.primary)
+                            }
                         }
                     }
                     
-                    Spacer()
-                    
-                    if store.state.isSubscribedUser == true,
-                       let timeUntilReset = store.state.timeUntilReset {
-                        VStack(alignment: .trailing, spacing: 4) {
-                            Text("Resets in")
-                                .font(.caption)
-                                .foregroundColor(FTColor.secondary)
+                    if let remainingCharacters = store.state.remainingCharacters,
+                       let totalLimit = store.state.characterLimitPerDay {
+                        VStack(spacing: 4) {
+                            HStack {
+                                Text("Usage Progress")
+                                    .font(.caption)
+                                    .foregroundColor(FTColor.secondary)
+                                Spacer()
+                                Text("\(remainingCharacters) of \(totalLimit)")
+                                    .font(.caption)
+                                    .foregroundColor(FTColor.secondary)
+                            }
                             
-                            Text(timeUntilReset)
-                                .font(.caption)
-                                .fontWeight(.medium)
-                                .foregroundColor(FTColor.primary)
+                            GeometryReader { geometry in
+                                ZStack(alignment: .leading) {
+                                    Rectangle()
+                                        .fill(FTColor.secondary.opacity(0.2))
+                                        .frame(height: 6)
+                                        .cornerRadius(3)
+                                    
+                                    Rectangle()
+                                        .fill(remainingCharacters > 0 ? FTColor.primary : .red)
+                                        .frame(width: geometry.size.width * CGFloat(remainingCharacters) / CGFloat(totalLimit), height: 6)
+                                        .cornerRadius(3)
+                                        .animation(.easeInOut(duration: 0.3), value: remainingCharacters)
+                                }
+                            }
+                            .frame(height: 6)
                         }
                     }
                 }
