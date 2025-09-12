@@ -28,6 +28,7 @@ public enum TextPracticeAction: Sendable {
     case setPlaybackTime(Double)
     case updateCurrentSentence(Sentence)
     
+    case setChapter(Chapter)
     case prepareToPlayChapter(Chapter)
     case playChapter(fromWord: WordTimeStampData)
     case pauseChapter

@@ -18,6 +18,8 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
     case .goToNextChapter:
         environment.goToNextChapter()
         return nil
+    case .setChapter(let chapter):
+        return .prepareToPlayChapter(chapter)
     case .prepareToPlayChapter(let chapter):
         await environment.prepareToPlayChapter(chapter)
         return .generateDefinitions(chapter, sentenceIndex: 0)

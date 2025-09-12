@@ -12,8 +12,7 @@ import Foundation
 let textPracticeReducer: Reducer<TextPracticeState, TextPracticeAction> = { state, action in
     var newState = state
     switch action {
-        
-    case .prepareToPlayChapter(let chapter):
+    case .setChapter(let chapter):
         newState.chapter = chapter
     case .addDefinitions(let definitions):
         for definition in definitions {
@@ -69,7 +68,8 @@ let textPracticeReducer: Reducer<TextPracticeState, TextPracticeAction> = { stat
             .failedToLoadDefinitions,
             .playWord,
             .defineWord,
-            .failedToDefineWord:
+            .failedToDefineWord,
+            .prepareToPlayChapter:
         break
     }
     return newState
