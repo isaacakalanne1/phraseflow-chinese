@@ -181,10 +181,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         audioEnvironment.pauseChapterAudio()
     }
     
-    public func setMusicVolume(_ volume: MusicVolume) {
-        audioEnvironment.setMusicVolume(volume)
-    }
-    
     private func trackSSMLCharacterUsage(
         characterCount: Int,
         subscription: SubscriptionLevel?
@@ -205,68 +201,11 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         try dataStore.deleteChapter(chapter)
     }
     
-    // MARK: - Settings Environment Functions
-    
     public func getAppSettings() throws -> SettingsState {
         try settingsEnvironment.loadAppSettings()
     }
     
-    public func isShowingEnglish() throws -> Bool {
-        let settings = try settingsEnvironment.loadAppSettings()
-        return settings.isShowingEnglish
-    }
-    
-    public func isShowingDefinition() throws -> Bool {
-        let settings = try settingsEnvironment.loadAppSettings()
-        return settings.isShowingDefinition
-    }
-    
-    public func getSpeechSpeed() throws -> SpeechSpeed {
-        let settings = try settingsEnvironment.loadAppSettings()
-        return settings.speechSpeed
-    }
-    
-    // MARK: - Audio Environment Functions
-    
     public func playSound(_ sound: AppSound) {
         audioEnvironment.playSound(sound)
-    }
-    
-    // MARK: - Definition Environment Functions
-    
-    public func getCurrentDefinition() -> Definition? {
-        // This would need to track current definition in the environment
-        // For now, return nil as a placeholder
-        return nil
-    }
-    
-    public func getDefinition(for timestampData: WordTimeStampData) -> Definition? {
-        // This would need to look up a definition by timestamp data
-        // For now, return nil as a placeholder
-        return nil
-    }
-    
-    public func hasDefinition(for timestampData: WordTimeStampData) -> Bool {
-        return getDefinition(for: timestampData) != nil
-    }
-    
-    public func getDefinitions() -> [Definition] {
-        // This would need to get all definitions
-        // For now, return empty array as a placeholder
-        return []
-    }
-    
-    // MARK: - Translation Environment Functions
-    
-    public func getCurrentTranslationSentence() -> Sentence? {
-        // This would need to track current translation sentence
-        // For now, return nil as a placeholder
-        return nil
-    }
-    
-    public func getTranslationChapter() -> Chapter? {
-        // This would need to get the translation chapter
-        // For now, return nil as a placeholder
-        return nil
     }
 }

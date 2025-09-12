@@ -23,7 +23,6 @@ public protocol StoryEnvironmentProtocol {
     func getAppSettings() throws -> SettingsState
     func playChapter(from word: WordTimeStampData) async
     func pauseChapter()
-    func setMusicVolume(_ volume: MusicVolume)
     func loadAllChapters() throws -> [Chapter]
     func loadDefinitions() throws -> [Definition]
     func saveChapter(_ chapter: Chapter) throws
@@ -40,22 +39,7 @@ public protocol StoryEnvironmentProtocol {
     
     func saveDefinitions(_ definitions: [Definition]) throws
     
-    // Settings Environment Functions
-    func isShowingEnglish() throws -> Bool
-    func isShowingDefinition() throws -> Bool
-    func getSpeechSpeed() throws -> SpeechSpeed
-    
     // Audio Environment Functions
     func playSound(_ sound: AppSound)
-    
-    // Definition Environment Functions
-    func getCurrentDefinition() -> Definition?
-    func getDefinition(for timestampData: WordTimeStampData) -> Definition?
-    func hasDefinition(for timestampData: WordTimeStampData) -> Bool
-    func getDefinitions() -> [Definition]
-    
-    // Translation Environment Functions
-    func getCurrentTranslationSentence() -> Sentence?
-    func getTranslationChapter() -> Chapter?
 }
 
