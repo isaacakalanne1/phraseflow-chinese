@@ -81,18 +81,6 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
         }
         return nil
         
-    case .onCreatedChapter(let chapter):
-        // Chapter creation handled - definitions will be loaded by TextPractice
-        return nil
-        
-    case .selectWord(let word, let shouldPlay):
-        await environment.playWord(word, rate: SpeechSpeed.normal.playRate)
-        return nil
-        
-    case .selectChapter(let chapter):
-        // Chapter selection handled - definitions will be loaded by TextPractice
-        return nil
-        
     case .playSound(let sound):
         environment.playSound(sound)
         return nil
@@ -110,7 +98,9 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
             .onSavedChapter,
             .onDeletedStory,
             .failedToCreateChapter,
-            .onLoadedStories:
+            .onLoadedStories,
+            .onCreatedChapter,
+            .selectChapter:
         return nil
     }
 }

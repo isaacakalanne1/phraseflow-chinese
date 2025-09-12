@@ -17,14 +17,8 @@ import TextPractice
 public protocol StoryEnvironmentProtocol {
     var audioEnvironment: AudioEnvironmentProtocol { get }
     var studyEnvironment: StudyEnvironmentProtocol { get }
-    var textPracticeEnvironment: TextPracticeEnvironmentProtocol { get }
-    func prepareToPlayChapter(_ chapter: Chapter) async
-    func playWord(_ word: WordTimeStampData, rate: Float) async
     func getAppSettings() throws -> SettingsState
-    func playChapter(from word: WordTimeStampData) async
-    func pauseChapter()
     func loadAllChapters() throws -> [Chapter]
-    func loadDefinitions() throws -> [Definition]
     func saveChapter(_ chapter: Chapter) throws
     func deleteChapter(_ chapter: Chapter) throws
     func generateChapter(
@@ -36,10 +30,7 @@ public protocol StoryEnvironmentProtocol {
         storyPrompt: String?,
         currentSubscription: SubscriptionLevel?
     ) async throws -> Chapter
-    
-    func saveDefinitions(_ definitions: [Definition]) throws
-    
-    // Audio Environment Functions
+
     func playSound(_ sound: AppSound)
 }
 

@@ -19,7 +19,7 @@ struct StoryListView: View {
     @State private var showCreateStorySettings = false
     
     var body: some View {
-        VStack(spacing: 0) {
+        VStack {
             if store.state.allStories.isEmpty {
                 StoryListEmptyState()
             } else {

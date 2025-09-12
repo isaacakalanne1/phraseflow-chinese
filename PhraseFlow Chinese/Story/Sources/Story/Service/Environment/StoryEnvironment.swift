@@ -21,7 +21,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     public let audioEnvironment: AudioEnvironmentProtocol
     public let studyEnvironment: StudyEnvironmentProtocol
     public let loadingEnvironment: LoadingEnvironmentProtocol
-    public let textPracticeEnvironment: TextPracticeEnvironmentProtocol
     private let settingsEnvironment: SettingsEnvironmentProtocol
     private let speechEnvironment: SpeechEnvironmentProtocol
     private let service: TextGenerationServicesProtocol
@@ -33,7 +32,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         settingsEnvironment: SettingsEnvironmentProtocol,
         speechEnvironment: SpeechEnvironmentProtocol,
         studyEnvironment: StudyEnvironmentProtocol,
-        textPracticeEnvironment: TextPracticeEnvironmentProtocol,
         loadingEnvironment: LoadingEnvironmentProtocol,
         service: TextGenerationServicesProtocol,
         imageGenerationService: ImageGenerationServicesProtocol,
@@ -43,7 +41,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         self.settingsEnvironment = settingsEnvironment
         self.speechEnvironment = speechEnvironment
         self.studyEnvironment = studyEnvironment
-        self.textPracticeEnvironment = textPracticeEnvironment
         self.loadingEnvironment = loadingEnvironment
         self.service = service
         self.imageGenerationService = imageGenerationService
@@ -134,10 +131,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         loadingEnvironment.updateLoadingStatus(.complete)
         return finalChapter
     }
-    
-    public func saveDefinitions(_ definitions: [Definition]) throws {
-        try studyEnvironment.saveDefinitions(definitions)
-    }
 
     // MARK: Chapters
 
@@ -159,28 +152,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         }
     }
     
-    public func prepareToPlayChapter(_ chapter: Chapter) async {
-        await audioEnvironment.setChapterAudioData(chapter.audio.data)
-    }
-    
-    public func playWord(
-        _ word: WordTimeStampData,
-        rate: Float
-    ) async {
-        await audioEnvironment.playWord(startTime: word.time, duration: word.duration, playRate: rate)
-
-    }
-    
-    public func playChapter(from word: WordTimeStampData) async {
-        await audioEnvironment.playChapterAudio(from: word.time,
-                                                rate: SpeechSpeed.normal.playRate)
-
-    }
-    
-    public func pauseChapter() {
-        audioEnvironment.pauseChapterAudio()
-    }
-    
     private func trackSSMLCharacterUsage(
         characterCount: Int,
         subscription: SubscriptionLevel?
@@ -191,10 +162,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     
     public func loadAllChapters() throws -> [Chapter] {
         try dataStore.loadAllChapters()
-    }
-    
-    public func loadDefinitions() throws -> [Definition] {
-        return try studyEnvironment.loadDefinitions()
     }
     
     public func deleteChapter(_ chapter: Chapter) throws {
