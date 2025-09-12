@@ -18,7 +18,7 @@ public struct SettingsRootView: View {
             environment: environment,
             middleware: settingsMiddleware
         )
-        store.dispatch(.loadUsageData)
+        store.dispatch(.loadAppSettings)
     }
     
     public var body: some View {

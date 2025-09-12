@@ -37,7 +37,7 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
         return .saveAppSettings
         
     case .onLoadedAppSettings(let settings):
-        return settings.isPlayingMusic ? .playMusic(.whispersOfTheForest) : nil
+        return .loadUsageData
         
     case .playSound(let sound):
         if state.shouldPlaySound {
@@ -77,7 +77,7 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
             )
         }
     case .onLoadedUsageData:
-        return .loadAppSettings
+        return state.isPlayingMusic ? .playMusic(.whispersOfTheForest) : nil
     case .failedToLoadAppSettings,
          .failedToSaveAppSettings,
          .updateCustomPrompt,
