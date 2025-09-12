@@ -15,66 +15,208 @@ struct SubscriptionView: View {
     @EnvironmentObject var store: SubscriptionStore
 
     var body: some View {
-        VStack(spacing: 20) {
-            Spacer()
-            Text(store.state.isSubscribed ? LocalizedString.manageSubscription : LocalizedString.subscribe)
-                .font(FTFont.flowTaleHeader())
-                .bold()
-                .foregroundColor(FTColor.primary)
-            if !store.state.isSubscribed {
-                Text(LocalizedString.subscriptionSubscribeNow)
-                    .multilineTextAlignment(.center)
-                    .font(FTFont.flowTaleSecondaryHeader())
-                    .bold()
-                    .foregroundColor(FTColor.primary)
-            }
-
-            ForEach(store.state.products?.sorted(by: { $0.price > $1.price }) ?? []) { product in
-                let limitString: String
-                if let characterLimit = SubscriptionLevel(id: product.id)?.ssmlCharacterLimitPerDay {
-                    // Use subscription_characters_per_day localization key
-                    limitString = LocalizedString.subscriptionCharactersPerDay(characterLimit)
-                } else {
-                    limitString = product.displayName
+        ScrollView {
+            VStack(spacing: 32) {
+                Spacer(minLength: 20)
+                
+                if !(store.state.products?.isEmpty ?? false) {
+                    subscriptionOptionsSection
                 }
-                return SubscriptionOption(title: LocalizedString.pricePerMonth(product.displayPrice),
-                                          detail: limitString,
-                                          product: product,
-                                          action: {
-                                              Task {
-                                                  // First validate receipt to ensure proper sandbox handling
-                                                  store.dispatch(.validateReceipt)
-                                                  // Then attempt to purchase
-                                                  store.dispatch(.purchaseSubscription(product))
-                                              }
-                                          })
+                
+                freeTierSection
+                
+                actionsSection
+                
+                if store.state.isSubscribed {
+                    managementInstructionsSection
+                }
+                
+                Spacer(minLength: 40)
             }
+            .padding(.horizontal, 20)
+        }
+        .onAppear {
+            Task {
+                store.dispatch(.validateReceipt)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            LinearGradient(
+                colors: [
+                    FTColor.background,
+                    FTColor.background.opacity(0.95),
+                    FTColor.secondary
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        )
+        .navigationBarTitleDisplayMode(.inline)
+        .overlay(content: {
+            Group {
+                if store.state.isLoadingSubscriptionPurchase {
+                    ZStack {
+                        Color.black.opacity(0.4)
+                            .ignoresSafeArea()
+                            .background(.ultraThinMaterial)
+                        
+                        VStack(spacing: 20) {
+                            ProgressView()
+                                .tint(FTColor.accent)
+                                .scaleEffect(1.5)
+                                .progressViewStyle(CircularProgressViewStyle())
+                            
+                            Text("Processing...")
+                                .font(FTFont.flowTaleSecondaryHeader())
+                                .fontWeight(.medium)
+                                .foregroundColor(FTColor.primary)
+                        }
+                        .padding(32)
+                        .background(
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(FTColor.background)
+                                .shadow(color: .black.opacity(0.1), radius: 20, x: 0, y: 10)
+                        )
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+            }
+        })
 
-            VStack {
+    }
+    
+    private var headerSection: some View {
+        VStack(spacing: 16) {
+            VStack(spacing: 8) {
+                Text(store.state.isSubscribed ? LocalizedString.manageSubscription : LocalizedString.subscribe)
+                    .font(FTFont.flowTaleHeader())
+                    .fontWeight(.heavy)
+                    .foregroundColor(FTColor.primary)
+                    .multilineTextAlignment(.center)
+                
+                if !store.state.isSubscribed {
+                    Text(LocalizedString.subscriptionSubscribeNow)
+                        .multilineTextAlignment(.center)
+                        .font(FTFont.flowTaleSecondaryHeader())
+                        .fontWeight(.medium)
+                        .foregroundColor(FTColor.primary.opacity(0.7))
+                        .padding(.horizontal, 20)
+                }
+            }
+            .padding(.vertical, 8)
+        }
+    }
+    
+    @ViewBuilder
+    private var subscriptionOptionsSection: some View {
+        VStack(spacing: 20) {
+            Text("Choose Your Plan")
+                .font(FTFont.flowTaleSecondaryHeader())
+                .fontWeight(.semibold)
+                .foregroundColor(FTColor.primary)
+                .padding(.bottom, 8)
+            
+            VStack(spacing: 16) {
+                ForEach(store.state.products?.sorted(by: { $0.price > $1.price }) ?? []) { product in
+                    let limitString: String
+                    if let characterLimit = SubscriptionLevel(id: product.id)?.ssmlCharacterLimitPerDay {
+                        limitString = LocalizedString.subscriptionCharactersPerDay(characterLimit)
+                    } else {
+                        limitString = product.displayName
+                    }
+                    return SubscriptionOption(title: LocalizedString.pricePerMonth(product.displayPrice),
+                                      detail: limitString,
+                                      product: product,
+                                      action: {
+                                          Task {
+                                              store.dispatch(.validateReceipt)
+                                              store.dispatch(.purchaseSubscription(product))
+                                          }
+                                      })
+                }
+            }
+        }
+        .padding(.horizontal, 4)
+    }
+    
+    private var freeTierSection: some View {
+        VStack(spacing: 12) {
+            HStack {
+                Image(systemName: "gift.fill")
+                    .foregroundColor(FTColor.accent)
+                    .font(.title2)
                 Text(LocalizedString.free)
                     .font(FTFont.flowTaleHeader())
-                    .bold()
-                Text(LocalizedString.subscriptionFreeCharactersDetail(4000))
-                    .font(FTFont.flowTaleSecondaryHeader())
+                    .fontWeight(.bold)
+                    .foregroundColor(FTColor.primary)
+                Spacer()
             }
-            .foregroundStyle(FTColor.primary)
-
+            
+            Text(LocalizedString.subscriptionFreeCharactersDetail(4000))
+                .font(FTFont.flowTaleSecondaryHeader())
+                .multilineTextAlignment(.leading)
+                .foregroundColor(FTColor.primary.opacity(0.8))
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(.horizontal, 24)
+        .padding(.vertical, 20)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(
+                    LinearGradient(
+                        colors: [FTColor.secondary.opacity(0.2), FTColor.secondary.opacity(0.1)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(
+                            LinearGradient(
+                                colors: [FTColor.secondary.opacity(0.5), FTColor.secondary.opacity(0.2)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: 1
+                        )
+                )
+        )
+    }
+    
+    private var actionsSection: some View {
+        VStack(spacing: 24) {
             Divider()
-
+                .overlay(FTColor.secondary.opacity(0.3))
+            
             Button {
                 Task {
                     store.dispatch(.validateReceipt)
                     store.dispatch(.restoreSubscriptions)
                 }
             } label: {
-                Text(LocalizedString.restoreSubscription)
-                    .multilineTextAlignment(.center)
-                    .font(FTFont.flowTaleSecondaryHeader())
-                    .bold()
-                    .foregroundColor(FTColor.primary)
+                HStack(spacing: 8) {
+                    Image(systemName: "arrow.clockwise")
+                    Text(LocalizedString.restoreSubscription)
+                }
+                .multilineTextAlignment(.center)
+                .font(FTFont.flowTaleSecondaryHeader())
+                .fontWeight(.semibold)
+                .foregroundColor(FTColor.primary)
+                .padding(.horizontal, 24)
+                .padding(.vertical, 16)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(FTColor.primary.opacity(0.3), lineWidth: 1.5)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(FTColor.background)
+                        )
+                )
             }
-
-            HStack {
+            .buttonStyle(PressedButtonStyle())
+            
+            HStack(spacing: 32) {
                 Button {
                     if let url = URL(string: "https://www.smileydude.co.uk/post/flowtale-terms-of-use-eula") {
                         UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -83,7 +225,8 @@ struct SubscriptionView: View {
                     Text(LocalizedString.termsOfUse)
                         .multilineTextAlignment(.center)
                         .font(FTFont.flowTaleSecondaryHeader())
-                        .foregroundColor(FTColor.primary)
+                        .foregroundColor(FTColor.primary.opacity(0.6))
+                        .underline()
                 }
 
                 Button {
@@ -94,38 +237,34 @@ struct SubscriptionView: View {
                     Text(LocalizedString.privacyPolicy)
                         .multilineTextAlignment(.center)
                         .font(FTFont.flowTaleSecondaryHeader())
-                        .foregroundColor(FTColor.primary)
+                        .foregroundColor(FTColor.primary.opacity(0.6))
+                        .underline()
                 }
             }
-
-            if store.state.isSubscribed {
-                Text(LocalizedString.manageSubscriptionsInstructions)
-                    .multilineTextAlignment(.center)
-                    .font(FTFont.flowTaleSecondaryHeader())
-                    .foregroundColor(FTColor.primary)
-            }
         }
-        // Validate receipt whenever subscription view appears to ensure we handle sandbox receipts properly
-        .onAppear {
-            Task {
-                store.dispatch(.validateReceipt)
-            }
+    }
+    
+    private var managementInstructionsSection: some View {
+        VStack(spacing: 12) {
+            Image(systemName: "info.circle.fill")
+                .foregroundColor(FTColor.accent)
+                .font(.title2)
+            
+            Text(LocalizedString.manageSubscriptionsInstructions)
+                .multilineTextAlignment(.center)
+                .font(FTFont.flowTaleSecondaryHeader())
+                .foregroundColor(FTColor.primary.opacity(0.7))
+                .padding(.horizontal, 8)
         }
-        .padding(20)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(FTColor.background)
-        .navigationBarTitleDisplayMode(.inline)
-        .overlay(content: {
-            Group {
-                if store.state.isLoadingSubscriptionPurchase {
-                    ZStack {
-                        Color.black.opacity(0.5)
-                        ProgressView()
-                            .tint(FTColor.primary)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
-            }
-        })
+        .padding(.horizontal, 20)
+        .padding(.vertical, 16)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(FTColor.accent.opacity(0.1))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(FTColor.accent.opacity(0.3), lineWidth: 1)
+                )
+        )
     }
 }
