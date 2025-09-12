@@ -13,12 +13,37 @@ import Settings
 import Study
 import TextGeneration
 import TextPractice
+import UserLimit
 
 @MainActor
 public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtocol> = { state, action, environment in
     switch action {
     case .createChapter(let type):
-        return .generateText(type)
+        do {
+            let settings = try environment.getAppSettings()
+            
+            // Check if limit has already been passed
+            if let characterLimitPerDay = settings.characterLimitPerDay {
+                // Subscribed user - check daily limit
+                let remainingCharacters = environment.userLimitEnvironment.getRemainingDailyCharacters(characterLimitPerDay: characterLimitPerDay)
+                if remainingCharacters <= 0 {
+                    let timeUntilReset = environment.userLimitEnvironment.getTimeUntilNextDailyReset(characterLimitPerDay: characterLimitPerDay) ?? "24 hours"
+                    environment.limitReachedSubject.send(.dailyLimit(nextAvailable: timeUntilReset))
+                    return .failedToCreateChapter
+                }
+            } else {
+                // Free user - check free limit
+                let remainingCharacters = environment.userLimitEnvironment.getRemainingFreeCharacters()
+                if remainingCharacters <= 0 {
+                    environment.limitReachedSubject.send(.freeLimit)
+                    return .failedToCreateChapter
+                }
+            }
+            
+            return .generateText(type)
+        } catch {
+            return .failedToCreateChapter
+        }
         
     case .generateText(let type):
         do {

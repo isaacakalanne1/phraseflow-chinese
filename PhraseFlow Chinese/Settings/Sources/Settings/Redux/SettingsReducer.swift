@@ -75,12 +75,19 @@ let settingsReducer: Reducer<SettingsState, SettingsAction> = { state, action in
         newState.isPlayingMusic = true
     case .stopMusic:
         newState.isPlayingMusic = false
+        
+    case .onLoadedUsageData(let remainingCharacters, let isSubscribed, let timeUntilReset):
+        newState.remainingCharacters = remainingCharacters
+        newState.isSubscribedUser = isSubscribed
+        newState.timeUntilReset = timeUntilReset
+        
     case .loadAppSettings,
          .saveAppSettings,
          .failedToLoadAppSettings,
          .failedToSaveAppSettings,
          .playSound,
-         .snackbarAction:
+         .snackbarAction,
+         .loadUsageData:
         break
     }
 

@@ -9,4 +9,7 @@ import Foundation
 
 enum NavigationAction {
     case selectTab(ContentTab, shouldPlaySound: Bool)
+    case showFreeLimitExplanation
+    case showDailyLimitExplanation(nextAvailable: String)
+    case dismissLimitExplanation
 }

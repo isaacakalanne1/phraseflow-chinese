@@ -12,8 +12,13 @@ import FTFont
 
 public struct DailyLimitExplanationView: View {
     @Environment(\.dismiss) private var dismiss
+    private let nextAvailable: String
+    private let onDismiss: (() -> Void)?
     
-    public init() {}
+    public init(nextAvailable: String = "", onDismiss: (() -> Void)? = nil) {
+        self.nextAvailable = nextAvailable
+        self.onDismiss = onDismiss
+    }
     
     public var body: some View {
         NavigationView {
@@ -35,9 +40,18 @@ public struct DailyLimitExplanationView: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                 
+                if !nextAvailable.isEmpty {
+                    Text("Next available in: \(nextAvailable)")
+                        .font(FTFont.flowTaleBodyMedium())
+                        .foregroundColor(FTColor.accent)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                }
+                
                 Spacer()
                 
                 Button(action: {
+                    onDismiss?()
                     dismiss()
                 }) {
                     Text("OK")
@@ -55,6 +69,7 @@ public struct DailyLimitExplanationView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Close") {
+                        onDismiss?()
                         dismiss()
                     }
                     .foregroundColor(FTColor.accent)

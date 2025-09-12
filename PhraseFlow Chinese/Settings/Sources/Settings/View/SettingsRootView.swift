@@ -24,7 +24,7 @@ public struct SettingsRootView: View {
         SettingsView()
             .environmentObject(store)
             .onAppear {
-                store.dispatch(.loadAppSettings)
+                store.dispatch(.loadUsageData)
             }
     }
 }

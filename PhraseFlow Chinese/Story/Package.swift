@@ -27,6 +27,7 @@ let package = Package(
         .package(name: "Subscription", path: "../Subscription"),
         .package(name: "TextGeneration", path: "../TextGeneration"),
         .package(name: "TextPractice", path: "../TextPractice"),
+        .package(name: "UserLimit", path: "../UserLimit"),
         .package(name: "ImageGeneration", path: "../ImageGeneration"),
         .package(name: "Localization", path: "../Localization")
     ],
@@ -48,6 +49,7 @@ let package = Package(
                 "Subscription",
                 "TextGeneration",
                 "TextPractice",
+                "UserLimit",
                 "ImageGeneration",
                 "Localization"
             ]

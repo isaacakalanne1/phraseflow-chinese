@@ -8,19 +8,23 @@
 import Audio
 import Foundation
 import Combine
+import UserLimit
 
 public struct SettingsEnvironment: SettingsEnvironmentProtocol {
     public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never>
+    public let userLimitEnvironment: UserLimitEnvironmentProtocol
     
     private let settingsDataStore: SettingsDataStoreProtocol
     private let audioEnvironment: AudioEnvironmentProtocol
     
     public init(
         settingsDataStore: SettingsDataStoreProtocol,
-        audioEnvironment: AudioEnvironmentProtocol
+        audioEnvironment: AudioEnvironmentProtocol,
+        userLimitEnvironment: UserLimitEnvironmentProtocol
     ) {
         self.settingsDataStore = settingsDataStore
         self.audioEnvironment = audioEnvironment
+        self.userLimitEnvironment = userLimitEnvironment
         settingsUpdatedSubject = .init(nil)
     }
     

@@ -8,7 +8,7 @@
 import DataStorage
 import Foundation
 
-enum UserLimitsDataStoreError: Error {
+public enum UserLimitsDataStoreError: Error {
     case freeUserCharacterLimitReached
     case characterLimitReached(timeUntilNextAvailable: String)
 }
@@ -103,5 +103,73 @@ public class UserLimitsDataStore: UserLimitsDataStoreProtocol {
               let string = String(data: data, encoding: .utf8),
               let count = Int(string) else { return 0 }
         return count
+    }
+    
+    public func canCreateChapter(estimatedCharacterCount: Int, characterLimitPerDay: Int?) throws {
+        if let characterLimitPerDay {
+            try checkSubscribedUserLimit(estimatedCharacterCount, characterLimitPerDay: characterLimitPerDay)
+        } else {
+            try checkFreeUserLimit(estimatedCharacterCount)
+        }
+    }
+    
+    private func checkFreeUserLimit(_ count: Int) throws {
+        let current = freeUserCount
+        #if DEBUG
+        let limit = 9_999_999_999_999
+        #else
+        let limit = 4000
+        #endif
+        
+        guard current + count <= limit else {
+            throw UserLimitsDataStoreError.freeUserCharacterLimitReached
+        }
+    }
+    
+    private func checkSubscribedUserLimit(_ count: Int, characterLimitPerDay: Int) throws {
+        let now = Date()
+        let cutoff = now.addingTimeInterval(-86400)
+        let records = dailyUsage.filter { $0.timestamp > cutoff }
+        
+        let totalUsage = records.reduce(0) { $0 + $1.characterCount }
+        
+        guard totalUsage + count <= characterLimitPerDay else {
+            let timeString = records.compactMap(\.timestamp).min()
+                .map(timeRemaining) ?? "24 hours"
+            throw UserLimitsDataStoreError.characterLimitReached(timeUntilNextAvailable: timeString)
+        }
+    }
+    
+    public func getRemainingFreeCharacters() -> Int {
+        let current = freeUserCount
+        #if DEBUG
+        let limit = 4_000
+        #else
+        let limit = 4000
+        #endif
+        return max(0, limit - current)
+    }
+    
+    public func getTimeUntilNextDailyReset(characterLimitPerDay: Int) -> String? {
+        let now = Date()
+        let cutoff = now.addingTimeInterval(-86400)
+        let records = dailyUsage.filter { $0.timestamp > cutoff }
+        
+        let totalUsage = records.reduce(0) { $0 + $1.characterCount }
+        
+        guard totalUsage >= characterLimitPerDay else { return nil }
+        
+        return records.compactMap(\.timestamp).min()
+            .map(timeRemaining) ?? "24 hours"
+    }
+    
+    public func getRemainingDailyCharacters(characterLimitPerDay: Int) -> Int {
+        let now = Date()
+        let cutoff = now.addingTimeInterval(-86400)
+        let records = dailyUsage.filter { $0.timestamp > cutoff }
+        
+        let totalUsage = records.reduce(0) { $0 + $1.characterCount }
+        
+        return max(0, characterLimitPerDay - totalUsage)
     }
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 import FTColor
 import Localization
+import UserLimit
 
 struct SettingsView: View {
     @EnvironmentObject var store: SettingsStore
@@ -55,6 +56,9 @@ struct SettingsView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 24) {
+                    // Usage Limit Section
+                    usageLimitSection()
+                    
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 2), spacing: 8) {
                         NavigationLink(destination: LanguageSettingsView(selectedLanguage: selectedLanguage,
                                                                          isEnabled: !store.state.viewState.isWritingChapter)) {
@@ -168,5 +172,51 @@ struct SettingsView: View {
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
         .background(Color.clear)
+    }
+    
+    @ViewBuilder
+    private func usageLimitSection() -> some View {
+        settingsSection(
+            title: (store.state.isSubscribedUser == true) ? "DAILY USAGE" : "FREE TRIAL USAGE",
+            content: {
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text((store.state.isSubscribedUser == true) ? "Characters Remaining Today" : "Characters Remaining")
+                            .font(.caption)
+                            .foregroundColor(FTColor.secondary)
+                        
+                        if let remainingCharacters = store.state.remainingCharacters {
+                            Text("\(remainingCharacters)")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundColor(remainingCharacters > 0 ? FTColor.primary : .red)
+                        } else {
+                            Text("Loading...")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundColor(FTColor.secondary)
+                        }
+                    }
+                    
+                    Spacer()
+                    
+                    if store.state.isSubscribedUser == true, let timeUntilReset = store.state.timeUntilReset {
+                        VStack(alignment: .trailing, spacing: 4) {
+                            Text("Resets in")
+                                .font(.caption)
+                                .foregroundColor(FTColor.secondary)
+                            
+                            Text(timeUntilReset)
+                                .font(.caption)
+                                .fontWeight(.medium)
+                                .foregroundColor(FTColor.primary)
+                        }
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+            }
+        )
+        .padding(.horizontal)
     }
 }

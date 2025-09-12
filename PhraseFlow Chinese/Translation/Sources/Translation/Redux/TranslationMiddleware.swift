@@ -13,6 +13,7 @@ import AVFoundation
 import Settings
 import Story
 import TextPractice
+import UserLimit
 
 @MainActor
 let translationMiddleware: Middleware<TranslationState, TranslationAction, TranslationEnvironmentProtocol> = { state, action, environment in
@@ -23,15 +24,33 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             return .translationInProgress(false)
         }
         
-        guard let chapter = try? await environment.translateText(
-            inputText,
-            from: Language.deviceLanguage,
-            to: state.settings.targetLanguage
-        ) else {
+        do {
+            let settings = try environment.getAppSettings()
+            let estimatedCharacterCount = inputText.count * 2 // Estimated characters for translation
+            
+            try environment.userLimitEnvironment.canCreateChapter(
+                estimatedCharacterCount: estimatedCharacterCount,
+                characterLimitPerDay: settings.characterLimitPerDay
+            )
+            
+            guard let chapter = try? await environment.translateText(
+                inputText,
+                from: Language.deviceLanguage,
+                to: state.settings.targetLanguage
+            ) else {
+                return .failedToTranslate
+            }
+            
+            return .synthesizeAudio(chapter, state.settings.targetLanguage)
+        } catch UserLimitsDataStoreError.freeUserCharacterLimitReached {
+            environment.limitReachedSubject.send(.freeLimit)
+            return .failedToTranslate
+        } catch UserLimitsDataStoreError.characterLimitReached(let timeUntilNextAvailable) {
+            environment.limitReachedSubject.send(.dailyLimit(nextAvailable: timeUntilNextAvailable))
+            return .failedToTranslate
+        } catch {
             return .failedToTranslate
         }
-        
-        return .synthesizeAudio(chapter, state.settings.targetLanguage)
         
     case .breakdownText:
         let inputText = state.inputText
@@ -39,18 +58,33 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             return .translationInProgress(false)
         }
         
-        // Get device language from settings environment
-        
-        
-        guard let chapter = try? await environment.breakdownText(
-                inputText,
-                textLanguage: state.settings.targetLanguage,
-                deviceLanguage: Language.deviceLanguage
-              ) else {
+        do {
+            let settings = try environment.getAppSettings()
+            let estimatedCharacterCount = inputText.count * 2 // Estimated characters for breakdown
+            
+            try environment.userLimitEnvironment.canCreateChapter(
+                estimatedCharacterCount: estimatedCharacterCount,
+                characterLimitPerDay: settings.characterLimitPerDay
+            )
+            
+            guard let chapter = try? await environment.breakdownText(
+                    inputText,
+                    textLanguage: state.settings.targetLanguage,
+                    deviceLanguage: Language.deviceLanguage
+                  ) else {
+                return .failedToBreakdown
+            }
+            
+            return .synthesizeAudio(chapter, state.settings.targetLanguage)
+        } catch UserLimitsDataStoreError.freeUserCharacterLimitReached {
+            environment.limitReachedSubject.send(.freeLimit)
+            return .failedToBreakdown
+        } catch UserLimitsDataStoreError.characterLimitReached(let timeUntilNextAvailable) {
+            environment.limitReachedSubject.send(.dailyLimit(nextAvailable: timeUntilNextAvailable))
+            return .failedToBreakdown
+        } catch {
             return .failedToBreakdown
         }
-        
-        return .synthesizeAudio(chapter, state.settings.targetLanguage)
         
     case .synthesizeAudio(let chapter, let language):
         // Get voice from settings environment

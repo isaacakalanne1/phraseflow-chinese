@@ -21,6 +21,7 @@ let package = Package(
         .package(name: "FTColor", path: "../FTColor"),
         .package(name: "FTFont", path: "../FTFont"),
         .package(name: "FTStyleKit", path: "../FTStyleKit"),
+        .package(name: "UserLimit", path: "../UserLimit"),
         .package(name: "SnackBar", path: "../SnackBar")
     ],
     targets: [
@@ -35,6 +36,7 @@ let package = Package(
                 "FTColor",
                 "FTFont",
                 "FTStyleKit",
+                "UserLimit",
                 "SnackBar"
             ]
         ),

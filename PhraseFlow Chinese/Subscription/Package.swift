@@ -18,7 +18,9 @@ let package = Package(
         .package(name: "ReduxKit", path: "../ReduxKit"),
         .package(name: "Localization", path: "../Localization"),
         .package(name: "FTColor", path: "../FTColor"),
-        .package(name: "FTFont", path: "../FTFont")
+        .package(name: "FTFont", path: "../FTFont"),
+        .package(name: "Speech", path: "../Speech"),
+        .package(name: "UserLimit", path: "../UserLimit")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -29,7 +31,9 @@ let package = Package(
                 "ReduxKit",
                 "Localization",
                 "FTColor",
-                "FTFont"
+                "FTFont",
+                "Speech",
+                "UserLimit"
             ]),
         .testTarget(
             name: "SubscriptionTests",

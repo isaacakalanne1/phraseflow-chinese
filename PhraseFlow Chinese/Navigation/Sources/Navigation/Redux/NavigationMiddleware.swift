@@ -16,5 +16,9 @@ let navigationMiddleware: Middleware<NavigationState, NavigationAction, Navigati
             environment.playSound(.tabPress)
         }
         return nil
+    case .showFreeLimitExplanation,
+            .showDailyLimitExplanation,
+            .dismissLimitExplanation:
+        return nil
     }
 }

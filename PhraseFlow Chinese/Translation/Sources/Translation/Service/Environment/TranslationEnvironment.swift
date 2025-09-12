@@ -12,6 +12,9 @@ import Study
 import Settings
 import TextGeneration
 import TextPractice
+import UserLimit
+import Combine
+import Story
 
 public struct TranslationEnvironment: TranslationEnvironmentProtocol {
     public let translationServices: TranslationServicesProtocol
@@ -20,6 +23,8 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
     public let settingsEnvironment: SettingsEnvironmentProtocol
     public let textPracticeEnvironment: TextPracticeEnvironmentProtocol
     public let translationDataStore: TranslationDataStoreProtocol
+    public let userLimitEnvironment: UserLimitEnvironmentProtocol
+    public let limitReachedSubject: PassthroughSubject<LimitReachedEvent, Never>
     
     public init(
         speechRepository: SpeechRepositoryProtocol,
@@ -28,6 +33,7 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
         audioEnvironment: AudioEnvironmentProtocol,
         settingsEnvironment: SettingsEnvironmentProtocol,
         textPracticeEnvironment: TextPracticeEnvironmentProtocol,
+        userLimitEnvironment: UserLimitEnvironmentProtocol,
         settingsDataStore: SettingsDataStoreProtocol
     ) {
         self.translationServices = TranslationServices()
@@ -39,6 +45,8 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
             settingsEnvironment: settingsEnvironment)
         self.settingsEnvironment = settingsEnvironment
         self.textPracticeEnvironment = textPracticeEnvironment
+        self.userLimitEnvironment = userLimitEnvironment
+        self.limitReachedSubject = PassthroughSubject<LimitReachedEvent, Never>()
         self.translationDataStore = TranslationDataStore()
     }
     

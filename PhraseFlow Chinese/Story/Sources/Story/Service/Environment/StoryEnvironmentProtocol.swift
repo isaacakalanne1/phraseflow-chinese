@@ -13,11 +13,19 @@ import TextGeneration
 import Study
 import Subscription
 import TextPractice
+import UserLimit
+
+public enum LimitReachedEvent {
+    case freeLimit
+    case dailyLimit(nextAvailable: String)
+}
 
 public protocol StoryEnvironmentProtocol {
     var audioEnvironment: AudioEnvironmentProtocol { get }
     var studyEnvironment: StudyEnvironmentProtocol { get }
     var textPracticeEnvironment: TextPracticeEnvironmentProtocol { get }
+    var userLimitEnvironment: UserLimitEnvironmentProtocol { get }
+    var limitReachedSubject: PassthroughSubject<LimitReachedEvent, Never> { get }
     func getAppSettings() throws -> SettingsState
     func loadAllChapters() throws -> [Chapter]
     func saveChapter(_ chapter: Chapter) throws

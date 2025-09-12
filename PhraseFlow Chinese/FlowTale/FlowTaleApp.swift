@@ -29,8 +29,8 @@ public struct FlowTaleRootView: View {
     public init() {
         let audioEnvironment = AudioEnvironment()
         let snackBarEnvironment = SnackBarEnvironment()
-        let userLimitEnvironment = UserLimitEnvironment()
         let userLimitsDataStore = UserLimitsDataStore()
+        let userLimitEnvironment = UserLimitEnvironment(dataStore: userLimitsDataStore)
         let loadingEnvironment = LoadingEnvironment()
         
         let speechRepository = SpeechRepository()
@@ -45,7 +45,8 @@ public struct FlowTaleRootView: View {
         let settingsDataStore = SettingsDataStore()
         let settingsEnvironment = SettingsEnvironment(
             settingsDataStore: settingsDataStore,
-            audioEnvironment: audioEnvironment
+            audioEnvironment: audioEnvironment,
+            userLimitEnvironment: userLimitEnvironment
         )
         
         let moderationServices = ModerationServices()
@@ -75,6 +76,7 @@ public struct FlowTaleRootView: View {
             audioEnvironment: audioEnvironment,
             settingsEnvironment: settingsEnvironment,
             textPracticeEnvironment: textPracticeEnvironment,
+            userLimitEnvironment: userLimitEnvironment,
             settingsDataStore: settingsDataStore
         )
         
@@ -87,6 +89,7 @@ public struct FlowTaleRootView: View {
             studyEnvironment: studyEnvironment,
             textPracticeEnvironment: textPracticeEnvironment,
             loadingEnvironment: loadingEnvironment,
+            userLimitEnvironment: userLimitEnvironment,
             service: textGenerationServices,
             imageGenerationService: imageGenerationService,
             dataStore: storyDataStore

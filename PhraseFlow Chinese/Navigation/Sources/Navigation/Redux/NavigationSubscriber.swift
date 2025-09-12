@@ -7,7 +7,37 @@
 
 import Foundation
 import ReduxKit
+import Story
+import Combine
 
-nonisolated(unsafe) let navigationSubscriber: OnSubscribe<NavigationStore, NavigationEnvironmentProtocol> = { store, environment in
-    // No reactive subscriptions needed for basic navigation
+@MainActor
+let navigationSubscriber: OnSubscribe<NavigationStore, NavigationEnvironmentProtocol> = { store, environment in
+    
+    // Listen to Story limit reached events
+    environment.storyEnvironment.limitReachedSubject
+        .receive(on: DispatchQueue.main)
+        .sink { [weak store] limitEvent in
+            guard let store else { return }
+            switch limitEvent {
+            case .freeLimit:
+                store.dispatch(.showFreeLimitExplanation)
+            case .dailyLimit(let nextAvailable):
+                store.dispatch(.showDailyLimitExplanation(nextAvailable: nextAvailable))
+            }
+        }
+        .store(in: &store.subscriptions)
+    
+    // Listen to Translation limit reached events
+    environment.translationEnvironment.limitReachedSubject
+        .receive(on: DispatchQueue.main)
+        .sink { [weak store] limitEvent in
+            guard let store else { return }
+            switch limitEvent {
+            case .freeLimit:
+                store.dispatch(.showFreeLimitExplanation)
+            case .dailyLimit(let nextAvailable):
+                store.dispatch(.showDailyLimitExplanation(nextAvailable: nextAvailable))
+            }
+        }
+        .store(in: &store.subscriptions)
 }

@@ -7,4 +7,7 @@
 
 struct NavigationState: Equatable {
     var contentTab: ContentTab = .reader
+    var isShowingFreeLimitExplanation: Bool = false
+    var isShowingDailyLimitExplanation: Bool = false
+    var dailyLimitNextAvailable: String = ""
 }

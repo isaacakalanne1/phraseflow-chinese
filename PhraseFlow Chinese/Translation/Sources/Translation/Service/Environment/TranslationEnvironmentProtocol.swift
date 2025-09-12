@@ -11,6 +11,9 @@ import Study
 import Settings
 import TextGeneration
 import TextPractice
+import UserLimit
+import Combine
+import Story
 
 public protocol TranslationEnvironmentProtocol {
     var translationServices: TranslationServicesProtocol { get }
@@ -19,6 +22,8 @@ public protocol TranslationEnvironmentProtocol {
     var settingsEnvironment: SettingsEnvironmentProtocol { get }
     var textPracticeEnvironment: TextPracticeEnvironmentProtocol { get }
     var translationDataStore: TranslationDataStoreProtocol { get }
+    var userLimitEnvironment: UserLimitEnvironmentProtocol { get }
+    var limitReachedSubject: PassthroughSubject<LimitReachedEvent, Never> { get }
     
     func translateText(_ text: String, from sourceLanguage: Language?, to targetLanguage: Language) async throws -> Chapter
     func breakdownText(_ text: String, textLanguage: Language, deviceLanguage: Language) async throws -> Chapter

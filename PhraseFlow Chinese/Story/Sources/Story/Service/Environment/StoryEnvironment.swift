@@ -15,12 +15,16 @@ import Subscription
 import Study
 import ImageGeneration
 import TextPractice
+import UserLimit
+import Combine
 
 public struct StoryEnvironment: StoryEnvironmentProtocol {
     public let audioEnvironment: AudioEnvironmentProtocol
     public let studyEnvironment: StudyEnvironmentProtocol
     public let loadingEnvironment: LoadingEnvironmentProtocol
     public let textPracticeEnvironment: TextPracticeEnvironmentProtocol
+    public let userLimitEnvironment: UserLimitEnvironmentProtocol
+    public let limitReachedSubject: PassthroughSubject<LimitReachedEvent, Never>
     private let settingsEnvironment: SettingsEnvironmentProtocol
     private let speechEnvironment: SpeechEnvironmentProtocol
     private let service: TextGenerationServicesProtocol
@@ -34,6 +38,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         studyEnvironment: StudyEnvironmentProtocol,
         textPracticeEnvironment: TextPracticeEnvironmentProtocol,
         loadingEnvironment: LoadingEnvironmentProtocol,
+        userLimitEnvironment: UserLimitEnvironmentProtocol,
         service: TextGenerationServicesProtocol,
         imageGenerationService: ImageGenerationServicesProtocol,
         dataStore: StoryDataStoreProtocol
@@ -44,6 +49,8 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         self.studyEnvironment = studyEnvironment
         self.textPracticeEnvironment = textPracticeEnvironment
         self.loadingEnvironment = loadingEnvironment
+        self.userLimitEnvironment = userLimitEnvironment
+        self.limitReachedSubject = PassthroughSubject<LimitReachedEvent, Never>()
         self.service = service
         self.imageGenerationService = imageGenerationService
         self.dataStore = dataStore

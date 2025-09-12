@@ -42,6 +42,12 @@ public struct SettingsState: Codable, Equatable, Sendable {
     var isShowingModerationFailedAlert: Bool
     var viewState: SettingsViewState
     
+    // User limit properties  
+    public var remainingCharacters: Int?
+    public var isSubscribedUser: Bool?
+    public var timeUntilReset: String?
+    public var characterLimitPerDay: Int?
+    
     enum CodingKeys: String, CodingKey {
         case isShowingDefinition
         case isShowingEnglish
@@ -60,6 +66,7 @@ public struct SettingsState: Codable, Equatable, Sendable {
         case isShowingCustomPromptAlert
         case isShowingModerationFailedAlert
         case viewState
+        case characterLimitPerDay
     }
 
     public init(
@@ -92,6 +99,10 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.isShowingCustomPromptAlert = isShowingCustomPromptAlert
         self.isShowingModerationFailedAlert = isShowingModerationFailedAlert
         self.viewState = viewState
+        self.remainingCharacters = nil
+        self.isSubscribedUser = nil
+        self.timeUntilReset = nil
+        self.characterLimitPerDay = nil
     }
 
     public init(from decoder: any Decoder) throws {
@@ -114,5 +125,9 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.isShowingCustomPromptAlert = (try? container.decode(Bool.self, forKey: .isShowingCustomPromptAlert)) ?? false
         self.isShowingModerationFailedAlert = (try? container.decode(Bool.self, forKey: .isShowingModerationFailedAlert)) ?? false
         self.viewState = (try? container.decode(SettingsViewState.self, forKey: .viewState)) ?? SettingsViewState()
+        self.characterLimitPerDay = try? container.decode(Int.self, forKey: .characterLimitPerDay)
+        self.remainingCharacters = nil
+        self.isSubscribedUser = nil
+        self.timeUntilReset = nil
     }
 }

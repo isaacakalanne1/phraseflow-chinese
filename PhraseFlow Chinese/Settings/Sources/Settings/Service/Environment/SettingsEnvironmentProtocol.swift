@@ -8,11 +8,13 @@
 import Audio
 import Foundation
 import Combine
+import UserLimit
 
 public protocol SettingsEnvironmentProtocol {
     var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> { get }
     var currentVoice: Voice { get }
     var speechSpeed: SpeechSpeed { get }
+    var userLimitEnvironment: UserLimitEnvironmentProtocol { get }
     
     func saveAppSettings(_ settings: SettingsState) throws
     func loadAppSettings() throws -> SettingsState

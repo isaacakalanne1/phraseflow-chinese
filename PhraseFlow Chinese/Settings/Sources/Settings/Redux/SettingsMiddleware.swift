@@ -7,6 +7,7 @@
 
 import Foundation
 import ReduxKit
+import UserLimit
 
 @MainActor
 let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvironmentProtocol> = { state, action, environment in
@@ -55,6 +56,28 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
     case .deleteCustomPrompt:
         return .saveAppSettings
         
+    case .loadUsageData:
+        let characterLimitPerDay = state.characterLimitPerDay
+        let isSubscribed = characterLimitPerDay != nil
+        
+        if isSubscribed {
+            let remainingCharacters = environment.userLimitEnvironment.getRemainingDailyCharacters(characterLimitPerDay: characterLimitPerDay!)
+            let timeUntilReset = environment.userLimitEnvironment.getTimeUntilNextDailyReset(characterLimitPerDay: characterLimitPerDay!)
+            return .onLoadedUsageData(
+                remainingCharacters: remainingCharacters,
+                isSubscribed: true,
+                timeUntilReset: timeUntilReset
+            )
+        } else {
+            let remainingCharacters = environment.userLimitEnvironment.getRemainingFreeCharacters()
+            return .onLoadedUsageData(
+                remainingCharacters: remainingCharacters,
+                isSubscribed: false,
+                timeUntilReset: nil
+            )
+        }
+    case .onLoadedUsageData:
+        return .loadAppSettings
     case .failedToLoadAppSettings,
          .failedToSaveAppSettings,
          .updateCustomPrompt,

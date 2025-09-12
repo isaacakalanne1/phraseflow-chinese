@@ -12,8 +12,11 @@ import FTFont
 
 public struct FreeLimitExplanationView: View {
     @Environment(\.dismiss) private var dismiss
+    private let onDismiss: (() -> Void)?
     
-    public init() {}
+    public init(onDismiss: (() -> Void)? = nil) {
+        self.onDismiss = onDismiss
+    }
     
     public var body: some View {
         NavigationView {
@@ -38,6 +41,7 @@ public struct FreeLimitExplanationView: View {
                 Spacer()
                 
                 Button(action: {
+                    onDismiss?()
                     dismiss()
                 }) {
                     Text("OK")
@@ -55,6 +59,7 @@ public struct FreeLimitExplanationView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Close") {
+                        onDismiss?()
                         dismiss()
                     }
                     .foregroundColor(FTColor.accent)
