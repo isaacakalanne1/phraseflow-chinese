@@ -46,7 +46,9 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
     }
     
     public func loadAppSettings() throws -> SettingsState {
-        return try settingsDataStore.loadAppSettings()
+        let settings = try settingsDataStore.loadAppSettings()
+        settingsUpdatedSubject.send(settings)
+        return settings
     }
     
     

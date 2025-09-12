@@ -66,7 +66,8 @@ public class TextGenerationServices: TextGenerationServicesProtocol {
         }
     }
 
-    public func generateChapter(previousChapters: [Chapter], deviceLanguage: Language?) async throws -> Chapter {
+    public func generateChapter(previousChapters: [Chapter],
+                                deviceLanguage: Language?) async throws -> Chapter {
         do {
             guard let deviceLanguage else {
                 throw TextGenerationServicesError.failedToGetDeviceLanguage

@@ -79,7 +79,7 @@ public struct SettingsState: Codable, Equatable, Sendable {
         isShowingDefinition: Bool = true,
         isShowingEnglish: Bool = true,
         isPlayingMusic: Bool = true,
-        voice: Voice = .xiaoxiao,
+        voice: Voice = .elvira,
         speechSpeed: SpeechSpeed = .normal,
         difficulty: Difficulty = .beginner,
         customPrompt: String = "",

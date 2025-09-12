@@ -22,14 +22,10 @@ struct TranslationLanguageSelector: View {
                 .foregroundColor(FTColor.secondary)
 
             HStack(spacing: 8) {
-                // Source language selector
                 sourceLanguageButton
-                
-                // Swap languages button (or one-way arrow for auto-detect)
                 swapLanguagesButton
-                
-                // Target language selector
                 targetLanguageButton
+            }
         }
     }
     
