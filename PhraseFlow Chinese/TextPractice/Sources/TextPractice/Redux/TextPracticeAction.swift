@@ -10,8 +10,6 @@ import Settings
 import Study
 
 public enum TextPracticeAction: Sendable {
-    case setChapter(Chapter)
-    
     case addDefinitions([Definition])
     case showDefinition(WordTimeStampData)
     case hideDefinition
@@ -38,8 +36,4 @@ public enum TextPracticeAction: Sendable {
     case refreshAppSettings(SettingsState)
     // Used to save settings in the Settings package
     case saveAppSettings(SettingsState)
-    
-    // Load existing definitions from storage
-    case loadDefinitions
-    case onLoadedDefinitions([Definition])
 }

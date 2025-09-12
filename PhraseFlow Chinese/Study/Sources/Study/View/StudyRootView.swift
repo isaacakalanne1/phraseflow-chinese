@@ -20,15 +20,13 @@ public struct StudyRootView: View {
             middleware: studyMiddleware,
             subscriber: studySubscriber
         )
+        store.dispatch(.loadDefinitions)
     }
     
     public var body: some View {
         NavigationStack {
             DefinitionsProgressView()
                 .environmentObject(store)
-                .onAppear {
-                    store.dispatch(.loadDefinitions)
-                }
         }
     }
 }

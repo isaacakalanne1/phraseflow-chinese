@@ -47,10 +47,6 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
         try studyEnvironment.saveDefinitions(definitions)
     }
     
-    public func loadDefinitions() throws -> [Definition] {
-        try studyEnvironment.loadDefinitions()
-    }
-    
     public func addDefinitions(_ definitions: [Definition]) {
         studyEnvironment.definitionsSubject.send(definitions)
     }

@@ -34,6 +34,8 @@ public class DefinitionDataStore: DefinitionDataStoreProtocol {
         decoder.dateDecodingStrategy = .iso8601
         createDefinitionsDirectory()
         scheduleWrite()
+        try? cleanupOrphanedDefinitionFiles()
+        try? cleanupOrphanedSentenceAudioFiles()
     }
     
     deinit {

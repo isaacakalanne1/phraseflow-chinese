@@ -61,6 +61,8 @@ public struct StudyEnvironment: StudyEnvironmentProtocol {
     }
     
     public func loadDefinitions() throws -> [Definition] {
-        return try dataStore.loadDefinitions()
+        let definitions = try dataStore.loadDefinitions()
+        definitionsSubject.send(definitions)
+        return definitions
     }
 }

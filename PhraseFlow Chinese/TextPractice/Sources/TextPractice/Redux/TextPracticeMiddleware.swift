@@ -20,7 +20,7 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
         return nil
     case .prepareToPlayChapter(let chapter):
         await environment.prepareToPlayChapter(chapter)
-        return nil
+        return .generateDefinitions(chapter, sentenceIndex: 0)
     case .playChapter(let word):
         await environment.playChapter(from: word, speechSpeed: state.settings.speechSpeed)
         environment.setMusicVolume(.quiet)
@@ -159,21 +159,6 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
             return .generateDefinitions(chapter, sentenceIndex: nextIndex)
         }
         return nil
-        
-    case .setChapter(let chapter):
-        // Load definitions for the chapter when it's set
-        return .loadDefinitions
-        
-    case .loadDefinitions:
-        do {
-            let definitions = try environment.loadDefinitions()
-            return .onLoadedDefinitions(definitions)
-        } catch {
-            return nil
-        }
-        
-    case .onLoadedDefinitions:
-        return .generateDefinitions(state.chapter, sentenceIndex: 0)
         
     case .playWord(let word):
         await environment.playWord(word, rate: state.settings.speechSpeed.playRate)

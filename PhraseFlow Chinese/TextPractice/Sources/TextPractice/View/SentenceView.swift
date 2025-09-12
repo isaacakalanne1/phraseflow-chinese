@@ -65,17 +65,17 @@ public struct SentenceView: View {
         }
         .onAppear {
             opacity = 1
-            updateCurrentSentence(chapter: chapter)
+            updateCurrentSentence()
         }
         .onChange(of: spokenWord) {
-            updateCurrentSentence(chapter: chapter)
+            updateCurrentSentence()
         }
         .onChange(of: store.state.chapter) {
-            updateCurrentSentence(chapter: chapter)
+            updateCurrentSentence()
         }
     }
 
-    private func updateCurrentSentence(chapter: Chapter) {
+    private func updateCurrentSentence() {
         if let sentence = chapter.sentences.first(where: { $0.timestamps.contains { $0.id == spokenWord?.id } }) {
             let targetPage = sentenceIndex(sentence, in: chapter.sentences)
             currentPage = targetPage

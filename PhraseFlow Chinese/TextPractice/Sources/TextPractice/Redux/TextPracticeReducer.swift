@@ -13,7 +13,7 @@ let textPracticeReducer: Reducer<TextPracticeState, TextPracticeAction> = { stat
     var newState = state
     switch action {
         
-    case .setChapter(let chapter):
+    case .prepareToPlayChapter(let chapter):
         newState.chapter = chapter
     case .addDefinitions(let definitions):
         for definition in definitions {
@@ -23,8 +23,7 @@ let textPracticeReducer: Reducer<TextPracticeState, TextPracticeAction> = { stat
                 newState.definitions[key] = definition
             }
         }
-    case .onGeneratedDefinitions(let definitions, _, _),
-            .onLoadedDefinitions(let definitions):
+    case .onGeneratedDefinitions(let definitions, _, _):
         for definition in definitions {
             let key = DefinitionKey(word: definition.timestampData.word,
                                     sentenceId: definition.sentence.id)
@@ -65,14 +64,12 @@ let textPracticeReducer: Reducer<TextPracticeState, TextPracticeAction> = { stat
         newState.selectedDefinition = nil
         newState.viewState = .normal
     case .goToNextChapter,
-            .prepareToPlayChapter,
             .saveAppSettings,
             .generateDefinitions,
             .failedToLoadDefinitions,
             .playWord,
             .defineWord,
-            .failedToDefineWord,
-            .loadDefinitions:
+            .failedToDefineWord:
         break
     }
     return newState

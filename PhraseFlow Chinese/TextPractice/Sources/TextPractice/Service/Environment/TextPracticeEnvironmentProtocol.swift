@@ -23,7 +23,6 @@ public protocol TextPracticeEnvironmentProtocol {
     func saveAppSettings(_ settings: SettingsState) throws
     
     func saveDefinitions(_ definitions: [Definition]) throws
-    func loadDefinitions() throws -> [Definition]
     
     func addDefinitions(_ definitions: [Definition])
     func goToNextChapter()
