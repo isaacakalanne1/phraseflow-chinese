@@ -17,13 +17,39 @@ struct AudioButton: View {
     var isPlayingAudio: Bool {
         store.state.isPlayingChapterAudio
     }
+    
+    var isAtLastWord: Bool {
+        guard let currentSpokenWord = store.state.chapter.currentSpokenWord else { return false }
+        let allTimestamps = store.state.chapter.sentences.flatMap { $0.timestamps }
+        guard let lastWord = allTimestamps.last else { return false }
+        return currentSpokenWord.word == lastWord.word && 
+               currentSpokenWord.time == lastWord.time
+    }
+    
+    var hasReachedEnd: Bool {
+        let allTimestamps = store.state.chapter.sentences.flatMap { $0.timestamps }
+        guard let lastWord = allTimestamps.last else { return false }
+        let endTime = lastWord.time + lastWord.duration
+        return store.state.chapter.currentPlaybackTime >= endTime
+    }
 
     var body: some View {
         Button {
             if isPlayingAudio {
                 store.dispatch(.pauseChapter)
             } else {
-                if let currentSpokenWord = store.state.chapter.currentSpokenWord {
+                if hasReachedEnd,
+                   let firstWord = store.state.chapter.sentences.flatMap ({ $0.timestamps }).first,
+                   let firstSentence = store.state.chapter.sentences.first {
+                    store.dispatch(.setPlaybackTime(firstWord.time))
+                    store.dispatch(.updateCurrentSentence(firstSentence))
+                    store.dispatch(.playChapter(fromWord: firstWord))
+                    Task {
+                        // Small delay to ensure state updates
+                        try? await Task.sleep(for: .milliseconds(50))
+                        await updatePlayTime()
+                    }
+                } else if let currentSpokenWord = store.state.chapter.currentSpokenWord {
                     store.dispatch(.playChapter(fromWord: currentSpokenWord))
                     Task {
                         await updatePlayTime()
@@ -52,6 +78,24 @@ struct AudioButton: View {
     private func updatePlayTime() async {
         let playbackTime = store.environment.audioEnvironment.audioPlayer.chapterAudioPlayer.currentTime().seconds
         store.dispatch(.setPlaybackTime(playbackTime))
+        
+        // Update current sentence based on playback time
+        if let currentWord = store.state.chapter.currentSpokenWord,
+           let sentence = store.state.chapter.sentences.first(where: { $0.timestamps.contains { $0.id == currentWord.id } }),
+           sentence != store.state.chapter.currentSentence {
+            store.dispatch(.updateCurrentSentence(sentence))
+        }
+        
+        // Check if we've reached the end
+        let allTimestamps = store.state.chapter.sentences.flatMap { $0.timestamps }
+        if let lastWord = allTimestamps.last {
+            let endTime = lastWord.time + lastWord.duration
+            if playbackTime >= endTime {
+                store.dispatch(.pauseChapter)
+                return
+            }
+        }
+        
         try? await Task.sleep(for: .seconds(0.1))
         if store.state.isPlayingChapterAudio {
             await updatePlayTime()
