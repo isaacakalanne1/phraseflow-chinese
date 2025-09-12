@@ -18,7 +18,6 @@ public struct TranslationRootView: View {
             environment: environment,
             middleware: translationMiddleware
         )
-        store.dispatch(.loadAppSettings)
     }
     
     public var body: some View {

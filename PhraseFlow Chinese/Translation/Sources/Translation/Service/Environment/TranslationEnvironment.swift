@@ -63,10 +63,6 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
         return try await speechEnvironment.synthesizeSpeech(for: chapter, voice: voice, language: language)
     }
     
-    public func getAppSettings() throws -> SettingsState {
-        return try settingsEnvironment.loadAppSettings()
-    }
-    
     public func saveAppSettings(_ settings: SettingsState) throws {
         try settingsEnvironment.saveAppSettings(settings)
     }

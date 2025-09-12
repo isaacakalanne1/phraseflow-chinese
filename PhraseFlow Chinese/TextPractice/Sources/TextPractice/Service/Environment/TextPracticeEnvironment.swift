@@ -39,10 +39,6 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
         goToNextChapterSubject = .init(nil)
     }
     
-    public func getAppSettings() throws -> SettingsState {
-        try settingsEnvironment.loadAppSettings()
-    }
-    
     public func saveAppSettings(_ settings: SettingsState) throws {
         try settingsEnvironment.saveAppSettings(settings)
     }

@@ -44,15 +44,13 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
                 chapters = existingChapters
             }
             
-            let settings = try environment.getAppSettings()
-            
             let chapter = try await environment.generateTextForChapter(
                 previousChapters: chapters,
-                language: settings.language,
-                difficulty: settings.difficulty,
-                voice: settings.voice,
+                language: state.settings.language,
+                difficulty: state.settings.difficulty,
+                voice: state.settings.voice,
                 deviceLanguage: Language.deviceLanguage,
-                storyPrompt: settings.storySetting.prompt
+                storyPrompt: state.settings.storySetting.prompt
             )
             
             return .onGeneratedText(chapter)

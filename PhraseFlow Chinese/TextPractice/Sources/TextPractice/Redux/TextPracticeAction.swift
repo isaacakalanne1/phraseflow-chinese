@@ -38,9 +38,6 @@ public enum TextPracticeAction: Sendable {
     case refreshSettings(SettingsState)
     // Used to save settings in the Settings package
     case saveAppSettings(SettingsState)
-    // Initial loading of app settings
-    case loadAppSettings
-    case failedToLoadAppSettings
     
     // Load existing definitions from storage
     case loadDefinitions

@@ -67,8 +67,6 @@ let textPracticeReducer: Reducer<TextPracticeState, TextPracticeAction> = { stat
     case .goToNextChapter,
             .prepareToPlayChapter,
             .saveAppSettings,
-            .loadAppSettings,
-            .failedToLoadAppSettings,
             .generateDefinitions,
             .failedToLoadDefinitions,
             .playWord,

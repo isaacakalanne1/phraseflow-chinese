@@ -35,13 +35,6 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
     case .saveAppSettings(let settings):
         try? environment.saveAppSettings(settings)
         return nil
-    case .loadAppSettings:
-        do {
-            let settings = try environment.getAppSettings()
-            return .refreshSettings(settings)
-        } catch {
-            return .failedToLoadAppSettings
-        }
     case .showDefinition(let wordTimestamp):
         // Find the definition for this word in the current sentence
         if let currentSentence = state.chapter.currentSentence {
@@ -202,7 +195,6 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
     case .addDefinitions,
             .setPlaybackTime,
             .refreshSettings,
-            .failedToLoadAppSettings,
             .hideDefinition,
             .failedToLoadDefinitions,
             .onDefinedWord,

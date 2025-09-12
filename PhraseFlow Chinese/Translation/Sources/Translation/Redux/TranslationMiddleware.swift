@@ -25,12 +25,11 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         }
         
         do {
-            let settings = try environment.getAppSettings()
             let estimatedCharacterCount = inputText.count * 2 // Estimated characters for translation
             
             try environment.userLimitEnvironment.canCreateChapter(
                 estimatedCharacterCount: estimatedCharacterCount,
-                characterLimitPerDay: settings.characterLimitPerDay
+                characterLimitPerDay: state.settings.characterLimitPerDay
             )
             
             guard let chapter = try? await environment.translateText(
@@ -59,12 +58,11 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         }
         
         do {
-            let settings = try environment.getAppSettings()
             let estimatedCharacterCount = inputText.count * 2 // Estimated characters for breakdown
             
             try environment.userLimitEnvironment.canCreateChapter(
                 estimatedCharacterCount: estimatedCharacterCount,
-                characterLimitPerDay: settings.characterLimitPerDay
+                characterLimitPerDay: state.settings.characterLimitPerDay
             )
             
             guard let chapter = try? await environment.breakdownText(
@@ -186,14 +184,6 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             return nil
         }
         
-    case .loadAppSettings:
-        do {
-            let settings = try environment.getAppSettings()
-            return .onLoadAppSettings(settings)
-        } catch {
-            return nil
-        }
-        
     case .onSynthesizedTranslationAudio(let chapter):
         return nil
     case .updateSourceLanguage,
@@ -217,7 +207,6 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             .clearTranslation,
             .onTranslationsSaved,
             .onTranslationsLoaded,
-            .onLoadAppSettings,
             .onSavedAppSettings,
             .failedToSaveAppSettings,
             .showTextPractice:

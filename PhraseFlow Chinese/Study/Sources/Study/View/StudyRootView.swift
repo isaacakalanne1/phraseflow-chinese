@@ -27,7 +27,6 @@ public struct StudyRootView: View {
             DefinitionsProgressView()
                 .environmentObject(store)
                 .onAppear {
-                    store.dispatch(.loadAppSettings)
                     store.dispatch(.loadDefinitions)
                 }
         }

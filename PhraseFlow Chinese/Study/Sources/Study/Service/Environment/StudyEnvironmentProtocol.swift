@@ -18,7 +18,6 @@ public protocol StudyEnvironmentProtocol {
     func playSound(_ sound: AppSound)
     func saveDefinitions(_ definitions: [Definition]) throws
     func saveSentenceAudio(_ audioData: Data, id: UUID) throws
-    func getAppSettings() throws -> SettingsState
     func fetchDefinitions(
         in sentence: Sentence?,
         chapter: Chapter,

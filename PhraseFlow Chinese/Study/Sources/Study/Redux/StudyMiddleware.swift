@@ -33,13 +33,6 @@ let studyMiddleware: Middleware<StudyState, StudyAction, StudyEnvironmentProtoco
         state.audioPlayer.pause()
         state.sentenceAudioPlayer.pause()
         return .updateStudyAudioPlaying(false)
-    case .loadAppSettings:
-        do {
-            let settings = try environment.getAppSettings()
-            return .onLoadAppSettings(settings)
-        } catch {
-            return nil
-        }
 
     case .deleteDefinition(let definition):
         do {
@@ -71,8 +64,7 @@ let studyMiddleware: Middleware<StudyState, StudyAction, StudyEnvironmentProtoco
             .onPreparedStudyWord,
             .onLoadDefinitions,
             .failedToLoadDefinitions,
-            .onLoadAppSettings,
-            .failedToLoadAppSettings,
+            .refreshAppSettings,
             .addDefinitions:
         return nil
     }

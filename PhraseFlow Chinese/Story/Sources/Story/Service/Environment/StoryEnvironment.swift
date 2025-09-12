@@ -186,10 +186,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         try dataStore.deleteChapter(chapter)
     }
     
-    public func getAppSettings() throws -> SettingsState {
-        try settingsEnvironment.loadAppSettings()
-    }
-    
     public func playSound(_ sound: AppSound) {
         audioEnvironment.playSound(sound)
     }

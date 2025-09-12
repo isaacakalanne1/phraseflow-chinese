@@ -17,17 +17,14 @@ public struct StudyEnvironment: StudyEnvironmentProtocol {
     private let definitionServices: DefinitionServicesProtocol
     private let audioEnvironment: AudioEnvironmentProtocol
     private let dataStore: DefinitionDataStoreProtocol
-    private let settingsEnvironment: SettingsEnvironmentProtocol
     
     public init(definitionServices: DefinitionServicesProtocol,
                 dataStore: DefinitionDataStoreProtocol,
-                audioEnvironment: AudioEnvironmentProtocol,
-                settingsEnvironment: SettingsEnvironmentProtocol) {
+                audioEnvironment: AudioEnvironmentProtocol) {
         self.definitionsSubject = .init(nil)
         self.definitionServices = definitionServices
         self.dataStore = dataStore
         self.audioEnvironment = audioEnvironment
-        self.settingsEnvironment = settingsEnvironment
     }
     
     public func loadSentenceAudio(id: UUID) throws -> Data {
@@ -49,10 +46,6 @@ public struct StudyEnvironment: StudyEnvironmentProtocol {
     
     public func saveSentenceAudio(_ audioData: Data, id: UUID) throws {
         try dataStore.saveSentenceAudio(audioData, id: id)
-    }
-    
-    public func getAppSettings() throws -> SettingsState {
-        return try settingsEnvironment.loadAppSettings()
     }
     
     public func playSound(_ sound: AppSound) {

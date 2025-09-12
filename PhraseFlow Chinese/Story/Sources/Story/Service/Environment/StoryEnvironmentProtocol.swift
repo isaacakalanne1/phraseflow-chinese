@@ -23,7 +23,6 @@ public protocol StoryEnvironmentProtocol {
     var textPracticeEnvironment: TextPracticeEnvironmentProtocol { get }
     var userLimitEnvironment: UserLimitEnvironmentProtocol { get }
     var limitReachedSubject: CurrentValueSubject<LimitReachedEvent, Never> { get }
-    func getAppSettings() throws -> SettingsState
     func loadAllChapters() throws -> [Chapter]
     func saveChapter(_ chapter: Chapter) throws
     func deleteChapter(_ chapter: Chapter) throws

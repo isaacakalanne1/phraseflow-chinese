@@ -39,7 +39,6 @@ public struct TextPracticeRootView: View {
         TextPracticeView()
             .environmentObject(store)
             .onAppear {
-                store.dispatch(.loadAppSettings)
                 store.dispatch(.prepareToPlayChapter(chapter))
                 store.dispatch(.setChapter(chapter))
             }

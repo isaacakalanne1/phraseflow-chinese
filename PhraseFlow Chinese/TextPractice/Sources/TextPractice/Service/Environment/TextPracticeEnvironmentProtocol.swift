@@ -20,7 +20,6 @@ public protocol TextPracticeEnvironmentProtocol {
     var audioEnvironment: AudioEnvironmentProtocol { get }
     var studyEnvironment: StudyEnvironmentProtocol { get }
     
-    func getAppSettings() throws -> SettingsState
     func saveAppSettings(_ settings: SettingsState) throws
     
     func saveDefinitions(_ definitions: [Definition]) throws

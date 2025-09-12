@@ -115,7 +115,7 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
     case .onTranslationsSaved(let translations):
         newState.savedTranslations = translations
         
-    case .onLoadAppSettings(let settings):
+    case .refreshAppSettings(let settings):
         newState.settings = settings
         
     case .showTextPractice(let show):
@@ -126,7 +126,6 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
             .failedToSynthesizeAudio,
             .saveCurrentTranslation,
             .deleteTranslation,
-            .loadAppSettings,
             .saveAppSettings,
             .onSavedAppSettings,
             .failedToSaveAppSettings:

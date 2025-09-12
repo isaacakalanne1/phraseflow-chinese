@@ -26,7 +26,7 @@ let studyReducer: Reducer<StudyState, StudyAction> = { state, action in
         newState.isAudioPlaying = isPlaying
     case let .updateDisplayStatus(displayStatus):
         newState.displayStatus = displayStatus
-    case .onLoadAppSettings(let settings):
+    case .refreshAppSettings(let settings):
         newState.filterLanguage = settings.language
         
     case .deleteDefinition(let definition):
@@ -58,9 +58,7 @@ let studyReducer: Reducer<StudyState, StudyAction> = { state, action in
             .failedToDeleteDefinition,
             .playSound,
             .loadDefinitions,
-            .loadAppSettings,
-            .failedToLoadDefinitions,
-            .failedToLoadAppSettings:
+            .failedToLoadDefinitions:
         break
     }
 
