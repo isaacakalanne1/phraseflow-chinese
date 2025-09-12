@@ -194,7 +194,7 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
         
     case .addDefinitions,
             .setPlaybackTime,
-            .refreshSettings,
+            .refreshAppSettings,
             .hideDefinition,
             .failedToLoadDefinitions,
             .onDefinedWord,

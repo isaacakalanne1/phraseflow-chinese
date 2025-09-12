@@ -13,18 +13,26 @@ import TextGeneration
 
 public struct StudyEnvironment: StudyEnvironmentProtocol {
     public var definitionsSubject: CurrentValueSubject<[Definition]?, Never>
+    public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> {
+        settingsEnvironment.settingsUpdatedSubject
+    }
     
     private let definitionServices: DefinitionServicesProtocol
     private let audioEnvironment: AudioEnvironmentProtocol
+    private let settingsEnvironment: SettingsEnvironmentProtocol
     private let dataStore: DefinitionDataStoreProtocol
     
-    public init(definitionServices: DefinitionServicesProtocol,
-                dataStore: DefinitionDataStoreProtocol,
-                audioEnvironment: AudioEnvironmentProtocol) {
+    public init(
+        definitionServices: DefinitionServicesProtocol,
+        dataStore: DefinitionDataStoreProtocol,
+        audioEnvironment: AudioEnvironmentProtocol,
+        settingsEnvironment: SettingsEnvironmentProtocol
+    ) {
         self.definitionsSubject = .init(nil)
         self.definitionServices = definitionServices
         self.dataStore = dataStore
         self.audioEnvironment = audioEnvironment
+        self.settingsEnvironment = settingsEnvironment
     }
     
     public func loadSentenceAudio(id: UUID) throws -> Data {

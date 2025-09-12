@@ -64,7 +64,8 @@ public struct FlowTaleRootView: View {
         let studyEnvironment = StudyEnvironment(
             definitionServices: definitionServices,
             dataStore: definitionDataStore,
-            audioEnvironment: audioEnvironment
+            audioEnvironment: audioEnvironment,
+            settingsEnvironment: settingsEnvironment
         )
         
         let textPracticeEnvironment = TextPracticeEnvironment(audioEnvironment: audioEnvironment,

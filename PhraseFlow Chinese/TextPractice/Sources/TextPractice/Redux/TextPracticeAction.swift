@@ -35,7 +35,7 @@ public enum TextPracticeAction: Sendable {
     case pauseChapter
     
     // Used by subscriber to set the stored settings to the reducer
-    case refreshSettings(SettingsState)
+    case refreshAppSettings(SettingsState)
     // Used to save settings in the Settings package
     case saveAppSettings(SettingsState)
     

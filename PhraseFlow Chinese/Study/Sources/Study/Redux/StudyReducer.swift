@@ -27,7 +27,7 @@ let studyReducer: Reducer<StudyState, StudyAction> = { state, action in
     case let .updateDisplayStatus(displayStatus):
         newState.displayStatus = displayStatus
     case .refreshAppSettings(let settings):
-        newState.filterLanguage = settings.language
+        newState.settings = settings
         
     case .deleteDefinition(let definition):
         newState.definitions.removeAll(where: { $0.id == definition.id })

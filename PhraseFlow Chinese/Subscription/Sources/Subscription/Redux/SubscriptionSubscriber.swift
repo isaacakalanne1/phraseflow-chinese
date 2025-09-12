@@ -28,7 +28,7 @@ let subscriptionSubscriber: OnSubscribe<SubscriptionStore, SubscriptionEnvironme
                 let settings else {
                     return
                 }
-                store.dispatch(.refreshSettings(settings))
+                store.dispatch(.refreshAppSettings(settings))
             }
             .store(in: &store.subscriptions)
 }

@@ -28,7 +28,7 @@ let storySubscriber: OnSubscribe<StoryStore, StoryEnvironmentProtocol> = { store
                 let settings else {
                     return
                 }
-                store.dispatch(.refreshSettings(settings))
+                store.dispatch(.refreshAppSettings(settings))
             }
             .store(in: &store.subscriptions)
 }

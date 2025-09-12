@@ -30,7 +30,7 @@ let textPracticeSubscriber: OnSubscribe<TextPracticeStore, TextPracticeEnvironme
                 let settings else {
                     return
                 }
-                store.dispatch(.refreshSettings(settings))
+                store.dispatch(.refreshAppSettings(settings))
             }
             .store(in: &store.subscriptions)
 }

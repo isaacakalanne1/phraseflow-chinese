@@ -39,7 +39,7 @@ public let subscriptionReducer: Reducer<SubscriptionState, SubscriptionAction> =
         case .onPurchasedSubscription,
              .failedToPurchaseSubscription:
             newState.isLoadingSubscriptionPurchase = false
-        case .refreshSettings(let settings):
+        case .refreshAppSettings(let settings):
             newState.settings = settings
             
         case .setSubscriptionSheetShowing,

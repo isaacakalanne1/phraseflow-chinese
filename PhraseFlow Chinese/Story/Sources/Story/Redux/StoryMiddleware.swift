@@ -162,7 +162,7 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
             .onCreatedChapter,
             .selectChapter,
             .onLoadedStories,
-            .refreshSettings:
+            .refreshAppSettings:
         return nil
     }
 }

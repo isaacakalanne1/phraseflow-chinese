@@ -13,6 +13,8 @@ import TextGeneration
 
 public protocol StudyEnvironmentProtocol {
     var definitionsSubject: CurrentValueSubject<[Definition]?, Never> { get }
+    var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> { get }
+    
     func loadSentenceAudio(id: UUID) throws -> Data
     func deleteDefinition(with id: UUID) throws
     func playSound(_ sound: AppSound)

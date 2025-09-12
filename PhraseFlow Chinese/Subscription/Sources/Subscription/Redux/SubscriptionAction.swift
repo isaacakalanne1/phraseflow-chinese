@@ -35,5 +35,5 @@ public enum SubscriptionAction: Sendable {
     case setSubscriptionSheetShowing(Bool)
     
     case saveAppSettings(SettingsState)
-    case refreshSettings(SettingsState)
+    case refreshAppSettings(SettingsState)
 }

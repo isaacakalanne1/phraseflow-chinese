@@ -20,4 +20,15 @@ let studySubscriber: OnSubscribe<StudyStore, StudyEnvironmentProtocol> = { store
                 store.dispatch(.addDefinitions(definitions))
             }
             .store(in: &store.subscriptions)
+    
+    environment.settingsUpdatedSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak store] settings in
+                guard let store,
+                let settings else {
+                    return
+                }
+                store.dispatch(.refreshAppSettings(settings))
+            }
+            .store(in: &store.subscriptions)
 }

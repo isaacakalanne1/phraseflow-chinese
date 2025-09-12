@@ -43,5 +43,5 @@ public enum StoryAction: Sendable {
     
     case playSound(AppSound)
     
-    case refreshSettings(SettingsState)
+    case refreshAppSettings(SettingsState)
 }

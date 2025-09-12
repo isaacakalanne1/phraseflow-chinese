@@ -54,7 +54,7 @@ let textPracticeReducer: Reducer<TextPracticeState, TextPracticeAction> = { stat
         newState.isPlayingChapterAudio = true
     case .pauseChapter:
         newState.isPlayingChapterAudio = false
-    case .refreshSettings(let settings):
+    case .refreshAppSettings(let settings):
         newState.settings = settings
     case .onDefinedWord(let definition):
         newState.selectedDefinition = definition

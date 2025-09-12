@@ -17,7 +17,7 @@ struct StudyState: Equatable {
     var displayStatus: StudyDisplayStatus = .wordShown
     
     var definitions: [Definition]
-    var filterLanguage: Language = .mandarinChinese
+    var settings = SettingsState()
 
     func studyDefinitions(language: Language?) -> [Definition] {
         definitions

@@ -117,7 +117,7 @@ public let subscriptionMiddleware: Middleware<SubscriptionState, SubscriptionAct
          .failedToRestoreSubscriptions,
          .onValidatedReceipt,
          .setSubscriptionSheetShowing,
-         .refreshSettings:
+         .refreshAppSettings:
         return nil
     }
 }

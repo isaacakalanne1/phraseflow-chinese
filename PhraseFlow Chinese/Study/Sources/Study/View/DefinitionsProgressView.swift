@@ -19,7 +19,7 @@ struct DefinitionsProgressView: View {
     @State private var navigateToStudyView = false
     
     var filterLanguage: Language {
-        store.state.filterLanguage
+        store.state.settings.language
     }
 
     var body: some View {
