@@ -43,8 +43,7 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
         self.studyEnvironment = StudyEnvironment(
             definitionServices: definitionServices,
             dataStore: definitionDataStore,
-            audioEnvironment: audioEnvironment,
-            settingsEnvironment: settingsEnvironment)
+            audioEnvironment: audioEnvironment)
         self.settingsEnvironment = settingsEnvironment
         self.textPracticeEnvironment = textPracticeEnvironment
         self.userLimitEnvironment = userLimitEnvironment

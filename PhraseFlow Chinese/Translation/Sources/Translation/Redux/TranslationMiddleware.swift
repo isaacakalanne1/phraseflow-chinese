@@ -209,7 +209,8 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             .onTranslationsLoaded,
             .onSavedAppSettings,
             .failedToSaveAppSettings,
-            .showTextPractice:
+            .showTextPractice,
+            .refreshAppSettings:
         return nil
     }
 }
