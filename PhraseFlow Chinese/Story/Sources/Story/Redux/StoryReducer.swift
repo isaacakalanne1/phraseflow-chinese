@@ -76,16 +76,6 @@ let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
         newState.currentChapter = storyChapters[nextIndex]
         newState.storyChapters[currentChapter.storyId]?[nextIndex] = storyChapters[nextIndex]
         
-    case .updateCurrentSentence(let sentence):
-        if var currentChapter = newState.currentChapter {
-            currentChapter.currentSentence = sentence
-            newState.currentChapter = currentChapter
-            if let chapters = newState.storyChapters[currentChapter.storyId],
-               let index = chapters.firstIndex(where: { $0.id == currentChapter.id }) {
-                newState.storyChapters[currentChapter.storyId]?[index] = currentChapter
-            }
-        }
-        
     case .selectWord(let word, _):
         if var currentChapter = newState.currentChapter {
             currentChapter.currentPlaybackTime = word.time
@@ -111,7 +101,6 @@ let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
          .failedToDeleteStory,
          .saveChapter,
          .failedToSaveChapter,
-         .updateSpeechSpeed,
          .playSound,
          .beginGetNextChapter:
         break

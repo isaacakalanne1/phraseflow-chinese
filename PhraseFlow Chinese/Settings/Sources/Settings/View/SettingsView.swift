@@ -30,11 +30,11 @@ struct SettingsView: View {
         let playMusic: Binding<Bool> = .init {
             store.state.isPlayingMusic
         } set: { newValue in
-            store.dispatch(.playSound(.togglePress))
             if newValue {
                 store.dispatch(.playMusic(.whispersOfTheForest))
             } else {
                 store.dispatch(.stopMusic)
+                store.dispatch(.playSound(.togglePress))
             }
         }
 

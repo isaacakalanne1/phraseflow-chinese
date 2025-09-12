@@ -44,7 +44,6 @@ public protocol StoryEnvironmentProtocol {
     func isShowingEnglish() throws -> Bool
     func isShowingDefinition() throws -> Bool
     func getSpeechSpeed() throws -> SpeechSpeed
-    func updateSpeechSpeed(_ speed: SpeechSpeed) throws
     
     // Audio Environment Functions
     func playSound(_ sound: AppSound)

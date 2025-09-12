@@ -29,7 +29,6 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
         
     case .selectVoice,
          .updateLanguage,
-         .updateSpeechSpeed,
          .updateShowDefinition,
          .updateShowEnglish,
          .updateDifficulty,

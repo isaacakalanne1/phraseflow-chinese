@@ -31,11 +31,8 @@ public enum StoryAction: Sendable {
     case beginGetNextChapter
     case goToNextChapter
 
-    case updateCurrentSentence(Sentence)
-
     case selectWord(WordTimeStampData, playAudio: Bool)
     case selectChapter(Chapter)
     
-    case updateSpeechSpeed(SpeechSpeed)
     case playSound(AppSound)
 }

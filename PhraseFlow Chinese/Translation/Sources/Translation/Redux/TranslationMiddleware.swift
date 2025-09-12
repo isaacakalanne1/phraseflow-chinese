@@ -184,7 +184,6 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             .onTranslationsSaved,
             .onTranslationsLoaded,
             .onLoadAppSettings,
-            .updateCurrentSentenceIndex,
             .onSavedAppSettings,
             .failedToSaveAppSettings,
             .showTextPractice:

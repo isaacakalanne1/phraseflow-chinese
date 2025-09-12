@@ -16,10 +16,6 @@ let settingsReducer: Reducer<SettingsState, SettingsAction> = { state, action in
     case .onLoadedAppSettings(let settings):
         newState = settings
         
-    case .updateSpeechSpeed(let speed):
-        newState.speechSpeed = speed
-        // Audio player logic now handled in AudioReducer
-        
     case .updateShowDefinition(let isShowing):
         newState.isShowingDefinition = isShowing
         

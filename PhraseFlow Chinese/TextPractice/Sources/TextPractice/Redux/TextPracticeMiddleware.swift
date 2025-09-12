@@ -196,9 +196,11 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
         }
         return .failedToDefineWord
         
+    case .updateCurrentSentence:
+        return .clearDefinition
+        
     case .addDefinitions,
             .setPlaybackTime,
-            .updateCurrentSentence,
             .refreshSettings,
             .failedToLoadAppSettings,
             .hideDefinition,

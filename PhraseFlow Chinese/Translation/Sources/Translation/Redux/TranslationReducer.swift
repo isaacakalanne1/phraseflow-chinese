@@ -118,13 +118,6 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
     case .onLoadAppSettings(let settings):
         newState.settings = settings
         
-    case .updateCurrentSentenceIndex(let index):
-        newState.currentSentenceIndex = index
-        if let chapter = newState.chapter,
-           index < chapter.sentences.count {
-            newState.currentSentence = chapter.sentences[index]
-        }
-        
     case .showTextPractice(let show):
         newState.showTextPractice = show
         

@@ -19,7 +19,6 @@ enum SettingsAction: Sendable {
     
     case selectVoice(Voice)
     case updateLanguage(Language)
-    case updateSpeechSpeed(SpeechSpeed)
     case updateShowDefinition(Bool)
     case updateShowEnglish(Bool)
     case updateDifficulty(Difficulty)

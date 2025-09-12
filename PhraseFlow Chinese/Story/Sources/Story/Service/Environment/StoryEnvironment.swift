@@ -226,12 +226,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         return settings.speechSpeed
     }
     
-    public func updateSpeechSpeed(_ speed: SpeechSpeed) throws {
-        var settings = try settingsEnvironment.loadAppSettings()
-        settings.speechSpeed = speed
-        try settingsEnvironment.saveAppSettings(settings)
-    }
-    
     // MARK: - Audio Environment Functions
     
     public func playSound(_ sound: AppSound) {

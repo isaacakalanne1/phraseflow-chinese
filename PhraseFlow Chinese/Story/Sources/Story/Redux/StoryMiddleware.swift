@@ -92,13 +92,6 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
     case .selectChapter(let chapter):
         // Chapter selection handled - definitions will be loaded by TextPractice
         return nil
-    case .updateSpeechSpeed(let speed):
-        do {
-            try environment.updateSpeechSpeed(speed)
-        } catch {
-            // Handle error silently for now
-        }
-        return nil
         
     case .playSound(let sound):
         environment.playSound(sound)
@@ -114,7 +107,6 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
     case .failedToLoadStoriesAndDefinitions,
             .failedToDeleteStory,
             .failedToSaveChapter,
-            .updateCurrentSentence,
             .onSavedChapter,
             .onDeletedStory,
             .failedToCreateChapter,
