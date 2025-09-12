@@ -69,19 +69,17 @@ public let subscriptionMiddleware: @Sendable (SubscriptionState, SubscriptionAct
         }
         return nil
 
-    case .onPurchasedSubscription:
+    case .onPurchasedSubscription,
+            .onFetchedSubscriptions:
         return .getCurrentEntitlements
 
-    case .setSubscriptionSheetShowing:
-        return nil
-
-    case .onFetchedSubscriptions,
-         .failedToFetchSubscriptions,
+    case .failedToFetchSubscriptions,
          .failedToPurchaseSubscription,
          .updateIsSubscriptionPurchaseLoading,
          .onRestoredSubscriptions,
          .failedToRestoreSubscriptions,
-         .onValidatedReceipt:
+         .onValidatedReceipt,
+         .setSubscriptionSheetShowing:
         return nil
     }
 }

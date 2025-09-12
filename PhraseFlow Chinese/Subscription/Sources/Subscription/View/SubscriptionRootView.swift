@@ -18,6 +18,7 @@ public struct SubscriptionRootView: View {
             environment: environment,
             middleware: subscriptionMiddleware
         )
+        store.dispatch(.fetchSubscriptions)
     }
     
     public var body: some View {
