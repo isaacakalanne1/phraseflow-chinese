@@ -72,6 +72,11 @@ public let subscriptionMiddleware: @Sendable (SubscriptionState, SubscriptionAct
     case .onPurchasedSubscription,
             .onFetchedSubscriptions:
         return .getCurrentEntitlements
+        
+    case .trackSsmlCharacterCount(let count):
+        try? environment.trackSSMLCharacterUsage(characterCount: count,
+                                                 subscription: state.currentSubscription)
+        return nil
 
     case .failedToFetchSubscriptions,
          .failedToPurchaseSubscription,

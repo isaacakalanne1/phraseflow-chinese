@@ -5,13 +5,28 @@
 //  Created by iakalann on 19/07/2025.
 //
 
+import Combine
 import StoreKit
+import Speech
+import UserLimit
 
 public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
     private let repository: SubscriptionRepositoryProtocol
+    private let speechEnvironment: SpeechEnvironmentProtocol
+    private let userLimitsDataStore: UserLimitsDataStoreProtocol
     
-    public init(repository: SubscriptionRepositoryProtocol = SubscriptionRepository()) {
+    public var synthesizedCharactersSubject: CurrentValueSubject<Int?, Never> {
+        speechEnvironment.synthesizedCharactersSubject
+    }
+    
+    public init(
+        repository: SubscriptionRepositoryProtocol,
+        speechEnvironment: SpeechEnvironmentProtocol,
+        userLimitsDataStore: UserLimitsDataStoreProtocol
+    ) {
         self.repository = repository
+        self.speechEnvironment = speechEnvironment
+        self.userLimitsDataStore = userLimitsDataStore
     }
     
     public func getProducts() async throws -> [Product] {
@@ -24,5 +39,11 @@ public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
     
     public func validateReceipt() {
         repository.validateAppStoreReceipt()
+    }
+    
+    public func trackSSMLCharacterUsage(characterCount: Int,
+                                        subscription: SubscriptionLevel?) throws {
+        try userLimitsDataStore.trackSSMLCharacterUsage(characterCount: characterCount,
+                                                        characterLimitPerDay: subscription?.ssmlCharacterLimitPerDay)
     }
 }

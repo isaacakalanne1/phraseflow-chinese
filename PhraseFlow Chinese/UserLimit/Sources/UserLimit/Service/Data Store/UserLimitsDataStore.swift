@@ -7,17 +7,20 @@
 
 import DataStorage
 import Foundation
-import Subscription
 
 enum UserLimitsDataStoreError: Error {
     case freeUserCharacterLimitReached
     case characterLimitReached(timeUntilNextAvailable: String)
 }
 
-class UserLimitsDataStore: UserLimitsDataStoreProtocol {
+public class UserLimitsDataStore: UserLimitsDataStoreProtocol {
     private let keychain = KeychainManager.shared
     private let dailyUsageKey = "dailyCharacterUsageData"
     private let freeCountKey = "freeUserCharacterCount"
+    
+    public init() {
+        
+    }
     
     private lazy var jsonDecoder: JSONDecoder = {
         let decoder = JSONDecoder()
@@ -31,10 +34,10 @@ class UserLimitsDataStore: UserLimitsDataStoreProtocol {
         return encoder
     }()
 
-    func trackSSMLCharacterUsage(characterCount: Int,
-                                 subscription: SubscriptionLevel?) throws {
-        if let subscription = subscription {
-            try trackSubscribedUser(characterCount, level: subscription)
+    public func trackSSMLCharacterUsage(characterCount: Int,
+                                        characterLimitPerDay: Int?) throws {
+        if let characterLimitPerDay {
+            try trackSubscribedUser(characterCount, characterLimitPerDay: characterLimitPerDay)
         } else {
             try trackFreeUser(characterCount)
         }
@@ -55,15 +58,14 @@ class UserLimitsDataStore: UserLimitsDataStoreProtocol {
         try keychain.setData(Data("\(current + count)".utf8), forKey: freeCountKey)
     }
 
-    private func trackSubscribedUser(_ count: Int, level: SubscriptionLevel) throws {
+    private func trackSubscribedUser(_ count: Int, characterLimitPerDay: Int) throws {
         let now = Date()
         let cutoff = now.addingTimeInterval(-86400)
         var records = dailyUsage.filter { $0.timestamp > cutoff }
         
         let totalUsage = records.reduce(0) { $0 + $1.characterCount }
-        let limit = level.ssmlCharacterLimitPerDay
         
-        guard totalUsage + count <= limit else {
+        guard totalUsage + count <= characterLimitPerDay else {
             let timeString = records.compactMap(\.timestamp).min()
                 .map(timeRemaining) ?? "24 hours"
             throw UserLimitsDataStoreError.characterLimitReached(timeUntilNextAvailable: timeString)

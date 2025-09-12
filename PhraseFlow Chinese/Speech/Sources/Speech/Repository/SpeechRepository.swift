@@ -162,8 +162,8 @@ public class SpeechRepository: SpeechRepositoryProtocol {
         return word
     }
 
-    private func createSpeechSsml(chapter: Chapter,
-                                  voice: Voice) -> String
+    public func createSpeechSsml(chapter: Chapter,
+                                 voice: Voice) -> String
     {
         let baseUrl = "http://www.w3.org/2001"
 

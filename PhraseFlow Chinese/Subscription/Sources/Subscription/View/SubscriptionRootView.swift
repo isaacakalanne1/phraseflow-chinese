@@ -16,9 +16,11 @@ public struct SubscriptionRootView: View {
             initial: SubscriptionState(),
             reducer: subscriptionReducer,
             environment: environment,
-            middleware: subscriptionMiddleware
+            middleware: subscriptionMiddleware,
+            subscriber: subscriptionSubscriber
         )
         store.dispatch(.fetchSubscriptions)
+        store.dispatch(.validateReceipt)
     }
     
     public var body: some View {

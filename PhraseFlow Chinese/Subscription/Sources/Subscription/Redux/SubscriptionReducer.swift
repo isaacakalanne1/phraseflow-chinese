@@ -9,7 +9,8 @@ import SwiftUI
 import ReduxKit
 import StoreKit
 
-public let subscriptionReducer: @Sendable (SubscriptionState, SubscriptionAction) -> SubscriptionState = { state, action in
+@MainActor
+public let subscriptionReducer: Reducer<SubscriptionState, SubscriptionAction> = { state, action in
         var newState = state
 
         switch action {
@@ -48,7 +49,8 @@ public let subscriptionReducer: @Sendable (SubscriptionState, SubscriptionAction
              .getCurrentEntitlements,
              .observeTransactionUpdates,
              .validateReceipt,
-             .onValidatedReceipt:
+             .onValidatedReceipt,
+             .trackSsmlCharacterCount:
             break
         }
 

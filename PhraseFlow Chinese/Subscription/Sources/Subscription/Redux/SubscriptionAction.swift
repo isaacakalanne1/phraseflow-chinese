@@ -9,6 +9,7 @@ import Foundation
 import StoreKit
 
 public enum SubscriptionAction: Sendable {
+    case trackSsmlCharacterCount(Int)
     case fetchSubscriptions
     case onFetchedSubscriptions([Product])
     case failedToFetchSubscriptions

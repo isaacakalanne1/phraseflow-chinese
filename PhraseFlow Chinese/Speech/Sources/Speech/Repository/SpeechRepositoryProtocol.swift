@@ -13,4 +13,6 @@ public protocol SpeechRepositoryProtocol {
     func synthesizeSpeech(_ chapter: Chapter,
                           voice: Voice,
                           language: Language) async throws -> (Chapter, Int)
+    func createSpeechSsml(chapter: Chapter,
+                          voice: Voice) -> String
 }

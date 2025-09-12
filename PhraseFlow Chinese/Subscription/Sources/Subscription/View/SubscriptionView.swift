@@ -35,11 +35,6 @@ struct SubscriptionView: View {
             }
             .padding(.horizontal, 20)
         }
-        .onAppear {
-            Task {
-                store.dispatch(.validateReceipt)
-            }
-        }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
             LinearGradient(
