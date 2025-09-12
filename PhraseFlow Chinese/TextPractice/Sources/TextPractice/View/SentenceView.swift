@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FTColor
 import FTFont
 import FTStyleKit
 import TextGeneration
@@ -101,13 +102,13 @@ public struct SentenceView: View {
                 } label: {
                     Image(systemName: "chevron.left")
                         .font(FTFont.flowTaleHeader())
-                        .foregroundColor(currentPage > 0 ? .primary : .gray)
+                        .foregroundColor(FTColor.primary)
                 }
-                .disabled(currentPage <= 0)
+                .opacity(currentPage > 0 ? 1 : 0)
                 
                 Text("\(currentPage + 1) / \(totalPages)")
                     .font(FTFont.flowTaleSecondaryHeader())
-                    .foregroundColor(.secondary)
+                    .foregroundColor(FTColor.primary)
                 
                 Button {
                     withAnimation(.easeInOut(duration: 0.3)) {
@@ -117,9 +118,9 @@ public struct SentenceView: View {
                 } label: {
                     Image(systemName: "chevron.right")
                         .font(FTFont.flowTaleHeader())
-                        .foregroundColor(currentPage < totalPages - 1 ? .primary : .gray)
+                        .foregroundColor(FTColor.primary)
                 }
-                .disabled(currentPage >= totalPages - 1)
+                .opacity(currentPage < totalPages - 1 ? 1 : 0)
             }
             .padding(.vertical, 8)
         }
