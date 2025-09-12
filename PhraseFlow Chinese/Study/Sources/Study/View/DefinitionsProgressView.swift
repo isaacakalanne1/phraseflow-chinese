@@ -117,7 +117,7 @@ struct DefinitionsProgressView: View {
                 store.dispatch(.deleteDefinition(definition))
                 store.dispatch(.playSound(.actionButtonPress))
             } label: {
-                Label("Delete", systemImage: "trash")
+                Label(LocalizedString.delete, systemImage: "trash")
                     .tint(FTColor.error)
             }
         }

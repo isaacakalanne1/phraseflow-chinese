@@ -8,6 +8,7 @@
 import SwiftUI
 import FTFont
 import FTColor
+import Localization
 
 struct TranslationLanguageSelector: View {
     @EnvironmentObject var store: TranslationStore
@@ -17,7 +18,7 @@ struct TranslationLanguageSelector: View {
     var body: some View {
         VStack(spacing: 8) {
             if store.state.mode == .translate {
-                Text("Translate between languages") // TODO: Localize
+                Text(LocalizedString.translateBetweenLanguages)
                     .font(FTFont.flowTaleSubHeader())
                     .foregroundColor(FTColor.secondary)
 
@@ -33,7 +34,7 @@ struct TranslationLanguageSelector: View {
                 }
             } else {
                 // Breakdown mode - only show text language selector
-                Text("Select text language") // TODO: Localize
+                Text(LocalizedString.selectTextLanguage)
                     .font(FTFont.flowTaleSubHeader())
                     .foregroundColor(FTColor.secondary)
 

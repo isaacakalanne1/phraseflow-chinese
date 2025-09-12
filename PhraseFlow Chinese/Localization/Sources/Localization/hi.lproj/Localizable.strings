@@ -613,3 +613,58 @@
 
 // Instruction to select a sentence to see its translation
 "select_sentence_to_see_translation" = "अनुवाद देखने के लिए एक वाक्य चुनें";
+
+// OK button
+"ok" = "ठीक";
+
+// Close button
+"close" = "बंद करें";
+
+// Next available in: (time format)
+"next_available_in" = "अगला उपलब्ध: %@";
+
+// Daily Limit (navigation title)
+"daily_limit" = "दैनिक सीमा";
+
+// Processing... (loading state)
+"processing" = "प्रसंस्करण हो रहा है...";
+
+// Choose Your Plan
+"choose_your_plan" = "अपनी योजना चुनें";
+
+// Current Plan
+"current_plan" = "वर्तमान योजना";
+
+// Content Moderation
+"content_moderation" = "सामग्री संचालन";
+
+// Your custom prompt didn't meet our content guidelines message
+"moderation_prompt_guidelines" = "आपका कस्टम प्रॉम्प्ट हमारे सामग्री दिशानिर्देशों को पूरा नहीं करता";
+
+// Moderation (navigation title)
+"moderation" = "संचालन";
+
+// Resets in (time format)
+"resets_in" = "%@ में रीसेट होगा";
+"resets_in_label" = "रीसेट होगा";
+
+// Usage Progress
+"usage_progress" = "उपयोग प्रगति";
+
+// Translate between languages
+"translate_between_languages" = "भाषाओं के बीच अनुवाद करें";
+
+// Select text language
+"select_text_language" = "पाठ भाषा चुनें";
+
+// Writing (loading progress)
+"writing_progress" = "लेखन";
+
+// Image (loading progress)
+"image_progress" = "छवि";
+
+// Audio (loading progress)
+"audio_progress" = "ऑडियो";
+
+// Definitions (loading progress)
+"definitions_progress" = "परिभाषाएं";

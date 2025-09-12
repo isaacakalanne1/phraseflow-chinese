@@ -44,7 +44,7 @@ public struct FreeLimitExplanationView: View {
                     onDismiss?()
                     dismiss()
                 }) {
-                    Text("OK")
+                    Text(LocalizedString.ok)
                         .font(FTFont.flowTaleBodyMedium())
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
@@ -58,7 +58,7 @@ public struct FreeLimitExplanationView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Close") {
+                    Button(LocalizedString.close) {
                         onDismiss?()
                         dismiss()
                     }

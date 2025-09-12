@@ -9,6 +9,7 @@ import StoreKit
 import SwiftUI
 import FTFont
 import FTColor
+import Localization
 
 struct SubscriptionOption: View {
     @EnvironmentObject var store: SubscriptionStore
@@ -94,7 +95,7 @@ struct SubscriptionOption: View {
                         Spacer()
                         
                         if isUserCurrentSubscription {
-                            Text("Current Plan")
+                            Text(LocalizedString.currentPlan)
                                 .font(.caption)
                                 .fontWeight(.semibold)
                                 .foregroundColor(FTColor.background.opacity(0.8))

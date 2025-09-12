@@ -613,3 +613,58 @@
 
 // Instruction to select a sentence to see its translation
 "select_sentence_to_see_translation" = "选择句子查看翻译";
+
+// OK button
+"ok" = "确定";
+
+// Close button
+"close" = "关闭";
+
+// Next available in: (time format)
+"next_available_in" = "下次可用时间：%@";
+
+// Daily Limit (navigation title)
+"daily_limit" = "每日限额";
+
+// Processing... (loading state)
+"processing" = "处理中...";
+
+// Choose Your Plan
+"choose_your_plan" = "选择您的计划";
+
+// Current Plan
+"current_plan" = "当前计划";
+
+// Content Moderation
+"content_moderation" = "内容审核";
+
+// Your custom prompt didn't meet our content guidelines message
+"moderation_prompt_guidelines" = "您的自定义提示不符合我们的内容准则";
+
+// Moderation (navigation title)
+"moderation" = "审核";
+
+// Resets in (time format)
+"resets_in" = "重置时间：%@";
+"resets_in_label" = "重置时间";
+
+// Usage Progress
+"usage_progress" = "使用进度";
+
+// Translate between languages
+"translate_between_languages" = "在语言之间翻译";
+
+// Select text language
+"select_text_language" = "选择文本语言";
+
+// Writing (loading progress)
+"writing_progress" = "写作中";
+
+// Image (loading progress)
+"image_progress" = "图像";
+
+// Audio (loading progress)
+"audio_progress" = "音频";
+
+// Definitions (loading progress)
+"definitions_progress" = "定义";

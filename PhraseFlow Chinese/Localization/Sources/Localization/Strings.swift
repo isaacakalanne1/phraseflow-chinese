@@ -257,6 +257,31 @@ public enum LocalizedString {
     public static let chartStudiedWords = LocalizedString.tr("Localizable", "chart_studied_words")
     public static let deviceVolumeZero = LocalizedString.tr("Localizable", "device_volume_zero")
     public static let progress = LocalizedString.tr("Localizable", "progress")
+    
+    // New localized strings
+    public static let ok = LocalizedString.tr("Localizable", "ok")
+    public static let close = LocalizedString.tr("Localizable", "close")
+    public static func nextAvailableIn(_ p1: String) -> String {
+        return LocalizedString.tr("Localizable", "next_available_in", p1)
+    }
+    public static let dailyLimit = LocalizedString.tr("Localizable", "daily_limit")
+    public static let processing = LocalizedString.tr("Localizable", "processing")
+    public static let chooseYourPlan = LocalizedString.tr("Localizable", "choose_your_plan")
+    public static let currentPlan = LocalizedString.tr("Localizable", "current_plan")
+    public static let contentModeration = LocalizedString.tr("Localizable", "content_moderation")
+    public static let moderationPromptGuidelines = LocalizedString.tr("Localizable", "moderation_prompt_guidelines")
+    public static let moderation = LocalizedString.tr("Localizable", "moderation")
+    public static func resetsIn(_ p1: String) -> String {
+        return LocalizedString.tr("Localizable", "resets_in", p1)
+    }
+    public static let resetsInLabel = LocalizedString.tr("Localizable", "resets_in_label")
+    public static let usageProgress = LocalizedString.tr("Localizable", "usage_progress")
+    public static let translateBetweenLanguages = LocalizedString.tr("Localizable", "translate_between_languages")
+    public static let selectTextLanguage = LocalizedString.tr("Localizable", "select_text_language")
+    public static let writingProgress = LocalizedString.tr("Localizable", "writing_progress")
+    public static let imageProgress = LocalizedString.tr("Localizable", "image_progress")
+    public static let audioProgress = LocalizedString.tr("Localizable", "audio_progress")
+    public static let definitionsProgress = LocalizedString.tr("Localizable", "definitions_progress")
 }
 
 extension LocalizedString {

@@ -634,3 +634,52 @@
 
 // Instruction to select a sentence to see its translation
 "select_sentence_to_see_translation" = "Select a sentence to see translation";
+
+// General OK button
+"ok" = "OK";
+
+// General Close button
+"close" = "Close";
+
+// Next available in time format
+"next_available_in" = "Next available in: %@";
+
+// Daily Limit navigation title
+"daily_limit" = "Daily Limit";
+
+// Processing state text
+"processing" = "Processing...";
+
+// Choose Your Plan title
+"choose_your_plan" = "Choose Your Plan";
+
+// Current Plan label
+"current_plan" = "Current Plan";
+
+// Content Moderation title
+"content_moderation" = "Content Moderation";
+
+// Moderation prompt guidelines message
+"moderation_prompt_guidelines" = "Your custom prompt didn't meet our content guidelines. Please review and modify your prompt to ensure it's appropriate for all audiences.";
+
+// Moderation navigation title
+"moderation" = "Moderation";
+
+// Resets in time format
+"resets_in" = "Resets in %@";
+"resets_in_label" = "Resets in";
+
+// Usage Progress title
+"usage_progress" = "Usage Progress";
+
+// Translate between languages text
+"translate_between_languages" = "Translate between languages";
+
+// Select text language prompt
+"select_text_language" = "Select text language";
+
+// Loading progress labels
+"writing_progress" = "Writing";
+"image_progress" = "Image";
+"audio_progress" = "Audio";
+"definitions_progress" = "Definitions";

@@ -613,3 +613,58 @@
 
 // Instruction to select a sentence to see its translation
 "select_sentence_to_see_translation" = "Selecciona una oración para ver la traducción";
+
+// OK button
+"ok" = "Aceptar";
+
+// Close button
+"close" = "Cerrar";
+
+// Next available in: (time format)
+"next_available_in" = "Próximo disponible en: %@";
+
+// Daily Limit (navigation title)
+"daily_limit" = "Límite Diario";
+
+// Processing... (loading state)
+"processing" = "Procesando...";
+
+// Choose Your Plan
+"choose_your_plan" = "Elige Tu Plan";
+
+// Current Plan
+"current_plan" = "Plan Actual";
+
+// Content Moderation
+"content_moderation" = "Moderación de Contenido";
+
+// Your custom prompt didn't meet our content guidelines message
+"moderation_prompt_guidelines" = "Tu mensaje personalizado no cumplió con nuestras pautas de contenido";
+
+// Moderation (navigation title)
+"moderation" = "Moderación";
+
+// Resets in (time format)
+"resets_in" = "Se reinicia en %@";
+"resets_in_label" = "Se reinicia en";
+
+// Usage Progress
+"usage_progress" = "Progreso de Uso";
+
+// Translate between languages
+"translate_between_languages" = "Traducir entre idiomas";
+
+// Select text language
+"select_text_language" = "Seleccionar idioma del texto";
+
+// Writing (loading progress)
+"writing_progress" = "Escritura";
+
+// Image (loading progress)
+"image_progress" = "Imagen";
+
+// Audio (loading progress)
+"audio_progress" = "Audio";
+
+// Definitions (loading progress)
+"definitions_progress" = "Definiciones";

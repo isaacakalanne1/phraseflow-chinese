@@ -41,7 +41,7 @@ public struct DailyLimitExplanationView: View {
                     .padding(.horizontal)
                 
                 if !nextAvailable.isEmpty {
-                    Text("Next available in: \(nextAvailable)")
+                    Text(LocalizedString.nextAvailableIn(nextAvailable))
                         .font(FTFont.flowTaleBodyMedium())
                         .foregroundColor(FTColor.accent)
                         .multilineTextAlignment(.center)
@@ -54,7 +54,7 @@ public struct DailyLimitExplanationView: View {
                     onDismiss?()
                     dismiss()
                 }) {
-                    Text("OK")
+                    Text(LocalizedString.ok)
                         .font(FTFont.flowTaleBodyMedium())
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
@@ -64,11 +64,11 @@ public struct DailyLimitExplanationView: View {
                         .padding(.horizontal)
                 }
             }
-            .navigationTitle("Daily Limit")
+            .navigationTitle(LocalizedString.dailyLimit)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Close") {
+                    Button(LocalizedString.close) {
                         onDismiss?()
                         dismiss()
                     }

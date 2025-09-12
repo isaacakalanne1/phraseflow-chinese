@@ -63,7 +63,7 @@ struct SubscriptionView: View {
                                 .scaleEffect(1.5)
                                 .progressViewStyle(CircularProgressViewStyle())
                             
-                            Text("Processing...")
+                            Text(LocalizedString.processing)
                                 .font(FTFont.flowTaleSecondaryHeader())
                                 .fontWeight(.medium)
                                 .foregroundColor(FTColor.primary)
@@ -107,7 +107,7 @@ struct SubscriptionView: View {
     @ViewBuilder
     private var subscriptionOptionsSection: some View {
         VStack(spacing: 20) {
-            Text("Choose Your Plan")
+            Text(LocalizedString.chooseYourPlan)
                 .font(FTFont.flowTaleSecondaryHeader())
                 .fontWeight(.semibold)
                 .foregroundColor(FTColor.primary)

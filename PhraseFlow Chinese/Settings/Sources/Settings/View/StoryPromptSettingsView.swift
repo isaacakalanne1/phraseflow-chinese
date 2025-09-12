@@ -96,7 +96,7 @@ struct StoryPromptMenu: View {
                                 Button(role: .destructive) {
                                     store.dispatch(.deleteCustomPrompt(prompt))
                                 } label: {
-                                    Label("Delete", systemImage: "trash")
+                                    Label(LocalizedString.delete, systemImage: "trash")
                                 }
                             }
                         }
@@ -195,11 +195,11 @@ struct SimpleModerationExplanationView: View {
                     .font(.largeTitle)
                     .foregroundColor(FTColor.accent)
                 
-                Text("Content Moderation")
+                Text(LocalizedString.contentModeration)
                     .font(FTFont.flowTaleHeader())
                     .foregroundColor(FTColor.primary)
                 
-                Text("Your custom prompt didn't meet our content guidelines. Please review and modify your prompt to ensure it's appropriate for all audiences.")
+                Text(LocalizedString.moderationPromptGuidelines)
                     .font(FTFont.flowTaleBodyMedium())
                     .foregroundColor(FTColor.secondary)
                     .multilineTextAlignment(.center)
@@ -216,7 +216,7 @@ struct SimpleModerationExplanationView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(FTColor.background)
-        .navigationTitle("Moderation")
+        .navigationTitle(LocalizedString.moderation)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

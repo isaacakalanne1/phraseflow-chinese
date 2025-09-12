@@ -190,7 +190,7 @@ struct SettingsView: View {
                                     .fontWeight(.bold)
                                     .foregroundColor(remainingCharacters > 0 ? FTColor.primary : .red)
                             } else {
-                                Text("Loading...")
+                                Text(LocalizedString.loading)
                                     .font(.title2)
                                     .fontWeight(.bold)
                                     .foregroundColor(FTColor.secondary)
@@ -202,7 +202,7 @@ struct SettingsView: View {
                         if store.state.isSubscribedUser,
                            let timeUntilReset = store.state.timeUntilReset {
                             VStack(alignment: .trailing, spacing: 4) {
-                                Text("Resets in")
+                                Text(LocalizedString.resetsInLabel)
                                     .font(.caption)
                                     .foregroundColor(FTColor.secondary)
                                 
@@ -218,7 +218,7 @@ struct SettingsView: View {
                         let totalLimit = store.state.characterLimitPerDay
                         VStack(spacing: 4) {
                             HStack {
-                                Text("Usage Progress")
+                                Text(LocalizedString.usageProgress)
                                     .font(.caption)
                                     .foregroundColor(FTColor.secondary)
                                 Spacer()

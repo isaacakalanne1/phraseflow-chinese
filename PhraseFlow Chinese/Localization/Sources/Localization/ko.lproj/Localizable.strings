@@ -613,3 +613,58 @@
 
 // Instruction to select a sentence to see its translation
 "select_sentence_to_see_translation" = "번역을 보려면 문장을 선택하세요";
+
+// OK button
+"ok" = "확인";
+
+// Close button
+"close" = "닫기";
+
+// Next available in: (time format)
+"next_available_in" = "다음 사용 가능: %@";
+
+// Daily Limit (navigation title)
+"daily_limit" = "일일 한도";
+
+// Processing... (loading state)
+"processing" = "처리 중...";
+
+// Choose Your Plan
+"choose_your_plan" = "플랜 선택";
+
+// Current Plan
+"current_plan" = "현재 플랜";
+
+// Content Moderation
+"content_moderation" = "콘텐츠 검수";
+
+// Your custom prompt didn't meet our content guidelines message
+"moderation_prompt_guidelines" = "사용자 정의 프롬프트가 콘텐츠 가이드라인을 충족하지 않습니다";
+
+// Moderation (navigation title)
+"moderation" = "검수";
+
+// Resets in (time format)
+"resets_in" = "%@ 후 초기화";
+"resets_in_label" = "초기화";
+
+// Usage Progress
+"usage_progress" = "사용 진행률";
+
+// Translate between languages
+"translate_between_languages" = "언어 간 번역";
+
+// Select text language
+"select_text_language" = "텍스트 언어 선택";
+
+// Writing (loading progress)
+"writing_progress" = "작성 중";
+
+// Image (loading progress)
+"image_progress" = "이미지";
+
+// Audio (loading progress)
+"audio_progress" = "오디오";
+
+// Definitions (loading progress)
+"definitions_progress" = "정의";

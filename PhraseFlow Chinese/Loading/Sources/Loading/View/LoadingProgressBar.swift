@@ -60,7 +60,7 @@ public struct LoadingProgressBar: View {
                 HStack(spacing: 8) {
                     ProgressStep(
                         icon: "doc.text",
-                        title: "Writing",
+                        title: LocalizedString.writingProgress,
                         isCompleted: loadingStatus.progressInt > 0,
                         isCurrent: loadingStatus == .writing,
                         isCompact: true
@@ -68,7 +68,7 @@ public struct LoadingProgressBar: View {
                     
                     ProgressStep(
                         icon: "photo",
-                        title: "Image",
+                        title: LocalizedString.imageProgress,
                         isCompleted: loadingStatus.progressInt > 1,
                         isCurrent: loadingStatus == .generatingImage,
                         isCompact: true
@@ -76,7 +76,7 @@ public struct LoadingProgressBar: View {
                     
                     ProgressStep(
                         icon: "speaker.wave.3",
-                        title: "Audio",
+                        title: LocalizedString.audioProgress,
                         isCompleted: loadingStatus.progressInt > 2,
                         isCurrent: loadingStatus == .generatingSpeech,
                         isCompact: true
@@ -84,7 +84,7 @@ public struct LoadingProgressBar: View {
                     
                     ProgressStep(
                         icon: "book.closed",
-                        title: "Definitions",
+                        title: LocalizedString.definitionsProgress,
                         isCompleted: loadingStatus.progressInt > 3,
                         isCurrent: loadingStatus == .generatingDefinitions,
                         isCompact: true

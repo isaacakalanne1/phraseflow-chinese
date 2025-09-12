@@ -617,3 +617,58 @@
 
 // Instruction to select a sentence to see its translation
 "select_sentence_to_see_translation" = "حدد جملة لرؤية الترجمة";
+
+// OK button
+"ok" = "حسناً";
+
+// Close button
+"close" = "إغلاق";
+
+// Next available in: (time format)
+"next_available_in" = "متوفر بعد: %@";
+
+// Daily Limit (navigation title)
+"daily_limit" = "الحد اليومي";
+
+// Processing... (loading state)
+"processing" = "جاري المعالجة...";
+
+// Choose Your Plan
+"choose_your_plan" = "اختر خطتك";
+
+// Current Plan
+"current_plan" = "الخطة الحالية";
+
+// Content Moderation
+"content_moderation" = "مراقبة المحتوى";
+
+// Your custom prompt didn't meet our content guidelines message
+"moderation_prompt_guidelines" = "الرسالة المخصصة ما تتوافق مع إرشادات المحتوى";
+
+// Moderation (navigation title)
+"moderation" = "المراقبة";
+
+// Resets in (time format)
+"resets_in" = "يتم إعادة التعيين في %@";
+"resets_in_label" = "يتم إعادة التعيين في";
+
+// Usage Progress
+"usage_progress" = "تقدم الاستخدام";
+
+// Translate between languages
+"translate_between_languages" = "الترجمة بين اللغات";
+
+// Select text language
+"select_text_language" = "حدد لغة النص";
+
+// Writing (loading progress)
+"writing_progress" = "الكتابة";
+
+// Image (loading progress)
+"image_progress" = "الصورة";
+
+// Audio (loading progress)
+"audio_progress" = "الصوت";
+
+// Definitions (loading progress)
+"definitions_progress" = "التعريفات";

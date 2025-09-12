@@ -613,3 +613,58 @@
 
 // Instruction to select a sentence to see its translation
 "select_sentence_to_see_translation" = "翻訳を見るには文を選択してください";
+
+// OK button
+"ok" = "OK";
+
+// Close button
+"close" = "閉じる";
+
+// Next available in: (time format)
+"next_available_in" = "次回利用可能: %@";
+
+// Daily Limit (navigation title)
+"daily_limit" = "1日の制限";
+
+// Processing... (loading state)
+"processing" = "処理中...";
+
+// Choose Your Plan
+"choose_your_plan" = "プランを選択";
+
+// Current Plan
+"current_plan" = "現在のプラン";
+
+// Content Moderation
+"content_moderation" = "コンテンツ管理";
+
+// Your custom prompt didn't meet our content guidelines message
+"moderation_prompt_guidelines" = "カスタムプロンプトがコンテンツガイドラインを満たしていません";
+
+// Moderation (navigation title)
+"moderation" = "管理";
+
+// Resets in (time format)
+"resets_in" = "%@後にリセット";
+"resets_in_label" = "リセット";
+
+// Usage Progress
+"usage_progress" = "使用状況";
+
+// Translate between languages
+"translate_between_languages" = "言語間の翻訳";
+
+// Select text language
+"select_text_language" = "テキストの言語を選択";
+
+// Writing (loading progress)
+"writing_progress" = "作成中";
+
+// Image (loading progress)
+"image_progress" = "画像";
+
+// Audio (loading progress)
+"audio_progress" = "音声";
+
+// Definitions (loading progress)
+"definitions_progress" = "定義";

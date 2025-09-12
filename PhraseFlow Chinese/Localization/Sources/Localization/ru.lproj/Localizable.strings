@@ -613,3 +613,58 @@
 
 // Instruction to select a sentence to see its translation
 "select_sentence_to_see_translation" = "Выберите предложение, чтобы увидеть перевод";
+
+// OK button
+"ok" = "ОК";
+
+// Close button
+"close" = "Закрыть";
+
+// Next available in: (time format)
+"next_available_in" = "Следующая доступна через: %@";
+
+// Daily Limit (navigation title)
+"daily_limit" = "Дневной лимит";
+
+// Processing... (loading state)
+"processing" = "Обработка...";
+
+// Choose Your Plan
+"choose_your_plan" = "Выберите ваш план";
+
+// Current Plan
+"current_plan" = "Текущий план";
+
+// Content Moderation
+"content_moderation" = "Модерация контента";
+
+// Your custom prompt didn't meet our content guidelines message
+"moderation_prompt_guidelines" = "Ваш пользовательский запрос не соответствует нашим правилам контента";
+
+// Moderation (navigation title)
+"moderation" = "Модерация";
+
+// Resets in (time format)
+"resets_in" = "Сбрасывается через %@";
+"resets_in_label" = "Сбрасывается через";
+
+// Usage Progress
+"usage_progress" = "Прогресс использования";
+
+// Translate between languages
+"translate_between_languages" = "Перевод между языками";
+
+// Select text language
+"select_text_language" = "Выберите язык текста";
+
+// Writing (loading progress)
+"writing_progress" = "Написание";
+
+// Image (loading progress)
+"image_progress" = "Изображение";
+
+// Audio (loading progress)
+"audio_progress" = "Аудио";
+
+// Definitions (loading progress)
+"definitions_progress" = "Определения";
