@@ -26,7 +26,7 @@ enum ContentTab: CaseIterable, Equatable, Identifiable, Hashable {
     var title: String {
         switch self {
         case .reader:
-            "Reader" // TODO: Localize
+            "Read" // TODO: Localize
         case .progress:
             LocalizedString.progress
         case .translate:
