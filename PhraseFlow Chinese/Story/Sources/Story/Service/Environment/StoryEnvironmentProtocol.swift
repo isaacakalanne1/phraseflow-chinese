@@ -17,6 +17,7 @@ import TextPractice
 public protocol StoryEnvironmentProtocol {
     var audioEnvironment: AudioEnvironmentProtocol { get }
     var studyEnvironment: StudyEnvironmentProtocol { get }
+    var textPracticeEnvironment: TextPracticeEnvironmentProtocol { get }
     func getAppSettings() throws -> SettingsState
     func loadAllChapters() throws -> [Chapter]
     func saveChapter(_ chapter: Chapter) throws

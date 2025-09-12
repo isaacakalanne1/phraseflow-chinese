@@ -54,15 +54,6 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
         return try await speechEnvironment.synthesizeSpeech(for: chapter, voice: voice, language: language)
     }
     
-    public func saveDefinitions(_ definitions: [Definition]) throws {
-        try studyEnvironment.saveDefinitions(definitions)
-        textPracticeEnvironment.addDefinitions(definitions)
-    }
-    
-    public func saveSentenceAudio(_ audioData: Data, id: UUID) throws {
-        try studyEnvironment.saveSentenceAudio(audioData, id: id)
-    }
-    
     public func getAppSettings() throws -> SettingsState {
         return try settingsEnvironment.loadAppSettings()
     }
