@@ -22,14 +22,28 @@ public protocol StoryEnvironmentProtocol {
     func loadAllChapters() throws -> [Chapter]
     func saveChapter(_ chapter: Chapter) throws
     func deleteChapter(_ chapter: Chapter) throws
-    func generateChapter(
+    
+    func generateTextForChapter(
         previousChapters: [Chapter],
         language: Language?,
         difficulty: Difficulty?,
         voice: Voice?,
         deviceLanguage: Language?,
-        storyPrompt: String?,
-        currentSubscription: SubscriptionLevel?
+        storyPrompt: String?
+    ) async throws -> Chapter
+    
+    func generateImageForChapter(
+        _ chapter: Chapter,
+        previousChapters: [Chapter]
+    ) async throws -> Chapter
+    
+    func generateSpeechForChapter(
+        _ chapter: Chapter
+    ) async throws -> (Chapter, Int)
+    
+    func generateDefinitionsForChapter(
+        _ chapter: Chapter,
+        deviceLanguage: Language?
     ) async throws -> Chapter
 
     func playSound(_ sound: AppSound)

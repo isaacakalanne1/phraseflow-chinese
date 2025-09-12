@@ -49,14 +49,13 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         self.dataStore = dataStore
     }
     
-    public func generateChapter(
+    public func generateTextForChapter(
         previousChapters: [Chapter] = [],
         language: Language? = nil,
         difficulty: Difficulty? = nil,
         voice: Voice? = nil,
         deviceLanguage: Language?,
-        storyPrompt: String? = nil,
-        currentSubscription: SubscriptionLevel?
+        storyPrompt: String? = nil
     ) async throws -> Chapter {
         loadingEnvironment.updateLoadingStatus(.writing)
 
@@ -81,9 +80,16 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
             )
         }
         
+        return newChapter
+    }
+    
+    public func generateImageForChapter(
+        _ chapter: Chapter,
+        previousChapters: [Chapter] = []
+    ) async throws -> Chapter {
         loadingEnvironment.updateLoadingStatus(.generatingImage)
 
-        var processedChapter = newChapter
+        var processedChapter = chapter
         if processedChapter.imageData == nil && !processedChapter.passage.isEmpty {
             if let firstChapter = previousChapters.first, let existingImageData = firstChapter.imageData {
                 processedChapter.imageData = existingImageData
@@ -92,46 +98,52 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
             }
         }
         
+        return processedChapter
+    }
+    
+    public func generateSpeechForChapter(
+        _ chapter: Chapter
+    ) async throws -> (Chapter, Int) {
         loadingEnvironment.updateLoadingStatus(.generatingSpeech)
 
-        let voiceToUse = processedChapter.audioVoice
+        let voiceToUse = chapter.audioVoice
         let (finalChapter, ssmlCharacterCount) = try await speechEnvironment.synthesizeSpeechWithCharacterCount(
-            for: processedChapter,
+            for: chapter,
             voice: voiceToUse,
-            language: processedChapter.language
-        )
-
-        try trackSSMLCharacterUsage(
-            characterCount: ssmlCharacterCount,
-            subscription: currentSubscription
+            language: chapter.language
         )
         
+        return (finalChapter, ssmlCharacterCount)
+    }
+    
+    public func generateDefinitionsForChapter(
+        _ chapter: Chapter,
+        deviceLanguage: Language?
+    ) async throws -> Chapter {
         loadingEnvironment.updateLoadingStatus(.generatingDefinitions)
         
-        let sentencesToProcess = Array(finalChapter.sentences.prefix(3))
+        let sentencesToProcess = Array(chapter.sentences.prefix(3))
         var allDefinitions: [Definition] = []
         
         for sentence in sentencesToProcess {
             do {
                 let definitions = try await studyEnvironment.fetchDefinitions(
                     in: sentence,
-                    chapter: finalChapter,
+                    chapter: chapter,
                     deviceLanguage: deviceLanguage ?? Language.deviceLanguage
                 )
                 allDefinitions.append(contentsOf: definitions)
             } catch {
-                // Continue with other sentences even if one fails
                 print("Failed to fetch definitions for sentence: \(error)")
             }
         }
         
-        // Save the definitions if any were generated
         if !allDefinitions.isEmpty {
             try studyEnvironment.saveDefinitions(allDefinitions)
         }
 
         loadingEnvironment.updateLoadingStatus(.complete)
-        return finalChapter
+        return chapter
     }
 
     // MARK: Chapters

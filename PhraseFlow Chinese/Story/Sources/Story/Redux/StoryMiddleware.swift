@@ -18,6 +18,9 @@ import TextPractice
 public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtocol> = { state, action, environment in
     switch action {
     case .createChapter(let type):
+        return .generateText(type)
+        
+    case .generateText(let type):
         do {
             var chapters: [Chapter] = []
             if case .existingStory(let storyId) = type,
@@ -27,18 +30,63 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
             
             let settings = try environment.getAppSettings()
             
-            let chapter = try await environment.generateChapter(
+            let chapter = try await environment.generateTextForChapter(
                 previousChapters: chapters,
                 language: settings.language,
                 difficulty: settings.difficulty,
                 voice: settings.voice,
                 deviceLanguage: Language.deviceLanguage,
-                storyPrompt: settings.storySetting.prompt,
-                currentSubscription: nil
+                storyPrompt: settings.storySetting.prompt
             )
             
+            return .onGeneratedText(chapter)
+        } catch {
+            return .failedToCreateChapter
+        }
+        
+    case .onGeneratedText(let chapter):
+        return .generateImage(chapter)
+        
+    case .generateImage(let chapter):
+        do {
+            let previousChapters = state.storyChapters[chapter.storyId] ?? []
+            let chapterWithImage = try await environment.generateImageForChapter(
+                chapter,
+                previousChapters: previousChapters
+            )
+            return .onGeneratedImage(chapterWithImage)
+        } catch {
+            return .failedToCreateChapter
+        }
+        
+    case .onGeneratedImage(let chapter):
+        return .generateSpeech(chapter)
+        
+    case .generateSpeech(let chapter):
+        do {
+            let (chapterWithSpeech, ssmlCharacterCount) = try await environment.generateSpeechForChapter(chapter)
+            return .onGeneratedSpeech(chapterWithSpeech, ssmlCharacterCount: ssmlCharacterCount)
+        } catch {
+            return .failedToCreateChapter
+        }
+        
+    case .onGeneratedSpeech(let chapter, _):
+        return .generateDefinitions(chapter)
+        
+    case .generateDefinitions(let chapter):
+        do {
+            let finalChapter = try await environment.generateDefinitionsForChapter(
+                chapter,
+                deviceLanguage: Language.deviceLanguage
+            )
+            return .onGeneratedDefinitions(finalChapter)
+        } catch {
+            return .failedToCreateChapter
+        }
+        
+    case .onGeneratedDefinitions(let chapter):
+        do {
             try environment.saveChapter(chapter)
-            
             return .onCreatedChapter(chapter)
         } catch {
             return .failedToCreateChapter

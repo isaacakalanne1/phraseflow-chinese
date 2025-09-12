@@ -13,6 +13,14 @@ import TextGeneration
 
 public enum StoryAction: Sendable {
     case createChapter(CreateChapterType)
+    case generateText(CreateChapterType)
+    case onGeneratedText(Chapter)
+    case generateImage(Chapter)
+    case onGeneratedImage(Chapter)
+    case generateSpeech(Chapter)
+    case onGeneratedSpeech(Chapter, ssmlCharacterCount: Int)
+    case generateDefinitions(Chapter)
+    case onGeneratedDefinitions(Chapter)
     case onCreatedChapter(Chapter)
     case failedToCreateChapter
 
