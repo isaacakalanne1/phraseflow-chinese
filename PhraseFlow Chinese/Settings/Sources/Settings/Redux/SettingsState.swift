@@ -45,7 +45,9 @@ public struct SettingsState: Codable, Equatable, Sendable {
     
     // User limit properties  
     public var remainingCharacters: Int?
-    public var isSubscribedUser: Bool?
+    public var isSubscribedUser: Bool {
+        subscriptionLevel != .free
+    }
     public var timeUntilReset: String?
     public var characterLimitPerDay: Int
     public var subscriptionLevel: SubscriptionLevel
@@ -109,7 +111,6 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.remainingCharacters = remainingCharacters
         self.characterLimitPerDay = characterLimitPerDay
         self.subscriptionLevel = subscriptionLevel
-        self.isSubscribedUser = nil
         self.timeUntilReset = nil
     }
 
@@ -136,7 +137,6 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.characterLimitPerDay = (try? container.decode(Int.self, forKey: .characterLimitPerDay)) ?? SubscriptionLevel.free.ssmlCharacterLimitPerDay
         self.subscriptionLevel = (try? container.decode(SubscriptionLevel.self, forKey: .subscriptionLevel)) ?? .free
         self.remainingCharacters = try? container.decode(Int.self, forKey: .remainingCharacters)
-        self.isSubscribedUser = nil
         self.timeUntilReset = nil
     }
 }

@@ -54,74 +54,77 @@ struct SettingsView: View {
             store.dispatch(.updateLanguage(newValue))
         }
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 24) {
-                    // Usage Limit Section
-                    usageLimitSection()
-                    
-                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 2), spacing: 8) {
-                        NavigationLink(destination: LanguageSettingsView(selectedLanguage: selectedLanguage,
-                                                                         isEnabled: !store.state.viewState.isWritingChapter)) {
-                            settingImageView(
-                                title: store.state.language.displayName,
-                                image: store.state.language.thumbnail
-                            )
-                        }
+            VStack {
+                usageLimitSection()
+                ScrollView {
+                    VStack(spacing: 24) {
+                        // Usage Limit Section
                         
-                        NavigationLink(destination: VoiceSettingsView()) {
-                            settingImageView(
-                                title: store.state.voice.title,
-                                image: store.state.voice.thumbnail
-                            )
-                        }
-                        
-                        NavigationLink(destination: DifficultySettingsView()) {
-                            settingImageView(
-                                title: store.state.difficulty.title,
-                                image: store.state.difficulty.thumbnail
-                            )
-                        }
-                        
-                        NavigationLink(destination: StoryPromptSettingsView()) {
-                            settingImageView(
-                                title: store.state.storySetting.title,
-                                image: store.state.storySetting.thumbnail
-                            )
-                        }
-                    }
-                    .padding(.horizontal)
-                    
-                    VStack(spacing: 16) {
-                        settingsSection(
-                            title: LocalizedString.settingsAppearance,
-                            content: {
-                                VStack(spacing: 12) {
-                                    settingsToggleRow(LocalizedString.definitionToggle, isOn: showDefinition)
-                                    settingsToggleRow(LocalizedString.translation, isOn: showEnglish)
-                                }
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8),
+                                                 count: 2),
+                                  spacing: 8) {
+                            NavigationLink(destination: LanguageSettingsView(selectedLanguage: selectedLanguage,
+                                                                             isEnabled: !store.state.viewState.isWritingChapter)) {
+                                settingImageView(
+                                    title: store.state.language.displayName,
+                                    image: store.state.language.thumbnail
+                                )
                             }
-                        )
-                        
-                        settingsSection(
-                            title: LocalizedString.settingsSoundHeader,
-                            content: {
-                                VStack(spacing: 12) {
-                                    settingsToggleRow(LocalizedString.music, isOn: playMusic)
-                                    settingsToggleRow(LocalizedString.settingsSounds, isOn: shouldPlayButtonSounds)
-                                }
+                            
+                            NavigationLink(destination: VoiceSettingsView()) {
+                                settingImageView(
+                                    title: store.state.voice.title,
+                                    image: store.state.voice.thumbnail
+                                )
                             }
-                        )
+                            
+                            NavigationLink(destination: DifficultySettingsView()) {
+                                settingImageView(
+                                    title: store.state.difficulty.title,
+                                    image: store.state.difficulty.thumbnail
+                                )
+                            }
+                            
+                            NavigationLink(destination: StoryPromptSettingsView()) {
+                                settingImageView(
+                                    title: store.state.storySetting.title,
+                                    image: store.state.storySetting.thumbnail
+                                )
+                            }
+                        }
+                                  .padding(.horizontal)
+                        
+                        VStack(spacing: 16) {
+                            settingsSection(
+                                title: LocalizedString.settingsAppearance,
+                                content: {
+                                    VStack(spacing: 12) {
+                                        settingsToggleRow(LocalizedString.definitionToggle, isOn: showDefinition)
+                                        settingsToggleRow(LocalizedString.translation, isOn: showEnglish)
+                                    }
+                                }
+                            )
+                            
+                            settingsSection(
+                                title: LocalizedString.settingsSoundHeader,
+                                content: {
+                                    VStack(spacing: 12) {
+                                        settingsToggleRow(LocalizedString.music, isOn: playMusic)
+                                        settingsToggleRow(LocalizedString.settingsSounds, isOn: shouldPlayButtonSounds)
+                                    }
+                                }
+                            )
+                        }
+                        .padding(.horizontal)
+                        
+                        Spacer(minLength: 50)
                     }
-                    .padding(.horizontal)
-                    
-                    Spacer(minLength: 50)
+                    .padding(.top, 16)
                 }
-                .padding(.top, 16)
             }
             .background(FTColor.background)
         }
         .navigationBarTitleDisplayMode(.inline)
-        .scrollContentBackground(.hidden)
         .scrollIndicators(.hidden)
     }
     
@@ -200,7 +203,7 @@ struct SettingsView: View {
                         
                         Spacer()
                         
-                        if store.state.isSubscribedUser == true,
+                        if store.state.isSubscribedUser,
                            let timeUntilReset = store.state.timeUntilReset {
                             VStack(alignment: .trailing, spacing: 4) {
                                 Text("Resets in")

@@ -43,7 +43,7 @@ enum SettingsAction: Sendable {
     
     // User limit actions
     case loadUsageData
-    case onLoadedUsageData(remainingCharacters: Int, isSubscribed: Bool, timeUntilReset: String?)
+    case onLoadedUsageData(remainingCharacters: Int, timeUntilReset: String?)
     case setCharacterLimit(Int)
     case updateSubscriptionLevel(SubscriptionLevel)
 }

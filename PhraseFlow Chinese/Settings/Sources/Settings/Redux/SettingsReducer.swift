@@ -77,9 +77,8 @@ let settingsReducer: Reducer<SettingsState, SettingsAction> = { state, action in
     case .stopMusic:
         newState.isPlayingMusic = false
         
-    case .onLoadedUsageData(let remainingCharacters, let isSubscribed, let timeUntilReset):
+    case .onLoadedUsageData(let remainingCharacters, let timeUntilReset):
         newState.remainingCharacters = remainingCharacters
-        newState.isSubscribedUser = isSubscribed
         newState.timeUntilReset = timeUntilReset
         
     case .setCharacterLimit(let limit):
