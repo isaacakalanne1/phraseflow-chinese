@@ -215,8 +215,8 @@ struct SettingsView: View {
                         }
                     }
                     
-                    if let remainingCharacters = store.state.remainingCharacters,
-                       let totalLimit = store.state.characterLimitPerDay {
+                    if let remainingCharacters = store.state.remainingCharacters {
+                        let totalLimit = store.state.characterLimitPerDay
                         VStack(spacing: 4) {
                             HStack {
                                 Text("Usage Progress")

@@ -19,7 +19,7 @@ struct SubscriptionOption: View {
     let action: () -> Void
 
     var isUserCurrentSubscription: Bool {
-        product != nil && store.state.currentSubscription?.idString == product?.id
+        product != nil && store.state.currentSubscription.idString == product?.id
     }
 
     var backgroundColor: Color {

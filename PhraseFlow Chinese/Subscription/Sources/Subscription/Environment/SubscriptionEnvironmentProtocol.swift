@@ -18,6 +18,4 @@ public protocol SubscriptionEnvironmentProtocol {
     func validateReceipt()
     func trackSSMLCharacterUsage(characterCount: Int,
                                  subscription: SubscriptionLevel?) throws
-    func getCurrentSubscriptionLevel() -> SubscriptionLevel?
-    func fetchCurrentSubscriptionLevel() async -> SubscriptionLevel?
 }

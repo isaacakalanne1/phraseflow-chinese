@@ -16,7 +16,8 @@ public struct SettingsRootView: View {
             initial: SettingsState(),
             reducer: settingsReducer,
             environment: environment,
-            middleware: settingsMiddleware
+            middleware: settingsMiddleware,
+            subscriber: settingsSubscriber
         )
         store.dispatch(.loadAppSettings)
     }

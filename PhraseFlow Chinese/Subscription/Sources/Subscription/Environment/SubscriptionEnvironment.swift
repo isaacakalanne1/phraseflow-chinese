@@ -50,20 +50,4 @@ public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
         try userLimitsDataStore.trackSSMLCharacterUsage(characterCount: characterCount,
                                                         characterLimitPerDay: subscription?.ssmlCharacterLimitPerDay)
     }
-    
-    public func getCurrentSubscriptionLevel() -> SubscriptionLevel? {
-        return currentSubscriptionSubject.value
-    }
-    
-    public func fetchCurrentSubscriptionLevel() async -> SubscriptionLevel? {
-        let entitlements = await repository.getCurrentEntitlements()
-        
-        if entitlements.contains("com.flowtale.level_2") {
-            return .level2
-        } else if entitlements.contains("com.flowtale.level_1") {
-            return .level1
-        } else {
-            return nil
-        }
-    }
 }

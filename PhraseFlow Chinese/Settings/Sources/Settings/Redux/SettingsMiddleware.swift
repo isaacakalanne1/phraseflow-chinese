@@ -58,12 +58,13 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
         return .saveAppSettings
         
     case .loadUsageData:
+        let subscriptionLevel = state.subscriptionLevel
         let characterLimitPerDay = state.characterLimitPerDay
-        let isSubscribed = characterLimitPerDay != nil
+        let isSubscribed = subscriptionLevel != .free
         
         if isSubscribed {
-            let remainingCharacters = environment.userLimitEnvironment.getRemainingDailyCharacters(characterLimitPerDay: characterLimitPerDay!)
-            let timeUntilReset = environment.userLimitEnvironment.getTimeUntilNextDailyReset(characterLimitPerDay: characterLimitPerDay!)
+            let remainingCharacters = environment.userLimitEnvironment.getRemainingDailyCharacters(characterLimitPerDay: characterLimitPerDay)
+            let timeUntilReset = environment.userLimitEnvironment.getTimeUntilNextDailyReset(characterLimitPerDay: characterLimitPerDay)
             return .onLoadedUsageData(
                 remainingCharacters: remainingCharacters,
                 isSubscribed: true,

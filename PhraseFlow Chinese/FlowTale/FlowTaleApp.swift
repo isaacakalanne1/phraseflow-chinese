@@ -24,21 +24,8 @@ import Speech
 import ImageGeneration
 import Combine
 
-class SubscriptionBridge {
-    var cancellables = Set<AnyCancellable>()
-    
-    func connect(subscription: SubscriptionEnvironmentProtocol, settings: SettingsEnvironmentProtocol) {
-        subscription.currentSubscriptionSubject
-            .sink { subscriptionLevel in
-                settings.subscriptionLevelSubject.send(subscriptionLevel)
-            }
-            .store(in: &cancellables)
-    }
-}
-
 public struct FlowTaleRootView: View {
     private let flowTaleEnvironment: FlowTaleEnvironmentProtocol
-    private let subscriptionBridge = SubscriptionBridge()
     
     public init() {
         let audioEnvironment = AudioEnvironment()
@@ -120,7 +107,11 @@ public struct FlowTaleRootView: View {
         )
         
         // Connect subscription level changes to settings environment
-        subscriptionBridge.connect(subscription: subscriptionEnvironment, settings: settingsEnvironment)
+        Task {
+            for await subscriptionLevel in subscriptionEnvironment.currentSubscriptionSubject.values {
+                settingsEnvironment.subscriptionLevelSubject.send(subscriptionLevel)
+            }
+        }
         
         self.flowTaleEnvironment = FlowTaleEnvironment(
             audioEnvironment: audioEnvironment,

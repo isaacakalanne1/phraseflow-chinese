@@ -11,25 +11,25 @@ import StoreKit
 
 public struct SubscriptionState: Equatable {
     public var isLoadingSubscriptionPurchase = false
-    public var currentSubscription: SubscriptionLevel? {
-//        #if DEBUG
-//            .max
-//        #else
+    public var currentSubscription: SubscriptionLevel {
+        #if DEBUG
+            .max
+        #else
         if purchasedProductIDs.contains("com.flowtale.level_2") {
             return .level2
         } else if purchasedProductIDs.contains("com.flowtale.level_1") {
             return .level1
         } else {
-            return nil
+            return .free
         }
-//        #endif
+        #endif
     }
 
     public var isSubscribed: Bool {
 //        #if DEBUG
 //            true
 //        #else
-            currentSubscription != nil
+            currentSubscription != .free
 //        #endif
     }
     public var products: [Product]?

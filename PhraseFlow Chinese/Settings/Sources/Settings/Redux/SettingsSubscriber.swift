@@ -14,7 +14,8 @@ let settingsSubscriber: OnSubscribe<SettingsStore, SettingsEnvironmentProtocol> 
     environment.subscriptionLevelSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak store] subscriptionLevel in
-                guard let store else {
+                guard let store,
+                      let subscriptionLevel else {
                     return
                 }
                 store.dispatch(.updateSubscriptionLevel(subscriptionLevel))
