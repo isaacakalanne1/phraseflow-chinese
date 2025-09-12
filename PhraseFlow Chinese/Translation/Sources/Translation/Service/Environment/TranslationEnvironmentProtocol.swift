@@ -23,7 +23,7 @@ public protocol TranslationEnvironmentProtocol {
     var textPracticeEnvironment: TextPracticeEnvironmentProtocol { get }
     var translationDataStore: TranslationDataStoreProtocol { get }
     var userLimitEnvironment: UserLimitEnvironmentProtocol { get }
-    var limitReachedSubject: PassthroughSubject<LimitReachedEvent, Never> { get }
+    var limitReachedSubject: CurrentValueSubject<LimitReachedEvent, Never> { get }
     
     func translateText(_ text: String, from sourceLanguage: Language?, to targetLanguage: Language) async throws -> Chapter
     func breakdownText(_ text: String, textLanguage: Language, deviceLanguage: Language) async throws -> Chapter

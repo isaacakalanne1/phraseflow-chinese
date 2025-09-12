@@ -5,6 +5,7 @@
 //  Created by iakalann on 18/07/2025.
 //
 
+import Combine
 import Audio
 import Foundation
 import Combine
@@ -15,17 +16,13 @@ import Subscription
 import TextPractice
 import UserLimit
 
-public enum LimitReachedEvent {
-    case freeLimit
-    case dailyLimit(nextAvailable: String)
-}
-
 public protocol StoryEnvironmentProtocol {
     var audioEnvironment: AudioEnvironmentProtocol { get }
     var studyEnvironment: StudyEnvironmentProtocol { get }
+    var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> { get }
     var textPracticeEnvironment: TextPracticeEnvironmentProtocol { get }
     var userLimitEnvironment: UserLimitEnvironmentProtocol { get }
-    var limitReachedSubject: PassthroughSubject<LimitReachedEvent, Never> { get }
+    var limitReachedSubject: CurrentValueSubject<LimitReachedEvent, Never> { get }
     func getAppSettings() throws -> SettingsState
     func loadAllChapters() throws -> [Chapter]
     func saveChapter(_ chapter: Chapter) throws

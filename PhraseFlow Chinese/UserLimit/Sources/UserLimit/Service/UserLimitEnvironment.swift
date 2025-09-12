@@ -5,13 +5,16 @@
 //  Created by Isaac Akalanne on 24/07/2025.
 //
 
+import Combine
 import Foundation
 
 public struct UserLimitEnvironment: UserLimitEnvironmentProtocol {
     private let dataStore: UserLimitsDataStoreProtocol
+    public let limitReachedSubject: CurrentValueSubject<LimitReachedEvent, Never>
     
     public init(dataStore: UserLimitsDataStoreProtocol) {
         self.dataStore = dataStore
+        self.limitReachedSubject = .init(.freeLimit)
     }
     
     public func canCreateChapter(estimatedCharacterCount: Int, characterLimitPerDay: Int?) throws {

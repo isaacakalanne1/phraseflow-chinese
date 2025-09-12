@@ -79,7 +79,7 @@ public let subscriptionMiddleware: Middleware<SubscriptionState, SubscriptionAct
         }
         
         // Determine the new subscription level
-        let newSubscriptionLevel: SubscriptionLevel?
+        let newSubscriptionLevel: SubscriptionLevel
         if newPurchasedProductIDs.contains("com.flowtale.level_2") {
             newSubscriptionLevel = .level2
         } else if newPurchasedProductIDs.contains("com.flowtale.level_1") {
@@ -94,7 +94,11 @@ public let subscriptionMiddleware: Middleware<SubscriptionState, SubscriptionAct
         
         // Publish the new subscription level
         environment.currentSubscriptionSubject.send(newSubscriptionLevel)
-        
+        var settings = state.settings
+        settings.subscriptionLevel = newSubscriptionLevel
+        return .saveAppSettings(settings)
+    case .saveAppSettings(let settings):
+        try? environment.saveAppSettings(settings)
         return nil
 
     case .onPurchasedSubscription,
@@ -112,7 +116,8 @@ public let subscriptionMiddleware: Middleware<SubscriptionState, SubscriptionAct
          .onRestoredSubscriptions,
          .failedToRestoreSubscriptions,
          .onValidatedReceipt,
-         .setSubscriptionSheetShowing:
+         .setSubscriptionSheetShowing,
+         .refreshSettings:
         return nil
     }
 }

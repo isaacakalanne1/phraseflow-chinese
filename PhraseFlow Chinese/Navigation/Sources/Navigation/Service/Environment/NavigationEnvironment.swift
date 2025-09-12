@@ -13,6 +13,7 @@ import Study
 import Settings
 import Subscription
 import Translation
+import UserLimit
 
 public struct NavigationEnvironment: NavigationEnvironmentProtocol {
     public let settingsEnvironment: SettingsEnvironmentProtocol
@@ -20,6 +21,7 @@ public struct NavigationEnvironment: NavigationEnvironmentProtocol {
     public let studyEnvironment: StudyEnvironmentProtocol
     public let subscriptionEnvironment: SubscriptionEnvironmentProtocol
     public let translationEnvironment: TranslationEnvironmentProtocol
+    public let userLimitEnvironment: UserLimitEnvironmentProtocol
     public let audioEnvironment: AudioEnvironmentProtocol
     public let loadingEnvironment: LoadingEnvironmentProtocol
     
@@ -29,6 +31,7 @@ public struct NavigationEnvironment: NavigationEnvironmentProtocol {
         studyEnvironment: StudyEnvironmentProtocol,
         subscriptionEnvironment: SubscriptionEnvironmentProtocol,
         translationEnvironment: TranslationEnvironmentProtocol,
+        userLimitEnvironment: UserLimitEnvironmentProtocol,
         audioEnvironment: AudioEnvironmentProtocol,
         loadingEnvironment: LoadingEnvironmentProtocol
     ) {
@@ -37,6 +40,7 @@ public struct NavigationEnvironment: NavigationEnvironmentProtocol {
         self.studyEnvironment = studyEnvironment
         self.subscriptionEnvironment = subscriptionEnvironment
         self.translationEnvironment = translationEnvironment
+        self.userLimitEnvironment = userLimitEnvironment
         self.audioEnvironment = audioEnvironment
         self.loadingEnvironment = loadingEnvironment
     }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Settings
 import StoreKit
 
 public enum SubscriptionAction: Sendable {
@@ -32,4 +33,7 @@ public enum SubscriptionAction: Sendable {
     case onValidatedReceipt
     
     case setSubscriptionSheetShowing(Bool)
+    
+    case saveAppSettings(SettingsState)
+    case refreshSettings(SettingsState)
 }

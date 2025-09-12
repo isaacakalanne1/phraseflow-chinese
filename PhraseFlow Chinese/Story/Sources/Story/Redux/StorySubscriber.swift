@@ -20,4 +20,15 @@ let storySubscriber: OnSubscribe<StoryStore, StoryEnvironmentProtocol> = { store
                 store.dispatch(.beginGetNextChapter)
             }
             .store(in: &store.subscriptions)
+    
+    environment.settingsUpdatedSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak store] settings in
+                guard let store,
+                let settings else {
+                    return
+                }
+                store.dispatch(.refreshSettings(settings))
+            }
+            .store(in: &store.subscriptions)
 }

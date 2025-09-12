@@ -57,7 +57,7 @@ struct SettingsView: View {
             VStack {
                 usageLimitSection()
                 ScrollView {
-                    VStack(spacing: 24) {
+                    VStack {
                         // Usage Limit Section
                         
                         LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8),
@@ -92,7 +92,6 @@ struct SettingsView: View {
                                 )
                             }
                         }
-                                  .padding(.horizontal)
                         
                         VStack(spacing: 16) {
                             settingsSection(
@@ -115,13 +114,10 @@ struct SettingsView: View {
                                 }
                             )
                         }
-                        .padding(.horizontal)
-                        
-                        Spacer(minLength: 50)
                     }
-                    .padding(.top, 16)
                 }
             }
+            .padding()
             .background(FTColor.background)
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -253,6 +249,5 @@ struct SettingsView: View {
                 .padding(.vertical, 12)
             }
         )
-        .padding(.horizontal)
     }
 }

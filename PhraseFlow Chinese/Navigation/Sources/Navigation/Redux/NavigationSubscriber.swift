@@ -14,7 +14,7 @@ import Combine
 let navigationSubscriber: OnSubscribe<NavigationStore, NavigationEnvironmentProtocol> = { store, environment in
     
     // Listen to Story limit reached events
-    environment.storyEnvironment.limitReachedSubject
+    environment.userLimitEnvironment.limitReachedSubject
         .receive(on: DispatchQueue.main)
         .sink { [weak store] limitEvent in
             guard let store else { return }

@@ -19,31 +19,22 @@ import UserLimit
 public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtocol> = { state, action, environment in
     switch action {
     case .createChapter(let type):
-        do {
-            let settings = try environment.getAppSettings()
-            
-            // Check if limit has already been passed
-            if let characterLimitPerDay = settings.characterLimitPerDay {
-                // Subscribed user - check daily limit
-                let remainingCharacters = environment.userLimitEnvironment.getRemainingDailyCharacters(characterLimitPerDay: characterLimitPerDay)
-                if remainingCharacters <= 0 {
-                    let timeUntilReset = environment.userLimitEnvironment.getTimeUntilNextDailyReset(characterLimitPerDay: characterLimitPerDay) ?? "24 hours"
-                    environment.limitReachedSubject.send(.dailyLimit(nextAvailable: timeUntilReset))
-                    return .failedToCreateChapter
-                }
-            } else {
-                // Free user - check free limit
-                let remainingCharacters = environment.userLimitEnvironment.getRemainingFreeCharacters()
-                if remainingCharacters <= 0 {
-                    environment.limitReachedSubject.send(.freeLimit)
-                    return .failedToCreateChapter
-                }
+        switch state.settings.subscriptionLevel {
+        case .free:
+            let remainingCharacters = environment.userLimitEnvironment.getRemainingFreeCharacters()
+            if remainingCharacters <= 0 {
+                environment.limitReachedSubject.send(.freeLimit)
+                return .failedToCreateChapter
             }
-            
-            return .generateText(type)
-        } catch {
-            return .failedToCreateChapter
+        default:
+            let remainingCharacters = environment.userLimitEnvironment.getRemainingDailyCharacters(characterLimitPerDay: state.settings.characterLimitPerDay)
+            if remainingCharacters <= 0 {
+                let timeUntilReset = environment.userLimitEnvironment.getTimeUntilNextDailyReset(characterLimitPerDay: state.settings.characterLimitPerDay) ?? "24 hours"
+                environment.limitReachedSubject.send(.dailyLimit(nextAvailable: timeUntilReset))
+                return .failedToCreateChapter
+            }
         }
+        return .generateText(type)
         
     case .generateText(let type):
         do {
@@ -164,16 +155,16 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
             return .createChapter(.existingStory(id))
         }
         return .goToNextChapter
-        
     case .failedToLoadStoriesAndDefinitions,
             .failedToDeleteStory,
             .failedToSaveChapter,
             .onSavedChapter,
             .onDeletedStory,
             .failedToCreateChapter,
-            .onLoadedStories,
             .onCreatedChapter,
-            .selectChapter:
+            .selectChapter,
+            .onLoadedStories,
+            .refreshSettings:
         return nil
     }
 }

@@ -42,4 +42,6 @@ public enum StoryAction: Sendable {
     case selectChapter(Chapter)
     
     case playSound(AppSound)
+    
+    case refreshSettings(SettingsState)
 }

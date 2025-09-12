@@ -24,7 +24,9 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
     public let textPracticeEnvironment: TextPracticeEnvironmentProtocol
     public let translationDataStore: TranslationDataStoreProtocol
     public let userLimitEnvironment: UserLimitEnvironmentProtocol
-    public let limitReachedSubject: PassthroughSubject<LimitReachedEvent, Never>
+    public var limitReachedSubject: CurrentValueSubject<LimitReachedEvent, Never> {
+        userLimitEnvironment.limitReachedSubject
+    }
     
     public init(
         speechRepository: SpeechRepositoryProtocol,
@@ -46,7 +48,6 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
         self.settingsEnvironment = settingsEnvironment
         self.textPracticeEnvironment = textPracticeEnvironment
         self.userLimitEnvironment = userLimitEnvironment
-        self.limitReachedSubject = PassthroughSubject<LimitReachedEvent, Never>()
         self.translationDataStore = TranslationDataStore()
     }
     

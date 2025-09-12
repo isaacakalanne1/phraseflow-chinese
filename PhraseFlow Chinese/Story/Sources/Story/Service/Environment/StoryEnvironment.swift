@@ -24,12 +24,18 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     public let loadingEnvironment: LoadingEnvironmentProtocol
     public let textPracticeEnvironment: TextPracticeEnvironmentProtocol
     public let userLimitEnvironment: UserLimitEnvironmentProtocol
-    public let limitReachedSubject: PassthroughSubject<LimitReachedEvent, Never>
+    public var limitReachedSubject: CurrentValueSubject<LimitReachedEvent, Never> {
+        userLimitEnvironment.limitReachedSubject
+    }
     private let settingsEnvironment: SettingsEnvironmentProtocol
     private let speechEnvironment: SpeechEnvironmentProtocol
     private let service: TextGenerationServicesProtocol
     private let imageGenerationService: ImageGenerationServicesProtocol
     private let dataStore: StoryDataStoreProtocol
+
+    public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> {
+        settingsEnvironment.settingsUpdatedSubject
+    }
     
     public init(
         audioEnvironment: AudioEnvironmentProtocol,
@@ -50,7 +56,6 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         self.textPracticeEnvironment = textPracticeEnvironment
         self.loadingEnvironment = loadingEnvironment
         self.userLimitEnvironment = userLimitEnvironment
-        self.limitReachedSubject = PassthroughSubject<LimitReachedEvent, Never>()
         self.service = service
         self.imageGenerationService = imageGenerationService
         self.dataStore = dataStore

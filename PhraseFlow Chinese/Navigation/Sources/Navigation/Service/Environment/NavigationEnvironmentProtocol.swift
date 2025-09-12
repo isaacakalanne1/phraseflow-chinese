@@ -13,6 +13,7 @@ import Story
 import Study
 import Subscription
 import Translation
+import UserLimit
 
 public protocol NavigationEnvironmentProtocol {
     var settingsEnvironment: SettingsEnvironmentProtocol { get }
@@ -20,6 +21,7 @@ public protocol NavigationEnvironmentProtocol {
     var studyEnvironment: StudyEnvironmentProtocol { get }
     var subscriptionEnvironment: SubscriptionEnvironmentProtocol { get }
     var translationEnvironment: TranslationEnvironmentProtocol { get }
+    var userLimitEnvironment: UserLimitEnvironmentProtocol { get }
     var audioEnvironment: AudioEnvironmentProtocol { get }
     var loadingEnvironment: LoadingEnvironmentProtocol { get }
     func playSound(_ sound: AppSound)

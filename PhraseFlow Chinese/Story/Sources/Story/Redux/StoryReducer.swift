@@ -96,6 +96,8 @@ let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
         
     case .failedToCreateChapter:
         newState.isWritingChapter = false
+    case .refreshSettings(let settings):
+        newState.settings = settings
     case .loadStories,
          .failedToLoadStoriesAndDefinitions,
          .deleteStory,

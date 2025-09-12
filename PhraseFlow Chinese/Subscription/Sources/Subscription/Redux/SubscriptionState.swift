@@ -7,10 +7,12 @@
 
 import Foundation
 import DataStorage
+import Settings
 import StoreKit
 
 public struct SubscriptionState: Equatable {
     public var isLoadingSubscriptionPurchase = false
+    public var settings = SettingsState()
     public var currentSubscription: SubscriptionLevel {
         #if DEBUG
             .max

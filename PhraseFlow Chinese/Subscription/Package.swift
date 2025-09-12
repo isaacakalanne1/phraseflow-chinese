@@ -21,6 +21,7 @@ let package = Package(
         .package(name: "FTFont", path: "../FTFont"),
         .package(name: "Speech", path: "../Speech"),
         .package(name: "UserLimit", path: "../UserLimit"),
+        .package(name: "Settings", path: "../Settings"),
         .package(name: "DataStorage", path: "../DataStorage")
     ],
     targets: [
@@ -35,6 +36,7 @@ let package = Package(
                 "FTFont",
                 "Speech",
                 "UserLimit",
+                "Settings",
                 "DataStorage"
             ]),
         .testTarget(

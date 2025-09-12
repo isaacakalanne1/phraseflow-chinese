@@ -7,6 +7,7 @@
 
 import Combine
 import DataStorage
+import Settings
 import StoreKit
 import Speech
 import UserLimit
@@ -14,10 +15,15 @@ import UserLimit
 public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
     private let repository: SubscriptionRepositoryProtocol
     private let speechEnvironment: SpeechEnvironmentProtocol
+    private let settingsEnvironment: SettingsEnvironmentProtocol
     private let userLimitsDataStore: UserLimitsDataStoreProtocol
     
     public var synthesizedCharactersSubject: CurrentValueSubject<Int?, Never> {
         speechEnvironment.synthesizedCharactersSubject
+    }
+    
+    public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> {
+        settingsEnvironment.settingsUpdatedSubject
     }
     
     public let currentSubscriptionSubject: CurrentValueSubject<SubscriptionLevel?, Never>
@@ -25,10 +31,12 @@ public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
     public init(
         repository: SubscriptionRepositoryProtocol,
         speechEnvironment: SpeechEnvironmentProtocol,
+        settingsEnvironment: SettingsEnvironmentProtocol,
         userLimitsDataStore: UserLimitsDataStoreProtocol
     ) {
         self.repository = repository
         self.speechEnvironment = speechEnvironment
+        self.settingsEnvironment = settingsEnvironment
         self.userLimitsDataStore = userLimitsDataStore
         self.currentSubscriptionSubject = CurrentValueSubject(nil)
     }
@@ -49,5 +57,9 @@ public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
                                         subscription: SubscriptionLevel?) throws {
         try userLimitsDataStore.trackSSMLCharacterUsage(characterCount: characterCount,
                                                         characterLimitPerDay: subscription?.ssmlCharacterLimitPerDay)
+    }
+    
+    public func saveAppSettings(_ settings: SettingsState) throws {
+        try settingsEnvironment.saveAppSettings(settings)
     }
 }

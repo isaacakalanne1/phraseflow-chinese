@@ -9,6 +9,7 @@ import Foundation
 import TextGeneration
 import Loading
 import TextPractice
+import Settings
 import Study
 
 public struct StoryState: Equatable {
@@ -17,6 +18,7 @@ public struct StoryState: Equatable {
     public var isWritingChapter: Bool = false
     public var viewState: StoryViewState = StoryViewState()
     public var isPlayingChapterAudio = false
+    public var settings: SettingsState = SettingsState()
 
     public init(
         currentChapter: Chapter? = nil,
