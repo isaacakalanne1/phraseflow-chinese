@@ -18,13 +18,11 @@ public struct SettingsRootView: View {
             environment: environment,
             middleware: settingsMiddleware
         )
+        store.dispatch(.loadUsageData)
     }
     
     public var body: some View {
         SettingsView()
             .environmentObject(store)
-            .onAppear {
-                store.dispatch(.loadUsageData)
-            }
     }
 }

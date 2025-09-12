@@ -184,7 +184,6 @@ struct SettingsView: View {
                         Text((store.state.isSubscribedUser == true) ? "Characters Remaining Today" : "Characters Remaining")
                             .font(.caption)
                             .foregroundColor(FTColor.secondary)
-                        
                         if let remainingCharacters = store.state.remainingCharacters {
                             Text("\(remainingCharacters)")
                                 .font(.title2)
@@ -200,7 +199,8 @@ struct SettingsView: View {
                     
                     Spacer()
                     
-                    if store.state.isSubscribedUser == true, let timeUntilReset = store.state.timeUntilReset {
+                    if store.state.isSubscribedUser == true,
+                       let timeUntilReset = store.state.timeUntilReset {
                         VStack(alignment: .trailing, spacing: 4) {
                             Text("Resets in")
                                 .font(.caption)
