@@ -668,3 +668,17 @@
 
 // Definitions (loading progress)
 "definitions_progress" = "Définitions";
+
+// Auto-detect language
+"auto_detect" = "Détection automatique";
+
+// Read tab
+"read" = "Lire";
+
+// 24 hours duration
+"twenty_four_hours" = "24 heures";
+
+// Loading states
+"generating_image" = "Génération d'image...";
+"generating_speech" = "Génération de la parole...";
+"generating_definitions" = "Génération des définitions...";

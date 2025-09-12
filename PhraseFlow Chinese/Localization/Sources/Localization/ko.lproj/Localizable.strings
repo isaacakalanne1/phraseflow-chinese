@@ -668,3 +668,17 @@
 
 // Definitions (loading progress)
 "definitions_progress" = "정의";
+
+// Auto-detect language
+"auto_detect" = "자동 감지";
+
+// Read tab
+"read" = "읽기";
+
+// 24 hours duration
+"twenty_four_hours" = "24시간";
+
+// Loading states
+"generating_image" = "이미지 생성 중...";
+"generating_speech" = "음성 생성 중...";
+"generating_definitions" = "정의 생성 중...";

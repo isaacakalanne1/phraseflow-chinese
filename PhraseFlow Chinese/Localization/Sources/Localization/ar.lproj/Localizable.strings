@@ -672,3 +672,17 @@
 
 // Definitions (loading progress)
 "definitions_progress" = "التعريفات";
+
+// Auto-detect language
+"auto_detect" = "كشف تلقائي";
+
+// Read tab
+"read" = "قراءة";
+
+// 24 hours duration
+"twenty_four_hours" = "24 ساعة";
+
+// Loading states
+"generating_image" = "جاري إنشاء الصورة...";
+"generating_speech" = "جاري إنشاء الكلام...";
+"generating_definitions" = "جاري إنشاء التعريفات...";

@@ -683,3 +683,9 @@
 "image_progress" = "Image";
 "audio_progress" = "Audio";
 "definitions_progress" = "Definitions";
+"auto_detect" = "Auto-Detect";
+"read" = "Read";
+"twenty_four_hours" = "24 hours";
+"generating_image" = "Generating image...";
+"generating_speech" = "Generating speech...";
+"generating_definitions" = "Generating definitions...";

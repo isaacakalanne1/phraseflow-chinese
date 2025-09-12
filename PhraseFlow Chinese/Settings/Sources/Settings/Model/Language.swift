@@ -35,7 +35,7 @@ public enum Language: String, Codable, CaseIterable, Sendable {
     public var descriptiveEnglishName: String {
         switch self {
         case .autoDetect:
-            "Auto-Detect" // TODO: Localize
+            LocalizedString.autoDetect
         case .brazilianPortuguese:
             "Brazilian Portuguese"
         case .europeanPortuguese:
@@ -62,7 +62,7 @@ public enum Language: String, Codable, CaseIterable, Sendable {
     public var displayName: String {
         switch self {
         case .autoDetect:
-            "Auto-Detect" // TODO: Localize
+            LocalizedString.autoDetect
         case .mandarinChinese:
             LocalizedString.chineseMandarin
         case .arabicGulf:

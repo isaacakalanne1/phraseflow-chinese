@@ -7,6 +7,7 @@
 
 import DataStorage
 import Foundation
+import Localization
 
 public enum UserLimitsDataStoreError: Error {
     case freeUserCharacterLimitReached
@@ -160,7 +161,7 @@ public class UserLimitsDataStore: UserLimitsDataStoreProtocol {
         guard totalUsage >= characterLimitPerDay else { return nil }
         
         return records.compactMap(\.timestamp).min()
-            .map(timeRemaining) ?? "24 hours" // TODO: Localize
+            .map(timeRemaining) ?? LocalizedString.twentyFourHours
     }
     
     public func getRemainingDailyCharacters(characterLimitPerDay: Int) -> Int {

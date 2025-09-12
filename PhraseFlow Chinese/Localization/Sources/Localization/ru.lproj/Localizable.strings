@@ -668,3 +668,17 @@
 
 // Definitions (loading progress)
 "definitions_progress" = "Определения";
+
+// Auto-detect language
+"auto_detect" = "Автоопределение";
+
+// Read tab
+"read" = "Читать";
+
+// 24 hours duration
+"twenty_four_hours" = "24 часа";
+
+// Loading states
+"generating_image" = "Создание изображения...";
+"generating_speech" = "Создание речи...";
+"generating_definitions" = "Создание определений...";

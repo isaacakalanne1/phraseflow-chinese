@@ -668,3 +668,17 @@
 
 // Definitions (loading progress)
 "definitions_progress" = "定义";
+
+// Auto-detect language
+"auto_detect" = "自动检测";
+
+// Read tab
+"read" = "阅读";
+
+// 24 hours duration
+"twenty_four_hours" = "24小时";
+
+// Loading states
+"generating_image" = "生成图像中...";
+"generating_speech" = "生成语音中...";
+"generating_definitions" = "生成定义中...";
