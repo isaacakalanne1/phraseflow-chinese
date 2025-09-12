@@ -41,13 +41,9 @@ struct TranslationView: View {
                 showLanguageSelector: $showLanguageSelector,
                 showSourceLanguageSelector: $showSourceLanguageSelector
             )
-            ScrollView {
-                if let chapter = store.state.chapter {
-                    TextPracticeRootView(environment: store.environment.textPracticeEnvironment,
-                                         chapter: chapter,
-                                         type: .translator)
-                }
-            }
+            
+            Spacer()
+            
             TranslationActionButton(isInputFocused: $isInputFocused)
         }
         .padding()
@@ -62,6 +58,16 @@ struct TranslationView: View {
             LanguageMenu(selectedLanguage: sourceLanguage,
                          isEnabled: !store.state.isTranslating,
                          type: .translationSourceLanguage)
+        }
+        .navigationDestination(isPresented: .init(
+            get: { store.state.showTextPractice },
+            set: { store.dispatch(.showTextPractice($0)) }
+        )) {
+            if let chapter = store.state.chapter {
+                TextPracticeRootView(environment: store.environment.textPracticeEnvironment,
+                                     chapter: chapter,
+                                     type: .translator)
+            }
         }
         .onChange(of: inputText, { oldValue, newValue in
             store.dispatch(.updateInputText(newValue))

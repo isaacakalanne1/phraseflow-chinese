@@ -41,4 +41,5 @@ enum TranslationAction {
     case onSavedAppSettings
     case failedToSaveAppSettings
     case updateCurrentSentenceIndex(Int)
+    case showTextPractice(Bool)
 }

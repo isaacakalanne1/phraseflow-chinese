@@ -5,6 +5,7 @@
 //  Created by Isaac Akalanne on 02/09/2025.
 //
 
+import FTColor
 import SwiftUI
 import TextGeneration
 
@@ -26,5 +27,6 @@ struct TextPracticeView: View {
         }
         .padding(10)
         .backgroundImage(type: .main)
+        .background(FTColor.background)
     }
 }

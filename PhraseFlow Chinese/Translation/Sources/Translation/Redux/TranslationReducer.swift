@@ -53,6 +53,7 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         if !chapter.sentences.isEmpty {
             newState.currentSentence = chapter.sentences[0]
         }
+        newState.showTextPractice = true
         
     case .failedToTranslate,
             .failedToBreakdown:
@@ -101,6 +102,7 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         newState.currentSentence = nil
         newState.currentSentenceIndex = 0
         newState.audioPlayer.replaceCurrentItem(with: nil)
+        newState.showTextPractice = false
         // Don't reset source language as it should persist between translations
         
     case .loadTranslationHistory:
@@ -122,6 +124,9 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
            index < chapter.sentences.count {
             newState.currentSentence = chapter.sentences[index]
         }
+        
+    case .showTextPractice(let show):
+        newState.showTextPractice = show
         
     case .playTranslationWord,
             .synthesizeAudio,

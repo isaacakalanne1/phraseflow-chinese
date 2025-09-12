@@ -27,6 +27,7 @@ struct TranslationState: Equatable {
     var savedTranslations: [Chapter] = []
     var isLoadingHistory: Bool = false
     var currentSentenceIndex: Int = 0
+    var showTextPractice: Bool = false
     
     init() {}
     

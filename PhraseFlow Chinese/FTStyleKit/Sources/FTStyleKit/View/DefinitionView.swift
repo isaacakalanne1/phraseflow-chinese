@@ -69,6 +69,7 @@ public struct DefinitionView: View {
                         .font(FTFont.flowTaleSecondaryHeader())
                         .foregroundColor(FTColor.secondary)
                     ProgressView()
+                        .progressViewStyle(.circular)
                         .padding()
                         .foregroundStyle(FTColor.primary)
                 }

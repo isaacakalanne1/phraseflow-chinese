@@ -48,14 +48,6 @@ struct CharacterView: View {
                             Color.clear
                         }
                     }
-
-                if isTappedWord && !hasDefinition {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .padding(4)
-                        .background(FTColor.background.opacity(0.7))
-                        .cornerRadius(8)
-                }
             }
         }
         .simultaneousGesture(
