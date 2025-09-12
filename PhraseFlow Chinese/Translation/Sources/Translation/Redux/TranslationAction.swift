@@ -20,7 +20,7 @@ enum TranslationAction {
     case breakdownText
     case translationInProgress(Bool)
     case synthesizeAudio(Chapter, Language)
-    case onSynthesizedTranslationAudio(Chapter, initialDefinitions: [Definition])
+    case onSynthesizedTranslationAudio(Chapter)
     case failedToSynthesizeAudio
     case failedToTranslate
     case failedToBreakdown
@@ -29,11 +29,6 @@ enum TranslationAction {
     case updateTranslationPlayTime
     case selectTranslationWord(WordTimeStampData)
     case playTranslationWord(WordTimeStampData)
-    case defineTranslationWord(WordTimeStampData)
-    case translationDefiningInProgress(Bool)
-    case onDefinedTranslationWord(Definition)
-    case failedToDefineTranslationWord
-    case clearTranslationDefinition
     case clearTranslation
     case saveCurrentTranslation
     case loadTranslationHistory
@@ -45,8 +40,5 @@ enum TranslationAction {
     case saveAppSettings
     case onSavedAppSettings
     case failedToSaveAppSettings
-    case loadDefinitionsForTranslation(Chapter, sentenceIndex: Int)
-    case onLoadedTranslationDefinitions([Definition], chapter: Chapter, sentenceIndex: Int)
-    case failedToLoadTranslationDefinitions
     case updateCurrentSentenceIndex(Int)
 }

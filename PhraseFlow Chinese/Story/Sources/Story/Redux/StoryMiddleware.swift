@@ -44,12 +44,11 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
             return .failedToCreateChapter
         }
     
-    case .loadStoriesAndDefinitions:
+    case .loadStories:
         do {
             // Load all chapters directly
             let chapters = try environment.loadAllChapters()
-            let definitions = try environment.loadDefinitions()
-            return .onLoadedStoriesAndDefitions(chapters, definitions)
+            return .onLoadedStories(chapters)
         } catch {
             return .failedToLoadStoriesAndDefinitions
         }
@@ -83,15 +82,16 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
         return nil
         
     case .onCreatedChapter(let chapter):
-        // Load definitions for the chapter after creation, starting with first sentence
-        return .loadDefinitionsForChapter(chapter, sentenceIndex: 0)
+        // Chapter creation handled - definitions will be loaded by TextPractice
+        return nil
         
     case .selectWord(let word, let shouldPlay):
         await environment.playWord(word, rate: SpeechSpeed.normal.playRate)
         return nil
         
     case .selectChapter(let chapter):
-        return .loadDefinitionsForChapter(chapter, sentenceIndex: 0)
+        // Chapter selection handled - definitions will be loaded by TextPractice
+        return nil
     case .updateSpeechSpeed(let speed):
         do {
             try environment.updateSpeechSpeed(speed)
@@ -104,50 +104,6 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
         environment.playSound(sound)
         return nil
         
-    case .loadDefinitionsForChapter(let chapter, let sentenceIndex):
-        // Check if sentenceIndex is valid
-        guard sentenceIndex < chapter.sentences.count else {
-            return nil
-        }
-        
-        let sentence = chapter.sentences[sentenceIndex]
-        
-        // Check if definitions already exist for all words in this sentence
-        let wordsInSentence = sentence.timestamps.map { $0.word }
-        let existingDefinitions = wordsInSentence.compactMap { word in
-            let key = DefinitionKey(word: word, sentenceId: sentence.id)
-            return state.definitions[key]
-        }
-        
-        // If we have definitions for all words in the sentence, skip fetching
-        if existingDefinitions.count == wordsInSentence.count {
-            return .onLoadedDefinitions(existingDefinitions, chapter: chapter, sentenceIndex: sentenceIndex)
-        }
-
-        do {
-            let sentenceDefinitions = try await environment.studyEnvironment.fetchDefinitions(
-                in: sentence,
-                chapter: chapter,
-                deviceLanguage: Language.deviceLanguage
-            )
-            try? environment.saveDefinitions(sentenceDefinitions)
-            return .onLoadedDefinitions(sentenceDefinitions, chapter: chapter, sentenceIndex: sentenceIndex)
-        } catch {
-            return .failedToLoadDefinitions
-        }
-        
-    case .onLoadedDefinitions(let definitions, let chapter, let sentenceIndex):
-        // Continue loading definitions for the next sentence
-        let nextIndex = sentenceIndex + 1
-        if nextIndex < chapter.sentences.count {
-            return .loadDefinitionsForChapter(chapter, sentenceIndex: nextIndex)
-        } else {
-            // All sentences processed, save the chapter if it's the current one
-            if state.currentChapter?.id == chapter.id {
-                return .saveChapter(chapter)
-            }
-        }
-        return nil
     case .beginGetNextChapter:
         if state.isLastChapter,
            let id = state.currentChapter?.storyId {
@@ -161,9 +117,8 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
             .updateCurrentSentence,
             .onSavedChapter,
             .onDeletedStory,
-            .failedToLoadDefinitions,
             .failedToCreateChapter,
-            .onLoadedStoriesAndDefitions:
+            .onLoadedStories:
         return nil
     }
 }

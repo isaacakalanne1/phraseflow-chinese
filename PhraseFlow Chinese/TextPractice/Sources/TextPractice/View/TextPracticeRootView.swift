@@ -13,19 +13,19 @@ import Study
 
 public struct TextPracticeRootView: View {
     private let store: TextPracticeStore
+    private let chapter: Chapter
     
     public init(
         environment: TextPracticeEnvironmentProtocol,
         chapter: Chapter,
-        definitions: [DefinitionKey: Definition],
         type: TextPracticeType,
         isViewingLastChapter: Bool = false
     ) {
+        self.chapter = chapter
         self.store = Store(
             initial: TextPracticeState(
                 isViewingLastChapter: isViewingLastChapter,
                 chapter: chapter,
-                definitions: definitions,
                 textPracticeType: type
             ),
             reducer: textPracticeReducer,
@@ -40,7 +40,8 @@ public struct TextPracticeRootView: View {
             .environmentObject(store)
             .onAppear {
                 store.dispatch(.loadAppSettings)
-                store.dispatch(.prepareToPlayChapter(store.state.chapter))
+                store.dispatch(.prepareToPlayChapter(chapter))
+                store.dispatch(.setChapter(chapter))
             }
     }
 }

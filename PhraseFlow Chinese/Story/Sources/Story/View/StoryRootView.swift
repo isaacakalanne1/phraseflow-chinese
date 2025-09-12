@@ -19,7 +19,7 @@ public struct StoryRootView: View {
             middleware: storyMiddleware,
             subscriber: storySubscriber
         )
-        store.dispatch(.loadStoriesAndDefinitions)
+        store.dispatch(.loadStories)
     }
     
     public var body: some View {

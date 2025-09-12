@@ -16,6 +16,15 @@ public enum TextPracticeAction: Sendable {
     case showDefinition(WordTimeStampData)
     case hideDefinition
     case selectWord(WordTimeStampData, playAudio: Bool)
+    case playWord(WordTimeStampData)
+    case defineWord(WordTimeStampData)
+    case onDefinedWord(Definition)
+    case failedToDefineWord
+    case clearDefinition
+    
+    case generateDefinitions(Chapter, sentenceIndex: Int)
+    case onGeneratedDefinitions([Definition], chapter: Chapter, sentenceIndex: Int)
+    case failedToLoadDefinitions
     
     case goToNextChapter
     case setPlaybackTime(Double)
@@ -32,4 +41,8 @@ public enum TextPracticeAction: Sendable {
     // Initial loading of app settings
     case loadAppSettings
     case failedToLoadAppSettings
+    
+    // Load existing definitions from storage
+    case loadDefinitions
+    case onLoadedDefinitions([Definition])
 }

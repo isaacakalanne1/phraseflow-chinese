@@ -61,7 +61,7 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             return .failedToBreakdown
         }
         
-        guard let (newChapter, initialDefinitions) = try? await environment.synthesizeSpeech(for: chapter,
+        guard let newChapter = try? await environment.synthesizeSpeech(for: chapter,
                                                                        voice: selectedVoice,
                                                                        language: language) else {
             return .failedToSynthesizeAudio
@@ -87,47 +87,7 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             print("Error creating AVPlayerItem from audio data: \(error)")
         }
         
-        return .onSynthesizedTranslationAudio(newChapter, initialDefinitions: initialDefinitions)
-        
-    case .defineTranslationWord(let wordTimeStampData):
-        return .translationDefiningInProgress(true)
-        
-    case .translationDefiningInProgress:
-        guard let timestampData = state.currentSpokenWord else {
-            return .failedToDefineTranslationWord
-        }
-        
-        // Check if definition already exists through environment
-        // Note: This would require a method to check existing definitions
-        // For now, proceed with fetching new definitions
-        
-        guard let sentence = state.chapter?.sentences.first,
-              let chapter = state.chapter else {
-            return .failedToDefineTranslationWord
-        }
-        
-        
-        
-        guard var definitionsForSentence = try? await environment.fetchDefinitions(
-                in: sentence,
-                chapter: chapter,
-                deviceLanguage: Language.deviceLanguage
-              ) else {
-            return .failedToDefineTranslationWord
-        }
-        
-        guard var definitionOfTappedWord = definitionsForSentence.first(where: { $0.timestampData == timestampData }) else {
-            return .failedToDefineTranslationWord
-        }
-        
-        definitionOfTappedWord.hasBeenSeen = true
-        definitionOfTappedWord.creationDate = .now
-        
-        definitionsForSentence.addDefinitions([definitionOfTappedWord])
-        
-        try? environment.saveDefinitions(definitionsForSentence)
-        
-        return .onDefinedTranslationWord(definitionOfTappedWord)
+        return .onSynthesizedTranslationAudio(newChapter)
         
     case .playTranslationAudio:
         if let lastWord = state.chapter?.sentences.last?.timestamps.last {
@@ -159,11 +119,8 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         await state.audioPlayer.playAudio(fromSeconds: word.time,
                                           toSeconds: word.time + word.duration,
                                           playRate: speechSpeed.playRate)
-        
-        return .defineTranslationWord(word)
-        
-    case .onDefinedTranslationWord:
         return nil
+        
         
     case .saveCurrentTranslation:
         guard let chapter = state.chapter else {
@@ -203,45 +160,7 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             return nil
         }
         
-    case .loadDefinitionsForTranslation(let chapter, let sentenceIndex):
-        guard sentenceIndex < chapter.sentences.count else {
-            return nil
-        }
-        
-        let sentence = chapter.sentences[sentenceIndex]
-        let existingDefinitions = sentence.timestamps.compactMap { timestamp in
-            let key = DefinitionKey(word: timestamp.word, sentenceId: sentence.id)
-            return state.definitions[key]
-        }
-        
-        if existingDefinitions.count == sentence.timestamps.count {
-            return .onLoadedTranslationDefinitions(existingDefinitions, chapter: chapter, sentenceIndex: sentenceIndex)
-        }
-        
-        do {
-            let definitions = try await environment.fetchDefinitions(
-                in: sentence,
-                chapter: chapter,
-                deviceLanguage: Language.deviceLanguage
-            )
-            return .onLoadedTranslationDefinitions(definitions, chapter: chapter, sentenceIndex: sentenceIndex)
-        } catch {
-            return .failedToLoadTranslationDefinitions
-        }
-        
-    case .onLoadedTranslationDefinitions(_, let chapter, let sentenceIndex):
-        let nextIndex = sentenceIndex + 1
-        if nextIndex < chapter.sentences.count {
-            return .loadDefinitionsForTranslation(chapter, sentenceIndex: nextIndex)
-        }
-        return nil
-        
-    case .onSynthesizedTranslationAudio(let chapter, _):
-        // Start loading from index 3 since first 3 sentences are already loaded during synthesis
-        let startIndex = min(3, chapter.sentences.count)
-        if startIndex < chapter.sentences.count {
-            return .loadDefinitionsForTranslation(chapter, sentenceIndex: startIndex)
-        }
+    case .onSynthesizedTranslationAudio(let chapter):
         return nil
     case .updateSourceLanguage,
             .updateTargetLanguage:
@@ -261,13 +180,10 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             .failedToSynthesizeAudio,
             .failedToTranslate,
             .failedToBreakdown,
-            .failedToDefineTranslationWord,
-            .clearTranslationDefinition,
             .clearTranslation,
             .onTranslationsSaved,
             .onTranslationsLoaded,
             .onLoadAppSettings,
-            .failedToLoadTranslationDefinitions,
             .updateCurrentSentenceIndex,
             .onSavedAppSettings,
             .failedToSaveAppSettings:

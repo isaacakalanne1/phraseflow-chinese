@@ -21,15 +21,12 @@ struct TranslationState: Equatable {
     var isPlayingAudio: Bool = false
     var currentPlaybackTime: Double = 0
     var currentSpokenWord: WordTimeStampData?
-    var currentDefinition: Definition?
     var settings: SettingsState = .init()
     var currentSentence: Sentence?
     var mode: TranslationMode = .translate
     var savedTranslations: [Chapter] = []
     var isLoadingHistory: Bool = false
     var currentSentenceIndex: Int = 0
-    var isLoadingDefinitions: Bool = false
-    var definitions: [DefinitionKey: Definition] = [:]
     
     init() {}
     

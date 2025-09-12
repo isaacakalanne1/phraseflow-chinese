@@ -128,13 +128,84 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
             }
         }
         return nil
-    case .setChapter,
-            .addDefinitions,
+    case .generateDefinitions(let chapter, let sentenceIndex):
+        // Check if sentenceIndex is valid
+        guard sentenceIndex < chapter.sentences.count else {
+            return nil
+        }
+        
+        let sentence = chapter.sentences[sentenceIndex]
+        
+        // Check if definitions already exist for all words in this sentence
+        let wordsInSentence = sentence.timestamps.map { $0.word }
+        let existingDefinitions = wordsInSentence.compactMap { word in
+            let key = DefinitionKey(word: word, sentenceId: sentence.id)
+            return state.definitions[key]
+        }
+        
+        // If we have definitions for all words in the sentence, skip fetching
+        if existingDefinitions.count == wordsInSentence.count {
+            return .onGeneratedDefinitions(existingDefinitions, chapter: chapter, sentenceIndex: sentenceIndex)
+        }
+
+        do {
+            let sentenceDefinitions = try await environment.studyEnvironment.fetchDefinitions(
+                in: sentence,
+                chapter: chapter,
+                deviceLanguage: Language.deviceLanguage
+            )
+            try? environment.saveDefinitions(sentenceDefinitions)
+            return .onGeneratedDefinitions(sentenceDefinitions, chapter: chapter, sentenceIndex: sentenceIndex)
+        } catch {
+            return .failedToLoadDefinitions
+        }
+        
+    case .onGeneratedDefinitions(let definitions, let chapter, let sentenceIndex):
+        let nextIndex = sentenceIndex + 1
+        if nextIndex < chapter.sentences.count {
+            return .generateDefinitions(chapter, sentenceIndex: nextIndex)
+        }
+        return nil
+        
+    case .setChapter(let chapter):
+        // Load definitions for the chapter when it's set
+        return .loadDefinitions
+        
+    case .loadDefinitions:
+        do {
+            let definitions = try environment.loadDefinitions()
+            return .onLoadedDefinitions(definitions)
+        } catch {
+            return nil
+        }
+        
+    case .onLoadedDefinitions:
+        return .generateDefinitions(state.chapter, sentenceIndex: 0)
+        
+    case .playWord(let word):
+        await environment.playWord(word, rate: state.settings.speechSpeed.playRate)
+        return nil
+        
+    case .defineWord(let word):
+        // Find the definition for this word in the current sentence
+        if let currentSentence = state.chapter.currentSentence {
+            let key = DefinitionKey(word: word.word, sentenceId: currentSentence.id)
+            if let definition = state.definitions[key] {
+                return .onDefinedWord(definition)
+            }
+        }
+        return .failedToDefineWord
+        
+    case .addDefinitions,
             .setPlaybackTime,
             .updateCurrentSentence,
             .refreshSettings,
             .failedToLoadAppSettings,
-            .hideDefinition:
+            .hideDefinition,
+            .failedToLoadDefinitions,
+            .onDefinedWord,
+            .failedToDefineWord,
+            .clearDefinition:
         return nil
     }
 }

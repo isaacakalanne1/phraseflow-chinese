@@ -15,19 +15,13 @@ let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
     var newState = state
 
     switch action {
-    case .onLoadedStoriesAndDefitions(let chapters, let definitions):
+    case .onLoadedStories(let chapters):
         let uniqueStoryIds = Set(chapters.map { $0.storyId })
         uniqueStoryIds.forEach { storyId in
             newState.storyChapters[storyId] = []
         }
         for chapter in chapters {
             newState.storyChapters[chapter.storyId]?.append(chapter)
-        }
-        
-        // Load definitions into state
-        for definition in definitions {
-            let key = DefinitionKey(word: definition.timestampData.word, sentenceId: definition.sentence.id)
-            newState.definitions[key] = definition
         }
         
         // Sort chapters by last updated for each story
@@ -111,12 +105,7 @@ let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
         
     case .failedToCreateChapter:
         newState.isWritingChapter = false
-    case .onLoadedDefinitions(let definitions, _, _):
-        for definition in definitions {
-            let key = DefinitionKey(word: definition.timestampData.word, sentenceId: definition.sentence.id)
-            newState.definitions[key] = definition
-        }
-    case .loadStoriesAndDefinitions,
+    case .loadStories,
          .failedToLoadStoriesAndDefinitions,
          .deleteStory,
          .failedToDeleteStory,
@@ -124,8 +113,6 @@ let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
          .failedToSaveChapter,
          .updateSpeechSpeed,
          .playSound,
-         .loadDefinitionsForChapter,
-         .failedToLoadDefinitions,
          .beginGetNextChapter:
         break
     }

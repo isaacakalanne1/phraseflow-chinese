@@ -16,8 +16,8 @@ public enum StoryAction: Sendable {
     case onCreatedChapter(Chapter)
     case failedToCreateChapter
 
-    case loadStoriesAndDefinitions
-    case onLoadedStoriesAndDefitions([Chapter], [Definition])
+    case loadStories
+    case onLoadedStories([Chapter])
     case failedToLoadStoriesAndDefinitions
 
     case deleteStory(UUID)
@@ -38,8 +38,4 @@ public enum StoryAction: Sendable {
     
     case updateSpeechSpeed(SpeechSpeed)
     case playSound(AppSound)
-    
-    case loadDefinitionsForChapter(Chapter, sentenceIndex: Int)
-    case onLoadedDefinitions([Definition], chapter: Chapter, sentenceIndex: Int)
-    case failedToLoadDefinitions
 }

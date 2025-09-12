@@ -22,8 +22,7 @@ public protocol TranslationEnvironmentProtocol {
     
     func translateText(_ text: String, from sourceLanguage: Language?, to targetLanguage: Language) async throws -> Chapter
     func breakdownText(_ text: String, textLanguage: Language, deviceLanguage: Language) async throws -> Chapter
-    func synthesizeSpeech(for chapter: Chapter, voice: Voice, language: Language) async throws -> (chapter: Chapter, initialDefinitions: [Definition])
-    func fetchDefinitions(in sentence: Sentence?, chapter: Chapter, deviceLanguage: Language) async throws -> [Definition]
+    func synthesizeSpeech(for chapter: Chapter, voice: Voice, language: Language) async throws -> Chapter
     func saveDefinitions(_ definitions: [Definition]) throws
     func saveSentenceAudio(_ audioData: Data, id: UUID) throws
     func getAppSettings() throws -> SettingsState

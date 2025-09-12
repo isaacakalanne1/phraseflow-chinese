@@ -11,17 +11,6 @@ import ReduxKit
 @MainActor
 let textPracticeSubscriber: OnSubscribe<TextPracticeStore, TextPracticeEnvironmentProtocol> = { store, environment in
 
-    environment.chapterSubject
-            .receive(on: DispatchQueue.main)
-            .sink { [weak store] chapter in
-                guard let store,
-                      let chapter else {
-                    return
-                }
-                store.dispatch(.setChapter(chapter))
-            }
-            .store(in: &store.subscriptions)
-
     environment.definitionsSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak store] definitions in

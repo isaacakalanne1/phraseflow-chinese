@@ -64,12 +64,13 @@ public struct DefinitionView: View {
                 .padding()
             } else if isLoading {
                 // Loading state when no definition is available yet
-                VStack {
+                HStack {
                     Text("🔍 \(LocalizedString.loading)")
                         .font(FTFont.flowTaleSecondaryHeader())
                         .foregroundColor(FTColor.secondary)
                     ProgressView()
                         .padding()
+                        .foregroundStyle(FTColor.primary)
                 }
             } else {
                 VStack {

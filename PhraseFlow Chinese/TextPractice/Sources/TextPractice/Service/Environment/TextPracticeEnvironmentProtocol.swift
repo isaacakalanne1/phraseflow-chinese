@@ -13,19 +13,19 @@ import Settings
 import Study
 
 public protocol TextPracticeEnvironmentProtocol {
-    var chapterSubject: CurrentValueSubject<Chapter?, Never> { get }
     var definitionsSubject: CurrentValueSubject<[Definition]?, Never> { get }
     var goToNextChapterSubject: CurrentValueSubject<Void?, Never> { get }
     var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> { get }
     
     var audioEnvironment: AudioEnvironmentProtocol { get }
+    var studyEnvironment: StudyEnvironmentProtocol { get }
     
     func getAppSettings() throws -> SettingsState
     func saveAppSettings(_ settings: SettingsState) throws
     
     func saveDefinitions(_ definitions: [Definition]) throws
+    func loadDefinitions() throws -> [Definition]
     
-    func setChapter(_ chapter: Chapter?)
     func addDefinitions(_ definitions: [Definition])
     func goToNextChapter()
     

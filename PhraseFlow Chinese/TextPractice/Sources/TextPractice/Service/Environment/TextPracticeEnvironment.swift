@@ -51,8 +51,8 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
         try studyEnvironment.saveDefinitions(definitions)
     }
     
-    public func setChapter(_ chapter: Chapter?) {
-        chapterSubject.send(chapter)
+    public func loadDefinitions() throws -> [Definition] {
+        try studyEnvironment.loadDefinitions()
     }
     
     public func addDefinitions(_ definitions: [Definition]) {

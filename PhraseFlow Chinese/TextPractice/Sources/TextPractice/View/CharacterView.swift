@@ -42,35 +42,10 @@ struct CharacterView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .foregroundStyle(isTappedWord ? FTColor.primary : (word == spokenWord ? FTColor.wordHighlight : FTColor.primary))
                     .background {
-                        if !hasDefinition {
-                            GeometryReader { geometry in
-                                LinearGradient(
-                                    gradient: Gradient(colors: [
-                                        Color.clear,
-                                        FTColor.highlight.opacity(0.4),
-                                        FTColor.highlight.opacity(0.8),
-                                        FTColor.highlight.opacity(0.4),
-                                        Color.clear
-                                    ]),
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                                .frame(width: geometry.size.width * 2, height: geometry.size.height)
-                                .offset(x: shimmerOffset * (geometry.size.width + 50) - geometry.size.width - 25)
-                                .onAppear {
-                                    withAnimation(
-                                        Animation.linear(duration: 1.2)
-                                            .repeatForever(autoreverses: false)
-                                    ) {
-                                        shimmerOffset = 1
-                                    }
-                                }
-                            }
-                            .clipped()
-                        } else if isTappedWord {
+                        if isTappedWord {
                             FTColor.wordHighlight
                         } else if sentence.id == currentSentence?.id {
-                            FTColor.highlight
+                            Color.clear
                         }
                     }
 

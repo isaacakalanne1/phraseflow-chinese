@@ -45,7 +45,6 @@ struct TranslationView: View {
                 if let chapter = store.state.chapter {
                     TextPracticeRootView(environment: store.environment.textPracticeEnvironment,
                                          chapter: chapter,
-                                         definitions: store.state.definitions,
                                          type: .translator)
                 }
             }

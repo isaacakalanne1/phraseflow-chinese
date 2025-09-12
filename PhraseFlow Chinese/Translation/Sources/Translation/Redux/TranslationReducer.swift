@@ -29,7 +29,6 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         newState.mode = mode
         // Clear current translation when switching modes
         newState.chapter = nil
-        newState.currentDefinition = nil
         newState.currentSpokenWord = nil
         newState.currentSentence = nil
         newState.audioPlayer.replaceCurrentItem(with: nil)
@@ -47,17 +46,12 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         
     case .translationInProgress(let isInProgress):
         newState.isTranslating = isInProgress
-    case .onSynthesizedTranslationAudio(let chapter, let initialDefinitions):
+    case .onSynthesizedTranslationAudio(let chapter):
         newState.chapter = chapter
         newState.isTranslating = false
         newState.currentSentenceIndex = 0
         if !chapter.sentences.isEmpty {
             newState.currentSentence = chapter.sentences[0]
-        }
-        // Store the initial definitions that were loaded for the first 3 sentences
-        for definition in initialDefinitions {
-            let key = DefinitionKey(word: definition.word, sentenceId: definition.sentenceId)
-            newState.definitions[key] = definition
         }
         
     case .failedToTranslate,
@@ -98,22 +92,14 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
             newState.currentSentence = sentence
         }
         
-    case .onDefinedTranslationWord(let definition):
-        newState.currentDefinition = definition
-        
-    case .clearTranslationDefinition:
-        newState.currentDefinition = nil
-        
     case .clearTranslation:
         newState.inputText = ""
         newState.chapter = nil
         newState.isTranslating = false
         newState.isPlayingAudio = false
         newState.currentSpokenWord = nil
-        newState.currentDefinition = nil
         newState.currentSentence = nil
         newState.currentSentenceIndex = 0
-        newState.definitions = [:]
         newState.audioPlayer.replaceCurrentItem(with: nil)
         // Don't reset source language as it should persist between translations
         
@@ -130,19 +116,6 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
     case .onLoadAppSettings(let settings):
         newState.settings = settings
         
-    case .loadDefinitionsForTranslation:
-        newState.isLoadingDefinitions = true
-        
-    case .onLoadedTranslationDefinitions(let definitions, _, _):
-        for definition in definitions {
-            let key = DefinitionKey(word: definition.word, sentenceId: definition.sentenceId)
-            newState.definitions[key] = definition
-        }
-        newState.isLoadingDefinitions = false
-        
-    case .failedToLoadTranslationDefinitions:
-        newState.isLoadingDefinitions = false
-        
     case .updateCurrentSentenceIndex(let index):
         newState.currentSentenceIndex = index
         if let chapter = newState.chapter,
@@ -152,9 +125,6 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         
     case .playTranslationWord,
             .synthesizeAudio,
-            .defineTranslationWord,
-            .translationDefiningInProgress,
-            .failedToDefineTranslationWord,
             .failedToSynthesizeAudio,
             .saveCurrentTranslation,
             .deleteTranslation,
