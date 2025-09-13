@@ -42,24 +42,27 @@ struct TranslationView: View {
                 showSourceLanguageSelector: $showSourceLanguageSelector
             )
             
-            ScrollView {
-                ForEach(Array(store.state.savedTranslations.enumerated()),
+            List {
+                ForEach(Array(store.state.savedTranslations.reversed().enumerated()),
                         id: \.offset) { index, translation in
                     Button(action: {
                         store.dispatch(.selectTranslation(translation))
                     }) {
                         translationCard(translation)
-                            .padding(.vertical, 4)
                     }
-                    //                        .buttonStyle(PlainButtonStyle())
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
                 }
-                        .onDelete { indexSet in
-                            for index in indexSet {
-                                let translationToDelete = store.state.savedTranslations[index]
-                                store.dispatch(.deleteTranslation(translationToDelete.storyId))
-                            }
-                        }
+                .onDelete { indexSet in
+                    for index in indexSet {
+                        let translationToDelete = store.state.savedTranslations[index]
+                        store.dispatch(.deleteTranslation(translationToDelete.storyId))
+                    }
+                }
             }
+            .scrollContentBackground(.hidden)
+            .scrollIndicators(.hidden)
             
             TranslationActionButton(isInputFocused: $isInputFocused)
         }

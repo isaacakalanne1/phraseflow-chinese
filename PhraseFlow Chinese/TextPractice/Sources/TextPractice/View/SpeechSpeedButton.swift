@@ -29,6 +29,7 @@ public struct SpeechSpeedButton: View {
                 .foregroundStyle(FTColor.primary)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
+                .frame(width: 70)
                 .background(
                     Capsule()
                         .fill(FTColor.background.opacity(0.9))
