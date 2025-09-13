@@ -81,9 +81,6 @@ let settingsReducer: Reducer<SettingsState, SettingsAction> = { state, action in
         newState.remainingCharacters = remainingCharacters
         newState.timeUntilReset = timeUntilReset
         
-    case .setCharacterLimit(let limit):
-        newState.characterLimitPerDay = limit
-        
     case .updateSubscriptionLevel(let subscriptionLevel):
         newState.subscriptionLevel = subscriptionLevel
         newState.characterLimitPerDay = subscriptionLevel.ssmlCharacterLimitPerDay

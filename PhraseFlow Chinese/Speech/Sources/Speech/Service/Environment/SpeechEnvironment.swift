@@ -14,7 +14,9 @@ public struct SpeechEnvironment: SpeechEnvironmentProtocol {
     public var synthesizedCharactersSubject: CurrentValueSubject<Int?, Never>
     public let speechRepository: SpeechRepositoryProtocol
     
-    public init(speechRepository: SpeechRepositoryProtocol) {
+    public init(
+        speechRepository: SpeechRepositoryProtocol
+    ) {
         synthesizedCharactersSubject = .init(nil)
         self.speechRepository = speechRepository
     }

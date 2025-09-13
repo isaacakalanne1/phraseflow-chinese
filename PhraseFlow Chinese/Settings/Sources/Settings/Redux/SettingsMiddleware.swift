@@ -75,8 +75,7 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
                 timeUntilReset: nil
             )
         }
-    case .setCharacterLimit,
-         .updateSubscriptionLevel:
+    case .updateSubscriptionLevel:
         return .loadUsageData
         
     case .onLoadedUsageData:

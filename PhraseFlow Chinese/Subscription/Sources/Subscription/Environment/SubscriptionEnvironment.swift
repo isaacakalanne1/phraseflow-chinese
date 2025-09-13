@@ -57,6 +57,7 @@ public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
                                         subscription: SubscriptionLevel?) throws {
         try userLimitsDataStore.trackSSMLCharacterUsage(characterCount: characterCount,
                                                         characterLimitPerDay: subscription?.ssmlCharacterLimitPerDay)
+        settingsEnvironment.ssmlCharacterCountSubject.send(characterCount)
     }
     
     public func saveAppSettings(_ settings: SettingsState) throws {

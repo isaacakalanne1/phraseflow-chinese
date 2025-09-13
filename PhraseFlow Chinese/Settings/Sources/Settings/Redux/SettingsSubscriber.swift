@@ -21,4 +21,14 @@ let settingsSubscriber: OnSubscribe<SettingsStore, SettingsEnvironmentProtocol> 
                 store.dispatch(.updateSubscriptionLevel(subscriptionLevel))
             }
             .store(in: &store.subscriptions)
+    
+    environment.ssmlCharacterCountSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak store] _ in
+                guard let store else {
+                    return
+                }
+                store.dispatch(.loadUsageData)
+            }
+            .store(in: &store.subscriptions)
 }

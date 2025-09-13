@@ -14,6 +14,7 @@ import DataStorage
 public struct SettingsEnvironment: SettingsEnvironmentProtocol {
     public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never>
     public var subscriptionLevelSubject: CurrentValueSubject<SubscriptionLevel?, Never>
+    public var ssmlCharacterCountSubject: CurrentValueSubject<Int?, Never>
     public let userLimitEnvironment: UserLimitEnvironmentProtocol
     
     private let settingsDataStore: SettingsDataStoreProtocol
@@ -29,6 +30,7 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
         self.userLimitEnvironment = userLimitEnvironment
         settingsUpdatedSubject = .init(nil)
         subscriptionLevelSubject = .init(nil)
+        ssmlCharacterCountSubject = .init(nil)
     }
     
     public var currentVoice: Voice {
