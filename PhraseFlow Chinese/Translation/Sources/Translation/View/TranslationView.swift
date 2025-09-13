@@ -8,6 +8,7 @@
 import SwiftUI
 import FTColor
 import Settings
+import TextGeneration
 import TextPractice
 
 struct TranslationView: View {
@@ -41,26 +42,24 @@ struct TranslationView: View {
                 showSourceLanguageSelector: $showSourceLanguageSelector
             )
             
-            List {
-                Section {
-                    ForEach(Array(store.state.savedTranslations.enumerated()),
-                            id: \.offset) { index, translation in
-                        let reducedSentences = translation.sentences.reduce("") { $0 + " " + $1.original }
-                        Button(action: {
-                            store.dispatch(.selectTranslation(translation))
-                        }) {
-                            Text(reducedSentences)
-                        }
+            ScrollView {
+                ForEach(Array(store.state.savedTranslations.enumerated()),
+                        id: \.offset) { index, translation in
+                    Button(action: {
+                        store.dispatch(.selectTranslation(translation))
+                    }) {
+                        translationCard(translation)
+                            .padding(.vertical, 4)
                     }
-                    .onDelete { indexSet in
-                        for index in indexSet {
-                            let translationToDelete = store.state.savedTranslations[index]
-                            store.dispatch(.deleteTranslation(translationToDelete.storyId))
-                        }
-                    }
+                    //                        .buttonStyle(PlainButtonStyle())
                 }
+                        .onDelete { indexSet in
+                            for index in indexSet {
+                                let translationToDelete = store.state.savedTranslations[index]
+                                store.dispatch(.deleteTranslation(translationToDelete.storyId))
+                            }
+                        }
             }
-            .scrollContentBackground(.hidden)
             
             TranslationActionButton(isInputFocused: $isInputFocused)
         }
@@ -91,6 +90,62 @@ struct TranslationView: View {
             store.dispatch(.updateInputText(newValue))
         })
         .ignoresSafeArea(.keyboard, edges: .bottom)
+    }
+    
+    @ViewBuilder
+    private func translationCard(_ translation: Chapter) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text(translation.deviceLanguage.flagEmoji)
+                    .font(.system(size: 20))
+                
+                Image(systemName: "arrow.right")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(FTColor.primary.opacity(0.5))
+                
+                Text(translation.language.flagEmoji)
+                    .font(.system(size: 20))
+                
+                Spacer()
+                
+                Text(translation.lastUpdated, style: .relative)
+                    .font(.caption)
+                    .foregroundColor(FTColor.primary.opacity(0.6))
+            }
+            
+            VStack(alignment: .leading, spacing: 6) {
+                Text(translation.sentences.prefix(2).map { $0.original }.joined(separator: " "))
+                    .font(.system(size: 15, weight: .medium))
+                    .foregroundColor(FTColor.primary)
+                    .lineLimit(2)
+                
+                Text(translation.sentences.prefix(2).map { $0.translation }.joined(separator: " "))
+                    .font(.system(size: 14))
+                    .foregroundColor(FTColor.primary.opacity(0.8))
+                    .lineLimit(2)
+            }
+            
+            HStack {
+                HStack(spacing: 4) {
+                    Image(systemName: "text.line.first.and.arrowtriangle.forward")
+                        .font(.caption2)
+                    Text("\(translation.sentences.count) sentences")
+                        .font(.caption2)
+                }
+                .foregroundColor(FTColor.primary.opacity(0.6))
+                
+                Spacer()
+            }
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(FTColor.background)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(FTColor.primary.opacity(0.1), lineWidth: 1)
+                )
+        )
     }
 }
 

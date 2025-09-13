@@ -21,6 +21,7 @@ public struct Chapter: Codable, Equatable, Hashable, Sendable {
     // Story-level properties moved to Chapter
     public var chapterSummary: String
     public let difficulty: Difficulty
+    public let deviceLanguage: Language
     public let language: Language
     public var storyTitle: String
     public var currentPlaybackTime: Double = 0
@@ -51,6 +52,7 @@ public struct Chapter: Codable, Equatable, Hashable, Sendable {
         passage: String,
         chapterSummary: String = "",
         difficulty: Difficulty = .beginner,
+        deviceLanguage: Language,
         language: Language,
         storyTitle: String = "",
         currentPlaybackTime: Double = 0,
@@ -68,6 +70,7 @@ public struct Chapter: Codable, Equatable, Hashable, Sendable {
         self.passage = passage
         self.chapterSummary = chapterSummary
         self.difficulty = difficulty
+        self.deviceLanguage = deviceLanguage
         self.language = language
         self.storyTitle = storyTitle
         self.currentPlaybackTime = currentPlaybackTime
@@ -92,6 +95,7 @@ public struct Chapter: Codable, Equatable, Hashable, Sendable {
         self.passage = (try? container.decode(String.self, forKey: .passage)) ?? sentences.reduce("") { $0 + newLine + $1.original }
         self.chapterSummary = (try? container.decode(String.self, forKey: .chapterSummary)) ?? ""
         self.difficulty = (try? container.decode(Difficulty.self, forKey: .difficulty)) ?? .beginner
+        self.deviceLanguage = (try? container.decode(Language.self, forKey: .deviceLanguage)) ?? .english
         self.language = (try? container.decode(Language.self, forKey: .language)) ?? .english
         self.storyTitle = (try? container.decode(String.self, forKey: .storyTitle)) ?? ""
         self.currentPlaybackTime = (try? container.decode(Double.self, forKey: .currentPlaybackTime)) ?? 0

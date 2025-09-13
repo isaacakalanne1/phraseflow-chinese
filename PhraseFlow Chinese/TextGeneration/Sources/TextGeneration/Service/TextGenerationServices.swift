@@ -39,6 +39,7 @@ public class TextGenerationServices: TextGenerationServicesProtocol {
                 audio: ChapterAudio(data: Data()),
                 passage: "",
                 difficulty: difficulty,
+                deviceLanguage: deviceLanguage,
                 language: language,
                 storyPrompt: storyPrompt
             )
@@ -75,11 +76,11 @@ public class TextGenerationServices: TextGenerationServicesProtocol {
             
             let jsonString = try await generateChapterRequest(previousChapters: previousChapters,
                                                               deviceLanguage: deviceLanguage)
-            guard let jsonData = jsonString.data(using: .utf8) else {
+            guard let jsonData = jsonString.data(using: .utf8),
+                  let baseChapter = previousChapters.last else {
                 throw TextGenerationServicesError.failedToGetResponseData
             }
-            
-            let baseChapter = previousChapters.last ?? Chapter(storyId: UUID(), title: "", sentences: [], audioVoice: .xiaoxiao, audio: ChapterAudio(data: Data()), passage: "", language: .mandarinChinese)
+
             let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguageKey: deviceLanguage.rawValue, targetLanguageKey: baseChapter.language.rawValue)
             let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
             let passage = chapterResponse.sentences.reduce("") { $0 + $1.original }

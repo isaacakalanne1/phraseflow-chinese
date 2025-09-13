@@ -53,6 +53,7 @@ class TranslationServices: TranslationServicesProtocol {
                        audioVoice: targetLanguage.voices.first ?? .xiaoxiao,
                        audio: .init(data: Data()),
                        passage: passage,
+                       deviceLanguage: deviceLanguage,
                        language: targetLanguage)
     }
 }
