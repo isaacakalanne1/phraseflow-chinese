@@ -6,12 +6,10 @@
 //
 
 import FTColor
+import FTStyleKit
 import SwiftUI
-import TextGeneration
 
 struct TextPracticeView: View {
-    @EnvironmentObject var store: TextPracticeStore
-
     var body: some View {
         VStack(spacing: 16) {
             AIStatementView()

@@ -68,8 +68,6 @@ public class SpeechRepository: SpeechRepositoryProtocol {
 
             let newTimestamp = WordTimeStampData(
                 id: UUID(),
-                storyId: chapter.storyId,
-                chapterIndex: 0,
                 word: cleanedWord,
                 time: audioTimeInSeconds,
                 duration: event.duration

@@ -8,10 +8,7 @@
 import Foundation
 import AVKit
 import Settings
-import Study
-import Story
 import TextGeneration
-import TextPractice
 
 struct TranslationState: Equatable {
     var inputText: String = ""
@@ -25,7 +22,6 @@ struct TranslationState: Equatable {
     var currentSentence: Sentence?
     var savedTranslations: [Chapter] = []
     var isLoadingHistory: Bool = false
-    var currentSentenceIndex: Int = 0
     var showTextPractice: Bool = false
     
     init() {}

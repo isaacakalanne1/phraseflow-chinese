@@ -7,7 +7,6 @@
 
 import Foundation
 import Settings
-import Study
 import TextGeneration
 
 enum TranslationAction {

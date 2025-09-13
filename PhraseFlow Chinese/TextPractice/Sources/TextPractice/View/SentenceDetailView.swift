@@ -7,7 +7,6 @@
 
 import FTStyleKit
 import SwiftUI
-import TextGeneration
 import Study
 
 public struct SentenceDetailView: View {

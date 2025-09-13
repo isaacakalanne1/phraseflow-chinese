@@ -67,9 +67,10 @@ struct UserLimitView: View {
                                     .frame(height: 6)
                                     .cornerRadius(3)
                                 
+                                let width = geometry.size.width * CGFloat(remainingCharacters) / CGFloat(totalLimit)
                                 Rectangle()
                                     .fill(remainingCharacters > 0 ? FTColor.primary : .red)
-                                    .frame(width: geometry.size.width * CGFloat(remainingCharacters) / CGFloat(totalLimit), height: 6)
+                                    .frame(width: width > 0 ? width : 0, height: 6)
                                     .cornerRadius(3)
                                     .animation(.easeInOut(duration: 0.3), value: remainingCharacters)
                             }

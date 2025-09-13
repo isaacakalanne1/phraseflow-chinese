@@ -38,22 +38,6 @@ public struct MainContentView: View {
         }
         .background(FTColor.background)
         .environmentObject(store)
-        .sheet(isPresented: Binding<Bool>(
-            get: { store.state.isShowingFreeLimitExplanation },
-            set: { _ in store.dispatch(.dismissLimitExplanation) }
-        )) {
-            FreeLimitExplanationView {
-                store.dispatch(.dismissLimitExplanation)
-            }
-        }
-        .sheet(isPresented: Binding<Bool>(
-            get: { store.state.isShowingDailyLimitExplanation },
-            set: { _ in store.dispatch(.dismissLimitExplanation) }
-        )) {
-            DailyLimitExplanationView(nextAvailable: store.state.dailyLimitNextAvailable) {
-                store.dispatch(.dismissLimitExplanation)
-            }
-        }
     }
 }
 

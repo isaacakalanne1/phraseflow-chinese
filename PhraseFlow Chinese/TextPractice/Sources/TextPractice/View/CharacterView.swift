@@ -12,7 +12,6 @@ import TextGeneration
 
 struct CharacterView: View {
     @EnvironmentObject var store: TextPracticeStore
-    @State private var shimmerOffset: CGFloat = -1
 
     let word: WordTimeStampData
     let sentence: Sentence
@@ -27,11 +26,6 @@ struct CharacterView: View {
 
     var currentSentence: Sentence? {
         store.state.chapter.currentSentence
-    }
-
-    var hasDefinition: Bool {
-        let key = DefinitionKey(word: word.word, sentenceId: sentence.id)
-        return store.state.definitions[key] != nil
     }
 
     var body: some View {

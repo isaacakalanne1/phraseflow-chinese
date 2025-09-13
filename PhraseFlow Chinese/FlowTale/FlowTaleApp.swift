@@ -79,8 +79,7 @@ public struct FlowTaleRootView: View {
             audioEnvironment: audioEnvironment,
             settingsEnvironment: settingsEnvironment,
             textPracticeEnvironment: textPracticeEnvironment,
-            userLimitEnvironment: userLimitEnvironment,
-            settingsDataStore: settingsDataStore
+            userLimitEnvironment: userLimitEnvironment
         )
         
         let textGenerationServices = TextGenerationServices()

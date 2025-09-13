@@ -10,7 +10,6 @@ import SwiftUI
 import TextGeneration
 
 struct StoryInfoView: View {
-    @EnvironmentObject var store: TextPracticeStore
     let chapter: Chapter
 
     var body: some View {

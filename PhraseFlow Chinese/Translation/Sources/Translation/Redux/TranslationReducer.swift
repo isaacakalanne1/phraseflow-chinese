@@ -8,8 +8,6 @@
 import Foundation
 import ReduxKit
 import AVKit
-import Story
-import TextPractice
 
 @MainActor
 let translationReducer: Reducer<TranslationState, TranslationAction> = { state, action in
@@ -40,7 +38,6 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
     case .onSynthesizedTranslationAudio(let chapter):
         newState.chapter = chapter
         newState.isTranslating = false
-        newState.currentSentenceIndex = 0
         if !chapter.sentences.isEmpty {
             newState.currentSentence = chapter.sentences[0]
         }
@@ -90,7 +87,6 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         newState.isPlayingAudio = false
         newState.currentSpokenWord = nil
         newState.currentSentence = nil
-        newState.currentSentenceIndex = 0
         newState.audioPlayer.replaceCurrentItem(with: nil)
         newState.showTextPractice = false
         // Don't reset source language as it should persist between translations

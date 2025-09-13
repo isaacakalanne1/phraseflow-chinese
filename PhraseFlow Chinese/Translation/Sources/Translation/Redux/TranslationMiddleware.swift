@@ -11,8 +11,6 @@ import ReduxKit
 import AVKit
 import AVFoundation
 import Settings
-import Story
-import TextPractice
 import UserLimit
 
 @MainActor

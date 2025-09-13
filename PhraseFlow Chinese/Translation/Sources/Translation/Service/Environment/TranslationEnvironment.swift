@@ -19,7 +19,6 @@ import Story
 public struct TranslationEnvironment: TranslationEnvironmentProtocol {
     private let translationServices: TranslationServicesProtocol
     private let speechEnvironment: SpeechEnvironmentProtocol
-    private let studyEnvironment: StudyEnvironmentProtocol
     private let settingsEnvironment: SettingsEnvironmentProtocol
     public let textPracticeEnvironment: TextPracticeEnvironmentProtocol
     private let translationDataStore: TranslationDataStoreProtocol
@@ -38,17 +37,10 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
         audioEnvironment: AudioEnvironmentProtocol,
         settingsEnvironment: SettingsEnvironmentProtocol,
         textPracticeEnvironment: TextPracticeEnvironmentProtocol,
-        userLimitEnvironment: UserLimitEnvironmentProtocol,
-        settingsDataStore: SettingsDataStoreProtocol
+        userLimitEnvironment: UserLimitEnvironmentProtocol
     ) {
         self.translationServices = TranslationServices()
         self.speechEnvironment = SpeechEnvironment(speechRepository: speechRepository)
-        self.studyEnvironment = StudyEnvironment(
-            definitionServices: definitionServices,
-            dataStore: definitionDataStore,
-            audioEnvironment: audioEnvironment,
-            settingsEnvironment: settingsEnvironment
-        )
         self.settingsEnvironment = settingsEnvironment
         self.textPracticeEnvironment = textPracticeEnvironment
         self.userLimitEnvironment = userLimitEnvironment

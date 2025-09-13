@@ -11,7 +11,6 @@ import FTFont
 import FTColor
 
 struct TranslationInputSection: View {
-    @EnvironmentObject var store: TranslationStore
     @Binding var inputText: String
     @FocusState.Binding var isInputFocused: Bool
     

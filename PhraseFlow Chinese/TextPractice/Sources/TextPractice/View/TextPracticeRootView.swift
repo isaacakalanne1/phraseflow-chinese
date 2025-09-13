@@ -8,8 +8,6 @@
 import SwiftUI
 import ReduxKit
 import TextGeneration
-import Settings
-import Study
 
 public struct TextPracticeRootView: View {
     @StateObject private var store: TextPracticeStore

@@ -79,29 +79,7 @@ struct SubscriptionView: View {
         })
 
     }
-    
-    private var headerSection: some View {
-        VStack(spacing: 16) {
-            VStack(spacing: 8) {
-                Text(store.state.isSubscribed ? LocalizedString.manageSubscription : LocalizedString.subscribe)
-                    .font(FTFont.flowTaleHeader())
-                    .fontWeight(.heavy)
-                    .foregroundColor(FTColor.primary)
-                    .multilineTextAlignment(.center)
-                
-                if !store.state.isSubscribed {
-                    Text(LocalizedString.subscriptionSubscribeNow)
-                        .multilineTextAlignment(.center)
-                        .font(FTFont.flowTaleSecondaryHeader())
-                        .fontWeight(.medium)
-                        .foregroundColor(FTColor.primary.opacity(0.7))
-                        .padding(.horizontal, 20)
-                }
-            }
-            .padding(.vertical, 8)
-        }
-    }
-    
+
     @ViewBuilder
     private var subscriptionOptionsSection: some View {
         VStack(spacing: 20) {

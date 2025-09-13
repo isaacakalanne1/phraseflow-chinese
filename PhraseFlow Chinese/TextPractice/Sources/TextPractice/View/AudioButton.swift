@@ -18,14 +18,6 @@ struct AudioButton: View {
         store.state.isPlayingChapterAudio
     }
     
-    var isAtLastWord: Bool {
-        guard let currentSpokenWord = store.state.chapter.currentSpokenWord else { return false }
-        let allTimestamps = store.state.chapter.sentences.flatMap { $0.timestamps }
-        guard let lastWord = allTimestamps.last else { return false }
-        return currentSpokenWord.word == lastWord.word && 
-               currentSpokenWord.time == lastWord.time
-    }
-    
     var hasReachedEnd: Bool {
         let allTimestamps = store.state.chapter.sentences.flatMap { $0.timestamps }
         guard let lastWord = allTimestamps.last else { return false }

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import TextGeneration
 import Settings
 
 public struct FlowLayout: Layout {

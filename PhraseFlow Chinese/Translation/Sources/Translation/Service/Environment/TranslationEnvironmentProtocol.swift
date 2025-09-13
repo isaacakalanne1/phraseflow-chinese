@@ -6,14 +6,11 @@
 //
 
 import Foundation
-import Speech
-import Study
 import Settings
 import TextGeneration
 import TextPractice
 import UserLimit
 import Combine
-import Story
 
 public protocol TranslationEnvironmentProtocol {
     var textPracticeEnvironment: TextPracticeEnvironmentProtocol { get }

@@ -11,7 +11,6 @@ import Foundation
 enum ModerationDataStoreError: Error {
     case failedToCreateUrl
     case failedToSaveData
-    case failedToEncodeData
     case failedToDecodeData
 }
 

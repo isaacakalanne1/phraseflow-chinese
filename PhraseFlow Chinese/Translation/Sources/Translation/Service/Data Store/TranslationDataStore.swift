@@ -12,7 +12,6 @@ import TextGeneration
 enum TranslationDataStoreError: Error {
     case failedToCreateUrl
     case failedToSaveData
-    case failedToDecodeData
 }
 
 class TranslationDataStore: TranslationDataStoreProtocol {
