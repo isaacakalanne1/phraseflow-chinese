@@ -57,63 +57,56 @@ struct SettingsView: View {
             VStack {
                 usageLimitSection()
                 ScrollView {
-                    VStack {
+                    VStack(spacing: 12) {
                         // Usage Limit Section
-                        
-                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8),
-                                                 count: 2),
-                                  spacing: 8) {
-                            NavigationLink(destination: LanguageSettingsView(selectedLanguage: selectedLanguage,
-                                                                             isEnabled: !store.state.viewState.isWritingChapter)) {
-                                settingImageView(
-                                    title: store.state.language.displayName,
-                                    image: store.state.language.thumbnail
-                                )
-                            }
-                            
-                            NavigationLink(destination: VoiceSettingsView()) {
-                                settingImageView(
-                                    title: store.state.voice.title,
-                                    image: store.state.voice.thumbnail
-                                )
-                            }
-                            
-                            NavigationLink(destination: DifficultySettingsView()) {
-                                settingImageView(
-                                    title: store.state.difficulty.title,
-                                    image: store.state.difficulty.thumbnail
-                                )
-                            }
-                            
-                            NavigationLink(destination: StoryPromptSettingsView()) {
-                                settingImageView(
-                                    title: store.state.storySetting.title,
-                                    image: store.state.storySetting.thumbnail
-                                )
-                            }
-                        }
-                        
-                        VStack(spacing: 16) {
-                            settingsSection(
-                                title: LocalizedString.settingsAppearance,
-                                content: {
-                                    VStack(spacing: 12) {
-                                        settingsToggleRow(LocalizedString.definitionToggle, isOn: showDefinition)
-                                        settingsToggleRow(LocalizedString.translation, isOn: showEnglish)
+                        settingsSection(
+                            title: LocalizedString.storySettings,
+                            content: {
+                                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8),
+                                                         count: 2),
+                                          spacing: 8) {
+                                    NavigationLink(destination: LanguageSettingsView(selectedLanguage: selectedLanguage,
+                                                                                     isEnabled: !store.state.viewState.isWritingChapter)) {
+                                        settingImageView(
+                                            title: store.state.language.displayName,
+                                            image: store.state.language.thumbnail
+                                        )
+                                    }
+                                    
+                                    NavigationLink(destination: VoiceSettingsView()) {
+                                        settingImageView(
+                                            title: store.state.voice.title,
+                                            image: store.state.voice.thumbnail
+                                        )
+                                    }
+                                    
+                                    NavigationLink(destination: DifficultySettingsView()) {
+                                        settingImageView(
+                                            title: store.state.difficulty.title,
+                                            image: store.state.difficulty.thumbnail
+                                        )
+                                    }
+                                    
+                                    NavigationLink(destination: StoryPromptSettingsView()) {
+                                        settingImageView(
+                                            title: store.state.storySetting.title,
+                                            image: store.state.storySetting.thumbnail
+                                        )
                                     }
                                 }
-                            )
-                            
-                            settingsSection(
-                                title: LocalizedString.settingsSoundHeader,
-                                content: {
-                                    VStack(spacing: 12) {
-                                        settingsToggleRow(LocalizedString.music, isOn: playMusic)
-                                        settingsToggleRow(LocalizedString.settingsSounds, isOn: shouldPlayButtonSounds)
-                                    }
+                                          .padding()
+                            }
+                        )
+                        
+                        settingsSection(
+                            title: LocalizedString.settingsSoundHeader,
+                            content: {
+                                VStack(spacing: 12) {
+                                    settingsToggleRow(LocalizedString.music, isOn: playMusic)
+                                    settingsToggleRow(LocalizedString.settingsSounds, isOn: shouldPlayButtonSounds)
                                 }
-                            )
-                        }
+                            }
+                        )
                     }
                 }
             }
@@ -136,7 +129,6 @@ struct SettingsView: View {
         )
         .disabled(true)
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 8)
     }
     
     @ViewBuilder

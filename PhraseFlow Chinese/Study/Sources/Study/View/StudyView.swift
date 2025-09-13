@@ -179,8 +179,9 @@ public struct StudyView: View {
 
     func goToNextDefinition() {
         // Navigation sound handled at app level
-        if let definition = currentDefinition {
-            // Definition update handled at app level
+        if var definition = currentDefinition {
+            definition.studiedDates.append(.now)
+            store.dispatch(.saveDefinitions([definition]))
         }
 
         index = (index + 1) % studyWords.count

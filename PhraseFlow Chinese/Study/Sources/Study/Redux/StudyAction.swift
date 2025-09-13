@@ -34,4 +34,8 @@ enum StudyAction {
     case loadDefinitions
     case onLoadDefinitions([Definition])
     case failedToLoadDefinitions
+    
+    case saveDefinitions([Definition])
+    case onSavedDefinitions([Definition])
+    case failedToSaveDefinitions
 }

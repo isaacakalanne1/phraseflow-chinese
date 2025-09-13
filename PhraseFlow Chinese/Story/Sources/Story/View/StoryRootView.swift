@@ -21,11 +21,13 @@ public struct StoryRootView: View {
                 subscriber: storySubscriber
             )
         }())
-        store.dispatch(.loadStories)
     }
     
     public var body: some View {
         StoryListView()
             .environmentObject(store)
+            .onAppear {
+                store.dispatch(.loadStories)
+            }
     }
 }

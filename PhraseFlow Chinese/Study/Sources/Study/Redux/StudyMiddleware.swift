@@ -53,6 +53,15 @@ let studyMiddleware: Middleware<StudyState, StudyAction, StudyEnvironmentProtoco
         } catch {
             return .failedToLoadDefinitions
         }
+    case .saveDefinitions(let definitions):
+        do {
+            try environment.saveDefinitions(definitions)
+            return .onSavedDefinitions(definitions)
+        } catch {
+            return .failedToSaveDefinitions
+        }
+    case .onSavedDefinitions(let definitions):
+        return .addDefinitions(definitions)
         
     case .failedToDeleteDefinition,
             .updateStudiedWord,
@@ -65,7 +74,8 @@ let studyMiddleware: Middleware<StudyState, StudyAction, StudyEnvironmentProtoco
             .onLoadDefinitions,
             .failedToLoadDefinitions,
             .refreshAppSettings,
-            .addDefinitions:
+            .addDefinitions,
+            .failedToSaveDefinitions:
         return nil
     }
 }

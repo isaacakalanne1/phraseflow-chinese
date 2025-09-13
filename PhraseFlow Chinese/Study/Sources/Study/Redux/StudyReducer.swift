@@ -58,7 +58,10 @@ let studyReducer: Reducer<StudyState, StudyAction> = { state, action in
             .failedToDeleteDefinition,
             .playSound,
             .loadDefinitions,
-            .failedToLoadDefinitions:
+            .failedToLoadDefinitions,
+            .saveDefinitions,
+            .onSavedDefinitions,
+            .failedToSaveDefinitions:
         break
     }
 
