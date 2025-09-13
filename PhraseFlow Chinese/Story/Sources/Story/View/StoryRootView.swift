@@ -9,16 +9,18 @@ import SwiftUI
 import ReduxKit
 
 public struct StoryRootView: View {
-    private let store: StoryStore
+    @StateObject private var store: StoryStore
     
     public init(environment: StoryEnvironmentProtocol) {
-        self.store = Store(
-            initial: StoryState(),
-            reducer: storyReducer,
-            environment: environment,
-            middleware: storyMiddleware,
-            subscriber: storySubscriber
-        )
+        self._store = StateObject(wrappedValue: {
+            Store(
+                initial: StoryState(),
+                reducer: storyReducer,
+                environment: environment,
+                middleware: storyMiddleware,
+                subscriber: storySubscriber
+            )
+        }())
         store.dispatch(.loadStories)
     }
     

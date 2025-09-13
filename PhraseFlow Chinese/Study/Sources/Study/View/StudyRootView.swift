@@ -10,16 +10,18 @@ import Settings
 import SwiftUI
 
 public struct StudyRootView: View {
-    private var store: StudyStore
+    @StateObject private var store: StudyStore
 
     public init(environment: StudyEnvironmentProtocol) {
-        store = StudyStore(
-            initial: StudyState(),
-            reducer: studyReducer,
-            environment: environment,
-            middleware: studyMiddleware,
-            subscriber: studySubscriber
-        )
+        self._store = StateObject(wrappedValue: {
+            StudyStore(
+                initial: StudyState(),
+                reducer: studyReducer,
+                environment: environment,
+                middleware: studyMiddleware,
+                subscriber: studySubscriber
+            )
+        }())
         store.dispatch(.loadDefinitions)
     }
     

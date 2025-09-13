@@ -9,16 +9,18 @@ import SwiftUI
 import ReduxKit
 
 public struct SettingsRootView: View {
-    private let store: SettingsStore
+    @StateObject private var store: SettingsStore
     
     public init(environment: SettingsEnvironmentProtocol) {
-        self.store = Store(
-            initial: SettingsState(),
-            reducer: settingsReducer,
-            environment: environment,
-            middleware: settingsMiddleware,
-            subscriber: settingsSubscriber
-        )
+        self._store = StateObject(wrappedValue: {
+            Store(
+                initial: SettingsState(),
+                reducer: settingsReducer,
+                environment: environment,
+                middleware: settingsMiddleware,
+                subscriber: settingsSubscriber
+            )
+        }())
     }
     
     public var body: some View {

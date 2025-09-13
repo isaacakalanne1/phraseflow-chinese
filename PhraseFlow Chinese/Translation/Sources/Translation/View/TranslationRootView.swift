@@ -9,16 +9,18 @@ import SwiftUI
 import ReduxKit
 
 public struct TranslationRootView: View {
-    private let store: TranslationStore
+    @StateObject private var store: TranslationStore
     
     public init(environment: TranslationEnvironmentProtocol) {
-        self.store = Store(
-            initial: TranslationState(),
-            reducer: translationReducer,
-            environment: environment,
-            middleware: translationMiddleware,
-            subscriber: translationSubscriber
-        )
+        self._store = StateObject(wrappedValue: {
+            Store(
+                initial: TranslationState(),
+                reducer: translationReducer,
+                environment: environment,
+                middleware: translationMiddleware,
+                subscriber: translationSubscriber
+            )
+        }())
     }
     
     public var body: some View {
