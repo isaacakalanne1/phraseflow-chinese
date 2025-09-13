@@ -74,9 +74,6 @@ public struct FlowTaleRootView: View {
 
         let translationEnvironment = TranslationEnvironment(
             speechRepository: speechRepository,
-            definitionServices: definitionServices,
-            definitionDataStore: definitionDataStore,
-            audioEnvironment: audioEnvironment,
             settingsEnvironment: settingsEnvironment,
             textPracticeEnvironment: textPracticeEnvironment,
             userLimitEnvironment: userLimitEnvironment

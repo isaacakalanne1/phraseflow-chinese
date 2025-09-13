@@ -5,8 +5,6 @@
 //  Created by Isaac Akalanne on 19/07/2025.
 //
 
-import Audio
-import Settings
 import SwiftUI
 
 public struct StudyRootView: View {

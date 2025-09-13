@@ -14,7 +14,6 @@ import TextGeneration
 import TextPractice
 import UserLimit
 import Combine
-import Story
 
 public struct TranslationEnvironment: TranslationEnvironmentProtocol {
     private let translationServices: TranslationServicesProtocol
@@ -32,9 +31,6 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
     
     public init(
         speechRepository: SpeechRepositoryProtocol,
-        definitionServices: DefinitionServicesProtocol,
-        definitionDataStore: DefinitionDataStoreProtocol,
-        audioEnvironment: AudioEnvironmentProtocol,
         settingsEnvironment: SettingsEnvironmentProtocol,
         textPracticeEnvironment: TextPracticeEnvironmentProtocol,
         userLimitEnvironment: UserLimitEnvironmentProtocol

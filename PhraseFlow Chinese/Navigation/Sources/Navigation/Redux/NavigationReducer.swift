@@ -17,20 +17,6 @@ let navigationReducer: Reducer<NavigationState, NavigationAction> = { state, act
         
     case .selectTab(let tab, _):
         newState.contentTab = tab
-        
-    case .showFreeLimitExplanation:
-        newState.isShowingFreeLimitExplanation = true
-        newState.isShowingDailyLimitExplanation = false
-        
-    case .showDailyLimitExplanation(let nextAvailable):
-        newState.isShowingDailyLimitExplanation = true
-        newState.isShowingFreeLimitExplanation = false
-        newState.dailyLimitNextAvailable = nextAvailable
-        
-    case .dismissLimitExplanation:
-        newState.isShowingFreeLimitExplanation = false
-        newState.isShowingDailyLimitExplanation = false
-        newState.dailyLimitNextAvailable = ""
     }
 
     return newState

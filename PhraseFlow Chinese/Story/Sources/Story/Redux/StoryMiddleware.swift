@@ -9,7 +9,6 @@ import AVKit
 import Foundation
 import ReduxKit
 import Settings
-import TextPractice
 import TextGeneration
 
 @MainActor

@@ -6,7 +6,6 @@
 //
 
 import Audio
-import Study
 import Foundation
 import Settings
 import TextGeneration

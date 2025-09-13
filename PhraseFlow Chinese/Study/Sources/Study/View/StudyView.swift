@@ -138,7 +138,7 @@ public struct StudyView: View {
                         PrimaryButton(
                             title: isDefinitionShown ? LocalizedString.next : LocalizedString.reveal
                         ) {
-                            nextTapped(definition: definition)
+                            nextTapped()
                         }
                     }
                 }
@@ -155,7 +155,7 @@ public struct StudyView: View {
         .foregroundStyle(FTColor.primary)
     }
 
-    private func nextTapped(definition: Definition) {
+    private func nextTapped() {
         if isDefinitionShown {
             goToNextDefinition()
         } else {

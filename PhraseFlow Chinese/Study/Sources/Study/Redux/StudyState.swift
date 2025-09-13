@@ -28,10 +28,6 @@ struct StudyState: Equatable {
             }
             .sorted(by: { $0.creationDate > $1.creationDate })
     }
-    
-    func definition(timestampData: WordTimeStampData?) -> Definition? {
-        definitions.first(where: { $0.timestampData == timestampData })
-    }
 
     init(
         audioPlayer: AVPlayer = AVPlayer(),
