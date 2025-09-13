@@ -12,8 +12,7 @@ import Settings
 import Study
 
 public struct TextPracticeRootView: View {
-    private let store: TextPracticeStore
-    private let chapter: Chapter
+    @StateObject private var store: TextPracticeStore
     
     public init(
         environment: TextPracticeEnvironmentProtocol,
@@ -21,25 +20,26 @@ public struct TextPracticeRootView: View {
         type: TextPracticeType,
         isViewingLastChapter: Bool = false
     ) {
-        self.chapter = chapter
-        self.store = Store(
-            initial: TextPracticeState(
-                isViewingLastChapter: isViewingLastChapter,
-                chapter: chapter,
-                textPracticeType: type
-            ),
-            reducer: textPracticeReducer,
-            environment: environment,
-            middleware: textPracticeMiddleware,
-            subscriber: textPracticeSubscriber
-        )
+        self._store = StateObject(wrappedValue: {
+            Store(
+                initial: TextPracticeState(
+                    isViewingLastChapter: isViewingLastChapter,
+                    chapter: chapter,
+                    textPracticeType: type
+                ),
+                reducer: textPracticeReducer,
+                environment: environment,
+                middleware: textPracticeMiddleware,
+                subscriber: textPracticeSubscriber
+            )
+        }())
     }
     
     public var body: some View {
         TextPracticeView()
             .environmentObject(store)
             .onAppear {
-                store.dispatch(.prepareToPlayChapter(chapter))
+                store.dispatch(.prepareToPlayChapter)
             }
     }
 }

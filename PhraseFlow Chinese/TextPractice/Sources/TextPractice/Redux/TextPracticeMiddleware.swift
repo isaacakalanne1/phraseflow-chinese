@@ -19,10 +19,10 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
         environment.goToNextChapter()
         return nil
     case .setChapter(let chapter):
-        return .prepareToPlayChapter(chapter)
-    case .prepareToPlayChapter(let chapter):
-        await environment.prepareToPlayChapter(chapter)
-        return .generateDefinitions(chapter, sentenceIndex: 0)
+        return .prepareToPlayChapter
+    case .prepareToPlayChapter:
+        await environment.prepareToPlayChapter(state.chapter)
+        return .generateDefinitions(state.chapter, sentenceIndex: 0)
     case .playChapter(let word):
         await environment.playChapter(from: word, speechSpeed: state.settings.speechSpeed)
         environment.setMusicVolume(.quiet)

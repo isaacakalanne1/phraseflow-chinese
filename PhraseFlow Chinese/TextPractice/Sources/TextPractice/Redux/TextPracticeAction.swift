@@ -29,7 +29,7 @@ public enum TextPracticeAction: Sendable {
     case updateCurrentSentence(Sentence)
     
     case setChapter(Chapter)
-    case prepareToPlayChapter(Chapter)
+    case prepareToPlayChapter
     case playChapter(fromWord: WordTimeStampData)
     case pauseChapter
     
