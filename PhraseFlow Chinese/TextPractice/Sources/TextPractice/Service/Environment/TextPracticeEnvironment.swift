@@ -23,7 +23,7 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
     }
     
     public let audioEnvironment: AudioEnvironmentProtocol
-    public let settingsEnvironment: SettingsEnvironmentProtocol
+    private let settingsEnvironment: SettingsEnvironmentProtocol
     public let studyEnvironment: StudyEnvironmentProtocol
     
     public init(

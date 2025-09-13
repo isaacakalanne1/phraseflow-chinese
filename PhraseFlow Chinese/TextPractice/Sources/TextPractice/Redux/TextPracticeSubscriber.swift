@@ -27,7 +27,7 @@ let textPracticeSubscriber: OnSubscribe<TextPracticeStore, TextPracticeEnvironme
             .receive(on: DispatchQueue.main)
             .sink { [weak store] settings in
                 guard let store,
-                let settings else {
+                      let settings else {
                     return
                 }
                 store.dispatch(.refreshAppSettings(settings))
