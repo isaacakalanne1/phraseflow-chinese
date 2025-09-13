@@ -27,7 +27,7 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         do {
             let estimatedCharacterCount = inputText.count * 2 // Estimated characters for translation
             
-            try environment.userLimitEnvironment.canCreateChapter(
+            try environment.canCreateChapter(
                 estimatedCharacterCount: estimatedCharacterCount,
                 characterLimitPerDay: state.settings.characterLimitPerDay
             )
@@ -43,10 +43,10 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
             return .synthesizeAudio(chapter, state.settings.targetLanguage)
         } catch UserLimitsDataStoreError.freeUserCharacterLimitReached {
             environment.limitReachedSubject.send(.freeLimit)
-            return .failedToTranslate
+            return .failedToTranslate // TODO: Add snackbar functionality
         } catch UserLimitsDataStoreError.characterLimitReached(let timeUntilNextAvailable) {
             environment.limitReachedSubject.send(.dailyLimit(nextAvailable: timeUntilNextAvailable))
-            return .failedToTranslate
+            return .failedToTranslate // TODO: Add snackbar functionality
         } catch {
             return .failedToTranslate
         }
@@ -107,17 +107,15 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         return nil
         
     case .playTranslationWord(let word):
-        let speechSpeed = environment.settingsEnvironment.speechSpeed
         await state.audioPlayer.playAudio(fromSeconds: word.time,
                                           toSeconds: word.time + word.duration,
-                                          playRate: speechSpeed.playRate)
+                                          playRate: state.settings.speechSpeed.playRate)
         return .updateTranslationPlayTime
         
     case .selectTranslationWord(let word):
-        let speechSpeed = environment.settingsEnvironment.speechSpeed
         await state.audioPlayer.playAudio(fromSeconds: word.time,
                                           toSeconds: word.time + word.duration,
-                                          playRate: speechSpeed.playRate)
+                                          playRate: state.settings.speechSpeed.playRate)
         return nil
         
         
@@ -127,8 +125,8 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         }
         
         do {
-            try environment.translationDataStore.saveTranslation(chapter)
-            let updatedHistory = try environment.translationDataStore.loadTranslationHistory()
+            try environment.saveTranslation(chapter)
+            let updatedHistory = try environment.loadTranslationHistory()
             return .onTranslationsSaved(updatedHistory)
         } catch {
             return nil
@@ -136,7 +134,7 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         
     case .loadTranslationHistory:
         do {
-            let translations = try environment.translationDataStore.loadTranslationHistory()
+            let translations = try environment.loadTranslationHistory()
             return .onTranslationsLoaded(translations)
         } catch {
             return .onTranslationsLoaded([])
@@ -144,8 +142,8 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         
     case .deleteTranslation(let id):
         do {
-            try environment.translationDataStore.deleteTranslation(id: id)
-            let updatedHistory = try environment.translationDataStore.loadTranslationHistory()
+            try environment.deleteTranslation(id: id)
+            let updatedHistory = try environment.loadTranslationHistory()
             return .onTranslationsLoaded(updatedHistory)
         } catch {
             return nil

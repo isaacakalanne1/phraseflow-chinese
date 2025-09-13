@@ -13,22 +13,7 @@ import Combine
 @MainActor
 let navigationSubscriber: OnSubscribe<NavigationStore, NavigationEnvironmentProtocol> = { store, environment in
     
-    // Listen to Story limit reached events
-    environment.userLimitEnvironment.limitReachedSubject
-        .receive(on: DispatchQueue.main)
-        .sink { [weak store] limitEvent in
-            guard let store else { return }
-            switch limitEvent {
-            case .freeLimit:
-                store.dispatch(.showFreeLimitExplanation)
-            case .dailyLimit(let nextAvailable):
-                store.dispatch(.showDailyLimitExplanation(nextAvailable: nextAvailable))
-            }
-        }
-        .store(in: &store.subscriptions)
-    
-    // Listen to Translation limit reached events
-    environment.translationEnvironment.limitReachedSubject
+    environment.limitReachedSubject
         .receive(on: DispatchQueue.main)
         .sink { [weak store] limitEvent in
             guard let store else { return }

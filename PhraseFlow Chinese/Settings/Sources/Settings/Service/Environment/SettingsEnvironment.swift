@@ -33,14 +33,6 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
         ssmlCharacterCountSubject = .init(nil)
     }
     
-    public var currentVoice: Voice {
-        (try? settingsDataStore.loadAppSettings())?.voice ?? .ava
-    }
-    
-    public var speechSpeed: SpeechSpeed {
-        (try? settingsDataStore.loadAppSettings())?.speechSpeed ?? .normal
-    }
-    
     public func saveAppSettings(_ settings: SettingsState) throws {
         audioEnvironment.playSound(.changeSettings)
         try settingsDataStore.saveAppSettings(settings)

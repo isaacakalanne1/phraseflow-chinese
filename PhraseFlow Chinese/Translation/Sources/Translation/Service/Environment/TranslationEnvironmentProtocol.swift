@@ -16,16 +16,16 @@ import Combine
 import Story
 
 public protocol TranslationEnvironmentProtocol {
-    var translationServices: TranslationServicesProtocol { get }
-    var speechEnvironment: SpeechEnvironmentProtocol { get }
-    var studyEnvironment: StudyEnvironmentProtocol { get }
-    var settingsEnvironment: SettingsEnvironmentProtocol { get }
     var textPracticeEnvironment: TextPracticeEnvironmentProtocol { get }
-    var translationDataStore: TranslationDataStoreProtocol { get }
-    var userLimitEnvironment: UserLimitEnvironmentProtocol { get }
+    var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> { get }
     var limitReachedSubject: CurrentValueSubject<LimitReachedEvent, Never> { get }
     
     func translateText(_ text: String, from sourceLanguage: Language?, to targetLanguage: Language) async throws -> Chapter
+    func saveTranslation(_ chapter: Chapter) throws
+    func loadTranslationHistory() throws -> [Chapter]
+    func deleteTranslation(id: UUID) throws
+
     func synthesizeSpeech(for chapter: Chapter, voice: Voice, language: Language) async throws -> Chapter
     func saveAppSettings(_ settings: SettingsState) throws
+    func canCreateChapter(estimatedCharacterCount: Int, characterLimitPerDay: Int?) throws
 }

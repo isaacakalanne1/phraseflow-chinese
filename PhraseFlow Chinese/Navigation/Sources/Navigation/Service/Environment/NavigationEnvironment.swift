@@ -5,6 +5,7 @@
 //  Created by iakalann on 17/07/2025.
 //
 
+import Combine
 import Foundation
 import Story
 import Audio
@@ -24,6 +25,10 @@ public struct NavigationEnvironment: NavigationEnvironmentProtocol {
     public let userLimitEnvironment: UserLimitEnvironmentProtocol
     public let audioEnvironment: AudioEnvironmentProtocol
     public let loadingEnvironment: LoadingEnvironmentProtocol
+    
+    public var limitReachedSubject: CurrentValueSubject<LimitReachedEvent, Never> {
+        userLimitEnvironment.limitReachedSubject
+    }
     
     public init(
         settingsEnvironment: SettingsEnvironmentProtocol,

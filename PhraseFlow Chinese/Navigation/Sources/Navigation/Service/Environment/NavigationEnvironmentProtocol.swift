@@ -5,6 +5,7 @@
 //  Created by iakalann on 17/07/2025.
 //
 
+import Combine
 import Foundation
 import Audio
 import Loading
@@ -24,5 +25,8 @@ public protocol NavigationEnvironmentProtocol {
     var userLimitEnvironment: UserLimitEnvironmentProtocol { get }
     var audioEnvironment: AudioEnvironmentProtocol { get }
     var loadingEnvironment: LoadingEnvironmentProtocol { get }
+    
+    var limitReachedSubject: CurrentValueSubject<LimitReachedEvent, Never> { get }
+    
     func playSound(_ sound: AppSound)
 }

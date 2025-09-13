@@ -16,7 +16,8 @@ public struct TranslationRootView: View {
             initial: TranslationState(),
             reducer: translationReducer,
             environment: environment,
-            middleware: translationMiddleware
+            middleware: translationMiddleware,
+            subscriber: translationSubscriber
         )
     }
     
