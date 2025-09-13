@@ -14,4 +14,6 @@ public protocol UserLimitEnvironmentProtocol {
     func getRemainingFreeCharacters() -> Int
     func getTimeUntilNextDailyReset(characterLimitPerDay: Int) -> String?
     func getRemainingDailyCharacters(characterLimitPerDay: Int) -> Int
+    func getUsedFreeCharacters() -> Int
+    func getUsedDailyCharacters(characterLimitPerDay: Int) -> Int
 }

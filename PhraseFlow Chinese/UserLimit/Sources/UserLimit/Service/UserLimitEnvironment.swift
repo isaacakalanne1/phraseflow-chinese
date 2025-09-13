@@ -32,4 +32,12 @@ public struct UserLimitEnvironment: UserLimitEnvironmentProtocol {
     public func getRemainingDailyCharacters(characterLimitPerDay: Int) -> Int {
         dataStore.getRemainingDailyCharacters(characterLimitPerDay: characterLimitPerDay)
     }
+    
+    public func getUsedFreeCharacters() -> Int {
+        dataStore.getUsedFreeCharacters()
+    }
+    
+    public func getUsedDailyCharacters(characterLimitPerDay: Int) -> Int {
+        dataStore.getUsedDailyCharacters(characterLimitPerDay: characterLimitPerDay)
+    }
 }

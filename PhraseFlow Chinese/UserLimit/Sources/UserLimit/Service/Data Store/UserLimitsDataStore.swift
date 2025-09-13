@@ -131,8 +131,8 @@ public class UserLimitsDataStore: UserLimitsDataStoreProtocol {
         }
     }
     
-    public func getRemainingFreeCharacters() -> Int {
-        return max(0, freeUserLimit - freeUserCount)
+    public func getUsedFreeCharacters() -> Int {
+        return freeUserCount
     }
     
     public func getTimeUntilNextDailyReset(characterLimitPerDay: Int) -> String? {
@@ -148,13 +148,11 @@ public class UserLimitsDataStore: UserLimitsDataStoreProtocol {
             .map(timeRemaining) ?? LocalizedString.twentyFourHours
     }
     
-    public func getRemainingDailyCharacters(characterLimitPerDay: Int) -> Int {
+    public func getUsedDailyCharacters(characterLimitPerDay: Int) -> Int {
         let now = Date()
         let cutoff = now.addingTimeInterval(-86400)
         let records = dailyUsage.filter { $0.timestamp > cutoff }
         
-        let totalUsage = records.reduce(0) { $0 + $1.characterCount }
-        
-        return max(0, characterLimitPerDay - totalUsage)
+        return records.reduce(0) { $0 + $1.characterCount }
     }
 }

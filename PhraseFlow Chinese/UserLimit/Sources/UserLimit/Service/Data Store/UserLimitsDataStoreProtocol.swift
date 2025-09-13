@@ -10,7 +10,7 @@ import Foundation
 public protocol UserLimitsDataStoreProtocol {
     func trackSSMLCharacterUsage(characterCount: Int, characterLimitPerDay: Int?) throws
     func canCreateChapter(estimatedCharacterCount: Int, characterLimitPerDay: Int?) throws
-    func getRemainingFreeCharacters() -> Int
+    func getUsedFreeCharacters() -> Int
     func getTimeUntilNextDailyReset(characterLimitPerDay: Int) -> String?
-    func getRemainingDailyCharacters(characterLimitPerDay: Int) -> Int
+    func getUsedDailyCharacters(characterLimitPerDay: Int) -> Int
 }
