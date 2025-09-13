@@ -31,10 +31,8 @@ struct SubscriptionView: View {
                 if store.state.isSubscribed {
                     managementInstructionsSection
                 }
-                
-                Spacer(minLength: 40)
             }
-            .padding(.horizontal, 20)
+            .padding()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
