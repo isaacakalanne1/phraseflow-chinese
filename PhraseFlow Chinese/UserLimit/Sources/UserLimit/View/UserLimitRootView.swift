@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import ReduxKit
 
 public struct UserLimitRootView: View {
     let remainingCharacters: Int

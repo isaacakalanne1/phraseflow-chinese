@@ -15,15 +15,4 @@ public enum MusicType: String, CaseIterable, Sendable {
     var fileURL: URL? {
         return Bundle.module.url(forResource: rawValue, withExtension: "mp3")
     }
-
-    static func next(after current: MusicType) -> MusicType {
-        let allCases = MusicType.allCases
-        guard let currentIndex = allCases.firstIndex(where: { $0 == current }),
-              currentIndex + 1 < allCases.count
-        else {
-            // If it's the last one or not found, return the first one
-            return allCases.first!
-        }
-        return allCases[currentIndex + 1]
-    }
 }

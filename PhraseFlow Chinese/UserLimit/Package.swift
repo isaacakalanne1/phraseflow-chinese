@@ -15,7 +15,6 @@ let package = Package(
             targets: ["UserLimit"]),
     ],
     dependencies: [
-        .package(name: "ReduxKit", path: "../ReduxKit"),
         .package(name: "DataStorage", path: "../DataStorage"),
         .package(name: "Localization", path: "../Localization"),
         .package(name: "FTColor", path: "../FTColor"),
@@ -28,7 +27,6 @@ let package = Package(
         .target(
             name: "UserLimit",
             dependencies: [
-                "ReduxKit",
                 "DataStorage",
                 "Localization",
                 "FTColor",
