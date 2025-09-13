@@ -94,12 +94,10 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
     case .loadTranslationHistory:
         newState.isLoadingHistory = true
         
-    case .onTranslationsLoaded(let translations):
-        newState.savedTranslations = translations
+    case .onTranslationsLoaded(let translations),
+            .onTranslationsSaved(let translations):
+        newState.savedTranslations = translations.sorted(by: { $0.lastUpdated > $1.lastUpdated })
         newState.isLoadingHistory = false
-        
-    case .onTranslationsSaved(let translations):
-        newState.savedTranslations = translations
         
     case .refreshAppSettings(let settings):
         newState.settings = settings

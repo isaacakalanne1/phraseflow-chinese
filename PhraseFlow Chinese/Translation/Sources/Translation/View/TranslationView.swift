@@ -43,7 +43,7 @@ struct TranslationView: View {
             )
             
             List {
-                ForEach(Array(store.state.savedTranslations.reversed().enumerated()),
+                ForEach(Array(store.state.savedTranslations.enumerated()),
                         id: \.offset) { index, translation in
                     Button(action: {
                         store.dispatch(.selectTranslation(translation))
@@ -57,7 +57,7 @@ struct TranslationView: View {
                 .onDelete { indexSet in
                     for index in indexSet {
                         let translationToDelete = store.state.savedTranslations[index]
-                        store.dispatch(.deleteTranslation(translationToDelete.storyId))
+                        store.dispatch(.deleteTranslation(translationToDelete.id))
                     }
                 }
             }
