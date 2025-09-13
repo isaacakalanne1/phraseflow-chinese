@@ -17,7 +17,7 @@ public let subscriptionReducer: Reducer<SubscriptionState, SubscriptionAction> =
         case .onFetchedSubscriptions(let subscriptions):
             newState.products = subscriptions
             
-        case .updatePurchasedProducts(let entitlements, _):
+        case .updatePurchasedProducts(let entitlements):
             for result in entitlements {
                 switch result {
                 case .unverified(let transaction, _),

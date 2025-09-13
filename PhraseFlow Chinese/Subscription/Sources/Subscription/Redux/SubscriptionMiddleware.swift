@@ -48,41 +48,22 @@ public let subscriptionMiddleware: Middleware<SubscriptionState, SubscriptionAct
         for await result in Transaction.currentEntitlements {
             entitlements.append(result)
         }
-        return .updatePurchasedProducts(entitlements, isOnLaunch: true)
+        return .updatePurchasedProducts(entitlements)
         
     case .observeTransactionUpdates:
         var entitlements: [VerificationResult<Transaction>] = []
         for await result in Transaction.updates {
             entitlements.append(result)
         }
-        return .updatePurchasedProducts(entitlements, isOnLaunch: false)
+        return .updatePurchasedProducts(entitlements)
         
-    case .updatePurchasedProducts(let entitlements, let isOnLaunch):
-        // Calculate the new subscription level after updating purchased products
-        var newPurchasedProductIDs = state.purchasedProductIDs
-        
-        for result in entitlements {
-            switch result {
-            case .unverified(let transaction, _),
-                    .verified(let transaction):
-                if transaction.revocationDate == nil {
-                    newPurchasedProductIDs.insert(transaction.productID)
-                } else {
-                    newPurchasedProductIDs.remove(transaction.productID)
-                }
-                guard transaction.revocationDate == nil,
-                      !isOnLaunch else {
-                    return nil
-                }
-                return nil
-            }
-        }
+    case .updatePurchasedProducts(let entitlements):
         
         // Determine the new subscription level
         let newSubscriptionLevel: SubscriptionLevel
-        if newPurchasedProductIDs.contains("com.flowtale.level_2") {
+        if state.purchasedProductIDs.contains("com.flowtale.level_2") {
             newSubscriptionLevel = .level2
-        } else if newPurchasedProductIDs.contains("com.flowtale.level_1") {
+        } else if state.purchasedProductIDs.contains("com.flowtale.level_1") {
             newSubscriptionLevel = .level1
         } else {
             #if DEBUG

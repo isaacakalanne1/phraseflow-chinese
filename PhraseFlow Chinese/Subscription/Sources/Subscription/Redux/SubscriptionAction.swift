@@ -26,7 +26,7 @@ public enum SubscriptionAction: Sendable {
     case failedToRestoreSubscriptions
     
     case getCurrentEntitlements
-    case updatePurchasedProducts([VerificationResult<Transaction>], isOnLaunch: Bool)
+    case updatePurchasedProducts([VerificationResult<Transaction>])
     
     case observeTransactionUpdates
     case validateReceipt
