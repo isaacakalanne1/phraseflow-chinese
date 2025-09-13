@@ -8,9 +8,7 @@
 import Foundation
 import TextGeneration
 import Loading
-import TextPractice
 import Settings
-import Study
 
 public struct StoryState: Equatable {
     public var currentChapter: Chapter?

@@ -34,7 +34,6 @@ public struct SettingsState: Codable, Equatable, Sendable {
     public var language: Language = .spanish
     var customPrompt: String
     public var storySetting: StorySetting
-    var confirmedCustomPrompt: String
     var customPrompts: [String]
     var shouldPlaySound: Bool
     var isShowingCustomPromptAlert: Bool
@@ -70,7 +69,6 @@ public struct SettingsState: Codable, Equatable, Sendable {
         case language
         case customPrompt
         case storySetting
-        case confirmedCustomPrompt
         case customPrompts
         case shouldPlaySound
         case isShowingCustomPromptAlert
@@ -92,7 +90,6 @@ public struct SettingsState: Codable, Equatable, Sendable {
         customPrompts: [String] = [],
         shouldPlaySound: Bool = true,
         isShowingCustomPromptAlert: Bool = true,
-        confirmedCustomPrompt: String = "",
         isShowingModerationFailedAlert: Bool = false,
         viewState: SettingsViewState = SettingsViewState(),
         usedCharacters: Int = 0,
@@ -107,7 +104,6 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.customPrompt = customPrompt
         self.customPrompts = customPrompts
         self.storySetting = storySetting
-        self.confirmedCustomPrompt = confirmedCustomPrompt
         self.shouldPlaySound = shouldPlaySound
         self.isShowingCustomPromptAlert = isShowingCustomPromptAlert
         self.isShowingModerationFailedAlert = isShowingModerationFailedAlert
@@ -130,7 +126,6 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.language = try container.decode(Language.self, forKey: .language)
         self.customPrompt = try container.decode(String.self, forKey: .customPrompt)
         self.storySetting = try container.decode(StorySetting.self, forKey: .storySetting)
-        self.confirmedCustomPrompt = try container.decode(String.self, forKey: .confirmedCustomPrompt)
         self.customPrompts = try container.decode([String].self, forKey: .customPrompts)
         
         self.shouldPlaySound = (try? container.decode(Bool.self, forKey: .shouldPlaySound)) ?? true

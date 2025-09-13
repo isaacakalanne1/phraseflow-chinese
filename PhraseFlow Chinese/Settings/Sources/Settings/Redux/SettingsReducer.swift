@@ -7,7 +7,6 @@
 
 import SwiftUI
 import ReduxKit
-import DataStorage
 
 @MainActor
 let settingsReducer: Reducer<SettingsState, SettingsAction> = { state, action in

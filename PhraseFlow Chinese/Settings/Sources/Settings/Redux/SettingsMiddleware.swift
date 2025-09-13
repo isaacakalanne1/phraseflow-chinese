@@ -7,7 +7,6 @@
 
 import Foundation
 import ReduxKit
-import DataStorage
 
 @MainActor
 let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvironmentProtocol> = { state, action, environment in
@@ -53,13 +52,13 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
         environment.stopMusic()
         return .saveAppSettings
         
-    case .deleteCustomPrompt:
+    case .updateStorySetting,
+            .deleteCustomPrompt:
         return .saveAppSettings
     case .failedToLoadAppSettings,
          .failedToSaveAppSettings,
          .updateCustomPrompt,
          .updateIsShowingCustomPromptAlert,
-         .updateStorySetting,
          .updateIsShowingModerationFailedAlert,
          .updateIsShowingModerationDetails,
          .snackbarAction,

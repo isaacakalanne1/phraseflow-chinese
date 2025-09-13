@@ -6,9 +6,6 @@
 //
 
 import SwiftUI
-import FTFont
-import FTColor
-import Localization
 import ReduxKit
 
 struct StoryListContent: View {

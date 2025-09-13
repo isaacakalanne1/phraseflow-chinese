@@ -8,7 +8,6 @@
 import Audio
 import Foundation
 import Combine
-import DataStorage
 
 public struct SettingsEnvironment: SettingsEnvironmentProtocol {
     public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never>

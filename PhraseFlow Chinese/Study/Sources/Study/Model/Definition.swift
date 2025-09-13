@@ -7,7 +7,6 @@
 
 import Foundation
 import Settings
-import Speech
 import TextGeneration
 
 public struct Definition: Codable, Equatable, Hashable, Sendable {
@@ -79,15 +78,6 @@ public struct Definition: Codable, Equatable, Hashable, Sendable {
         detail.definitionInContextOfSentence
     }
 
-}
-
-public extension [Definition] {
-    mutating func addDefinitions(_ definitions: [Definition]) {
-        for definition in definitions {
-            self.removeAll(where: { $0.id == definition.id })
-            self.append(definition)
-        }
-    }
 }
 
 public func definitionSchema() -> [String: Any] {

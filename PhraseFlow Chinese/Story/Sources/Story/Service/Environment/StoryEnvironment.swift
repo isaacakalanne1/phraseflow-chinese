@@ -11,7 +11,6 @@ import Loading
 import Settings
 import TextGeneration
 import Speech
-import Subscription
 import Study
 import ImageGeneration
 import TextPractice

@@ -5,13 +5,7 @@
 //  Created by iakalann on 17/07/2025.
 //
 
-import FTColor
 import SwiftUI
-import Story
-import Study
-import Settings
-import Subscription
-import Translation
 
 struct DisplayedContentView: View {
     @EnvironmentObject var store: NavigationStore

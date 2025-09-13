@@ -12,7 +12,6 @@ import Combine
 import Settings
 import TextGeneration
 import Study
-import Subscription
 import TextPractice
 import UserLimit
 

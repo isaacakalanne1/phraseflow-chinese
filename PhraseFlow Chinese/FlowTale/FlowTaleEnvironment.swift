@@ -23,17 +23,7 @@ protocol FlowTaleEnvironmentProtocol {
 }
 
 struct FlowTaleEnvironment: FlowTaleEnvironmentProtocol {
-    let audioEnvironment: AudioEnvironmentProtocol
-    let storyEnvironment: StoryEnvironmentProtocol
-    let settingsEnvironment: SettingsEnvironmentProtocol
-    let studyEnvironment: StudyEnvironmentProtocol
-    let translationEnvironment: TranslationEnvironmentProtocol
-    let subscriptionEnvironment: SubscriptionEnvironmentProtocol
-    let snackBarEnvironment: SnackBarEnvironmentProtocol
-    let userLimitEnvironment: UserLimitEnvironmentProtocol
-    let moderationEnvironment: ModerationEnvironmentProtocol
     let navigationEnvironment: NavigationEnvironmentProtocol
-    let loadingEnvironment: LoadingEnvironmentProtocol
 }
 
 // TODO: Implement proper mock environment according to refactoring guide

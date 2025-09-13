@@ -5,14 +5,12 @@
 //  Created by iakalann on 15/06/2025.
 //
 
-import Audio
 import AVKit
 import Foundation
 import ReduxKit
 import Settings
-import Study
-import TextGeneration
 import TextPractice
+import TextGeneration
 
 @MainActor
 public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironmentProtocol> = { state, action, environment in
@@ -152,7 +150,6 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
             .failedToSaveChapter,
             .onSavedChapter,
             .onDeletedStory,
-            .failedToCreateChapter,
             .onCreatedChapter,
             .selectChapter,
             .onLoadedStories,

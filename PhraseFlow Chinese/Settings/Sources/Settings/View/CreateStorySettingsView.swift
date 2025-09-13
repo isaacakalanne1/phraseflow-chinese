@@ -120,7 +120,6 @@ public struct CreateStorySettingsView: View {
             title: promptDisplayText,
             image: promptImage,
             isSelected: false,
-            isTextCentered: promptDisplayText.count > 20,
             action: {
                 isShowingPromptSettings = true
                 store.dispatch(.playSound(.openStorySettings))

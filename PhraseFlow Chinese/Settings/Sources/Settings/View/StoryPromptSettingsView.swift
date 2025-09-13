@@ -78,9 +78,8 @@ struct StoryPromptMenu: View {
 
                             ImageButton(
                                 title: displayPrompt,
-                                image: UIImage(named: "StoryPrompt-Custom"),
+                                image: StorySetting.customPrompt("").thumbnail,
                                 isSelected: isSelectedPrompt,
-                                isTextCentered: true,
                                 action: {
                                     withAnimation(.easeInOut) {
                                         store.dispatch(.playSound(.changeSettings))

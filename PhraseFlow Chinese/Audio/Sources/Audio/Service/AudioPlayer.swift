@@ -95,7 +95,7 @@ public class AudioPlayer {
         let player = try AVAudioPlayer(contentsOf: url)
         player.volume = 0.7
         self.appSoundAudioPlayer = player
-        player.play()
+        self.appSoundAudioPlayer?.play()
     }
 }
 

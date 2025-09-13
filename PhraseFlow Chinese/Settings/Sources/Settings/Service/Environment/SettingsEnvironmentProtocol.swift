@@ -8,7 +8,6 @@
 import Audio
 import Foundation
 import Combine
-import DataStorage
 
 public protocol SettingsEnvironmentProtocol {
     var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> { get }

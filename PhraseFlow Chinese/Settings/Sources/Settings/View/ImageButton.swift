@@ -12,20 +12,17 @@ public struct ImageButton: View {
     let title: String
     let image: UIImage?
     let isSelected: Bool
-    let isTextCentered: Bool
     let action: () -> Void
     
     public init(
         title: String,
         image: UIImage?,
         isSelected: Bool,
-        isTextCentered: Bool = false,
         action: @escaping () -> Void
     ) {
         self.title = title
         self.image = image
         self.isSelected = isSelected
-        self.isTextCentered = isTextCentered
         self.action = action
     }
     
@@ -41,9 +38,9 @@ public struct ImageButton: View {
                 LinearGradient(
                     gradient: Gradient(
                         stops: [
-                            .init(color: Color.black.opacity(isTextCentered ? 1 : 0),
+                            .init(color: Color.black.opacity(0),
                                   location: 0.0),
-                            .init(color: Color.black.opacity(isTextCentered ? 1 : 0), location: 0.5),
+                            .init(color: Color.black.opacity(0), location: 0.5),
                             .init(color: Color.black.opacity(1), location: 1.0)
                         ]
                     ),
@@ -52,9 +49,7 @@ public struct ImageButton: View {
                 )
 
                 VStack {
-                    if !isTextCentered {
-                        Spacer()
-                    }
+                    Spacer()
                     Text(title)
                         .fontWeight(isSelected ? .bold : .regular)
                         .foregroundStyle(isSelected ? FTColor.accent : Color.white)

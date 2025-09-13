@@ -110,17 +110,7 @@ public struct FlowTaleRootView: View {
         )
         
         self.flowTaleEnvironment = FlowTaleEnvironment(
-            audioEnvironment: audioEnvironment,
-            storyEnvironment: storyEnvironment,
-            settingsEnvironment: settingsEnvironment,
-            studyEnvironment: studyEnvironment,
-            translationEnvironment: translationEnvironment,
-            subscriptionEnvironment: subscriptionEnvironment,
-            snackBarEnvironment: snackBarEnvironment,
-            userLimitEnvironment: userLimitEnvironment,
-            moderationEnvironment: moderationEnvironment,
-            navigationEnvironment: navigationEnvironment,
-            loadingEnvironment: loadingEnvironment
+            navigationEnvironment: navigationEnvironment
         )
     }
     
