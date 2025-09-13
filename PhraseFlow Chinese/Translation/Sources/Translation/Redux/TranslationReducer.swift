@@ -106,6 +106,8 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         
     case .showTextPractice(let show):
         newState.showTextPractice = show
+    case .selectTranslation(let chapter):
+        newState.chapter = chapter
         
     case .playTranslationWord,
             .synthesizeAudio,

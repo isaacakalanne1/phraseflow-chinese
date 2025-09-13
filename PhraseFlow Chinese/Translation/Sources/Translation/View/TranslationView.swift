@@ -41,7 +41,26 @@ struct TranslationView: View {
                 showSourceLanguageSelector: $showSourceLanguageSelector
             )
             
-            Spacer()
+            List {
+                Section {
+                    ForEach(Array(store.state.savedTranslations.enumerated()),
+                            id: \.offset) { index, translation in
+                        let reducedSentences = translation.sentences.reduce("") { $0 + " " + $1.original }
+                        Button(action: {
+                            store.dispatch(.selectTranslation(translation))
+                        }) {
+                            Text(reducedSentences)
+                        }
+                    }
+                    .onDelete { indexSet in
+                        for index in indexSet {
+                            let translationToDelete = store.state.savedTranslations[index]
+                            store.dispatch(.deleteTranslation(translationToDelete.storyId))
+                        }
+                    }
+                }
+            }
+            .scrollContentBackground(.hidden)
             
             TranslationActionButton(isInputFocused: $isInputFocused)
         }

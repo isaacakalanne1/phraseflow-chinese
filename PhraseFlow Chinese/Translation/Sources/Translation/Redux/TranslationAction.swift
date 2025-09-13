@@ -36,4 +36,5 @@ enum TranslationAction {
     case onSavedAppSettings
     case failedToSaveAppSettings
     case showTextPractice(Bool)
+    case selectTranslation(Chapter)
 }

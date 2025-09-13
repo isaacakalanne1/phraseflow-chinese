@@ -148,7 +148,7 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         }
         
     case .onSynthesizedTranslationAudio(let chapter):
-        return nil
+        return .saveCurrentTranslation
     case .updateSourceLanguage,
             .updateTargetLanguage:
         return .saveAppSettings
@@ -159,7 +159,8 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         } catch {
             return .failedToSaveAppSettings
         }
-        
+    case .selectTranslation:
+        return .showTextPractice(true)
     case .updateInputText,
             .swapLanguages,
             .translationInProgress,
