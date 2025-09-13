@@ -51,5 +51,6 @@ public protocol StoryEnvironmentProtocol {
     ) async throws -> Chapter
 
     func playSound(_ sound: AppSound)
+    func cleanupDefinitionsNotInChapters(_ chapters: [Chapter]) throws
 }
 

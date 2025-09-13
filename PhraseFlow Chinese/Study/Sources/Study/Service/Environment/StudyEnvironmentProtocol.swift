@@ -26,4 +26,5 @@ public protocol StudyEnvironmentProtocol {
         deviceLanguage: Language
     ) async throws -> [Definition]
     func loadDefinitions() throws -> [Definition]
+    func cleanupDefinitionsNotInChapters(_ chapters: [Chapter]) throws
 }

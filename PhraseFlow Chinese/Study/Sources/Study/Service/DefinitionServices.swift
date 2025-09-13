@@ -64,7 +64,9 @@ public class DefinitionServices: DefinitionServicesProtocol {
                 timestampData: timeStamp,
                 sentence: sentence,
                 detail: wordDef,
-                language: chapter.language
+                language: chapter.language,
+                sentenceId: sentence.id,
+                storyId: chapter.storyId
             )
         }
     }

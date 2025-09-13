@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import TextGeneration
 
 enum DefinitionDataStoreError: Error {
     case failedToCreateUrl
@@ -34,8 +35,6 @@ public class DefinitionDataStore: DefinitionDataStoreProtocol {
         decoder.dateDecodingStrategy = .iso8601
         createDefinitionsDirectory()
         scheduleWrite()
-        try? cleanupOrphanedDefinitionFiles()
-        try? cleanupOrphanedSentenceAudioFiles()
     }
     
     deinit {
@@ -50,21 +49,29 @@ public class DefinitionDataStore: DefinitionDataStoreProtocol {
     private func definitionFileURL(for id: UUID) -> URL? {
         definitionsDirectory?.appendingPathComponent("\(id.uuidString).json")
     }
-
-    public func cleanupOrphanedDefinitionFiles() throws {
-        guard let dir = documentsDirectory else {
-            throw DefinitionDataStoreError.failedToCreateUrl
+    
+    public func cleanupDefinitionsNotInChapters(_ chapters: [Chapter]) throws {
+        print("Starting cleanup of definitions not matching chapter story IDs...")
+        
+        // Get all current definitions
+        let definitions = try loadDefinitions()
+        
+        // Collect valid story IDs from chapters
+        let validStoryIds = Set(chapters.map { $0.storyId })
+        
+        // Find definitions to delete (those with story IDs not in chapters)
+        let definitionsToDelete = definitions.filter { definition in
+            !validStoryIds.contains(definition.storyId) && !definition.hasBeenSeen
         }
-
-        let contents = try fileManager.contentsOfDirectory(atPath: dir.path)
-        let oldDefinitionFiles = contents.filter { $0.hasPrefix("definitions-") && $0.hasSuffix(".json") }
-
-        for fileName in oldDefinitionFiles {
-            let fileURL = dir.appendingPathComponent(fileName)
-            try fileManager.removeItem(at: fileURL)
+        
+        print("Found \(definitionsToDelete.count) definitions to delete (out of \(definitions.count) total definitions)")
+        
+        // Delete all orphaned definitions in batch
+        for definition in definitionsToDelete {
+            try deleteDefinition(with: definition.id)
         }
-
-        print("Successfully cleaned up old definition files")
+        
+        print("Successfully deleted \(definitionsToDelete.count) definitions with mismatched story IDs")
     }
 
     private func sentenceAudioFileURL(id: UUID) -> URL? {
@@ -86,27 +93,6 @@ public class DefinitionDataStore: DefinitionDataStoreProtocol {
             return try Data(contentsOf: fileURL)
         } catch {
             throw DefinitionDataStoreError.failedToDecodeData
-        }
-    }
-
-    public func cleanupOrphanedSentenceAudioFiles() throws {
-        guard let dir = documentsDirectory else {
-            throw DefinitionDataStoreError.failedToCreateUrl
-        }
-
-        let definitions = try loadDefinitions()
-        let validSentenceIds = definitions.compactMap { $0.sentenceId.uuidString }
-
-        let contents = try fileManager.contentsOfDirectory(atPath: dir.path)
-        let audioFiles = contents.filter { $0.hasPrefix("sentence-audio-") && $0.hasSuffix(".m4a") }
-
-        for fileName in audioFiles {
-            let idString = fileName.replacingOccurrences(of: "sentence-audio-", with: "")
-                .replacingOccurrences(of: ".m4a", with: "")
-            if !validSentenceIds.contains(idString) {
-                let fileURL = dir.appendingPathComponent(fileName)
-                try fileManager.removeItem(at: fileURL)
-            }
         }
     }
 

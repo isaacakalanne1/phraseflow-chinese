@@ -20,6 +20,7 @@ public struct Definition: Codable, Equatable, Hashable, Sendable {
     var language: Language
     public var hasBeenSeen: Bool
     public var sentenceId: UUID // ID for the extracted sentence audio
+    public var storyId: UUID
     public var audioData: Data?
 
     init(id: UUID = UUID(),
@@ -30,7 +31,8 @@ public struct Definition: Codable, Equatable, Hashable, Sendable {
          detail: WordDefinition,
          language: Language,
          hasBeenSeen: Bool = false,
-         sentenceId: UUID = UUID(),
+         sentenceId: UUID,
+         storyId: UUID,
          audioData: Data? = nil)
     {
         self.id = id
@@ -42,6 +44,7 @@ public struct Definition: Codable, Equatable, Hashable, Sendable {
         self.language = language
         self.hasBeenSeen = hasBeenSeen
         self.sentenceId = sentenceId
+        self.storyId = storyId
         self.audioData = audioData
     }
 
@@ -56,6 +59,7 @@ public struct Definition: Codable, Equatable, Hashable, Sendable {
         language = try container.decode(Language.self, forKey: .language)
         hasBeenSeen = (try? container.decode(Bool.self, forKey: .hasBeenSeen)) ?? false
         sentenceId = (try? container.decode(UUID.self, forKey: .sentenceId)) ?? UUID()
+        storyId = (try? container.decode(UUID.self, forKey: .storyId)) ?? UUID()
         audioData = try? container.decode(Data.self, forKey: .audioData)
     }
     

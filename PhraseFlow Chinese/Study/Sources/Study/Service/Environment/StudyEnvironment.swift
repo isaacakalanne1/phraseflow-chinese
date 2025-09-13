@@ -65,4 +65,8 @@ public struct StudyEnvironment: StudyEnvironmentProtocol {
         definitionsSubject.send(definitions)
         return definitions
     }
+    
+    public func cleanupDefinitionsNotInChapters(_ chapters: [Chapter]) throws {
+        try dataStore.cleanupDefinitionsNotInChapters(chapters)
+    }
 }

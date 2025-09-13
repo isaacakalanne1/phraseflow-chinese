@@ -189,4 +189,8 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     public func playSound(_ sound: AppSound) {
         audioEnvironment.playSound(sound)
     }
+    
+    public func cleanupDefinitionsNotInChapters(_ chapters: [Chapter]) throws {
+        try studyEnvironment.cleanupDefinitionsNotInChapters(chapters)
+    }
 }

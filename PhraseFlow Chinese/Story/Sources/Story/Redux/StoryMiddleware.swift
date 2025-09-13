@@ -101,6 +101,7 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
     case .onGeneratedDefinitions(let chapter):
         do {
             try environment.saveChapter(chapter)
+            
             return .onCreatedChapter(chapter)
         } catch {
             return .failedToCreateChapter
@@ -110,6 +111,7 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
         do {
             // Load all chapters directly
             let chapters = try environment.loadAllChapters()
+            try environment.cleanupDefinitionsNotInChapters(chapters)
             return .onLoadedStories(chapters)
         } catch {
             return .failedToLoadStoriesAndDefinitions
