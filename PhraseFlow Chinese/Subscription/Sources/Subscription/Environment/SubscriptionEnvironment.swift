@@ -26,8 +26,6 @@ public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
         settingsEnvironment.settingsUpdatedSubject
     }
     
-    public let currentSubscriptionSubject: CurrentValueSubject<SubscriptionLevel?, Never>
-    
     public init(
         repository: SubscriptionRepositoryProtocol,
         speechEnvironment: SpeechEnvironmentProtocol,
@@ -38,7 +36,6 @@ public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
         self.speechEnvironment = speechEnvironment
         self.settingsEnvironment = settingsEnvironment
         self.userLimitsDataStore = userLimitsDataStore
-        self.currentSubscriptionSubject = CurrentValueSubject(nil)
     }
     
     public func getProducts() async throws -> [Product] {

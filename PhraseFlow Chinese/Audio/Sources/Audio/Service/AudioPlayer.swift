@@ -10,7 +10,7 @@ import AVKit
 
 public class AudioPlayer {
     public var chapterAudioPlayer: AVPlayer
-    private var musicAudioPlayer: AVAudioPlayer?
+    public var musicAudioPlayer: AVAudioPlayer?
     private var appSoundAudioPlayer: AVAudioPlayer?
     
     init() {

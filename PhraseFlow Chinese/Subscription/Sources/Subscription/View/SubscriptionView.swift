@@ -137,47 +137,13 @@ struct SubscriptionView: View {
     }
     
     private var freeTierSection: some View {
-        VStack(spacing: 12) {
-            HStack {
-                Image(systemName: "gift.fill")
-                    .foregroundColor(FTColor.accent)
-                    .font(.title2)
-                Text(LocalizedString.free)
-                    .font(FTFont.flowTaleHeader())
-                    .fontWeight(.bold)
-                    .foregroundColor(FTColor.primary)
-                Spacer()
-            }
-            
-            Text(LocalizedString.subscriptionFreeCharactersDetail(4000))
-                .font(FTFont.flowTaleSecondaryHeader())
-                .multilineTextAlignment(.leading)
-                .foregroundColor(FTColor.primary.opacity(0.8))
-                .frame(maxWidth: .infinity, alignment: .leading)
-        }
-        .padding(.horizontal, 24)
-        .padding(.vertical, 20)
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(
-                    LinearGradient(
-                        colors: [FTColor.secondary.opacity(0.2), FTColor.secondary.opacity(0.1)],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(
-                            LinearGradient(
-                                colors: [FTColor.secondary.opacity(0.5), FTColor.secondary.opacity(0.2)],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ),
-                            lineWidth: 1
-                        )
-                )
+        SubscriptionOption(
+            title: LocalizedString.free,
+            detail: LocalizedString.subscriptionFreeCharactersDetail(4000),
+            product: nil,
+            action: {}
         )
+        .disabled(true)
     }
     
     private var actionsSection: some View {

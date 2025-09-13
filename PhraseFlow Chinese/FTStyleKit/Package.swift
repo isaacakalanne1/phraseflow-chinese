@@ -15,6 +15,7 @@ let package = Package(
             targets: ["FTStyleKit"]),
     ],
     dependencies: [
+        .package(name: "AppleIcon", path: "../AppleIcon"),
         .package(name: "FTColor", path: "../FTColor"),
         .package(name: "Localization", path: "../Localization"),
     ],
@@ -24,6 +25,7 @@ let package = Package(
         .target(
             name: "FTStyleKit",
             dependencies: [
+                "AppleIcon",
                 "FTColor",
                 "Localization"
             ],

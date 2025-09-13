@@ -24,7 +24,7 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
     case .saveAppSettings:
         do {
             try environment.saveAppSettings(state)
-            return nil
+            return .loadUsageData
         } catch {
             return .failedToSaveAppSettings
         }
@@ -75,11 +75,9 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
                 timeUntilReset: nil
             )
         }
-    case .updateSubscriptionLevel:
-        return .loadUsageData
         
     case .onLoadedUsageData:
-        return state.isPlayingMusic ? .playMusic(.whispersOfTheForest) : nil
+        return state.isPlayingMusic && !environment.isPlayingMusic ? .playMusic(.whispersOfTheForest) : nil
     case .failedToLoadAppSettings,
          .failedToSaveAppSettings,
          .updateCustomPrompt,

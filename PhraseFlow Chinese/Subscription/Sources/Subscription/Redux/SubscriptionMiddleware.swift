@@ -68,9 +68,6 @@ public let subscriptionMiddleware: Middleware<SubscriptionState, SubscriptionAct
         } else {
             newSubscriptionLevel = .free
         }
-        
-        // Publish the new subscription level
-        environment.currentSubscriptionSubject.send(newSubscriptionLevel)
         var settings = state.settings
         settings.subscriptionLevel = newSubscriptionLevel
         return .saveAppSettings(settings)

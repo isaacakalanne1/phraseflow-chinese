@@ -13,7 +13,6 @@ import StoreKit
 
 public protocol SubscriptionEnvironmentProtocol {
     var synthesizedCharactersSubject: CurrentValueSubject<Int?, Never> { get }
-    var currentSubscriptionSubject: CurrentValueSubject<SubscriptionLevel?, Never> { get }
     var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> { get }
     func getProducts() async throws -> [Product]
     func purchase(_ product: Product) async throws

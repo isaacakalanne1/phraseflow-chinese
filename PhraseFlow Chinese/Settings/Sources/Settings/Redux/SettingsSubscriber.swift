@@ -11,16 +11,6 @@ import Combine
 
 @MainActor
 let settingsSubscriber: OnSubscribe<SettingsStore, SettingsEnvironmentProtocol> = { store, environment in
-    environment.subscriptionLevelSubject
-            .receive(on: DispatchQueue.main)
-            .sink { [weak store] subscriptionLevel in
-                guard let store,
-                      let subscriptionLevel else {
-                    return
-                }
-                store.dispatch(.updateSubscriptionLevel(subscriptionLevel))
-            }
-            .store(in: &store.subscriptions)
     
     environment.ssmlCharacterCountSubject
             .receive(on: DispatchQueue.main)

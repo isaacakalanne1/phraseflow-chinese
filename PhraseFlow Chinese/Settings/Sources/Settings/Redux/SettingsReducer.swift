@@ -81,10 +81,6 @@ let settingsReducer: Reducer<SettingsState, SettingsAction> = { state, action in
         newState.remainingCharacters = remainingCharacters
         newState.timeUntilReset = timeUntilReset
         
-    case .updateSubscriptionLevel(let subscriptionLevel):
-        newState.subscriptionLevel = subscriptionLevel
-        newState.characterLimitPerDay = subscriptionLevel.ssmlCharacterLimitPerDay
-        
     case .loadAppSettings,
          .saveAppSettings,
          .failedToLoadAppSettings,

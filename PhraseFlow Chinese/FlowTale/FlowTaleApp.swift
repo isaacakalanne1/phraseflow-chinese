@@ -110,13 +110,6 @@ public struct FlowTaleRootView: View {
             loadingEnvironment: loadingEnvironment
         )
         
-        // Connect subscription level changes to settings environment
-        Task {
-            for await subscriptionLevel in subscriptionEnvironment.currentSubscriptionSubject.values {
-                settingsEnvironment.subscriptionLevelSubject.send(subscriptionLevel)
-            }
-        }
-        
         self.flowTaleEnvironment = FlowTaleEnvironment(
             audioEnvironment: audioEnvironment,
             storyEnvironment: storyEnvironment,

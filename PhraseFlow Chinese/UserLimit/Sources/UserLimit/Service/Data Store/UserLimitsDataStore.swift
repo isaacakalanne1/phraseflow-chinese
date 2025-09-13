@@ -19,6 +19,10 @@ public class UserLimitsDataStore: UserLimitsDataStoreProtocol {
     private let dailyUsageKey = "dailyCharacterUsageData"
     private let freeCountKey = "freeUserCharacterCount"
     
+    private var freeUserLimit: Int {
+        SubscriptionLevel.free.ssmlCharacterLimitPerDay
+    }
+    
     public init() {
         
     }
@@ -45,18 +49,11 @@ public class UserLimitsDataStore: UserLimitsDataStoreProtocol {
     }
 
     private func trackFreeUser(_ count: Int) throws {
-        let current = freeUserCount
-        #if DEBUG
-        let limit = 9_999_999_999_999
-        #else
-        let limit = 4000
-        #endif
-        
-        guard current + count <= limit else {
+        guard freeUserCount + count <= freeUserLimit else {
             throw UserLimitsDataStoreError.freeUserCharacterLimitReached
         }
         
-        try keychain.setData(Data("\(current + count)".utf8), forKey: freeCountKey)
+        try keychain.setData(Data("\(freeUserCount + count)".utf8), forKey: freeCountKey)
     }
 
     private func trackSubscribedUser(_ count: Int, characterLimitPerDay: Int) throws {
@@ -115,14 +112,7 @@ public class UserLimitsDataStore: UserLimitsDataStoreProtocol {
     }
     
     private func checkFreeUserLimit(_ count: Int) throws {
-        let current = freeUserCount
-        #if DEBUG
-        let limit = 9_999_999_999_999
-        #else
-        let limit = 4000
-        #endif
-        
-        guard current + count <= limit else {
+        guard freeUserCount + count <= freeUserLimit else {
             throw UserLimitsDataStoreError.freeUserCharacterLimitReached
         }
     }
@@ -142,13 +132,7 @@ public class UserLimitsDataStore: UserLimitsDataStoreProtocol {
     }
     
     public func getRemainingFreeCharacters() -> Int {
-        let current = freeUserCount
-        #if DEBUG
-        let limit = 4_000
-        #else
-        let limit = 4000
-        #endif
-        return max(0, limit - current)
+        return max(0, freeUserLimit - freeUserCount)
     }
     
     public func getTimeUntilNextDailyReset(characterLimitPerDay: Int) -> String? {

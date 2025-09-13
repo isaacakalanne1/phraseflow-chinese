@@ -13,7 +13,6 @@ import DataStorage
 
 public struct SettingsEnvironment: SettingsEnvironmentProtocol {
     public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never>
-    public var subscriptionLevelSubject: CurrentValueSubject<SubscriptionLevel?, Never>
     public var ssmlCharacterCountSubject: CurrentValueSubject<Int?, Never>
     public let userLimitEnvironment: UserLimitEnvironmentProtocol
     
@@ -29,12 +28,10 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
         self.audioEnvironment = audioEnvironment
         self.userLimitEnvironment = userLimitEnvironment
         settingsUpdatedSubject = .init(nil)
-        subscriptionLevelSubject = .init(nil)
         ssmlCharacterCountSubject = .init(nil)
     }
     
     public func saveAppSettings(_ settings: SettingsState) throws {
-        audioEnvironment.playSound(.changeSettings)
         try settingsDataStore.saveAppSettings(settings)
         settingsUpdatedSubject.send(settings)
     }
@@ -45,13 +42,16 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
         return settings
     }
     
-    
     public func playSound(_ sound: AppSound) {
         audioEnvironment.playSound(sound)
     }
     
     public func playMusic(_ music: MusicType) throws {
         try audioEnvironment.playMusic(music, volume: .normal)
+    }
+    
+    public var isPlayingMusic: Bool {
+        audioEnvironment.audioPlayer.musicAudioPlayer?.isPlaying ?? false
     }
     
     public func stopMusic() {

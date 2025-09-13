@@ -49,7 +49,9 @@ public struct SettingsState: Codable, Equatable, Sendable {
         subscriptionLevel != .free
     }
     public var timeUntilReset: String?
-    public var characterLimitPerDay: Int
+    public var characterLimitPerDay: Int {
+        subscriptionLevel.ssmlCharacterLimitPerDay
+    }
     public var subscriptionLevel: SubscriptionLevel
     
     enum CodingKeys: String, CodingKey {
@@ -71,7 +73,6 @@ public struct SettingsState: Codable, Equatable, Sendable {
         case isShowingModerationFailedAlert
         case remainingCharacters
         case viewState
-        case characterLimitPerDay
         case subscriptionLevel
     }
 
@@ -91,7 +92,6 @@ public struct SettingsState: Codable, Equatable, Sendable {
         isShowingModerationFailedAlert: Bool = false,
         viewState: SettingsViewState = SettingsViewState(),
         remainingCharacters: Int? = nil,
-        characterLimitPerDay: Int = SubscriptionLevel.free.ssmlCharacterLimitPerDay,
         subscriptionLevel: SubscriptionLevel = .free
     ) {
         self.isShowingDefinition = isShowingDefinition
@@ -109,7 +109,6 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.isShowingModerationFailedAlert = isShowingModerationFailedAlert
         self.viewState = viewState
         self.remainingCharacters = remainingCharacters
-        self.characterLimitPerDay = characterLimitPerDay
         self.subscriptionLevel = subscriptionLevel
         self.timeUntilReset = nil
     }
@@ -134,7 +133,6 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.isShowingCustomPromptAlert = (try? container.decode(Bool.self, forKey: .isShowingCustomPromptAlert)) ?? false
         self.isShowingModerationFailedAlert = (try? container.decode(Bool.self, forKey: .isShowingModerationFailedAlert)) ?? false
         self.viewState = (try? container.decode(SettingsViewState.self, forKey: .viewState)) ?? SettingsViewState()
-        self.characterLimitPerDay = (try? container.decode(Int.self, forKey: .characterLimitPerDay)) ?? SubscriptionLevel.free.ssmlCharacterLimitPerDay
         self.subscriptionLevel = (try? container.decode(SubscriptionLevel.self, forKey: .subscriptionLevel)) ?? .free
         self.remainingCharacters = try? container.decode(Int.self, forKey: .remainingCharacters)
         self.timeUntilReset = nil

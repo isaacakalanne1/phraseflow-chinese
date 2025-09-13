@@ -20,42 +20,35 @@ struct SubscriptionOption: View {
     let action: () -> Void
 
     var isUserCurrentSubscription: Bool {
-        product != nil && store.state.currentSubscription.idString == product?.id
+        if let product = product {
+            return store.state.currentSubscription.idString == product.id
+        } else {
+            // Free tier - check if user is not subscribed
+            return !store.state.isSubscribed
+        }
     }
 
     var backgroundColor: Color {
-        if let _ = product {
-            if isUserCurrentSubscription {
-                return FTColor.accent
-            } else {
-                return FTColor.background
-            }
+        if isUserCurrentSubscription {
+            return FTColor.accent
         } else {
-            return FTColor.secondary
+            return FTColor.background
         }
     }
 
     var foregroundColor: Color {
-        if let _ = product {
-            if isUserCurrentSubscription {
-                return FTColor.background
-            } else {
-                return FTColor.primary
-            }
+        if isUserCurrentSubscription {
+            return FTColor.background
         } else {
             return FTColor.primary
         }
     }
     
     var borderColor: Color {
-        if let _ = product {
-            if isUserCurrentSubscription {
-                return FTColor.accent
-            } else {
-                return FTColor.primary.opacity(0.2)
-            }
+        if isUserCurrentSubscription {
+            return FTColor.accent
         } else {
-            return FTColor.secondary
+            return FTColor.primary.opacity(0.2)
         }
     }
     
@@ -69,7 +62,7 @@ struct SubscriptionOption: View {
 
     var body: some View {
         Button(action: {
-            if product != nil && !isUserCurrentSubscription {
+            if !isUserCurrentSubscription {
                 action()
             }
         }, label: {
@@ -81,6 +74,10 @@ struct SubscriptionOption: View {
                                 .foregroundColor(FTColor.background)
                                 .font(.title3)
                                 .fontWeight(.semibold)
+                        } else if product == nil {
+                            Image(systemName: "gift.fill")
+                                .foregroundColor(FTColor.accent)
+                                .font(.title3)
                         } else {
                             Image(systemName: "crown.fill")
                                 .foregroundColor(FTColor.accent)
