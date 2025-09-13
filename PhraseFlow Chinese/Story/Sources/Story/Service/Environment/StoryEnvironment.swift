@@ -193,4 +193,8 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     public func cleanupDefinitionsNotInChapters(_ chapters: [Chapter]) throws {
         try studyEnvironment.cleanupDefinitionsNotInChapters(chapters)
     }
+    
+    public func cleanupOrphanedSentenceAudioFiles() throws {
+        try studyEnvironment.cleanupOrphanedSentenceAudioFiles()
+    }
 }

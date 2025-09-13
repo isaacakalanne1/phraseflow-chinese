@@ -17,4 +17,5 @@ public protocol DefinitionDataStoreProtocol {
 
     func saveSentenceAudio(_ audioData: Data, id: UUID) throws
     func loadSentenceAudio(id: UUID) throws -> Data
+    func cleanupOrphanedSentenceAudioFiles() throws
 }

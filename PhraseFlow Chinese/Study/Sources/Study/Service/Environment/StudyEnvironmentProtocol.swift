@@ -27,4 +27,5 @@ public protocol StudyEnvironmentProtocol {
     ) async throws -> [Definition]
     func loadDefinitions() throws -> [Definition]
     func cleanupDefinitionsNotInChapters(_ chapters: [Chapter]) throws
+    func cleanupOrphanedSentenceAudioFiles() throws
 }

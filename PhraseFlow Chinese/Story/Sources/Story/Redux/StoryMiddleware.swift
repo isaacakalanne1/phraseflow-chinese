@@ -112,6 +112,7 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
             // Load all chapters directly
             let chapters = try environment.loadAllChapters()
             try environment.cleanupDefinitionsNotInChapters(chapters)
+            try environment.cleanupOrphanedSentenceAudioFiles()
             return .onLoadedStories(chapters)
         } catch {
             return .failedToLoadStoriesAndDefinitions

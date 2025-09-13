@@ -52,5 +52,6 @@ public protocol StoryEnvironmentProtocol {
 
     func playSound(_ sound: AppSound)
     func cleanupDefinitionsNotInChapters(_ chapters: [Chapter]) throws
+    func cleanupOrphanedSentenceAudioFiles() throws
 }
 

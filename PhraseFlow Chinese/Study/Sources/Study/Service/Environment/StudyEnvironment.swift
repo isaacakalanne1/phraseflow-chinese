@@ -69,4 +69,8 @@ public struct StudyEnvironment: StudyEnvironmentProtocol {
     public func cleanupDefinitionsNotInChapters(_ chapters: [Chapter]) throws {
         try dataStore.cleanupDefinitionsNotInChapters(chapters)
     }
+    
+    public func cleanupOrphanedSentenceAudioFiles() throws {
+        try dataStore.cleanupOrphanedSentenceAudioFiles()
+    }
 }

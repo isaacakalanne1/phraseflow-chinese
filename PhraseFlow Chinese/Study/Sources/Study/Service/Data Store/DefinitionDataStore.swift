@@ -95,6 +95,35 @@ public class DefinitionDataStore: DefinitionDataStoreProtocol {
             throw DefinitionDataStoreError.failedToDecodeData
         }
     }
+    
+    public func cleanupOrphanedSentenceAudioFiles() throws {
+        print("Starting cleanup of sentence audio files not matching definition sentence IDs...")
+        
+        guard let dir = documentsDirectory else {
+            throw DefinitionDataStoreError.failedToCreateUrl
+        }
+
+        // Get all current definitions and collect their sentence IDs
+        let definitions = try loadDefinitions()
+        let validSentenceIds = Set(definitions.map { $0.sentenceId.uuidString })
+
+        let contents = try fileManager.contentsOfDirectory(atPath: dir.path)
+        let audioFiles = contents.filter { $0.hasPrefix("sentence-audio-") && $0.hasSuffix(".m4a") }
+
+        var removedCount = 0
+        for fileName in audioFiles {
+            let idString = fileName.replacingOccurrences(of: "sentence-audio-", with: "")
+                .replacingOccurrences(of: ".m4a", with: "")
+            if !validSentenceIds.contains(idString) {
+                let fileURL = dir.appendingPathComponent(fileName)
+                try fileManager.removeItem(at: fileURL)
+                removedCount += 1
+            }
+        }
+        
+        print("Found \(removedCount) sentence audio files to delete (out of \(audioFiles.count) total audio files)")
+        print("Successfully deleted \(removedCount) orphaned sentence audio files")
+    }
 
     private func scheduleWrite() {
         writeTimer?.invalidate()
