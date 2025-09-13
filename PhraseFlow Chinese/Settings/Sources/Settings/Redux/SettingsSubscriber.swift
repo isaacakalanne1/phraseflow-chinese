@@ -11,14 +11,14 @@ import Combine
 
 @MainActor
 let settingsSubscriber: OnSubscribe<SettingsStore, SettingsEnvironmentProtocol> = { store, environment in
-    
-    environment.ssmlCharacterCountSubject
+    environment.settingsUpdatedSubject
             .receive(on: DispatchQueue.main)
-            .sink { [weak store] _ in
-                guard let store else {
+            .sink { [weak store] settings in
+                guard let store,
+                let settings else {
                     return
                 }
-                store.dispatch(.loadUsageData)
+                store.dispatch(.refreshAppSettings(settings))
             }
             .store(in: &store.subscriptions)
 }

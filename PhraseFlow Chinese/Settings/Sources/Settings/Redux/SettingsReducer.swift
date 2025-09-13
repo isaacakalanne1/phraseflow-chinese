@@ -14,7 +14,8 @@ let settingsReducer: Reducer<SettingsState, SettingsAction> = { state, action in
     var newState = state
 
     switch action {
-    case .onLoadedAppSettings(let settings):
+    case .onLoadedAppSettings(let settings),
+            .refreshAppSettings(let settings):
         newState = settings
         
     case .updateShowDefinition(let isShowing):
@@ -77,17 +78,12 @@ let settingsReducer: Reducer<SettingsState, SettingsAction> = { state, action in
     case .stopMusic:
         newState.isPlayingMusic = false
         
-    case .onLoadedUsageData(let remainingCharacters, let timeUntilReset):
-        newState.remainingCharacters = remainingCharacters
-        newState.timeUntilReset = timeUntilReset
-        
     case .loadAppSettings,
          .saveAppSettings,
          .failedToLoadAppSettings,
          .failedToSaveAppSettings,
          .playSound,
-         .snackbarAction,
-         .loadUsageData:
+         .snackbarAction:
         break
     }
 

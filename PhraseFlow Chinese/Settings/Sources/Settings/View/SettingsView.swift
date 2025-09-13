@@ -55,7 +55,10 @@ struct SettingsView: View {
         }
         NavigationStack {
             VStack {
-                usageLimitSection()
+                UserLimitRootView(remainingCharacters: store.state.remainingCharacters,
+                                  totalLimit: store.state.characterLimitPerDay,
+                                  isSubscribedUser: store.state.isSubscribedUser,
+                                  timeUntilReset: store.state.timeUntilReset)
                 ScrollView {
                     VStack(spacing: 12) {
                         // Usage Limit Section
@@ -176,17 +179,10 @@ struct SettingsView: View {
                             Text((store.state.isSubscribedUser == true) ? "Characters Remaining Today" : "Characters Remaining")
                                 .font(.caption)
                                 .foregroundColor(FTColor.secondary)
-                            if let remainingCharacters = store.state.remainingCharacters {
-                                Text("\(remainingCharacters)")
-                                    .font(.title2)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(remainingCharacters > 0 ? FTColor.primary : .red)
-                            } else {
-                                Text(LocalizedString.loading)
-                                    .font(.title2)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(FTColor.secondary)
-                            }
+                            Text("\(store.state.remainingCharacters)")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundColor(store.state.remainingCharacters > 0 ? FTColor.primary : .red)
                         }
                         
                         Spacer()
@@ -206,35 +202,34 @@ struct SettingsView: View {
                         }
                     }
                     
-                    if let remainingCharacters = store.state.remainingCharacters {
-                        let totalLimit = store.state.characterLimitPerDay
-                        VStack(spacing: 4) {
-                            HStack {
-                                Text(LocalizedString.usageProgress)
-                                    .font(.caption)
-                                    .foregroundColor(FTColor.secondary)
-                                Spacer()
-                                Text("\(remainingCharacters) of \(totalLimit)")
-                                    .font(.caption)
-                                    .foregroundColor(FTColor.secondary)
-                            }
-                            
-                            GeometryReader { geometry in
-                                ZStack(alignment: .leading) {
-                                    Rectangle()
-                                        .fill(FTColor.secondary.opacity(0.2))
-                                        .frame(height: 6)
-                                        .cornerRadius(3)
-                                    
-                                    Rectangle()
-                                        .fill(remainingCharacters > 0 ? FTColor.primary : .red)
-                                        .frame(width: geometry.size.width * CGFloat(remainingCharacters) / CGFloat(totalLimit), height: 6)
-                                        .cornerRadius(3)
-                                        .animation(.easeInOut(duration: 0.3), value: remainingCharacters)
-                                }
-                            }
-                            .frame(height: 6)
+                    let remainingCharacters = store.state.remainingCharacters
+                    let totalLimit = store.state.characterLimitPerDay
+                    VStack(spacing: 4) {
+                        HStack {
+                            Text(LocalizedString.usageProgress)
+                                .font(.caption)
+                                .foregroundColor(FTColor.secondary)
+                            Spacer()
+                            Text("\(remainingCharacters) of \(totalLimit)")
+                                .font(.caption)
+                                .foregroundColor(FTColor.secondary)
                         }
+                        
+                        GeometryReader { geometry in
+                            ZStack(alignment: .leading) {
+                                Rectangle()
+                                    .fill(FTColor.secondary.opacity(0.2))
+                                    .frame(height: 6)
+                                    .cornerRadius(3)
+                                
+                                Rectangle()
+                                    .fill(remainingCharacters > 0 ? FTColor.primary : .red)
+                                    .frame(width: geometry.size.width * CGFloat(remainingCharacters) / CGFloat(totalLimit), height: 6)
+                                    .cornerRadius(3)
+                                    .animation(.easeInOut(duration: 0.3), value: remainingCharacters)
+                            }
+                        }
+                        .frame(height: 6)
                     }
                 }
                 .padding(.horizontal, 16)

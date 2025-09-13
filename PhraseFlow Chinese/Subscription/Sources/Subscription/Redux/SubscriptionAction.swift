@@ -11,6 +11,8 @@ import StoreKit
 
 public enum SubscriptionAction: Sendable {
     case trackSsmlCharacterCount(Int)
+    case onTrackedSsml(totalUsedCharacters: Int)
+    case failedToTrackSsml
     case fetchSubscriptions
     case onFetchedSubscriptions([Product])
     case failedToFetchSubscriptions

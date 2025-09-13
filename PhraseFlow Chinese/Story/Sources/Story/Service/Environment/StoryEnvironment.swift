@@ -61,6 +61,10 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         self.dataStore = dataStore
     }
     
+    public func limitReached(_ event: LimitReachedEvent) {
+        limitReachedSubject.send(event)
+    }
+    
     public func generateTextForChapter(
         previousChapters: [Chapter] = [],
         language: Language? = nil,

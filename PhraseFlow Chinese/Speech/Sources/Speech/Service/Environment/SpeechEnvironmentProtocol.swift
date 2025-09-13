@@ -9,7 +9,6 @@ import Combine
 import Foundation
 import TextGeneration
 import Settings
-import UserLimit
 
 public protocol SpeechEnvironmentProtocol {
     var synthesizedCharactersSubject: CurrentValueSubject<Int?, Never> { get }

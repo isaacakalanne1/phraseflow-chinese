@@ -44,9 +44,13 @@ public struct SettingsState: Codable, Equatable, Sendable {
     var viewState: SettingsViewState
     
     // User limit properties  
-    public var remainingCharacters: Int?
+    public var usedCharacters: Int
     public var isSubscribedUser: Bool {
         subscriptionLevel != .free
+    }
+    
+    public var remainingCharacters: Int {
+        subscriptionLevel.ssmlCharacterLimitPerDay - usedCharacters
     }
     public var timeUntilReset: String?
     public var characterLimitPerDay: Int {
@@ -71,7 +75,7 @@ public struct SettingsState: Codable, Equatable, Sendable {
         case shouldPlaySound
         case isShowingCustomPromptAlert
         case isShowingModerationFailedAlert
-        case remainingCharacters
+        case usedCharacters
         case viewState
         case subscriptionLevel
     }
@@ -91,7 +95,7 @@ public struct SettingsState: Codable, Equatable, Sendable {
         confirmedCustomPrompt: String = "",
         isShowingModerationFailedAlert: Bool = false,
         viewState: SettingsViewState = SettingsViewState(),
-        remainingCharacters: Int? = nil,
+        usedCharacters: Int = 0,
         subscriptionLevel: SubscriptionLevel = .free
     ) {
         self.isShowingDefinition = isShowingDefinition
@@ -108,7 +112,7 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.isShowingCustomPromptAlert = isShowingCustomPromptAlert
         self.isShowingModerationFailedAlert = isShowingModerationFailedAlert
         self.viewState = viewState
-        self.remainingCharacters = remainingCharacters
+        self.usedCharacters = usedCharacters
         self.subscriptionLevel = subscriptionLevel
         self.timeUntilReset = nil
     }
@@ -134,7 +138,7 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.isShowingModerationFailedAlert = (try? container.decode(Bool.self, forKey: .isShowingModerationFailedAlert)) ?? false
         self.viewState = (try? container.decode(SettingsViewState.self, forKey: .viewState)) ?? SettingsViewState()
         self.subscriptionLevel = (try? container.decode(SubscriptionLevel.self, forKey: .subscriptionLevel)) ?? .free
-        self.remainingCharacters = try? container.decode(Int.self, forKey: .remainingCharacters)
+        self.usedCharacters = (try? container.decode(Int.self, forKey: .usedCharacters)) ?? 0
         self.timeUntilReset = nil
     }
 }

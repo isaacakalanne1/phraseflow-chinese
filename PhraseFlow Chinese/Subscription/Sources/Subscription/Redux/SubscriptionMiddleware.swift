@@ -80,9 +80,16 @@ public let subscriptionMiddleware: Middleware<SubscriptionState, SubscriptionAct
         return .getCurrentEntitlements
         
     case .trackSsmlCharacterCount(let count):
-        try? environment.trackSSMLCharacterUsage(characterCount: count,
-                                                 subscription: state.currentSubscription)
-        return nil
+        do {
+            let totalUsedCharacters = try environment.trackSSMLCharacterUsage(characterCount: count,
+                                                     subscription: state.currentSubscription)
+            return .onTrackedSsml(totalUsedCharacters: totalUsedCharacters)
+        } catch {
+            return .failedToTrackSsml
+        }
+        
+    case .onTrackedSsml:
+        return .saveAppSettings(state.settings)
 
     case .failedToFetchSubscriptions,
          .failedToPurchaseSubscription,
@@ -91,7 +98,8 @@ public let subscriptionMiddleware: Middleware<SubscriptionState, SubscriptionAct
          .failedToRestoreSubscriptions,
          .onValidatedReceipt,
          .setSubscriptionSheetShowing,
-         .refreshAppSettings:
+         .refreshAppSettings,
+         .failedToTrackSsml:
         return nil
     }
 }

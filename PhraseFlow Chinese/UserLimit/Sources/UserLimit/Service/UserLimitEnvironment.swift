@@ -5,16 +5,23 @@
 //  Created by Isaac Akalanne on 24/07/2025.
 //
 
+import DataStorage
 import Combine
 import Foundation
 
 public struct UserLimitEnvironment: UserLimitEnvironmentProtocol {
     private let dataStore: UserLimitsDataStoreProtocol
+    
     public let limitReachedSubject: CurrentValueSubject<LimitReachedEvent, Never>
     
-    public init(dataStore: UserLimitsDataStoreProtocol) {
+    public var usedCharactersSubject: CurrentValueSubject<Int?, Never>
+    
+    public init(
+        dataStore: UserLimitsDataStoreProtocol
+    ) {
         self.dataStore = dataStore
         self.limitReachedSubject = .init(.freeLimit)
+        self.usedCharactersSubject = .init(nil)
     }
     
     public func canCreateChapter(estimatedCharacterCount: Int, characterLimitPerDay: Int?) throws {
@@ -37,7 +44,13 @@ public struct UserLimitEnvironment: UserLimitEnvironmentProtocol {
         dataStore.getUsedFreeCharacters()
     }
     
-    public func getUsedDailyCharacters(characterLimitPerDay: Int) -> Int {
-        dataStore.getUsedDailyCharacters(characterLimitPerDay: characterLimitPerDay)
+    public func getUsedDailyCharacters() -> Int {
+        dataStore.getUsedDailyCharacters()
+    }
+    
+    public func trackSSMLCharacterUsage(characterCount: Int,
+                                        subscription: SubscriptionLevel) throws -> Int {
+        try dataStore.trackSSMLCharacterUsage(characterCount: characterCount,
+                                              subscription: subscription)
     }
 }

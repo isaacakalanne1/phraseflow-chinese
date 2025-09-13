@@ -14,6 +14,7 @@ enum SettingsAction: Sendable {
     case loadAppSettings
     case onLoadedAppSettings(SettingsState)
     case failedToLoadAppSettings
+    case refreshAppSettings(SettingsState)
     
     case saveAppSettings
     case failedToSaveAppSettings
@@ -40,8 +41,4 @@ enum SettingsAction: Sendable {
     // Simple moderation actions without dependency
     case updateIsShowingModerationFailedAlert(Bool)
     case updateIsShowingModerationDetails(Bool)
-    
-    // User limit actions
-    case loadUsageData
-    case onLoadedUsageData(remainingCharacters: Int, timeUntilReset: String?)
 }

@@ -18,6 +18,6 @@ public protocol SubscriptionEnvironmentProtocol {
     func purchase(_ product: Product) async throws
     func validateReceipt()
     func trackSSMLCharacterUsage(characterCount: Int,
-                                 subscription: SubscriptionLevel?) throws
+                                 subscription: SubscriptionLevel) throws -> Int
     func saveAppSettings(_ settings: SettingsState) throws
 }

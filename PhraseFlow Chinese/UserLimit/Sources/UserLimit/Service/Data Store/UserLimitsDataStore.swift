@@ -40,12 +40,18 @@ public class UserLimitsDataStore: UserLimitsDataStoreProtocol {
     }()
 
     public func trackSSMLCharacterUsage(characterCount: Int,
-                                        characterLimitPerDay: Int?) throws {
-        if let characterLimitPerDay {
-            try trackSubscribedUser(characterCount, characterLimitPerDay: characterLimitPerDay)
-        } else {
+                                        subscription: SubscriptionLevel) throws -> Int {
+        let totalUsedCharacters: Int
+        switch subscription {
+        case .free:
             try trackFreeUser(characterCount)
+            totalUsedCharacters = getUsedFreeCharacters()
+        default:
+            try trackSubscribedUser(characterCount)
+            totalUsedCharacters = getUsedDailyCharacters()
         }
+        return totalUsedCharacters
+        
     }
 
     private func trackFreeUser(_ count: Int) throws {
@@ -56,18 +62,12 @@ public class UserLimitsDataStore: UserLimitsDataStoreProtocol {
         try keychain.setData(Data("\(freeUserCount + count)".utf8), forKey: freeCountKey)
     }
 
-    private func trackSubscribedUser(_ count: Int, characterLimitPerDay: Int) throws {
+    private func trackSubscribedUser(_ count: Int) throws {
         let now = Date()
         let cutoff = now.addingTimeInterval(-86400)
         var records = dailyUsage.filter { $0.timestamp > cutoff }
         
         let totalUsage = records.reduce(0) { $0 + $1.characterCount }
-        
-        guard totalUsage + count <= characterLimitPerDay else {
-            let timeString = records.compactMap(\.timestamp).min()
-                .map(timeRemaining) ?? "24 hours"
-            throw UserLimitsDataStoreError.characterLimitReached(timeUntilNextAvailable: timeString)
-        }
         
         records.append(CharacterUsageRecord(timestamp: now, characterCount: count))
         try saveDailyUsage(records)
@@ -148,7 +148,7 @@ public class UserLimitsDataStore: UserLimitsDataStoreProtocol {
             .map(timeRemaining) ?? LocalizedString.twentyFourHours
     }
     
-    public func getUsedDailyCharacters(characterLimitPerDay: Int) -> Int {
+    public func getUsedDailyCharacters() -> Int {
         let now = Date()
         let cutoff = now.addingTimeInterval(-86400)
         let records = dailyUsage.filter { $0.timestamp > cutoff }

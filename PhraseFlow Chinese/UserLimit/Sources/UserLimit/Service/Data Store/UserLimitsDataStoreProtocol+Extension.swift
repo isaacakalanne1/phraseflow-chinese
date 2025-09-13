@@ -16,7 +16,7 @@ public extension UserLimitsDataStoreProtocol {
     }
     
     func getRemainingDailyCharacters(characterLimitPerDay: Int) -> Int {
-        let usedCharacters = getUsedDailyCharacters(characterLimitPerDay: characterLimitPerDay)
+        let usedCharacters = getUsedDailyCharacters()
         return max(0, characterLimitPerDay - usedCharacters)
     }
 }

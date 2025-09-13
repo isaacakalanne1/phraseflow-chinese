@@ -7,7 +7,6 @@
 
 import Foundation
 import ReduxKit
-import UserLimit
 import DataStorage
 
 @MainActor
@@ -24,7 +23,7 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
     case .saveAppSettings:
         do {
             try environment.saveAppSettings(state)
-            return .loadUsageData
+            return nil
         } catch {
             return .failedToSaveAppSettings
         }
@@ -38,7 +37,7 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
         return .saveAppSettings
         
     case .onLoadedAppSettings(let settings):
-        return .loadUsageData
+        return state.isPlayingMusic && !environment.isPlayingMusic ? .playMusic(.whispersOfTheForest) : nil
         
     case .playSound(let sound):
         if state.shouldPlaySound {
@@ -56,28 +55,6 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
         
     case .deleteCustomPrompt:
         return .saveAppSettings
-        
-    case .loadUsageData:
-        let subscriptionLevel = state.subscriptionLevel
-        let characterLimitPerDay = state.characterLimitPerDay
-        
-        if state.isSubscribedUser {
-            let remainingCharacters = environment.userLimitEnvironment.getRemainingDailyCharacters(characterLimitPerDay: characterLimitPerDay)
-            let timeUntilReset = environment.userLimitEnvironment.getTimeUntilNextDailyReset(characterLimitPerDay: characterLimitPerDay)
-            return .onLoadedUsageData(
-                remainingCharacters: remainingCharacters,
-                timeUntilReset: timeUntilReset
-            )
-        } else {
-            let remainingCharacters = environment.userLimitEnvironment.getRemainingFreeCharacters()
-            return .onLoadedUsageData(
-                remainingCharacters: remainingCharacters,
-                timeUntilReset: nil
-            )
-        }
-        
-    case .onLoadedUsageData:
-        return state.isPlayingMusic && !environment.isPlayingMusic ? .playMusic(.whispersOfTheForest) : nil
     case .failedToLoadAppSettings,
          .failedToSaveAppSettings,
          .updateCustomPrompt,
@@ -85,7 +62,8 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
          .updateStorySetting,
          .updateIsShowingModerationFailedAlert,
          .updateIsShowingModerationDetails,
-         .snackbarAction:
+         .snackbarAction,
+         .refreshAppSettings:
         return nil
     }
 }

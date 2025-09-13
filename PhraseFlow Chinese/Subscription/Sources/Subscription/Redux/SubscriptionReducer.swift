@@ -41,7 +41,8 @@ public let subscriptionReducer: Reducer<SubscriptionState, SubscriptionAction> =
             newState.isLoadingSubscriptionPurchase = false
         case .refreshAppSettings(let settings):
             newState.settings = settings
-            
+        case .onTrackedSsml(let totalUsedCharacters):
+            newState.settings.usedCharacters = totalUsedCharacters
         case .setSubscriptionSheetShowing,
              .fetchSubscriptions,
              .failedToFetchSubscriptions,
@@ -53,7 +54,8 @@ public let subscriptionReducer: Reducer<SubscriptionState, SubscriptionAction> =
              .validateReceipt,
              .onValidatedReceipt,
              .trackSsmlCharacterCount,
-             .saveAppSettings:
+             .saveAppSettings,
+             .failedToTrackSsml:
             break
         }
 

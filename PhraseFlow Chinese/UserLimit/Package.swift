@@ -19,6 +19,7 @@ let package = Package(
         .package(name: "DataStorage", path: "../DataStorage"),
         .package(name: "Localization", path: "../Localization"),
         .package(name: "FTColor", path: "../FTColor"),
+        .package(name: "FTStyleKit", path: "../FTStyleKit"),
         .package(name: "FTFont", path: "../FTFont")
     ],
     targets: [
@@ -31,6 +32,7 @@ let package = Package(
                 "DataStorage",
                 "Localization",
                 "FTColor",
+                "FTStyleKit",
                 "FTFont"
             ]),
         .testTarget(

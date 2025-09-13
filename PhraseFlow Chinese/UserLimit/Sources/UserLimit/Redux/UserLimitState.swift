@@ -5,7 +5,8 @@
 //  Created by Isaac Akalanne on 24/07/2025.
 //
 
-struct UserLimitState {
+
+struct UserLimitState: Equatable {
     var hasReachedFreeTrialLimit = false
     var nextAvailableDescription = ""
 

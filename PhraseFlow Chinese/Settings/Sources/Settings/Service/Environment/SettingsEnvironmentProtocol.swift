@@ -8,13 +8,11 @@
 import Audio
 import Foundation
 import Combine
-import UserLimit
 import DataStorage
 
 public protocol SettingsEnvironmentProtocol {
     var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> { get }
     var ssmlCharacterCountSubject: CurrentValueSubject<Int?, Never> { get }
-    var userLimitEnvironment: UserLimitEnvironmentProtocol { get }
     
     func saveAppSettings(_ settings: SettingsState) throws
     func loadAppSettings() throws -> SettingsState

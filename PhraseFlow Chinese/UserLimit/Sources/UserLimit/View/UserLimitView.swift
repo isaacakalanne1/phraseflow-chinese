@@ -1,0 +1,85 @@
+//
+//  UserLimitView.swift
+//  UserLimit
+//
+//  Created by Isaac Akalanne on 13/09/2025.
+//
+
+import SwiftUI
+import FTColor
+import Localization
+import FTStyleKit
+
+struct UserLimitView: View {
+    let remainingCharacters: Int
+    let totalLimit: Int
+    let isSubscribedUser: Bool
+    let timeUntilReset: String?
+    
+    var body: some View {
+        SectionView(
+            title: (isSubscribedUser == true) ? "DAILY USAGE" : "FREE TRIAL USAGE",
+            content: {
+                VStack(spacing: 12) {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text((isSubscribedUser) ? "Characters Remaining Today" : "Characters Remaining")
+                                .font(.caption)
+                                .foregroundColor(FTColor.secondary)
+                            Text("\(remainingCharacters)")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundColor(remainingCharacters > 0 ? FTColor.primary : .red)
+                        }
+                        
+                        Spacer()
+                        
+                        if isSubscribedUser,
+                           let timeUntilReset = timeUntilReset {
+                            VStack(alignment: .trailing, spacing: 4) {
+                                Text(LocalizedString.resetsInLabel)
+                                    .font(.caption)
+                                    .foregroundColor(FTColor.secondary)
+                                
+                                Text(timeUntilReset)
+                                    .font(.caption)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(FTColor.primary)
+                            }
+                        }
+                    }
+                    
+                    VStack(spacing: 4) {
+                        HStack {
+                            Text(LocalizedString.usageProgress)
+                                .font(.caption)
+                                .foregroundColor(FTColor.secondary)
+                            Spacer()
+                            Text("\(remainingCharacters) of \(totalLimit)")
+                                .font(.caption)
+                                .foregroundColor(FTColor.secondary)
+                        }
+                        
+                        GeometryReader { geometry in
+                            ZStack(alignment: .leading) {
+                                Rectangle()
+                                    .fill(FTColor.secondary.opacity(0.2))
+                                    .frame(height: 6)
+                                    .cornerRadius(3)
+                                
+                                Rectangle()
+                                    .fill(remainingCharacters > 0 ? FTColor.primary : .red)
+                                    .frame(width: geometry.size.width * CGFloat(remainingCharacters) / CGFloat(totalLimit), height: 6)
+                                    .cornerRadius(3)
+                                    .animation(.easeInOut(duration: 0.3), value: remainingCharacters)
+                            }
+                        }
+                        .frame(height: 6)
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+            }
+        )
+    }
+}

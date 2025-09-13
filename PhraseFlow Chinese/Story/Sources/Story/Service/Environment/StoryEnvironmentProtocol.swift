@@ -27,6 +27,8 @@ public protocol StoryEnvironmentProtocol {
     func saveChapter(_ chapter: Chapter) throws
     func deleteChapter(_ chapter: Chapter) throws
     
+    func limitReached(_ event: LimitReachedEvent)
+    
     func generateTextForChapter(
         previousChapters: [Chapter],
         language: Language?,

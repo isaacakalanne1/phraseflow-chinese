@@ -16,7 +16,7 @@ public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
     private let repository: SubscriptionRepositoryProtocol
     private let speechEnvironment: SpeechEnvironmentProtocol
     private let settingsEnvironment: SettingsEnvironmentProtocol
-    private let userLimitsDataStore: UserLimitsDataStoreProtocol
+    private let userLimitsEnvironment: UserLimitEnvironmentProtocol
     
     public var synthesizedCharactersSubject: CurrentValueSubject<Int?, Never> {
         speechEnvironment.synthesizedCharactersSubject
@@ -30,12 +30,12 @@ public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
         repository: SubscriptionRepositoryProtocol,
         speechEnvironment: SpeechEnvironmentProtocol,
         settingsEnvironment: SettingsEnvironmentProtocol,
-        userLimitsDataStore: UserLimitsDataStoreProtocol
+        userLimitsEnvironment: UserLimitEnvironmentProtocol
     ) {
         self.repository = repository
         self.speechEnvironment = speechEnvironment
         self.settingsEnvironment = settingsEnvironment
-        self.userLimitsDataStore = userLimitsDataStore
+        self.userLimitsEnvironment = userLimitsEnvironment
     }
     
     public func getProducts() async throws -> [Product] {
@@ -51,10 +51,9 @@ public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
     }
     
     public func trackSSMLCharacterUsage(characterCount: Int,
-                                        subscription: SubscriptionLevel?) throws {
-        try userLimitsDataStore.trackSSMLCharacterUsage(characterCount: characterCount,
-                                                        characterLimitPerDay: subscription?.ssmlCharacterLimitPerDay)
-        settingsEnvironment.ssmlCharacterCountSubject.send(characterCount)
+                                        subscription: SubscriptionLevel) throws -> Int {
+        try userLimitsEnvironment.trackSSMLCharacterUsage(characterCount: characterCount,
+                                                          subscription: subscription)
     }
     
     public func saveAppSettings(_ settings: SettingsState) throws {

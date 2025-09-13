@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import DataStorage
 
 enum UserLimitAction {
     case checkFreeTrialLimit
