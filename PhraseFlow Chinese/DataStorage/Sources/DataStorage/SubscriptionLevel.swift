@@ -8,25 +8,26 @@
 import Foundation
 
 public enum SubscriptionLevel: CaseIterable, Sendable, Equatable, Codable {
-    case free, level1, level2, max
+    case free, level1, level2
 
     public var ssmlCharacterLimitPerDay: Int {
         switch self {
         case .free:
+            #if DEBUG
+            9_999_999
+            #else
             4000
+            #endif
         case .level1:
             15000
         case .level2:
             30000
-        case .max:
-            9_999_999_999
         }
     }
     
     public var idString: String {
         switch self {
-        case .free,
-                .max:
+        case .free:
             ""
         case .level1:
             "com.flowtale.level_1"

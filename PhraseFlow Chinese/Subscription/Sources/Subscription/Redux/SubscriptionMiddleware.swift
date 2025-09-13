@@ -66,11 +66,7 @@ public let subscriptionMiddleware: Middleware<SubscriptionState, SubscriptionAct
         } else if state.purchasedProductIDs.contains("com.flowtale.level_1") {
             newSubscriptionLevel = .level1
         } else {
-            #if DEBUG
-            newSubscriptionLevel = .max
-            #else
             newSubscriptionLevel = .free
-            #endif
         }
         
         // Publish the new subscription level

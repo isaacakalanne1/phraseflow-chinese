@@ -14,26 +14,13 @@ public struct SubscriptionState: Equatable {
     public var isLoadingSubscriptionPurchase = false
     public var settings = SettingsState()
     public var currentSubscription: SubscriptionLevel {
-        #if DEBUG
-            .max
-        #else
-        if purchasedProductIDs.contains("com.flowtale.level_2") {
-            return .level2
-        } else if purchasedProductIDs.contains("com.flowtale.level_1") {
-            return .level1
-        } else {
-            return .free
-        }
-        #endif
+        settings.subscriptionLevel
     }
 
     public var isSubscribed: Bool {
-//        #if DEBUG
-//            true
-//        #else
-            currentSubscription != .free
-//        #endif
+        currentSubscription != .free
     }
+
     public var products: [Product]?
     public var purchasedProductIDs = Set<String>()
 

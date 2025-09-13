@@ -69,7 +69,7 @@ struct SubscriptionOption: View {
 
     var body: some View {
         Button(action: {
-            if product != nil {
+            if product != nil && !isUserCurrentSubscription {
                 action()
             }
         }, label: {
@@ -143,6 +143,8 @@ struct SubscriptionOption: View {
             .scaleEffect(isUserCurrentSubscription ? 1.02 : 1.0)
         })
         .buttonStyle(PressedButtonStyle())
+        .disabled(isUserCurrentSubscription)
+        .allowsHitTesting(!isUserCurrentSubscription)
     }
 }
 
