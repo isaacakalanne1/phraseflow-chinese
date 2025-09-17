@@ -111,7 +111,7 @@ struct TranslationView: View {
                 
                 Spacer()
                 
-                Text(translation.lastUpdated, style: .relative)
+                Text("\(translation.lastUpdated, style: .relative) ago") // TODO: Localize
                     .font(.caption)
                     .foregroundColor(FTColor.primary.opacity(0.6))
             }
