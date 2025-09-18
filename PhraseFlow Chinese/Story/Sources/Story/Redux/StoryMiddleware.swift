@@ -150,6 +150,9 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
         try? environment.saveAppSettings(settings)
         return nil
     case .updateLanguage:
+        if state.settings.shouldPlaySound {
+            environment.playSound(.tabPress)
+        }
         return .saveAppSettings(state.settings)
     case .failedToLoadStoriesAndDefinitions,
             .failedToDeleteStory,

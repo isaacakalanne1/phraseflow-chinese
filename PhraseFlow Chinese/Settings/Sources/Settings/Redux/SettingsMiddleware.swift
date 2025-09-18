@@ -29,7 +29,6 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
         }
         
     case .selectVoice,
-         .updateLanguage,
          .updateShowDefinition,
          .updateShowEnglish,
          .updateDifficulty:
@@ -40,7 +39,11 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
             environment.playSound(.togglePress)
         }
         return .saveAppSettings
-        
+    case .updateLanguage:
+        if state.shouldPlaySound {
+            environment.playSound(.tabPress)
+        }
+        return .saveAppSettings
     case .onLoadedAppSettings(let settings):
         return state.isPlayingMusic && !environment.isPlayingMusic ? .playMusic(.whispersOfTheForest) : nil
         
