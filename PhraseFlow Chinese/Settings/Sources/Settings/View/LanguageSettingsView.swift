@@ -48,7 +48,13 @@ public struct LanguageMenu: View {
         if !type.shouldShowAutoDetect {
             languages.removeAll(where: { $0 == .autoDetect})
         }
-        return languages
+        
+        // Sort so selected language appears first
+        return languages.sorted { first, second in
+            if first == selectedLanguage { return true }
+            if second == selectedLanguage { return false }
+            return false
+        }
     }
     
     @ViewBuilder
