@@ -12,7 +12,12 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "Settings",
-            targets: ["Settings"]),
+            targets: ["Settings"]
+        ),
+        .library(
+            name: "SettingsMocks",
+            targets: ["SettingsMocks"]
+        ),
     ],
     dependencies: [
         .package(name: "Audio", path: "../Audio"),
@@ -44,9 +49,28 @@ let package = Package(
                 "Moderation"
             ]
         ),
+        .target(
+            name: "SettingsMocks",
+            dependencies: [
+                "Audio",
+                "ReduxKit",
+                "Localization",
+                "FTColor",
+                "FTFont",
+                "FTStyleKit",
+                "SnackBar",
+                "UserLimit",
+                "DataStorage",
+                "Moderation"
+            ],
+            path: "Mocks"
+        ),
         .testTarget(
             name: "SettingsTests",
-            dependencies: ["Settings"]
+            dependencies: [
+                "Settings",
+                "SettingsMocks"
+            ]
         ),
     ]
 )
