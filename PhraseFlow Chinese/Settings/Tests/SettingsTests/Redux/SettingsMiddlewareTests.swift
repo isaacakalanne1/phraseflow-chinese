@@ -11,18 +11,31 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func loadAppSettings() async throws {
-        let action: SettingsAction = .loadAppSettings
-        let settings: SettingsState = .arrange(usedCharacters: 999)
+    func loadAppSettings_success() async throws {
+        let expectedSettings: SettingsState = .arrange(usedCharacters: 999)
+        mockEnvironment.loadAppSettingsResult = .success(expectedSettings)
 
-        mockEnvironment.loadAppSettingsResult = .success(settings)
         let resultAction = await settingsMiddleware(
             .arrange,
-            action,
+            .loadAppSettings,
             mockEnvironment
         )
 
-        #expect(resultAction == .onLoadedAppSettings(settings))
+        #expect(resultAction == .onLoadedAppSettings(expectedSettings))
+        #expect(mockEnvironment.loadAppSettingsCalled == true)
+    }
+    
+    @Test
+    func loadAppSettings_error() async throws {
+        mockEnvironment.loadAppSettingsResult = .failure(.genericError)
+
+        let resultAction = await settingsMiddleware(
+            .arrange,
+            .loadAppSettings,
+            mockEnvironment
+        )
+
+        #expect(resultAction == .failedToLoadAppSettings)
         #expect(mockEnvironment.loadAppSettingsCalled == true)
     }
 }
