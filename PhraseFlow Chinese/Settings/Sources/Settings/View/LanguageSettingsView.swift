@@ -35,6 +35,8 @@ public struct LanguageMenu: View {
                 sectionHeader
             }
         }
+        .scrollBounceBehavior(.basedOnSize)
+        .scrollIndicators(.hidden)
         .padding()
         .navigationTitle(LocalizedString.language)
         .background(FTColor.background)
