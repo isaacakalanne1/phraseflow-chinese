@@ -2,7 +2,7 @@
 //  SnackbarView.swift
 //  SnackBar
 //
-//  Created by Claude on 25/07/2025.
+//  Created by Isaac Akalanne on 25/07/2025.
 //
 
 import SwiftUI

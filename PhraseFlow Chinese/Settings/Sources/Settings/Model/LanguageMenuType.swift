@@ -14,10 +14,10 @@ public enum LanguageMenuType {
     var shouldShowAutoDetect: Bool {
         switch self {
         case .normal,
-                .translationTextLanguage:
-            return false
-        case .translationSourceLanguage,
+                .translationTextLanguage,
                 .translationTargetLanguage:
+            return false
+        case .translationSourceLanguage:
             return true
         }
     }

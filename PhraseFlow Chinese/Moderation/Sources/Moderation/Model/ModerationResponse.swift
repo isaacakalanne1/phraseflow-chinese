@@ -7,6 +7,12 @@
 
 public struct ModerationResponse: Codable, Equatable, Sendable {
     let results: [ModerationResult]
+    
+    public init(
+        results: [ModerationResult]
+    ) {
+        self.results = results
+    }
 
     public var didPassModeration: Bool {
         guard let firstResult = results.first else {

@@ -56,6 +56,7 @@ let package = Package(
         .target(
             name: "NavigationMocks",
             dependencies: [
+                "Navigation",
                 "Study",
                 "Story",
                 "Audio",

@@ -2,7 +2,7 @@
 //  ModerationRootView.swift
 //  Moderation
 //
-//  Created by Claude on 26/07/2025.
+//  Created by Isaac Akalanne on 26/07/2025.
 //
 
 import SwiftUI

@@ -13,7 +13,7 @@ public enum OpenRouterModel {
     }
 
     static var authKey: String {
-        "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" // TODO: Don't store in plain-text, find recommended practice online, or use claude for recommended practice
+        "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" // TODO: Don't store in plain-text, find recommended practice online
     }
 
     var modelName: String {

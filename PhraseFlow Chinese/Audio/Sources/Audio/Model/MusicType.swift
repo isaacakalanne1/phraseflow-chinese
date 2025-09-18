@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum MusicType: String, CaseIterable, Sendable {
+public enum MusicType: String, CaseIterable, Sendable, Equatable {
     case whispersOfTranquility = "Whispers of Tranquility"
     case whispersOfTheForest = "Whispers of the Forest"
     case whispersOfTheEnchantedGrove = "Whispers of the Enchanted Grove"

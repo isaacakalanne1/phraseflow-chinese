@@ -10,7 +10,7 @@ import Foundation
 import SnackBar
 import Moderation
 
-enum SettingsAction: Sendable {
+enum SettingsAction: Sendable, Equatable {
     case loadAppSettings
     case onLoadedAppSettings(SettingsState)
     case failedToLoadAppSettings

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SnackBarAction: Sendable {
+public enum SnackBarAction: Sendable, Equatable {
     case showSnackBar(SnackBarType)
     case hideSnackbar
     case checkDeviceVolumeZero

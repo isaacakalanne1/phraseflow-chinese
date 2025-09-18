@@ -2,7 +2,7 @@
 //  UserLimitsDataStoreProtocol+Extension.swift
 //  UserLimit
 //
-//  Created by Claude on 13/09/2025.
+//  Created by Isaac Akalanne on 13/09/2025.
 //
 
 import Foundation

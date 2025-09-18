@@ -9,6 +9,7 @@ import Combine
 import Audio
 import Settings
 import Moderation
+import ModerationMocks
 
 enum MockSettingsEnvironmentError: Error {
     case genericError
@@ -33,12 +34,12 @@ class MockSettingsEnvironment: SettingsEnvironmentProtocol {
     }
     
     var loadAppSettingsCalled = false
-    var loadAppSettingsResult: Result<Void, MockSettingsEnvironmentError> = .success(())
+    var loadAppSettingsResult: Result<SettingsState, MockSettingsEnvironmentError> = .success(.arrange)
     func loadAppSettings() throws -> SettingsState {
         loadAppSettingsCalled = true
         switch loadAppSettingsResult {
         case .success(let success):
-            return .init() // TODO: Replace with arrange
+            return success
         case .failure(let error):
             throw error
         }
@@ -75,13 +76,13 @@ class MockSettingsEnvironment: SettingsEnvironmentProtocol {
     
     var moderateTextSpy = ""
     var moderateTextCalled = false
-    var moderateTextResult: Result<Void, MockSettingsEnvironmentError> = .success(())
+    var moderateTextResult: Result<ModerationResponse, MockSettingsEnvironmentError> = .success(.arrange)
     func moderateText(_ text: String) async throws -> ModerationResponse {
         moderateTextSpy = text
         moderateTextCalled = true
         switch moderateTextResult {
         case .success(let success):
-            break
+            return success
         case .failure(let error):
             throw error
         }

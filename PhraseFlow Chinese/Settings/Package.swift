@@ -52,6 +52,7 @@ let package = Package(
         .target(
             name: "SettingsMocks",
             dependencies: [
+                "Settings",
                 "Audio",
                 "ReduxKit",
                 "Localization",
@@ -61,7 +62,8 @@ let package = Package(
                 "SnackBar",
                 "UserLimit",
                 "DataStorage",
-                "Moderation"
+                "Moderation",
+                .product(name: "ModerationMocks", package: "Moderation")
             ],
             path: "Mocks"
         ),
@@ -69,7 +71,8 @@ let package = Package(
             name: "SettingsTests",
             dependencies: [
                 "Settings",
-                "SettingsMocks"
+                "SettingsMocks",
+                .product(name: "ModerationMocks", package: "Moderation")
             ]
         ),
     ]
