@@ -29,6 +29,7 @@ public struct SubscriptionRootView: View {
             .onAppear {
                 store.dispatch(.fetchSubscriptions)
                 store.dispatch(.validateReceipt)
+                store.dispatch(.observeTransactionUpdates)
             }
     }
 }
