@@ -142,16 +142,6 @@ struct ModerationCategoryCard: View {
                         .fill(FTColor.secondary.opacity(0.2))
                         .frame(height: 12)
                     
-                    // Threshold indicator
-                    GeometryReader { geometry in
-                        let thresholdPosition = result.threshold * geometry.size.width
-                        
-                        Rectangle()
-                            .fill(Color.orange)
-                            .frame(width: 2, height: 12)
-                            .offset(x: thresholdPosition - 1)
-                    }
-                    
                     // Score fill
                     RoundedRectangle(cornerRadius: 8)
                         .fill(
@@ -165,6 +155,16 @@ struct ModerationCategoryCard: View {
                         )
                         .frame(width: max(8, result.score * UIScreen.main.bounds.width * 0.8), height: 12)
                         .animation(.easeInOut(duration: 0.6), value: result.score)
+                    
+                    // Threshold indicator (on top)
+                    GeometryReader { geometry in
+                        let thresholdPosition = result.threshold * geometry.size.width
+                        
+                        Rectangle()
+                            .fill(Color.orange)
+                            .frame(width: 2, height: 12)
+                            .offset(x: thresholdPosition - 1)
+                    }
                 }
                 .frame(height: 12)
                 
