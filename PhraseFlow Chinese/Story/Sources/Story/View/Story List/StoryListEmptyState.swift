@@ -20,9 +20,7 @@ struct StoryListEmptyState: View {
             selectedLanguage: Binding(
                 get: { store.state.settings.language },
                 set: { newLanguage in
-                    var updatedSettings = store.state.settings
-                    updatedSettings.language = newLanguage
-                    store.dispatch(.saveAppSettings(updatedSettings))
+                    store.dispatch(.updateLanguage(newLanguage))
                 }
             ),
             isEnabled: true

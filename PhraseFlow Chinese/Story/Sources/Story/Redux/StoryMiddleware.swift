@@ -147,6 +147,8 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
     case .saveAppSettings(let settings):
         try? environment.saveAppSettings(settings)
         return nil
+    case .updateLanguage:
+        return .saveAppSettings(state.settings)
     case .failedToLoadStoriesAndDefinitions,
             .failedToDeleteStory,
             .failedToSaveChapter,

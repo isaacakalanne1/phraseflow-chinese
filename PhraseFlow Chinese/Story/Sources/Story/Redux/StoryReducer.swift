@@ -97,6 +97,13 @@ let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
         newState.isWritingChapter = false
     case .refreshAppSettings(let settings):
         newState.settings = settings
+    case .updateLanguage(let language):
+        if language != newState.settings.language {
+            newState.settings.language = language
+            if let voice = language.voices.first {
+                newState.settings.voice = voice
+            }
+        }
     case .loadStories,
          .failedToLoadStoriesAndDefinitions,
          .deleteStory,

@@ -22,6 +22,7 @@ public enum StoryAction: Sendable {
     case onGeneratedDefinitions(Chapter)
     case onCreatedChapter(Chapter)
     case failedToCreateChapter
+    case updateLanguage(Language)
 
     case loadStories
     case onLoadedStories([Chapter])
