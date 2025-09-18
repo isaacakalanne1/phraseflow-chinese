@@ -14,19 +14,6 @@ struct SettingsView: View {
     @EnvironmentObject var store: SettingsStore
 
     var body: some View {
-        let showDefinition: Binding<Bool> = .init {
-            store.state.isShowingDefinition
-        } set: { newValue in
-            store.dispatch(.playSound(.togglePress))
-            store.dispatch(.updateShowDefinition(newValue))
-        }
-
-        let showEnglish: Binding<Bool> = .init {
-            store.state.isShowingEnglish
-        } set: { newValue in
-            store.dispatch(.playSound(.togglePress))
-            store.dispatch(.updateShowEnglish(newValue))
-        }
 
         let playMusic: Binding<Bool> = .init {
             store.state.isPlayingMusic
@@ -35,7 +22,6 @@ struct SettingsView: View {
                 store.dispatch(.playMusic(.whispersOfTheForest))
             } else {
                 store.dispatch(.stopMusic)
-                store.dispatch(.playSound(.togglePress))
             }
         }
 
@@ -43,9 +29,6 @@ struct SettingsView: View {
             store.state.shouldPlaySound
         } set: { newValue in
             store.dispatch(.updateShouldPlaySound(newValue))
-            if newValue {
-                store.dispatch(.playSound(.togglePress))
-            }
         }
 
         let selectedLanguage: Binding<Language> = .init {

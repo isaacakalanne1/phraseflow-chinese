@@ -21,8 +21,6 @@ let studyReducer: Reducer<StudyState, StudyAction> = { state, action in
         newState.audioPlayer = AVPlayer()
     case .failedToPrepareStudySentence:
         newState.sentenceAudioPlayer = AVPlayer()
-    case .updateStudyAudioPlaying(let isPlaying):
-        newState.isAudioPlaying = isPlaying
     case let .updateDisplayStatus(displayStatus):
         newState.displayStatus = displayStatus
     case .refreshAppSettings(let settings):

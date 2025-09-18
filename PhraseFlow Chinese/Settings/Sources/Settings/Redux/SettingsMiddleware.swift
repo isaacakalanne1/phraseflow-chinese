@@ -32,8 +32,13 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
          .updateLanguage,
          .updateShowDefinition,
          .updateShowEnglish,
-         .updateDifficulty,
-         .updateShouldPlaySound:
+         .updateDifficulty:
+        return .saveAppSettings
+        
+    case .updateShouldPlaySound:
+        if state.shouldPlaySound {
+            environment.playSound(.togglePress)
+        }
         return .saveAppSettings
         
     case .onLoadedAppSettings(let settings):
@@ -51,6 +56,9 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
         
     case .stopMusic:
         environment.stopMusic()
+        if state.shouldPlaySound {
+            environment.playSound(.togglePress)
+        }
         return .saveAppSettings
         
     case .updateStorySetting,

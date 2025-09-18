@@ -13,7 +13,6 @@ import TextGeneration
 struct StudyState: Equatable {
     var audioPlayer: AVPlayer
     var sentenceAudioPlayer: AVPlayer
-    var isAudioPlaying: Bool
     var displayStatus: StudyDisplayStatus = .wordShown
     
     var definitions: [Definition]
@@ -32,13 +31,11 @@ struct StudyState: Equatable {
     init(
         audioPlayer: AVPlayer = AVPlayer(),
         sentenceAudioPlayer: AVPlayer = AVPlayer(),
-        isAudioPlaying: Bool = false,
         definitions: [Definition] = [],
         displayStatus: StudyDisplayStatus = .wordShown
     ) {
         self.audioPlayer = audioPlayer
         self.sentenceAudioPlayer = sentenceAudioPlayer
-        self.isAudioPlaying = isAudioPlaying
         self.displayStatus = displayStatus
         self.definitions = definitions
     }

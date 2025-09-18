@@ -13,7 +13,7 @@ let studyMiddleware: Middleware<StudyState, StudyAction, StudyEnvironmentProtoco
     switch action {
     case .playStudyWord:
         await state.audioPlayer.playAudio()
-        return .updateStudyAudioPlaying(true)
+        return nil
     case .prepareToPlayStudyWord(let definition):
         if let player = await definition.audioData?.createAVPlayer(fileExtension: "m4a") {
             return .onPreparedStudyWord(player)
@@ -28,11 +28,11 @@ let studyMiddleware: Middleware<StudyState, StudyAction, StudyEnvironmentProtoco
         }
     case .playStudySentence:
         await state.sentenceAudioPlayer.playAudio()
-        return .updateStudyAudioPlaying(true)
+        return nil
     case .pauseStudyAudio:
         state.audioPlayer.pause()
         state.sentenceAudioPlayer.pause()
-        return .updateStudyAudioPlaying(false)
+        return nil
 
     case .deleteDefinition(let definition):
         do {
@@ -71,7 +71,6 @@ let studyMiddleware: Middleware<StudyState, StudyAction, StudyEnvironmentProtoco
             .failedToPrepareStudySentence,
             .onPreparedStudySentence,
             .updateDisplayStatus,
-            .updateStudyAudioPlaying,
             .onPreparedStudyWord,
             .onLoadDefinitions,
             .failedToLoadDefinitions,

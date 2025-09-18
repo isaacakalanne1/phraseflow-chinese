@@ -20,7 +20,6 @@ enum StudyAction {
     case onPreparedStudySentence(AVPlayer)
     case playStudySentence
     case pauseStudyAudio
-    case updateStudyAudioPlaying(Bool)
     case updateDisplayStatus(StudyDisplayStatus)
     
     case addDefinitions([Definition])

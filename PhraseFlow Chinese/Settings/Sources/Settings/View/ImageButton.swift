@@ -7,7 +7,6 @@
 
 import SwiftUI
 import FTColor
-import FTFont
 
 public struct ImageButton: View {
     let title: String
