@@ -107,6 +107,7 @@ public struct SettingsState: Codable, Equatable, Sendable {
         voice: Voice = .elvira,
         speechSpeed: SpeechSpeed = .normal,
         difficulty: Difficulty = .beginner,
+        language: Language = .spanish,
         customPrompt: String = "",
         storySetting: StorySetting = .random,
         customPrompts: [String] = [],
@@ -123,6 +124,7 @@ public struct SettingsState: Codable, Equatable, Sendable {
         self.voice = voice
         self.speechSpeed = speechSpeed
         self.difficulty = difficulty
+        self.language = language
         self.customPrompt = customPrompt
         self.customPrompts = customPrompts
         self.storySetting = storySetting

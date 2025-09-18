@@ -1,3 +1,10 @@
+//
+//  SettingsMiddlewareTests.swift
+//  Settings
+//
+//  Created by Isaac Akalanne on 19/09/2025.
+//
+
 import Testing
 @testable import Settings
 @testable import SettingsMocks
