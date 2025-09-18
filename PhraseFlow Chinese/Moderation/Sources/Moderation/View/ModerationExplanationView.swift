@@ -17,81 +17,224 @@ struct ModerationExplanationView: View {
     let customPrompt: String
 
     var body: some View {
-        VStack(spacing: 16) {
-            VStack(alignment: .leading) {
-                Text(LocalizedString.storyDidNotPassModeration)
-                    .lineLimit(0)
-                    .font(FTFont.flowTaleHeader())
-                    .fontWeight(.semibold)
-
-                Text(customPrompt)
-                    .font(FTFont.flowTaleSubHeader())
-                    .fontWeight(.light)
-
-                Divider()
-
-                Text(LocalizedString.whatIsModeration)
-                    .font(FTFont.flowTaleHeader())
-                    .fontWeight(.medium)
-                Text(LocalizedString.moderationExplanation)
-                    .font(FTFont.flowTaleSubHeader())
-                    .fontWeight(.light)
-
-                Divider()
-
-                Text(LocalizedString.howDoesModerationWork)
-                    .font(FTFont.flowTaleHeader())
-                    .fontWeight(.medium)
-                Text(LocalizedString.moderationWorkExplanation)
-                    .font(FTFont.flowTaleSubHeader())
-                    .fontWeight(.light)
-
-                Divider()
-
-                Text(LocalizedString.whyDidntItPass)
-                    .font(FTFont.flowTaleHeader())
-                    .fontWeight(.medium)
-
-                Divider()
-
-                // Show each category’s pass/fail
-                ScrollView {
-                    if let moderationResponse = store.state.moderationResponse {
-                        ForEach(moderationResponse.categoryResults.sorted(by: { !$0.didPass && $1.didPass })) { result in
-                            HStack {
-                                if result.didPass {
-                                    Text("✅ \(result.category.name)")
-                                        .foregroundColor(.green)
-                                } else {
-                                    Text("❌ \(result.category.name)")
-                                        .foregroundColor(.red)
-                                }
-
-                                Spacer()
-
-                                // Example text:
-                                // "We accept below 80% | You scored 92%"
-                                VStack(alignment: .trailing) {
-                                    Text(LocalizedString.acceptanceThresholdExplanation("\(result.thresholdPercentageString)"))
-                                    Text(LocalizedString.userScoreExplanation("\(result.scorePercentageString)"))
-                                        .bold(!result.didPass)
-                                }
-                                .font(FTFont.flowTaleSubHeader())
-                                .foregroundColor(.secondary)
-                            }
-                            .padding(.bottom)
-                        }
+        ScrollView {
+            VStack(spacing: 24) {
+                // Header Section
+                VStack(spacing: 16) {
+                    Image(systemName: "shield.lefthalf.filled.badge.checkmark")
+                        .font(.system(size: 48))
+                        .foregroundColor(FTColor.accent)
+                    
+                    Text(LocalizedString.storyDidNotPassModeration)
+                        .font(FTFont.flowTaleHeader())
+                        .fontWeight(.bold)
+                        .foregroundColor(FTColor.primary)
+                        .multilineTextAlignment(.center)
+                    
+                    if !customPrompt.isEmpty {
+                        Text(customPrompt)
+                            .font(FTFont.flowTaleBodyMedium())
+                            .foregroundColor(FTColor.secondary)
+                            .padding()
+                            .background(FTColor.background.opacity(0.8))
+                            .cornerRadius(12)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(FTColor.secondary.opacity(0.3), lineWidth: 1)
+                            )
                     }
                 }
-            }
-
-            PrimaryButton(title: LocalizedString.okayButton) {
-                dismiss()
+                .padding(.horizontal)
+                
+                // Moderation Results Section
+                if let moderationResponse = store.state.moderationResponse {
+                    VStack(spacing: 16) {
+                        Text(LocalizedString.whyDidntItPass)
+                            .font(FTFont.flowTaleHeader())
+                            .fontWeight(.semibold)
+                            .foregroundColor(FTColor.primary)
+                        
+                        VStack(spacing: 12) {
+                            ForEach(moderationResponse.categoryResults.sorted(by: { !$0.didPass && $1.didPass }), id: \.category) { result in
+                                ModerationCategoryCard(result: result)
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+                
+                // Information Section
+                VStack(spacing: 20) {
+                    InfoSection(
+                        title: LocalizedString.whatIsModeration,
+                        content: LocalizedString.moderationExplanation,
+                        icon: "info.circle.fill"
+                    )
+                    
+                    InfoSection(
+                        title: LocalizedString.howDoesModerationWork,
+                        content: LocalizedString.moderationWorkExplanation,
+                        icon: "gearshape.fill"
+                    )
+                }
+                .padding(.horizontal)
+                
+                // Action Button
+                PrimaryButton(title: LocalizedString.okayButton) {
+                    dismiss()
+                }
+                .padding(.horizontal)
+                .padding(.bottom, 32)
             }
         }
-        .padding()
         .navigationTitle(LocalizedString.navigationTitleWhy)
         .navigationBarTitleDisplayMode(.inline)
         .background(FTColor.background)
+    }
+}
+
+struct ModerationCategoryCard: View {
+    let result: CategoryResult
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            // Header with status
+            HStack {
+                HStack(spacing: 8) {
+                    Image(systemName: result.didPass ? "checkmark.circle.fill" : "xmark.circle.fill")
+                        .foregroundColor(result.didPass ? .green : .red)
+                    
+                    Text(result.category.name)
+                        .font(FTFont.flowTaleBodyMedium())
+                        .fontWeight(.semibold)
+                        .foregroundColor(FTColor.primary)
+                }
+                
+                Spacer()
+                
+                Text(result.didPass ? "PASSED" : "FAILED")
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(result.didPass ? Color.green.opacity(0.2) : Color.red.opacity(0.2))
+                    .foregroundColor(result.didPass ? .green : .red)
+                    .cornerRadius(6)
+            }
+            
+            // Visual Progress Bar
+            VStack(spacing: 8) {
+                HStack {
+                    Text("Score: \(result.scorePercentageString)")
+                        .font(FTFont.flowTaleBodyMedium())
+                        .foregroundColor(FTColor.primary)
+                    
+                    Spacer()
+                    
+                    Text("Threshold: \(result.thresholdPercentageString)")
+                        .font(FTFont.flowTaleBodyMedium())
+                        .foregroundColor(FTColor.secondary)
+                }
+                
+                ZStack(alignment: .leading) {
+                    // Background bar
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(FTColor.secondary.opacity(0.2))
+                        .frame(height: 12)
+                    
+                    // Threshold indicator
+                    GeometryReader { geometry in
+                        let thresholdPosition = result.threshold * geometry.size.width
+                        
+                        Rectangle()
+                            .fill(Color.orange)
+                            .frame(width: 2, height: 12)
+                            .offset(x: thresholdPosition - 1)
+                    }
+                    
+                    // Score fill
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(
+                            LinearGradient(
+                                colors: result.didPass ? 
+                                    [.green.opacity(0.7), .green] : 
+                                    [.red.opacity(0.7), .red],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .frame(width: max(8, result.score * UIScreen.main.bounds.width * 0.8), height: 12)
+                        .animation(.easeInOut(duration: 0.6), value: result.score)
+                }
+                .frame(height: 12)
+                
+                // Legend
+                HStack {
+                    HStack(spacing: 4) {
+                        Rectangle()
+                            .fill(Color.orange)
+                            .frame(width: 2, height: 8)
+                        Text("Threshold")
+                            .font(.caption2)
+                            .foregroundColor(FTColor.secondary)
+                    }
+                    
+                    Spacer()
+                    
+                    if !result.didPass {
+                        Text("Content exceeded safety threshold")
+                            .font(.caption)
+                            .foregroundColor(.red)
+                            .fontWeight(.medium)
+                    }
+                }
+            }
+        }
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(result.didPass ? Color.green.opacity(0.05) : Color.red.opacity(0.05))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(result.didPass ? Color.green.opacity(0.3) : Color.red.opacity(0.3), lineWidth: 1)
+                )
+        )
+    }
+}
+
+struct InfoSection: View {
+    let title: String
+    let content: String
+    let icon: String
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 8) {
+                Image(systemName: icon)
+                    .foregroundColor(FTColor.accent)
+                    .font(.title3)
+                
+                Text(title)
+                    .font(FTFont.flowTaleBodyMedium())
+                    .fontWeight(.semibold)
+                    .foregroundColor(FTColor.primary)
+                
+                Spacer()
+            }
+            
+            Text(content)
+                .font(FTFont.flowTaleBodyMedium())
+                .foregroundColor(FTColor.secondary)
+                .lineSpacing(4)
+        }
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(FTColor.accent.opacity(0.05))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(FTColor.accent.opacity(0.2), lineWidth: 1)
+                )
+        )
     }
 }
