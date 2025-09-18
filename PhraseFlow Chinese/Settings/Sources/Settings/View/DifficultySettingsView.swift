@@ -41,6 +41,7 @@ struct DifficultyMenu: View {
                             }
                         )
                         .disabled(store.state.viewState.isWritingChapter)
+                        .padding(6)
                     }
                 }
             } header: {
@@ -48,7 +49,6 @@ struct DifficultyMenu: View {
                     .font(FTFont.flowTaleSubHeader())
             }
         }
-        .padding()
         .navigationTitle(LocalizedString.difficulty)
         .background(FTColor.background)
         .scrollContentBackground(.hidden)

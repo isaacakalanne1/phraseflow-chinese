@@ -54,9 +54,11 @@ public struct ImageButton: View {
                 LinearGradient(
                     gradient: Gradient(
                         stops: [
-                            .init(color: Color.black.opacity(0.1), location: 0.0),
-                            .init(color: Color.black.opacity(0.3), location: 0.6),
-                            .init(color: Color.black.opacity(0.8), location: 1.0)
+                            .init(color: Color.black.opacity(0),
+                                  location: 0.0),
+                            .init(color: Color.black.opacity(0), location: 0.5),
+                            .init(color: Color.black.opacity(1), location: 1.0)
+
                         ]
                     ),
                     startPoint: .top,
@@ -108,6 +110,5 @@ public struct ImageButton: View {
                 y: isSelected ? 4 : 2
             )
         }
-        .buttonStyle(PlainButtonStyle())
     }
 }

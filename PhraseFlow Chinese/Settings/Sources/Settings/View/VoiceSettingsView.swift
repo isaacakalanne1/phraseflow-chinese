@@ -43,6 +43,7 @@ struct VoiceMenu: View {
                             }
                         )
                         .disabled(store.state.viewState.isWritingChapter)
+                        .padding(6)
                     }
                 }
             } header: {
@@ -50,7 +51,6 @@ struct VoiceMenu: View {
                     .font(FTFont.flowTaleSubHeader())
             }
         }
-        .padding()
         .navigationTitle(LocalizedString.voice)
         .background(FTColor.background)
     }
