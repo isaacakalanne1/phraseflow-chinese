@@ -144,6 +144,9 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
             return .createChapter(.existingStory(id))
         }
         return .goToNextChapter
+    case .saveAppSettings(let settings):
+        try? environment.saveAppSettings(settings)
+        return nil
     case .failedToLoadStoriesAndDefinitions,
             .failedToDeleteStory,
             .failedToSaveChapter,

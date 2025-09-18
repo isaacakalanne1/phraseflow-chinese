@@ -25,6 +25,7 @@ public protocol StoryEnvironmentProtocol {
     func loadAllChapters() throws -> [Chapter]
     func saveChapter(_ chapter: Chapter) throws
     func deleteChapter(_ chapter: Chapter) throws
+    func saveAppSettings(_ settings: SettingsState) throws
     
     func limitReached(_ event: LimitReachedEvent)
     

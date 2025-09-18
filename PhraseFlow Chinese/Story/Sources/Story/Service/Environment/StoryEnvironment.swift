@@ -60,6 +60,10 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         self.dataStore = dataStore
     }
     
+    public func saveAppSettings(_ settings: SettingsState) throws {
+        try settingsEnvironment.saveAppSettings(settings)
+    }
+    
     public func limitReached(_ event: LimitReachedEvent) {
         limitReachedSubject.send(event)
     }

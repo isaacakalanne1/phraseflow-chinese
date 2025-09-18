@@ -104,7 +104,8 @@ let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
          .saveChapter,
          .failedToSaveChapter,
          .playSound,
-         .beginGetNextChapter:
+         .beginGetNextChapter,
+         .saveAppSettings:
         break
     }
 

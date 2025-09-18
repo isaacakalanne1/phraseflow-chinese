@@ -11,29 +11,6 @@ import FTStyleKit
 import Localization
 import SwiftUI
 
-struct LanguageOnboardingView: View {
-    @EnvironmentObject var store: SettingsStore
-    @Binding var selectedLanguage: Language
-    private var isEnabled: Bool
-    
-    public init(
-        selectedLanguage: Binding<Language>,
-        isEnabled: Bool
-    ) {
-        self._selectedLanguage = selectedLanguage
-        self.isEnabled = isEnabled
-    }
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            LanguageMenu(selectedLanguage: $selectedLanguage, isEnabled: isEnabled)
-        }
-        .background(FTColor.background)
-        .opacity(store.state.viewState.isWritingChapter ? 0.3 : 1.0)
-        .disabled(store.state.viewState.isWritingChapter)
-    }
-}
-
 public struct LanguageMenu: View {
     @Environment(\.dismiss) var dismiss
     let type: LanguageMenuType
@@ -105,6 +82,7 @@ public struct LanguageMenu: View {
     private var sectionHeader: some View {
         Text(LocalizedString.whichLanguageLearn.uppercased())
             .font(FTFont.flowTaleSubHeader())
+            .foregroundStyle(FTColor.primary)
     }
     
     private func languageButtonAction(for language: Language) {
