@@ -43,6 +43,8 @@ public let subscriptionReducer: Reducer<SubscriptionState, SubscriptionAction> =
             newState.settings = settings
         case .onTrackedSsml(let totalUsedCharacters):
             newState.settings.usedCharacters = totalUsedCharacters
+        case .onUpdatedPurchasedProducts(let subscriptionLevel):
+            newState.settings.subscriptionLevel = subscriptionLevel
         case .setSubscriptionSheetShowing,
              .fetchSubscriptions,
              .failedToFetchSubscriptions,

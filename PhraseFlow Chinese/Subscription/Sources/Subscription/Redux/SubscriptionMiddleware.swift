@@ -70,7 +70,9 @@ public let subscriptionMiddleware: Middleware<SubscriptionState, SubscriptionAct
         }
         var settings = state.settings
         settings.subscriptionLevel = newSubscriptionLevel
-        return .saveAppSettings(settings)
+        return .onUpdatedPurchasedProducts(newSubscriptionLevel)
+    case .onUpdatedPurchasedProducts:
+        return .trackSsmlCharacterCount(0)
     case .saveAppSettings(let settings):
         try? environment.saveAppSettings(settings)
         return nil

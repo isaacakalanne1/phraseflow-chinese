@@ -5,6 +5,7 @@
 //  Created by iakalann on 15/06/2025.
 //
 
+import DataStorage
 import Foundation
 import Settings
 import StoreKit
@@ -29,6 +30,7 @@ public enum SubscriptionAction: Sendable {
     
     case getCurrentEntitlements
     case updatePurchasedProducts([VerificationResult<Transaction>])
+    case onUpdatedPurchasedProducts(SubscriptionLevel)
     
     case observeTransactionUpdates
     case validateReceipt
