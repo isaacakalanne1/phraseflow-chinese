@@ -69,7 +69,6 @@ struct StoryPromptMenu: View {
                             }
                         )
                         .disabled(store.state.viewState.isWritingChapter)
-                        .padding(6)
 
                         // Previously Created Custom Stories
                         ForEach(store.state.customPrompts, id: \.self) { prompt in

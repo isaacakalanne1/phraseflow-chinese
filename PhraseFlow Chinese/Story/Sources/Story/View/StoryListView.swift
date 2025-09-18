@@ -9,12 +9,10 @@ import SwiftUI
 import FTColor
 import FTStyleKit
 import Localization
-import Settings
 import ReduxKit
 
 struct StoryListView: View {
     @EnvironmentObject var store: StoryStore
-    @State private var showCreateStorySettings = false
     
     var body: some View {
         VStack {
@@ -36,10 +34,6 @@ struct StoryListView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(FTColor.background)
         .toolbar(.hidden)
-        .navigationDestination(isPresented: $showCreateStorySettings) {
-            CreateStorySettingsView()
-                .background(FTColor.background)
-        }
         .navigationBarTitleDisplayMode(.inline)
     }
 }
