@@ -12,7 +12,7 @@ import ReduxKit
 let studyMiddleware: Middleware<StudyState, StudyAction, StudyEnvironmentProtocol> = { state, action, environment in
     switch action {
     case .playStudyWord:
-        await state.audioPlayer.playAudio(playRate: 1.0)
+        await state.audioPlayer.playAudio()
         return .updateStudyAudioPlaying(true)
     case .prepareToPlayStudyWord(let definition):
         if let player = await definition.audioData?.createAVPlayer(fileExtension: "m4a") {
@@ -27,7 +27,7 @@ let studyMiddleware: Middleware<StudyState, StudyAction, StudyEnvironmentProtoco
             return .failedToPrepareStudySentence
         }
     case .playStudySentence:
-        await state.sentenceAudioPlayer.playAudio(playRate: 1.0)
+        await state.sentenceAudioPlayer.playAudio()
         return .updateStudyAudioPlaying(true)
     case .pauseStudyAudio:
         state.audioPlayer.pause()

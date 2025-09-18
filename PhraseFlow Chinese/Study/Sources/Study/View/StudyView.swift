@@ -43,7 +43,6 @@ public struct StudyView: View {
         VStack {
             if let definition = currentDefinition {
                 ScrollView {
-                    let characterCount = definition.sentence.original.count
                     let baseString = definition.sentence.translation
 
                     VStack(alignment: .leading) {
@@ -100,8 +99,7 @@ public struct StudyView: View {
                                         .font(FTFont.flowTaleBodyLarge())
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Button {
-                                        let studyAction: StudyAction = store.state.isAudioPlaying ? .pauseStudyAudio : .playStudySentence
-                                        store.dispatch(studyAction)
+                                        store.dispatch(.playStudySentence)
                                     } label: {
                                         SystemImageView(.speaker)
                                     }
