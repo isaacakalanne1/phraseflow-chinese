@@ -5,6 +5,7 @@
 //  Created by Isaac Akalanne on 02/09/2025.
 //
 
+import Audio
 import TextGeneration
 import Settings
 import Study
@@ -37,4 +38,5 @@ public enum TextPracticeAction: Sendable {
     case refreshAppSettings(SettingsState)
     // Used to save settings in the Settings package
     case saveAppSettings(SettingsState)
+    case playSound(AppSound)
 }

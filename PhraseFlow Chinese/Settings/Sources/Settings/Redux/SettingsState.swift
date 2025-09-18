@@ -57,7 +57,7 @@ public struct SettingsState: Codable, Equatable, Sendable {
     var customPrompt: String
     public var storySetting: StorySetting
     var customPrompts: [String]
-    var shouldPlaySound: Bool
+    public var shouldPlaySound: Bool
     var isShowingCustomPromptAlert: Bool
     
     // Moderation related properties

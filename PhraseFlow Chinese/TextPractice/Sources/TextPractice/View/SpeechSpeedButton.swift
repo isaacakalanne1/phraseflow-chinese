@@ -21,7 +21,7 @@ public struct SpeechSpeedButton: View {
             var settings = store.state.settings
             settings.speechSpeed = settings.speechSpeed.nextSpeed
             store.dispatch(.saveAppSettings(settings))
-            store.environment.playSound(.changeSettings)
+            store.dispatch(.playSound(.changeSettings))
         } label: {
             Text(store.state.settings.speechSpeed.text)
                 .font(FTFont.flowTaleBodyMedium())

@@ -135,7 +135,9 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
         return nil
         
     case .playSound(let sound):
-        environment.playSound(sound)
+        if state.settings.shouldPlaySound {
+            environment.playSound(sound)
+        }
         return nil
         
     case .beginGetNextChapter:

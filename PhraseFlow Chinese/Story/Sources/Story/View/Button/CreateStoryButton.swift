@@ -18,7 +18,7 @@ public struct CreateStoryButton: View {
 
     public var body: some View {
         MainButton(title: LocalizedString.newStory.uppercased()) {
-            store.environment.playSound(.largeBoom)
+            store.dispatch(.playSound(.largeBoom))
             store.dispatch(.createChapter(.newStory))
         }
         .disabled(store.state.viewState.isWritingChapter)

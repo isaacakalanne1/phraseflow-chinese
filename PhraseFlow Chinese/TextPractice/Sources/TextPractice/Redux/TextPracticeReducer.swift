@@ -69,7 +69,8 @@ let textPracticeReducer: Reducer<TextPracticeState, TextPracticeAction> = { stat
             .playWord,
             .defineWord,
             .failedToDefineWord,
-            .prepareToPlayChapter:
+            .prepareToPlayChapter,
+            .playSound:
         break
     }
     return newState

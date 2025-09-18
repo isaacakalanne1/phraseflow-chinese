@@ -43,7 +43,9 @@ let studyMiddleware: Middleware<StudyState, StudyAction, StudyEnvironmentProtoco
         }
 
     case .playSound(let appSound):
-        environment.playSound(appSound)
+        if state.settings.shouldPlaySound {
+            environment.playSound(appSound)
+        }
         return nil
         
     case .loadDefinitions:

@@ -31,6 +31,11 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
         environment.pauseChapter()
         environment.setMusicVolume(.normal)
         return nil
+    case .playSound(let sound):
+        if state.settings.shouldPlaySound {
+            environment.playSound(sound)
+        }
+        return nil
     case .selectWord(let word, let shouldPlay):
         await environment.playWord(word, rate: state.settings.speechSpeed.playRate)
         return .showDefinition(word)
