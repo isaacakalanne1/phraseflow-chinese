@@ -18,12 +18,12 @@ struct UserLimitView: View {
     
     var body: some View {
         SectionView(
-            title: (isSubscribedUser == true) ? "DAILY USAGE" : "FREE TRIAL USAGE",
+            title: (isSubscribedUser == true) ? "DAILY USAGE" : "FREE TRIAL USAGE", // TODO: Localize
             content: {
                 VStack(spacing: 12) {
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text((isSubscribedUser) ? "Characters Remaining Today" : "Characters Remaining")
+                            Text((isSubscribedUser) ? "Characters Remaining Today" : "Characters Remaining") // TODO: Localize
                                 .font(.caption)
                                 .foregroundColor(FTColor.secondary)
                             Text("\(remainingCharacters)")
@@ -55,7 +55,7 @@ struct UserLimitView: View {
                                 .font(.caption)
                                 .foregroundColor(FTColor.secondary)
                             Spacer()
-                            Text("\(remainingCharacters) of \(totalLimit)")
+                            Text("\(remainingCharacters) of \(totalLimit)") // TODO: Localize
                                 .font(.caption)
                                 .foregroundColor(FTColor.secondary)
                         }
