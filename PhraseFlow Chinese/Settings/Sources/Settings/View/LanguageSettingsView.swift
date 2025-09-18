@@ -29,15 +29,17 @@ public struct LanguageMenu: View {
 
     public var body: some View {
         ScrollView {
-            Section {
-                languageGrid
-            } header: {
+            VStack(spacing: 20) {
                 sectionHeader
+                    .padding(.top, 8)
+                
+                languageGrid
+                    .padding(.bottom, 16)
             }
+            .padding(.horizontal)
         }
         .scrollBounceBehavior(.basedOnSize)
         .scrollIndicators(.hidden)
-        .padding()
         .navigationTitle(LocalizedString.language)
         .background(FTColor.background)
         .scrollContentBackground(.hidden)
@@ -60,10 +62,10 @@ public struct LanguageMenu: View {
     @ViewBuilder
     private var languageGrid: some View {
         LazyVGrid(columns: [
-            GridItem(.flexible()),
-            GridItem(.flexible()),
-            GridItem(.flexible()),
-        ], spacing: 8) {
+            GridItem(.flexible(), spacing: 12),
+            GridItem(.flexible(), spacing: 12),
+            GridItem(.flexible(), spacing: 12),
+        ], spacing: 16) {
             
             ForEach(languages, id: \.self) { language in
                 languageButton(for: language)
@@ -88,9 +90,14 @@ public struct LanguageMenu: View {
     
     @ViewBuilder
     private var sectionHeader: some View {
-        Text(LocalizedString.whichLanguageLearn.uppercased())
-            .font(FTFont.flowTaleSubHeader())
-            .foregroundStyle(FTColor.primary)
+        HStack {
+            Text(LocalizedString.whichLanguageLearn.uppercased())
+                .font(FTFont.flowTaleSubHeader())
+                .foregroundStyle(FTColor.primary)
+                .multilineTextAlignment(.leading)
+            Spacer()
+        }
+        .padding(.horizontal, 4)
     }
     
     private func languageButtonAction(for language: Language) {
