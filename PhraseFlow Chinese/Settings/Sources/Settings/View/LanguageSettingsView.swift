@@ -28,23 +28,22 @@ public struct LanguageMenu: View {
     }
 
     public var body: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                sectionHeader
-                    .padding(.top, 8)
-                
-                selectedLanguageSection
-                
+        VStack(spacing: 20) {
+            sectionHeader
+                .padding(.top, 8)
+            
+            selectedLanguageSection
+
+            ScrollView {
                 otherLanguagesGrid
                     .padding(.bottom, 16)
             }
-            .padding(.horizontal)
+            .scrollBounceBehavior(.basedOnSize)
+            .scrollIndicators(.hidden)
         }
-        .scrollBounceBehavior(.basedOnSize)
-        .scrollIndicators(.hidden)
+        .padding(.horizontal)
         .navigationTitle(LocalizedString.language)
         .background(FTColor.background)
-        .scrollContentBackground(.hidden)
     }
     
     var availableLanguages: [Language] {
