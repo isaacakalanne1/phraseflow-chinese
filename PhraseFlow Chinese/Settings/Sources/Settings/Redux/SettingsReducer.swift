@@ -72,6 +72,12 @@ let settingsReducer: Reducer<SettingsState, SettingsAction> = { state, action in
     case .updateIsShowingModerationDetails(let isShowing):
         newState.viewState.isShowingModerationDetails = isShowing
         
+    case .updateModerationResponse(let response):
+        newState.viewState.moderationResponse = response
+        if let response = response, !response.didPassModeration {
+            newState.isShowingModerationFailedAlert = true
+        }
+        
     case .playMusic:
         newState.isPlayingMusic = true
     case .stopMusic:

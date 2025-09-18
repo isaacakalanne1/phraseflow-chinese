@@ -185,44 +185,9 @@ public struct StoryPromptSettingsView: View {
                     moderationServices: ModerationServices(),
                     moderationDataStore: ModerationDataStore()
                 ),
+                moderationResponse: store.state.viewState.moderationResponse,
                 customPrompt: store.state.customPrompt
             )
         }
-    }
-}
-
-struct SimpleModerationExplanationView: View {
-    @Environment(\.dismiss) private var dismiss
-    
-    var body: some View {
-        VStack(spacing: 20) {
-            VStack(spacing: 12) {
-                Image(systemName: "shield.checkered")
-                    .font(.largeTitle)
-                    .foregroundColor(FTColor.accent)
-                
-                Text(LocalizedString.contentModeration)
-                    .font(FTFont.flowTaleHeader())
-                    .foregroundColor(FTColor.primary)
-                
-                Text(LocalizedString.moderationPromptGuidelines)
-                    .font(FTFont.flowTaleBodyMedium())
-                    .foregroundColor(FTColor.secondary)
-                    .multilineTextAlignment(.center)
-            }
-            .padding(.horizontal, 24)
-            
-            Spacer()
-            
-            PrimaryButton(title: LocalizedString.done) {
-                dismiss()
-            }
-            .padding(.horizontal, 20)
-            .padding(.bottom, 20)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(FTColor.background)
-        .navigationTitle(LocalizedString.moderation)
-        .navigationBarTitleDisplayMode(.inline)
     }
 }

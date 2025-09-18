@@ -8,6 +8,7 @@
 import Audio
 import Foundation
 import SnackBar
+import Moderation
 
 enum SettingsAction: Sendable {
     case loadAppSettings
@@ -41,4 +42,5 @@ enum SettingsAction: Sendable {
     // Simple moderation actions without dependency
     case updateIsShowingModerationFailedAlert(Bool)
     case updateIsShowingModerationDetails(Bool)
+    case updateModerationResponse(ModerationResponse?)
 }

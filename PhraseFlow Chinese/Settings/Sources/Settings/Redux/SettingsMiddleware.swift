@@ -63,7 +63,7 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
             if response.didPassModeration {
                 return .updateStorySetting(.customPrompt(prompt))
             } else {
-                return .updateIsShowingModerationFailedAlert(true)
+                return .updateModerationResponse(response)
             }
         } catch {
             return .updateIsShowingModerationFailedAlert(true)
@@ -75,6 +75,7 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
          .updateIsShowingCustomPromptAlert,
          .updateIsShowingModerationFailedAlert,
          .updateIsShowingModerationDetails,
+         .updateModerationResponse,
          .snackbarAction,
          .refreshAppSettings:
         return nil
