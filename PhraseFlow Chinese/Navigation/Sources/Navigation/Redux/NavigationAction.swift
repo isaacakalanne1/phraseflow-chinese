@@ -5,8 +5,9 @@
 //  Created by iakalann on 15/06/2025.
 //
 
-import Foundation
+import Settings
 
 enum NavigationAction {
-    case selectTab(ContentTab, shouldPlaySound: Bool)
+    case selectTab(ContentTab)
+    case refreshAppSettings(SettingsState)
 }

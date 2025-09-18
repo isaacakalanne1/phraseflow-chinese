@@ -15,8 +15,10 @@ let navigationReducer: Reducer<NavigationState, NavigationAction> = { state, act
 
     switch action {
         
-    case .selectTab(let tab, _):
+    case .selectTab(let tab):
         newState.contentTab = tab
+    case .refreshAppSettings(let settings):
+        newState.settings = settings
     }
 
     return newState

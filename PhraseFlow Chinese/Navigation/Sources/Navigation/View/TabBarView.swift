@@ -58,7 +58,7 @@ struct TabBarView: View {
     
     private func tapAction(tab: ContentTab) {
         withAnimation {
-            store.dispatch(.selectTab(tab, shouldPlaySound: true))
+            store.dispatch(.selectTab(tab))
         }
     }
 }

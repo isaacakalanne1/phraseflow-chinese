@@ -30,6 +30,10 @@ public struct NavigationEnvironment: NavigationEnvironmentProtocol {
         userLimitEnvironment.limitReachedSubject
     }
     
+    public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> {
+        settingsEnvironment.settingsUpdatedSubject
+    }
+    
     public init(
         settingsEnvironment: SettingsEnvironmentProtocol,
         storyEnvironment: StoryEnvironmentProtocol,
