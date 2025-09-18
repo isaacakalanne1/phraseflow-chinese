@@ -20,7 +20,6 @@ let package = Package(
         .package(name: "FTStyleKit", path: "../FTStyleKit"),
         .package(name: "Localization", path: "../Localization"),
         .package(name: "APIRequest", path: "../APIRequest"),
-        .package(name: "Story", path: "../Story"),
         .package(name: "ReduxKit", path: "../ReduxKit"),
     ],
     targets: [
@@ -34,7 +33,6 @@ let package = Package(
                 "FTStyleKit",
                 "Localization",
                 "APIRequest",
-                "Story",
                 .product(name: "ReduxKit", package: "ReduxKit")
             ]),
         .testTarget(

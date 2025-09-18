@@ -29,6 +29,7 @@ enum SettingsAction: Sendable {
     case updateCustomPrompt(String)
     case deleteCustomPrompt(String)
     case updateIsShowingCustomPromptAlert(Bool)
+    case submitCustomPrompt(String)
     
     case playSound(AppSound)
     case playMusic(MusicType)

@@ -8,6 +8,7 @@
 import Audio
 import Foundation
 import Combine
+import Moderation
 
 public struct SettingsEnvironment: SettingsEnvironmentProtocol {
     public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never>
@@ -15,13 +16,16 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
     
     private let settingsDataStore: SettingsDataStoreProtocol
     private let audioEnvironment: AudioEnvironmentProtocol
+    private let moderationEnvironment: ModerationEnvironmentProtocol
     
     public init(
         settingsDataStore: SettingsDataStoreProtocol,
-        audioEnvironment: AudioEnvironmentProtocol
+        audioEnvironment: AudioEnvironmentProtocol,
+        moderationEnvironment: ModerationEnvironmentProtocol
     ) {
         self.settingsDataStore = settingsDataStore
         self.audioEnvironment = audioEnvironment
+        self.moderationEnvironment = moderationEnvironment
         settingsUpdatedSubject = .init(nil)
         ssmlCharacterCountSubject = .init(nil)
     }
@@ -51,5 +55,9 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
     
     public func stopMusic() {
         audioEnvironment.stopMusic()
+    }
+    
+    public func moderateText(_ text: String) async throws -> ModerationResponse {
+        return try await moderationEnvironment.moderateText(text)
     }
 }

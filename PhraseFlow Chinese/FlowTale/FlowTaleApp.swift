@@ -32,9 +32,18 @@ public struct FlowTaleRootView: View {
         let snackBarEnvironment = SnackBarEnvironment()
         let userLimitsDataStore = UserLimitsDataStore()
         let settingsDataStore = SettingsDataStore()
+        
+        let moderationServices = ModerationServices()
+        let moderationDataStore = ModerationDataStore()
+        let moderationEnvironment = ModerationEnvironment(
+            moderationServices: moderationServices,
+            moderationDataStore: moderationDataStore
+        )
+        
         let settingsEnvironment = SettingsEnvironment(
             settingsDataStore: settingsDataStore,
-            audioEnvironment: audioEnvironment
+            audioEnvironment: audioEnvironment,
+            moderationEnvironment: moderationEnvironment
         )
         let userLimitEnvironment = UserLimitEnvironment(dataStore: userLimitsDataStore)
         let loadingEnvironment = LoadingEnvironment()
@@ -50,14 +59,6 @@ public struct FlowTaleRootView: View {
                                                               settingsEnvironment: settingsEnvironment,
                                                               userLimitsEnvironment: userLimitEnvironment)
         let imageGenerationService = ImageGenerationServices()
-        
-        
-        let moderationServices = ModerationServices()
-        let moderationDataStore = ModerationDataStore()
-        let moderationEnvironment = ModerationEnvironment(
-            moderationServices: moderationServices,
-            moderationDataStore: moderationDataStore
-        )
         
         let definitionServices = DefinitionServices()
         let definitionDataStore = DefinitionDataStore()

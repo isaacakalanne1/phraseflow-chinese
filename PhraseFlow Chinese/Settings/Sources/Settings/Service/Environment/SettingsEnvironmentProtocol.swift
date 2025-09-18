@@ -8,6 +8,7 @@
 import Audio
 import Foundation
 import Combine
+import Moderation
 
 public protocol SettingsEnvironmentProtocol {
     var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> { get }
@@ -19,4 +20,5 @@ public protocol SettingsEnvironmentProtocol {
     func playMusic(_ music: MusicType) throws
     var isPlayingMusic: Bool { get }
     func stopMusic()
+    func moderateText(_ text: String) async throws -> ModerationResponse
 }

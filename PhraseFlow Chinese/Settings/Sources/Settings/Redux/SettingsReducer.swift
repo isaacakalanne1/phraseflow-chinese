@@ -82,7 +82,8 @@ let settingsReducer: Reducer<SettingsState, SettingsAction> = { state, action in
          .failedToLoadAppSettings,
          .failedToSaveAppSettings,
          .playSound,
-         .snackbarAction:
+         .snackbarAction,
+         .submitCustomPrompt:
         break
     }
 

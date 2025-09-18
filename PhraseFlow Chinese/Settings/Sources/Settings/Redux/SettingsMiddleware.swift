@@ -7,6 +7,7 @@
 
 import Foundation
 import ReduxKit
+import Moderation
 
 @MainActor
 let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvironmentProtocol> = { state, action, environment in
@@ -55,6 +56,19 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
     case .updateStorySetting,
             .deleteCustomPrompt:
         return .saveAppSettings
+        
+    case .submitCustomPrompt(let prompt):
+        do {
+            let response = try await environment.moderateText(prompt)
+            if response.didPassModeration {
+                return .updateStorySetting(.customPrompt(prompt))
+            } else {
+                return .updateIsShowingModerationFailedAlert(true)
+            }
+        } catch {
+            return .updateIsShowingModerationFailedAlert(true)
+        }
+        
     case .failedToLoadAppSettings,
          .failedToSaveAppSettings,
          .updateCustomPrompt,

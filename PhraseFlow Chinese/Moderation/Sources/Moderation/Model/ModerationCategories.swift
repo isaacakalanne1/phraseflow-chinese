@@ -55,7 +55,7 @@ public enum ModerationCategories: CaseIterable, Sendable {
     public var thresholdScore: Double {
         switch self {
         case .sexual:
-            return 0.8
+            return 0.6
         case .sexualMinors:
             return 0.2
         case .violenceGraphic:

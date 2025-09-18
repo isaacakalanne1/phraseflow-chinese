@@ -10,6 +10,7 @@ import FTColor
 import FTFont
 import FTStyleKit
 import Localization
+import Moderation
 
 struct StoryPromptMenu: View {
     @EnvironmentObject var store: SettingsStore
@@ -124,7 +125,7 @@ struct StoryPromptMenu: View {
     private func submitCustomPrompt() {
         store.dispatch(.snackbarAction(.showSnackBar(.moderatingText)))
         store.dispatch(.updateIsShowingCustomPromptAlert(false))
-        store.dispatch(.updateStorySetting(.customPrompt(store.state.customPrompt)))
+        store.dispatch(.submitCustomPrompt(store.state.customPrompt))
     }
 }
 
@@ -179,7 +180,13 @@ public struct StoryPromptSettingsView: View {
                 }
             )
         ) {
-            SimpleModerationExplanationView()
+            ModerationRootView(
+                environment: ModerationEnvironment(
+                    moderationServices: ModerationServices(),
+                    moderationDataStore: ModerationDataStore()
+                ),
+                customPrompt: store.state.customPrompt
+            )
         }
     }
 }
