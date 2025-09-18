@@ -47,6 +47,9 @@ struct DifficultyMenu: View {
             } header: {
                 Text(LocalizedString.howDifficultStory.uppercased())
                     .font(FTFont.flowTaleSubHeader())
+                    .foregroundStyle(FTColor.primary)
+                    .multilineTextAlignment(.leading)
+                    .padding(.horizontal, 4)
             }
         }
         .navigationTitle(LocalizedString.difficulty)

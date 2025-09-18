@@ -104,6 +104,9 @@ struct StoryPromptMenu: View {
                 } header: {
                     Text(LocalizedString.howStoryStart.uppercased())
                         .font(FTFont.flowTaleSubHeader())
+                        .foregroundStyle(FTColor.primary)
+                        .multilineTextAlignment(.leading)
+                        .padding(.horizontal, 4)
                 }
             }
         }

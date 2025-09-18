@@ -49,6 +49,9 @@ struct VoiceMenu: View {
             } header: {
                 Text(LocalizedString.voiceMenuHeader.uppercased())
                     .font(FTFont.flowTaleSubHeader())
+                    .foregroundStyle(FTColor.primary)
+                    .multilineTextAlignment(.leading)
+                    .padding(.horizontal, 4)
             }
         }
         .navigationTitle(LocalizedString.voice)
