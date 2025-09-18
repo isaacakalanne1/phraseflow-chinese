@@ -91,13 +91,9 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
         newState.showTextPractice = false
         // Don't reset source language as it should persist between translations
         
-    case .loadTranslationHistory:
-        newState.isLoadingHistory = true
-        
     case .onTranslationsLoaded(let translations),
             .onTranslationsSaved(let translations):
         newState.savedTranslations = translations.sorted(by: { $0.lastUpdated > $1.lastUpdated })
-        newState.isLoadingHistory = false
         
     case .refreshAppSettings(let settings):
         newState.settings = settings
@@ -114,7 +110,8 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
             .deleteTranslation,
             .saveAppSettings,
             .onSavedAppSettings,
-            .failedToSaveAppSettings:
+            .failedToSaveAppSettings,
+            .loadTranslationHistory:
         break
     }
     

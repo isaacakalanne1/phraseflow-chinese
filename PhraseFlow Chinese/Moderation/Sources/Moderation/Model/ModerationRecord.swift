@@ -10,9 +10,4 @@ import Foundation
 public struct ModerationRecord: Codable, Identifiable, Equatable {
     public let id: UUID
     let timestamp: Date
-    
-    public init(prompt: String, moderationResponse: ModerationResponse) {
-        self.id = UUID()
-        self.timestamp = Date()
-    }
 }

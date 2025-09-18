@@ -15,7 +15,6 @@ let moderationReducer: Reducer<ModerationState, ModerationAction> = { state, act
     switch action {
     case .onModeratedText(let response, let prompt):
         newState.moderationResponse = response
-        newState.moderationRecord = ModerationRecord(prompt: prompt, moderationResponse: response)
         
     case .didNotPassModeration:
         newState.isShowingModerationFailedAlert = true

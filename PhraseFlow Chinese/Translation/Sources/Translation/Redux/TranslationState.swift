@@ -21,7 +21,6 @@ struct TranslationState: Equatable {
     var settings: SettingsState = .init()
     var currentSentence: Sentence?
     var savedTranslations: [Chapter] = []
-    var isLoadingHistory: Bool = false
     var showTextPractice: Bool = false
     
     init() {}
