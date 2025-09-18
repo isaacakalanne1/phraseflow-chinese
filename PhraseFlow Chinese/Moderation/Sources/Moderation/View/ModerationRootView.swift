@@ -9,26 +9,21 @@ import SwiftUI
 import ReduxKit
 
 public struct ModerationRootView: View {
-    @StateObject private var store: ModerationStore
     private let customPrompt: String
+    private let moderationResponse: ModerationResponse?
     
-    public init(environment: ModerationEnvironmentProtocol, 
-                moderationResponse: ModerationResponse? = nil,
-                customPrompt: String = "") {
+    public init(
+        moderationResponse: ModerationResponse?,
+        customPrompt: String = ""
+    ) {
         self.customPrompt = customPrompt
-        
-        self._store = StateObject(wrappedValue: {
-            Store(
-                initial: ModerationState(moderationResponse: moderationResponse),
-                reducer: moderationReducer,
-                environment: environment,
-                middleware: moderationMiddleware
-            )
-        }())
+        self.moderationResponse = moderationResponse
     }
     
     public var body: some View {
-        ModerationExplanationView(customPrompt: customPrompt)
-            .environmentObject(store)
+        ModerationExplanationView(
+            customPrompt: customPrompt,
+            moderationResponse: moderationResponse
+        )
     }
 }

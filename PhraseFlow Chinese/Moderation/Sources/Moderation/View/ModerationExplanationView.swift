@@ -12,9 +12,9 @@ import FTStyleKit
 import Localization
 
 struct ModerationExplanationView: View {
-    @EnvironmentObject var store: ModerationStore
     @Environment(\.dismiss) private var dismiss
     let customPrompt: String
+    let moderationResponse: ModerationResponse?
 
     var body: some View {
         ScrollView {
@@ -47,7 +47,7 @@ struct ModerationExplanationView: View {
                 .padding(.horizontal)
                 
                 // Moderation Results Section
-                if let moderationResponse = store.state.moderationResponse {
+                if let moderationResponse {
                     VStack(spacing: 16) {
                         Text(LocalizedString.whyDidntItPass)
                             .font(FTFont.flowTaleHeader())

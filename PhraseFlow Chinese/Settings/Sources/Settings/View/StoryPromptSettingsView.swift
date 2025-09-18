@@ -183,10 +183,6 @@ public struct StoryPromptSettingsView: View {
             )
         ) {
             ModerationRootView(
-                environment: ModerationEnvironment(
-                    moderationServices: ModerationServices(),
-                    moderationDataStore: ModerationDataStore()
-                ),
                 moderationResponse: store.state.viewState.moderationResponse,
                 customPrompt: store.state.customPrompt
             )
