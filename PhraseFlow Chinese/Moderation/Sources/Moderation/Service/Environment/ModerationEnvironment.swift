@@ -8,8 +8,8 @@
 import Foundation
 
 public struct ModerationEnvironment: ModerationEnvironmentProtocol {
-    let moderationServices: ModerationServicesProtocol
-    public let moderationDataStore: ModerationDataStoreProtocol
+    private let moderationServices: ModerationServicesProtocol
+    private let moderationDataStore: ModerationDataStoreProtocol
     
     public init(moderationServices: ModerationServicesProtocol,
          moderationDataStore: ModerationDataStoreProtocol) {

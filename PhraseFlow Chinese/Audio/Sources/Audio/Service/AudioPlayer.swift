@@ -13,7 +13,7 @@ public class AudioPlayer {
     public var musicAudioPlayer: AVAudioPlayer?
     private var appSoundAudioPlayer: AVAudioPlayer?
     
-    init() {
+    public init() {
         self.chapterAudioPlayer = AVPlayer()
         self.musicAudioPlayer = nil
         self.appSoundAudioPlayer = nil
