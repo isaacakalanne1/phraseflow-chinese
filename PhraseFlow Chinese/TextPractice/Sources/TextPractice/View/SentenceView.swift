@@ -100,13 +100,13 @@ public struct SentenceView: View {
                     }
                 } label: {
                     Image(systemName: "chevron.left")
-                        .font(FTFont.flowTaleHeader())
+                        .font(FTFont.header.font)
                         .foregroundColor(FTColor.primary.color)
                 }
                 .opacity(currentPage > 0 ? 1 : 0)
                 
                 Text("\(currentPage + 1) / \(totalPages)")
-                    .font(FTFont.flowTaleSecondaryHeader())
+                    .font(FTFont.secondaryHeader.font)
                     .foregroundColor(FTColor.primary.color)
                 
                 Button {
@@ -116,7 +116,7 @@ public struct SentenceView: View {
                     }
                 } label: {
                     Image(systemName: "chevron.right")
-                        .font(FTFont.flowTaleHeader())
+                        .font(FTFont.header.font)
                         .foregroundColor(FTColor.primary.color)
                 }
                 .opacity(currentPage < totalPages - 1 ? 1 : 0)

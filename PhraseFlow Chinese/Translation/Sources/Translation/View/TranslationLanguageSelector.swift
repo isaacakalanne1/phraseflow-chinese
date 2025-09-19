@@ -18,7 +18,7 @@ struct TranslationLanguageSelector: View {
     var body: some View {
         VStack(spacing: 8) {
             Text(LocalizedString.translateBetweenLanguages)
-                .font(FTFont.flowTaleSubHeader())
+                .font(FTFont.subHeader.font)
                 .foregroundColor(FTColor.secondary.color)
 
             HStack(spacing: 8) {
@@ -35,13 +35,13 @@ struct TranslationLanguageSelector: View {
         } label: {
             HStack(spacing: 6) {
                 Text(store.state.settings.sourceLanguage.flagEmoji)
-                    .font(FTFont.flowTaleBodyXSmall())
+                    .font(FTFont.bodyXSmall.font)
                 Text(store.state.settings.sourceLanguage.displayName)
-                    .font(FTFont.flowTaleSubHeader())
+                    .font(FTFont.subHeader.font)
                     .fontWeight(.medium)
                     .lineLimit(1)
                 Image(systemName: "chevron.down")
-                    .font(FTFont.flowTaleSecondaryHeader())
+                    .font(FTFont.secondaryHeader.font)
             }
             .foregroundColor(FTColor.primary.color)
             .padding(.vertical, 6)
@@ -63,7 +63,7 @@ struct TranslationLanguageSelector: View {
         } label: {
             Image(systemName: store.state.settings.sourceLanguage == .autoDetect ?
                   "arrow.right" : "arrow.left.arrow.right")
-                .font(FTFont.flowTaleBodyXSmall())
+                .font(FTFont.bodyXSmall.font)
                 .foregroundColor(store.state.settings.sourceLanguage == .autoDetect ?
                                 FTColor.secondary.color : FTColor.accent.color)
                 .frame(width: 36, height: 36)
@@ -82,13 +82,13 @@ struct TranslationLanguageSelector: View {
         } label: {
             HStack(spacing: 6) {
                 Text(store.state.settings.targetLanguage.flagEmoji)
-                    .font(FTFont.flowTaleBodyXSmall())
+                    .font(FTFont.bodyXSmall.font)
                 Text(store.state.settings.targetLanguage.displayName)
-                    .font(FTFont.flowTaleSubHeader())
+                    .font(FTFont.subHeader.font)
                     .fontWeight(.medium)
                     .lineLimit(1)
                 Image(systemName: "chevron.down")
-                    .font(FTFont.flowTaleSecondaryHeader())
+                    .font(FTFont.secondaryHeader.font)
             }
             .foregroundColor(FTColor.primary.color)
             .padding(.vertical, 6)

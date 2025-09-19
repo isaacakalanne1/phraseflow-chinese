@@ -32,7 +32,7 @@ struct CharacterView: View {
         VStack(spacing: 0) {
             ZStack {
                 Text(word.word)
-                    .font(FTFont.flowTaleBodyMedium())
+                    .font(FTFont.bodyMedium.font)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .foregroundStyle(isTappedWord ? FTColor.primary.color : (word == spokenWord ? FTColor.wordHighlight.color : FTColor.primary.color))
                     .background {

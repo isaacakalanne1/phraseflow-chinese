@@ -62,7 +62,7 @@ struct SubscriptionView: View {
                                 .progressViewStyle(CircularProgressViewStyle())
                             
                             Text(LocalizedString.processing)
-                                .font(FTFont.flowTaleSecondaryHeader())
+                                .font(FTFont.secondaryHeader.font)
                                 .fontWeight(.medium)
                                 .foregroundColor(FTColor.primary.color)
                         }
@@ -84,7 +84,7 @@ struct SubscriptionView: View {
     private var subscriptionOptionsSection: some View {
         VStack(spacing: 20) {
             Text(LocalizedString.chooseYourPlan)
-                .font(FTFont.flowTaleSecondaryHeader())
+                .font(FTFont.secondaryHeader.font)
                 .fontWeight(.semibold)
                 .foregroundColor(FTColor.primary.color)
                 .padding(.bottom, 8)
@@ -138,7 +138,7 @@ struct SubscriptionView: View {
                     Text(LocalizedString.restoreSubscription)
                 }
                 .multilineTextAlignment(.center)
-                .font(FTFont.flowTaleSecondaryHeader())
+                .font(FTFont.secondaryHeader.font)
                 .fontWeight(.semibold)
                 .foregroundColor(FTColor.primary.color)
                 .padding(.horizontal, 24)
@@ -162,7 +162,7 @@ struct SubscriptionView: View {
                 } label: {
                     Text(LocalizedString.termsOfUse)
                         .multilineTextAlignment(.center)
-                        .font(FTFont.flowTaleSecondaryHeader())
+                        .font(FTFont.secondaryHeader.font)
                         .foregroundColor(FTColor.primary.color.opacity(0.6))
                         .underline()
                 }
@@ -174,7 +174,7 @@ struct SubscriptionView: View {
                 } label: {
                     Text(LocalizedString.privacyPolicy)
                         .multilineTextAlignment(.center)
-                        .font(FTFont.flowTaleSecondaryHeader())
+                        .font(FTFont.secondaryHeader.font)
                         .foregroundColor(FTColor.primary.color.opacity(0.6))
                         .underline()
                 }
@@ -190,7 +190,7 @@ struct SubscriptionView: View {
             
             Text(LocalizedString.manageSubscriptionsInstructions)
                 .multilineTextAlignment(.center)
-                .font(FTFont.flowTaleSecondaryHeader())
+                .font(FTFont.secondaryHeader.font)
                 .foregroundColor(FTColor.primary.color.opacity(0.7))
                 .padding(.horizontal, 8)
         }

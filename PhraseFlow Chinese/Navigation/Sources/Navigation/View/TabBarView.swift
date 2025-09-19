@@ -38,7 +38,7 @@ struct TabBarView: View {
                     }
                     
                     Text(tab.title)
-                        .font(FTFont.flowTaleBodyXSmall())
+                        .font(FTFont.bodyXSmall.font)
                         .foregroundStyle(isSelected ? FTColor.accent.color : FTColor.primary.color)
                     
                     RoundedRectangle(cornerRadius: 1.5)

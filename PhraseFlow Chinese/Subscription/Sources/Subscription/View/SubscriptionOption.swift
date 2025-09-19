@@ -85,7 +85,7 @@ struct SubscriptionOption: View {
                         }
                         
                         Text(title)
-                            .font(FTFont.flowTaleHeader())
+                            .font(FTFont.header.font)
                             .fontWeight(.bold)
                             .multilineTextAlignment(.leading)
                         
@@ -106,7 +106,7 @@ struct SubscriptionOption: View {
                     }
                     
                     Text(detail)
-                        .font(FTFont.flowTaleSecondaryHeader())
+                        .font(FTFont.secondaryHeader.font)
                         .fontWeight(.medium)
                         .multilineTextAlignment(.leading)
                         .opacity(isUserCurrentSubscription ? 0.9 : 0.8)

@@ -7,41 +7,53 @@
 
 import SwiftUI
 
-public struct FTFont {
-
-    // MARK: Header
-
-    public static func flowTaleHeader() -> Font {
-        .title2
+public enum FTFont {
+    case header,
+         secondaryHeader,
+         subHeader,
+         bodyXSmall,
+         bodySmall,
+         bodyMedium,
+         bodyLarge,
+         bodyXLarge
+    
+    var font: Font {
+        .system(size: fontSize, weight: fontWeight)
     }
-
-    public static func flowTaleSecondaryHeader() -> Font {
-        .subheadline
+    
+    var fontSize: CGFloat {
+        switch self {
+        case .header:
+            25
+        case .secondaryHeader:
+            20
+        case .subHeader:
+            12
+        case .bodyXSmall:
+            12
+        case .bodySmall:
+            16
+        case .bodyMedium:
+            20
+        case .bodyLarge:
+            30
+        case .bodyXLarge:
+            60
+        }
     }
-
-    public static func flowTaleSubHeader() -> Font {
-        .footnote
-    }
-
-    // MARK: Body
-
-    public static func flowTaleBodyXSmall() -> Font {
-        .system(size: 12, weight: .light)
-    }
-
-    public static func flowTaleBodySmall() -> Font {
-        .system(size: 16, weight: .light)
-    }
-
-    public static func flowTaleBodyMedium() -> Font {
-        .system(size: 20, weight: .light)
-    }
-
-    public static func flowTaleBodyLarge() -> Font {
-        .system(size: 30, weight: .light)
-    }
-
-    public static func flowTaleBodyXLarge() -> Font {
-        .system(size: 60, weight: .light)
+    
+    var fontWeight: Font.Weight {
+        switch self {
+        case .header,
+                .secondaryHeader,
+                .subHeader:
+            return .medium
+        case .bodyXSmall,
+                .bodySmall,
+                .bodyMedium,
+                .bodyLarge,
+                .bodyXLarge:
+            return .light
+        }
     }
 }

@@ -27,14 +27,14 @@ struct TranslationActionButton: View {
                         .padding(.trailing, 8)
                 } else {
                     Image(systemName: "arrow.right.circle.fill")
-                        .font(FTFont.flowTaleBodySmall())
+                        .font(FTFont.bodySmall.font)
                         .padding(.trailing, 8)
                 }
                 
                 let buttonText = store.state.isTranslating ? LocalizedString.translating : LocalizedString.translate
                 
                 Text(buttonText)
-                    .font(FTFont.flowTaleSecondaryHeader())
+                    .font(FTFont.secondaryHeader.font)
             }
             .foregroundColor(.white)
             .padding()

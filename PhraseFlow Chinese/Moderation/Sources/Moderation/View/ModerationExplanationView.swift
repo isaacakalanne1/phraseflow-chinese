@@ -26,14 +26,14 @@ struct ModerationExplanationView: View {
                         .foregroundColor(FTColor.accent.color)
                     
                     Text(LocalizedString.storyDidNotPassModeration)
-                        .font(FTFont.flowTaleHeader())
+                        .font(FTFont.header.font)
                         .fontWeight(.bold)
                         .foregroundColor(FTColor.primary.color)
                         .multilineTextAlignment(.center)
                     
                     if !customPrompt.isEmpty {
                         Text(customPrompt)
-                            .font(FTFont.flowTaleBodyMedium())
+                            .font(FTFont.bodyMedium.font)
                             .foregroundColor(FTColor.secondary.color)
                             .padding()
                             .background(FTColor.background.color.opacity(0.8))
@@ -50,7 +50,7 @@ struct ModerationExplanationView: View {
                 if let moderationResponse {
                     VStack(spacing: 16) {
                         Text(LocalizedString.whyDidntItPass)
-                            .font(FTFont.flowTaleHeader())
+                            .font(FTFont.header.font)
                             .fontWeight(.semibold)
                             .foregroundColor(FTColor.primary.color)
                         
@@ -105,7 +105,7 @@ struct ModerationCategoryCard: View {
                         .foregroundColor(result.didPass ? .green : .red)
                     
                     Text(result.category.name)
-                        .font(FTFont.flowTaleBodyMedium())
+                        .font(FTFont.bodyMedium.font)
                         .fontWeight(.semibold)
                         .foregroundColor(FTColor.primary.color)
                 }
@@ -126,13 +126,13 @@ struct ModerationCategoryCard: View {
             VStack(spacing: 8) {
                 HStack {
                     Text("Score: \(result.scorePercentageString)")
-                        .font(FTFont.flowTaleBodyMedium())
+                        .font(FTFont.bodyMedium.font)
                         .foregroundColor(FTColor.primary.color)
                     
                     Spacer()
                     
                     Text("Threshold: \(result.thresholdPercentageString)")
-                        .font(FTFont.flowTaleBodyMedium())
+                        .font(FTFont.bodyMedium.font)
                         .foregroundColor(FTColor.secondary.color)
                 }
                 
@@ -215,7 +215,7 @@ struct InfoSection: View {
                     .font(.title3)
                 
                 Text(title)
-                    .font(FTFont.flowTaleBodyMedium())
+                    .font(FTFont.bodyMedium.font)
                     .fontWeight(.semibold)
                     .foregroundColor(FTColor.primary.color)
                 
@@ -223,7 +223,7 @@ struct InfoSection: View {
             }
             
             Text(content)
-                .font(FTFont.flowTaleBodyMedium())
+                .font(FTFont.bodyMedium.font)
                 .foregroundColor(FTColor.secondary.color)
                 .lineSpacing(4)
         }

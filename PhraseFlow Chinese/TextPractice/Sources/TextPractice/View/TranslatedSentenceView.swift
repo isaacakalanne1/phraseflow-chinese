@@ -18,7 +18,7 @@ struct TranslatedSentenceView: View {
         VStack(spacing: 8) {
             if let sentence = store.state.chapter.currentSentence {
                 Text(sentence.original)
-                    .font(FTFont.flowTaleBodyMedium())
+                    .font(FTFont.bodyMedium.font)
                     .foregroundColor(FTColor.primary.color)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 8)
@@ -26,7 +26,7 @@ struct TranslatedSentenceView: View {
                 // No sentence selected state
                 VStack {
                     Text(LocalizedString.selectSentenceToSeeTranslation)
-                        .font(FTFont.flowTaleSecondaryHeader())
+                        .font(FTFont.secondaryHeader.font)
                         .foregroundColor(FTColor.secondary.color)
                         .multilineTextAlignment(.center)
                 }

@@ -24,7 +24,7 @@ public struct SpeechSpeedButton: View {
             store.dispatch(.playSound(.changeSettings))
         } label: {
             Text(store.state.settings.speechSpeed.text)
-                .font(FTFont.flowTaleBodyMedium())
+                .font(FTFont.bodyMedium.font)
                 .fontWeight(.medium)
                 .foregroundStyle(FTColor.primary.color)
                 .padding(.horizontal, 12)

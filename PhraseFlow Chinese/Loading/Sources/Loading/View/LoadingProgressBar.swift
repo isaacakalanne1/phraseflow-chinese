@@ -52,7 +52,7 @@ public struct LoadingProgressBar: View {
         VStack(spacing: 4) {
             HStack {
                 Text(statusText)
-                    .font(FTFont.flowTaleSecondaryHeader())
+                    .font(FTFont.secondaryHeader.font)
                     .foregroundColor(FTColor.primary.color)
                 
                 Spacer()
@@ -130,7 +130,7 @@ struct ProgressStep: View {
                 
                 if isCompleted {
                     Image(systemName: "checkmark")
-                        .font(FTFont.flowTaleBodyXSmall())
+                        .font(FTFont.bodyXSmall.font)
                         .foregroundColor(.white)
                 } else if isCurrent {
                     ProgressView()
@@ -138,7 +138,7 @@ struct ProgressStep: View {
                         .progressViewStyle(CircularProgressViewStyle(tint: FTColor.accent.color))
                 } else {
                     Image(systemName: icon)
-                        .font(FTFont.flowTaleBodyXSmall())
+                        .font(FTFont.bodyXSmall.font)
                         .foregroundColor(FTColor.secondary.color.opacity(0.6))
                 }
             }
@@ -156,7 +156,7 @@ struct ProgressStep: View {
                     
                     if isCompleted {
                         Image(systemName: "checkmark")
-                            .font(FTFont.flowTaleBodySmall())
+                            .font(FTFont.bodySmall.font)
                             .foregroundColor(.white)
                     } else if isCurrent {
                         ProgressView()
@@ -164,13 +164,13 @@ struct ProgressStep: View {
                             .progressViewStyle(CircularProgressViewStyle(tint: FTColor.accent.color))
                     } else {
                         Image(systemName: icon)
-                            .font(FTFont.flowTaleBodySmall())
+                            .font(FTFont.bodySmall.font)
                             .foregroundColor(FTColor.secondary.color.opacity(0.6))
                     }
                 }
                 
                 Text(title)
-                    .font(FTFont.flowTaleSecondaryHeader())
+                    .font(FTFont.secondaryHeader.font)
                     .foregroundColor(
                         isCompleted || isCurrent ? FTColor.primary.color : FTColor.secondary.color
                     )

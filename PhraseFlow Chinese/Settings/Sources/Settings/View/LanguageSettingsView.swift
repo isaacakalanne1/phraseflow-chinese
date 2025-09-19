@@ -63,7 +63,7 @@ public struct LanguageMenu: View {
         VStack(spacing: 12) {
             HStack {
                 Text("CURRENT SELECTION")
-                    .font(FTFont.flowTaleSubHeader())
+                    .font(FTFont.subHeader.font)
                     .foregroundStyle(FTColor.accent.color)
                     .multilineTextAlignment(.leading)
                 Spacer()
@@ -134,7 +134,7 @@ public struct LanguageMenu: View {
         VStack(spacing: 12) {
             HStack {
                 Text("OTHER LANGUAGES")
-                    .font(FTFont.flowTaleSubHeader())
+                    .font(FTFont.subHeader.font)
                     .foregroundStyle(FTColor.primary.color)
                     .multilineTextAlignment(.leading)
                 Spacer()
@@ -173,7 +173,7 @@ public struct LanguageMenu: View {
     private var sectionHeader: some View {
         HStack {
             Text(LocalizedString.whichLanguageLearn.uppercased())
-                .font(FTFont.flowTaleSubHeader())
+                .font(FTFont.subHeader.font)
                 .foregroundStyle(FTColor.primary.color)
                 .multilineTextAlignment(.leading)
             Spacer()

@@ -17,7 +17,7 @@ struct TranslationInputSection: View {
     var body: some View {
         VStack(spacing: 8) {
             Text(LocalizedString.enterText)
-                .font(FTFont.flowTaleSubHeader())
+                .font(FTFont.subHeader.font)
                 .foregroundColor(FTColor.primary.color)
 
             ZStack(alignment: .topTrailing) {

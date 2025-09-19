@@ -48,7 +48,7 @@ public struct StudyView: View {
                     VStack(alignment: .leading) {
                         ZStack {
                             Text(definition.timestampData.word)
-                                .font(FTFont.flowTaleBodyXLarge())
+                                .font(FTFont.bodyXLarge.font)
                                 .frame(maxWidth: .infinity, alignment: .center)
                             HStack {
                                 Spacer()
@@ -66,7 +66,7 @@ public struct StudyView: View {
                             content:
                             VStack {
                                 Text(LocalizedString.studyPronunciationPrefix + definition.detail.pronunciation)
-                                    .font(FTFont.flowTaleBodySmall())
+                                    .font(FTFont.bodySmall.font)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
                         )
@@ -78,12 +78,12 @@ public struct StudyView: View {
                                 Group {
                                     Text(LocalizedString.studyDefinitionPrefix + definition.detail.definition)
                                         .frame(maxWidth: .infinity, alignment: .leading)
-                                        .font(FTFont.flowTaleBodySmall())
+                                        .font(FTFont.bodySmall.font)
                                     Divider()
                                     Text(LocalizedString.studyContextPrefix + definition.detail.definitionInContextOfSentence)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .scaleEffect(x: 1, y: isDefinitionShown ? 1 : 0, anchor: .top)
-                                        .font(FTFont.flowTaleBodySmall())
+                                        .font(FTFont.bodySmall.font)
                                 }
                         )
 
@@ -96,7 +96,7 @@ public struct StudyView: View {
                                     let highlighted = highlightWord(wordToHighlight, in: baseString) ?? AttributedString(definition.sentence.translation)
 
                                     Text(highlighted)
-                                        .font(FTFont.flowTaleBodyLarge())
+                                        .font(FTFont.bodyLarge.font)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Button {
                                         store.dispatch(.playStudySentence)
@@ -111,7 +111,7 @@ public struct StudyView: View {
                             isShown: isDefinitionShown,
                             content:
                                 Text(definition.sentence.original)
-                                    .font(FTFont.flowTaleBodySmall())
+                                    .font(FTFont.bodySmall.font)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                         )
                     }

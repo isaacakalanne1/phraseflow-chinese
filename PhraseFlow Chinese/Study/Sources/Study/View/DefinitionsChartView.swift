@@ -168,7 +168,7 @@ struct DefinitionsChartView: View {
                 .foregroundStyle(FTColor.secondary.color)
                 .annotation(position: .top, alignment: .leading) {
                     Text(checkpoint.label)
-                        .font(FTFont.flowTaleSecondaryHeader())
+                        .font(FTFont.secondaryHeader.font)
                         .foregroundColor(.secondary)
                 }
             }
@@ -258,17 +258,17 @@ struct DefinitionsChartView: View {
                         if showYear {
                             // Show full date with year: "2nd Feb 2024"
                             Text("\(date, format: .dateTime.day()) \(date, format: .dateTime.month(.abbreviated)) \(year)")
-                                .font(FTFont.flowTaleSecondaryHeader())
+                                .font(FTFont.secondaryHeader.font)
                                 .foregroundColor(.secondary)
                         } else if showMonthName {
                             // Show date with month: "2nd Feb"
                             Text("\(date, format: .dateTime.day()) \(date, format: .dateTime.month(.abbreviated))")
-                                .font(FTFont.flowTaleSecondaryHeader())
+                                .font(FTFont.secondaryHeader.font)
                                 .foregroundColor(.secondary)
                         } else {
                             // Just show day: "2nd"
                             Text("\(date, format: .dateTime.day())")
-                                .font(FTFont.flowTaleSecondaryHeader())
+                                .font(FTFont.secondaryHeader.font)
                                 .foregroundColor(.secondary)
                         }
                     }
@@ -279,7 +279,7 @@ struct DefinitionsChartView: View {
             AxisMarks(values: [nowWithCurrentHour]) { _ in
                 AxisValueLabel(anchor: .leading, horizontalSpacing: 0) {
                     Text(LocalizedString.now)
-                        .font(FTFont.flowTaleSecondaryHeader())
+                        .font(FTFont.secondaryHeader.font)
                         .fontWeight(.bold)
                         .foregroundColor(FTColor.accent.color)
                         .fixedSize()
