@@ -17,7 +17,6 @@ enum MockSettingsEnvironmentError: Error {
 
 class MockSettingsEnvironment: SettingsEnvironmentProtocol {
     var settingsUpdatedSubject: CurrentValueSubject<Settings.SettingsState?, Never> = .init(nil)
-    var ssmlCharacterCountSubject: CurrentValueSubject<Int?, Never> = .init(nil)
     
     var saveAppSettingsSpy: SettingsState? = nil
     var saveAppSettingsCalled = false

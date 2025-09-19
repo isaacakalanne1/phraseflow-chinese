@@ -12,7 +12,6 @@ import Moderation
 
 public struct SettingsEnvironment: SettingsEnvironmentProtocol {
     public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never>
-    public var ssmlCharacterCountSubject: CurrentValueSubject<Int?, Never>
     
     private let settingsDataStore: SettingsDataStoreProtocol
     private let audioEnvironment: AudioEnvironmentProtocol
@@ -27,7 +26,6 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
         self.audioEnvironment = audioEnvironment
         self.moderationEnvironment = moderationEnvironment
         settingsUpdatedSubject = .init(nil)
-        ssmlCharacterCountSubject = .init(nil)
     }
     
     public func saveAppSettings(_ settings: SettingsState) throws {

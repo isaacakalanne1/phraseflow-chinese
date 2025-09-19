@@ -12,7 +12,6 @@ import Moderation
 
 public protocol SettingsEnvironmentProtocol {
     var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> { get }
-    var ssmlCharacterCountSubject: CurrentValueSubject<Int?, Never> { get }
     
     func saveAppSettings(_ settings: SettingsState) throws
     func loadAppSettings() throws -> SettingsState

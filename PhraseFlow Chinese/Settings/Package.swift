@@ -73,6 +73,7 @@ let package = Package(
             dependencies: [
                 "Settings",
                 "SettingsMocks",
+                "ReduxKit",
                 .product(name: "Audio", package: "Audio"),
                 .product(name: "AudioMocks", package: "Audio"),
                 .product(name: "ModerationMocks", package: "Moderation")
