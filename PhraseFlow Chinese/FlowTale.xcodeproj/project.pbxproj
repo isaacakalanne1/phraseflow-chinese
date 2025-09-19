@@ -59,6 +59,7 @@
 		112BE27C2E32C39F006E80FC /* FTStyleKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FTStyleKit; sourceTree = "<group>"; };
 		11BAFA972E364D9A00502C14 /* FlowTaleEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleEnvironment.swift; sourceTree = "<group>"; };
 		11FF5A612E67580D007F1A22 /* TextPractice */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TextPractice; sourceTree = "<group>"; };
+		11FF5A632E7DC3A0007F1A22 /* FlowTaleTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = FlowTaleTestPlan.xctestplan; sourceTree = "<group>"; };
 		BB34C5022E2430BA00238EA8 /* Study */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Study; sourceTree = "<group>"; };
 		BB34C5042E25279800238EA8 /* Story */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Story; sourceTree = "<group>"; };
 		BB34C5052E252D7100238EA8 /* Speech */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Speech; sourceTree = "<group>"; };
@@ -166,6 +167,7 @@
 				BBB6EF362C8C862A0079D135 /* FlowTaleTests */,
 				BBB6EF402C8C862A0079D135 /* FlowTaleUITests */,
 				BBB6EF242C8C86240079D135 /* Products */,
+				11FF5A632E7DC3A0007F1A22 /* FlowTaleTestPlan.xctestplan */,
 			);
 			sourceTree = "<group>";
 		};

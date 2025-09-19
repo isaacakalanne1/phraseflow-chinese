@@ -1,0 +1,192 @@
+{
+  "configurations" : [
+    {
+      "id" : "634335B2-03AC-4DD2-BFBC-10619F584F19",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:ImageGeneration",
+        "identifier" : "ImageGenerationTests",
+        "name" : "ImageGenerationTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:APIRequest",
+        "identifier" : "APIRequestTests",
+        "name" : "APIRequestTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:UserLimit",
+        "identifier" : "UserLimitTests",
+        "name" : "UserLimitTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:FTFont",
+        "identifier" : "FTFontTests",
+        "name" : "FTFontTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:TextPractice",
+        "identifier" : "TextPracticeTests",
+        "name" : "TextPracticeTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Loading",
+        "identifier" : "LoadingTests",
+        "name" : "LoadingTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Story",
+        "identifier" : "StoryTests",
+        "name" : "StoryTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:FTColor",
+        "identifier" : "FTColorTests",
+        "name" : "FTColorTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Subscription",
+        "identifier" : "SubscriptionTests",
+        "name" : "SubscriptionTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Moderation",
+        "identifier" : "ModerationTests",
+        "name" : "ModerationTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Speech",
+        "identifier" : "SpeechTests",
+        "name" : "SpeechTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:ReduxKit",
+        "identifier" : "ReduxKitTests",
+        "name" : "ReduxKitTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:FTStyleKit",
+        "identifier" : "FTStyleKitTests",
+        "name" : "FTStyleKitTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:AppleIcon",
+        "identifier" : "AppleIconTests",
+        "name" : "AppleIconTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:SnackBar",
+        "identifier" : "SnackBarTests",
+        "name" : "SnackBarTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Audio",
+        "identifier" : "AudioTests",
+        "name" : "AudioTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:FlowTale.xcodeproj",
+        "identifier" : "BBB6EF322C8C862A0079D135",
+        "name" : "FlowTaleTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:DataStorage",
+        "identifier" : "DataStorageTests",
+        "name" : "DataStorageTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Localization",
+        "identifier" : "LocalizationTests",
+        "name" : "LocalizationTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Navigation",
+        "identifier" : "NavigationTests",
+        "name" : "NavigationTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:FlowTale.xcodeproj",
+        "identifier" : "BBB6EF3C2C8C862A0079D135",
+        "name" : "FlowTaleUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Settings",
+        "identifier" : "SettingsTests",
+        "name" : "SettingsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Study",
+        "identifier" : "StudyTests",
+        "name" : "StudyTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Translation",
+        "identifier" : "TranslationTests",
+        "name" : "TranslationTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:TextGeneration",
+        "identifier" : "TextGenerationTests",
+        "name" : "TextGenerationTests"
+      }
+    }
+  ],
+  "version" : 1
+}

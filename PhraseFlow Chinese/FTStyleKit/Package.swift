@@ -17,6 +17,7 @@ let package = Package(
     dependencies: [
         .package(name: "AppleIcon", path: "../AppleIcon"),
         .package(name: "FTColor", path: "../FTColor"),
+        .package(name: "FTFont", path: "../FTFont"),
         .package(name: "Localization", path: "../Localization"),
     ],
     targets: [
@@ -27,6 +28,7 @@ let package = Package(
             dependencies: [
                 "AppleIcon",
                 "FTColor",
+                "FTFont",
                 "Localization"
             ],
             resources: [

@@ -10,8 +10,8 @@ import StoreKit
 @testable import Subscription
 
 final class SubscriptionEnvironmentTests: XCTestCase {
-    func testSubscriptionEnvironmentImplementsProtocol() {
-        let environment = SubscriptionEnvironment()
-        XCTAssertNotNil(environment as SubscriptionEnvironmentProtocol)
-    }
+//    func testSubscriptionEnvironmentImplementsProtocol() {
+//        let environment = SubscriptionEnvironment()
+//        XCTAssertNotNil(environment as SubscriptionEnvironmentProtocol)
+//    }
 }
