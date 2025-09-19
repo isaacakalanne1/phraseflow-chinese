@@ -16,7 +16,7 @@ public struct BackgroundImage: ViewModifier {
             content
                 .background {
                     Group {
-                        if let uiImage = UIImage(named: type.name) {
+                        if let uiImage = type.image {
                             Image(uiImage: uiImage)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)

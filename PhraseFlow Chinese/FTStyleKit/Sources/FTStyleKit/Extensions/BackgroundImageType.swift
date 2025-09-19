@@ -5,6 +5,8 @@
 //  Created by iakalann on 18/04/2025.
 //
 
+import SwiftUI
+
 public enum BackgroundImageType {
     case main, createStory
 
@@ -15,5 +17,9 @@ public enum BackgroundImageType {
         case .createStory:
             "CreateStoryBackground"
         }
+    }
+    
+    var image: UIImage? {
+        UIImage(named: name)
     }
 }
