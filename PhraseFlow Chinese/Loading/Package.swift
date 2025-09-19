@@ -12,7 +12,12 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "Loading",
-            targets: ["Loading"]),
+            targets: ["Loading"]
+        ),
+        .library(
+            name: "LoadingMocks",
+            targets: ["LoadingMocks"]
+        ),
     ],
     dependencies: [
         .package(name: "FTColor", path: "../FTColor"),
@@ -32,9 +37,23 @@ let package = Package(
                 "ReduxKit"
             ]
         ),
+        .target(
+            name: "LoadingMocks",
+            dependencies: [
+                "Loading",
+                "FTColor",
+                "FTFont",
+                "Localization",
+                "ReduxKit"
+            ],
+            path: "Mocks"
+        ),
         .testTarget(
             name: "LoadingTests",
-            dependencies: ["Loading"]
+            dependencies: [
+                "Loading",
+                "LoadingMocks"
+            ]
         ),
     ]
 )

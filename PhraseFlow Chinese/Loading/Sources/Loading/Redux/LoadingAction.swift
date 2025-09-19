@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum LoadingAction: Sendable {
+enum LoadingAction: Sendable, Equatable {
     case updateLoadingStatus(LoadingStatus)
 }

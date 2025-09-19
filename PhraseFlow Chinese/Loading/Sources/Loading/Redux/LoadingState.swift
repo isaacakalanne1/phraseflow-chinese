@@ -5,6 +5,12 @@
 //  Created by Isaac Akalanne on 19/07/2025.
 //
 
-struct LoadingState: Equatable {
-    var loadingStatus: LoadingStatus = .none
+public struct LoadingState: Equatable {
+    var loadingStatus: LoadingStatus
+    
+    public init(
+        loadingStatus: LoadingStatus = .none
+    ) {
+        self.loadingStatus = loadingStatus
+    }
 }

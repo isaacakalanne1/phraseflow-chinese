@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum ImageGenerationServicesError: Error {
+    case missingRequestID
+    case missingImageURL
+}
+
 public class ImageGenerationServices: ImageGenerationServicesProtocol {
     private let baseURL = "https://queue.fal.run/fal-ai/flux"
     private let apiKey = ProcessInfo.processInfo.environment["FAL_KEY"] ?? "e1f58875-fe36-4a31-ad34-badb6bbd0409:4645ce9820c0b75b3cbe1b0d9c324306"
@@ -28,7 +33,7 @@ public class ImageGenerationServices: ImageGenerationServicesProtocol {
 
     private func submitGenerationRequest(prompt: String) async throws -> String {
         guard let url = URL(string: "\(baseURL)/schnell") else {
-            throw FluxImageError.missingImageURL
+            throw ImageGenerationServicesError.missingImageURL
         }
 
         var request = URLRequest(url: url)
@@ -50,7 +55,7 @@ public class ImageGenerationServices: ImageGenerationServicesProtocol {
         let json = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any]
 
         guard let requestID = json?["request_id"] as? String else {
-            throw FluxImageError.missingRequestID
+            throw ImageGenerationServicesError.missingRequestID
         }
 
         return requestID
@@ -81,7 +86,7 @@ public class ImageGenerationServices: ImageGenerationServicesProtocol {
 
     private func fetchResult(requestID: String) async throws -> URL {
         guard let url = URL(string: "\(baseURL)/requests/\(requestID)") else {
-            throw FluxImageError.missingImageURL
+            throw ImageGenerationServicesError.missingImageURL
         }
 
         var request = URLRequest(url: url)
@@ -96,7 +101,7 @@ public class ImageGenerationServices: ImageGenerationServicesProtocol {
             let urlString = images.first?["url"] as? String,
             let imageURL = URL(string: urlString)
         else {
-            throw FluxImageError.missingImageURL
+            throw ImageGenerationServicesError.missingImageURL
         }
 
         return imageURL

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum LoadingStatus: Sendable {
+public enum LoadingStatus: Sendable, Equatable {
     case complete, writing, generatingImage, generatingSpeech, generatingDefinitions, none
 
     var progressInt: Int {
