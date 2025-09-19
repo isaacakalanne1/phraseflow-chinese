@@ -102,6 +102,6 @@ public enum SnackBarType: Equatable, Sendable {
     }
 
     var backgroundColor: Color {
-        isError ? FTColor.error : FTColor.accent
+        isError ? FTColor.error.color : FTColor.accent.color
     }
 }

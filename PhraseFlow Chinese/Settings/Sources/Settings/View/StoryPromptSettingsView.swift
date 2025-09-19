@@ -104,14 +104,14 @@ struct StoryPromptMenu: View {
                 } header: {
                     Text(LocalizedString.howStoryStart.uppercased())
                         .font(FTFont.flowTaleSubHeader())
-                        .foregroundStyle(FTColor.primary)
+                        .foregroundStyle(FTColor.primary.color)
                         .multilineTextAlignment(.leading)
                         .padding(.horizontal, 4)
                 }
             }
         }
         .navigationTitle(LocalizedString.story)
-        .background(FTColor.background)
+        .background(FTColor.background.color)
         .scrollContentBackground(.hidden)
         .alert(LocalizedString.customStoryAlertTitle, isPresented: isShowingAlert) {
             TextField(LocalizedString.customStoryTextfieldPlaceholder, text: customPrompt)
@@ -147,7 +147,7 @@ public struct StoryPromptSettingsView: View {
             .padding(.horizontal)
             .padding(.bottom)
         }
-        .background(FTColor.background)
+        .background(FTColor.background.color)
         // Attach the alert:
         .alert(
             LocalizedString.storyDidNotPassModeration,

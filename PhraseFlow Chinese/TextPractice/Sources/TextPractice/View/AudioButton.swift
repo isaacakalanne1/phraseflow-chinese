@@ -57,12 +57,12 @@ struct AudioButton: View {
     private func audioButtonLabel(systemImage: SystemImage) -> some View {
         Image(systemName: systemImage.systemName)
             .font(FTFont.flowTaleBodyLarge())
-            .foregroundColor(FTColor.primary)
+            .foregroundColor(FTColor.primary.color)
             .frame(width: 60, height: 60)
             .background(
                 Circle()
-                    .fill(FTColor.background)
-                    .overlay(Circle().strokeBorder(FTColor.accent, lineWidth: 2))
+                    .fill(FTColor.background.color)
+                    .overlay(Circle().strokeBorder(FTColor.accent.color, lineWidth: 2))
                     .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
             )
     }

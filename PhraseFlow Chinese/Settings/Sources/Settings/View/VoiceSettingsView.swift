@@ -49,13 +49,13 @@ struct VoiceMenu: View {
             } header: {
                 Text(LocalizedString.voiceMenuHeader.uppercased())
                     .font(FTFont.flowTaleSubHeader())
-                    .foregroundStyle(FTColor.primary)
+                    .foregroundStyle(FTColor.primary.color)
                     .multilineTextAlignment(.leading)
                     .padding(.horizontal, 4)
             }
         }
         .navigationTitle(LocalizedString.voice)
-        .background(FTColor.background)
+        .background(FTColor.background.color)
     }
 }
 
@@ -74,6 +74,6 @@ public struct VoiceSettingsView: View {
             .padding(.horizontal)
             .padding(.bottom)
         }
-        .background(FTColor.background)
+        .background(FTColor.background.color)
     }
 }

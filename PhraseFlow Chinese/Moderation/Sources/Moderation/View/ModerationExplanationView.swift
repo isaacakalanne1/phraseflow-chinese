@@ -23,24 +23,24 @@ struct ModerationExplanationView: View {
                 VStack(spacing: 16) {
                     Image(systemName: "shield.lefthalf.filled.badge.checkmark")
                         .font(.system(size: 48))
-                        .foregroundColor(FTColor.accent)
+                        .foregroundColor(FTColor.accent.color)
                     
                     Text(LocalizedString.storyDidNotPassModeration)
                         .font(FTFont.flowTaleHeader())
                         .fontWeight(.bold)
-                        .foregroundColor(FTColor.primary)
+                        .foregroundColor(FTColor.primary.color)
                         .multilineTextAlignment(.center)
                     
                     if !customPrompt.isEmpty {
                         Text(customPrompt)
                             .font(FTFont.flowTaleBodyMedium())
-                            .foregroundColor(FTColor.secondary)
+                            .foregroundColor(FTColor.secondary.color)
                             .padding()
-                            .background(FTColor.background.opacity(0.8))
+                            .background(FTColor.background.color.opacity(0.8))
                             .cornerRadius(12)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 12)
-                                    .stroke(FTColor.secondary.opacity(0.3), lineWidth: 1)
+                                    .stroke(FTColor.secondary.color.opacity(0.3), lineWidth: 1)
                             )
                     }
                 }
@@ -52,7 +52,7 @@ struct ModerationExplanationView: View {
                         Text(LocalizedString.whyDidntItPass)
                             .font(FTFont.flowTaleHeader())
                             .fontWeight(.semibold)
-                            .foregroundColor(FTColor.primary)
+                            .foregroundColor(FTColor.primary.color)
                         
                         VStack(spacing: 12) {
                             ForEach(moderationResponse.categoryResults.sorted(by: { !$0.didPass && $1.didPass }), id: \.category) { result in
@@ -89,7 +89,7 @@ struct ModerationExplanationView: View {
         }
         .navigationTitle(LocalizedString.navigationTitleWhy)
         .navigationBarTitleDisplayMode(.inline)
-        .background(FTColor.background)
+        .background(FTColor.background.color)
     }
 }
 
@@ -107,7 +107,7 @@ struct ModerationCategoryCard: View {
                     Text(result.category.name)
                         .font(FTFont.flowTaleBodyMedium())
                         .fontWeight(.semibold)
-                        .foregroundColor(FTColor.primary)
+                        .foregroundColor(FTColor.primary.color)
                 }
                 
                 Spacer()
@@ -127,19 +127,19 @@ struct ModerationCategoryCard: View {
                 HStack {
                     Text("Score: \(result.scorePercentageString)")
                         .font(FTFont.flowTaleBodyMedium())
-                        .foregroundColor(FTColor.primary)
+                        .foregroundColor(FTColor.primary.color)
                     
                     Spacer()
                     
                     Text("Threshold: \(result.thresholdPercentageString)")
                         .font(FTFont.flowTaleBodyMedium())
-                        .foregroundColor(FTColor.secondary)
+                        .foregroundColor(FTColor.secondary.color)
                 }
                 
                 ZStack(alignment: .leading) {
                     // Background bar
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(FTColor.secondary.opacity(0.2))
+                        .fill(FTColor.secondary.color.opacity(0.2))
                         .frame(height: 12)
                     
                     // Score fill
@@ -176,7 +176,7 @@ struct ModerationCategoryCard: View {
                             .frame(width: 2, height: 8)
                         Text("Threshold")
                             .font(.caption2)
-                            .foregroundColor(FTColor.secondary)
+                            .foregroundColor(FTColor.secondary.color)
                     }
                     
                     Spacer()
@@ -211,29 +211,29 @@ struct InfoSection: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 8) {
                 Image(systemName: icon)
-                    .foregroundColor(FTColor.accent)
+                    .foregroundColor(FTColor.accent.color)
                     .font(.title3)
                 
                 Text(title)
                     .font(FTFont.flowTaleBodyMedium())
                     .fontWeight(.semibold)
-                    .foregroundColor(FTColor.primary)
+                    .foregroundColor(FTColor.primary.color)
                 
                 Spacer()
             }
             
             Text(content)
                 .font(FTFont.flowTaleBodyMedium())
-                .foregroundColor(FTColor.secondary)
+                .foregroundColor(FTColor.secondary.color)
                 .lineSpacing(4)
         }
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(FTColor.accent.opacity(0.05))
+                .fill(FTColor.accent.color.opacity(0.05))
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(FTColor.accent.opacity(0.2), lineWidth: 1)
+                        .stroke(FTColor.accent.color.opacity(0.2), lineWidth: 1)
                 )
         )
     }

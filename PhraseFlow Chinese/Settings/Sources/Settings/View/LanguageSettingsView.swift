@@ -43,7 +43,7 @@ public struct LanguageMenu: View {
         }
         .padding(.horizontal)
         .navigationTitle(LocalizedString.language)
-        .background(FTColor.background)
+        .background(FTColor.background.color)
     }
     
     var availableLanguages: [Language] {
@@ -64,7 +64,7 @@ public struct LanguageMenu: View {
             HStack {
                 Text("CURRENT SELECTION")
                     .font(FTFont.flowTaleSubHeader())
-                    .foregroundStyle(FTColor.accent)
+                    .foregroundStyle(FTColor.accent.color)
                     .multilineTextAlignment(.leading)
                 Spacer()
             }
@@ -90,12 +90,12 @@ public struct LanguageMenu: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(selectedLanguage.displayName)
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
-                        .foregroundStyle(FTColor.accent)
+                        .foregroundStyle(FTColor.accent.color)
                         .multilineTextAlignment(.leading)
                     
                     Text("Currently Selected")
                         .font(.system(size: 14, weight: .medium, design: .rounded))
-                        .foregroundStyle(FTColor.primary.opacity(0.7))
+                        .foregroundStyle(FTColor.primary.color.opacity(0.7))
                         .multilineTextAlignment(.leading)
                 }
                 
@@ -103,7 +103,7 @@ public struct LanguageMenu: View {
                 
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 24, weight: .medium))
-                    .foregroundStyle(FTColor.accent)
+                    .foregroundStyle(FTColor.accent.color)
             }
             .padding(20)
             .background(
@@ -113,8 +113,8 @@ public struct LanguageMenu: View {
                         RoundedRectangle(cornerRadius: 16)
                             .fill(LinearGradient(
                                 gradient: Gradient(colors: [
-                                    FTColor.accent.opacity(0.1),
-                                    FTColor.accent.opacity(0.05)
+                                    FTColor.accent.color.opacity(0.1),
+                                    FTColor.accent.color.opacity(0.05)
                                 ]),
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
@@ -123,7 +123,7 @@ public struct LanguageMenu: View {
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
-                    .stroke(FTColor.accent.opacity(0.3), lineWidth: 2)
+                    .stroke(FTColor.accent.color.opacity(0.3), lineWidth: 2)
             )
         }
         .disabled(true)
@@ -135,7 +135,7 @@ public struct LanguageMenu: View {
             HStack {
                 Text("OTHER LANGUAGES")
                     .font(FTFont.flowTaleSubHeader())
-                    .foregroundStyle(FTColor.primary)
+                    .foregroundStyle(FTColor.primary.color)
                     .multilineTextAlignment(.leading)
                 Spacer()
             }
@@ -174,7 +174,7 @@ public struct LanguageMenu: View {
         HStack {
             Text(LocalizedString.whichLanguageLearn.uppercased())
                 .font(FTFont.flowTaleSubHeader())
-                .foregroundStyle(FTColor.primary)
+                .foregroundStyle(FTColor.primary.color)
                 .multilineTextAlignment(.leading)
             Spacer()
         }
@@ -213,6 +213,6 @@ public struct LanguageSettingsView: View {
             .padding(.horizontal)
             .padding(.bottom)
         }
-        .background(FTColor.background)
+        .background(FTColor.background.color)
     }
 }

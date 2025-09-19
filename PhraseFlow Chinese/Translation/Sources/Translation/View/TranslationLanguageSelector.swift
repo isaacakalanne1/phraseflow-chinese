@@ -19,7 +19,7 @@ struct TranslationLanguageSelector: View {
         VStack(spacing: 8) {
             Text(LocalizedString.translateBetweenLanguages)
                 .font(FTFont.flowTaleSubHeader())
-                .foregroundColor(FTColor.secondary)
+                .foregroundColor(FTColor.secondary.color)
 
             HStack(spacing: 8) {
                 sourceLanguageButton
@@ -43,15 +43,15 @@ struct TranslationLanguageSelector: View {
                 Image(systemName: "chevron.down")
                     .font(FTFont.flowTaleSecondaryHeader())
             }
-            .foregroundColor(FTColor.primary)
+            .foregroundColor(FTColor.primary.color)
             .padding(.vertical, 6)
             .padding(.horizontal, 10)
             .background(
                 Capsule()
-                    .fill(FTColor.background)
+                    .fill(FTColor.background.color)
                     .overlay(
                         Capsule()
-                            .strokeBorder(FTColor.secondary, lineWidth: 1)
+                            .strokeBorder(FTColor.secondary.color, lineWidth: 1)
                     )
             )
         }
@@ -65,12 +65,12 @@ struct TranslationLanguageSelector: View {
                   "arrow.right" : "arrow.left.arrow.right")
                 .font(FTFont.flowTaleBodyXSmall())
                 .foregroundColor(store.state.settings.sourceLanguage == .autoDetect ?
-                                FTColor.secondary : FTColor.accent)
+                                FTColor.secondary.color : FTColor.accent.color)
                 .frame(width: 36, height: 36)
                 .background(
                     Circle()
                         .strokeBorder(store.state.settings.sourceLanguage == .autoDetect ?
-                                     FTColor.secondary : FTColor.accent, lineWidth: 1)
+                                     FTColor.secondary.color : FTColor.accent.color, lineWidth: 1)
                 )
         }
         .disabled(store.state.settings.sourceLanguage == .autoDetect)
@@ -90,15 +90,15 @@ struct TranslationLanguageSelector: View {
                 Image(systemName: "chevron.down")
                     .font(FTFont.flowTaleSecondaryHeader())
             }
-            .foregroundColor(FTColor.primary)
+            .foregroundColor(FTColor.primary.color)
             .padding(.vertical, 6)
             .padding(.horizontal, 10)
             .background(
                 Capsule()
-                    .fill(FTColor.background)
+                    .fill(FTColor.background.color)
                     .overlay(
                         Capsule()
-                            .strokeBorder(FTColor.secondary, lineWidth: 1)
+                            .strokeBorder(FTColor.secondary.color, lineWidth: 1)
                     )
             )
         }

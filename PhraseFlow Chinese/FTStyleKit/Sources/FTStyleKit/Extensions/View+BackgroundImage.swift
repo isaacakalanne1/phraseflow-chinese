@@ -21,7 +21,7 @@ public struct BackgroundImage: ViewModifier {
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .overlay {
-                                    FTColor.background.opacity(0.9)
+                                    FTColor.background.color.opacity(0.9)
                                 }
                         }
                     }

@@ -23,10 +23,10 @@ public struct SystemImageView: View {
     }
 
     public var body: some View {
-        let baseColor: Color = isSelected ? FTColor.accent : FTColor.primary
+        let baseColor: Color = isSelected ? FTColor.accent.color : FTColor.primary.color
         let bottomColor: Color = isSelected ?
-            FTColor.accent.opacity(0.7) // Accent with opacity for selected (simulates black overlay)
-            : FTColor.primary.opacity(0.7) // Darker version for non-selected
+            FTColor.accent.color.opacity(0.7) // Accent with opacity for selected (simulates black overlay)
+            : FTColor.primary.color.opacity(0.7) // Darker version for non-selected
 
         Image(systemName: systemImage.systemName)
             .resizable()

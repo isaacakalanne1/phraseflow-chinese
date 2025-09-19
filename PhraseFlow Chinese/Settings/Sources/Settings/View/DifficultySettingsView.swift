@@ -47,13 +47,13 @@ struct DifficultyMenu: View {
             } header: {
                 Text(LocalizedString.howDifficultStory.uppercased())
                     .font(FTFont.flowTaleSubHeader())
-                    .foregroundStyle(FTColor.primary)
+                    .foregroundStyle(FTColor.primary.color)
                     .multilineTextAlignment(.leading)
                     .padding(.horizontal, 4)
             }
         }
         .navigationTitle(LocalizedString.difficulty)
-        .background(FTColor.background)
+        .background(FTColor.background.color)
         .scrollContentBackground(.hidden)
     }
 }
@@ -73,6 +73,6 @@ public struct DifficultySettingsView: View {
             .padding(.horizontal)
             .padding(.bottom)
         }
-        .background(FTColor.background)
+        .background(FTColor.background.color)
     }
 }

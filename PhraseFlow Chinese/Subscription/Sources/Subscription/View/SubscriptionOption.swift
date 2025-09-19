@@ -30,31 +30,31 @@ struct SubscriptionOption: View {
 
     var backgroundColor: Color {
         if isUserCurrentSubscription {
-            return FTColor.accent
+            return FTColor.accent.color
         } else {
-            return FTColor.background
+            return FTColor.background.color
         }
     }
 
     var foregroundColor: Color {
         if isUserCurrentSubscription {
-            return FTColor.background
+            return FTColor.background.color
         } else {
-            return FTColor.primary
+            return FTColor.primary.color
         }
     }
     
     var borderColor: Color {
         if isUserCurrentSubscription {
-            return FTColor.accent
+            return FTColor.accent.color
         } else {
-            return FTColor.primary.opacity(0.2)
+            return FTColor.primary.color.opacity(0.2)
         }
     }
     
     var shadowColor: Color {
         if isUserCurrentSubscription {
-            return FTColor.accent.opacity(0.3)
+            return FTColor.accent.color.opacity(0.3)
         } else {
             return Color.black.opacity(0.1)
         }
@@ -71,16 +71,16 @@ struct SubscriptionOption: View {
                     HStack {
                         if isUserCurrentSubscription {
                             Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(FTColor.background)
+                                .foregroundColor(FTColor.background.color)
                                 .font(.title3)
                                 .fontWeight(.semibold)
                         } else if product == nil {
                             Image(systemName: "gift.fill")
-                                .foregroundColor(FTColor.accent)
+                                .foregroundColor(FTColor.accent.color)
                                 .font(.title3)
                         } else {
                             Image(systemName: "crown.fill")
-                                .foregroundColor(FTColor.accent)
+                                .foregroundColor(FTColor.accent.color)
                                 .font(.title3)
                         }
                         
@@ -95,12 +95,12 @@ struct SubscriptionOption: View {
                             Text(LocalizedString.currentPlan)
                                 .font(.caption)
                                 .fontWeight(.semibold)
-                                .foregroundColor(FTColor.background.opacity(0.8))
+                                .foregroundColor(FTColor.background.color.opacity(0.8))
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 4)
                                 .background(
                                     Capsule()
-                                        .fill(FTColor.background.opacity(0.2))
+                                        .fill(FTColor.background.color.opacity(0.2))
                                 )
                         }
                     }

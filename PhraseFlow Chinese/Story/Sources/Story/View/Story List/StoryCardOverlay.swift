@@ -35,7 +35,7 @@ struct StoryCardOverlay: View {
                 // Story title
                 Text(firstChapter?.storyTitle ?? "")
                     .font(FTFont.flowTaleHeader())
-                    .foregroundColor(FTColor.primary)
+                    .foregroundColor(FTColor.primary.color)
                     .lineLimit(2)
                     .shadow(color: .black.opacity(0.5), radius: 1, x: 0, y: 1)
 
@@ -45,7 +45,7 @@ struct StoryCardOverlay: View {
                 // Story summary
                 Text(firstChapter?.chapterSummary ?? "")
                     .font(FTFont.flowTaleSecondaryHeader())
-                    .foregroundColor(FTColor.primary)
+                    .foregroundColor(FTColor.primary.color)
                     .lineLimit(2)
                     .shadow(color: .black, radius: 4, x: 0, y: 0)
 
@@ -65,7 +65,7 @@ struct StoryCardOverlay: View {
 
                 Text(firstChapter?.language.descriptiveEnglishName ?? "")
                     .font(FTFont.flowTaleSecondaryHeader())
-                    .foregroundColor(FTColor.primary)
+                    .foregroundColor(FTColor.primary.color)
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 4)
@@ -81,7 +81,7 @@ struct StoryCardOverlay: View {
 
                 Text(firstChapter?.difficulty.title ?? "")
                     .font(FTFont.flowTaleSecondaryHeader())
-                    .foregroundColor(FTColor.primary)
+                    .foregroundColor(FTColor.primary.color)
                     .tracking(0.5)
             }
             .padding(.horizontal, 10)
@@ -98,11 +98,11 @@ struct StoryCardOverlay: View {
         HStack(spacing: 4) {
             Image(systemName: "book.pages")
                 .font(FTFont.flowTaleSecondaryHeader())
-                .foregroundColor(FTColor.primary)
+                .foregroundColor(FTColor.primary.color)
 
             Text("\(allChaptersForStory.count) \(allChaptersForStory.count == 1 ? LocalizedString.chapter : LocalizedString.chapters)")
                 .font(FTFont.flowTaleSecondaryHeader())
-                .foregroundColor(FTColor.primary)
+                .foregroundColor(FTColor.primary.color)
         }
         .shadow(color: .black, radius: 4, x: 0, y: 0)
     }

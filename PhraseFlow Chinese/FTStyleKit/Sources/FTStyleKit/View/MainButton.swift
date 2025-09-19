@@ -31,7 +31,7 @@ public struct MainButton: View {
                     VideoBackgroundView(player: player, autoPlay: true)
                         .frame(height: 70)
                         .overlay {
-                            FTColor.accent.opacity(0.6)
+                            FTColor.accent.color.opacity(0.6)
                         }
                         .cornerRadius(10)
                         .scaleEffect(x: -1, y: 1)

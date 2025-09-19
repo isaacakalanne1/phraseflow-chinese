@@ -58,7 +58,7 @@ struct DefinitionsProgressView: View {
             .padding(.vertical, 12)
             .background(
                 Rectangle()
-                    .fill(FTColor.background)
+                    .fill(FTColor.background.color)
                     .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: -2)
             )
         }
@@ -66,7 +66,7 @@ struct DefinitionsProgressView: View {
             StudyView(studyWords: store.state.studyDefinitions(language: filterLanguage))
                 .environmentObject(store)
         }
-        .background(FTColor.background)
+        .background(FTColor.background.color)
     }
 
     @ViewBuilder
@@ -78,7 +78,7 @@ struct DefinitionsProgressView: View {
 
                 definitionsList(definitions: definitions, isCreations: isCreations)
             }
-            .background(FTColor.background)
+            .background(FTColor.background.color)
         }
     }
     
@@ -95,7 +95,7 @@ struct DefinitionsProgressView: View {
         }
         .listStyle(.insetGrouped)
         .navigationBarTitleDisplayMode(.inline)
-        .background(FTColor.background)
+        .background(FTColor.background.color)
         .scrollContentBackground(.hidden)
     }
     
@@ -107,9 +107,9 @@ struct DefinitionsProgressView: View {
         } label: {
             Text(definition.timestampData.word)
                 .fontWeight(.light)
-                .foregroundStyle(FTColor.primary)
+                .foregroundStyle(FTColor.primary.color)
         }
-        .foregroundStyle(FTColor.secondary)
+        .foregroundStyle(FTColor.secondary.color)
         .listRowBackground(Color.clear)
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             Button(role: .destructive) {
@@ -117,7 +117,7 @@ struct DefinitionsProgressView: View {
                 store.dispatch(.playSound(.actionButtonPress))
             } label: {
                 Label(LocalizedString.delete, systemImage: "trash")
-                    .tint(FTColor.error)
+                    .tint(FTColor.error.color)
             }
         }
     }
@@ -133,7 +133,7 @@ struct DefinitionsProgressView: View {
             }
         }()
         Text(headerText)
-            .foregroundStyle(FTColor.secondary)
+            .foregroundStyle(FTColor.secondary.color)
     }
 
     func removeDuplicates(from definitions: [Definition]) -> [Definition] {

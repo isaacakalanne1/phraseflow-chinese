@@ -43,7 +43,7 @@ struct TranslationActionButton: View {
                 RoundedRectangle(cornerRadius: 12)
                     .fill(store.state.inputText.isEmpty ||
                           store.state.isTranslating ?
-                          Color.gray.opacity(0.5) : FTColor.accent)
+                          Color.gray.opacity(0.5) : FTColor.accent.color)
             )
         }
         .disabled(store.state.inputText.isEmpty || store.state.isTranslating)

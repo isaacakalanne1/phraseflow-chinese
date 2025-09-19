@@ -31,7 +31,7 @@ public struct PrimaryButton<Content: View>: View {
             }
             .frame(maxWidth: .infinity)
             .padding()
-            .background(FTColor.accent)
+            .background(FTColor.accent.color)
             .foregroundColor(.white)
             .cornerRadius(10)
         }

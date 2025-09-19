@@ -32,7 +32,7 @@ struct StoryListView: View {
             .padding([.horizontal, .bottom])
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(FTColor.background)
+        .background(FTColor.background.color)
         .toolbar(.hidden)
         .navigationBarTitleDisplayMode(.inline)
     }

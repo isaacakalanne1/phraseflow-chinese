@@ -41,23 +41,23 @@ public struct DefinitionView: View {
                         Text(viewData.word)
                             .font(FTFont.flowTaleHeader())
                             .fontWeight(.bold)
-                            .foregroundColor(FTColor.primary)
+                            .foregroundColor(FTColor.primary.color)
                         Text(viewData.pronounciation)
                             .font(FTFont.flowTaleBodyMedium())
                             .italic()
-                            .foregroundColor(FTColor.accent)
+                            .foregroundColor(FTColor.accent.color)
                     }
 
                     Text(viewData.definition)
                         .font(FTFont.flowTaleBodyMedium())
-                        .foregroundColor(FTColor.primary)
+                        .foregroundColor(FTColor.primary.color)
                         .padding(.horizontal, 4)
 
                     Divider()
 
                     Text(viewData.definitionInContextOfSentence)
                         .font(FTFont.flowTaleBodyMedium())
-                        .foregroundColor(FTColor.primary)
+                        .foregroundColor(FTColor.primary.color)
                         .multilineTextAlignment(.leading)
                         .frame(maxHeight: .infinity)
                 }
@@ -67,17 +67,17 @@ public struct DefinitionView: View {
                 HStack {
                     Text("🔍 \(LocalizedString.loading)")
                         .font(FTFont.flowTaleSecondaryHeader())
-                        .foregroundColor(FTColor.secondary)
+                        .foregroundColor(FTColor.secondary.color)
                     ProgressView()
                         .progressViewStyle(.circular)
                         .padding()
-                        .foregroundStyle(FTColor.primary)
+                        .foregroundStyle(FTColor.primary.color)
                 }
             } else {
                 VStack {
                     HStack(spacing: 8) {
                         Image(systemName: "hand.tap")
-                            .foregroundColor(FTColor.secondary)
+                            .foregroundColor(FTColor.secondary.color)
                         Text("👆")
                     }
                     .font(FTFont.flowTaleBodyMedium())
@@ -85,7 +85,7 @@ public struct DefinitionView: View {
                     
                     Text(LocalizedString.tapAWordToDefineIt)
                         .font(FTFont.flowTaleSecondaryHeader())
-                        .foregroundColor(FTColor.secondary)
+                        .foregroundColor(FTColor.secondary.color)
                         .multilineTextAlignment(.center)
                 }
             }

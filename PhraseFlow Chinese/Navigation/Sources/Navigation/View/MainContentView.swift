@@ -31,11 +31,11 @@ public struct MainContentView: View {
             LoadingProgressView(environment: environment.loadingEnvironment)
             DisplayedContentView()
             Divider()
-                .background(FTColor.secondary)
+                .background(FTColor.secondary.color)
                 .padding(.horizontal)
             TabBarView()
         }
-        .background(FTColor.background)
+        .background(FTColor.background.color)
         .environmentObject(store)
     }
 }

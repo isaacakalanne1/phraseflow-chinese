@@ -53,7 +53,7 @@ public struct LoadingProgressBar: View {
             HStack {
                 Text(statusText)
                     .font(FTFont.flowTaleSecondaryHeader())
-                    .foregroundColor(FTColor.primary)
+                    .foregroundColor(FTColor.primary.color)
                 
                 Spacer()
                 
@@ -93,7 +93,7 @@ public struct LoadingProgressBar: View {
             }
             
             ProgressView(value: progress, total: 1.0)
-                .progressViewStyle(LinearProgressViewStyle(tint: FTColor.accent))
+                .progressViewStyle(LinearProgressViewStyle(tint: FTColor.accent.color))
                 .scaleEffect(y: 0.8)
                 .animation(.easeInOut(duration: 0.3), value: progress)
         }
@@ -101,7 +101,7 @@ public struct LoadingProgressBar: View {
         .padding(.vertical, 8)
         .background(
             RoundedRectangle(cornerRadius: 8)
-                .fill(FTColor.background)
+                .fill(FTColor.background.color)
                 .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
         )
         .padding(.horizontal, 16)
@@ -122,9 +122,9 @@ struct ProgressStep: View {
             ZStack {
                 Circle()
                     .fill(
-                        isCompleted ? FTColor.accent :
-                        isCurrent ? FTColor.accent.opacity(0.3) :
-                        FTColor.secondary.opacity(0.2)
+                        isCompleted ? FTColor.accent.color :
+                        isCurrent ? FTColor.accent.color.opacity(0.3) :
+                        FTColor.secondary.color.opacity(0.2)
                     )
                     .frame(width: 24, height: 24)
                 
@@ -135,11 +135,11 @@ struct ProgressStep: View {
                 } else if isCurrent {
                     ProgressView()
                         .scaleEffect(0.5)
-                        .progressViewStyle(CircularProgressViewStyle(tint: FTColor.accent))
+                        .progressViewStyle(CircularProgressViewStyle(tint: FTColor.accent.color))
                 } else {
                     Image(systemName: icon)
                         .font(FTFont.flowTaleBodyXSmall())
-                        .foregroundColor(FTColor.secondary.opacity(0.6))
+                        .foregroundColor(FTColor.secondary.color.opacity(0.6))
                 }
             }
         } else {
@@ -148,9 +148,9 @@ struct ProgressStep: View {
                 ZStack {
                     Circle()
                         .fill(
-                            isCompleted ? FTColor.accent :
-                            isCurrent ? FTColor.accent.opacity(0.3) :
-                            FTColor.secondary.opacity(0.2)
+                            isCompleted ? FTColor.accent.color :
+                            isCurrent ? FTColor.accent.color.opacity(0.3) :
+                            FTColor.secondary.color.opacity(0.2)
                         )
                         .frame(width: 40, height: 40)
                     
@@ -161,18 +161,18 @@ struct ProgressStep: View {
                     } else if isCurrent {
                         ProgressView()
                             .scaleEffect(0.8)
-                            .progressViewStyle(CircularProgressViewStyle(tint: FTColor.accent))
+                            .progressViewStyle(CircularProgressViewStyle(tint: FTColor.accent.color))
                     } else {
                         Image(systemName: icon)
                             .font(FTFont.flowTaleBodySmall())
-                            .foregroundColor(FTColor.secondary.opacity(0.6))
+                            .foregroundColor(FTColor.secondary.color.opacity(0.6))
                     }
                 }
                 
                 Text(title)
                     .font(FTFont.flowTaleSecondaryHeader())
                     .foregroundColor(
-                        isCompleted || isCurrent ? FTColor.primary : FTColor.secondary
+                        isCompleted || isCurrent ? FTColor.primary.color : FTColor.secondary.color
                     )
             }
         }

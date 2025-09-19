@@ -1,12 +1,11 @@
-import XCTest
+import Testing
 @testable import FTColor
 
-final class FTColorTests: XCTestCase {
-    func testExample() throws {
-        // XCTest Documentation
-        // https://developer.apple.com/documentation/xctest
+final class FTColorTests {
 
-        // Defining Test Cases and Test Methods
-        // https://developer.apple.com/documentation/xctest/defining_test_cases_and_test_methods
+    @Test
+    func accent() throws {
+        let color = FTColor.accent.color
+        #expect(color.name)
     }
 }

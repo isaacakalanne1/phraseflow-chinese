@@ -38,9 +38,9 @@ struct SubscriptionView: View {
         .background(
             LinearGradient(
                 colors: [
-                    FTColor.background,
-                    FTColor.background.opacity(0.95),
-                    FTColor.secondary
+                    FTColor.background.color,
+                    FTColor.background.color.opacity(0.95),
+                    FTColor.secondary.color
                 ],
                 startPoint: .top,
                 endPoint: .bottom
@@ -57,19 +57,19 @@ struct SubscriptionView: View {
                         
                         VStack(spacing: 20) {
                             ProgressView()
-                                .tint(FTColor.accent)
+                                .tint(FTColor.accent.color)
                                 .scaleEffect(1.5)
                                 .progressViewStyle(CircularProgressViewStyle())
                             
                             Text(LocalizedString.processing)
                                 .font(FTFont.flowTaleSecondaryHeader())
                                 .fontWeight(.medium)
-                                .foregroundColor(FTColor.primary)
+                                .foregroundColor(FTColor.primary.color)
                         }
                         .padding(32)
                         .background(
                             RoundedRectangle(cornerRadius: 20)
-                                .fill(FTColor.background)
+                                .fill(FTColor.background.color)
                                 .shadow(color: .black.opacity(0.1), radius: 20, x: 0, y: 10)
                         )
                     }
@@ -86,7 +86,7 @@ struct SubscriptionView: View {
             Text(LocalizedString.chooseYourPlan)
                 .font(FTFont.flowTaleSecondaryHeader())
                 .fontWeight(.semibold)
-                .foregroundColor(FTColor.primary)
+                .foregroundColor(FTColor.primary.color)
                 .padding(.bottom, 8)
             
             VStack(spacing: 16) {
@@ -125,7 +125,7 @@ struct SubscriptionView: View {
     private var actionsSection: some View {
         VStack(spacing: 24) {
             Divider()
-                .overlay(FTColor.secondary.opacity(0.3))
+                .overlay(FTColor.secondary.color.opacity(0.3))
             
             Button {
                 Task {
@@ -140,15 +140,15 @@ struct SubscriptionView: View {
                 .multilineTextAlignment(.center)
                 .font(FTFont.flowTaleSecondaryHeader())
                 .fontWeight(.semibold)
-                .foregroundColor(FTColor.primary)
+                .foregroundColor(FTColor.primary.color)
                 .padding(.horizontal, 24)
                 .padding(.vertical, 16)
                 .background(
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(FTColor.primary.opacity(0.3), lineWidth: 1.5)
+                        .stroke(FTColor.primary.color.opacity(0.3), lineWidth: 1.5)
                         .background(
                             RoundedRectangle(cornerRadius: 12)
-                                .fill(FTColor.background)
+                                .fill(FTColor.background.color)
                         )
                 )
             }
@@ -163,7 +163,7 @@ struct SubscriptionView: View {
                     Text(LocalizedString.termsOfUse)
                         .multilineTextAlignment(.center)
                         .font(FTFont.flowTaleSecondaryHeader())
-                        .foregroundColor(FTColor.primary.opacity(0.6))
+                        .foregroundColor(FTColor.primary.color.opacity(0.6))
                         .underline()
                 }
 
@@ -175,7 +175,7 @@ struct SubscriptionView: View {
                     Text(LocalizedString.privacyPolicy)
                         .multilineTextAlignment(.center)
                         .font(FTFont.flowTaleSecondaryHeader())
-                        .foregroundColor(FTColor.primary.opacity(0.6))
+                        .foregroundColor(FTColor.primary.color.opacity(0.6))
                         .underline()
                 }
             }
@@ -185,23 +185,23 @@ struct SubscriptionView: View {
     private var managementInstructionsSection: some View {
         VStack(spacing: 12) {
             Image(systemName: "info.circle.fill")
-                .foregroundColor(FTColor.accent)
+                .foregroundColor(FTColor.accent.color)
                 .font(.title2)
             
             Text(LocalizedString.manageSubscriptionsInstructions)
                 .multilineTextAlignment(.center)
                 .font(FTFont.flowTaleSecondaryHeader())
-                .foregroundColor(FTColor.primary.opacity(0.7))
+                .foregroundColor(FTColor.primary.color.opacity(0.7))
                 .padding(.horizontal, 8)
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 16)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(FTColor.accent.opacity(0.1))
+                .fill(FTColor.accent.color.opacity(0.1))
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(FTColor.accent.opacity(0.3), lineWidth: 1)
+                        .stroke(FTColor.accent.color.opacity(0.3), lineWidth: 1)
                 )
         )
     }

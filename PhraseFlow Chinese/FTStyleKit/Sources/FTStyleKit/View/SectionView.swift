@@ -22,7 +22,7 @@ public struct SectionView<Content: View>: View {
             Text(title.uppercased())
                 .font(.caption)
                 .fontWeight(.semibold)
-                .foregroundColor(FTColor.secondary)
+                .foregroundColor(FTColor.secondary.color)
                 .padding(.horizontal, 16)
             
             VStack(spacing: 0) {

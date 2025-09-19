@@ -20,13 +20,13 @@ struct ChapterHeaderView: View {
                 
                 Text(store.state.chapter.storyTitle)
                     .font(FTFont.flowTaleSecondaryHeader())
-                    .foregroundColor(FTColor.primary)
+                    .foregroundColor(FTColor.primary.color)
                     .lineLimit(1)
             }
             
             Text(store.state.chapter.title)
                 .font(FTFont.flowTaleSecondaryHeader())
-                .foregroundColor(FTColor.primary.opacity(0.9))
+                .foregroundColor(FTColor.primary.color.opacity(0.9))
                 .lineLimit(1)
         }
     }

@@ -20,12 +20,12 @@ public struct SnackBarContentView: View {
         HStack {
             type.iconView
             Text(type.text)
-                .foregroundStyle(FTColor.background)
+                .foregroundStyle(FTColor.background.color)
         }
         .padding()
         .frame(maxWidth: .infinity)
         .background(type.backgroundColor)
-        .foregroundStyle(FTColor.primary)
+        .foregroundStyle(FTColor.primary.color)
         .cornerRadius(15)
         .multilineTextAlignment(.center)
         .padding()

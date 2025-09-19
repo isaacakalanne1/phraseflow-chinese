@@ -18,7 +18,7 @@ struct GreyBackground: ViewModifier {
                 .padding(4)
                 .background {
                     if isShowing {
-                        FTColor.secondary
+                        FTColor.secondary.color
                             .clipShape(.rect(cornerRadius: 5))
                     }
                 }

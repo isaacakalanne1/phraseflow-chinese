@@ -26,14 +26,14 @@ public struct SpeechSpeedButton: View {
             Text(store.state.settings.speechSpeed.text)
                 .font(FTFont.flowTaleBodyMedium())
                 .fontWeight(.medium)
-                .foregroundStyle(FTColor.primary)
+                .foregroundStyle(FTColor.primary.color)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
                 .frame(width: 70)
                 .background(
                     Capsule()
-                        .fill(FTColor.background.opacity(0.9))
-                        .overlay(Capsule().strokeBorder(FTColor.accent, lineWidth: 1))
+                        .fill(FTColor.background.color.opacity(0.9))
+                        .overlay(Capsule().strokeBorder(FTColor.accent.color, lineWidth: 1))
                         .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 2)
                 )
         }

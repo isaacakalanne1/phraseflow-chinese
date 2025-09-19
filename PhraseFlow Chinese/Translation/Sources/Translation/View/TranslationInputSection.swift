@@ -18,20 +18,20 @@ struct TranslationInputSection: View {
         VStack(spacing: 8) {
             Text(LocalizedString.enterText)
                 .font(FTFont.flowTaleSubHeader())
-                .foregroundColor(FTColor.primary)
+                .foregroundColor(FTColor.primary.color)
 
             ZStack(alignment: .topTrailing) {
                 TextEditor(text: $inputText)
                     .frame(height: 120)
                     .padding(10)
                     .scrollContentBackground(.hidden)
-                    .background(FTColor.background)
+                    .background(FTColor.background.color)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .strokeBorder(FTColor.secondary, lineWidth: 1)
+                            .strokeBorder(FTColor.secondary.color, lineWidth: 1)
                     )
-                    .foregroundColor(FTColor.primary)
+                    .foregroundColor(FTColor.primary.color)
                     .focused($isInputFocused)
                 
                 if isInputFocused {
@@ -40,9 +40,9 @@ struct TranslationInputSection: View {
                     }) {
                         Image(systemName: "keyboard.chevron.compact.down")
                             .font(.system(size: 16))
-                            .foregroundColor(FTColor.secondary)
+                            .foregroundColor(FTColor.secondary.color)
                             .padding(8)
-                            .background(FTColor.background)
+                            .background(FTColor.background.color)
                             .clipShape(Circle())
                             .shadow(radius: 2)
                     }

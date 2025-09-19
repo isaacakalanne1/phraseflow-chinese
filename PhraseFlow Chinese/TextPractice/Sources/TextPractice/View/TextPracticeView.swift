@@ -25,6 +25,6 @@ struct TextPracticeView: View {
         }
         .padding(10)
         .backgroundImage(type: .main)
-        .background(FTColor.background)
+        .background(FTColor.background.color)
     }
 }

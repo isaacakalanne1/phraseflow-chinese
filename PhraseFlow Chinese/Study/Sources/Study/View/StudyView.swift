@@ -149,8 +149,8 @@ public struct StudyView: View {
             // Volume warning handled at app level
         }
         .padding()
-        .background(FTColor.background)
-        .foregroundStyle(FTColor.primary)
+        .background(FTColor.background.color)
+        .foregroundStyle(FTColor.primary.color)
     }
 
     private func nextTapped() {

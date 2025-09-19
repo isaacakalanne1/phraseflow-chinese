@@ -34,10 +34,10 @@ struct CharacterView: View {
                 Text(word.word)
                     .font(FTFont.flowTaleBodyMedium())
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .foregroundStyle(isTappedWord ? FTColor.primary : (word == spokenWord ? FTColor.wordHighlight : FTColor.primary))
+                    .foregroundStyle(isTappedWord ? FTColor.primary.color : (word == spokenWord ? FTColor.wordHighlight.color : FTColor.primary.color))
                     .background {
                         if isTappedWord {
-                            FTColor.wordHighlight
+                            FTColor.wordHighlight.color
                         } else if sentence.id == currentSentence?.id {
                             Color.clear
                         }

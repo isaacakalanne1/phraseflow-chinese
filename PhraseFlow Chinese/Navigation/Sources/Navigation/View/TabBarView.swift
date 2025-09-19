@@ -39,21 +39,21 @@ struct TabBarView: View {
                     
                     Text(tab.title)
                         .font(FTFont.flowTaleBodyXSmall())
-                        .foregroundStyle(isSelected ? FTColor.accent : FTColor.primary)
+                        .foregroundStyle(isSelected ? FTColor.accent.color : FTColor.primary.color)
                     
                     RoundedRectangle(cornerRadius: 1.5)
-                        .fill(isSelected ? FTColor.accent : Color.clear)
+                        .fill(isSelected ? FTColor.accent.color : Color.clear)
                         .frame(width: 40, height: 3)
                 }
                 .frame(maxWidth: .infinity)
-                .background(FTColor.background)
+                .background(FTColor.background.color)
                 .padding(.top, 4)
                 .onTapGesture {
                     tapAction(tab: tab)
                 }
             }
         }
-        .background(FTColor.background)
+        .background(FTColor.background.color)
     }
     
     private func tapAction(tab: ContentTab) {

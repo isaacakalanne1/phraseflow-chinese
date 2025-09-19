@@ -68,7 +68,7 @@ struct TranslationView: View {
         }
         .padding()
         .toolbar(.hidden)
-        .background(FTColor.background)
+        .background(FTColor.background.color)
         .navigationDestination(isPresented: $showLanguageSelector) {
             LanguageMenu(selectedLanguage: targetLanguage,
                          isEnabled: !store.state.isTranslating,
@@ -104,7 +104,7 @@ struct TranslationView: View {
                 
                 Image(systemName: "arrow.right")
                     .font(.system(size: 12, weight: .semibold))
-                    .foregroundColor(FTColor.primary.opacity(0.5))
+                    .foregroundColor(FTColor.primary.color.opacity(0.5))
                 
                 Text(translation.language.flagEmoji)
                     .font(.system(size: 20))
@@ -113,18 +113,18 @@ struct TranslationView: View {
                 
                 Text("\(translation.lastUpdated, style: .relative) ago") // TODO: Localize
                     .font(.caption)
-                    .foregroundColor(FTColor.primary.opacity(0.6))
+                    .foregroundColor(FTColor.primary.color.opacity(0.6))
             }
             
             VStack(alignment: .leading, spacing: 6) {
                 Text(translation.sentences.prefix(2).map { $0.original }.joined(separator: " "))
                     .font(.system(size: 15, weight: .medium))
-                    .foregroundColor(FTColor.primary)
+                    .foregroundColor(FTColor.primary.color)
                     .lineLimit(2)
                 
                 Text(translation.sentences.prefix(2).map { $0.translation }.joined(separator: " "))
                     .font(.system(size: 14))
-                    .foregroundColor(FTColor.primary.opacity(0.8))
+                    .foregroundColor(FTColor.primary.color.opacity(0.8))
                     .lineLimit(2)
             }
             
@@ -135,7 +135,7 @@ struct TranslationView: View {
                     Text("\(translation.sentences.count) sentences")
                         .font(.caption2)
                 }
-                .foregroundColor(FTColor.primary.opacity(0.6))
+                .foregroundColor(FTColor.primary.color.opacity(0.6))
                 
                 Spacer()
             }
@@ -143,10 +143,10 @@ struct TranslationView: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(FTColor.background)
+                .fill(FTColor.background.color)
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(FTColor.primary.opacity(0.1), lineWidth: 1)
+                        .stroke(FTColor.primary.color.opacity(0.1), lineWidth: 1)
                 )
         )
     }

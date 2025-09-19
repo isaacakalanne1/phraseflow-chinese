@@ -25,11 +25,11 @@ struct UserLimitView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text((isSubscribedUser) ? "Characters Remaining Today" : "Characters Remaining") // TODO: Localize
                                 .font(.caption)
-                                .foregroundColor(FTColor.secondary)
+                                .foregroundColor(FTColor.secondary.color)
                             Text("\(remainingCharacters)")
                                 .font(.title2)
                                 .fontWeight(.bold)
-                                .foregroundColor(remainingCharacters > 0 ? FTColor.primary : .red)
+                                .foregroundColor(remainingCharacters > 0 ? FTColor.primary.color : .red)
                         }
                         
                         Spacer()
@@ -39,12 +39,12 @@ struct UserLimitView: View {
                             VStack(alignment: .trailing, spacing: 4) {
                                 Text(LocalizedString.resetsInLabel)
                                     .font(.caption)
-                                    .foregroundColor(FTColor.secondary)
+                                    .foregroundColor(FTColor.secondary.color)
                                 
                                 Text(timeUntilReset)
                                     .font(.caption)
                                     .fontWeight(.medium)
-                                    .foregroundColor(FTColor.primary)
+                                    .foregroundColor(FTColor.primary.color)
                             }
                         }
                     }
@@ -53,23 +53,23 @@ struct UserLimitView: View {
                         HStack {
                             Text(LocalizedString.usageProgress)
                                 .font(.caption)
-                                .foregroundColor(FTColor.secondary)
+                                .foregroundColor(FTColor.secondary.color)
                             Spacer()
                             Text("\(remainingCharacters) of \(totalLimit)") // TODO: Localize
                                 .font(.caption)
-                                .foregroundColor(FTColor.secondary)
+                                .foregroundColor(FTColor.secondary.color)
                         }
                         
                         GeometryReader { geometry in
                             ZStack(alignment: .leading) {
                                 Rectangle()
-                                    .fill(FTColor.secondary.opacity(0.2))
+                                    .fill(FTColor.secondary.color.opacity(0.2))
                                     .frame(height: 6)
                                     .cornerRadius(3)
                                 
                                 let width = geometry.size.width * CGFloat(remainingCharacters) / CGFloat(totalLimit)
                                 Rectangle()
-                                    .fill(remainingCharacters > 0 ? FTColor.primary : .red)
+                                    .fill(remainingCharacters > 0 ? FTColor.primary.color : .red)
                                     .frame(width: width > 0 ? width : 0, height: 6)
                                     .cornerRadius(3)
                                     .animation(.easeInOut(duration: 0.3), value: remainingCharacters)

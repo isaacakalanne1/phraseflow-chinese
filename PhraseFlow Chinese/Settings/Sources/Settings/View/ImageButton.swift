@@ -35,8 +35,8 @@ public struct ImageButton: View {
                         RoundedRectangle(cornerRadius: 16)
                             .fill(LinearGradient(
                                 gradient: Gradient(colors: [
-                                    FTColor.background.opacity(0.3),
-                                    FTColor.background.opacity(0.8)
+                                    FTColor.background.color.opacity(0.3),
+                                    FTColor.background.color.opacity(0.8)
                                 ]),
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
@@ -68,7 +68,7 @@ public struct ImageButton: View {
                     Spacer()
                     Text(title)
                         .font(.system(size: 13, weight: isSelected ? .semibold : .medium, design: .rounded))
-                        .foregroundStyle(isSelected ? FTColor.accent : Color.white)
+                        .foregroundStyle(isSelected ? FTColor.accent.color : Color.white)
                         .lineLimit(2)
                         .truncationMode(.tail)
                         .multilineTextAlignment(.center)
@@ -82,7 +82,7 @@ public struct ImageButton: View {
                     .stroke(
                         isSelected ? 
                         LinearGradient(
-                            gradient: Gradient(colors: [FTColor.accent, FTColor.accent.opacity(0.7)]),
+                            gradient: Gradient(colors: [FTColor.accent.color, FTColor.accent.color.opacity(0.7)]),
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         ) : 
@@ -103,7 +103,7 @@ public struct ImageButton: View {
             .aspectRatio(1.0, contentMode: .fit)
             .scaleEffect(isSelected ? 1.02 : 1.0)
             .shadow(
-                color: isSelected ? FTColor.accent.opacity(0.3) : Color.black.opacity(0.1),
+                color: isSelected ? FTColor.accent.color.opacity(0.3) : Color.black.opacity(0.1),
                 radius: isSelected ? 8 : 4,
                 x: 0,
                 y: isSelected ? 4 : 2

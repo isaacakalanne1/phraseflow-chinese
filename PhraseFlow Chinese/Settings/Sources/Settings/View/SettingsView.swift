@@ -97,7 +97,7 @@ struct SettingsView: View {
                 }
             }
             .padding()
-            .background(FTColor.background)
+            .background(FTColor.background.color)
         }
         .navigationBarTitleDisplayMode(.inline)
         .scrollIndicators(.hidden)
@@ -123,7 +123,7 @@ struct SettingsView: View {
             Text(title.uppercased())
                 .font(.caption)
                 .fontWeight(.semibold)
-                .foregroundColor(FTColor.secondary)
+                .foregroundColor(FTColor.secondary.color)
                 .padding(.horizontal, 16)
             
             VStack(spacing: 0) {
@@ -139,7 +139,7 @@ struct SettingsView: View {
         HStack {
             Text(title)
                 .fontWeight(.light)
-                .foregroundColor(FTColor.primary)
+                .foregroundColor(FTColor.primary.color)
             
             Spacer()
             
