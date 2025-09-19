@@ -9,12 +9,11 @@ import Foundation
 
 public struct ModerationEnvironment: ModerationEnvironmentProtocol {
     private let moderationServices: ModerationServicesProtocol
-    private let moderationDataStore: ModerationDataStoreProtocol
     
-    public init(moderationServices: ModerationServicesProtocol,
-         moderationDataStore: ModerationDataStoreProtocol) {
+    public init(
+        moderationServices: ModerationServicesProtocol
+    ) {
         self.moderationServices = moderationServices
-        self.moderationDataStore = moderationDataStore
     }
     
     public func moderateText(_ text: String) async throws -> ModerationResponse {

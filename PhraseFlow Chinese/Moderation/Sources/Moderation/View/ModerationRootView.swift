@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import ReduxKit
 
 public struct ModerationRootView: View {
     private let customPrompt: String

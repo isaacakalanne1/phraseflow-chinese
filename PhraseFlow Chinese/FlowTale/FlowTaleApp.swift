@@ -34,10 +34,8 @@ public struct FlowTaleRootView: View {
         let settingsDataStore = SettingsDataStore()
         
         let moderationServices = ModerationServices()
-        let moderationDataStore = ModerationDataStore()
         let moderationEnvironment = ModerationEnvironment(
-            moderationServices: moderationServices,
-            moderationDataStore: moderationDataStore
+            moderationServices: moderationServices
         )
         
         let settingsEnvironment = SettingsEnvironment(
