@@ -73,6 +73,8 @@ let package = Package(
             dependencies: [
                 "Settings",
                 "SettingsMocks",
+                .product(name: "Audio", package: "Audio"),
+                .product(name: "AudioMocks", package: "Audio"),
                 .product(name: "ModerationMocks", package: "Moderation")
             ]
         ),

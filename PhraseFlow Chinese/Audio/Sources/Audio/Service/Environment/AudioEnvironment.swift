@@ -16,6 +16,10 @@ public struct AudioEnvironment: AudioEnvironmentProtocol {
         self.audioPlayer = AudioPlayer()
     }
     
+    public var isPlayingMusic: Bool {
+        audioPlayer.musicAudioPlayer?.isPlaying ?? false
+    }
+    
     // MARK: - AudioPlayer Wrapper Methods
     
     public func setChapterAudioData(_ audioData: Data) async {

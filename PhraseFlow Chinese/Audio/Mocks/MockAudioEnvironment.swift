@@ -19,6 +19,11 @@ public class MockAudioEnvironment: AudioEnvironmentProtocol {
         self.audioPlayer = audioPlayer
     }
     
+    var isPlayingMusicResult = false
+    public var isPlayingMusic: Bool {
+        isPlayingMusicResult
+    }
+    
     var setChapterAudioDataSpy: Data?
     var setChapterAudioDataCalled = false
     public func setChapterAudioData(_ audioData: Data) async {
@@ -57,14 +62,16 @@ public class MockAudioEnvironment: AudioEnvironmentProtocol {
         playSoundCalled = true
     }
     
-    var playMusicSpy: (MusicType, MusicVolume)?
+    var playMusicTypeSpy: MusicType?
+    var playMusicVolumeSpy: MusicVolume?
     var playMusicCalled = false
     var playMusicResult: Result<Void, MockAudioEnvironmentError> = .success(())
     public func playMusic(
         _ music: MusicType,
         volume: MusicVolume
     ) throws {
-        playMusicSpy = (music, volume)
+        playMusicTypeSpy = music
+        playMusicVolumeSpy = volume
         playMusicCalled = true
         switch playMusicResult {
         case .success(let success):

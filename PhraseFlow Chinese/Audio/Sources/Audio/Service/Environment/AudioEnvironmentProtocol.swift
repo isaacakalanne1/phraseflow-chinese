@@ -11,6 +11,7 @@ import AVKit
 
 public protocol AudioEnvironmentProtocol {
     var audioPlayer: AudioPlayer { get }
+    var isPlayingMusic: Bool { get }
     func setChapterAudioData(_ audioData: Data) async
     func playChapterAudio(from time: Double?, rate: Float) async
     func pauseChapterAudio()

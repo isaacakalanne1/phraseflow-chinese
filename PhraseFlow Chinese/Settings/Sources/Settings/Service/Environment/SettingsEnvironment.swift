@@ -50,7 +50,7 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
     }
     
     public var isPlayingMusic: Bool {
-        audioEnvironment.audioPlayer.musicAudioPlayer?.isPlaying ?? false
+        audioEnvironment.isPlayingMusic
     }
     
     public func stopMusic() {
