@@ -17,7 +17,7 @@ public enum FTFont {
          bodyLarge,
          bodyXLarge
     
-    var font: Font {
+    public var font: Font {
         .system(size: fontSize, weight: fontWeight)
     }
     
