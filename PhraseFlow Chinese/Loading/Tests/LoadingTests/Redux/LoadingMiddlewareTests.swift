@@ -10,31 +10,30 @@ final class LoadingMiddlewareTests {
         mockEnvironment = MockLoadingEnvironment()
     }
     
-    @Test
-    func updateLoadingStatus_complete() async {
-        let resultAction = await loadingMiddleware(
-            .arrange,
-            .updateLoadingStatus(.complete),
-            mockEnvironment
-        )
-
-        #expect(resultAction == .updateLoadingStatus(.none))
-    }
-    
     @Test(arguments: [
+        LoadingStatus.complete,
         LoadingStatus.generatingDefinitions,
         LoadingStatus.generatingImage,
         LoadingStatus.generatingSpeech,
         LoadingStatus.none,
         LoadingStatus.writing
     ])
-    func updateLoadingStatus_other(loadingStatus: LoadingStatus) async throws {
+    func updateLoadingStatus(loadingStatus: LoadingStatus) async throws {
         let resultAction = await loadingMiddleware(
             .arrange,
             .updateLoadingStatus(loadingStatus),
             mockEnvironment
         )
 
-        #expect(resultAction == nil)
+        switch loadingStatus {
+        case .complete:
+            #expect(resultAction == .updateLoadingStatus(.none))
+        case .writing,
+                .generatingImage,
+                .generatingSpeech,
+                .generatingDefinitions,
+                .none:
+            #expect(resultAction == nil)
+        }
     }
 }
