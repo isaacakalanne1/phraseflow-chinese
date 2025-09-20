@@ -12,16 +12,32 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "ImageGeneration",
-            targets: ["ImageGeneration"]),
+            targets: ["ImageGeneration"]
+        ),
+        .library(
+            name: "ImageGenerationMocks",
+            targets: ["ImageGenerationMocks"]
+        ),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "ImageGeneration"),
+            name: "ImageGeneration"
+        ),
+        .target(
+            name: "ImageGenerationMocks",
+            dependencies: [
+                "ImageGeneration"
+            ],
+            path: "Mocks"
+        ),
         .testTarget(
             name: "ImageGenerationTests",
-            dependencies: ["ImageGeneration"]
+            dependencies: [
+                "ImageGeneration",
+                "ImageGenerationMocks"
+            ]
         ),
     ]
 )

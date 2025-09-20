@@ -83,7 +83,10 @@ let package = Package(
                 .product(name: "TextGenerationMocks", package: "TextGeneration"),
                 .product(name: "TextPracticeMocks", package: "TextPractice"),
                 .product(name: "UserLimitMocks", package: "UserLimit"),
-                .product(name: "SettingsMocks", package: "Settings")
+                .product(name: "SettingsMocks", package: "Settings"),
+                .product(name: "ImageGenerationMocks", package: "ImageGeneration"),
+                .product(name: "SpeechMocks", package: "Speech"),
+                .product(name: "LoadingMocks", package: "Loading")
             ],
             path: "Mocks"
         ),
