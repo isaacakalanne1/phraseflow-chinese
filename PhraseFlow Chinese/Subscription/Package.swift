@@ -12,7 +12,12 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "Subscription",
-            targets: ["Subscription"]),
+            targets: ["Subscription"]
+        ),
+        .library(
+            name: "SubscriptionMocks",
+            targets: ["SubscriptionMocks"]
+        ),
     ],
     dependencies: [
         .package(name: "ReduxKit", path: "../ReduxKit"),
@@ -38,7 +43,23 @@ let package = Package(
                 "UserLimit",
                 "Settings",
                 "DataStorage"
-            ]),
+            ]
+        ),
+        .target(
+            name: "SubscriptionMocks",
+            dependencies: [
+                "Subscription",
+                "ReduxKit",
+                "Localization",
+                "FTColor",
+                "FTFont",
+                "Speech",
+                "UserLimit",
+                "Settings",
+                "DataStorage"
+            ],
+            path: "Mocks"
+        ),
         .testTarget(
             name: "SubscriptionTests",
             dependencies: ["Subscription"]

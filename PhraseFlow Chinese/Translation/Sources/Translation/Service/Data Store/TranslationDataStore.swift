@@ -14,7 +14,7 @@ enum TranslationDataStoreError: Error {
     case failedToSaveData
 }
 
-class TranslationDataStore: TranslationDataStoreProtocol {
+public class TranslationDataStore: TranslationDataStoreProtocol {
     private let fileManager = FileManager.default
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
@@ -27,7 +27,7 @@ class TranslationDataStore: TranslationDataStoreProtocol {
         documentsDirectory?.appendingPathComponent("translations")
     }
     
-    init() {
+    public init() {
         encoder.dateEncodingStrategy = .iso8601
         decoder.dateDecodingStrategy = .iso8601
         createTranslationsDirectory()
@@ -42,7 +42,7 @@ class TranslationDataStore: TranslationDataStoreProtocol {
         translationsDirectory?.appendingPathComponent("\(id.uuidString).json")
     }
     
-    func saveTranslation(_ chapter: Chapter) throws {
+    public func saveTranslation(_ chapter: Chapter) throws {
         guard let fileURL = translationFileURL(for: chapter.id) else {
             throw TranslationDataStoreError.failedToCreateUrl
         }
@@ -55,7 +55,7 @@ class TranslationDataStore: TranslationDataStoreProtocol {
         }
     }
     
-    func loadTranslationHistory() throws -> [Chapter] {
+    public func loadTranslationHistory() throws -> [Chapter] {
         guard let dir = translationsDirectory else {
             throw TranslationDataStoreError.failedToCreateUrl
         }
@@ -72,12 +72,12 @@ class TranslationDataStore: TranslationDataStoreProtocol {
         }
     }
     
-    func deleteTranslation(id: UUID) throws {
+    public func deleteTranslation(id: UUID) throws {
         guard let fileURL = translationFileURL(for: id) else { return }
         try? fileManager.removeItem(at: fileURL)
     }
     
-    func cleanupOrphanedTranslationFiles() throws {
+    public func cleanupOrphanedTranslationFiles() throws {
         guard let dir = documentsDirectory else {
             throw TranslationDataStoreError.failedToCreateUrl
         }

@@ -15,7 +15,7 @@ enum MockLoadingEnvironmentError: Error {
 public class MockLoadingEnvironment: LoadingEnvironmentProtocol {
     public var loadingStatus: CurrentValueSubject<LoadingStatus?, Never>
     
-    init(
+    public init(
         loadingStatus: CurrentValueSubject<LoadingStatus?, Never> = .init(nil)
     ) {
         self.loadingStatus = loadingStatus

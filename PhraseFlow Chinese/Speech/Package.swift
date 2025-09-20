@@ -52,8 +52,8 @@ let package = Package(
         .testTarget(
             name: "SpeechTests",
             dependencies: [
-                .product(name: "Speech", package: "Speech"),
-                .product(name: "SpeechMocks", package: "Speech"),
+                "Speech",
+                "SpeechMocks",
                 .product(name: "TextGeneration", package: "TextGeneration"),
                 .product(name: "TextGenerationMocks", package: "TextGeneration")
             ]

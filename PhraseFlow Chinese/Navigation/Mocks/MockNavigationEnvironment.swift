@@ -10,13 +10,19 @@ import Navigation
 import Settings
 import SettingsMocks
 import Story
+import StoryMocks
 import Study
+import StudyMocks
 import Subscription
+import SubscriptionMocks
 import Translation
+import TranslationMocks
 import UserLimit
+import UserLimitMocks
 import Audio
 import AudioMocks
 import Loading
+import LoadingMocks
 
 class MockNavigationEnvironment: NavigationEnvironmentProtocol {
     public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never>
@@ -34,13 +40,13 @@ class MockNavigationEnvironment: NavigationEnvironmentProtocol {
     
     public init(
         settingsEnvironment: SettingsEnvironmentProtocol = MockSettingsEnvironment(),
-        storyEnvironment: StoryEnvironmentProtocol,
-        studyEnvironment: StudyEnvironmentProtocol,
-        subscriptionEnvironment: SubscriptionEnvironmentProtocol,
-        translationEnvironment: TranslationEnvironmentProtocol,
-        userLimitEnvironment: UserLimitEnvironmentProtocol,
+        storyEnvironment: StoryEnvironmentProtocol = MockStoryEnvironment(),
+        studyEnvironment: StudyEnvironmentProtocol = MockStudyEnvironment(),
+        subscriptionEnvironment: SubscriptionEnvironmentProtocol = MockSubscriptionEnvironment(),
+        translationEnvironment: TranslationEnvironmentProtocol = MockTranslationEnvironment(),
+        userLimitEnvironment: UserLimitEnvironmentProtocol = MockUserLimitEnvironment(),
         audioEnvironment: AudioEnvironmentProtocol = MockAudioEnvironment(),
-        loadingEnvironment: LoadingEnvironmentProtocol
+        loadingEnvironment: LoadingEnvironmentProtocol = MockLoadingEnvironment()
     ) {
         self.settingsEnvironment = settingsEnvironment
         self.storyEnvironment = storyEnvironment

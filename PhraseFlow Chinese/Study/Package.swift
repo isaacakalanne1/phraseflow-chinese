@@ -11,7 +11,12 @@ let package = Package(
     products: [
         .library(
             name: "Study",
-            targets: ["Study"]),
+            targets: ["Study"]
+        ),
+        .library(
+            name: "StudyMocks",
+            targets: ["StudyMocks"]
+        ),
     ],
     dependencies: [
         .package(name: "Audio", path: "../Audio"),
@@ -39,9 +44,28 @@ let package = Package(
                 "AppleIcon"
             ]
         ),
+        .target(
+            name: "StudyMocks",
+            dependencies: [
+                "Study",
+                "Audio",
+                "ReduxKit",
+                "Localization",
+                "FTColor",
+                "FTFont",
+                "FTStyleKit",
+                "Settings",
+                "TextGeneration",
+                "AppleIcon"
+            ],
+            path: "Mocks"
+        ),
         .testTarget(
             name: "StudyTests",
-            dependencies: ["Study"]
+            dependencies: [
+                "Study",
+                "StudyMocks"
+            ]
         ),
     ]
 )

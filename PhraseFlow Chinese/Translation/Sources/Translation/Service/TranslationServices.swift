@@ -15,8 +15,13 @@ enum TranslationServicesError: Error {
     case failedToGetResponseData
 }
 
-class TranslationServices: TranslationServicesProtocol {
-    func translateText(
+public class TranslationServices: TranslationServicesProtocol {
+    
+    public init() {
+        
+    }
+    
+    public func translateText(
         _ text: String,
         from deviceLanguage: Language?,
         to targetLanguage: Language

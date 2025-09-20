@@ -50,10 +50,14 @@ public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
         repository.validateAppStoreReceipt()
     }
     
-    public func trackSSMLCharacterUsage(characterCount: Int,
-                                        subscription: SubscriptionLevel) throws -> Int {
-        try userLimitsEnvironment.trackSSMLCharacterUsage(characterCount: characterCount,
-                                                          subscription: subscription)
+    public func trackSSMLCharacterUsage(
+        characterCount: Int,
+        subscription: SubscriptionLevel
+    ) throws -> Int {
+        try userLimitsEnvironment.trackSSMLCharacterUsage(
+            characterCount: characterCount,
+            subscription: subscription
+        )
     }
     
     public func saveAppSettings(_ settings: SettingsState) throws {

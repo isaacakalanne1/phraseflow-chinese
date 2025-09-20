@@ -12,7 +12,12 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "UserLimit",
-            targets: ["UserLimit"]),
+            targets: ["UserLimit"]
+        ),
+        .library(
+            name: "UserLimitMocks",
+            targets: ["UserLimitMocks"]
+        ),
     ],
     dependencies: [
         .package(name: "DataStorage", path: "../DataStorage"),
@@ -32,10 +37,26 @@ let package = Package(
                 "FTColor",
                 "FTStyleKit",
                 "FTFont"
-            ]),
+            ]
+        ),
+        .target(
+            name: "UserLimitMocks",
+            dependencies: [
+                "UserLimit",
+                "DataStorage",
+                "Localization",
+                "FTColor",
+                "FTStyleKit",
+                "FTFont"
+            ],
+            path: "Mocks"
+        ),
         .testTarget(
             name: "UserLimitTests",
-            dependencies: ["UserLimit"]
+            dependencies: [
+                "UserLimit",
+                "UserLimitMocks"
+            ]
         ),
     ]
 )

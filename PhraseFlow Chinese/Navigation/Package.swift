@@ -30,6 +30,7 @@ let package = Package(
         .package(name: "Settings", path: "../Settings"),
         .package(name: "Subscription", path: "../Subscription"),
         .package(name: "Translation", path: "../Translation"),
+        .package(name: "UserLimit", path: "../UserLimit"),
         .package(name: "DataStorage", path: "../DataStorage"),
         .package(name: "ReduxKit", path: "../ReduxKit"),
     ],
@@ -49,6 +50,7 @@ let package = Package(
                 "Settings",
                 "Subscription",
                 "Translation",
+                "UserLimit",
                 "DataStorage",
                 "ReduxKit"
             ]
@@ -58,7 +60,6 @@ let package = Package(
             dependencies: [
                 "Navigation",
                 "Study",
-                "Story",
                 "Audio",
                 "Loading",
                 "Settings",
@@ -66,7 +67,14 @@ let package = Package(
                 "Translation",
                 "DataStorage",
                 .product(name: "AudioMocks", package: "Audio"),
-                .product(name: "SettingsMocks", package: "Settings")
+                .product(name: "SettingsMocks", package: "Settings"),
+                .product(name: "SubscriptionMocks", package: "Subscription"),
+                .product(name: "Story", package: "Story"),
+                .product(name: "StoryMocks", package: "Story"),
+                .product(name: "StudyMocks", package: "Study"),
+                .product(name: "LoadingMocks", package: "Loading"),
+                .product(name: "TranslationMocks", package: "Translation"),
+                .product(name: "UserLimitMocks", package: "UserLimit")
             ],
             path: "Mocks"
         ),

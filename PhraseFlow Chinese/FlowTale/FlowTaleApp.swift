@@ -71,10 +71,14 @@ public struct FlowTaleRootView: View {
                                                               settingsEnvironment: settingsEnvironment,
                                                               studyEnvironment: studyEnvironment)
 
+        let translationServices = TranslationServices()
+        let translationDataStore = TranslationDataStore()
         let translationEnvironment = TranslationEnvironment(
-            speechRepository: speechRepository,
+            translationServices: translationServices,
+            speechEnvironment: speechEnvironment,
             settingsEnvironment: settingsEnvironment,
             textPracticeEnvironment: textPracticeEnvironment,
+            translationDataStore: translationDataStore,
             userLimitEnvironment: userLimitEnvironment
         )
         
@@ -88,7 +92,7 @@ public struct FlowTaleRootView: View {
             textPracticeEnvironment: textPracticeEnvironment,
             loadingEnvironment: loadingEnvironment,
             userLimitEnvironment: userLimitEnvironment,
-            service: textGenerationServices,
+            textGenerationService: textGenerationServices,
             imageGenerationService: imageGenerationService,
             dataStore: storyDataStore
         )

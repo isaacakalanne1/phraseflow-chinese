@@ -22,13 +22,16 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     public let studyEnvironment: StudyEnvironmentProtocol
     public let loadingEnvironment: LoadingEnvironmentProtocol
     public let textPracticeEnvironment: TextPracticeEnvironmentProtocol
+    public var goToNextChapterSubject: CurrentValueSubject<Void?, Never> {
+        textPracticeEnvironment.goToNextChapterSubject
+    }
     public let userLimitEnvironment: UserLimitEnvironmentProtocol
     public var limitReachedSubject: CurrentValueSubject<LimitReachedEvent, Never> {
         userLimitEnvironment.limitReachedSubject
     }
     private let settingsEnvironment: SettingsEnvironmentProtocol
     private let speechEnvironment: SpeechEnvironmentProtocol
-    private let service: TextGenerationServicesProtocol
+    private let textGenerationService: TextGenerationServicesProtocol
     private let imageGenerationService: ImageGenerationServicesProtocol
     private let dataStore: StoryDataStoreProtocol
 
@@ -44,7 +47,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         textPracticeEnvironment: TextPracticeEnvironmentProtocol,
         loadingEnvironment: LoadingEnvironmentProtocol,
         userLimitEnvironment: UserLimitEnvironmentProtocol,
-        service: TextGenerationServicesProtocol,
+        textGenerationService: TextGenerationServicesProtocol,
         imageGenerationService: ImageGenerationServicesProtocol,
         dataStore: StoryDataStoreProtocol
     ) {
@@ -55,7 +58,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         self.textPracticeEnvironment = textPracticeEnvironment
         self.loadingEnvironment = loadingEnvironment
         self.userLimitEnvironment = userLimitEnvironment
-        self.service = service
+        self.textGenerationService = textGenerationService
         self.imageGenerationService = imageGenerationService
         self.dataStore = dataStore
     }
@@ -85,7 +88,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
                   let voice = voice else {
                 throw NSError(domain: "StoryEnvironment", code: 0, userInfo: [NSLocalizedDescriptionKey: "Missing required parameters for first chapter"])
             }
-            newChapter = try await service.generateFirstChapter(
+            newChapter = try await textGenerationService.generateFirstChapter(
                 language: language,
                 difficulty: difficulty,
                 voice: voice,
@@ -93,7 +96,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
                 storyPrompt: storyPrompt
             )
         } else {
-            newChapter = try await service.generateChapter(
+            newChapter = try await textGenerationService.generateChapter(
                 previousChapters: previousChapters,
                 deviceLanguage: deviceLanguage
             )

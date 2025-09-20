@@ -28,17 +28,19 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
     }
     
     public init(
-        speechRepository: SpeechRepositoryProtocol,
+        translationServices: TranslationServicesProtocol,
+        speechEnvironment: SpeechEnvironmentProtocol,
         settingsEnvironment: SettingsEnvironmentProtocol,
         textPracticeEnvironment: TextPracticeEnvironmentProtocol,
+        translationDataStore: TranslationDataStoreProtocol,
         userLimitEnvironment: UserLimitEnvironmentProtocol
     ) {
-        self.translationServices = TranslationServices()
-        self.speechEnvironment = SpeechEnvironment(speechRepository: speechRepository)
+        self.translationServices = translationServices
+        self.speechEnvironment = speechEnvironment
         self.settingsEnvironment = settingsEnvironment
         self.textPracticeEnvironment = textPracticeEnvironment
         self.userLimitEnvironment = userLimitEnvironment
-        self.translationDataStore = TranslationDataStore()
+        self.translationDataStore = translationDataStore
     }
     
     public func translateText(_ text: String, from sourceLanguage: Language?, to targetLanguage: Language) async throws -> Chapter {

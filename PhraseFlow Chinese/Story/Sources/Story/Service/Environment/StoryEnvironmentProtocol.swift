@@ -16,11 +16,9 @@ import TextPractice
 import UserLimit
 
 public protocol StoryEnvironmentProtocol {
-    var audioEnvironment: AudioEnvironmentProtocol { get }
-    var studyEnvironment: StudyEnvironmentProtocol { get }
-    var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> { get }
     var textPracticeEnvironment: TextPracticeEnvironmentProtocol { get }
-    var userLimitEnvironment: UserLimitEnvironmentProtocol { get }
+    var goToNextChapterSubject: CurrentValueSubject<Void?, Never> { get }
+    var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> { get }
     var limitReachedSubject: CurrentValueSubject<LimitReachedEvent, Never> { get }
     func loadAllChapters() throws -> [Chapter]
     func saveChapter(_ chapter: Chapter) throws
