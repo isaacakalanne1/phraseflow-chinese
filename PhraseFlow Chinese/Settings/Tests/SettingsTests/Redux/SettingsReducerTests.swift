@@ -7,7 +7,7 @@ import Testing
 final class SettingsReducerTests {
     
     @Test
-    func loadAppSettings() async throws {
+    func loadAppSettings() {
         let state = SettingsState.arrange
 
         let newState = settingsReducer(
@@ -19,7 +19,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func onLoadedAppSettings() async throws {
+    func onLoadedAppSettings() {
         let initialState = SettingsState.arrange
         let expectedSettings = SettingsState.arrange(customPrompts: ["a", "b", "c"])
         let expectedState = expectedSettings
@@ -33,7 +33,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateShowDefinition_true() async throws {
+    func updateShowDefinition_true() {
         let initialState = SettingsState.arrange
         let expectedIsShowing = true
         
@@ -49,7 +49,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateShowDefinition_false() async throws {
+    func updateShowDefinition_false() {
         let initialState = SettingsState.arrange
         let expectedIsShowing = false
         
@@ -65,7 +65,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func failedToLoadAppSettings_doesNotChangeState() async throws {
+    func failedToLoadAppSettings_doesNotChangeState() {
         let state = SettingsState.arrange(usedCharacters: 999)
 
         let newState = settingsReducer(
@@ -77,7 +77,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func refreshAppSettings_updatesEntireState() async throws {
+    func refreshAppSettings_updatesEntireState() {
         let initialState = SettingsState.arrange
         let refreshedSettings = SettingsState.arrange(
             isShowingDefinition: false,
@@ -95,7 +95,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func saveAppSettings_doesNotChangeState() async throws {
+    func saveAppSettings_doesNotChangeState() {
         let state = SettingsState.arrange(usedCharacters: 123)
 
         let newState = settingsReducer(
@@ -107,7 +107,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func failedToSaveAppSettings_doesNotChangeState() async throws {
+    func failedToSaveAppSettings_doesNotChangeState() {
         let state = SettingsState.arrange
 
         let newState = settingsReducer(
@@ -119,7 +119,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateShowEnglish_true() async throws {
+    func updateShowEnglish_true() {
         let initialState = SettingsState.arrange(isShowingEnglish: false)
         var expectedState = initialState
         expectedState.isShowingEnglish = true
@@ -133,7 +133,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateShowEnglish_false() async throws {
+    func updateShowEnglish_false() {
         let initialState = SettingsState.arrange(isShowingEnglish: true)
         var expectedState = initialState
         expectedState.isShowingEnglish = false
@@ -147,7 +147,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func selectVoice_updatesVoice() async throws {
+    func selectVoice_updatesVoice() {
         let initialState = SettingsState.arrange(voice: .elvira)
         var expectedState = initialState
         expectedState.voice = .denise
@@ -161,7 +161,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateDifficulty_beginner() async throws {
+    func updateDifficulty_beginner() {
         let initialState = SettingsState.arrange(difficulty: .intermediate)
         var expectedState = initialState
         expectedState.difficulty = .beginner
@@ -175,7 +175,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateDifficulty_intermediate() async throws {
+    func updateDifficulty_intermediate() {
         let initialState = SettingsState.arrange(difficulty: .beginner)
         var expectedState = initialState
         expectedState.difficulty = .intermediate
@@ -189,7 +189,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateDifficulty_advanced() async throws {
+    func updateDifficulty_advanced() {
         let initialState = SettingsState.arrange(difficulty: .beginner)
         var expectedState = initialState
         expectedState.difficulty = .advanced
@@ -203,7 +203,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateLanguage_changesLanguageAndVoice() async throws {
+    func updateLanguage_changesLanguageAndVoice() {
         let initialState = SettingsState.arrange()
         var expectedState = initialState
         expectedState.language = .mandarinChinese
@@ -218,7 +218,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateLanguage_sameLanguage_doesNotChangeVoice() async throws {
+    func updateLanguage_sameLanguage_doesNotChangeVoice() {
         let initialState = SettingsState.arrange(
             voice: .elvira,
             language: .spanish
@@ -234,7 +234,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateCustomPrompt() async throws {
+    func updateCustomPrompt() {
         let initialState = SettingsState.arrange(customPrompt: "old prompt")
         var expectedState = initialState
         expectedState.customPrompt = "new prompt"
@@ -248,7 +248,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateStorySetting_toRandom() async throws {
+    func updateStorySetting_toRandom() {
         let initialState = SettingsState.arrange(storySetting: .customPrompt("test"))
         var expectedState = initialState
         expectedState.storySetting = .random
@@ -262,7 +262,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateStorySetting_toNewCustomPrompt_addsToList() async throws {
+    func updateStorySetting_toNewCustomPrompt_addsToList() {
         let newPrompt = "A story about dragons"
         let initialState = SettingsState.arrange(
             storySetting: .random,
@@ -281,7 +281,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateStorySetting_toExistingCustomPrompt_doesNotDuplicate() async throws {
+    func updateStorySetting_toExistingCustomPrompt_doesNotDuplicate() {
         let existingPrompt = "existing prompt"
         let initialState = SettingsState.arrange(
             storySetting: .random,
@@ -300,7 +300,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateIsShowingCustomPromptAlert_true() async throws {
+    func updateIsShowingCustomPromptAlert_true() {
         let initialState = SettingsState.arrange(isShowingCustomPromptAlert: false)
         var expectedState = initialState
         expectedState.isShowingCustomPromptAlert = true
@@ -314,7 +314,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateIsShowingCustomPromptAlert_false() async throws {
+    func updateIsShowingCustomPromptAlert_false() {
         let initialState = SettingsState.arrange(isShowingCustomPromptAlert: true)
         var expectedState = initialState
         expectedState.isShowingCustomPromptAlert = false
@@ -328,7 +328,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func deleteCustomPrompt_removesFromList() async throws {
+    func deleteCustomPrompt_removesFromList() {
         let promptToDelete = "prompt to delete"
         let initialState = SettingsState.arrange(
             storySetting: .random,
@@ -346,7 +346,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func deleteCustomPrompt_whenCurrentlySelected_switchesToRandom() async throws {
+    func deleteCustomPrompt_whenCurrentlySelected_switchesToRandom() {
         let promptToDelete = "current prompt"
         let initialState = SettingsState.arrange(
             storySetting: .customPrompt(promptToDelete),
@@ -365,7 +365,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateShouldPlaySound_true() async throws {
+    func updateShouldPlaySound_true() {
         let initialState = SettingsState.arrange(shouldPlaySound: false)
         var expectedState = initialState
         expectedState.shouldPlaySound = true
@@ -379,7 +379,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateShouldPlaySound_false() async throws {
+    func updateShouldPlaySound_false() {
         let initialState = SettingsState.arrange(shouldPlaySound: true)
         var expectedState = initialState
         expectedState.shouldPlaySound = false
@@ -393,7 +393,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateIsShowingModerationFailedAlert_true() async throws {
+    func updateIsShowingModerationFailedAlert_true() {
         let initialState = SettingsState.arrange(isShowingModerationFailedAlert: false)
         var expectedState = initialState
         expectedState.isShowingModerationFailedAlert = true
@@ -407,7 +407,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateIsShowingModerationFailedAlert_false() async throws {
+    func updateIsShowingModerationFailedAlert_false() {
         let initialState = SettingsState.arrange(isShowingModerationFailedAlert: true)
         var expectedState = initialState
         expectedState.isShowingModerationFailedAlert = false
@@ -421,7 +421,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateIsShowingModerationDetails_true() async throws {
+    func updateIsShowingModerationDetails_true() {
         let initialState = SettingsState.arrange(
             viewState: SettingsViewState.arrange(isShowingModerationDetails: false)
         )
@@ -437,7 +437,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateIsShowingModerationDetails_false() async throws {
+    func updateIsShowingModerationDetails_false() {
         let initialState = SettingsState.arrange(
             viewState: SettingsViewState.arrange(isShowingModerationDetails: true)
         )
@@ -453,7 +453,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateModerationResponse_withResponse() async throws {
+    func updateModerationResponse_withResponse() {
         let response = ModerationResponse.arrange()
         let initialState = SettingsState.arrange(
             viewState: SettingsViewState.arrange(moderationResponse: nil)
@@ -470,7 +470,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateModerationResponse_withFailedResponse_showsAlert() async throws {
+    func updateModerationResponse_withFailedResponse_showsAlert() {
         let failedResponse = ModerationResponse.arrange(results: [
             .arrange(category_scores: [ModerationCategories.violenceGraphic.key: 0.9])
         ])
@@ -491,7 +491,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func updateModerationResponse_nil() async throws {
+    func updateModerationResponse_nil() {
         let initialState = SettingsState.arrange(
             viewState: SettingsViewState.arrange(moderationResponse: .arrange())
         )
@@ -507,7 +507,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func playMusic_setsIsPlayingMusicTrue() async throws {
+    func playMusic_setsIsPlayingMusicTrue() {
         let initialState = SettingsState.arrange(isPlayingMusic: false)
         var expectedState = initialState
         expectedState.isPlayingMusic = true
@@ -521,7 +521,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func stopMusic_setsIsPlayingMusicFalse() async throws {
+    func stopMusic_setsIsPlayingMusicFalse() {
         let initialState = SettingsState.arrange(isPlayingMusic: true)
         var expectedState = initialState
         expectedState.isPlayingMusic = false
@@ -535,7 +535,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func playSound_doesNotChangeState() async throws {
+    func playSound_doesNotChangeState() {
         let state = SettingsState.arrange
 
         let newState = settingsReducer(
@@ -547,7 +547,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func snackbarAction_doesNotChangeState() async throws {
+    func snackbarAction_doesNotChangeState() {
         let state = SettingsState.arrange
 
         let newState = settingsReducer(
@@ -559,7 +559,7 @@ final class SettingsReducerTests {
     }
     
     @Test
-    func submitCustomPrompt_doesNotChangeState() async throws {
+    func submitCustomPrompt_doesNotChangeState() {
         let state = SettingsState.arrange
 
         let newState = settingsReducer(

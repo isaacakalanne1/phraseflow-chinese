@@ -20,7 +20,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func loadAppSettings_success() async throws {
+    func loadAppSettings_success() async {
         let expectedSettings: SettingsState = .arrange(usedCharacters: 999)
         mockEnvironment.loadAppSettingsResult = .success(expectedSettings)
 
@@ -35,7 +35,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func loadAppSettings_error() async throws {
+    func loadAppSettings_error() async {
         mockEnvironment.loadAppSettingsResult = .failure(.genericError)
 
         let resultAction = await settingsMiddleware(
@@ -49,7 +49,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func saveAppSettings_success() async throws {
+    func saveAppSettings_success() async {
         let state: SettingsState = .arrange(usedCharacters: 100)
         mockEnvironment.saveAppSettingsResult = .success(())
 
@@ -65,7 +65,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func saveAppSettings_error() async throws {
+    func saveAppSettings_error() async {
         let state: SettingsState = .arrange(usedCharacters: 100)
         mockEnvironment.saveAppSettingsResult = .failure(.genericError)
 
@@ -80,7 +80,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func selectVoice_shouldTriggerSaveAppSettings() async throws {
+    func selectVoice_shouldTriggerSaveAppSettings() async {
         let resultAction = await settingsMiddleware(
             .arrange,
             .selectVoice(.elvira),
@@ -91,7 +91,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func updateShowDefinition_shouldTriggerSaveAppSettings() async throws {
+    func updateShowDefinition_shouldTriggerSaveAppSettings() async {
         let resultAction = await settingsMiddleware(
             .arrange,
             .updateShowDefinition(true),
@@ -102,7 +102,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func updateShowEnglish_shouldTriggerSaveAppSettings() async throws {
+    func updateShowEnglish_shouldTriggerSaveAppSettings() async {
         let resultAction = await settingsMiddleware(
             .arrange,
             .updateShowEnglish(false),
@@ -113,7 +113,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func updateDifficulty_shouldTriggerSaveAppSettings() async throws {
+    func updateDifficulty_shouldTriggerSaveAppSettings() async {
         let resultAction = await settingsMiddleware(
             .arrange,
             .updateDifficulty(.intermediate),
@@ -124,7 +124,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func updateShouldPlaySound_whenEnabled_playsToggleAndSaves() async throws {
+    func updateShouldPlaySound_whenEnabled_playsToggleAndSaves() async {
         let state: SettingsState = .arrange(shouldPlaySound: true)
         
         let resultAction = await settingsMiddleware(
@@ -139,7 +139,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func updateShouldPlaySound_whenDisabled_doesNotPlaySound() async throws {
+    func updateShouldPlaySound_whenDisabled_doesNotPlaySound() async {
         let state: SettingsState = .arrange(shouldPlaySound: false)
         
         let resultAction = await settingsMiddleware(
@@ -153,7 +153,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func updateLanguage_whenSoundEnabled_playsTabPress() async throws {
+    func updateLanguage_whenSoundEnabled_playsTabPress() async {
         let state: SettingsState = .arrange(shouldPlaySound: true)
         
         let resultAction = await settingsMiddleware(
@@ -168,7 +168,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func updateLanguage_whenSoundDisabled_doesNotPlaySound() async throws {
+    func updateLanguage_whenSoundDisabled_doesNotPlaySound() async {
         let state: SettingsState = .arrange(shouldPlaySound: false)
         
         let resultAction = await settingsMiddleware(
@@ -182,7 +182,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func onLoadedAppSettings_whenMusicShouldPlay_startsMusic() async throws {
+    func onLoadedAppSettings_whenMusicShouldPlay_startsMusic() async {
         let state: SettingsState = .arrange(isPlayingMusic: true)
         let loadedSettings: SettingsState = .arrange(isPlayingMusic: true)
         mockEnvironment.isPlayingMusic = false
@@ -197,7 +197,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func onLoadedAppSettings_whenMusicAlreadyPlaying_doesNothing() async throws {
+    func onLoadedAppSettings_whenMusicAlreadyPlaying_doesNothing() async {
         let state: SettingsState = .arrange(isPlayingMusic: true)
         let loadedSettings: SettingsState = .arrange(isPlayingMusic: true)
         mockEnvironment.isPlayingMusic = true
@@ -212,7 +212,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func onLoadedAppSettings_whenMusicDisabled_doesNothing() async throws {
+    func onLoadedAppSettings_whenMusicDisabled_doesNothing() async {
         let state: SettingsState = .arrange(isPlayingMusic: false)
         let loadedSettings: SettingsState = .arrange(isPlayingMusic: false)
         mockEnvironment.isPlayingMusic = false
@@ -227,7 +227,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func playSound_whenSoundEnabled_playsSound() async throws {
+    func playSound_whenSoundEnabled_playsSound() async {
         let state: SettingsState = .arrange(shouldPlaySound: true)
         
         let resultAction = await settingsMiddleware(
@@ -242,7 +242,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func playSound_whenSoundDisabled_doesNotPlaySound() async throws {
+    func playSound_whenSoundDisabled_doesNotPlaySound() async {
         let state: SettingsState = .arrange(shouldPlaySound: false)
         
         let resultAction = await settingsMiddleware(
@@ -256,7 +256,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func playMusic_triggersPlayAndSave() async throws {
+    func playMusic_triggersPlayAndSave() async {
         mockEnvironment.playMusicResult = .success(())
         
         let resultAction = await settingsMiddleware(
@@ -271,7 +271,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func playMusic_onError_stillSavesSettings() async throws {
+    func playMusic_onError_stillSavesSettings() async {
         mockEnvironment.playMusicResult = .failure(.genericError)
         
         let resultAction = await settingsMiddleware(
@@ -285,7 +285,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func stopMusic_stopsAndPlaysSoundIfEnabled() async throws {
+    func stopMusic_stopsAndPlaysSoundIfEnabled() async {
         let state: SettingsState = .arrange(shouldPlaySound: true)
         
         let resultAction = await settingsMiddleware(
@@ -301,7 +301,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func stopMusic_whenSoundDisabled_onlyStopsMusic() async throws {
+    func stopMusic_whenSoundDisabled_onlyStopsMusic() async {
         let state: SettingsState = .arrange(shouldPlaySound: false)
         
         let resultAction = await settingsMiddleware(
@@ -316,7 +316,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func updateStorySetting_shouldTriggerSaveAppSettings() async throws {
+    func updateStorySetting_shouldTriggerSaveAppSettings() async {
         let resultAction = await settingsMiddleware(
             .arrange,
             .updateStorySetting(.random),
@@ -327,7 +327,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func deleteCustomPrompt_shouldTriggerSaveAppSettings() async throws {
+    func deleteCustomPrompt_shouldTriggerSaveAppSettings() async {
         let resultAction = await settingsMiddleware(
             .arrange,
             .deleteCustomPrompt("test prompt"),
@@ -338,7 +338,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func submitCustomPrompt_whenPassesModeration_updatesStorySetting() async throws {
+    func submitCustomPrompt_whenPassesModeration_updatesStorySetting() async {
         let prompt = "A nice story about cats"
         
         let moderationResponse = ModerationResponse.arrange(results: [
@@ -358,7 +358,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func submitCustomPrompt_whenFailsModeration_updatesModerationResponse() async throws {
+    func submitCustomPrompt_whenFailsModeration_updatesModerationResponse() async {
         let prompt = "An inappropriate prompt"
         let moderationResponse = ModerationResponse.arrange(results: [
             .arrange(category_scores: [ModerationCategories.violenceGraphic.key: 0.9])
@@ -377,7 +377,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func submitCustomPrompt_whenModerationErrors_showsAlert() async throws {
+    func submitCustomPrompt_whenModerationErrors_showsAlert() async {
         let prompt = "A story prompt"
         mockEnvironment.moderateTextResult = .failure(.genericError)
         
@@ -393,7 +393,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func failedToLoadAppSettings_returnsNil() async throws {
+    func failedToLoadAppSettings_returnsNil() async {
         let resultAction = await settingsMiddleware(
             .arrange,
             .failedToLoadAppSettings,
@@ -404,7 +404,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func failedToSaveAppSettings_returnsNil() async throws {
+    func failedToSaveAppSettings_returnsNil() async {
         let resultAction = await settingsMiddleware(
             .arrange,
             .failedToSaveAppSettings,
@@ -415,7 +415,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func updateCustomPrompt_returnsNil() async throws {
+    func updateCustomPrompt_returnsNil() async {
         let resultAction = await settingsMiddleware(
             .arrange,
             .updateCustomPrompt("new prompt"),
@@ -426,7 +426,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func updateIsShowingCustomPromptAlert_returnsNil() async throws {
+    func updateIsShowingCustomPromptAlert_returnsNil() async {
         let resultAction = await settingsMiddleware(
             .arrange,
             .updateIsShowingCustomPromptAlert(true),
@@ -437,7 +437,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func updateIsShowingModerationFailedAlert_returnsNil() async throws {
+    func updateIsShowingModerationFailedAlert_returnsNil() async {
         let resultAction = await settingsMiddleware(
             .arrange,
             .updateIsShowingModerationFailedAlert(false),
@@ -448,7 +448,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func updateIsShowingModerationDetails_returnsNil() async throws {
+    func updateIsShowingModerationDetails_returnsNil() async {
         let resultAction = await settingsMiddleware(
             .arrange,
             .updateIsShowingModerationDetails(true),
@@ -459,7 +459,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func updateModerationResponse_returnsNil() async throws {
+    func updateModerationResponse_returnsNil() async {
         let resultAction = await settingsMiddleware(
             .arrange,
             .updateModerationResponse(.arrange),
@@ -470,7 +470,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func snackbarAction_returnsNil() async throws {
+    func snackbarAction_returnsNil() async {
         let resultAction = await settingsMiddleware(
             .arrange,
             .snackbarAction(.showSnackBar(.chapterReady)),
@@ -481,7 +481,7 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func refreshAppSettings_returnsNil() async throws {
+    func refreshAppSettings_returnsNil() async {
         let resultAction = await settingsMiddleware(
             .arrange,
             .refreshAppSettings(.arrange),

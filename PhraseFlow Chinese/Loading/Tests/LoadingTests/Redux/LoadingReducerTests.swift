@@ -19,7 +19,7 @@ final class LoadingReducerTests {
         LoadingStatus.none,
         LoadingStatus.writing,
     ])
-    func loadAppSettings(loadingStatus: LoadingStatus) async throws {
+    func loadAppSettings(loadingStatus: LoadingStatus) {
         let initialState = LoadingState.arrange
         var expectedState = initialState
         expectedState.loadingStatus = loadingStatus

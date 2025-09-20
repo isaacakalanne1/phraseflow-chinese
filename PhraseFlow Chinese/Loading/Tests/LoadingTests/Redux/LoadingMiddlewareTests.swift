@@ -18,7 +18,7 @@ final class LoadingMiddlewareTests {
         LoadingStatus.none,
         LoadingStatus.writing
     ])
-    func updateLoadingStatus(loadingStatus: LoadingStatus) async throws {
+    func updateLoadingStatus(loadingStatus: LoadingStatus) async {
         let resultAction = await loadingMiddleware(
             .arrange,
             .updateLoadingStatus(loadingStatus),
