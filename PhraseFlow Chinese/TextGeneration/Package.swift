@@ -12,7 +12,12 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "TextGeneration",
-            targets: ["TextGeneration"]),
+            targets: ["TextGeneration"]
+        ),
+        .library(
+            name: "TextGenerationMocks",
+            targets: ["TextGenerationMocks"]
+        ),
     ],
     dependencies: [
         .package(name: "APIRequest", path: "../APIRequest"),
@@ -28,9 +33,21 @@ let package = Package(
                 "Settings"
             ]
         ),
+        .target(
+            name: "TextGenerationMocks",
+            dependencies: [
+                "TextGeneration",
+                "APIRequest",
+                "Settings"
+            ],
+            path: "Mocks"
+        ),
         .testTarget(
             name: "TextGenerationTests",
-            dependencies: ["TextGeneration"]
+            dependencies: [
+                "TextGeneration",
+                "TextGenerationMocks"
+            ]
         ),
     ]
 )

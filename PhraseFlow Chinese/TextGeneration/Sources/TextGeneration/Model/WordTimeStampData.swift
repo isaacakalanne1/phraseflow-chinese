@@ -13,11 +13,12 @@ public struct WordTimeStampData: Codable, Equatable, Hashable, Sendable {
     public let time: Double
     public var duration: Double
 
-    public init(id: UUID,
-         word: String,
-         time: Double,
-         duration: Double)
-    {
+    public init(
+        id: UUID,
+        word: String,
+        time: Double,
+        duration: Double
+    ) {
         self.id = id
         self.word = word
         self.time = time

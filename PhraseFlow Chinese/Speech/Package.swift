@@ -12,7 +12,12 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "Speech",
-            targets: ["Speech"]),
+            targets: ["Speech"]
+        ),
+        .library(
+            name: "SpeechMocks",
+            targets: ["SpeechMocks"]
+        ),
     ],
     dependencies: [
         .package(name: "TextGeneration", path: "../TextGeneration"),
@@ -33,9 +38,25 @@ let package = Package(
                 "Settings"
             ]
         ),
+        .target(
+            name: "SpeechMocks",
+            dependencies: [
+                "Speech",
+                "MicrosoftCognitiveServicesSpeech",
+                "Settings",
+                "TextGeneration",
+                .product(name: "TextGenerationMocks", package: "TextGeneration")
+            ],
+            path: "Mocks"
+        ),
         .testTarget(
             name: "SpeechTests",
-            dependencies: ["Speech"]
+            dependencies: [
+                .product(name: "Speech", package: "Speech"),
+                .product(name: "SpeechMocks", package: "Speech"),
+                .product(name: "TextGeneration", package: "TextGeneration"),
+                .product(name: "TextGenerationMocks", package: "TextGeneration")
+            ]
         ),
     ]
 )
