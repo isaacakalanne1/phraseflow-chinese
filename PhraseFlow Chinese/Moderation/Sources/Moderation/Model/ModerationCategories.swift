@@ -7,7 +7,7 @@
 
 import Localization
 
-public enum ModerationCategories: CaseIterable, Sendable {
+public enum ModerationCategories: CaseIterable, Sendable, Equatable {
     case sexual
     case sexualMinors
     case violenceGraphic

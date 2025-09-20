@@ -38,3 +38,11 @@ public struct CategoryResult: Identifiable {
         "\(Int(score * 100))%"
     }
 }
+
+extension CategoryResult: Equatable {
+    public static func == (lhs: CategoryResult, rhs: CategoryResult) -> Bool {
+        return lhs.category == rhs.category &&
+            lhs.threshold == rhs.threshold &&
+            lhs.score == rhs.score
+    }
+}

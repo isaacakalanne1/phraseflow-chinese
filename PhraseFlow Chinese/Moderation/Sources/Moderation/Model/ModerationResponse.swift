@@ -32,12 +32,11 @@ public struct ModerationResponse: Codable, Equatable, Sendable {
             return []
         }
 
-        return ModerationCategories.allCases.map { category in
-            let score = firstResult.category_scores[category.key] ?? 0.0
+        return ModerationCategories.allCases.map {
             return CategoryResult(
-                category: category,
-                threshold: category.thresholdScore,
-                score: score
+                category: $0,
+                threshold: $0.thresholdScore,
+                score: firstResult.category_scores[$0.key] ?? 0.0
             )
         }
     }

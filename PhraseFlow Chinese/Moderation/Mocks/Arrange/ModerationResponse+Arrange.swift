@@ -13,7 +13,7 @@ public extension ModerationResponse {
     }
 
     static func arrange(
-        results: [ModerationResult] = [.arrange]
+        results: [ModerationResult] = []
     ) -> ModerationResponse {
         .init(results: results)
     }
