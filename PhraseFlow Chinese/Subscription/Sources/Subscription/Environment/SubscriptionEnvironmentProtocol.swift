@@ -19,4 +19,7 @@ public protocol SubscriptionEnvironmentProtocol {
     func trackSSMLCharacterUsage(characterCount: Int,
                                  subscription: SubscriptionLevel) throws -> Int
     func saveAppSettings(_ settings: SettingsState) throws
+    func getCurrentEntitlements() async -> [VerificationResult<Transaction>]
+    func observeTransactionUpdates() async -> [VerificationResult<Transaction>]
+    func restoreSubscriptions() async throws
 }

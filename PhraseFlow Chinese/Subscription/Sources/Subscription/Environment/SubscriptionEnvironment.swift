@@ -63,4 +63,16 @@ public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
     public func saveAppSettings(_ settings: SettingsState) throws {
         try settingsEnvironment.saveAppSettings(settings)
     }
+    
+    public func getCurrentEntitlements() async -> [VerificationResult<Transaction>] {
+        return await repository.getCurrentEntitlementsDetailed()
+    }
+    
+    public func observeTransactionUpdates() async -> [VerificationResult<Transaction>] {
+        return await repository.observeTransactionUpdates()
+    }
+    
+    public func restoreSubscriptions() async throws {
+        try await repository.restoreSubscriptions()
+    }
 }

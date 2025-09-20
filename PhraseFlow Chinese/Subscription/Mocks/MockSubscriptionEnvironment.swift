@@ -20,13 +20,16 @@ public class MockSubscriptionEnvironment: SubscriptionEnvironmentProtocol {
     
     public var synthesizedCharactersSubject: CurrentValueSubject<Int?, Never>
     public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never>
+    var mockRepository: MockSubscriptionRepository
     
     public init(
         synthesizedCharactersSubject: CurrentValueSubject<Int?, Never> = .init(nil),
-        settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> = .init(nil)
+        settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> = .init(nil),
+        mockRepository: MockSubscriptionRepository = MockSubscriptionRepository()
     ) {
         self.synthesizedCharactersSubject = synthesizedCharactersSubject
         self.settingsUpdatedSubject = settingsUpdatedSubject
+        self.mockRepository = mockRepository
     }
     
     var getProductsCalled = false
@@ -88,5 +91,17 @@ public class MockSubscriptionEnvironment: SubscriptionEnvironmentProtocol {
         case .failure(let error):
             throw error
         }
+    }
+    
+    public func getCurrentEntitlements() async -> [VerificationResult<Transaction>] {
+        return await mockRepository.getCurrentEntitlementsDetailed()
+    }
+    
+    public func observeTransactionUpdates() async -> [VerificationResult<Transaction>] {
+        return await mockRepository.observeTransactionUpdates()
+    }
+    
+    public func restoreSubscriptions() async throws {
+        try await mockRepository.restoreSubscriptions()
     }
 }

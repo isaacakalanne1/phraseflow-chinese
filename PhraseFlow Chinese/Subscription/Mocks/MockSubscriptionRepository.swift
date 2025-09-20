@@ -57,4 +57,30 @@ public class MockSubscriptionRepository: SubscriptionRepositoryProtocol {
         getCurrentEntitlementsCalled = true
         return getCurrentEntitlementsReturn
     }
+    
+    var getCurrentEntitlementsDetailedCalled = false
+    var getCurrentEntitlementsDetailedReturn: [VerificationResult<Transaction>] = []
+    public func getCurrentEntitlementsDetailed() async -> [VerificationResult<Transaction>] {
+        getCurrentEntitlementsDetailedCalled = true
+        return getCurrentEntitlementsDetailedReturn
+    }
+    
+    var observeTransactionUpdatesCalled = false
+    var observeTransactionUpdatesReturn: [VerificationResult<Transaction>] = []
+    public func observeTransactionUpdates() async -> [VerificationResult<Transaction>] {
+        observeTransactionUpdatesCalled = true
+        return observeTransactionUpdatesReturn
+    }
+    
+    var restoreSubscriptionsCalled = false
+    var restoreSubscriptionsResult: Result<Void, MockSubscriptionRepositoryError> = .success(())
+    public func restoreSubscriptions() async throws {
+        restoreSubscriptionsCalled = true
+        switch restoreSubscriptionsResult {
+        case .success:
+            return
+        case .failure(let error):
+            throw error
+        }
+    }
 }

@@ -33,7 +33,7 @@ public let subscriptionMiddleware: Middleware<SubscriptionState, SubscriptionAct
     case .restoreSubscriptions:
         environment.validateReceipt()
         do {
-            try await AppStore.sync()
+            try await environment.restoreSubscriptions()
             return .onRestoredSubscriptions
         } catch {
             return .failedToRestoreSubscriptions
@@ -44,17 +44,11 @@ public let subscriptionMiddleware: Middleware<SubscriptionState, SubscriptionAct
         return .onValidatedReceipt
         
     case .getCurrentEntitlements:
-        var entitlements: [VerificationResult<Transaction>] = []
-        for await result in Transaction.currentEntitlements {
-            entitlements.append(result)
-        }
+        let entitlements = await environment.getCurrentEntitlements()
         return .updatePurchasedProducts(entitlements)
         
     case .observeTransactionUpdates:
-        var entitlements: [VerificationResult<Transaction>] = []
-        for await result in Transaction.updates {
-            entitlements.append(result)
-        }
+        let entitlements = await environment.observeTransactionUpdates()
         return .updatePurchasedProducts(entitlements)
         
     case .updatePurchasedProducts(let entitlements):

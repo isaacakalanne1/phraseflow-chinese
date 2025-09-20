@@ -17,9 +17,13 @@ import StoreKit
 final class SubscriptionMiddlewareTests {
     
     let mockEnvironment: MockSubscriptionEnvironment
+    let mockRepository: MockSubscriptionRepository
     
     init() {
-        mockEnvironment = MockSubscriptionEnvironment()
+        self.mockRepository = MockSubscriptionRepository()
+        self.mockEnvironment = MockSubscriptionEnvironment(
+            mockRepository: mockRepository
+        )
     }
     
     @Test
@@ -56,18 +60,36 @@ final class SubscriptionMiddlewareTests {
     // Note: purchaseSubscription tests are skipped because we cannot create mock Product instances
     // @Test func purchaseSubscription_success() - Skipped: Cannot create mock Product instances
     // @Test func purchaseSubscription_error() - Skipped: Cannot create mock Product instances
+    // TODO: Update above to be testable
     
     @Test
     func restoreSubscriptions_success() async {
-        // Note: We can't properly test AppStore.sync() but we can verify validateReceipt is called
+        mockRepository.restoreSubscriptionsResult = .success(())
+        
         let resultAction = await subscriptionMiddleware(
             .arrange,
             .restoreSubscriptions,
             mockEnvironment
         )
         
-        // The actual action depends on AppStore.sync() which we can't mock
+        #expect(resultAction == .onRestoredSubscriptions)
         #expect(mockEnvironment.validateReceiptCalled == true)
+        #expect(mockRepository.restoreSubscriptionsCalled == true)
+    }
+    
+    @Test
+    func restoreSubscriptions_error() async {
+        mockRepository.restoreSubscriptionsResult = .failure(.genericError)
+        
+        let resultAction = await subscriptionMiddleware(
+            .arrange,
+            .restoreSubscriptions,
+            mockEnvironment
+        )
+        
+        #expect(resultAction == .failedToRestoreSubscriptions)
+        #expect(mockEnvironment.validateReceiptCalled == true)
+        #expect(mockRepository.restoreSubscriptionsCalled == true)
     }
     
     @Test
@@ -84,36 +106,32 @@ final class SubscriptionMiddlewareTests {
     
     @Test
     func getCurrentEntitlements() async {
-        // Note: Transaction.currentEntitlements cannot be mocked, so we verify the action type
+        let expectedEntitlements: [VerificationResult<Transaction>] = []
+        mockRepository.getCurrentEntitlementsDetailedReturn = expectedEntitlements
+        
         let resultAction = await subscriptionMiddleware(
             .arrange,
             .getCurrentEntitlements,
             mockEnvironment
         )
         
-        // The result will be .updatePurchasedProducts with empty array since we can't mock transactions
-        if case .updatePurchasedProducts(let entitlements) = resultAction {
-            #expect(entitlements.isEmpty)
-        } else {
-            Issue.record("Expected updatePurchasedProducts action")
-        }
+        #expect(resultAction == .updatePurchasedProducts(expectedEntitlements))
+        #expect(mockRepository.getCurrentEntitlementsDetailedCalled == true)
     }
     
     @Test
     func observeTransactionUpdates() async {
-        // Note: Transaction.updates cannot be mocked, so we verify the action type
+        let expectedEntitlements: [VerificationResult<Transaction>] = []
+        mockRepository.observeTransactionUpdatesReturn = expectedEntitlements
+        
         let resultAction = await subscriptionMiddleware(
             .arrange,
             .observeTransactionUpdates,
             mockEnvironment
         )
         
-        // The result will be .updatePurchasedProducts with empty array since we can't mock transactions
-        if case .updatePurchasedProducts(let entitlements) = resultAction {
-            #expect(entitlements.isEmpty)
-        } else {
-            Issue.record("Expected updatePurchasedProducts action")
-        }
+        #expect(resultAction == .updatePurchasedProducts(expectedEntitlements))
+        #expect(mockRepository.observeTransactionUpdatesCalled == true)
     }
     
     @Test

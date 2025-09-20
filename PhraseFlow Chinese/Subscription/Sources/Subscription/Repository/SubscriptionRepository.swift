@@ -66,4 +66,24 @@ public class SubscriptionRepository: SubscriptionRepositoryProtocol {
         return productIDs
     }
     
+    public func getCurrentEntitlementsDetailed() async -> [VerificationResult<Transaction>] {
+        var entitlements: [VerificationResult<Transaction>] = []
+        for await result in Transaction.currentEntitlements {
+            entitlements.append(result)
+        }
+        return entitlements
+    }
+    
+    public func observeTransactionUpdates() async -> [VerificationResult<Transaction>] {
+        var entitlements: [VerificationResult<Transaction>] = []
+        for await result in Transaction.updates {
+            entitlements.append(result)
+        }
+        return entitlements
+    }
+    
+    public func restoreSubscriptions() async throws {
+        try await AppStore.sync()
+    }
+    
 }

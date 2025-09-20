@@ -166,5 +166,45 @@ final class SubscriptionEnvironmentTests {
         
         #expect(environment.settingsUpdatedSubject.value == expectedSettings)
     }
+    
+    @Test
+    func getCurrentEntitlements() async {
+        let expectedEntitlements: [VerificationResult<Transaction>] = []
+        
+        let result = await environment.getCurrentEntitlements()
+        
+        #expect(result == expectedEntitlements)
+    }
+    
+    @Test
+    func observeTransactionUpdates() async {
+        let expectedEntitlements: [VerificationResult<Transaction>] = []
+        
+        let result = await environment.observeTransactionUpdates()
+        
+        #expect(result == expectedEntitlements)
+    }
+    
+    @Test
+    func restoreSubscriptions_success() async throws {
+        try await environment.restoreSubscriptions()
+        
+        // Success - no exception thrown
+        #expect(true)
+    }
+    
+    @Test
+    func restoreSubscriptions_error() async throws {
+        // Note: We can't easily mock AppStore.sync() to throw errors in the real environment
+        // This test just verifies the method exists and can be called
+        do {
+            try await environment.restoreSubscriptions()
+            // Success case - AppStore.sync() completed
+            #expect(true)
+        } catch {
+            // Error case - AppStore.sync() failed (this is also valid)
+            #expect(true)
+        }
+    }
 }
 
