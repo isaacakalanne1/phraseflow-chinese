@@ -82,7 +82,8 @@ let package = Package(
                 .product(name: "StudyMocks", package: "Study"),
                 .product(name: "TextGenerationMocks", package: "TextGeneration"),
                 .product(name: "TextPracticeMocks", package: "TextPractice"),
-                .product(name: "UserLimitMocks", package: "UserLimit")
+                .product(name: "UserLimitMocks", package: "UserLimit"),
+                .product(name: "SettingsMocks", package: "Settings")
             ],
             path: "Mocks"
         ),

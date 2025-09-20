@@ -20,13 +20,18 @@ public struct StoryState: Equatable {
 
     public init(
         currentChapter: Chapter? = nil,
-         storyChapters: [UUID: [Chapter]] = [:],
-         isWritingChapter: Bool = false
+        storyChapters: [UUID: [Chapter]] = [:],
+        isWritingChapter: Bool = false,
+        viewState: StoryViewState = StoryViewState(),
+        isPlayingChapterAudio: Bool = false,
+        settings: SettingsState = SettingsState()
     ) {
         self.currentChapter = currentChapter
         self.storyChapters = storyChapters
         self.isWritingChapter = isWritingChapter
-        self.viewState = StoryViewState()
+        self.viewState = viewState
+        self.isPlayingChapterAudio = isPlayingChapterAudio
+        self.settings = settings
     }
     
     public var allStories: [(storyId: UUID, chapters: [Chapter])] {

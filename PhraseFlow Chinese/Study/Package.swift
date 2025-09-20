@@ -56,7 +56,9 @@ let package = Package(
                 "FTStyleKit",
                 "Settings",
                 "TextGeneration",
-                "AppleIcon"
+                "AppleIcon",
+                .product(name: "SettingsMocks", package: "Settings"),
+                .product(name: "TextGenerationMocks", package: "TextGeneration")
             ],
             path: "Mocks"
         ),

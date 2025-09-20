@@ -22,7 +22,6 @@ public class StoryDataStore: @preconcurrency StoryDataStoreProtocol {
         return fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
     }
 
-
     private func fileURL(for chapter: Chapter) throws -> URL {
         guard let dir = documentsDirectory else {
             throw StoryDataStoreError.failedToCreateUrl

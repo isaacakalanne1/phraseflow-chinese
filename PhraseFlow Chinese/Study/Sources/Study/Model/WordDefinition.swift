@@ -10,4 +10,14 @@ public struct WordDefinition: Codable, Equatable, Hashable, Sendable {
     public let pronunciation: String
     public let definition: String
     public let definitionInContextOfSentence: String
+    public init(
+        word: String,
+        pronunciation: String,
+        definition: String,
+        definitionInContextOfSentence: String) {
+        self.word = word
+        self.pronunciation = pronunciation
+        self.definition = definition
+        self.definitionInContextOfSentence = definitionInContextOfSentence
+    }
 }

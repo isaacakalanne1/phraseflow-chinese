@@ -9,7 +9,7 @@ import Settings
 import Moderation
 import ModerationMocks
 
-extension SettingsViewState {
+public extension SettingsViewState {
     static var arrange: SettingsViewState {
         .arrange()
     }

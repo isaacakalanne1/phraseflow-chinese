@@ -10,7 +10,7 @@ import AVKit
 import Foundation
 import Settings
 
-enum StudyAction {
+enum StudyAction: Equatable, Sendable {
     case failedToPrepareStudyWord
     case playStudyWord
     case prepareToPlayStudySentence(Definition)

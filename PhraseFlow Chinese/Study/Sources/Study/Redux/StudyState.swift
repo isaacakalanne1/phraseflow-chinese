@@ -10,13 +10,13 @@ import AVKit
 import Settings
 import TextGeneration
 
-struct StudyState: Equatable {
+public struct StudyState: Equatable {
     var audioPlayer: AVPlayer
     var sentenceAudioPlayer: AVPlayer
-    var displayStatus: StudyDisplayStatus = .wordShown
+    var displayStatus: StudyDisplayStatus
     
     var definitions: [Definition]
-    var settings = SettingsState()
+    var settings: SettingsState
 
     func studyDefinitions(language: Language?) -> [Definition] {
         definitions
@@ -28,16 +28,18 @@ struct StudyState: Equatable {
             .sorted(by: { $0.creationDate > $1.creationDate })
     }
 
-    init(
+    public init(
         audioPlayer: AVPlayer = AVPlayer(),
         sentenceAudioPlayer: AVPlayer = AVPlayer(),
         definitions: [Definition] = [],
-        displayStatus: StudyDisplayStatus = .wordShown
+        displayStatus: StudyDisplayStatus = .wordShown,
+        settings: SettingsState = .init()
     ) {
         self.audioPlayer = audioPlayer
         self.sentenceAudioPlayer = sentenceAudioPlayer
         self.displayStatus = displayStatus
         self.definitions = definitions
+        self.settings = settings
     }
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum CreateChapterType: Sendable {
+public enum CreateChapterType: Sendable, Equatable {
     case newStory
     case existingStory(UUID)
 }

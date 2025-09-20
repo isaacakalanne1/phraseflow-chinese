@@ -10,7 +10,7 @@ import Foundation
 import Settings
 import TextGeneration
 
-public enum StoryAction: Sendable {
+public enum StoryAction: Sendable, Equatable {
     case createChapter(CreateChapterType)
     case generateText(CreateChapterType)
     case onGeneratedText(Chapter)

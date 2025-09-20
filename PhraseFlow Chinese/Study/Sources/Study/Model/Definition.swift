@@ -22,18 +22,19 @@ public struct Definition: Codable, Equatable, Hashable, Sendable {
     public var storyId: UUID
     public var audioData: Data?
 
-    init(id: UUID = UUID(),
-         creationDate: Date = Date(),
-         studiedDates: [Date] = [],
-         timestampData: WordTimeStampData,
-         sentence: Sentence,
-         detail: WordDefinition,
-         language: Language,
-         hasBeenSeen: Bool = false,
-         sentenceId: UUID,
-         storyId: UUID,
-         audioData: Data? = nil)
-    {
+    public init(
+        id: UUID = UUID(),
+        creationDate: Date = Date(),
+        studiedDates: [Date] = [],
+        timestampData: WordTimeStampData,
+        sentence: Sentence,
+        detail: WordDefinition,
+        language: Language,
+        hasBeenSeen: Bool = false,
+        sentenceId: UUID,
+        storyId: UUID,
+        audioData: Data? = nil
+    ) {
         self.id = id
         self.creationDate = creationDate
         self.studiedDates = studiedDates

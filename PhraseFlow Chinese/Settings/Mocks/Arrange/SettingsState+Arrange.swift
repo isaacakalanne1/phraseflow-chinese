@@ -8,7 +8,7 @@
 import Settings
 import DataStorage
 
-extension SettingsState {
+public extension SettingsState {
     static var arrange: SettingsState {
         .arrange()
     }

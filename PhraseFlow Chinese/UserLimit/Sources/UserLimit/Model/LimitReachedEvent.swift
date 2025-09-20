@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum LimitReachedEvent {
+public enum LimitReachedEvent: Equatable {
     case freeLimit
     case dailyLimit(nextAvailable: String)
 }

@@ -5,7 +5,7 @@
 //  Created by iakalann on 13/07/2025.
 //
 
-enum StudyDisplayStatus {
+public enum StudyDisplayStatus: Sendable {
     case wordShown
     case pronounciationShown
     case allShown
