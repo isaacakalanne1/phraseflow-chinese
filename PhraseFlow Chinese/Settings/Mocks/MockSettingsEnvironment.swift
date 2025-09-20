@@ -15,17 +15,21 @@ enum MockSettingsEnvironmentError: Error {
     case genericError
 }
 
-class MockSettingsEnvironment: SettingsEnvironmentProtocol {
-    var settingsUpdatedSubject: CurrentValueSubject<Settings.SettingsState?, Never> = .init(nil)
+public class MockSettingsEnvironment: SettingsEnvironmentProtocol {
+    public var settingsUpdatedSubject: CurrentValueSubject<Settings.SettingsState?, Never> = .init(nil)
+    
+    public init() {
+        
+    }
     
     var saveAppSettingsSpy: SettingsState? = nil
     var saveAppSettingsCalled = false
     var saveAppSettingsResult: Result<Void, MockSettingsEnvironmentError> = .success(())
-    func saveAppSettings(_ settings: SettingsState) throws {
+    public func saveAppSettings(_ settings: SettingsState) throws {
         saveAppSettingsSpy = settings
         saveAppSettingsCalled = true
         switch saveAppSettingsResult {
-        case .success(let success):
+        case .success:
             break
         case .failure(let error):
             throw error
@@ -34,7 +38,7 @@ class MockSettingsEnvironment: SettingsEnvironmentProtocol {
     
     var loadAppSettingsCalled = false
     var loadAppSettingsResult: Result<SettingsState, MockSettingsEnvironmentError> = .success(.arrange)
-    func loadAppSettings() throws -> SettingsState {
+    public func loadAppSettings() throws -> SettingsState {
         loadAppSettingsCalled = true
         switch loadAppSettingsResult {
         case .success(let success):
@@ -46,7 +50,7 @@ class MockSettingsEnvironment: SettingsEnvironmentProtocol {
     
     var playSoundSpy: AppSound? = nil
     var playSoundCalled = false
-    func playSound(_ sound: AppSound) {
+    public func playSound(_ sound: AppSound) {
         playSoundSpy = sound
         playSoundCalled = true
     }
@@ -54,11 +58,11 @@ class MockSettingsEnvironment: SettingsEnvironmentProtocol {
     var playMusicSpy: MusicType? = nil
     var playMusicCalled = false
     var playMusicResult: Result<Void, MockSettingsEnvironmentError> = .success(())
-    func playMusic(_ music: MusicType) throws {
+    public func playMusic(_ music: MusicType) throws {
         playMusicSpy = music
         playMusicCalled = true
         switch playMusicResult {
-        case .success(let success):
+        case .success:
             break
         case .failure(let error):
             throw error
@@ -66,17 +70,17 @@ class MockSettingsEnvironment: SettingsEnvironmentProtocol {
     }
     
     
-    var isPlayingMusic: Bool = false
+    public var isPlayingMusic: Bool = false
     
     var stopMusicCalled = false
-    func stopMusic() {
+    public func stopMusic() {
         stopMusicCalled = true
     }
     
     var moderateTextSpy = ""
     var moderateTextCalled = false
     var moderateTextResult: Result<ModerationResponse, MockSettingsEnvironmentError> = .success(.arrange)
-    func moderateText(_ text: String) async throws -> ModerationResponse {
+    public func moderateText(_ text: String) async throws -> ModerationResponse {
         moderateTextSpy = text
         moderateTextCalled = true
         switch moderateTextResult {

@@ -35,7 +35,7 @@ public enum Language: String, Codable, CaseIterable, Sendable, Equatable {
     public var descriptiveEnglishName: String {
         switch self {
         case .autoDetect:
-            LocalizedString.autoDetect
+            "Auto detect"
         case .brazilianPortuguese:
             "Brazilian Portuguese"
         case .europeanPortuguese:

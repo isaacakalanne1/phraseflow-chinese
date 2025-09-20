@@ -65,6 +65,8 @@ let package = Package(
                 "Subscription",
                 "Translation",
                 "DataStorage",
+                .product(name: "AudioMocks", package: "Audio"),
+                .product(name: "SettingsMocks", package: "Settings")
             ],
             path: "Mocks"
         ),

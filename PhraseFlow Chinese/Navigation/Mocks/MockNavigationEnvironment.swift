@@ -8,12 +8,14 @@
 import Combine
 import Navigation
 import Settings
+import SettingsMocks
 import Story
 import Study
 import Subscription
 import Translation
 import UserLimit
 import Audio
+import AudioMocks
 import Loading
 
 class MockNavigationEnvironment: NavigationEnvironmentProtocol {
@@ -31,13 +33,13 @@ class MockNavigationEnvironment: NavigationEnvironmentProtocol {
     public let loadingEnvironment: LoadingEnvironmentProtocol
     
     public init(
-        settingsEnvironment: SettingsEnvironmentProtocol,
+        settingsEnvironment: SettingsEnvironmentProtocol = MockSettingsEnvironment(),
         storyEnvironment: StoryEnvironmentProtocol,
         studyEnvironment: StudyEnvironmentProtocol,
         subscriptionEnvironment: SubscriptionEnvironmentProtocol,
         translationEnvironment: TranslationEnvironmentProtocol,
         userLimitEnvironment: UserLimitEnvironmentProtocol,
-        audioEnvironment: AudioEnvironmentProtocol,
+        audioEnvironment: AudioEnvironmentProtocol = MockAudioEnvironment(),
         loadingEnvironment: LoadingEnvironmentProtocol
     ) {
         self.settingsEnvironment = settingsEnvironment
