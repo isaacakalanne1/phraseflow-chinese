@@ -65,6 +65,8 @@ let package = Package(
             dependencies: [
                 "Subscription",
                 "SubscriptionMocks",
+                "Settings",
+                "ReduxKit",
                 .product(name: "SpeechMocks", package: "Speech"),
                 .product(name: "SettingsMocks", package: "Settings"),
                 .product(name: "UserLimitMocks", package: "UserLimit")

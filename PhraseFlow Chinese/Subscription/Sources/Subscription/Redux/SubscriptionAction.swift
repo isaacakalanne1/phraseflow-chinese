@@ -10,7 +10,7 @@ import Foundation
 import Settings
 import StoreKit
 
-public enum SubscriptionAction: Sendable {
+public enum SubscriptionAction: Sendable, Equatable {
     case trackSsmlCharacterCount(Int)
     case onTrackedSsml(totalUsedCharacters: Int)
     case failedToTrackSsml

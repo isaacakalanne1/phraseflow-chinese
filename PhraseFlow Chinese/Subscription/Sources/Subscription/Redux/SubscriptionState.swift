@@ -11,8 +11,8 @@ import Settings
 import StoreKit
 
 public struct SubscriptionState: Equatable {
-    public var isLoadingSubscriptionPurchase = false
-    public var settings = SettingsState()
+    public var isLoadingSubscriptionPurchase: Bool
+    public var settings: SettingsState
     public var currentSubscription: SubscriptionLevel {
         settings.subscriptionLevel
     }
@@ -24,8 +24,22 @@ public struct SubscriptionState: Equatable {
     public var products: [Product]?
     public var purchasedProductIDs = Set<String>()
 
-    public var hasReachedFreeTrialLimit = false
-    public var nextAvailableDescription = ""
+    public var hasReachedFreeTrialLimit: Bool
+    public var nextAvailableDescription: String
     
-    public init() {}
+    public init(
+        isLoadingSubscriptionPurchase: Bool = false,
+        settings: SettingsState = SettingsState(),
+        products: [Product]? = nil,
+        purchasedProductIDs: Set<String> = Set<String>(),
+        hasReachedFreeTrialLimit: Bool = false,
+        nextAvailableDescription: String = ""
+    ) {
+        self.isLoadingSubscriptionPurchase = isLoadingSubscriptionPurchase
+        self.settings = settings
+        self.products = products
+        self.purchasedProductIDs = purchasedProductIDs
+        self.hasReachedFreeTrialLimit = hasReachedFreeTrialLimit
+        self.nextAvailableDescription = nextAvailableDescription
+    }
 }

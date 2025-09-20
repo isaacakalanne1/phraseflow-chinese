@@ -67,11 +67,11 @@ final class SubscriptionEnvironmentTests {
     
     // @Test 
     // func purchase_success() - Skipped: Cannot create mock Product instances
-    // TODO: Update purchase to be testable
+    // TODO: Update purchase function to be testable
     
     // @Test 
     // func purchase_error() - Skipped: Cannot create mock Product instances
-    // TODO: Update purchase to be testable
+    // TODO: Update purchase function to be testable
     
     @Test
     func validateReceipt() {
@@ -85,7 +85,10 @@ final class SubscriptionEnvironmentTests {
         (500, SubscriptionLevel.level1),
         (1000, SubscriptionLevel.level2)
     ])
-    func trackSSMLCharacterUsage_success(characterCount: Int, subscription: SubscriptionLevel) throws {
+    func trackSSMLCharacterUsage_success(
+        characterCount: Int,
+        subscription: SubscriptionLevel
+    ) throws {
         let expectedRemaining = 1000
         mockUserLimitsEnvironment.trackSSMLCharacterUsageResult = .success(expectedRemaining)
         
@@ -105,7 +108,10 @@ final class SubscriptionEnvironmentTests {
         (500, SubscriptionLevel.level1),
         (1000, SubscriptionLevel.level2)
     ])
-    func trackSSMLCharacterUsage_error(characterCount: Int, subscription: SubscriptionLevel) throws {
+    func trackSSMLCharacterUsage_error(
+        characterCount: Int,
+        subscription: SubscriptionLevel
+    ) throws {
         mockUserLimitsEnvironment.trackSSMLCharacterUsageResult = .failure(MockUserLimitEnvironmentError.genericError)
         
         do {
