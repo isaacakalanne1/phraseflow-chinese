@@ -13,6 +13,16 @@ public struct CategoryResult: Identifiable {
     let category: ModerationCategories
     let threshold: Double
     let score: Double
+    
+    public init(
+        category: ModerationCategories,
+        threshold: Double,
+        score: Double
+    ) {
+        self.category = category
+        self.threshold = threshold
+        self.score = score
+    }
 
     /// Did this particular category pass (score < threshold)?
     public var didPass: Bool {
