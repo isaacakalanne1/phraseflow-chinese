@@ -62,7 +62,13 @@ let package = Package(
         ),
         .testTarget(
             name: "SubscriptionTests",
-            dependencies: ["Subscription"]
+            dependencies: [
+                "Subscription",
+                "SubscriptionMocks",
+                .product(name: "SpeechMocks", package: "Speech"),
+                .product(name: "SettingsMocks", package: "Settings"),
+                .product(name: "UserLimitMocks", package: "UserLimit")
+            ]
         ),
     ]
 )
