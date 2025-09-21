@@ -161,7 +161,6 @@ final class StoryEnvironmentTests {
     
     @Test
     func generateTextForChapter_withEmptyPreviousChaptersAndMissingParameters_throwsError() async throws {
-        var threwError = false
         do {
             _ = try await storyEnvironment.generateTextForChapter(
                 previousChapters: [],
@@ -171,11 +170,10 @@ final class StoryEnvironmentTests {
                 deviceLanguage: .english,
                 storyPrompt: nil
             )
+            Issue.record("Should have thrown error")
         } catch {
-            threwError = true
+            #expect(mockLoadingEnvironment.updateLoadingStatusSpy == .writing)
         }
-        
-        #expect(threwError == true)
     }
     
     @Test
