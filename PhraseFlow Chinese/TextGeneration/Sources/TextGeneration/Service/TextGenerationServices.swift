@@ -122,6 +122,7 @@ public class TextGenerationServices: TextGenerationServicesProtocol {
         \(baseChapter.difficulty.vocabularyPrompt).
         Use a vocabulary of around 150 \(baseChapter.language.descriptiveEnglishName) words.
         The chapter should be around 400 \(baseChapter.language.descriptiveEnglishName) words long.
+        In the JSON, split the story into individual sentences.
         
         """
         initialPrompt.append(promptDetails)
