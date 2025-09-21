@@ -32,10 +32,15 @@ public class MockAudioEnvironment: AudioEnvironmentProtocol {
     }
     
     
-    var playChapterAudioSpy: (Double?, Float)?
+    var playChapterAudioFromTimeSpy: Double?
+    var playChapterAudioRateSpy: Float?
     var playChapterAudioCalled = false
-    public func playChapterAudio(from time: Double?, rate: Float) async {
-        playChapterAudioSpy = (time, rate)
+    public func playChapterAudio(
+        from time: Double?,
+        rate: Float
+    ) async {
+        playChapterAudioFromTimeSpy = time
+        playChapterAudioRateSpy = rate
         playChapterAudioCalled = true
     }
     
@@ -44,14 +49,18 @@ public class MockAudioEnvironment: AudioEnvironmentProtocol {
         pauseChapterAudioCalled = true
     }
     
-    var playWordSpy: (Double, Double, Float)?
+    var playWordStartTimeSpy: Double?
+    var playWordDurationSpy: Double?
+    var playWordPlayRateSpy: Float?
     var playWordCalled = false
     public func playWord(
         startTime: Double,
         duration: Double,
         playRate: Float
     ) async {
-        playWordSpy = (startTime, duration, playRate)
+        playWordStartTimeSpy = startTime
+        playWordDurationSpy = duration
+        playWordPlayRateSpy = playRate
         playWordCalled = true
     }
     

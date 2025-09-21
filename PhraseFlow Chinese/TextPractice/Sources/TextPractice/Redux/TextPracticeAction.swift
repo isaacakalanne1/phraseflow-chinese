@@ -10,7 +10,7 @@ import TextGeneration
 import Settings
 import Study
 
-public enum TextPracticeAction: Sendable {
+public enum TextPracticeAction: Sendable, Equatable {
     case addDefinitions([Definition])
     case showDefinition(WordTimeStampData)
     case hideDefinition

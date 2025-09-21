@@ -17,8 +17,7 @@ public struct Chapter: Codable, Equatable, Hashable, Sendable {
     public var audioVoice: Voice
     public var audio: ChapterAudio
     public var passage: String
-    
-    // Story-level properties moved to Chapter
+
     public var chapterSummary: String
     public let difficulty: Difficulty
     public let deviceLanguage: Language
@@ -44,16 +43,16 @@ public struct Chapter: Codable, Equatable, Hashable, Sendable {
 
     public init(
         id: UUID = UUID(),
-        storyId: UUID,
-        title: String,
-        sentences: [Sentence],
-        audioVoice: Voice,
-        audio: ChapterAudio,
-        passage: String,
+        storyId: UUID = UUID(),
+        title: String = "",
+        sentences: [Sentence] = [],
+        audioVoice: Voice = .elvira,
+        audio: ChapterAudio = .init(data: Data()),
+        passage: String = "",
         chapterSummary: String = "",
         difficulty: Difficulty = .beginner,
-        deviceLanguage: Language,
-        language: Language,
+        deviceLanguage: Language = .english,
+        language: Language = .spanish,
         storyTitle: String = "",
         currentPlaybackTime: Double = 0,
         currentSentence: Sentence? = nil,

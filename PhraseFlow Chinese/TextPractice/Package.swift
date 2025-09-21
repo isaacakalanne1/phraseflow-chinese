@@ -54,6 +54,7 @@ let package = Package(
                 "Study",
                 "TextGeneration",
                 "Localization",
+                .product(name: "SettingsMocks", package: "Settings"),
                 .product(name: "AudioMocks", package: "Audio"),
                 .product(name: "StudyMocks", package: "Study")
             ],

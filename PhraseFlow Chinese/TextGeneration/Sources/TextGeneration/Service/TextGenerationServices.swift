@@ -16,8 +16,8 @@ enum TextGenerationServicesError: Error {
 }
 
 public class TextGenerationServices: TextGenerationServicesProtocol {
+
     public init() {}
-    
 
     public func generateFirstChapter(
         language: Language,
