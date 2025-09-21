@@ -9,7 +9,7 @@ import Foundation
 import Settings
 import TextGeneration
 
-enum TranslationAction {
+enum TranslationAction: Equatable {
     case updateInputText(String)
     case updateSourceLanguage(Language)
     case updateTargetLanguage(Language)
