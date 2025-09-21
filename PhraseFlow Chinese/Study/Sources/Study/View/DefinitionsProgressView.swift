@@ -66,20 +66,19 @@ struct DefinitionsProgressView: View {
             StudyView(studyWords: store.state.studyDefinitions(language: filterLanguage))
                 .environmentObject(store)
         }
+        .toolbar(.hidden)
         .background(FTColor.background.color)
     }
 
     @ViewBuilder
     func sheetContent(isCreations: Bool, definitions: [Definition]) -> some View {
-        NavigationView {
-            VStack {
-                DefinitionsChartView(definitions: definitions, isCreations: isCreations)
-                    .frame(height: 300)
+        VStack {
+            DefinitionsChartView(definitions: definitions, isCreations: isCreations)
+                .frame(height: 300)
 
-                definitionsList(definitions: definitions, isCreations: isCreations)
-            }
-            .background(FTColor.background.color)
+            definitionsList(definitions: definitions, isCreations: isCreations)
         }
+        .background(FTColor.background.color)
     }
     
     @ViewBuilder
@@ -94,7 +93,6 @@ struct DefinitionsProgressView: View {
             }
         }
         .listStyle(.insetGrouped)
-        .navigationBarTitleDisplayMode(.inline)
         .background(FTColor.background.color)
         .scrollContentBackground(.hidden)
     }

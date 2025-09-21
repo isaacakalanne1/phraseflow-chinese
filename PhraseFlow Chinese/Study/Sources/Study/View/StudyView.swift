@@ -142,7 +142,6 @@ public struct StudyView: View {
                 }
             }
         }
-        .navigationTitle(LocalizedString.studyNavTitle)
         .onAppear {
             index = 0
             updateDefinition()

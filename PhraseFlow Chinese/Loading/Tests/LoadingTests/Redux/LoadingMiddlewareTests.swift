@@ -32,6 +32,7 @@ final class LoadingMiddlewareTests {
                 .generatingImage,
                 .generatingSpeech,
                 .generatingDefinitions,
+                .formattingSentences,
                 .none:
             #expect(resultAction == nil)
         }
