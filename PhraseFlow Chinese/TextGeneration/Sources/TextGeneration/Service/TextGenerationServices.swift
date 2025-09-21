@@ -19,16 +19,20 @@ public class TextGenerationServices: TextGenerationServicesProtocol {
 
     public init() {}
 
-    public func generateFirstChapter(
-        language: Language,
-        difficulty: Difficulty,
-        voice: Voice,
-        deviceLanguage: Language?,
+    public func generateChapterStory(
+        previousChapters: [Chapter],
+        language: Language?,
+        difficulty: Difficulty?,
+        voice: Voice?,
         storyPrompt: String?
     ) async throws -> Chapter {
-        do {
-            guard let deviceLanguage else {
-                throw TextGenerationServicesError.failedToGetDeviceLanguage
+        let isFirstChapter = previousChapters.isEmpty
+        
+        if isFirstChapter {
+            guard let language = language,
+                  let difficulty = difficulty,
+                  let voice = voice else {
+                throw NSError(domain: "TextGenerationServices", code: 0, userInfo: [NSLocalizedDescriptionKey: "Missing required parameters for first chapter"])
             }
             
             let baseChapter = Chapter(
@@ -39,167 +43,171 @@ public class TextGenerationServices: TextGenerationServicesProtocol {
                 audio: ChapterAudio(data: Data()),
                 passage: "",
                 difficulty: difficulty,
-                deviceLanguage: deviceLanguage,
+                deviceLanguage: Language.deviceLanguage,
                 language: language,
                 storyPrompt: storyPrompt
             )
             
-            let jsonString = try await generateFirstChapterRequest(baseChapter: baseChapter, deviceLanguage: deviceLanguage)
-            guard let jsonData = jsonString.data(using: .utf8) else {
-                throw TextGenerationServicesError.failedToGetResponseData
-            }
-            
-            let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguageKey: deviceLanguage.rawValue, targetLanguageKey: language.rawValue)
-            let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
-            let passage = chapterResponse.sentences.reduce("") { $0 + $1.original }
+            let storyText = try await generateStoryRequest(baseChapter: baseChapter, previousChapters: [])
             
             var newChapter = baseChapter
             newChapter.id = UUID()
-            newChapter.title = chapterResponse.chapterNumberAndTitle ?? ""
-            newChapter.sentences = chapterResponse.sentences
-            newChapter.passage = passage
-            newChapter.storyTitle = chapterResponse.titleOfNovel ?? ""
-            newChapter.chapterSummary = chapterResponse.briefLatestStorySummary
+            newChapter.passage = storyText
             newChapter.lastUpdated = .now
             return newChapter
-        } catch {
-            throw TextGenerationServicesError.failedToDecodeSentences
+        } else {
+            guard let baseChapter = previousChapters.last else {
+                throw TextGenerationServicesError.failedToGetResponseData
+            }
+            
+            let storyText = try await generateStoryRequest(baseChapter: baseChapter, previousChapters: previousChapters)
+            
+            var newChapter = baseChapter
+            newChapter.id = UUID()
+            newChapter.passage = storyText
+            newChapter.lastUpdated = .now
+            return newChapter
         }
     }
 
-    public func generateChapter(previousChapters: [Chapter],
-                                deviceLanguage: Language?) async throws -> Chapter {
+    public func formatStoryIntoSentences(
+        chapter: Chapter,
+        deviceLanguage: Language?
+    ) async throws -> Chapter {
         do {
             guard let deviceLanguage else {
                 throw TextGenerationServicesError.failedToGetDeviceLanguage
             }
             
-            let jsonString = try await generateChapterRequest(previousChapters: previousChapters,
-                                                              deviceLanguage: deviceLanguage)
-            guard let jsonData = jsonString.data(using: .utf8),
-                  let baseChapter = previousChapters.last else {
+            let jsonString = try await formatSentencesRequest(chapter: chapter, deviceLanguage: deviceLanguage)
+            guard let jsonData = jsonString.data(using: .utf8) else {
                 throw TextGenerationServicesError.failedToGetResponseData
             }
-
-            let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguageKey: deviceLanguage.rawValue, targetLanguageKey: baseChapter.language.rawValue)
-            let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
-            let passage = chapterResponse.sentences.reduce("") { $0 + $1.original }
             
-            var newChapter = baseChapter
-            newChapter.id = UUID()
-            newChapter.title = chapterResponse.chapterNumberAndTitle ?? ""
-            newChapter.sentences = chapterResponse.sentences
-            newChapter.passage = passage
-
+            let decoder = JSONDecoder.createChapterResponseDecoder(deviceLanguageKey: deviceLanguage.rawValue, targetLanguageKey: chapter.language.rawValue)
+            let chapterResponse = try decoder.decode(ChapterResponse.self, from: jsonData)
+            
+            var updatedChapter = chapter
+            updatedChapter.title = chapterResponse.chapterNumberAndTitle ?? ""
+            updatedChapter.sentences = chapterResponse.sentences
+            updatedChapter.chapterSummary = chapterResponse.briefLatestStorySummary
+            
             if let title = chapterResponse.titleOfNovel {
-                newChapter.storyTitle = title
+                updatedChapter.storyTitle = title
             }
-            newChapter.chapterSummary = chapterResponse.briefLatestStorySummary
-            newChapter.lastUpdated = .now
-            return newChapter
+            
+            return updatedChapter
         } catch {
             throw TextGenerationServicesError.failedToDecodeSentences
         }
     }
 
-    private func generateFirstChapterRequest(
+    private func generateStoryRequest(
         baseChapter: Chapter,
-        deviceLanguage: Language
+        previousChapters: [Chapter]
     ) async throws -> String {
         var messages: [[String: String]] = []
         
-        var initialPrompt = """
-        Write an incredible first chapter of a story written in \(baseChapter.language.descriptiveEnglishName).
+        let isFirstChapter = previousChapters.isEmpty
         
-        """
-        
-        if let storyPrompt = baseChapter.storyPrompt {
-            let settingPrompt = "The story is in the following setting: \(storyPrompt)\n\n"
-            initialPrompt.append(settingPrompt)
-        }
+        if isFirstChapter {
+            var initialPrompt = """
+            Write an incredible first chapter of a story written in \(baseChapter.language.descriptiveEnglishName).
+            
+            """
+            
+            if let storyPrompt = baseChapter.storyPrompt {
+                let settingPrompt = "The story is in the following setting: \(storyPrompt)\n\n"
+                initialPrompt.append(settingPrompt)
+            }
 
-        let promptDetails = """
-        \(baseChapter.difficulty.vocabularyPrompt).
-        Use a vocabulary of around 150 \(baseChapter.language.descriptiveEnglishName) words.
-        The chapter should be around 400 \(baseChapter.language.descriptiveEnglishName) words long.
-        In the JSON, split the story into individual sentences.
+            let promptDetails = """
+            \(baseChapter.difficulty.vocabularyPrompt).
+            Use a vocabulary of around 150 \(baseChapter.language.descriptiveEnglishName) words.
+            The chapter should be around 400 \(baseChapter.language.descriptiveEnglishName) words long.
+            
+            Write only the story text in \(baseChapter.language.descriptiveEnglishName), without any formatting or sentence breaks.
+            """
+            initialPrompt.append(promptDetails)
+            
+            messages.append(["role": "user", "content": initialPrompt])
+        } else {
+            // Add conversation history from previous chapters
+            for (index, chapter) in previousChapters.enumerated() {
+                if index == 0 {
+                    // First chapter as system context
+                    let systemMessage = """
+                    Story Title: \(chapter.storyTitle)
+                    Chapter \(index + 1): \(chapter.title)
+                    
+                    \(chapter.passage)
+                    """
+                    messages.append(["role": "system", "content": systemMessage])
+                } else {
+                    // Previous chapters as assistant responses
+                    let assistantMessage = """
+                    Chapter \(index + 1): \(chapter.title)
+                    
+                    \(chapter.passage)
+                    """
+                    messages.append(["role": "assistant", "content": assistantMessage])
+                }
+            }
+            
+            // Next chapter prompt
+            var nextChapterPrompt = """
+            Continue the story by writing the next chapter in \(baseChapter.language.descriptiveEnglishName).
+            
+            """
+            
+            if let storyPrompt = baseChapter.storyPrompt {
+                let settingPrompt = "Remember the story setting: \(storyPrompt)\n\n"
+                nextChapterPrompt.append(settingPrompt)
+            }
+
+            let promptDetails = """
+            \(baseChapter.difficulty.vocabularyPrompt).
+            Use a vocabulary of around 150 \(baseChapter.language.descriptiveEnglishName) words.
+            The chapter should be around 400 \(baseChapter.language.descriptiveEnglishName) words long.
+            Build upon the previous chapters to continue the narrative in an engaging way.
+            
+            Write only the story text in \(baseChapter.language.descriptiveEnglishName), without any formatting or sentence breaks.
+            """
+            nextChapterPrompt.append(promptDetails)
+            
+            messages.append(["role": "user", "content": nextChapterPrompt])
+        }
         
-        """
-        initialPrompt.append(promptDetails)
-        
-        messages.append(["role": "user", "content": initialPrompt])
-        
-        var requestBody: [String: Any] = ["messages": messages]
-        requestBody["response_format"] = sentenceSchema(originalLanguage: deviceLanguage,
-                                                        translationLanguage: baseChapter.language,
-                                                        shouldCreateTitle: true)
+        let requestBody: [String: Any] = ["messages": messages]
 
         return try await RequestFactory.makeRequest(type: .openRouter(.geminiFlash),
                                                     requestBody: requestBody)
     }
 
-    private func generateChapterRequest(previousChapters: [Chapter],
-                                        deviceLanguage: Language?) async throws -> String {
-        guard let deviceLanguage else {
-            throw TextGenerationServicesError.failedToGetDeviceLanguage
-        }
+    private func formatSentencesRequest(
+        chapter: Chapter,
+        deviceLanguage: Language
+    ) async throws -> String {
+        let isFirstChapter = chapter.storyTitle.isEmpty
         
-        guard let baseChapter = previousChapters.last else {
-            throw TextGenerationServicesError.failedToGetResponseData
-        }
+        let prompt = """
+        Take the following story text in \(chapter.language.descriptiveEnglishName) and break it into individual sentences with translations to \(deviceLanguage.descriptiveEnglishName):
         
-        var messages: [[String: String]] = []
+        \(chapter.passage)
         
-        // Add conversation history from previous chapters
-        for (index, chapter) in previousChapters.enumerated() {
-            if index == 0 {
-                // First chapter as system context
-                let systemMessage = """
-                Story Title: \(chapter.storyTitle)
-                Chapter \(index + 1): \(chapter.title)
-                
-                \(chapter.passage)
-                """
-                messages.append(["role": "system", "content": systemMessage])
-            } else {
-                // Previous chapters as assistant responses
-                let assistantMessage = """
-                Chapter \(index + 1): \(chapter.title)
-                
-                \(chapter.passage)
-                """
-                messages.append(["role": "assistant", "content": assistantMessage])
-            }
-        }
-        
-        // Next chapter prompt
-        var nextChapterPrompt = """
-        Continue the story by writing the next chapter in \(baseChapter.language.descriptiveEnglishName).
-        
+        Please format this into proper sentences with appropriate translations.
         """
         
-        if let storyPrompt = baseChapter.storyPrompt {
-            let settingPrompt = "Remember the story setting: \(storyPrompt)\n\n"
-            nextChapterPrompt.append(settingPrompt)
-        }
-
-        let promptDetails = """
-        \(baseChapter.difficulty.vocabularyPrompt).
-        Use a vocabulary of around 150 \(baseChapter.language.descriptiveEnglishName) words.
-        The chapter should be around 400 \(baseChapter.language.descriptiveEnglishName) words long.
-        Build upon the previous chapters to continue the narrative in an engaging way.
-        
-        """
-        nextChapterPrompt.append(promptDetails)
-        
-        messages.append(["role": "user", "content": nextChapterPrompt])
+        let messages: [[String: String]] = [
+            ["role": "user", "content": prompt]
+        ]
         
         var requestBody: [String: Any] = ["messages": messages]
         requestBody["response_format"] = sentenceSchema(originalLanguage: deviceLanguage,
-                                                        translationLanguage: baseChapter.language,
-                                                        shouldCreateTitle: false)
+                                                        translationLanguage: chapter.language,
+                                                        shouldCreateTitle: isFirstChapter)
 
-        return try await RequestFactory.makeRequest(type: APIRequestType.openRouter(.geminiFlash),
+        return try await RequestFactory.makeRequest(type: .openRouter(.geminiFlash),
                                                     requestBody: requestBody)
     }
 }

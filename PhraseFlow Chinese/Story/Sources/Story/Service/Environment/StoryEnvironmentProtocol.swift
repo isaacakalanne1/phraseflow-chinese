@@ -36,6 +36,19 @@ public protocol StoryEnvironmentProtocol {
         storyPrompt: String?
     ) async throws -> Chapter
     
+    func generateChapterStory(
+        previousChapters: [Chapter],
+        language: Language?,
+        difficulty: Difficulty?,
+        voice: Voice?,
+        storyPrompt: String?
+    ) async throws -> Chapter
+    
+    func formatStoryIntoSentences(
+        chapter: Chapter,
+        deviceLanguage: Language?
+    ) async throws -> Chapter
+    
     func generateImageForChapter(
         _ chapter: Chapter,
         previousChapters: [Chapter]

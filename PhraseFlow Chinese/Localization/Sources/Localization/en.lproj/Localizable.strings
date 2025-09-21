@@ -677,6 +677,7 @@
 
 // Loading progress labels
 "writing_progress" = "Writing";
+"formatting_progress" = "Formatting";
 "image_progress" = "Image";
 "audio_progress" = "Audio";
 "definitions_progress" = "Definitions";
@@ -686,3 +687,4 @@
 "generating_image" = "Generating image...";
 "generating_speech" = "Generating speech...";
 "generating_definitions" = "Generating definitions...";
+"formatting_story" = "Formatting story...";

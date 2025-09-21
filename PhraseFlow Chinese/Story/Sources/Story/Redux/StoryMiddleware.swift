@@ -32,12 +32,11 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
                 chapters = existingChapters
             }
             
-            let chapter = try await environment.generateTextForChapter(
+            let chapter = try await environment.generateChapterStory(
                 previousChapters: chapters,
                 language: state.settings.language,
                 difficulty: state.settings.difficulty,
                 voice: state.settings.voice,
-                deviceLanguage: Language.deviceLanguage,
                 storyPrompt: state.settings.storySetting.prompt
             )
             
@@ -47,6 +46,20 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
         }
         
     case .onGeneratedText(let chapter):
+        return .formatSentences(chapter)
+        
+    case .formatSentences(let chapter):
+        do {
+            let formattedChapter = try await environment.formatStoryIntoSentences(
+                chapter: chapter,
+                deviceLanguage: Language.deviceLanguage
+            )
+            return .onFormattedSentences(formattedChapter)
+        } catch {
+            return .failedToCreateChapter
+        }
+        
+    case .onFormattedSentences(let chapter):
         return .generateImage(chapter)
         
     case .generateImage(let chapter):

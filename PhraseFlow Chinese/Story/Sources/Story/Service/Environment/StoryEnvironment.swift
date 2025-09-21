@@ -81,28 +81,52 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     ) async throws -> Chapter {
         loadingEnvironment.updateLoadingStatus(.writing)
 
-        let newChapter: Chapter
-        if previousChapters.isEmpty {
-            guard let language = language,
-                  let difficulty = difficulty,
-                  let voice = voice else {
-                throw NSError(domain: "StoryEnvironment", code: 0, userInfo: [NSLocalizedDescriptionKey: "Missing required parameters for first chapter"])
-            }
-            newChapter = try await textGenerationService.generateFirstChapter(
-                language: language,
-                difficulty: difficulty,
-                voice: voice,
-                deviceLanguage: deviceLanguage,
-                storyPrompt: storyPrompt
-            )
-        } else {
-            newChapter = try await textGenerationService.generateChapter(
-                previousChapters: previousChapters,
-                deviceLanguage: deviceLanguage
-            )
-        }
+        let chapterWithStory = try await textGenerationService.generateChapterStory(
+            previousChapters: previousChapters,
+            language: language,
+            difficulty: difficulty,
+            voice: voice,
+            storyPrompt: storyPrompt
+        )
         
-        return newChapter
+        loadingEnvironment.updateLoadingStatus(.formattingSentences)
+        
+        let finalChapter = try await textGenerationService.formatStoryIntoSentences(
+            chapter: chapterWithStory,
+            deviceLanguage: deviceLanguage
+        )
+        
+        return finalChapter
+    }
+    
+    public func generateChapterStory(
+        previousChapters: [Chapter],
+        language: Language?,
+        difficulty: Difficulty?,
+        voice: Voice?,
+        storyPrompt: String?
+    ) async throws -> Chapter {
+        loadingEnvironment.updateLoadingStatus(.writing)
+        
+        return try await textGenerationService.generateChapterStory(
+            previousChapters: previousChapters,
+            language: language,
+            difficulty: difficulty,
+            voice: voice,
+            storyPrompt: storyPrompt
+        )
+    }
+    
+    public func formatStoryIntoSentences(
+        chapter: Chapter,
+        deviceLanguage: Language?
+    ) async throws -> Chapter {
+        loadingEnvironment.updateLoadingStatus(.formattingSentences)
+        
+        return try await textGenerationService.formatStoryIntoSentences(
+            chapter: chapter,
+            deviceLanguage: deviceLanguage
+        )
     }
     
     public func generateImageForChapter(

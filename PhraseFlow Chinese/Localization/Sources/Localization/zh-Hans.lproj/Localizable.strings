@@ -657,6 +657,9 @@
 // Writing (loading progress)
 "writing_progress" = "写作中";
 
+// Formatting (loading progress)
+"formatting_progress" = "格式化";
+
 // Image (loading progress)
 "image_progress" = "图像";
 
@@ -679,3 +682,4 @@
 "generating_image" = "生成图像中...";
 "generating_speech" = "生成语音中...";
 "generating_definitions" = "生成定义中...";
+"formatting_story" = "格式化故事中...";

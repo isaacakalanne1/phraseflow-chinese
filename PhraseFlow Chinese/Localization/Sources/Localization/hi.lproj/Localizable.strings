@@ -657,6 +657,9 @@
 // Writing (loading progress)
 "writing_progress" = "लेखन";
 
+// Formatting (loading progress)
+"formatting_progress" = "स्वरूपण";
+
 // Image (loading progress)
 "image_progress" = "छवि";
 
@@ -679,3 +682,4 @@
 "generating_image" = "छवि बनाई जा रही है...";
 "generating_speech" = "भाषण बनाया जा रहा है...";
 "generating_definitions" = "परिभाषाएं बनाई जा रही हैं...";
+"formatting_story" = "कहानी स्वरूपित की जा रही है...";

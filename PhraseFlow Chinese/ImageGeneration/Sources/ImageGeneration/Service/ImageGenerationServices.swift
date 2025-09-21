@@ -14,7 +14,7 @@ enum ImageGenerationServicesError: Error {
 
 public class ImageGenerationServices: ImageGenerationServicesProtocol {
     private let baseURL = "https://queue.fal.run/fal-ai/flux"
-    private let apiKey = ProcessInfo.processInfo.environment["FAL_KEY"] ?? ""
+    private let apiKey = "e1f58875-fe36-4a31-ad34-badb6bbd0409:4645ce9820c0b75b3cbe1b0d9c324306" // TODO: Store remotely and download via API
     private let session = URLSession.shared
     
     public init() { }

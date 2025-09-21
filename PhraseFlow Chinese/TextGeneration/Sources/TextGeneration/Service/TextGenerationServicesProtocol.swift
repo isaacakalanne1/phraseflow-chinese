@@ -8,16 +8,16 @@
 import Settings
 
 public protocol TextGenerationServicesProtocol {
-    func generateChapter(
+    func generateChapterStory(
         previousChapters: [Chapter],
-        deviceLanguage: Language?
-    ) async throws -> Chapter
-
-    func generateFirstChapter(
-        language: Language,
-        difficulty: Difficulty,
-        voice: Voice,
-        deviceLanguage: Language?,
+        language: Language?,
+        difficulty: Difficulty?,
+        voice: Voice?,
         storyPrompt: String?
+    ) async throws -> Chapter
+    
+    func formatStoryIntoSentences(
+        chapter: Chapter,
+        deviceLanguage: Language?
     ) async throws -> Chapter
 }

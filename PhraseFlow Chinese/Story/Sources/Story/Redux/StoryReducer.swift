@@ -83,16 +83,6 @@ let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
         
     case .generateText:
         newState.isWritingChapter = true
-        
-    case .onGeneratedText,
-         .generateImage,
-         .onGeneratedImage,
-         .generateSpeech,
-         .onGeneratedSpeech,
-         .generateDefinitions,
-         .onGeneratedDefinitions:
-        break
-        
     case .failedToCreateChapter:
         newState.isWritingChapter = false
     case .refreshAppSettings(let settings):
@@ -112,7 +102,16 @@ let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
          .failedToSaveChapter,
          .playSound,
          .beginGetNextChapter,
-         .saveAppSettings:
+         .saveAppSettings,
+         .onGeneratedText,
+         .generateImage,
+         .onGeneratedImage,
+         .generateSpeech,
+         .onGeneratedSpeech,
+         .generateDefinitions,
+         .onGeneratedDefinitions,
+         .formatSentences,
+         .onFormattedSentences:
         break
     }
 

@@ -14,6 +14,8 @@ public enum StoryAction: Sendable, Equatable {
     case createChapter(CreateChapterType)
     case generateText(CreateChapterType)
     case onGeneratedText(Chapter)
+    case formatSentences(Chapter)
+    case onFormattedSentences(Chapter)
     case generateImage(Chapter)
     case onGeneratedImage(Chapter)
     case generateSpeech(Chapter)

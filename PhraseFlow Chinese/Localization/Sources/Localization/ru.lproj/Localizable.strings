@@ -657,6 +657,9 @@
 // Writing (loading progress)
 "writing_progress" = "Написание";
 
+// Formatting (loading progress)
+"formatting_progress" = "Форматирование";
+
 // Image (loading progress)
 "image_progress" = "Изображение";
 
@@ -679,3 +682,4 @@
 "generating_image" = "Создание изображения...";
 "generating_speech" = "Создание речи...";
 "generating_definitions" = "Создание определений...";
+"formatting_story" = "Форматирование истории...";

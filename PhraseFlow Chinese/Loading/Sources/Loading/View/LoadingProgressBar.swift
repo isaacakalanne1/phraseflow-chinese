@@ -18,7 +18,7 @@ public struct LoadingProgressBar: View {
     }
     
     private var progress: Double {
-        return Double(loadingStatus.progressInt) / 4.0
+        return Double(loadingStatus.progressInt) / Double(LoadingStatus.complete.progressInt)
     }
     
     private var statusText: String {
@@ -35,6 +35,8 @@ public struct LoadingProgressBar: View {
             return LocalizedString.chapterReady
         case .generatingDefinitions:
             return LocalizedString.generatingDefinitions
+        case .formattingSentences:
+            return LocalizedString.formattingStory
         }
     }
     
@@ -67,9 +69,17 @@ public struct LoadingProgressBar: View {
                     )
                     
                     ProgressStep(
+                        icon: "text.alignleft",
+                        title: LocalizedString.formattingProgress,
+                        isCompleted: loadingStatus.progressInt > 1,
+                        isCurrent: loadingStatus == .formattingSentences,
+                        isCompact: true
+                    )
+                    
+                    ProgressStep(
                         icon: "photo",
                         title: LocalizedString.imageProgress,
-                        isCompleted: loadingStatus.progressInt > 1,
+                        isCompleted: loadingStatus.progressInt > 2,
                         isCurrent: loadingStatus == .generatingImage,
                         isCompact: true
                     )
@@ -77,7 +87,7 @@ public struct LoadingProgressBar: View {
                     ProgressStep(
                         icon: "speaker.wave.3",
                         title: LocalizedString.audioProgress,
-                        isCompleted: loadingStatus.progressInt > 2,
+                        isCompleted: loadingStatus.progressInt > 3,
                         isCurrent: loadingStatus == .generatingSpeech,
                         isCompact: true
                     )
@@ -85,7 +95,7 @@ public struct LoadingProgressBar: View {
                     ProgressStep(
                         icon: "book.closed",
                         title: LocalizedString.definitionsProgress,
-                        isCompleted: loadingStatus.progressInt > 3,
+                        isCompleted: loadingStatus.progressInt > 4,
                         isCurrent: loadingStatus == .generatingDefinitions,
                         isCompact: true
                     )

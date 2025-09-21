@@ -657,6 +657,9 @@
 // Writing (loading progress)
 "writing_progress" = "Escrevendo";
 
+// Formatting (loading progress)
+"formatting_progress" = "Formatando";
+
 // Image (loading progress)
 "image_progress" = "Imagem";
 
@@ -679,3 +682,4 @@
 "generating_image" = "Gerando imagem...";
 "generating_speech" = "Gerando fala...";
 "generating_definitions" = "Gerando definições...";
+"formatting_story" = "Formatando história...";

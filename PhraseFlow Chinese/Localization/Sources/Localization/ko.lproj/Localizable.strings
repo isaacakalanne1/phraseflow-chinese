@@ -657,6 +657,9 @@
 // Writing (loading progress)
 "writing_progress" = "작성 중";
 
+// Formatting (loading progress)
+"formatting_progress" = "서식 지정";
+
 // Image (loading progress)
 "image_progress" = "이미지";
 
@@ -679,3 +682,4 @@
 "generating_image" = "이미지 생성 중...";
 "generating_speech" = "음성 생성 중...";
 "generating_definitions" = "정의 생성 중...";
+"formatting_story" = "이야기 서식 지정 중...";

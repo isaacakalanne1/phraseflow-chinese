@@ -661,6 +661,9 @@
 // Writing (loading progress)
 "writing_progress" = "الكتابة";
 
+// Formatting (loading progress)
+"formatting_progress" = "التنسيق";
+
 // Image (loading progress)
 "image_progress" = "الصورة";
 
@@ -683,3 +686,4 @@
 "generating_image" = "جاري إنشاء الصورة...";
 "generating_speech" = "جاري إنشاء الكلام...";
 "generating_definitions" = "جاري إنشاء التعريفات...";
+"formatting_story" = "جاري تنسيق القصة...";

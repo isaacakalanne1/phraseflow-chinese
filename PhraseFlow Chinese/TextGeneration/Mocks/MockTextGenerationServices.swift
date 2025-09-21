@@ -17,20 +17,29 @@ public class MockTextGenerationServices: TextGenerationServicesProtocol {
     
     public init() {}
     
-    var generateChapterPreviousChaptersSpy: [Chapter]?
-    var generateChapterDeviceLanguageSpy: Language?
-    var generateChapterCalled = false
-    var generateChapterResult: Result<Chapter, MockTextGenerationServicesError> = .success(.arrange)
+    var generateChapterStoryPreviousChaptersSpy: [Chapter]?
+    var generateChapterStoryLanguageSpy: Language?
+    var generateChapterStoryDifficultySpy: Difficulty?
+    var generateChapterStoryVoiceSpy: Voice?
+    var generateChapterStoryStoryPromptSpy: String?
+    var generateChapterStoryCalled = false
+    var generateChapterStoryResult: Result<Chapter, MockTextGenerationServicesError> = .success(.arrange)
     
-    public func generateChapter(
+    public func generateChapterStory(
         previousChapters: [Chapter],
-        deviceLanguage: Language?
+        language: Language?,
+        difficulty: Difficulty?,
+        voice: Voice?,
+        storyPrompt: String?
     ) async throws -> Chapter {
-        generateChapterPreviousChaptersSpy = previousChapters
-        generateChapterDeviceLanguageSpy = deviceLanguage
-        generateChapterCalled = true
+        generateChapterStoryPreviousChaptersSpy = previousChapters
+        generateChapterStoryLanguageSpy = language
+        generateChapterStoryDifficultySpy = difficulty
+        generateChapterStoryVoiceSpy = voice
+        generateChapterStoryStoryPromptSpy = storyPrompt
+        generateChapterStoryCalled = true
         
-        switch generateChapterResult {
+        switch generateChapterStoryResult {
         case .success(let chapter):
             return chapter
         case .failure(let error):
@@ -38,29 +47,20 @@ public class MockTextGenerationServices: TextGenerationServicesProtocol {
         }
     }
     
-    var generateFirstChapterLanguageSpy: Language?
-    var generateFirstChapterDifficultySpy: Difficulty?
-    var generateFirstChapterVoiceSpy: Voice?
-    var generateFirstChapterDeviceLanguageSpy: Language?
-    var generateFirstChapterStoryPromptSpy: String?
-    var generateFirstChapterCalled = false
-    var generateFirstChapterResult: Result<Chapter, MockTextGenerationServicesError> = .success(.arrange)
+    var formatStoryIntoSentencesChapterSpy: Chapter?
+    var formatStoryIntoSentencesDeviceLanguageSpy: Language?
+    var formatStoryIntoSentencesCalled = false
+    var formatStoryIntoSentencesResult: Result<Chapter, MockTextGenerationServicesError> = .success(.arrange)
     
-    public func generateFirstChapter(
-        language: Language,
-        difficulty: Difficulty,
-        voice: Voice,
-        deviceLanguage: Language?,
-        storyPrompt: String?
+    public func formatStoryIntoSentences(
+        chapter: Chapter,
+        deviceLanguage: Language?
     ) async throws -> Chapter {
-        generateFirstChapterLanguageSpy = language
-        generateFirstChapterDifficultySpy = difficulty
-        generateFirstChapterVoiceSpy = voice
-        generateFirstChapterDeviceLanguageSpy = deviceLanguage
-        generateFirstChapterStoryPromptSpy = storyPrompt
-        generateFirstChapterCalled = true
+        formatStoryIntoSentencesChapterSpy = chapter
+        formatStoryIntoSentencesDeviceLanguageSpy = deviceLanguage
+        formatStoryIntoSentencesCalled = true
         
-        switch generateFirstChapterResult {
+        switch formatStoryIntoSentencesResult {
         case .success(let chapter):
             return chapter
         case .failure(let error):

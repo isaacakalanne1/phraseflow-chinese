@@ -278,6 +278,7 @@ public enum LocalizedString {
     public static let translateBetweenLanguages = LocalizedString.tr("Localizable", "translate_between_languages")
     public static let selectTextLanguage = LocalizedString.tr("Localizable", "select_text_language")
     public static let writingProgress = LocalizedString.tr("Localizable", "writing_progress")
+    public static let formattingProgress = LocalizedString.tr("Localizable", "formatting_progress")
     public static let imageProgress = LocalizedString.tr("Localizable", "image_progress")
     public static let audioProgress = LocalizedString.tr("Localizable", "audio_progress")
     public static let definitionsProgress = LocalizedString.tr("Localizable", "definitions_progress")
@@ -287,6 +288,7 @@ public enum LocalizedString {
     public static let generatingImage = LocalizedString.tr("Localizable", "generating_image")
     public static let generatingSpeech = LocalizedString.tr("Localizable", "generating_speech")
     public static let generatingDefinitions = LocalizedString.tr("Localizable", "generating_definitions")
+    public static let formattingStory = LocalizedString.tr("Localizable", "formatting_story")
 }
 
 extension LocalizedString {
