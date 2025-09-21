@@ -113,9 +113,11 @@ final class StoryEnvironmentTests {
         let voice = Voice.elvira
         let deviceLanguage = Language.english
         let storyPrompt = "A story about dragons"
-        let expectedChapter = Chapter.arrange
+        let storyChapter = Chapter.arrange(passage: "Story text")
+        let formattedChapter = Chapter.arrange(sentences: [.arrange])
         
-        mockTextGenerationService.generateFirstChapterResult = .success(expectedChapter)
+        mockTextGenerationService.generateChapterStoryResult = .success(storyChapter)
+        mockTextGenerationService.formatStoryIntoSentencesResult = .success(formattedChapter)
         
         let result = try await storyEnvironment.generateTextForChapter(
             previousChapters: [],
@@ -126,23 +128,25 @@ final class StoryEnvironmentTests {
             storyPrompt: storyPrompt
         )
         
-        #expect(result == expectedChapter)
-        #expect(mockTextGenerationService.generateFirstChapterCalled == true)
-        #expect(mockTextGenerationService.generateFirstChapterLanguageSpy == language)
-        #expect(mockTextGenerationService.generateFirstChapterDifficultySpy == difficulty)
-        #expect(mockTextGenerationService.generateFirstChapterVoiceSpy == voice)
-        #expect(mockTextGenerationService.generateFirstChapterDeviceLanguageSpy == deviceLanguage)
-        #expect(mockTextGenerationService.generateFirstChapterStoryPromptSpy == storyPrompt)
-        #expect(mockLoadingEnvironment.updateLoadingStatusSpy == .writing)
+        #expect(result == formattedChapter)
+        #expect(mockTextGenerationService.generateChapterStoryCalled == true)
+        #expect(mockTextGenerationService.formatStoryIntoSentencesCalled == true)
+        #expect(mockTextGenerationService.generateChapterStoryLanguageSpy == language)
+        #expect(mockTextGenerationService.generateChapterStoryDifficultySpy == difficulty)
+        #expect(mockTextGenerationService.generateChapterStoryVoiceSpy == voice)
+        #expect(mockTextGenerationService.generateChapterStoryStoryPromptSpy == storyPrompt)
+        #expect(mockLoadingEnvironment.updateLoadingStatusSpy == .formattingSentences)
     }
     
     @Test
     func generateTextForChapter_withPreviousChapters_generatesNextChapter() async throws {
         let previousChapters = [Chapter.arrange]
         let deviceLanguage = Language.english
-        let expectedChapter = Chapter.arrange
+        let storyChapter = Chapter.arrange(passage: "Story text")
+        let formattedChapter = Chapter.arrange(sentences: [.arrange])
         
-        mockTextGenerationService.generateChapterResult = .success(expectedChapter)
+        mockTextGenerationService.generateChapterStoryResult = .success(storyChapter)
+        mockTextGenerationService.formatStoryIntoSentencesResult = .success(formattedChapter)
         
         let result = try await storyEnvironment.generateTextForChapter(
             previousChapters: previousChapters,
@@ -153,14 +157,16 @@ final class StoryEnvironmentTests {
             storyPrompt: nil
         )
         
-        #expect(result == expectedChapter)
-        #expect(mockTextGenerationService.generateChapterCalled == true)
-        #expect(mockTextGenerationService.generateChapterPreviousChaptersSpy == previousChapters)
-        #expect(mockTextGenerationService.generateChapterDeviceLanguageSpy == deviceLanguage)
+        #expect(result == formattedChapter)
+        #expect(mockTextGenerationService.generateChapterStoryCalled == true)
+        #expect(mockTextGenerationService.formatStoryIntoSentencesCalled == true)
+        #expect(mockTextGenerationService.generateChapterStoryPreviousChaptersSpy == previousChapters)
     }
     
     @Test
     func generateTextForChapter_withEmptyPreviousChaptersAndMissingParameters_throwsError() async throws {
+        mockTextGenerationService.generateChapterStoryResult = .failure(.genericError)
+        
         do {
             _ = try await storyEnvironment.generateTextForChapter(
                 previousChapters: [],
@@ -394,5 +400,54 @@ final class StoryEnvironmentTests {
         storyEnvironment.limitReachedSubject.send(event)
         
         #expect(storyEnvironment.limitReachedSubject.value == event)
+    }
+    
+    @Test
+    func generateChapterStory_delegatesToTextGenerationService() async throws {
+        let previousChapters = [Chapter.arrange]
+        let language = Language.spanish
+        let difficulty = Difficulty.intermediate
+        let voice = Voice.elvira
+        let storyPrompt = "A mystery story"
+        let expectedChapter = Chapter.arrange(passage: "Generated story")
+        
+        mockTextGenerationService.generateChapterStoryResult = .success(expectedChapter)
+        
+        let result = try await storyEnvironment.generateChapterStory(
+            previousChapters: previousChapters,
+            language: language,
+            difficulty: difficulty,
+            voice: voice,
+            storyPrompt: storyPrompt
+        )
+        
+        #expect(result == expectedChapter)
+        #expect(mockTextGenerationService.generateChapterStoryCalled == true)
+        #expect(mockTextGenerationService.generateChapterStoryPreviousChaptersSpy == previousChapters)
+        #expect(mockTextGenerationService.generateChapterStoryLanguageSpy == language)
+        #expect(mockTextGenerationService.generateChapterStoryDifficultySpy == difficulty)
+        #expect(mockTextGenerationService.generateChapterStoryVoiceSpy == voice)
+        #expect(mockTextGenerationService.generateChapterStoryStoryPromptSpy == storyPrompt)
+        #expect(mockLoadingEnvironment.updateLoadingStatusSpy == .writing)
+    }
+    
+    @Test
+    func formatStoryIntoSentences_delegatesToTextGenerationService() async throws {
+        let chapter = Chapter.arrange(passage: "Story to format")
+        let deviceLanguage = Language.english
+        let expectedChapter = Chapter.arrange(sentences: [.arrange])
+        
+        mockTextGenerationService.formatStoryIntoSentencesResult = .success(expectedChapter)
+        
+        let result = try await storyEnvironment.formatStoryIntoSentences(
+            chapter: chapter,
+            deviceLanguage: deviceLanguage
+        )
+        
+        #expect(result == expectedChapter)
+        #expect(mockTextGenerationService.formatStoryIntoSentencesCalled == true)
+        #expect(mockTextGenerationService.formatStoryIntoSentencesChapterSpy == chapter)
+        #expect(mockTextGenerationService.formatStoryIntoSentencesDeviceLanguageSpy == deviceLanguage)
+        #expect(mockLoadingEnvironment.updateLoadingStatusSpy == .formattingSentences)
     }
 }

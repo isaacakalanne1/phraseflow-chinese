@@ -78,7 +78,7 @@ final class StoryMiddlewareTests {
     @Test
     func generateText_success_returnsOnGeneratedText() async {
         let expectedChapter: Chapter = .arrange(title: "Test Chapter")
-        mockEnvironment.generateTextForChapterResult = .success(expectedChapter)
+        mockEnvironment.generateChapterStoryResult = .success(expectedChapter)
         
         let resultAction = await storyMiddleware(
             .arrange,
@@ -87,12 +87,12 @@ final class StoryMiddlewareTests {
         )
         
         #expect(resultAction == .onGeneratedText(expectedChapter))
-        #expect(mockEnvironment.generateTextForChapterCalled == true)
+        #expect(mockEnvironment.generateChapterStoryCalled == true)
     }
     
     @Test
     func generateText_error_returnsFailedToCreateChapter() async {
-        mockEnvironment.generateTextForChapterResult = .failure(.genericError)
+        mockEnvironment.generateChapterStoryResult = .failure(.genericError)
         
         let resultAction = await storyMiddleware(
             .arrange,
@@ -101,7 +101,7 @@ final class StoryMiddlewareTests {
         )
         
         #expect(resultAction == .failedToCreateChapter)
-        #expect(mockEnvironment.generateTextForChapterCalled == true)
+        #expect(mockEnvironment.generateChapterStoryCalled == true)
     }
     
     @Test
@@ -111,7 +111,7 @@ final class StoryMiddlewareTests {
         let state: StoryState = .arrange(storyChapters: [storyId: [existingChapter]])
         let expectedChapter = Chapter.arrange
         
-        mockEnvironment.generateTextForChapterResult = .success(expectedChapter)
+        mockEnvironment.generateChapterStoryResult = .success(expectedChapter)
         
         let resultAction = await storyMiddleware(
             state,
@@ -120,16 +120,61 @@ final class StoryMiddlewareTests {
         )
         
         #expect(resultAction == .onGeneratedText(expectedChapter))
-        #expect(mockEnvironment.generateTextForChapterPreviousChaptersSpy == [existingChapter])
+        #expect(mockEnvironment.generateChapterStoryPreviousChaptersSpy == [existingChapter])
     }
     
     @Test
-    func onGeneratedText_returnsGenerateImage() async {
+    func onGeneratedText_returnsFormatSentences() async {
         let chapter: Chapter = .arrange
         
         let resultAction = await storyMiddleware(
             .arrange,
             .onGeneratedText(chapter),
+            mockEnvironment
+        )
+        
+        #expect(resultAction == .formatSentences(chapter))
+    }
+    
+    @Test
+    func formatSentences_success_returnsOnFormattedSentences() async {
+        let chapter: Chapter = .arrange(passage: "Test story text")
+        let expectedChapter: Chapter = .arrange(title: "Formatted Chapter", sentences: [.arrange])
+        mockEnvironment.formatStoryIntoSentencesResult = .success(expectedChapter)
+        
+        let resultAction = await storyMiddleware(
+            .arrange,
+            .formatSentences(chapter),
+            mockEnvironment
+        )
+        
+        #expect(resultAction == .onFormattedSentences(expectedChapter))
+        #expect(mockEnvironment.formatStoryIntoSentencesCalled == true)
+        #expect(mockEnvironment.formatStoryIntoSentencesChapterSpy == chapter)
+    }
+    
+    @Test
+    func formatSentences_error_returnsFailedToCreateChapter() async {
+        let chapter: Chapter = .arrange(passage: "Test story text")
+        mockEnvironment.formatStoryIntoSentencesResult = .failure(.genericError)
+        
+        let resultAction = await storyMiddleware(
+            .arrange,
+            .formatSentences(chapter),
+            mockEnvironment
+        )
+        
+        #expect(resultAction == .failedToCreateChapter)
+        #expect(mockEnvironment.formatStoryIntoSentencesCalled == true)
+    }
+    
+    @Test
+    func onFormattedSentences_returnsGenerateImage() async {
+        let chapter: Chapter = .arrange
+        
+        let resultAction = await storyMiddleware(
+            .arrange,
+            .onFormattedSentences(chapter),
             mockEnvironment
         )
         

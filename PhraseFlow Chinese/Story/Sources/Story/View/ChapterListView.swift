@@ -56,7 +56,6 @@ public struct ChapterListView: View {
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
-                    .frame(height: 200)
                     
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {

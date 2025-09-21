@@ -454,6 +454,30 @@ final class StoryReducerTests {
     }
     
     @Test
+    func formatSentences_doesNotChangeState() {
+        let initialState = StoryState.arrange
+        
+        let newState = storyReducer(
+            initialState,
+            .formatSentences(.arrange)
+        )
+        
+        #expect(newState == initialState)
+    }
+    
+    @Test
+    func onFormattedSentences_doesNotChangeState() {
+        let initialState = StoryState.arrange
+        
+        let newState = storyReducer(
+            initialState,
+            .onFormattedSentences(.arrange)
+        )
+        
+        #expect(newState == initialState)
+    }
+    
+    @Test
     func loadStories_doesNotChangeState() {
         let initialState = StoryState.arrange
         

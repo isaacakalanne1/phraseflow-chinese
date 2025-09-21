@@ -24,26 +24,32 @@ final class LoadingStatusTests {
     }
     
     @Test
+    func formattingSentences() {
+        let status = LoadingStatus.formattingSentences
+        #expect(status.progressInt == 1)
+    }
+    
+    @Test
     func generatingImage() {
         let status = LoadingStatus.generatingImage
-        #expect(status.progressInt == 1)
+        #expect(status.progressInt == 2)
     }
     
     @Test
     func generatingSpeech() {
         let status = LoadingStatus.generatingSpeech
-        #expect(status.progressInt == 2)
+        #expect(status.progressInt == 3)
     }
     
     @Test
     func generatingDefinitions() {
         let status = LoadingStatus.generatingDefinitions
-        #expect(status.progressInt == 3)
+        #expect(status.progressInt == 4)
     }
     
     @Test
     func complete() {
         let status = LoadingStatus.complete
-        #expect(status.progressInt == 4)
+        #expect(status.progressInt == 5)
     }
 }
