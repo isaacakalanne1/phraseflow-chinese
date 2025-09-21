@@ -185,7 +185,6 @@ final class StoryEnvironmentTests {
             imageData: nil
         )
         let expectedImageData = Data("generated image".utf8)
-        let expectedChapter = Chapter.arrange(imageData: expectedImageData)
         
         mockImageGenerationService.generateImageResult = .success(expectedImageData)
         

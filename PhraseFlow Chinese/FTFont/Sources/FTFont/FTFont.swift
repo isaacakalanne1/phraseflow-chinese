@@ -24,9 +24,9 @@ public enum FTFont {
     var fontSize: CGFloat {
         switch self {
         case .header:
-            25
-        case .secondaryHeader:
             20
+        case .secondaryHeader:
+            16
         case .subHeader:
             12
         case .bodyXSmall:

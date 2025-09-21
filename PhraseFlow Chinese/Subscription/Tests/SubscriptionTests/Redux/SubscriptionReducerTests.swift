@@ -32,7 +32,6 @@ final class SubscriptionReducerTests {
     @Test
     func updatePurchasedProducts_withVerifiedTransaction_addsProductID() {
         let initialState = SubscriptionState.arrange(purchasedProductIDs: Set())
-        let productID = "com.flowtale.level_1"
         
         // Note: We can't create real Transaction objects, so we test with empty array
         let newState = subscriptionReducer(

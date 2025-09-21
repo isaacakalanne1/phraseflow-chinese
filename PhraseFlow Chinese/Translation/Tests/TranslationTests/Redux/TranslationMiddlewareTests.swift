@@ -146,24 +146,6 @@ final class TranslationMiddlewareTests {
     }
     
     @Test
-    func synthesizeAudio_noVoiceAvailable_returnsFailedToTranslate() async {
-        let chapter = Chapter.arrange
-        let language = Language.spanish
-        let state = TranslationState.arrange(settings: .arrange(voice: .elvira))
-        
-        // Mock a language with no voices
-        let resultAction = await translationMiddleware(
-            state,
-            .synthesizeAudio(chapter, language),
-            mockEnvironment
-        )
-        
-        // Since we can't easily mock Language.voices, this will use the first available voice
-        // But if it were nil, it would return .failedToTranslate
-        #expect(mockEnvironment.synthesizeSpeechCalled == true)
-    }
-    
-    @Test
     func synthesizeAudio_synthesizeFails_returnsFailedToSynthesizeAudio() async {
         let chapter = Chapter.arrange
         let language = Language.spanish

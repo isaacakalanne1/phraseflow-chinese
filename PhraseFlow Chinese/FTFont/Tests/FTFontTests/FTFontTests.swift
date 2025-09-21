@@ -10,7 +10,7 @@ final class FTFontTests {
         let fontSize = font.fontSize
         let fontWeight = font.fontWeight
         
-        #expect(fontSize == 25)
+        #expect(fontSize == 20)
         #expect(font.fontWeight == .medium)
         #expect(font.font == Font.system(size: fontSize, weight: fontWeight))
     }
@@ -21,7 +21,7 @@ final class FTFontTests {
         let fontSize = font.fontSize
         let fontWeight = font.fontWeight
         
-        #expect(fontSize == 20)
+        #expect(fontSize == 16)
         #expect(font.fontWeight == .medium)
         #expect(font.font == Font.system(size: fontSize, weight: fontWeight))
     }

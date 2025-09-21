@@ -129,7 +129,7 @@ final class StudyReducerTests {
         )
         let initialState = StudyState.arrange(definitions: [existingDefinition])
         
-        var updatedDefinition = existingDefinition
+        let updatedDefinition = existingDefinition
         
         let newState = studyReducer(
             initialState,

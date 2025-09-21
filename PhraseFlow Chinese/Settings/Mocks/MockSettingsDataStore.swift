@@ -32,7 +32,7 @@ public class MockSettingsDataStore: SettingsDataStoreProtocol {
         saveAppSettingsSpy = settings
         saveAppSettingsCalled = true
         switch saveAppSettingsResult {
-        case .success(let success):
+        case .success:
             return
         case .failure(let error):
             throw error
