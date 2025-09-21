@@ -82,7 +82,8 @@ let package = Package(
             name: "NavigationTests",
             dependencies: [
                 "Navigation",
-                "NavigationMocks"
+                "NavigationMocks",
+                "Localization"
             ]
         ),
     ]

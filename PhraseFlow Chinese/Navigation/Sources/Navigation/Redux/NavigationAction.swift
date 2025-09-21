@@ -7,7 +7,7 @@
 
 import Settings
 
-enum NavigationAction {
+enum NavigationAction: Equatable, Sendable {
     case selectTab(ContentTab)
     case refreshAppSettings(SettingsState)
 }

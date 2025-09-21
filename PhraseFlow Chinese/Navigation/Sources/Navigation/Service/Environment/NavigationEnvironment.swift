@@ -25,11 +25,7 @@ public struct NavigationEnvironment: NavigationEnvironmentProtocol {
     public let userLimitEnvironment: UserLimitEnvironmentProtocol
     public let audioEnvironment: AudioEnvironmentProtocol
     public let loadingEnvironment: LoadingEnvironmentProtocol
-    
-    public var limitReachedSubject: CurrentValueSubject<LimitReachedEvent, Never> {
-        userLimitEnvironment.limitReachedSubject
-    }
-    
+
     public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> {
         settingsEnvironment.settingsUpdatedSubject
     }

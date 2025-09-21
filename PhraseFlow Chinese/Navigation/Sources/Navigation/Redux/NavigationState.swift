@@ -7,7 +7,15 @@
 
 import Settings
 
-struct NavigationState: Equatable {
-    var contentTab: ContentTab = .reader
-    var settings = SettingsState()
+public struct NavigationState: Equatable {
+    var contentTab: ContentTab
+    var settings: SettingsState
+    
+    public init(
+        contentTab: ContentTab = .reader,
+        settings: SettingsState = SettingsState()
+    ) {
+        self.contentTab = contentTab
+        self.settings = settings
+    }
 }

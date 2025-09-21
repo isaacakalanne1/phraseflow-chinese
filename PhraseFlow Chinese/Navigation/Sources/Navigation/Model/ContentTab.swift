@@ -10,8 +10,11 @@ import Foundation
 import Localization
 import SwiftUI
 
-enum ContentTab: CaseIterable, Equatable, Identifiable, Hashable {
-    var id: String {
+public enum ContentTab: CaseIterable, Equatable, Identifiable, Hashable, Sendable {
+
+    case reader, progress, translate, subscribe, settings
+
+    public var id: String {
         switch self {
         case .reader: return "reader"
         case .progress: return "progress"
@@ -20,8 +23,6 @@ enum ContentTab: CaseIterable, Equatable, Identifiable, Hashable {
         case .settings: return "settings"
         }
     }
-
-    case reader, progress, translate, subscribe, settings
 
     var title: String {
         switch self {

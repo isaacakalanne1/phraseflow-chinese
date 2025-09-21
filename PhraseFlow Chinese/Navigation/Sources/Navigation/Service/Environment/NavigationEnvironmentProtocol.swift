@@ -27,7 +27,6 @@ public protocol NavigationEnvironmentProtocol {
     var loadingEnvironment: LoadingEnvironmentProtocol { get }
     
     var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> { get }
-    var limitReachedSubject: CurrentValueSubject<LimitReachedEvent, Never> { get }
     
     func playSound(_ sound: AppSound)
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SystemImage {
+public enum SystemImage: Equatable {
     case _repeat,
          speaker,
          pause,
