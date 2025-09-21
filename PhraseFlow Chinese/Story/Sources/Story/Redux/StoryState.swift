@@ -57,17 +57,3 @@ public struct StoryState: Equatable {
         return currentIndex >= chapters.count - 1
     }
 }
-
-public struct StoryViewState: Equatable {
-    public var loadingState: LoadingStatus? = .complete
-    public var isDefining: Bool = false
-    public var isWritingChapter: Bool = false
-    
-    public init(loadingState: LoadingStatus? = .complete,
-                isDefining: Bool = false,
-                isWritingChapter: Bool = false) {
-        self.loadingState = loadingState
-        self.isDefining = isDefining
-        self.isWritingChapter = isWritingChapter
-    }
-}
