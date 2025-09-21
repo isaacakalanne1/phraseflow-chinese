@@ -26,7 +26,7 @@ public enum FTFont {
         case .header:
             20
         case .secondaryHeader:
-            16
+            14
         case .subHeader:
             12
         case .bodyXSmall:
