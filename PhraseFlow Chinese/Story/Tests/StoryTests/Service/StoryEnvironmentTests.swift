@@ -24,6 +24,8 @@ import UserLimit
 @testable import StoryMocks
 @testable import AudioMocks
 @testable import StudyMocks
+@testable import SnackBar
+@testable import SnackBarMocks
 @testable import SettingsMocks
 @testable import TextGenerationMocks
 @testable import TextPracticeMocks
@@ -41,6 +43,7 @@ final class StoryEnvironmentTests {
     let mockStoryDataStore: MockStoryDataStore
     let mockSpeechEnvironment: MockSpeechEnvironment
     let mockLoadingEnvironment: MockLoadingEnvironment
+    let mockSnackBarEnvironment: MockSnackBarEnvironment
     
     var storyEnvironment: StoryEnvironment
     
@@ -55,6 +58,7 @@ final class StoryEnvironmentTests {
         mockStoryDataStore = MockStoryDataStore()
         mockSpeechEnvironment = MockSpeechEnvironment()
         mockLoadingEnvironment = MockLoadingEnvironment()
+        mockSnackBarEnvironment = MockSnackBarEnvironment()
         
         storyEnvironment = StoryEnvironment(
             audioEnvironment: mockAudioEnvironment,
@@ -64,6 +68,7 @@ final class StoryEnvironmentTests {
             textPracticeEnvironment: mockTextPracticeEnvironment,
             loadingEnvironment: mockLoadingEnvironment,
             userLimitEnvironment: mockUserLimitEnvironment,
+            snackbarEnvironment: mockSnackBarEnvironment,
             textGenerationService: mockTextGenerationService,
             imageGenerationService: mockImageGenerationService,
             dataStore: mockStoryDataStore
@@ -449,5 +454,25 @@ final class StoryEnvironmentTests {
         #expect(mockTextGenerationService.formatStoryIntoSentencesChapterSpy == chapter)
         #expect(mockTextGenerationService.formatStoryIntoSentencesDeviceLanguageSpy == deviceLanguage)
         #expect(mockLoadingEnvironment.updateLoadingStatusSpy == .formattingSentences)
+    }
+    
+    @Test
+    func setSnackbarType_delegatesToSnackbarEnvironment() {
+        let snackbarType: SnackBarType = .failedToWriteChapter
+        
+        storyEnvironment.setSnackbarType(snackbarType)
+        
+        #expect(mockSnackBarEnvironment.setSnackbarTypeCalled == true)
+        #expect(mockSnackBarEnvironment.setSnackbarTypeSpy == snackbarType)
+    }
+    
+    @Test
+    func updateLoadingStatus_delegatesToLoadingEnvironment() {
+        let loadingStatus: LoadingStatus = .writing
+        
+        storyEnvironment.updateLoadingStatus(loadingStatus)
+        
+        #expect(mockLoadingEnvironment.updateLoadingStatusCalled == true)
+        #expect(mockLoadingEnvironment.updateLoadingStatusSpy == loadingStatus)
     }
 }

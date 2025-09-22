@@ -161,11 +161,16 @@ let translationMiddleware: Middleware<TranslationState, TranslationAction, Trans
         }
     case .selectTranslation:
         return .showTextPractice(true)
+        
+    case .failedToTranslate:
+        return .setSnackbarType(.failedToWriteTranslation)
+    case .setSnackbarType(let type):
+        environment.setSnackbarType(type)
+        return nil
     case .updateInputText,
             .swapLanguages,
             .translationInProgress,
             .failedToSynthesizeAudio,
-            .failedToTranslate,
             .clearTranslation,
             .onTranslationsSaved,
             .onTranslationsLoaded,

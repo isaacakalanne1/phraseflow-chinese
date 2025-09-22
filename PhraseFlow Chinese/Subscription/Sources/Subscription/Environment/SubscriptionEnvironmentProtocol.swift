@@ -9,6 +9,7 @@ import Combine
 import DataStorage
 import Settings
 import StoreKit
+import SnackBar
 
 public protocol SubscriptionEnvironmentProtocol {
     var synthesizedCharactersSubject: CurrentValueSubject<Int?, Never> { get }
@@ -22,4 +23,5 @@ public protocol SubscriptionEnvironmentProtocol {
     func getCurrentEntitlements() async -> [VerificationResult<Transaction>]
     func observeTransactionUpdates() async -> [VerificationResult<Transaction>]
     func restoreSubscriptions() async throws
+    func setSnackbarType(_ type: SnackBarType)
 }

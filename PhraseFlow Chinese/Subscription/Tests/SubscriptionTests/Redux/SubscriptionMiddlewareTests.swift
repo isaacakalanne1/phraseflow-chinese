@@ -8,6 +8,7 @@
 import Foundation
 import Testing
 import StoreKit
+import SnackBar
 @testable import DataStorage
 @testable import Settings
 @testable import SettingsMocks
@@ -308,14 +309,14 @@ final class SubscriptionMiddlewareTests {
     }
     
     @Test
-    func failedToPurchaseSubscription_returnsNil() async {
+    func failedToPurchaseSubscription_setsSnackbarType() async {
         let resultAction = await subscriptionMiddleware(
             .arrange,
             .failedToPurchaseSubscription,
             mockEnvironment
         )
         
-        #expect(resultAction == nil)
+        #expect(resultAction == .setSnackbarType(.failedToSubscribe))
     }
     
     @Test
@@ -393,5 +394,20 @@ final class SubscriptionMiddlewareTests {
         )
         
         #expect(resultAction == nil)
+    }
+    
+    @Test
+    func setSnackbarType_callsEnvironmentAndReturnsNil() async {
+        let snackbarType: SnackBarType = .failedToSubscribe
+        
+        let resultAction = await subscriptionMiddleware(
+            .arrange,
+            .setSnackbarType(snackbarType),
+            mockEnvironment
+        )
+        
+        #expect(resultAction == nil)
+        #expect(mockEnvironment.setSnackbarTypeCalled == true)
+        #expect(mockEnvironment.setSnackbarTypeSpy == snackbarType)
     }
 }

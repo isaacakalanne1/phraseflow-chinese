@@ -17,7 +17,7 @@ final class SnackBarTypeTests {
         let type = SnackBarType.welcomeBack
         
         #expect(!type.text.isEmpty)
-        #expect(type.showDuration == 2.5)
+        #expect(type.showDuration == 2)
         #expect(type.emoji == "🔥")
         #expect(type.isError == false)
         #expect(type.backgroundColor == FTColor.accent.color)
@@ -28,7 +28,7 @@ final class SnackBarTypeTests {
         let type = SnackBarType.deletedCustomStory
         
         #expect(!type.text.isEmpty)
-        #expect(type.showDuration == 2.5)
+        #expect(type.showDuration == 2)
         #expect(type.emoji == "✅")
         #expect(type.isError == false)
         #expect(type.backgroundColor == FTColor.accent.color)
@@ -39,7 +39,7 @@ final class SnackBarTypeTests {
         let type = SnackBarType.subscribed
         
         #expect(!type.text.isEmpty)
-        #expect(type.showDuration == 2.5)
+        #expect(type.showDuration == 2)
         #expect(type.emoji == "✅")
         #expect(type.isError == false)
         #expect(type.backgroundColor == FTColor.accent.color)
@@ -50,7 +50,29 @@ final class SnackBarTypeTests {
         let type = SnackBarType.failedToWriteChapter
         
         #expect(!type.text.isEmpty)
-        #expect(type.showDuration == 2.5)
+        #expect(type.showDuration == 2)
+        #expect(type.emoji == "⚠️")
+        #expect(type.isError == true)
+        #expect(type.backgroundColor == FTColor.error.color)
+    }
+    
+    @Test
+    func failedToSubscribe() {
+        let type = SnackBarType.failedToSubscribe
+        
+        #expect(!type.text.isEmpty)
+        #expect(type.showDuration == 2)
+        #expect(type.emoji == "⚠️")
+        #expect(type.isError == true)
+        #expect(type.backgroundColor == FTColor.error.color)
+    }
+    
+    @Test
+    func failedToWriteTranslation() {
+        let type = SnackBarType.failedToWriteTranslation
+        
+        #expect(!type.text.isEmpty)
+        #expect(type.showDuration == 2)
         #expect(type.emoji == "⚠️")
         #expect(type.isError == true)
         #expect(type.backgroundColor == FTColor.error.color)
@@ -61,7 +83,7 @@ final class SnackBarTypeTests {
         let type = SnackBarType.moderatingText
         
         #expect(!type.text.isEmpty)
-        #expect(type.showDuration == 2.5)
+        #expect(type.showDuration == 2)
         #expect(type.emoji == "⌛")
         #expect(type.isError == false)
         #expect(type.backgroundColor == FTColor.accent.color)
@@ -72,7 +94,7 @@ final class SnackBarTypeTests {
         let type = SnackBarType.passedModeration
         
         #expect(!type.text.isEmpty)
-        #expect(type.showDuration == 2.5)
+        #expect(type.showDuration == 2)
         #expect(type.emoji == "✅")
         #expect(type.isError == false)
         #expect(type.backgroundColor == FTColor.accent.color)
@@ -83,7 +105,7 @@ final class SnackBarTypeTests {
         let type = SnackBarType.couldNotModerateText
         
         #expect(!type.text.isEmpty)
-        #expect(type.showDuration == 2.5)
+        #expect(type.showDuration == 2)
         #expect(type.emoji == "⚠️")
         #expect(type.isError == true)
         #expect(type.backgroundColor == FTColor.error.color)
@@ -94,7 +116,7 @@ final class SnackBarTypeTests {
         let type = SnackBarType.didNotPassModeration
         
         #expect(!type.text.isEmpty)
-        #expect(type.showDuration == 2.5)
+        #expect(type.showDuration == 2)
         #expect(type.emoji == "⚠️")
         #expect(type.isError == true)
         #expect(type.backgroundColor == FTColor.error.color)
@@ -138,7 +160,7 @@ final class SnackBarTypeTests {
         let type = SnackBarType.none
         
         #expect(type.text.isEmpty)
-        #expect(type.showDuration == 2.5)
+        #expect(type.showDuration == 2)
         #expect(type.emoji.isEmpty)
         #expect(type.isError == false)
         #expect(type.backgroundColor == FTColor.accent.color)

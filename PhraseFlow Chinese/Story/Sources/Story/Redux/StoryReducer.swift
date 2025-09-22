@@ -111,7 +111,8 @@ let storyReducer: Reducer<StoryState, StoryAction> = { state, action in
          .generateDefinitions,
          .onGeneratedDefinitions,
          .formatSentences,
-         .onFormattedSentences:
+         .onFormattedSentences,
+         .setSnackbarType:
         break
     }
 

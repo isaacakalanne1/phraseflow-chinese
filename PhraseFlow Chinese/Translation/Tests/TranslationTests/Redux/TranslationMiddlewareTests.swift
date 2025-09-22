@@ -13,6 +13,7 @@ import SettingsMocks
 import TextGeneration
 import TextGenerationMocks
 import UserLimit
+import SnackBar
 @testable import Translation
 @testable import TranslationMocks
 
@@ -505,14 +506,14 @@ final class TranslationMiddlewareTests {
     }
     
     @Test
-    func failedToTranslate_returnsNil() async {
+    func failedToTranslate_setsSnackbarType() async {
         let resultAction = await translationMiddleware(
             .arrange,
             .failedToTranslate,
             mockEnvironment
         )
         
-        #expect(resultAction == nil)
+        #expect(resultAction == .setSnackbarType(.failedToWriteTranslation))
     }
     
     @Test
@@ -590,5 +591,20 @@ final class TranslationMiddlewareTests {
         )
         
         #expect(resultAction == nil)
+    }
+    
+    @Test
+    func setSnackbarType_callsEnvironmentAndReturnsNil() async {
+        let snackbarType: SnackBarType = .failedToWriteTranslation
+        
+        let resultAction = await translationMiddleware(
+            .arrange,
+            .setSnackbarType(snackbarType),
+            mockEnvironment
+        )
+        
+        #expect(resultAction == nil)
+        #expect(mockEnvironment.setSnackbarTypeCalled == true)
+        #expect(mockEnvironment.setSnackbarTypeSpy == snackbarType)
     }
 }

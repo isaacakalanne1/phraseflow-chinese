@@ -10,6 +10,7 @@ import DataStorage
 import Foundation
 import Settings
 import StoreKit
+import SnackBar
 import Subscription
 
 enum MockSubscriptionEnvironmentError: Error {
@@ -103,5 +104,12 @@ public class MockSubscriptionEnvironment: SubscriptionEnvironmentProtocol {
     
     public func restoreSubscriptions() async throws {
         try await mockRepository.restoreSubscriptions()
+    }
+    
+    var setSnackbarTypeSpy: SnackBarType?
+    var setSnackbarTypeCalled = false
+    public func setSnackbarType(_ type: SnackBarType) {
+        setSnackbarTypeSpy = type
+        setSnackbarTypeCalled = true
     }
 }

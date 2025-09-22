@@ -30,6 +30,7 @@ let package = Package(
         .package(name: "Speech", path: "../Speech"),
         .package(name: "Story", path: "../Story"),
         .package(name: "Study", path: "../Study"),
+        .package(name: "SnackBar", path: "../SnackBar"),
         .package(name: "UserLimit", path: "../UserLimit"),
         .package(name: "TextPractice", path: "../TextPractice"),
         .package(name: "TextGeneration", path: "../TextGeneration")
@@ -50,6 +51,7 @@ let package = Package(
                 "Speech",
                 "Story",
                 "Study",
+                "SnackBar",
                 "UserLimit",
                 "TextPractice",
                 "TextGeneration"
@@ -69,8 +71,10 @@ let package = Package(
                 "Speech",
                 "Story",
                 "Study",
+                "SnackBar",
                 "TextPractice",
                 "TextGeneration",
+                .product(name: "SnackBarMocks", package: "SnackBar"),
                 .product(name: "TextGenerationMocks", package: "TextGeneration"),
                 .product(name: "TextPracticeMocks", package: "TextPractice")
             ],

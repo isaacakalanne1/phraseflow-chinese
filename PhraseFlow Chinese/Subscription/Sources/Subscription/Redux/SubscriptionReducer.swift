@@ -57,7 +57,8 @@ public let subscriptionReducer: Reducer<SubscriptionState, SubscriptionAction> =
              .onValidatedReceipt,
              .trackSsmlCharacterCount,
              .saveAppSettings,
-             .failedToTrackSsml:
+             .failedToTrackSsml,
+             .setSnackbarType:
             break
         }
 

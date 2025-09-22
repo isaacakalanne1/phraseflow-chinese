@@ -8,6 +8,8 @@
 import Testing
 import Foundation
 import Settings
+import SnackBar
+import Loading
 import TextGeneration
 @testable import Story
 @testable import StoryMocks
@@ -47,7 +49,7 @@ final class StoryMiddlewareTests {
     }
     
     @Test
-    func failedToCreateChapter_whenNoCharactersRemaining_triggersLimitReached() async {
+    func failedToCreateChapter_whenNoCharactersRemaining_triggersLimitReachedAndUpdatesLoadingAndSetsSnackbar() async {
         let state: StoryState = .arrange(settings: .arrange(usedCharacters: 9_999_999_999, subscriptionLevel: .free))
         
         let resultAction = await storyMiddleware(
@@ -56,13 +58,15 @@ final class StoryMiddlewareTests {
             mockEnvironment
         )
         
-        #expect(resultAction == nil)
+        #expect(resultAction == .setSnackbarType(.failedToWriteChapter))
         #expect(mockEnvironment.limitReachedCalled == true)
         #expect(mockEnvironment.limitReachedSpy == .freeLimit)
+        #expect(mockEnvironment.updateLoadingStatusCalled == true)
+        #expect(mockEnvironment.updateLoadingStatusSpy == LoadingStatus.none)
     }
     
     @Test
-    func failedToCreateChapter_whenHasCharacters_doesNotTriggerLimitReached() async {
+    func failedToCreateChapter_whenHasCharacters_setsSnackbarAndUpdatesLoadingButDoesNotTriggerLimitReached() async {
         let state: StoryState = .arrange(settings: .arrange(usedCharacters: 50))
         
         let resultAction = await storyMiddleware(
@@ -71,8 +75,10 @@ final class StoryMiddlewareTests {
             mockEnvironment
         )
         
-        #expect(resultAction == nil)
+        #expect(resultAction == .setSnackbarType(.failedToWriteChapter))
         #expect(mockEnvironment.limitReachedCalled == false)
+        #expect(mockEnvironment.updateLoadingStatusCalled == true)
+        #expect(mockEnvironment.updateLoadingStatusSpy == LoadingStatus.none)
     }
     
     @Test
@@ -666,5 +672,20 @@ final class StoryMiddlewareTests {
         )
         
         #expect(resultAction == nil)
+    }
+    
+    @Test
+    func setSnackbarType_callsEnvironmentAndReturnsNil() async {
+        let snackbarType: SnackBarType = .failedToWriteChapter
+        
+        let resultAction = await storyMiddleware(
+            .arrange,
+            .setSnackbarType(snackbarType),
+            mockEnvironment
+        )
+        
+        #expect(resultAction == nil)
+        #expect(mockEnvironment.setSnackbarTypeCalled == true)
+        #expect(mockEnvironment.setSnackbarTypeSpy == snackbarType)
     }
 }

@@ -12,6 +12,7 @@ import TextGeneration
 import TextPractice
 import UserLimit
 import Combine
+import SnackBar
 
 public struct TranslationEnvironment: TranslationEnvironmentProtocol {
     private let translationServices: TranslationServicesProtocol
@@ -20,6 +21,7 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
     public let textPracticeEnvironment: TextPracticeEnvironmentProtocol
     private let translationDataStore: TranslationDataStoreProtocol
     private let userLimitEnvironment: UserLimitEnvironmentProtocol
+    private let snackbarEnvironment: SnackBarEnvironmentProtocol
     public var limitReachedSubject: CurrentValueSubject<LimitReachedEvent, Never> {
         userLimitEnvironment.limitReachedSubject
     }
@@ -33,13 +35,15 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
         settingsEnvironment: SettingsEnvironmentProtocol,
         textPracticeEnvironment: TextPracticeEnvironmentProtocol,
         translationDataStore: TranslationDataStoreProtocol,
-        userLimitEnvironment: UserLimitEnvironmentProtocol
+        userLimitEnvironment: UserLimitEnvironmentProtocol,
+        snackbarEnvironment: SnackBarEnvironmentProtocol
     ) {
         self.translationServices = translationServices
         self.speechEnvironment = speechEnvironment
         self.settingsEnvironment = settingsEnvironment
         self.textPracticeEnvironment = textPracticeEnvironment
         self.userLimitEnvironment = userLimitEnvironment
+        self.snackbarEnvironment = snackbarEnvironment
         self.translationDataStore = translationDataStore
     }
     
@@ -70,5 +74,9 @@ public struct TranslationEnvironment: TranslationEnvironmentProtocol {
     public func canCreateChapter(estimatedCharacterCount: Int, characterLimitPerDay: Int?) throws {
         try userLimitEnvironment.canCreateChapter(estimatedCharacterCount: estimatedCharacterCount,
                                                   characterLimitPerDay: characterLimitPerDay)
+    }
+    
+    public func setSnackbarType(_ type: SnackBarType) {
+        snackbarEnvironment.setSnackbarType(type)
     }
 }

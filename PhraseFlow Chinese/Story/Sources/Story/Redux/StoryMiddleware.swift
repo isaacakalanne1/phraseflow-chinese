@@ -20,10 +20,11 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
         }
         return .generateText(type)
     case .failedToCreateChapter:
+        environment.updateLoadingStatus(.none)
         if state.settings.remainingCharacters <= 0 {
             environment.limitReached(state.settings.subscriptionLevel == .free ? .freeLimit : .dailyLimit(nextAvailable: "text here"))
         }
-        return nil
+        return .setSnackbarType(.failedToWriteChapter)
     case .generateText(let type):
         do {
             var chapters: [Chapter] = []
@@ -167,6 +168,9 @@ public let storyMiddleware: Middleware<StoryState, StoryAction, StoryEnvironment
             environment.playSound(.tabPress)
         }
         return .saveAppSettings(state.settings)
+    case .setSnackbarType(let type):
+        environment.setSnackbarType(type)
+        return nil
     case .failedToLoadStoriesAndDefinitions,
             .failedToDeleteStory,
             .failedToSaveChapter,

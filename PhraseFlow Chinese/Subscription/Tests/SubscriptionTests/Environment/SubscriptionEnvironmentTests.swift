@@ -15,6 +15,8 @@ import StoreKit
 @testable import SpeechMocks
 @testable import Subscription
 @testable import SubscriptionMocks
+@testable import SnackBar
+@testable import SnackBarMocks
 @testable import UserLimit
 @testable import UserLimitMocks
 
@@ -24,18 +26,21 @@ final class SubscriptionEnvironmentTests {
     let mockSpeechEnvironment: MockSpeechEnvironment
     let mockSettingsEnvironment: MockSettingsEnvironment
     let mockUserLimitsEnvironment: MockUserLimitEnvironment
+    let mockSnackBarEnvironment: MockSnackBarEnvironment
     
     init() {
         self.mockRepository = MockSubscriptionRepository()
         self.mockSpeechEnvironment = MockSpeechEnvironment()
         self.mockSettingsEnvironment = MockSettingsEnvironment()
         self.mockUserLimitsEnvironment = MockUserLimitEnvironment()
+        self.mockSnackBarEnvironment = MockSnackBarEnvironment()
         
         self.environment = SubscriptionEnvironment(
             repository: mockRepository,
             speechEnvironment: mockSpeechEnvironment,
             settingsEnvironment: mockSettingsEnvironment,
-            userLimitsEnvironment: mockUserLimitsEnvironment
+            userLimitsEnvironment: mockUserLimitsEnvironment,
+            snackbarEnvironment: mockSnackBarEnvironment
         )
     }
     
@@ -205,6 +210,16 @@ final class SubscriptionEnvironmentTests {
             // Error case - AppStore.sync() failed (this is also valid)
             #expect(true)
         }
+    }
+    
+    @Test
+    func setSnackbarType_delegatesToSnackbarEnvironment() {
+        let snackbarType: SnackBarType = .failedToSubscribe
+        
+        environment.setSnackbarType(snackbarType)
+        
+        #expect(mockSnackBarEnvironment.setSnackbarTypeCalled == true)
+        #expect(mockSnackBarEnvironment.setSnackbarTypeSpy == snackbarType)
     }
 }
 

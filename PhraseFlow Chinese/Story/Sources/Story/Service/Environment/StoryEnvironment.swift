@@ -11,6 +11,7 @@ import Loading
 import Settings
 import TextGeneration
 import Speech
+import SnackBar
 import Study
 import ImageGeneration
 import TextPractice
@@ -26,6 +27,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         textPracticeEnvironment.goToNextChapterSubject
     }
     public let userLimitEnvironment: UserLimitEnvironmentProtocol
+    public let snackbarEnvironment: SnackBarEnvironmentProtocol
     public var limitReachedSubject: CurrentValueSubject<LimitReachedEvent, Never> {
         userLimitEnvironment.limitReachedSubject
     }
@@ -47,6 +49,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         textPracticeEnvironment: TextPracticeEnvironmentProtocol,
         loadingEnvironment: LoadingEnvironmentProtocol,
         userLimitEnvironment: UserLimitEnvironmentProtocol,
+        snackbarEnvironment: SnackBarEnvironmentProtocol,
         textGenerationService: TextGenerationServicesProtocol,
         imageGenerationService: ImageGenerationServicesProtocol,
         dataStore: StoryDataStoreProtocol
@@ -58,6 +61,7 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
         self.textPracticeEnvironment = textPracticeEnvironment
         self.loadingEnvironment = loadingEnvironment
         self.userLimitEnvironment = userLimitEnvironment
+        self.snackbarEnvironment = snackbarEnvironment
         self.textGenerationService = textGenerationService
         self.imageGenerationService = imageGenerationService
         self.dataStore = dataStore
@@ -230,5 +234,13 @@ public struct StoryEnvironment: StoryEnvironmentProtocol {
     
     public func cleanupOrphanedSentenceAudioFiles() throws {
         try studyEnvironment.cleanupOrphanedSentenceAudioFiles()
+    }
+    
+    public func setSnackbarType(_ type: SnackBarType) {
+        snackbarEnvironment.setSnackbarType(type)
+    }
+    
+    public func updateLoadingStatus(_ status: LoadingStatus) {
+        loadingEnvironment.updateLoadingStatus(status)
     }
 }

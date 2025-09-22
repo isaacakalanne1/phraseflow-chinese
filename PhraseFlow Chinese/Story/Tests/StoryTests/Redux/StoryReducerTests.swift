@@ -584,4 +584,16 @@ final class StoryReducerTests {
         
         #expect(newState == initialState)
     }
+    
+    @Test
+    func setSnackbarType_doesNotChangeState() {
+        let initialState = StoryState.arrange
+        
+        let newState = storyReducer(
+            initialState,
+            .setSnackbarType(.failedToWriteChapter)
+        )
+        
+        #expect(newState == initialState)
+    }
 }

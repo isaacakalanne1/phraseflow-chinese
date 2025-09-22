@@ -8,7 +8,10 @@
 import Audio
 import AudioMocks
 import Combine
+import Loading
 import Settings
+import SnackBar
+import SnackBarMocks
 import Story
 import Study
 import StudyMocks
@@ -279,5 +282,19 @@ public class MockStoryEnvironment: StoryEnvironmentProtocol {
         case .failure(let error):
             throw error
         }
+    }
+    
+    var setSnackbarTypeSpy: SnackBarType?
+    var setSnackbarTypeCalled = false
+    public func setSnackbarType(_ type: SnackBarType) {
+        setSnackbarTypeSpy = type
+        setSnackbarTypeCalled = true
+    }
+    
+    var updateLoadingStatusSpy: LoadingStatus?
+    var updateLoadingStatusCalled = false
+    public func updateLoadingStatus(_ status: LoadingStatus) {
+        updateLoadingStatusSpy = status
+        updateLoadingStatusCalled = true
     }
 }

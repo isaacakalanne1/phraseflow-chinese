@@ -9,6 +9,7 @@ import DataStorage
 import Foundation
 import Settings
 import StoreKit
+import SnackBar
 
 public enum SubscriptionAction: Sendable, Equatable {
     case trackSsmlCharacterCount(Int)
@@ -40,4 +41,5 @@ public enum SubscriptionAction: Sendable, Equatable {
     
     case saveAppSettings(SettingsState)
     case refreshAppSettings(SettingsState)
+    case setSnackbarType(SnackBarType)
 }

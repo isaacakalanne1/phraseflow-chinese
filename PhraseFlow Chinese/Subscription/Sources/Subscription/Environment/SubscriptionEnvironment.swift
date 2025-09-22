@@ -10,6 +10,7 @@ import DataStorage
 import Settings
 import StoreKit
 import Speech
+import SnackBar
 import UserLimit
 
 public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
@@ -17,6 +18,7 @@ public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
     private let speechEnvironment: SpeechEnvironmentProtocol
     private let settingsEnvironment: SettingsEnvironmentProtocol
     private let userLimitsEnvironment: UserLimitEnvironmentProtocol
+    private let snackbarEnvironment: SnackBarEnvironmentProtocol
     
     public var synthesizedCharactersSubject: CurrentValueSubject<Int?, Never> {
         speechEnvironment.synthesizedCharactersSubject
@@ -30,12 +32,14 @@ public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
         repository: SubscriptionRepositoryProtocol,
         speechEnvironment: SpeechEnvironmentProtocol,
         settingsEnvironment: SettingsEnvironmentProtocol,
-        userLimitsEnvironment: UserLimitEnvironmentProtocol
+        userLimitsEnvironment: UserLimitEnvironmentProtocol,
+        snackbarEnvironment: SnackBarEnvironmentProtocol
     ) {
         self.repository = repository
         self.speechEnvironment = speechEnvironment
         self.settingsEnvironment = settingsEnvironment
         self.userLimitsEnvironment = userLimitsEnvironment
+        self.snackbarEnvironment = snackbarEnvironment
     }
     
     public func getProducts() async throws -> [Product] {
@@ -74,5 +78,9 @@ public struct SubscriptionEnvironment: SubscriptionEnvironmentProtocol {
     
     public func restoreSubscriptions() async throws {
         try await repository.restoreSubscriptions()
+    }
+    
+    public func setSnackbarType(_ type: SnackBarType) {
+        snackbarEnvironment.setSnackbarType(type)
     }
 }

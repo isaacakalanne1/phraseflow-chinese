@@ -328,5 +328,17 @@ final class SubscriptionReducerTests {
         
         #expect(state.isSubscribed == false)
     }
+    
+    @Test
+    func setSnackbarType_doesNotChangeState() {
+        let initialState = SubscriptionState.arrange
+        
+        let newState = subscriptionReducer(
+            initialState,
+            .setSnackbarType(.failedToSubscribe)
+        )
+        
+        #expect(newState == initialState)
+    }
 }
 

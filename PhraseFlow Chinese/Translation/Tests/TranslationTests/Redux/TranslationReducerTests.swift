@@ -395,4 +395,16 @@ final class TranslationReducerTests {
         
         #expect(newState == initialState)
     }
+    
+    @Test
+    func setSnackbarType_doesNotChangeState() {
+        let initialState = TranslationState.arrange
+        
+        let newState = translationReducer(
+            initialState,
+            .setSnackbarType(.failedToWriteTranslation)
+        )
+        
+        #expect(newState == initialState)
+    }
 }

@@ -18,6 +18,8 @@ import UserLimit
 @testable import UserLimitMocks
 import Speech
 @testable import SpeechMocks
+@testable import SnackBar
+@testable import SnackBarMocks
 @testable import Translation
 @testable import TranslationMocks
 
@@ -29,6 +31,7 @@ class TranslationEnvironmentTests {
     let mockTextPracticeEnvironment: MockTextPracticeEnvironment
     let mockTranslationDataStore: MockTranslationDataStore
     let mockUserLimitEnvironment: MockUserLimitEnvironment
+    let mockSnackBarEnvironment: MockSnackBarEnvironment
     
     init() {
         self.mockTranslationServices = MockTranslationServices()
@@ -37,6 +40,7 @@ class TranslationEnvironmentTests {
         self.mockTextPracticeEnvironment = MockTextPracticeEnvironment()
         self.mockTranslationDataStore = MockTranslationDataStore()
         self.mockUserLimitEnvironment = MockUserLimitEnvironment()
+        self.mockSnackBarEnvironment = MockSnackBarEnvironment()
         
         self.environment = TranslationEnvironment(
             translationServices: mockTranslationServices,
@@ -44,7 +48,8 @@ class TranslationEnvironmentTests {
             settingsEnvironment: mockSettingsEnvironment,
             textPracticeEnvironment: mockTextPracticeEnvironment,
             translationDataStore: mockTranslationDataStore,
-            userLimitEnvironment: mockUserLimitEnvironment
+            userLimitEnvironment: mockUserLimitEnvironment,
+            snackbarEnvironment: mockSnackBarEnvironment
         )
     }
     
@@ -266,5 +271,15 @@ class TranslationEnvironmentTests {
         mockUserLimitEnvironment.limitReachedSubject.send(testEvent)
         
         #expect(environment.limitReachedSubject.value == testEvent)
+    }
+    
+    @Test
+    func setSnackbarType_delegatesToSnackbarEnvironment() {
+        let snackbarType: SnackBarType = .failedToWriteTranslation
+        
+        environment.setSnackbarType(snackbarType)
+        
+        #expect(mockSnackBarEnvironment.setSnackbarTypeCalled == true)
+        #expect(mockSnackBarEnvironment.setSnackbarTypeSpy == snackbarType)
     }
 }

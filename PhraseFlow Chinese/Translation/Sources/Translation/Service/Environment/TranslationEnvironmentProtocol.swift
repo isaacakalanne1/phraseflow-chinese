@@ -11,6 +11,7 @@ import TextGeneration
 import TextPractice
 import UserLimit
 import Combine
+import SnackBar
 
 public protocol TranslationEnvironmentProtocol {
     var textPracticeEnvironment: TextPracticeEnvironmentProtocol { get }
@@ -25,4 +26,5 @@ public protocol TranslationEnvironmentProtocol {
     func synthesizeSpeech(for chapter: Chapter, voice: Voice, language: Language) async throws -> Chapter
     func saveAppSettings(_ settings: SettingsState) throws
     func canCreateChapter(estimatedCharacterCount: Int, characterLimitPerDay: Int?) throws
+    func setSnackbarType(_ type: SnackBarType)
 }

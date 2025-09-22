@@ -8,6 +8,7 @@
 import Audio
 import Foundation
 import Settings
+import SnackBar
 import TextGeneration
 
 public enum StoryAction: Sendable, Equatable {
@@ -47,4 +48,6 @@ public enum StoryAction: Sendable, Equatable {
     
     case refreshAppSettings(SettingsState)
     case saveAppSettings(SettingsState)
+    
+    case setSnackbarType(SnackBarType)
 }

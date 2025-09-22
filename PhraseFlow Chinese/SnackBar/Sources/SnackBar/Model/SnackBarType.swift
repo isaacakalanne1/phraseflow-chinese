@@ -13,7 +13,9 @@ public enum SnackBarType: Equatable, Sendable {
     case welcomeBack
     case deletedCustomStory
     case subscribed
+    case failedToSubscribe
     case failedToWriteChapter
+    case failedToWriteTranslation
     case moderatingText
     case passedModeration
     case couldNotModerateText
@@ -28,6 +30,10 @@ public enum SnackBarType: Equatable, Sendable {
             LocalizedString.welcomeBack
         case .failedToWriteChapter:
             LocalizedString.snackbarFailedWriteChapter
+        case .failedToWriteTranslation:
+            "Failed to write translation" // TODO: Localize
+        case .failedToSubscribe:
+            "Failed to subscribe" // TODO: Localize
         case .couldNotModerateText:
             LocalizedString.failedModerateText
         case .subscribed:
@@ -56,24 +62,26 @@ public enum SnackBarType: Equatable, Sendable {
         case .deviceVolumeZero:
             5.0
         default:
-            2.5
+            2
         }
     }
 
     var emoji: String {
         switch self {
         case .moderatingText,
-             .dailyChapterLimitReached:
+                .dailyChapterLimitReached:
             "⌛"
         case .subscribed,
-             .passedModeration,
-             .deletedCustomStory:
+                .passedModeration,
+                .deletedCustomStory:
             "✅"
         case .welcomeBack:
             "🔥"
         case .didNotPassModeration,
-             .couldNotModerateText,
-             .failedToWriteChapter:
+                .couldNotModerateText,
+                .failedToWriteChapter,
+                .failedToWriteTranslation,
+                .failedToSubscribe:
             "⚠️"
         case .deviceVolumeZero:
             "🔇"
@@ -85,8 +93,10 @@ public enum SnackBarType: Equatable, Sendable {
     var isError: Bool {
         switch self {
         case .failedToWriteChapter,
-             .didNotPassModeration,
-             .couldNotModerateText:
+                .failedToWriteTranslation,
+                .failedToSubscribe,
+                .didNotPassModeration,
+                .couldNotModerateText:
             return true
         default:
             return false

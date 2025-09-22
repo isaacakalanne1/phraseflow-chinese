@@ -16,8 +16,6 @@ import Foundation
 import Combine
 import Testing
 import ReduxKit
-@testable import Settings
-@testable import SettingsMocks
 @testable import SnackBar
 @testable import SnackBarMocks
 

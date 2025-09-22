@@ -17,20 +17,23 @@ public struct SnackBarContentView: View {
     }
 
     public var body: some View {
-        HStack {
-            Text(type.emoji)
-            Text(type.text)
-                .foregroundStyle(FTColor.background.color)
+        GeometryReader { geometry in
+            HStack {
+                Text(type.emoji)
+                Text(type.text)
+                    .foregroundStyle(FTColor.background.color)
+            }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(type.backgroundColor)
+            .foregroundStyle(FTColor.primary.color)
+            .cornerRadius(15)
+            .multilineTextAlignment(.center)
+            .padding()
+            .offset(x: store.state.isShowing ? 0 : -geometry.size.width)
+            .animation(.smooth, value: store.state.isShowing)
         }
-        .padding()
-        .frame(maxWidth: .infinity)
-        .background(type.backgroundColor)
-        .foregroundStyle(FTColor.primary.color)
-        .cornerRadius(15)
-        .multilineTextAlignment(.center)
-        .padding()
         .zIndex(Double.infinity)
-        .offset(y: store.state.isShowing ? 0 : -200)
-        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: store.state.isShowing)
+        .allowsHitTesting(store.state.isShowing)
     }
 }

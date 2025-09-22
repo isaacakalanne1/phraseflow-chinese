@@ -111,7 +111,8 @@ let translationReducer: Reducer<TranslationState, TranslationAction> = { state, 
             .saveAppSettings,
             .onSavedAppSettings,
             .failedToSaveAppSettings,
-            .loadTranslationHistory:
+            .loadTranslationHistory,
+            .setSnackbarType:
         break
     }
     

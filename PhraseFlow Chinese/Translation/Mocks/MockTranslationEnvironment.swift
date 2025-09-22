@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 import Settings
+import SnackBar
 import TextGeneration
 import TextGenerationMocks
 import TextPractice
@@ -139,5 +140,12 @@ public class MockTranslationEnvironment: TranslationEnvironmentProtocol {
         case .failure(let error):
             throw error
         }
+    }
+    
+    var setSnackbarTypeSpy: SnackBarType?
+    var setSnackbarTypeCalled = false
+    public func setSnackbarType(_ type: SnackBarType) {
+        setSnackbarTypeSpy = type
+        setSnackbarTypeCalled = true
     }
 }

@@ -27,6 +27,7 @@ let package = Package(
         .package(name: "Speech", path: "../Speech"),
         .package(name: "UserLimit", path: "../UserLimit"),
         .package(name: "Settings", path: "../Settings"),
+        .package(name: "SnackBar", path: "../SnackBar"),
         .package(name: "DataStorage", path: "../DataStorage")
     ],
     targets: [
@@ -40,6 +41,7 @@ let package = Package(
                 "FTColor",
                 "FTFont",
                 "Speech",
+                "SnackBar",
                 "UserLimit",
                 "Settings",
                 "DataStorage"
@@ -56,6 +58,8 @@ let package = Package(
                 "Speech",
                 "UserLimit",
                 "Settings",
+                "SnackBar",
+                .product(name: "SnackBarMocks", package: "SnackBar"),
                 .product(name: "SettingsMocks", package: "Settings"),
                 "DataStorage"
             ],

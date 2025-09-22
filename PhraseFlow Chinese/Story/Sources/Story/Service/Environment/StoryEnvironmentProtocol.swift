@@ -12,8 +12,10 @@ import Combine
 import Settings
 import TextGeneration
 import Study
+import SnackBar
 import TextPractice
 import UserLimit
+import Loading
 
 public protocol StoryEnvironmentProtocol {
     var textPracticeEnvironment: TextPracticeEnvironmentProtocol { get }
@@ -66,5 +68,7 @@ public protocol StoryEnvironmentProtocol {
     func playSound(_ sound: AppSound)
     func cleanupDefinitionsNotInChapters(_ chapters: [Chapter]) throws
     func cleanupOrphanedSentenceAudioFiles() throws
+    func setSnackbarType(_ type: SnackBarType)
+    func updateLoadingStatus(_ status: LoadingStatus)
 }
 

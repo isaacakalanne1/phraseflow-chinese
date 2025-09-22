@@ -86,9 +86,15 @@ public let subscriptionMiddleware: Middleware<SubscriptionState, SubscriptionAct
         
     case .onTrackedSsml:
         return .saveAppSettings(state.settings)
+        
+    case .failedToPurchaseSubscription:
+        return .setSnackbarType(.failedToSubscribe)
+
+    case .setSnackbarType(let type):
+        environment.setSnackbarType(type)
+        return nil
 
     case .failedToFetchSubscriptions,
-         .failedToPurchaseSubscription,
          .updateIsSubscriptionPurchaseLoading,
          .onRestoredSubscriptions,
          .failedToRestoreSubscriptions,

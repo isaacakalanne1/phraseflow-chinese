@@ -8,6 +8,7 @@
 import Foundation
 import Settings
 import TextGeneration
+import SnackBar
 
 enum TranslationAction: Equatable {
     case updateInputText(String)
@@ -37,4 +38,5 @@ enum TranslationAction: Equatable {
     case failedToSaveAppSettings
     case showTextPractice(Bool)
     case selectTranslation(Chapter)
+    case setSnackbarType(SnackBarType)
 }
