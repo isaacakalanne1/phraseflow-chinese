@@ -9,19 +9,22 @@ import SwiftUI
 import ReduxKit
 
 public struct SnackbarView: View {
-    private var store: SnackBarStore
+    @StateObject private var store: SnackBarStore
     
-    public init() {
+    public init(
+        environment: SnackBarEnvironmentProtocol
+    ) {
         let state = SnackBarState()
-        let environment = SnackBarEnvironment()
         
-        store = SnackBarStore(
-            initial: state,
-            reducer: snackBarReducer,
-            environment: environment,
-            middleware: snackBarMiddleware,
-            subscriber: snackBarSubscriber
-        )
+        self._store = StateObject(wrappedValue: {
+            SnackBarStore(
+                initial: state,
+                reducer: snackBarReducer,
+                environment: environment,
+                middleware: snackBarMiddleware,
+                subscriber: snackBarSubscriber
+            )
+        }())
     }
     
     public var body: some View {

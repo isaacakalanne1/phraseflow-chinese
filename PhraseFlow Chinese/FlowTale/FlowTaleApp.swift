@@ -32,6 +32,7 @@ public struct FlowTaleRootView: View {
         let snackBarEnvironment = SnackBarEnvironment()
         let userLimitsDataStore = UserLimitsDataStore()
         let settingsDataStore = SettingsDataStore()
+        let snackbarEnvironment = SnackBarEnvironment()
         
         let moderationServices = ModerationServices()
         let moderationEnvironment = ModerationEnvironment(
@@ -105,6 +106,7 @@ public struct FlowTaleRootView: View {
             translationEnvironment: translationEnvironment,
             userLimitEnvironment: userLimitEnvironment,
             audioEnvironment: audioEnvironment,
+            snackbarEnvironment: snackbarEnvironment,
             loadingEnvironment: loadingEnvironment
         )
         

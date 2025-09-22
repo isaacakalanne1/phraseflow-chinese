@@ -30,5 +30,7 @@ public struct SnackBarContentView: View {
         .multilineTextAlignment(.center)
         .padding()
         .zIndex(Double.infinity)
+        .offset(y: store.state.isShowing ? 0 : -200)
+        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: store.state.isShowing)
     }
 }

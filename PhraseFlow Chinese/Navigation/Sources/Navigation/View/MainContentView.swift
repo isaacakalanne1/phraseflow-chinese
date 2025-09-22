@@ -8,6 +8,7 @@
 import FTColor
 import Loading
 import SwiftUI
+import SnackBar
 
 public struct MainContentView: View {
     private var store: NavigationStore
@@ -27,22 +28,18 @@ public struct MainContentView: View {
     }
     
     public var body: some View {
-        VStack {
-            LoadingProgressView(environment: environment.loadingEnvironment)
-            DisplayedContentView()
-            Divider()
-                .background(FTColor.secondary.color)
-                .padding(.horizontal)
-            TabBarView()
+        ZStack {
+            VStack {
+                LoadingProgressView(environment: environment.loadingEnvironment)
+                DisplayedContentView()
+                Divider()
+                    .background(FTColor.secondary.color)
+                    .padding(.horizontal)
+                TabBarView()
+            }
+            SnackbarView(environment: environment.snackbarEnvironment)
         }
         .background(FTColor.background.color)
         .environmentObject(store)
     }
 }
-
-// #Preview {
-//     MainContentView(environment: NavigationEnvironment(
-//         storyEnvironment: MockStoryEnvironment(),
-//         audioEnvironment: MockAudioEnvironment()
-//     ))
-// }

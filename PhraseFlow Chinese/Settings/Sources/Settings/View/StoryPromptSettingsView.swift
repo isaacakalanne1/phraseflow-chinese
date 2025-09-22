@@ -125,7 +125,7 @@ struct StoryPromptMenu: View {
     }
 
     private func submitCustomPrompt() {
-        store.dispatch(.snackbarAction(.showSnackBar(.moderatingText)))
+        store.dispatch(.snackbarAction(.setType(.moderatingText)))
         store.dispatch(.updateIsShowingCustomPromptAlert(false))
         store.dispatch(.submitCustomPrompt(store.state.customPrompt))
     }
