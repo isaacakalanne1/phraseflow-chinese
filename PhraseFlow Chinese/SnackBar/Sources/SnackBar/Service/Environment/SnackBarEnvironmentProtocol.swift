@@ -5,4 +5,10 @@
 //  Created by iakalann on 18/07/2025.
 //
 
-public protocol SnackBarEnvironmentProtocol { }
+import Combine
+
+public protocol SnackBarEnvironmentProtocol {
+    var snackbarStatus: CurrentValueSubject<SnackBarType, Never> { get }
+    
+    func setSnackbarType(_ type: SnackBarType)
+}

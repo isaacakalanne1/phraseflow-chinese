@@ -12,12 +12,12 @@ import ReduxKit
 @MainActor
 public let snackBarMiddleware: Middleware<SnackBarState, SnackBarAction, SnackBarEnvironmentProtocol> = { state, action, environment in
     switch action {
-    case .showSnackBar(let type):
-        if let duration = type.showDuration {
-            try? await Task.sleep(for: .seconds(duration))
-            return .hideSnackbar
-        }
-        return nil
+    case .setType:
+        return state.type == .none ? .hideSnackbar : .showSnackbar
+        
+    case .showSnackbar:
+        try? await Task.sleep(for: .seconds(state.type.showDuration))
+        return .hideSnackbar
         
     case .checkDeviceVolumeZero:
         let audioSession = AVAudioSession.sharedInstance()
@@ -26,7 +26,7 @@ public let snackBarMiddleware: Middleware<SnackBarState, SnackBarAction, SnackBa
         } catch {
             return nil
         }
-        return audioSession.outputVolume == 0.0 ? .showSnackBar(.deviceVolumeZero) : nil
+        return audioSession.outputVolume == 0.0 ? .setType(.deviceVolumeZero) : nil
         
     case .hideSnackbar:
         return nil

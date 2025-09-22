@@ -13,6 +13,7 @@ import Settings
 import Story
 import Study
 import Subscription
+import SnackBar
 import Translation
 import UserLimit
 
@@ -24,6 +25,7 @@ public protocol NavigationEnvironmentProtocol {
     var translationEnvironment: TranslationEnvironmentProtocol { get }
     var userLimitEnvironment: UserLimitEnvironmentProtocol { get }
     var audioEnvironment: AudioEnvironmentProtocol { get }
+    var snackbarEnvironment: SnackBarEnvironmentProtocol { get }
     var loadingEnvironment: LoadingEnvironmentProtocol { get }
     
     var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> { get }

@@ -13,8 +13,10 @@ public let snackBarReducer: Reducer<SnackBarState, SnackBarAction> = { state, ac
     var newState = state
 
     switch action {
-    case .showSnackBar(let type):
+    case .setType(let type):
         newState.type = type
+        
+    case .showSnackbar:
         newState.isShowing = true
         
     case .hideSnackbar:

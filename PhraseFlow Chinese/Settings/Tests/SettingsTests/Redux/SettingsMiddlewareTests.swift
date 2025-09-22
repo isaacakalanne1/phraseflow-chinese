@@ -473,7 +473,7 @@ final class SettingsMiddlewareTests {
     func snackbarAction_returnsNil() async {
         let resultAction = await settingsMiddleware(
             .arrange,
-            .snackbarAction(.showSnackBar(.chapterReady)),
+            .snackbarAction(.setType(.moderatingText)),
             mockEnvironment
         )
 

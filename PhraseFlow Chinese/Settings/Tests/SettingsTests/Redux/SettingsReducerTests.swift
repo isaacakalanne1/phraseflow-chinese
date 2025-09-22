@@ -552,7 +552,7 @@ final class SettingsReducerTests {
 
         let newState = settingsReducer(
             state,
-            .snackbarAction(.showSnackBar(.chapterReady))
+            .snackbarAction(.setType(.none))
         )
 
         #expect(newState == state)

@@ -18,7 +18,7 @@ public struct SnackBarContentView: View {
 
     public var body: some View {
         HStack {
-            type.iconView
+            Text(type.emoji)
             Text(type.text)
                 .foregroundStyle(FTColor.background.color)
         }

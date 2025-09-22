@@ -10,6 +10,7 @@ import ReduxKit
 
 @MainActor
 let subscriptionSubscriber: OnSubscribe<SubscriptionStore, SubscriptionEnvironmentProtocol> = { store, environment in
+
     environment.synthesizedCharactersSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak store] characterCount in

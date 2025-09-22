@@ -8,7 +8,8 @@
 import Foundation
 
 public enum SnackBarAction: Sendable, Equatable {
-    case showSnackBar(SnackBarType)
+    case setType(SnackBarType)
+    case showSnackbar
     case hideSnackbar
     case checkDeviceVolumeZero
 }

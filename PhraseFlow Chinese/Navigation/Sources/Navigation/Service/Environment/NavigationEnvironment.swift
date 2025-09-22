@@ -13,6 +13,7 @@ import Loading
 import Study
 import Settings
 import Subscription
+import SnackBar
 import Translation
 import UserLimit
 
@@ -24,6 +25,7 @@ public struct NavigationEnvironment: NavigationEnvironmentProtocol {
     public let translationEnvironment: TranslationEnvironmentProtocol
     public let userLimitEnvironment: UserLimitEnvironmentProtocol
     public let audioEnvironment: AudioEnvironmentProtocol
+    public let snackbarEnvironment: SnackBarEnvironmentProtocol
     public let loadingEnvironment: LoadingEnvironmentProtocol
 
     public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> {
@@ -38,6 +40,7 @@ public struct NavigationEnvironment: NavigationEnvironmentProtocol {
         translationEnvironment: TranslationEnvironmentProtocol,
         userLimitEnvironment: UserLimitEnvironmentProtocol,
         audioEnvironment: AudioEnvironmentProtocol,
+        snackbarEnvironment: SnackBarEnvironmentProtocol,
         loadingEnvironment: LoadingEnvironmentProtocol
     ) {
         self.settingsEnvironment = settingsEnvironment
@@ -47,6 +50,7 @@ public struct NavigationEnvironment: NavigationEnvironmentProtocol {
         self.translationEnvironment = translationEnvironment
         self.userLimitEnvironment = userLimitEnvironment
         self.audioEnvironment = audioEnvironment
+        self.snackbarEnvironment = snackbarEnvironment
         self.loadingEnvironment = loadingEnvironment
     }
     

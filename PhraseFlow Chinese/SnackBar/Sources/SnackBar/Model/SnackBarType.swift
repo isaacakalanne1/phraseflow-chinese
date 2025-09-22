@@ -11,8 +11,6 @@ import Localization
 
 public enum SnackBarType: Equatable, Sendable {
     case welcomeBack
-    case writingChapter
-    case chapterReady
     case deletedCustomStory
     case subscribed
     case failedToWriteChapter
@@ -22,15 +20,12 @@ public enum SnackBarType: Equatable, Sendable {
     case didNotPassModeration
     case dailyChapterLimitReached(nextAvailable: String)
     case deviceVolumeZero
+    case none
 
     var text: String {
         switch self {
         case .welcomeBack:
             LocalizedString.welcomeBack
-        case .writingChapter:
-            LocalizedString.writingChapter
-        case .chapterReady:
-            LocalizedString.chapterReady
         case .failedToWriteChapter:
             LocalizedString.snackbarFailedWriteChapter
         case .couldNotModerateText:
@@ -49,13 +44,13 @@ public enum SnackBarType: Equatable, Sendable {
             LocalizedString.snackbarDailyChapterLimitReached(nextAvailable)
         case .deviceVolumeZero:
             LocalizedString.deviceVolumeZero
+        case .none:
+            ""
         }
     }
 
-    var showDuration: Double? {
+    var showDuration: Double {
         switch self {
-        case .writingChapter:
-            nil
         case .dailyChapterLimitReached:
             4
         case .deviceVolumeZero:
@@ -65,29 +60,26 @@ public enum SnackBarType: Equatable, Sendable {
         }
     }
 
-    var iconView: some View {
-        let emoji: String
+    var emoji: String {
         switch self {
-        case .writingChapter:
-            emoji = "✏️"
         case .moderatingText,
              .dailyChapterLimitReached:
-            emoji = "⌛"
-        case .chapterReady,
-             .subscribed,
+            "⌛"
+        case .subscribed,
              .passedModeration,
              .deletedCustomStory:
-            emoji = "✅"
+            "✅"
         case .welcomeBack:
-            emoji = "🔥"
+            "🔥"
         case .didNotPassModeration,
              .couldNotModerateText,
              .failedToWriteChapter:
-            emoji = "⚠️"
+            "⚠️"
         case .deviceVolumeZero:
-            emoji = "🔇"
+            "🔇"
+        case .none:
+            ""
         }
-        return Text(emoji)
     }
 
     var isError: Bool {

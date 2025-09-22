@@ -85,7 +85,8 @@ let package = Package(
             dependencies: [
                 "Navigation",
                 "NavigationMocks",
-                "Localization"
+                "Localization",
+                .product(name: "SnackBarMocks", package: "SnackBar")
             ]
         ),
     ]

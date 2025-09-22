@@ -23,6 +23,8 @@ import Audio
 import AudioMocks
 import Loading
 import LoadingMocks
+import SnackBar
+import SnackBarMocks
 
 class MockNavigationEnvironment: NavigationEnvironmentProtocol {
     public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never>
@@ -36,6 +38,7 @@ class MockNavigationEnvironment: NavigationEnvironmentProtocol {
     public let translationEnvironment: TranslationEnvironmentProtocol
     public let userLimitEnvironment: UserLimitEnvironmentProtocol
     public let audioEnvironment: AudioEnvironmentProtocol
+    public let snackbarEnvironment: SnackBarEnvironmentProtocol
     public let loadingEnvironment: LoadingEnvironmentProtocol
     
     public init(
@@ -46,6 +49,7 @@ class MockNavigationEnvironment: NavigationEnvironmentProtocol {
         translationEnvironment: TranslationEnvironmentProtocol = MockTranslationEnvironment(),
         userLimitEnvironment: UserLimitEnvironmentProtocol = MockUserLimitEnvironment(),
         audioEnvironment: AudioEnvironmentProtocol = MockAudioEnvironment(),
+        snackbarEnvironment: SnackBarEnvironmentProtocol = MockSnackBarEnvironment(),
         loadingEnvironment: LoadingEnvironmentProtocol = MockLoadingEnvironment()
     ) {
         self.settingsEnvironment = settingsEnvironment
@@ -55,6 +59,7 @@ class MockNavigationEnvironment: NavigationEnvironmentProtocol {
         self.translationEnvironment = translationEnvironment
         self.userLimitEnvironment = userLimitEnvironment
         self.audioEnvironment = audioEnvironment
+        self.snackbarEnvironment = snackbarEnvironment
         self.loadingEnvironment = loadingEnvironment
         
         self.settingsUpdatedSubject = .init(nil)

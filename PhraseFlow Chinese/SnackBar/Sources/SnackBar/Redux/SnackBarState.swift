@@ -8,6 +8,14 @@
 import Foundation
 
 public struct SnackBarState: Equatable {
-    public var isShowing = false
-    public var type: SnackBarType = .chapterReady
+    public var isShowing: Bool
+    public var type: SnackBarType
+    
+    public init(
+        isShowing: Bool = false,
+        type: SnackBarType = .none
+    ) {
+        self.isShowing = isShowing
+        self.type = type
+    }
 }

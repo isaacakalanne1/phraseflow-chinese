@@ -12,10 +12,13 @@ import Audio
 import LoadingMocks
 import Settings
 import SettingsMocks
+import SnackBar
+import SnackBarMocks
 import StoryMocks
 import StudyMocks
 import SubscriptionMocks
 import TranslationMocks
+import UserLimit
 import UserLimitMocks
 @testable import Navigation
 @testable import NavigationMocks
@@ -29,6 +32,7 @@ class NavigationEnvironmentTests {
     let mockTranslationEnvironment: MockTranslationEnvironment
     let mockUserLimitEnvironment: MockUserLimitEnvironment
     let mockAudioEnvironment: MockAudioEnvironment
+    let mockSnackBarEnvironment: MockSnackBarEnvironment
     let mockLoadingEnvironment: MockLoadingEnvironment
     
     init() {
@@ -39,6 +43,7 @@ class NavigationEnvironmentTests {
         self.mockTranslationEnvironment = MockTranslationEnvironment()
         self.mockUserLimitEnvironment = MockUserLimitEnvironment()
         self.mockAudioEnvironment = MockAudioEnvironment()
+        self.mockSnackBarEnvironment = MockSnackBarEnvironment()
         self.mockLoadingEnvironment = MockLoadingEnvironment()
         
         self.environment = NavigationEnvironment(
@@ -49,6 +54,7 @@ class NavigationEnvironmentTests {
             translationEnvironment: mockTranslationEnvironment,
             userLimitEnvironment: mockUserLimitEnvironment,
             audioEnvironment: mockAudioEnvironment,
+            snackbarEnvironment: mockSnackBarEnvironment,
             loadingEnvironment: mockLoadingEnvironment
         )
     }

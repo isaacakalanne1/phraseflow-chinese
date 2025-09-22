@@ -266,5 +266,54 @@ final class LanguageTests {
         #expect(Language.autoDetect.key == "AutoDetect")
         #expect(Language.english.key == "English")
         #expect(Language.mandarinChinese.key == "MandarinChinese")
+        #expect(Language.brazilianPortuguese.key == "BrazilianPortuguese")
+        #expect(Language.europeanPortuguese.key == "EuropeanPortuguese")
+    }
+    
+    @Test
+    func language_flagCodes() throws {
+        #expect(Language.autoDetect.flagCodes == [""])
+        #expect(Language.english.flagCodes == ["us"])
+        #expect(Language.englishUK.flagCodes == ["gb"])
+        #expect(Language.mandarinChinese.flagCodes == ["cn"])
+        #expect(Language.spanish.flagCodes == ["es"])
+        #expect(Language.french.flagCodes == ["fr"])
+        #expect(Language.arabicGulf.flagCodes == ["ae"])
+        #expect(Language.japanese.flagCodes == ["jp"])
+        #expect(Language.korean.flagCodes == ["kr"])
+        #expect(Language.brazilianPortuguese.flagCodes == ["br"])
+        #expect(Language.europeanPortuguese.flagCodes == ["pt"])
+        #expect(Language.hindi.flagCodes == ["in"])
+        #expect(Language.russian.flagCodes == ["ru"])
+        #expect(Language.german.flagCodes == ["de"])
+    }
+    
+    @Test
+    func language_allCases() throws {
+        let allCases = Language.allCases
+        #expect(allCases.count == 14)
+        #expect(allCases.contains(.autoDetect))
+        #expect(allCases.contains(.english))
+        #expect(allCases.contains(.englishUK))
+        #expect(allCases.contains(.mandarinChinese))
+        #expect(allCases.contains(.spanish))
+        #expect(allCases.contains(.french))
+        #expect(allCases.contains(.arabicGulf))
+        #expect(allCases.contains(.japanese))
+        #expect(allCases.contains(.korean))
+        #expect(allCases.contains(.brazilianPortuguese))
+        #expect(allCases.contains(.europeanPortuguese))
+        #expect(allCases.contains(.hindi))
+        #expect(allCases.contains(.russian))
+        #expect(allCases.contains(.german))
+    }
+    
+    @Test
+    func language_codable() throws {
+        for language in Language.allCases {
+            let encoded = try JSONEncoder().encode(language)
+            let decoded = try JSONDecoder().decode(Language.self, from: encoded)
+            #expect(decoded == language)
+        }
     }
 }
