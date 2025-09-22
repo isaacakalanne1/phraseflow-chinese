@@ -19,10 +19,11 @@ public enum APIRequestType {
         }
     }
 
+    // TODO: Don't store in plain-text, fetch from Firebase
     public var authKey: String {
         switch self {
         case .openAI:
-            "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" // TODO: Don't store in plain-text, find recommended practice online
+            "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"
         case .openRouter:
             OpenRouterModel.authKey
         }

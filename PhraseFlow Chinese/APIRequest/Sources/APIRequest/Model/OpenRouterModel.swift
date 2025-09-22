@@ -12,8 +12,9 @@ public enum OpenRouterModel {
         "https://openrouter.ai/api/v1/chat/completions"
     }
 
+    // TODO: Don't store in plain-text, fetch from Firebase
     static var authKey: String {
-        "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" // TODO: Don't store in plain-text, find recommended practice online
+        "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"
     }
 
     var modelName: String {
