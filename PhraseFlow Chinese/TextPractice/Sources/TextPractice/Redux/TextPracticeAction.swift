@@ -9,13 +9,13 @@ import Audio
 import TextGeneration
 import Settings
 import Study
+import AVKit
 
 public enum TextPracticeAction: Sendable, Equatable {
     case addDefinitions([Definition])
     case showDefinition(WordTimeStampData)
     case hideDefinition
-    case selectWord(WordTimeStampData, playAudio: Bool)
-    case playWord(WordTimeStampData)
+    case selectWord(WordTimeStampData)
     case defineWord(WordTimeStampData)
     case onDefinedWord(Definition)
     case failedToDefineWord
@@ -31,6 +31,11 @@ public enum TextPracticeAction: Sendable, Equatable {
     
     case setChapter(Chapter)
     case prepareToPlayChapter
+    case setChapterAudioData(Data)
+    case onCreatedChapterPlayer(AVPlayer)
+    case playChapterAudio(time: Double?, rate: Float)
+    case pauseChapterAudio
+    case updatePlaybackRate(Float)
     case playChapter(fromWord: WordTimeStampData)
     case pauseChapter
     

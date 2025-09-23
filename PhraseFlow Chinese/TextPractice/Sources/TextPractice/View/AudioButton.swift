@@ -68,7 +68,7 @@ struct AudioButton: View {
     }
     
     private func updatePlayTime() async {
-        let playbackTime = store.environment.audioEnvironment.audioPlayer.chapterAudioPlayer.currentTime().seconds
+        let playbackTime = store.state.chapterAudioPlayer.currentTime().seconds
         store.dispatch(.setPlaybackTime(playbackTime))
         
         // Update current sentence based on playback time

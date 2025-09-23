@@ -5,6 +5,7 @@
 //  Created by iakalann on 11/09/2024.
 //
 
+import Audio
 import SwiftUI
 import FTColor
 import Localization
@@ -83,6 +84,8 @@ struct SettingsView: View {
                                           .padding()
                             }
                         )
+                        
+                        AudioRootView(environment: store.environment.audioEnvironment)
                         
                         settingsSection(
                             title: LocalizedString.settingsSoundHeader,

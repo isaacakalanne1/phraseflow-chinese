@@ -216,7 +216,7 @@ final class TextPracticeReducerTests {
         
         let newState = textPracticeReducer(
             initialState,
-            .selectWord(word, playAudio: true)
+            .selectWord(word)
         )
         
         #expect(newState == expectedState)

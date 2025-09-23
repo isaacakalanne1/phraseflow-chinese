@@ -24,20 +24,24 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
         await environment.prepareToPlayChapter(state.chapter)
         return .generateDefinitions(state.chapter, sentenceIndex: 0)
     case .playChapter(let word):
-        await environment.playChapter(from: word, speechSpeed: state.settings.speechSpeed)
         environment.setMusicVolume(.quiet)
+        await state.chapterAudioPlayer.playAudio(fromSeconds: word.time, playRate: state.settings.speechSpeed.playRate)
         return nil
     case .pauseChapter:
-        environment.pauseChapter()
         environment.setMusicVolume(.normal)
+        state.chapterAudioPlayer.pause()
         return nil
     case .playSound(let sound):
         if state.settings.shouldPlaySound {
             environment.playSound(sound)
         }
         return nil
-    case .selectWord(let word, let shouldPlay):
-        await environment.playWord(word, rate: state.settings.speechSpeed.playRate)
+    case .selectWord(let word):
+        await state.chapterAudioPlayer.playAudio(
+            fromSeconds: word.time,
+            toSeconds: word.time + word.duration,
+            playRate: state.settings.speechSpeed.playRate
+        )
         return .showDefinition(word)
     case .saveAppSettings(let settings):
         try? environment.saveAppSettings(settings)
@@ -68,9 +72,8 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
                     return (startTime, duration)
                 }()
                 
-                // Extract audio directly since we're already on MainActor
-                // This may cause a runtime warning but should work functionally
-                let chapterPlayer = environment.audioEnvironment.audioPlayer.chapterAudioPlayer
+                // Extract audio using the TextPractice chapter audio player
+                let chapterPlayer = state.chapterAudioPlayer
                 
                 // Extract audio for the word if not already present
                 if needsWordAudio && wordTime >= 0 && wordDuration > 0 {
@@ -167,10 +170,6 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
         }
         return nil
         
-    case .playWord(let word):
-        await environment.playWord(word, rate: state.settings.speechSpeed.playRate)
-        return nil
-        
     case .defineWord(let word):
         // Find the definition for this word in the current sentence
         if let currentSentence = state.chapter.currentSentence {
@@ -184,6 +183,28 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
     case .updateCurrentSentence:
         return .clearDefinition
         
+    case .setChapterAudioData(let audioData):
+        if let player = await audioData.createAVPlayer() {
+            return .onCreatedChapterPlayer(player)
+        }
+        return nil
+    case .onCreatedChapterPlayer:
+        return nil
+    case .playChapterAudio(let time, let rate):
+        if let time = time {
+            await state.chapterAudioPlayer.playAudio(fromSeconds: time, playRate: rate)
+        } else {
+            await state.chapterAudioPlayer.playAudio(playRate: rate)
+        }
+        return nil
+    case .pauseChapterAudio:
+        state.chapterAudioPlayer.pause()
+        return nil
+    case .updatePlaybackRate(let playRate):
+        if state.chapterAudioPlayer.rate != 0 {
+            state.chapterAudioPlayer.rate = playRate
+        }
+        return nil
     case .addDefinitions,
             .setPlaybackTime,
             .refreshAppSettings,

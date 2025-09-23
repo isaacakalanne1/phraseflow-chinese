@@ -16,6 +16,7 @@ public protocol TextPracticeEnvironmentProtocol {
     var definitionsSubject: CurrentValueSubject<[Definition]?, Never> { get }
     var goToNextChapterSubject: CurrentValueSubject<Void?, Never> { get }
     var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> { get }
+    var chapterAudioDataSubject: CurrentValueSubject<Data?, Never> { get }
     
     var audioEnvironment: AudioEnvironmentProtocol { get }
     var studyEnvironment: StudyEnvironmentProtocol { get }
@@ -28,13 +29,6 @@ public protocol TextPracticeEnvironmentProtocol {
     func goToNextChapter()
     
     func prepareToPlayChapter(_ chapter: Chapter) async
-    func playWord(
-        _ word: WordTimeStampData,
-        rate: Float
-    ) async
-    func playChapter(from word: WordTimeStampData,
-                     speechSpeed: SpeechSpeed) async
-    func pauseChapter()
     func setMusicVolume(_ volume: MusicVolume)
     func playSound(_ sound: AppSound)
     func saveSentenceAudio(_ audio: Data, id: UUID) throws

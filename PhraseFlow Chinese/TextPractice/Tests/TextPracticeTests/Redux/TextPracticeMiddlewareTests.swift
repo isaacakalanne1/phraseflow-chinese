@@ -138,7 +138,7 @@ final class TextPracticeMiddlewareTests {
         
         let resultAction = await textPracticeMiddleware(
             state,
-            .selectWord(word, playAudio: true),
+            .selectWord(word),
             mockEnvironment
         )
         

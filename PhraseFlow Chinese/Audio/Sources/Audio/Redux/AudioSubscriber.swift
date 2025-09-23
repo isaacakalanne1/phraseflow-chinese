@@ -23,50 +23,6 @@ let audioSubscriber: OnSubscribe<AudioStore, AudioEnvironmentProtocol> = { store
             }
             .store(in: &store.subscriptions)
     
-    environment.chapterAudioDataSubject
-            .receive(on: DispatchQueue.main)
-            .sink { [weak store] audioData in
-                guard let store,
-                let audioData else {
-                    return
-                }
-                store.dispatch(.setChapterAudioData(audioData))
-            }
-            .store(in: &store.subscriptions)
-    
-    environment.playChapterAudioSubject
-            .receive(on: DispatchQueue.main)
-            .sink { [weak store] params in
-                guard let store,
-                let params else {
-                    return
-                }
-                store.dispatch(.playChapterAudio(time: params.time, rate: params.rate))
-            }
-            .store(in: &store.subscriptions)
-    
-    environment.pauseChapterAudioSubject
-            .receive(on: DispatchQueue.main)
-            .sink { [weak store] shouldPause in
-                guard let store,
-                shouldPause else {
-                    return
-                }
-                store.dispatch(.pauseChapterAudio)
-            }
-            .store(in: &store.subscriptions)
-    
-    environment.playWordSubject
-            .receive(on: DispatchQueue.main)
-            .sink { [weak store] params in
-                guard let store,
-                let params else {
-                    return
-                }
-                store.dispatch(.playWord(startTime: params.startTime, duration: params.duration, playRate: params.playRate))
-            }
-            .store(in: &store.subscriptions)
-    
     environment.playMusicSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak store] params in
@@ -100,14 +56,4 @@ let audioSubscriber: OnSubscribe<AudioStore, AudioEnvironmentProtocol> = { store
             }
             .store(in: &store.subscriptions)
     
-    environment.updatePlaybackRateSubject
-            .receive(on: DispatchQueue.main)
-            .sink { [weak store] playRate in
-                guard let store,
-                let playRate else {
-                    return
-                }
-                store.dispatch(.updatePlaybackRate(playRate))
-            }
-            .store(in: &store.subscriptions)
 }

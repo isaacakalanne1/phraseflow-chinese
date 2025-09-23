@@ -21,6 +21,7 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
     public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> {
         settingsEnvironment.settingsUpdatedSubject
     }
+    public var chapterAudioDataSubject: CurrentValueSubject<Data?, Never>
     
     public let audioEnvironment: AudioEnvironmentProtocol
     private let settingsEnvironment: SettingsEnvironmentProtocol
@@ -37,6 +38,7 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
         
         chapterSubject = .init(nil)
         goToNextChapterSubject = .init(nil)
+        chapterAudioDataSubject = .init(nil)
     }
     
     public func saveAppSettings(_ settings: SettingsState) throws {
@@ -56,26 +58,7 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
     }
     
     public func prepareToPlayChapter(_ chapter: Chapter) async {
-        await audioEnvironment.setChapterAudioData(chapter.audio.data)
-    }
-    
-    public func playWord(
-        _ word: WordTimeStampData,
-        rate: Float
-    ) async {
-        await audioEnvironment.playWord(startTime: word.time, duration: word.duration, playRate: rate)
-
-    }
-    
-    public func playChapter(from word: WordTimeStampData,
-                            speechSpeed: SpeechSpeed) async {
-        await audioEnvironment.playChapterAudio(from: word.time,
-                                                rate: speechSpeed.playRate)
-
-    }
-    
-    public func pauseChapter() {
-        audioEnvironment.pauseChapterAudio()
+        chapterAudioDataSubject.send(chapter.audio.data)
     }
     
     public func setMusicVolume(_ volume: MusicVolume) {

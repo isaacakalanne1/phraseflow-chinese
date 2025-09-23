@@ -14,7 +14,7 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
     public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never>
     
     private let settingsDataStore: SettingsDataStoreProtocol
-    private let audioEnvironment: AudioEnvironmentProtocol
+    public let audioEnvironment: AudioEnvironmentProtocol
     private let moderationEnvironment: ModerationEnvironmentProtocol
     
     public init(

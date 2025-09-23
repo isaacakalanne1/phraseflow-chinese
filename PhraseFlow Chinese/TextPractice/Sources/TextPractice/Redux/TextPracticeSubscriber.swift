@@ -33,4 +33,15 @@ let textPracticeSubscriber: OnSubscribe<TextPracticeStore, TextPracticeEnvironme
                 store.dispatch(.refreshAppSettings(settings))
             }
             .store(in: &store.subscriptions)
+    
+    environment.chapterAudioDataSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak store] audioData in
+                guard let store,
+                      let audioData else {
+                    return
+                }
+                store.dispatch(.setChapterAudioData(audioData))
+            }
+            .store(in: &store.subscriptions)
 }

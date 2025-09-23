@@ -42,7 +42,7 @@ let textPracticeReducer: Reducer<TextPracticeState, TextPracticeAction> = { stat
     case .hideDefinition:
         newState.selectedDefinition = nil
         newState.viewState = .normal
-    case .selectWord(let word, _):
+    case .selectWord(let word):
         newState.chapter.currentPlaybackTime = word.time
     case .setPlaybackTime(let time):
         newState.chapter.currentPlaybackTime = time
@@ -62,11 +62,20 @@ let textPracticeReducer: Reducer<TextPracticeState, TextPracticeAction> = { stat
     case .clearDefinition:
         newState.selectedDefinition = nil
         newState.viewState = .normal
+    case .setChapterAudioData:
+        break
+    case .onCreatedChapterPlayer(let player):
+        newState.chapterAudioPlayer = player
+    case .playChapterAudio:
+        break
+    case .pauseChapterAudio:
+        break
+    case .updatePlaybackRate:
+        break
     case .goToNextChapter,
             .saveAppSettings,
             .generateDefinitions,
             .failedToLoadDefinitions,
-            .playWord,
             .defineWord,
             .failedToDefineWord,
             .prepareToPlayChapter,
