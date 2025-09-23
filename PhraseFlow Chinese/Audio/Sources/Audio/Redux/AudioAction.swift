@@ -6,5 +6,5 @@
 //
 
 enum AudioAction {
-    
+    case playSound(AppSound)
 }

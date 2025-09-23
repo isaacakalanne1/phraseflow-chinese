@@ -11,5 +11,9 @@ import Moderation
 
 @MainActor
 let audioMiddleware: Middleware<AudioState, AudioAction,  AudioEnvironmentProtocol> = { state, action, environment in
-    return nil
+    switch action {
+    case .playSound:
+        state.appSoundAudioPlayer.play()
+        return nil
+    }
 }

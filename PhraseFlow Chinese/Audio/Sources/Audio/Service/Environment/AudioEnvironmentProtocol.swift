@@ -10,6 +10,7 @@ import Combine
 import AVKit
 
 public protocol AudioEnvironmentProtocol {
+    var appSoundSubject: CurrentValueSubject<AppSound?, Never> { get }
     var audioPlayer: AudioPlayer { get }
     var isPlayingMusic: Bool { get }
     func setChapterAudioData(_ audioData: Data) async

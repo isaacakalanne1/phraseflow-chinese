@@ -8,12 +8,15 @@
 import Foundation
 import Combine
 import AVKit
+import Combine
 
 public struct AudioEnvironment: AudioEnvironmentProtocol {
+    public var appSoundSubject: CurrentValueSubject<AppSound?, Never>
     public let audioPlayer: AudioPlayer
     
     public init() {
         self.audioPlayer = AudioPlayer()
+        appSoundSubject = .init(nil)
     }
     
     public var isPlayingMusic: Bool {
@@ -43,7 +46,7 @@ public struct AudioEnvironment: AudioEnvironmentProtocol {
     }
     
     public func playSound(_ sound: AppSound) {
-        try? audioPlayer.playSound(sound)
+        appSoundSubject.send(sound)
     }
 
     public func playMusic(
