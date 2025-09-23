@@ -9,71 +9,39 @@ import Foundation
 import Localization
 
 public enum SpeechSpeed: CaseIterable, Codable, Equatable, Sendable {
-    case slow, normal, fast
-
-    public var title: String {
-        switch self {
-        case .slow:
-            LocalizedString.slow
-        case .normal:
-            LocalizedString.normal
-        case .fast:
-            LocalizedString.fast
-        }
-    }
+    case xslow, slow, normal, fast, xfast
 
     public var nextSpeed: SpeechSpeed {
         switch self {
+        case .xslow:
+                .slow
         case .slow:
                 .normal
         case .normal:
                 .fast
         case .fast:
-                .slow
+                .xfast
+        case .xfast:
+                .xslow
         }
     }
 
     public var playRate: Float {
         switch self {
-        case .slow:
+        case .xslow:
             0.5
+        case .slow:
+            0.75
         case .normal:
             1
         case .fast:
+            1.25
+        case .xfast:
             1.5
         }
     }
 
-    public var rate: String {
-        switch self {
-        case .slow:
-            "x-slow"
-        case .normal:
-            "medium"
-        case .fast:
-            "fast"
-        }
-    }
-
-    public var emoji: String {
-        switch self {
-        case .slow:
-            "🐌"
-        case .normal:
-            "🚗"
-        case .fast:
-            "🚀"
-        }
-    }
-
     public var text: String {
-        switch self {
-        case .slow:
-            "0.5X"
-        case .normal:
-            "1X"
-        case .fast:
-            "1.5X"
-        }
+        "\(playRate)X"
     }
 }

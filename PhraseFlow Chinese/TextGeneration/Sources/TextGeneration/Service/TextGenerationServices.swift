@@ -180,7 +180,7 @@ public class TextGenerationServices: TextGenerationServicesProtocol {
         
         let requestBody: [String: Any] = ["messages": messages]
 
-        return try await RequestFactory.makeRequest(type: .openRouter(.geminiFlash),
+        return try await RequestFactory.makeRequest(type: .openRouter(.grok4Fast),
                                                     requestBody: requestBody)
     }
 

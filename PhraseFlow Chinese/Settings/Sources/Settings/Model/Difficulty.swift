@@ -54,13 +54,13 @@ public enum Difficulty: String, Codable, Hashable, CaseIterable, Equatable, Send
         var prompt: String
         switch self {
         case .beginner:
-            prompt = "Write using simple language and simple sentences."
+            prompt = "This is a story for a beginner learning the language. Write using short sentences, and simple language."
         case .intermediate:
-            prompt = "Write using simple sentences."
+            prompt = "This is a story for a intermediate learning the language. Write using simple sentences."
         case .advanced:
-            prompt = "Write using simple language."
+            prompt = "This is a story for an advanced level learning the language. Write using simple language."
         case .expert:
-            prompt = ""
+            prompt = "" 
         }
         return prompt
     }

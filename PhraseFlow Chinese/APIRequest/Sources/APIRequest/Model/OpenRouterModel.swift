@@ -6,7 +6,7 @@
 //
 
 public enum OpenRouterModel {
-    case metaLlama, geminiFlash, gpt_4o_Mini
+    case metaLlama, geminiFlash, grok4Fast
 
     static var baseUrl: String {
         "https://openrouter.ai/api/v1/chat/completions"
@@ -23,8 +23,8 @@ public enum OpenRouterModel {
             return "meta-llama/llama-3.3-70b-instruct"
         case .geminiFlash:
             return "google/gemini-2.5-flash-lite"
-        case .gpt_4o_Mini:
-            return "gpt-4o-mini-2024-07-18"
+        case .grok4Fast:
+            return "x-ai/grok-4-fast:free"
         }
     }
 }
