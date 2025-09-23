@@ -45,7 +45,7 @@ let settingsMiddleware: Middleware<SettingsState, SettingsAction,  SettingsEnvir
         }
         return .saveAppSettings
     case .onLoadedAppSettings(let settings):
-        return state.isPlayingMusic && !environment.isPlayingMusic ? .playMusic(.whispersOfTheForest) : nil
+        return state.isPlayingMusic ? .playMusic(.whispersOfTheForest) : nil
         
     case .playSound(let sound):
         if state.shouldPlaySound {

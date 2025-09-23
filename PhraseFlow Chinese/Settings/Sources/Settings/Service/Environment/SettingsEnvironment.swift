@@ -47,10 +47,6 @@ public struct SettingsEnvironment: SettingsEnvironmentProtocol {
         try audioEnvironment.playMusic(music, volume: .normal)
     }
     
-    public var isPlayingMusic: Bool {
-        audioEnvironment.isPlayingMusic
-    }
-    
     public func stopMusic() {
         audioEnvironment.stopMusic()
     }

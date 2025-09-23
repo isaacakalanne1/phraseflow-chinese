@@ -22,4 +22,16 @@ struct AudioState: Equatable {
         self.musicAudioPlayer = musicAudioPlayer
         self.appSoundAudioPlayer = appSoundAudioPlayer
     }
+    
+    var isPlayingMusic: Bool {
+        musicAudioPlayer.isPlaying
+    }
+    
+    public func isNearEndOfTrack(endTimeOfLastWord: Double) -> Bool {
+        chapterAudioPlayer.currentTime().seconds >= endTimeOfLastWord
+    }
+    
+    public func getCurrentPlaybackTime() -> Double {
+        chapterAudioPlayer.currentTime().seconds
+    }
 }

@@ -12,37 +12,45 @@ import Combine
 
 public struct AudioEnvironment: AudioEnvironmentProtocol {
     public var appSoundSubject: CurrentValueSubject<AppSound?, Never>
-    public let audioPlayer: AudioPlayer
+    public var chapterAudioDataSubject: CurrentValueSubject<Data?, Never>
+    public var playChapterAudioSubject: CurrentValueSubject<(time: Double?, rate: Float)?, Never>
+    public var pauseChapterAudioSubject: CurrentValueSubject<Bool, Never>
+    public var playWordSubject: CurrentValueSubject<(startTime: Double, duration: Double, playRate: Float)?, Never>
+    public var playMusicSubject: CurrentValueSubject<(music: MusicType, volume: MusicVolume)?, Never>
+    public var stopMusicSubject: CurrentValueSubject<Bool, Never>
+    public var setMusicVolumeSubject: CurrentValueSubject<MusicVolume?, Never>
+    public var updatePlaybackRateSubject: CurrentValueSubject<Float?, Never>
     
     public init() {
-        self.audioPlayer = AudioPlayer()
         appSoundSubject = .init(nil)
-    }
-    
-    public var isPlayingMusic: Bool {
-        audioPlayer.musicAudioPlayer?.isPlaying ?? false
+        chapterAudioDataSubject = .init(nil)
+        playChapterAudioSubject = .init(nil)
+        pauseChapterAudioSubject = .init(false)
+        playWordSubject = .init(nil)
+        playMusicSubject = .init(nil)
+        stopMusicSubject = .init(false)
+        setMusicVolumeSubject = .init(nil)
+        updatePlaybackRateSubject = .init(nil)
     }
     
     // MARK: - AudioPlayer Wrapper Methods
     
     public func setChapterAudioData(_ audioData: Data) async {
-        await audioPlayer.setChapterAudioData(audioData)
+        chapterAudioDataSubject.send(audioData)
     }
     
     public func playChapterAudio(from time: Double?, rate: Float) async {
-        await audioPlayer.playAudio(from: time, playRate: rate)
+        playChapterAudioSubject.send((time: time, rate: rate))
     }
     
     public func pauseChapterAudio() {
-        audioPlayer.pauseAudio()
+        pauseChapterAudioSubject.send(true)
     }
     
     public func playWord(startTime: Double,
                          duration: Double,
                          playRate: Float) async {
-        await audioPlayer.playSection(startTime: startTime,
-                                      duration: duration,
-                                      playRate: playRate)
+        playWordSubject.send((startTime: startTime, duration: duration, playRate: playRate))
     }
     
     public func playSound(_ sound: AppSound) {
@@ -53,26 +61,18 @@ public struct AudioEnvironment: AudioEnvironmentProtocol {
         _ music: MusicType,
         volume: MusicVolume
     ) throws {
-        try audioPlayer.playMusic(music, volume: volume)
+        playMusicSubject.send((music: music, volume: volume))
     }
     
     public func stopMusic() {
-        audioPlayer.stopMusic()
+        stopMusicSubject.send(true)
     }
     
     public func setMusicVolume(_ volume: MusicVolume) {
-        audioPlayer.setMusicVolume(volume)
-    }
-    
-    public func isNearEndOfTrack(endTimeOfLastWord: Double) -> Bool {
-        audioPlayer.isNearEndOfTrack(endTimeOfLastWord: endTimeOfLastWord)
-    }
-    
-    public func getCurrentPlaybackTime() -> Double {
-        audioPlayer.getCurrentPlaybackTime()
+        setMusicVolumeSubject.send(volume)
     }
     
     public func updatePlaybackRate(_ playRate: Float) {
-        audioPlayer.updatePlaybackRate(playRate)
+        updatePlaybackRateSubject.send(playRate)
     }
 }

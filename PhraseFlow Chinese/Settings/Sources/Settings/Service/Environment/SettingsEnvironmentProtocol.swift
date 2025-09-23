@@ -17,7 +17,6 @@ public protocol SettingsEnvironmentProtocol {
     func loadAppSettings() throws -> SettingsState
     func playSound(_ sound: AppSound)
     func playMusic(_ music: MusicType) throws
-    var isPlayingMusic: Bool { get }
     func stopMusic()
     func moderateText(_ text: String) async throws -> ModerationResponse
 }
