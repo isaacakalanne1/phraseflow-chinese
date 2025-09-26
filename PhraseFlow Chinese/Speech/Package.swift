@@ -21,7 +21,8 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "TextGeneration", path: "../TextGeneration"),
-        .package(name: "Settings", path: "../Settings")
+        .package(name: "Settings", path: "../Settings"),
+        .package(url: "https://github.com/firebase/firebase-ios-sdk", exact: "12.3.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -35,7 +36,9 @@ let package = Package(
             dependencies: [
                 "MicrosoftCognitiveServicesSpeech",
                 "TextGeneration",
-                "Settings"
+                "Settings",
+                .product(name: "FirebaseCore", package: "firebase-ios-sdk"),
+                .product(name: "FirebaseFirestore", package: "firebase-ios-sdk")
             ]
         ),
         .target(

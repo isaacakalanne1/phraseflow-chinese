@@ -10,16 +10,34 @@ import MicrosoftCognitiveServicesSpeech
 import StoreKit
 import TextGeneration
 import Settings
+import FirebaseFirestore
 
 public class SpeechRepository: SpeechRepositoryProtocol {
+    private let db = Firestore.firestore()
+    
     public init() {}
     
     private let speechCharacters = ["“", "”", "«", "»", "「", "」", "\"", "''"]
-    let subscriptionKey = "Fp11D0CAMjjAcf03VNqe2IsKfqycenIKcrAm4uGV8RSiaqMX15NWJQQJ99AKACYeBjFXJ3w3AAAYACOG6Orb"
     let region = "eastus"
     let sentenceMarker = "[]"
 
     private var speechMarkCounter: Int = 0
+    
+    private func getSpeechKey() async throws -> String {
+        do {
+            let document = try await db.collection("config").document("api_keys").getDocument()
+            
+            guard document.exists,
+                  let speechKey = document.data()?["speech_key"] as? String,
+                  !speechKey.isEmpty else {
+                throw NSError(domain: "SpeechRepository", code: 401, userInfo: [NSLocalizedDescriptionKey: "Speech API key not found"])
+            }
+            
+            return speechKey
+        } catch {
+            throw error
+        }
+    }
 
     public func synthesizeSpeech(_ chapter: Chapter,
                                  voice: Voice,
@@ -29,7 +47,7 @@ public class SpeechRepository: SpeechRepositoryProtocol {
 
         let synthesizer: SPXSpeechSynthesizer
         do {
-            let speechConfig = try createSpeechConfig(voice: voice)
+            let speechConfig = try await createSpeechConfig(voice: voice)
             synthesizer = try SPXSpeechSynthesizer(speechConfiguration: speechConfig, audioConfiguration: nil)
         } catch {
             throw error
@@ -177,8 +195,9 @@ public class SpeechRepository: SpeechRepositoryProtocol {
         return ssml
     }
 
-    private func createSpeechConfig(voice: Voice) throws -> SPXSpeechConfiguration {
-        let speechConfig = try SPXSpeechConfiguration(subscription: subscriptionKey, region: region)
+    private func createSpeechConfig(voice: Voice) async throws -> SPXSpeechConfiguration {
+        let speechKey = try await getSpeechKey()
+        let speechConfig = try SPXSpeechConfiguration(subscription: speechKey, region: region)
         speechConfig.requestWordLevelTimestamps()
         speechConfig.outputFormat = .detailed
         speechConfig.setSpeechSynthesisOutputFormat(.riff16Khz16BitMonoPcm)
