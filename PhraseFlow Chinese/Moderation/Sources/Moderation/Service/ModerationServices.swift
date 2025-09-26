@@ -12,9 +12,10 @@ public class ModerationServices: ModerationServicesProtocol {
     public init() {}
     
     public func moderateText(_ text: String) async throws -> ModerationResponse {
+        let authKey = try await APIRequestType.openAI.authKey()
         var request = RequestFactory.createURLRequest(
             baseUrl: "https://api.openai.com/v1/moderations",
-            authKey: APIRequestType.openAI.authKey
+            authKey: authKey
         )
 
         request.httpBody = try JSONEncoder()

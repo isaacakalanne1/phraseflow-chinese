@@ -17,7 +17,8 @@ public class RequestFactory {
         type: APIRequestType,
         requestBody: [String: Any]
     ) async throws -> String {
-        let request = createURLRequest(baseUrl: type.baseUrl, authKey: type.authKey)
+        let authKey = try await type.authKey()
+        let request = createURLRequest(baseUrl: type.baseUrl, authKey: authKey)
         var requestBody = requestBody
         requestBody["model"] = type.modelName
 

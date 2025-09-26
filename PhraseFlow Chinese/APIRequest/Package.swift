@@ -14,11 +14,19 @@ let package = Package(
             name: "APIRequest",
             targets: ["APIRequest"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/firebase/firebase-ios-sdk", exact: "12.3.0")
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "APIRequest"),
+            name: "APIRequest",
+            dependencies: [
+                .product(name: "FirebaseCore", package: "firebase-ios-sdk"),
+                .product(name: "FirebaseFirestore", package: "firebase-ios-sdk")
+            ]
+        ),
         .testTarget(
             name: "APIRequestTests",
             dependencies: ["APIRequest"]

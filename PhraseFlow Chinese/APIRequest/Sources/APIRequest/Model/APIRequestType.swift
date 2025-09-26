@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 public enum APIRequestType {
     case openAI, openRouter(OpenRouterModel)
@@ -19,13 +20,27 @@ public enum APIRequestType {
         }
     }
 
-    // TODO: Don't store in plain-text, fetch from Firebase
-    public var authKey: String {
+    public func authKey() async throws -> String {
+        let db = Firestore.firestore()
+        let document = try await db.collection("config").document("api_keys").getDocument()
+        
+        guard document.exists else {
+            throw NSError(domain: "APIRequestType", code: 404, userInfo: [NSLocalizedDescriptionKey: "API keys document not found"])
+        }
+        
         switch self {
         case .openAI:
-            "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"
+            guard let apiKey = document.data()?["openai_api_key"] as? String,
+                  !apiKey.isEmpty else {
+                throw NSError(domain: "APIRequestType", code: 401, userInfo: [NSLocalizedDescriptionKey: "OpenAI API key not found"])
+            }
+            return apiKey
         case .openRouter:
-            OpenRouterModel.authKey
+            guard let apiKey = document.data()?["openrouter_api_key"] as? String,
+                  !apiKey.isEmpty else {
+                throw NSError(domain: "APIRequestType", code: 401, userInfo: [NSLocalizedDescriptionKey: "OpenRouter API key not found"])
+            }
+            return apiKey
         }
     }
 

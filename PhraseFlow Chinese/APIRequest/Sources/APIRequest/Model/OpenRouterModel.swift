@@ -6,15 +6,10 @@
 //
 
 public enum OpenRouterModel {
-    case metaLlama, geminiFlash, grok4Fast
+    case metaLlama, geminiFlash, grok4Fast, gpt_4o_Mini
 
     static var baseUrl: String {
         "https://openrouter.ai/api/v1/chat/completions"
-    }
-
-    // TODO: Don't store in plain-text, fetch from Firebase
-    static var authKey: String {
-        "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"
     }
 
     var modelName: String {
@@ -25,6 +20,8 @@ public enum OpenRouterModel {
             return "google/gemini-2.5-flash-lite"
         case .grok4Fast:
             return "x-ai/grok-4-fast:free"
+        case .gpt_4o_Mini:
+            return "gpt-4o-mini-2024-07-18"
         }
     }
 }
