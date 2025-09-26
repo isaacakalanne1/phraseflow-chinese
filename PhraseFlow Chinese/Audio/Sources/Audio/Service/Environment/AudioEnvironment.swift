@@ -15,23 +15,12 @@ public struct AudioEnvironment: AudioEnvironmentProtocol {
     public var playMusicSubject: CurrentValueSubject<(music: MusicType, volume: MusicVolume)?, Never>
     public var stopMusicSubject: CurrentValueSubject<Bool, Never>
     public var setMusicVolumeSubject: CurrentValueSubject<MusicVolume?, Never>
-    public var musicFinishedSubject: CurrentValueSubject<Bool, Never>
-    public var audioDelegate: AudioDelegate
     
     public init() {
         appSoundSubject = .init(nil)
         playMusicSubject = .init(nil)
         stopMusicSubject = .init(false)
         setMusicVolumeSubject = .init(nil)
-        musicFinishedSubject = .init(false)
-        audioDelegate = AudioDelegate {
-            // This will be set up properly after initialization
-        }
-        
-        // Set up the delegate callback after initialization
-        audioDelegate = AudioDelegate { [musicFinishedSubject] in
-            musicFinishedSubject.send(true)
-        }
     }
     
     // MARK: - AudioPlayer Wrapper Methods

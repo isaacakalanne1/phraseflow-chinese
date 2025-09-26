@@ -7,25 +7,61 @@
 
 import Audio
 import Foundation
-import Combine
-import AVKit
 
 enum MockAudioEnvironmentError: Error {
     case genericError
 }
 
 public class MockAudioEnvironment: AudioEnvironmentProtocol {
-    public var appSoundSubject: CurrentValueSubject<AppSound?, Never> = .init(nil)
-    public var playMusicSubject: CurrentValueSubject<(music: MusicType, volume: MusicVolume)?, Never> = .init(nil)
-    public var stopMusicSubject: CurrentValueSubject<Bool, Never> = .init(false)
-    public var setMusicVolumeSubject: CurrentValueSubject<MusicVolume?, Never> = .init(nil)
-    public var musicFinishedSubject: CurrentValueSubject<Bool, Never> = .init(false)
-    public var audioDelegate: AudioDelegate
+    public var audioPlayer: AudioPlayer
     
-    public init() {
-        audioDelegate = AudioDelegate {
-            // Mock implementation
-        }
+    public init(audioPlayer: AudioPlayer = AudioPlayer()) {
+        self.audioPlayer = audioPlayer
+    }
+    
+    var isPlayingMusicResult = false
+    public var isPlayingMusic: Bool {
+        isPlayingMusicResult
+    }
+    
+    var setChapterAudioDataSpy: Data?
+    var setChapterAudioDataCalled = false
+    public func setChapterAudioData(_ audioData: Data) async {
+        setChapterAudioDataSpy = audioData
+        setChapterAudioDataCalled = true
+    }
+    
+    
+    var playChapterAudioFromTimeSpy: Double?
+    var playChapterAudioRateSpy: Float?
+    var playChapterAudioCalled = false
+    public func playChapterAudio(
+        from time: Double?,
+        rate: Float
+    ) async {
+        playChapterAudioFromTimeSpy = time
+        playChapterAudioRateSpy = rate
+        playChapterAudioCalled = true
+    }
+    
+    var pauseChapterAudioCalled = false
+    public func pauseChapterAudio() {
+        pauseChapterAudioCalled = true
+    }
+    
+    var playWordStartTimeSpy: Double?
+    var playWordDurationSpy: Double?
+    var playWordPlayRateSpy: Float?
+    var playWordCalled = false
+    public func playWord(
+        startTime: Double,
+        duration: Double,
+        playRate: Float
+    ) async {
+        playWordStartTimeSpy = startTime
+        playWordDurationSpy = duration
+        playWordPlayRateSpy = playRate
+        playWordCalled = true
     }
     
     var playSoundSpy: AppSound?
@@ -33,7 +69,6 @@ public class MockAudioEnvironment: AudioEnvironmentProtocol {
     public func playSound(_ sound: AppSound) {
         playSoundSpy = sound
         playSoundCalled = true
-        appSoundSubject.send(sound)
     }
     
     var playMusicTypeSpy: MusicType?
@@ -49,7 +84,6 @@ public class MockAudioEnvironment: AudioEnvironmentProtocol {
         playMusicCalled = true
         switch playMusicResult {
         case .success(let success):
-            playMusicSubject.send((music: music, volume: volume))
             return success
         case .failure(let error):
             throw error
@@ -59,7 +93,6 @@ public class MockAudioEnvironment: AudioEnvironmentProtocol {
     var stopMusicCalled = false
     public func stopMusic() {
         stopMusicCalled = true
-        stopMusicSubject.send(true)
     }
     
     var setMusicVolumeSpy: MusicVolume?
@@ -67,6 +100,28 @@ public class MockAudioEnvironment: AudioEnvironmentProtocol {
     public func setMusicVolume(_ volume: MusicVolume) {
         setMusicVolumeSpy = volume
         setMusicVolumeCalled = true
-        setMusicVolumeSubject.send(volume)
+    }
+    
+    var isNearEndOfTrackSpy: Double?
+    var isNearEndOfTrackCalled = false
+    var isNearEndOfTrackResult = false
+    public func isNearEndOfTrack(endTimeOfLastWord: Double) -> Bool {
+        isNearEndOfTrackSpy = endTimeOfLastWord
+        isNearEndOfTrackCalled = true
+        return isNearEndOfTrackResult
+    }
+    
+    var getCurrentPlaybackTimeCalled = false
+    var getCurrentPlaybackTimeResult: Double = 0
+    public func getCurrentPlaybackTime() -> Double {
+        getCurrentPlaybackTimeCalled = true
+        return getCurrentPlaybackTimeResult
+    }
+    
+    var updatePlaybackRateSpy: Float?
+    var updatePlaybackRateCalled = false
+    public func updatePlaybackRate(_ playRate: Float) {
+        updatePlaybackRateSpy = playRate
+        updatePlaybackRateCalled = true
     }
 }

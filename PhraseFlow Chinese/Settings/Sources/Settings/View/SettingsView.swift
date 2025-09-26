@@ -16,6 +16,16 @@ struct SettingsView: View {
 
     var body: some View {
 
+        let playMusic: Binding<Bool> = .init {
+            store.state.isPlayingMusic
+        } set: { newValue in
+            if newValue {
+                store.dispatch(.playMusic(.whispersOfTheForest))
+            } else {
+                store.dispatch(.stopMusic)
+            }
+        }
+
         let shouldPlayButtonSounds: Binding<Bool> = .init {
             store.state.shouldPlaySound
         } set: { newValue in
@@ -81,6 +91,7 @@ struct SettingsView: View {
                             title: LocalizedString.settingsSoundHeader,
                             content: {
                                 VStack(spacing: 12) {
+                                    settingsToggleRow(LocalizedString.music, isOn: playMusic)
                                     settingsToggleRow(LocalizedString.settingsSounds, isOn: shouldPlayButtonSounds)
                                 }
                             }

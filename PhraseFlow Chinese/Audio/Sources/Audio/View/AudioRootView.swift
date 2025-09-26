@@ -25,6 +25,5 @@ public struct AudioRootView: View {
 
     public var body: some View {
         AudioView()
-            .environmentObject(store)
     }
 }
