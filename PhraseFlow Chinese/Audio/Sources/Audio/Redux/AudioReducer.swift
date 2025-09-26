@@ -20,6 +20,7 @@ let audioReducer: Reducer<AudioState, AudioAction> = { state, action in
             newState.appSoundAudioPlayer = player
         }
     case .playMusic(let music, let volume):
+        newState.currentMusic = music
         if let url = music.fileURL,
            let player = try? AVAudioPlayer(contentsOf: url) {
             player.numberOfLoops = -1

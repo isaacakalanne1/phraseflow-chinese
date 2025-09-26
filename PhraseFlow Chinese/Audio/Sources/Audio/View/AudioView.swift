@@ -6,21 +6,31 @@
 //
 
 import SwiftUI
+import ReduxKit
 
 struct AudioView: View {
-    
+    @EnvironmentObject var store: AudioStore
     
     var body: some View {
-        HStack {
+        HStack(spacing: 12) {
+            Image(systemName: "music.note")
+                .foregroundColor(.secondary)
+                .font(.system(size: 14))
             
-            Button("Previous") {
-                
-            }
-            Text("Song name")
+            Text(store.state.currentMusic.rawValue)
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(.primary)
             
-            Button("Next") {
-                
+            if store.state.isPlayingMusic {
+                Image(systemName: "speaker.wave.2.fill")
+                    .foregroundColor(.green)
+                    .font(.system(size: 12))
+                    .symbolEffect(.variableColor.iterative.dimInactiveLayers.nonReversing)
             }
         }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
+        .background(Color(.systemGray6))
+        .cornerRadius(20)
     }
 }

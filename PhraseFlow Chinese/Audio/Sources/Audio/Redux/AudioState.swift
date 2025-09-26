@@ -11,11 +11,14 @@ import Foundation
 struct AudioState: Equatable {
     var musicAudioPlayer: AVAudioPlayer
     var appSoundAudioPlayer: AVAudioPlayer
+    var currentMusic: MusicType
     
     init(
+        currentMusic: MusicType = .whispersOfTranquility,
         musicAudioPlayer: AVAudioPlayer = .init(),
         appSoundAudioPlayer: AVAudioPlayer = .init()
     ) {
+        self.currentMusic = currentMusic
         self.musicAudioPlayer = musicAudioPlayer
         self.appSoundAudioPlayer = appSoundAudioPlayer
     }
