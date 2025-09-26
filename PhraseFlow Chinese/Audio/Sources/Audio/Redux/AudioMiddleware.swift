@@ -16,9 +16,7 @@ let audioMiddleware: Middleware<AudioState, AudioAction,  AudioEnvironmentProtoc
         state.appSoundAudioPlayer.play()
         return nil
     case .playMusic:
-        if !state.isPlayingMusic {
-            state.musicAudioPlayer.play()
-        }
+        state.musicAudioPlayer.play()
         return nil
     case .stopMusic:
         state.musicAudioPlayer.stop()

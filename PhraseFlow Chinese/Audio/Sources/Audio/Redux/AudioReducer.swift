@@ -20,6 +20,7 @@ let audioReducer: Reducer<AudioState, AudioAction> = { state, action in
             newState.appSoundAudioPlayer = player
         }
     case .playMusic(let music, let volume):
+        newState.isPlayingMusic = true
         newState.currentMusic = music
         if let url = music.fileURL,
            let player = try? AVAudioPlayer(contentsOf: url) {
@@ -28,7 +29,7 @@ let audioReducer: Reducer<AudioState, AudioAction> = { state, action in
             newState.musicAudioPlayer = player
         }
     case .stopMusic:
-        break
+        newState.isPlayingMusic = false
     case .setMusicVolume(let volume):
         newState.musicAudioPlayer.setVolume(volume.float, fadeDuration: 0.2)
     }

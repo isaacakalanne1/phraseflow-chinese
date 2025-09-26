@@ -21,12 +21,14 @@ struct AudioView: View {
                 .font(.system(size: 14, weight: .medium))
                 .foregroundColor(.primary)
             
-            if store.state.isPlayingMusic {
-                Image(systemName: "speaker.wave.2.fill")
-                    .foregroundColor(.green)
-                    .font(.system(size: 12))
-                    .symbolEffect(.variableColor.iterative.dimInactiveLayers.nonReversing)
-            }
+            Image(systemName: "speaker.wave.2.fill")
+                .foregroundColor(.green)
+                .font(.system(size: 12))
+                .symbolEffect(.variableColor
+                    .iterative
+                    .dimInactiveLayers
+                    .nonReversing)
+                .opacity(store.state.isPlayingMusic ? 1 : 0)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 8)

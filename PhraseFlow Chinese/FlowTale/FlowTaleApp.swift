@@ -29,7 +29,6 @@ public struct FlowTaleRootView: View {
     
     public init() {
         let audioEnvironment = AudioEnvironment()
-        let snackBarEnvironment = SnackBarEnvironment()
         let userLimitsDataStore = UserLimitsDataStore()
         let settingsDataStore = SettingsDataStore()
         let snackbarEnvironment = SnackBarEnvironment()

@@ -20,7 +20,7 @@ struct SettingsView: View {
             store.state.isPlayingMusic
         } set: { newValue in
             if newValue {
-                store.dispatch(.playMusic(.whispersOfTheForest))
+                store.dispatch(.playMusic(.whispersOfTranquility))
             } else {
                 store.dispatch(.stopMusic)
             }
