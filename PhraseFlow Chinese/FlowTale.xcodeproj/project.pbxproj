@@ -11,6 +11,8 @@
 		11EBA7592E872B67006543D4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11EBA7582E872B67006543D4 /* GoogleService-Info.plist */; };
 		11EBA75C2E872C32006543D4 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 11EBA75B2E872C32006543D4 /* FirebaseCore */; };
 		11EBA75E2E872C32006543D4 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 11EBA75D2E872C32006543D4 /* FirebaseRemoteConfig */; };
+		11EBA7632E873D77006543D4 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 11EBA7622E873D77006543D4 /* FirebaseFirestore */; };
+		11EBA7652E873E08006543D4 /* upload_fal_key_to_firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EBA7642E873E07006543D4 /* upload_fal_key_to_firestore.swift */; };
 		BB34C51E2E29525B00238EA8 /* FTColor in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C51D2E29525B00238EA8 /* FTColor */; };
 		BB34C5202E29526700238EA8 /* Localization in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C51F2E29526700238EA8 /* Localization */; };
 		BB34C5222E29526C00238EA8 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5212E29526C00238EA8 /* Navigation */; };
@@ -62,6 +64,7 @@
 		112BE27C2E32C39F006E80FC /* FTStyleKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FTStyleKit; sourceTree = "<group>"; };
 		11BAFA972E364D9A00502C14 /* FlowTaleEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleEnvironment.swift; sourceTree = "<group>"; };
 		11EBA7582E872B67006543D4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		11EBA7642E873E07006543D4 /* upload_fal_key_to_firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = upload_fal_key_to_firestore.swift; sourceTree = "<group>"; };
 		11FF5A612E67580D007F1A22 /* TextPractice */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TextPractice; sourceTree = "<group>"; };
 		11FF5A632E7DC3A0007F1A22 /* FlowTaleTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = FlowTaleTestPlan.xctestplan; sourceTree = "<group>"; };
 		BB34C5022E2430BA00238EA8 /* Study */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Study; sourceTree = "<group>"; };
@@ -116,6 +119,7 @@
 				BB34C5262E29BF4700238EA8 /* APIRequest in Frameworks */,
 				BB34C5202E29526700238EA8 /* Localization in Frameworks */,
 				BB34C5422E2A4FB200238EA8 /* Subscription in Frameworks */,
+				11EBA7632E873D77006543D4 /* FirebaseFirestore in Frameworks */,
 				BB34C5402E2A4FB200238EA8 /* Study in Frameworks */,
 				BB34C5442E2A4FB200238EA8 /* TextGeneration in Frameworks */,
 				BB34C5382E2A4FB200238EA8 /* Settings in Frameworks */,
@@ -190,6 +194,7 @@
 		BBB6EF252C8C86240079D135 /* FlowTale */ = {
 			isa = PBXGroup;
 			children = (
+				11EBA7642E873E07006543D4 /* upload_fal_key_to_firestore.swift */,
 				11EBA7582E872B67006543D4 /* GoogleService-Info.plist */,
 				BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */,
 				11BAFA972E364D9A00502C14 /* FlowTaleEnvironment.swift */,
@@ -264,6 +269,7 @@
 				BB34C5472E2A4FB200238EA8 /* UserLimit */,
 				11EBA75B2E872C32006543D4 /* FirebaseCore */,
 				11EBA75D2E872C32006543D4 /* FirebaseRemoteConfig */,
+				11EBA7622E873D77006543D4 /* FirebaseFirestore */,
 			);
 			productName = "PhraseFlow Chinese";
 			productReference = BBB6EF232C8C86240079D135 /* FlowTale.app */;
@@ -396,6 +402,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBB6EF292C8C86240079D135 /* ContentView.swift in Sources */,
+				11EBA7652E873E08006543D4 /* upload_fal_key_to_firestore.swift in Sources */,
 				BBB6EF272C8C86240079D135 /* FlowTaleApp.swift in Sources */,
 				11BAFA982E364D9A00502C14 /* FlowTaleEnvironment.swift in Sources */,
 			);
@@ -754,6 +761,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 11EBA75A2E872C32006543D4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseRemoteConfig;
+		};
+		11EBA7622E873D77006543D4 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11EBA75A2E872C32006543D4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 		BB34C51D2E29525B00238EA8 /* FTColor */ = {
 			isa = XCSwiftPackageProductDependency;

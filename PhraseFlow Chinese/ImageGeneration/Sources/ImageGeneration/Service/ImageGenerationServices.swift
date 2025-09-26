@@ -6,32 +6,51 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 enum ImageGenerationServicesError: Error {
     case missingRequestID
     case missingImageURL
+    case missingApiKey
 }
 
 public class ImageGenerationServices: ImageGenerationServicesProtocol {
     private let baseURL = "https://queue.fal.run/fal-ai/flux"
-    private let apiKey = "e1f58875-fe36-4a31-ad34-badb6bbd0409:4645ce9820c0b75b3cbe1b0d9c324306" // TODO: Store remotely and download via API
     private let session = URLSession.shared
+    private let db = Firestore.firestore()
     
     public init() { }
 
     public func generateImage(with prompt: String) async throws -> Data {
-        let requestID = try await submitGenerationRequest(prompt: prompt)
+        let apiKey = try await getApiKey()
+        let requestID = try await submitGenerationRequest(prompt: prompt, apiKey: apiKey)
 
-        try await pollRequestStatus(requestID: requestID)
+        try await pollRequestStatus(requestID: requestID, apiKey: apiKey)
 
-        let imageURL = try await fetchResult(requestID: requestID)
+        let imageURL = try await fetchResult(requestID: requestID, apiKey: apiKey)
 
         let (data, _) = try await session.data(from: imageURL)
 
         return data
     }
+    
+    private func getApiKey() async throws -> String {
+        do {
+            let document = try await db.collection("config").document("api_keys").getDocument()
+            
+            guard document.exists,
+                  let apiKey = document.data()?["fal_api_key"] as? String,
+                  !apiKey.isEmpty else {
+                throw ImageGenerationServicesError.missingApiKey
+            }
+            
+            return apiKey
+        } catch {
+            throw ImageGenerationServicesError.missingApiKey
+        }
+    }
 
-    private func submitGenerationRequest(prompt: String) async throws -> String {
+    private func submitGenerationRequest(prompt: String, apiKey: String) async throws -> String {
         guard let url = URL(string: "\(baseURL)/schnell") else {
             throw ImageGenerationServicesError.missingImageURL
         }
@@ -61,7 +80,7 @@ public class ImageGenerationServices: ImageGenerationServicesProtocol {
         return requestID
     }
 
-    private func pollRequestStatus(requestID: String) async throws {
+    private func pollRequestStatus(requestID: String, apiKey: String) async throws {
         while true {
             try await Task.sleep(nanoseconds: 1_000_000_000)
 
@@ -84,7 +103,7 @@ public class ImageGenerationServices: ImageGenerationServicesProtocol {
         }
     }
 
-    private func fetchResult(requestID: String) async throws -> URL {
+    private func fetchResult(requestID: String, apiKey: String) async throws -> URL {
         guard let url = URL(string: "\(baseURL)/requests/\(requestID)") else {
             throw ImageGenerationServicesError.missingImageURL
         }
