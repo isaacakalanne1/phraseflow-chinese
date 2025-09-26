@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		11BAFA982E364D9A00502C14 /* FlowTaleEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BAFA972E364D9A00502C14 /* FlowTaleEnvironment.swift */; };
+		11EBA7592E872B67006543D4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11EBA7582E872B67006543D4 /* GoogleService-Info.plist */; };
+		11EBA75C2E872C32006543D4 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 11EBA75B2E872C32006543D4 /* FirebaseCore */; };
+		11EBA75E2E872C32006543D4 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 11EBA75D2E872C32006543D4 /* FirebaseRemoteConfig */; };
 		BB34C51E2E29525B00238EA8 /* FTColor in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C51D2E29525B00238EA8 /* FTColor */; };
 		BB34C5202E29526700238EA8 /* Localization in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C51F2E29526700238EA8 /* Localization */; };
 		BB34C5222E29526C00238EA8 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = BB34C5212E29526C00238EA8 /* Navigation */; };
@@ -58,6 +61,7 @@
 		112BE27B2E2AE3E0006E80FC /* ReduxKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ReduxKit; sourceTree = "<group>"; };
 		112BE27C2E32C39F006E80FC /* FTStyleKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FTStyleKit; sourceTree = "<group>"; };
 		11BAFA972E364D9A00502C14 /* FlowTaleEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleEnvironment.swift; sourceTree = "<group>"; };
+		11EBA7582E872B67006543D4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		11FF5A612E67580D007F1A22 /* TextPractice */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TextPractice; sourceTree = "<group>"; };
 		11FF5A632E7DC3A0007F1A22 /* FlowTaleTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = FlowTaleTestPlan.xctestplan; sourceTree = "<group>"; };
 		BB34C5022E2430BA00238EA8 /* Study */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Study; sourceTree = "<group>"; };
@@ -101,12 +105,14 @@
 				BB34C5462E2A4FB200238EA8 /* Translation in Frameworks */,
 				BB34C52C2E29BF4700238EA8 /* DataStorage in Frameworks */,
 				BB34C53C2E2A4FB200238EA8 /* Speech in Frameworks */,
+				11EBA75C2E872C32006543D4 /* FirebaseCore in Frameworks */,
 				BB34C5362E29BF4700238EA8 /* Moderation in Frameworks */,
 				BB34C52A2E29BF4700238EA8 /* Audio in Frameworks */,
 				BB34C51E2E29525B00238EA8 /* FTColor in Frameworks */,
 				BB34C5482E2A4FB200238EA8 /* UserLimit in Frameworks */,
 				BB34C5342E29BF4700238EA8 /* Loading in Frameworks */,
 				BB34C5322E29BF4700238EA8 /* ImageGeneration in Frameworks */,
+				11EBA75E2E872C32006543D4 /* FirebaseRemoteConfig in Frameworks */,
 				BB34C5262E29BF4700238EA8 /* APIRequest in Frameworks */,
 				BB34C5202E29526700238EA8 /* Localization in Frameworks */,
 				BB34C5422E2A4FB200238EA8 /* Subscription in Frameworks */,
@@ -184,6 +190,7 @@
 		BBB6EF252C8C86240079D135 /* FlowTale */ = {
 			isa = PBXGroup;
 			children = (
+				11EBA7582E872B67006543D4 /* GoogleService-Info.plist */,
 				BBB6EF262C8C86240079D135 /* FlowTaleApp.swift */,
 				11BAFA972E364D9A00502C14 /* FlowTaleEnvironment.swift */,
 				BBB6EF282C8C86240079D135 /* ContentView.swift */,
@@ -255,6 +262,8 @@
 				BB34C5432E2A4FB200238EA8 /* TextGeneration */,
 				BB34C5452E2A4FB200238EA8 /* Translation */,
 				BB34C5472E2A4FB200238EA8 /* UserLimit */,
+				11EBA75B2E872C32006543D4 /* FirebaseCore */,
+				11EBA75D2E872C32006543D4 /* FirebaseRemoteConfig */,
 			);
 			productName = "PhraseFlow Chinese";
 			productReference = BBB6EF232C8C86240079D135 /* FlowTale.app */;
@@ -341,6 +350,7 @@
 			);
 			mainGroup = BBB6EF1A2C8C86240079D135;
 			packageReferences = (
+				11EBA75A2E872C32006543D4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = BBB6EF242C8C86240079D135 /* Products */;
 			projectDirPath = "";
@@ -360,6 +370,7 @@
 			files = (
 				BBB6EF2E2C8C86290079D135 /* Preview Assets.xcassets in Resources */,
 				BBB6EF2B2C8C86290079D135 /* Assets.xcassets in Resources */,
+				11EBA7592E872B67006543D4 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -722,7 +733,28 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		11EBA75A2E872C32006543D4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		11EBA75B2E872C32006543D4 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11EBA75A2E872C32006543D4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		11EBA75D2E872C32006543D4 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11EBA75A2E872C32006543D4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
+		};
 		BB34C51D2E29525B00238EA8 /* FTColor */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FTColor;

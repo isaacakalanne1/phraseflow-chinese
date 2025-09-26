@@ -23,6 +23,15 @@ import TextPractice
 import Speech
 import ImageGeneration
 import Combine
+import FirebaseCore
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(_ application: UIApplication,
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    FirebaseApp.configure()
+    return true
+  }
+}
 
 public struct FlowTaleRootView: View {
     private let flowTaleEnvironment: FlowTaleEnvironmentProtocol
@@ -128,6 +137,8 @@ public struct FlowTaleRootView: View {
 
 @main
 struct FlowTaleApp: App {
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
     init() { }
 
