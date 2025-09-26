@@ -7,15 +7,27 @@
 
 import Audio
 import Foundation
+import Combine
 
 enum MockAudioEnvironmentError: Error {
     case genericError
 }
 
 public class MockAudioEnvironment: AudioEnvironmentProtocol {
+    public var appSoundSubject: CurrentValueSubject<AppSound?, Never>
+    
+    public var playMusicSubject: CurrentValueSubject<(music: MusicType, volume: MusicVolume)?, Never>
+    
+    public var stopMusicSubject: CurrentValueSubject<Bool, Never>
+    
+    public var setMusicVolumeSubject: CurrentValueSubject<MusicVolume?, Never>
+    
     
     public init() {
-
+        self.appSoundSubject = .init(nil)
+        self.playMusicSubject = .init((music: .whispersOfTranquility, volume: .normal))
+        self.stopMusicSubject = .init(false)
+        self.setMusicVolumeSubject = .init(nil)
     }
     
     var isPlayingMusicResult = false

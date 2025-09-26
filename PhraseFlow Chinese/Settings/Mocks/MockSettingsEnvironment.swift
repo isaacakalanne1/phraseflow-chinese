@@ -7,6 +7,7 @@
 
 import Combine
 import Audio
+import AudioMocks
 import Settings
 import Moderation
 import ModerationMocks
@@ -16,10 +17,12 @@ enum MockSettingsEnvironmentError: Error {
 }
 
 public class MockSettingsEnvironment: SettingsEnvironmentProtocol {
+    public var audioEnvironment: AudioEnvironmentProtocol
+    
     public var settingsUpdatedSubject: CurrentValueSubject<Settings.SettingsState?, Never> = .init(nil)
     
-    public init() {
-        
+    public init(audioEnvironment: AudioEnvironmentProtocol = MockAudioEnvironment()) {
+        self.audioEnvironment = audioEnvironment
     }
     
     var saveAppSettingsSpy: SettingsState? = nil
