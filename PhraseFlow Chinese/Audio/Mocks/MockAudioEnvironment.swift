@@ -13,10 +13,9 @@ enum MockAudioEnvironmentError: Error {
 }
 
 public class MockAudioEnvironment: AudioEnvironmentProtocol {
-    public var audioPlayer: AudioPlayer
     
-    public init(audioPlayer: AudioPlayer = AudioPlayer()) {
-        self.audioPlayer = audioPlayer
+    public init() {
+
     }
     
     var isPlayingMusicResult = false
