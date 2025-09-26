@@ -14,6 +14,8 @@ public protocol AudioEnvironmentProtocol {
     var playMusicSubject: CurrentValueSubject<(music: MusicType, volume: MusicVolume)?, Never> { get }
     var stopMusicSubject: CurrentValueSubject<Bool, Never> { get }
     var setMusicVolumeSubject: CurrentValueSubject<MusicVolume?, Never> { get }
+    var musicFinishedSubject: CurrentValueSubject<Bool, Never> { get }
+    var audioDelegate: AudioDelegate { get }
     func playSound(_ sound: AppSound)
     func playMusic(_ music: MusicType, volume: MusicVolume) throws
     func stopMusic()

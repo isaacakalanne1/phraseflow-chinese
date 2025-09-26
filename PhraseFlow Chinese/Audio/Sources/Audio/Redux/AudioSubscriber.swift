@@ -56,4 +56,15 @@ let audioSubscriber: OnSubscribe<AudioStore, AudioEnvironmentProtocol> = { store
             }
             .store(in: &store.subscriptions)
     
+    environment.musicFinishedSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak store] finished in
+                guard let store,
+                finished else {
+                    return
+                }
+                store.dispatch(.musicFinished)
+            }
+            .store(in: &store.subscriptions)
+    
 }
