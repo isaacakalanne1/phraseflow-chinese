@@ -110,8 +110,7 @@ class TextPracticeEnvironmentTests {
         
         await environment.prepareToPlayChapter(chapter)
         
-        #expect(mockAudioEnvironment.setChapterAudioDataSpy == chapterData)
-        #expect(mockAudioEnvironment.setChapterAudioDataCalled == true)
+        #expect(environment.chapterAudioDataSubject.value == chapterData)
     }
     
     @Test

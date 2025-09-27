@@ -182,10 +182,9 @@ final class SettingsMiddlewareTests {
     }
     
     @Test
-    func onLoadedAppSettings_whenMusicShouldPlay_startsMusic() async {
+    func onLoadedAppSettings_whenStateHasMusicEnabled_startsMusic() async {
         let state: SettingsState = .arrange(isPlayingMusic: true)
-        let loadedSettings: SettingsState = .arrange(isPlayingMusic: true)
-        mockEnvironment.isPlayingMusic = false
+        let loadedSettings: SettingsState = .arrange(isPlayingMusic: false)
 
         let resultAction = await settingsMiddleware(
             state,
@@ -193,14 +192,13 @@ final class SettingsMiddlewareTests {
             mockEnvironment
         )
 
-        #expect(resultAction == .playMusic(.whispersOfTheForest))
+        #expect(resultAction == .playMusic(.whispersOfTranquility))
     }
     
     @Test
-    func onLoadedAppSettings_whenMusicAlreadyPlaying_doesNothing() async {
-        let state: SettingsState = .arrange(isPlayingMusic: true)
+    func onLoadedAppSettings_whenStateHasMusicDisabled_doesNothing() async {
+        let state: SettingsState = .arrange(isPlayingMusic: false)
         let loadedSettings: SettingsState = .arrange(isPlayingMusic: true)
-        mockEnvironment.isPlayingMusic = true
 
         let resultAction = await settingsMiddleware(
             state,

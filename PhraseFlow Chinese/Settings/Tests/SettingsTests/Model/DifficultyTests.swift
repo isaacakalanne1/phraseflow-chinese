@@ -18,7 +18,7 @@ final class DifficultyTests {
         #expect(difficulty.index == 0)
         #expect(difficulty.thumbnail == UIImage(named: "Difficulty-Beginner"))
         #expect(!difficulty.title.isEmpty)
-        #expect(difficulty.vocabularyPrompt == "Write using simple language and simple sentences.")
+        #expect(difficulty.vocabularyPrompt == "This is a story for a beginner learning the language. Write using short sentences, and simple language.")
         #expect(difficulty.hashValue == Difficulty.beginner.hashValue)
         
         let data = try JSONEncoder().encode(difficulty)
@@ -33,7 +33,7 @@ final class DifficultyTests {
         #expect(difficulty.index == 1)
         #expect(difficulty.thumbnail == UIImage(named: "Difficulty-Intermediate"))
         #expect(!difficulty.title.isEmpty)
-        #expect(difficulty.vocabularyPrompt == "Write using simple sentences.")
+        #expect(difficulty.vocabularyPrompt == "This is a story for a intermediate learning the language. Write using simple sentences.")
         #expect(difficulty.hashValue == Difficulty.intermediate.hashValue)
         
         let data = try JSONEncoder().encode(difficulty)
@@ -48,7 +48,7 @@ final class DifficultyTests {
         #expect(difficulty.index == 2)
         #expect(difficulty.thumbnail == UIImage(named: "Difficulty-Advanced"))
         #expect(!difficulty.title.isEmpty)
-        #expect(difficulty.vocabularyPrompt == "Write using simple language.")
+        #expect(difficulty.vocabularyPrompt == "This is a story for an advanced level learning the language. Write using simple language.")
         #expect(difficulty.hashValue == Difficulty.advanced.hashValue)
         
         let data = try JSONEncoder().encode(difficulty)
