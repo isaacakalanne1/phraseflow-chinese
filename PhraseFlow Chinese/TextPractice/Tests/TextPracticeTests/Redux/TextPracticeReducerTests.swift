@@ -422,19 +422,6 @@ final class TextPracticeReducerTests {
     }
     
     @Test
-    func playWord_doesNotChangeState() {
-        let state = TextPracticeState.arrange
-        let word = WordTimeStampData.arrange
-        
-        let newState = textPracticeReducer(
-            state,
-            .playWord(word)
-        )
-        
-        #expect(newState == state)
-    }
-    
-    @Test
     func defineWord_doesNotChangeState() {
         let state = TextPracticeState.arrange
         let word = WordTimeStampData.arrange

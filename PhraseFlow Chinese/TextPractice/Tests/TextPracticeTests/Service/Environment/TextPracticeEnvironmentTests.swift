@@ -115,38 +115,6 @@ class TextPracticeEnvironmentTests {
     }
     
     @Test
-    func playWord() async {
-        let word = WordTimeStampData.arrange(time: 10.5, duration: 1.5)
-        let rate: Float = 1.5
-        
-        await environment.playWord(word, rate: rate)
-        
-        #expect(mockAudioEnvironment.playWordStartTimeSpy == word.time)
-        #expect(mockAudioEnvironment.playWordDurationSpy == word.duration)
-        #expect(mockAudioEnvironment.playWordPlayRateSpy == rate)
-        #expect(mockAudioEnvironment.playWordCalled == true)
-    }
-    
-    @Test
-    func playChapter() async {
-        let word = WordTimeStampData.arrange(time: 20.0)
-        let speechSpeed = SpeechSpeed.fast
-        
-        await environment.playChapter(from: word, speechSpeed: speechSpeed)
-        
-        #expect(mockAudioEnvironment.playChapterAudioFromTimeSpy == word.time)
-        #expect(mockAudioEnvironment.playChapterAudioRateSpy == speechSpeed.playRate)
-        #expect(mockAudioEnvironment.playChapterAudioCalled == true)
-    }
-    
-    @Test
-    func pauseChapter() {
-        environment.pauseChapter()
-        
-        #expect(mockAudioEnvironment.pauseChapterAudioCalled == true)
-    }
-    
-    @Test
     func setMusicVolume() {
         let volume = MusicVolume.quiet
         

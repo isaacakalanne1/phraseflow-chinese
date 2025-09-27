@@ -20,7 +20,7 @@ enum MockTextPracticeEnvironmentError: Error {
 }
 
 public class MockTextPracticeEnvironment: TextPracticeEnvironmentProtocol {
-    
+    public var chapterAudioDataSubject: CurrentValueSubject<Data?, Never>
     public var definitionsSubject: CurrentValueSubject<[Definition]?, Never>
     public var goToNextChapterSubject: CurrentValueSubject<Void?, Never>
     public var settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never>
@@ -29,12 +29,14 @@ public class MockTextPracticeEnvironment: TextPracticeEnvironmentProtocol {
     public var studyEnvironment: StudyEnvironmentProtocol
     
     public init(
+        chapterAudioDataSubject: CurrentValueSubject<Data?, Never> = .init(nil),
         definitionsSubject: CurrentValueSubject<[Definition]?, Never> = .init(nil),
         goToNextChapterSubject: CurrentValueSubject<Void?, Never> = .init(nil),
         settingsUpdatedSubject: CurrentValueSubject<SettingsState?, Never> = .init(nil),
         audioEnvironment: AudioEnvironmentProtocol = MockAudioEnvironment(),
         studyEnvironment: StudyEnvironmentProtocol = MockStudyEnvironment()
     ) {
+        self.chapterAudioDataSubject = chapterAudioDataSubject
         self.definitionsSubject = definitionsSubject
         self.goToNextChapterSubject = goToNextChapterSubject
         self.settingsUpdatedSubject = settingsUpdatedSubject

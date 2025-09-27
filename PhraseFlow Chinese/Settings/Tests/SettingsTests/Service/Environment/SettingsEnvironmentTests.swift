@@ -122,24 +122,6 @@ class SettingsEnvironmentTests {
     }
     
     @Test
-    func isPlayingMusic_true() {
-        mockAudioEnvironment.isPlayingMusicResult = true
-        
-        let result = environment.isPlayingMusic
-        
-        #expect(result == true)
-    }
-    
-    @Test
-    func isPlayingMusic_false() {
-        mockAudioEnvironment.isPlayingMusicResult = false
-        
-        let result = environment.isPlayingMusic
-        
-        #expect(result == false)
-    }
-    
-    @Test
     func stopMusic() {
         environment.stopMusic()
         

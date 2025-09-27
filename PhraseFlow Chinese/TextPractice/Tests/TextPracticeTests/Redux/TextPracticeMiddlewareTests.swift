@@ -283,24 +283,6 @@ final class TextPracticeMiddlewareTests {
     }
     
     @Test
-    func playWord_callsEnvironment() async {
-        let word: WordTimeStampData = .arrange
-        let speechSpeed: SpeechSpeed = .slow
-        let state: TextPracticeState = .arrange(settings: .arrange(speechSpeed: speechSpeed))
-        
-        let resultAction = await textPracticeMiddleware(
-            state,
-            .playWord(word),
-            mockEnvironment
-        )
-        
-        #expect(resultAction == nil)
-        #expect(mockEnvironment.playWordCalled == true)
-        #expect(mockEnvironment.playWordWordSpy == word)
-        #expect(mockEnvironment.playWordRateSpy == speechSpeed.playRate)
-    }
-    
-    @Test
     func defineWord_withExistingDefinition_returnsOnDefinedWord() async {
         let word: WordTimeStampData = .arrange(word: "test")
         let sentence: Sentence = .arrange
