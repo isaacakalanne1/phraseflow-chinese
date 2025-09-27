@@ -21,7 +21,7 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "APIRequest", path: "../APIRequest"),
-        .package(name: "ReduxKit", path: "../ReduxKit"),
+        .package(url: "https://github.com/isaacakalanne1/reduxkit.git", from: "1.0.1"),
         .package(name: "Localization", path: "../Localization"),
         .package(name: "FTColor", path: "../FTColor"),
         .package(name: "FTFont", path: "../FTFont"),
@@ -42,7 +42,6 @@ let package = Package(
             name: "Translation",
             dependencies: [
                 "APIRequest",
-                "ReduxKit",
                 "Localization",
                 "FTColor",
                 "FTFont",
@@ -54,7 +53,8 @@ let package = Package(
                 "SnackBar",
                 "UserLimit",
                 "TextPractice",
-                "TextGeneration"
+                "TextGeneration",
+                .product(name: "ReduxKit", package: "reduxkit")
             ]
         ),
         .target(
@@ -62,7 +62,6 @@ let package = Package(
             dependencies: [
                 "Translation",
                 "APIRequest",
-                "ReduxKit",
                 "Localization",
                 "FTColor",
                 "FTFont",
@@ -76,7 +75,8 @@ let package = Package(
                 "TextGeneration",
                 .product(name: "SnackBarMocks", package: "SnackBar"),
                 .product(name: "TextGenerationMocks", package: "TextGeneration"),
-                .product(name: "TextPracticeMocks", package: "TextPractice")
+                .product(name: "TextPracticeMocks", package: "TextPractice"),
+                .product(name: "ReduxKit", package: "reduxkit")
             ],
             path: "Mocks"
         ),

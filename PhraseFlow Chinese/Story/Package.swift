@@ -21,7 +21,7 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "Audio", path: "../Audio"),
-        .package(name: "ReduxKit", path: "../ReduxKit"),
+        .package(url: "https://github.com/isaacakalanne1/reduxkit.git", from: "1.0.1"),
         .package(name: "Study", path: "../Study"),
         .package(name: "FTColor", path: "../FTColor"),
         .package(name: "FTFont", path: "../FTFont"),
@@ -44,29 +44,6 @@ let package = Package(
             name: "Story",
             dependencies: [
                 "Audio",
-                "ReduxKit",
-                "Study",
-                "FTColor",
-                "FTFont",
-                "FTStyleKit",
-                "Loading",
-                "Speech",
-                "Settings",
-                "SnackBar",
-                "Subscription",
-                "TextGeneration",
-                "TextPractice",
-                "UserLimit",
-                "ImageGeneration",
-                "Localization"
-            ]
-        ),
-        .target(
-            name: "StoryMocks",
-            dependencies: [
-                "Story",
-                "Audio",
-                "ReduxKit",
                 "Study",
                 "FTColor",
                 "FTFont",
@@ -81,6 +58,29 @@ let package = Package(
                 "UserLimit",
                 "ImageGeneration",
                 "Localization",
+                .product(name: "ReduxKit", package: "reduxkit")
+            ]
+        ),
+        .target(
+            name: "StoryMocks",
+            dependencies: [
+                "Story",
+                "Audio",
+                "Study",
+                "FTColor",
+                "FTFont",
+                "FTStyleKit",
+                "Loading",
+                "Speech",
+                "Settings",
+                "SnackBar",
+                "Subscription",
+                "TextGeneration",
+                "TextPractice",
+                "UserLimit",
+                "ImageGeneration",
+                "Localization",
+                .product(name: "ReduxKit", package: "reduxkit"),
                 .product(name: "AudioMocks", package: "Audio"),
                 .product(name: "SnackBarMocks", package: "SnackBar"),
                 .product(name: "StudyMocks", package: "Study"),

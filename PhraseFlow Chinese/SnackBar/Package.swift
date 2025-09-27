@@ -21,7 +21,7 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "Audio", path: "../Audio"),
-        .package(name: "ReduxKit", path: "../ReduxKit"),
+        .package(url: "https://github.com/isaacakalanne1/reduxkit.git", from: "1.0.1"),
         .package(name: "Localization", path: "../Localization"),
         .package(name: "Loading", path: "../Loading"),
         .package(name: "FTColor", path: "../FTColor")
@@ -35,8 +35,8 @@ let package = Package(
                 "Audio",
                 "Localization",
                 "Loading",
-                "ReduxKit",
-                "FTColor"
+                "FTColor",
+                .product(name: "ReduxKit", package: "reduxkit")
             ]
         ),
         .target(
@@ -46,8 +46,8 @@ let package = Package(
                 "Audio",
                 "Localization",
                 "Loading",
-                "ReduxKit",
-                "FTColor"
+                "FTColor",
+                .product(name: "ReduxKit", package: "reduxkit")
             ],
             path: "Mocks"
         ),

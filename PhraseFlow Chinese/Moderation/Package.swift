@@ -25,7 +25,7 @@ let package = Package(
         .package(name: "FTStyleKit", path: "../FTStyleKit"),
         .package(name: "Localization", path: "../Localization"),
         .package(name: "APIRequest", path: "../APIRequest"),
-        .package(name: "ReduxKit", path: "../ReduxKit"),
+        .package(url: "https://github.com/isaacakalanne1/reduxkit.git", from: "1.0.1"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -38,7 +38,7 @@ let package = Package(
                 "FTStyleKit",
                 "Localization",
                 "APIRequest",
-                .product(name: "ReduxKit", package: "ReduxKit")
+                .product(name: "ReduxKit", package: "reduxkit")
             ]
         ),
         .target(

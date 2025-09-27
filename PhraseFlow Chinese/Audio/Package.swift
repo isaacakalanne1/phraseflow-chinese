@@ -20,7 +20,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "ReduxKit", path: "../ReduxKit")
+        .package(url: "https://github.com/isaacakalanne1/reduxkit.git", from: "1.0.1")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -28,7 +28,7 @@ let package = Package(
         .target(
             name: "Audio",
             dependencies: [
-                "ReduxKit"
+                .product(name: "ReduxKit", package: "reduxkit")
             ],
             resources: [
                 .process("Resources")
@@ -38,7 +38,7 @@ let package = Package(
             name: "AudioMocks",
             dependencies: [
                 "Audio",
-                "ReduxKit"
+                .product(name: "ReduxKit", package: "reduxkit")
             ],
             path: "Mocks"
         ),

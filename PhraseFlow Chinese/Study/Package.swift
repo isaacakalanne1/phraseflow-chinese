@@ -20,7 +20,7 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "Audio", path: "../Audio"),
-        .package(name: "ReduxKit", path: "../ReduxKit"),
+        .package(url: "https://github.com/isaacakalanne1/reduxkit.git", from: "1.0.1"),
         .package(name: "Localization", path: "../Localization"),
         .package(name: "FTColor", path: "../FTColor"),
         .package(name: "FTFont", path: "../FTFont"),
@@ -34,14 +34,14 @@ let package = Package(
             name: "Study",
             dependencies: [
                 "Audio",
-                "ReduxKit",
                 "Localization",
                 "FTColor",
                 "FTFont",
                 "FTStyleKit",
                 "Settings",
                 "TextGeneration",
-                "AppleIcon"
+                "AppleIcon",
+                .product(name: "ReduxKit", package: "reduxkit")
             ]
         ),
         .target(
@@ -49,7 +49,6 @@ let package = Package(
             dependencies: [
                 "Study",
                 "Audio",
-                "ReduxKit",
                 "Localization",
                 "FTColor",
                 "FTFont",
@@ -58,7 +57,8 @@ let package = Package(
                 "TextGeneration",
                 "AppleIcon",
                 .product(name: "SettingsMocks", package: "Settings"),
-                .product(name: "TextGenerationMocks", package: "TextGeneration")
+                .product(name: "TextGenerationMocks", package: "TextGeneration"),
+                .product(name: "ReduxKit", package: "reduxkit")
             ],
             path: "Mocks"
         ),

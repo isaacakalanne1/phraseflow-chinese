@@ -21,7 +21,7 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "Audio", path: "../Audio"),
-        .package(name: "ReduxKit", path: "../ReduxKit"),
+        .package(url: "https://github.com/isaacakalanne1/reduxkit.git", from: "1.0.1"),
         .package(name: "Localization", path: "../Localization"),
         .package(name: "FTColor", path: "../FTColor"),
         .package(name: "FTFont", path: "../FTFont"),
@@ -38,22 +38,6 @@ let package = Package(
             name: "Settings",
             dependencies: [
                 "Audio",
-                "ReduxKit",
-                "Localization",
-                "FTColor",
-                "FTFont",
-                "FTStyleKit",
-                "SnackBar",
-                "UserLimit",
-                "DataStorage",
-                "Moderation"
-            ]
-        ),
-        .target(
-            name: "SettingsMocks",
-            dependencies: [
-                "Settings",
-                "ReduxKit",
                 "Localization",
                 "FTColor",
                 "FTFont",
@@ -62,6 +46,22 @@ let package = Package(
                 "UserLimit",
                 "DataStorage",
                 "Moderation",
+                .product(name: "ReduxKit", package: "reduxkit")
+            ]
+        ),
+        .target(
+            name: "SettingsMocks",
+            dependencies: [
+                "Settings",
+                "Localization",
+                "FTColor",
+                "FTFont",
+                "FTStyleKit",
+                "SnackBar",
+                "UserLimit",
+                "DataStorage",
+                "Moderation",
+                .product(name: "ReduxKit", package: "reduxkit"),
                 .product(name: "Audio", package: "Audio"),
                 .product(name: "AudioMocks", package: "Audio"),
                 .product(name: "ModerationMocks", package: "Moderation")
@@ -73,7 +73,7 @@ let package = Package(
             dependencies: [
                 "Settings",
                 "SettingsMocks",
-                "ReduxKit",
+                .product(name: "ReduxKit", package: "reduxkit"),
                 .product(name: "Audio", package: "Audio"),
                 .product(name: "AudioMocks", package: "Audio"),
                 .product(name: "ModerationMocks", package: "Moderation")

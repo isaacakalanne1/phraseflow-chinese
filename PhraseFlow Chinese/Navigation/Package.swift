@@ -33,7 +33,7 @@ let package = Package(
         .package(name: "Translation", path: "../Translation"),
         .package(name: "UserLimit", path: "../UserLimit"),
         .package(name: "DataStorage", path: "../DataStorage"),
-        .package(name: "ReduxKit", path: "../ReduxKit"),
+        .package(url: "https://github.com/isaacakalanne1/reduxkit.git", from: "1.0.1"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -54,7 +54,7 @@ let package = Package(
                 "Translation",
                 "UserLimit",
                 "DataStorage",
-                "ReduxKit"
+                .product(name: "ReduxKit", package: "reduxkit")
             ]
         ),
         .target(

@@ -20,7 +20,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "ReduxKit", path: "../ReduxKit"),
+        .package(url: "https://github.com/isaacakalanne1/reduxkit.git", from: "1.0.1"),
         .package(name: "Localization", path: "../Localization"),
         .package(name: "FTColor", path: "../FTColor"),
         .package(name: "FTFont", path: "../FTFont"),
@@ -36,7 +36,6 @@ let package = Package(
         .target(
             name: "Subscription",
             dependencies: [
-                "ReduxKit",
                 "Localization",
                 "FTColor",
                 "FTFont",
@@ -44,14 +43,14 @@ let package = Package(
                 "SnackBar",
                 "UserLimit",
                 "Settings",
-                "DataStorage"
+                "DataStorage",
+                .product(name: "ReduxKit", package: "reduxkit")
             ]
         ),
         .target(
             name: "SubscriptionMocks",
             dependencies: [
                 "Subscription",
-                "ReduxKit",
                 "Localization",
                 "FTColor",
                 "FTFont",
@@ -61,7 +60,8 @@ let package = Package(
                 "SnackBar",
                 .product(name: "SnackBarMocks", package: "SnackBar"),
                 .product(name: "SettingsMocks", package: "Settings"),
-                "DataStorage"
+                "DataStorage",
+                .product(name: "ReduxKit", package: "reduxkit")
             ],
             path: "Mocks"
         ),
@@ -71,7 +71,7 @@ let package = Package(
                 "Subscription",
                 "SubscriptionMocks",
                 "Settings",
-                "ReduxKit",
+                .product(name: "ReduxKit", package: "reduxkit"),
                 .product(name: "SpeechMocks", package: "Speech"),
                 .product(name: "SettingsMocks", package: "Settings"),
                 .product(name: "UserLimitMocks", package: "UserLimit")

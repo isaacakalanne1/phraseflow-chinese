@@ -60,7 +60,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		112BE27B2E2AE3E0006E80FC /* ReduxKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ReduxKit; sourceTree = "<group>"; };
 		112BE27C2E32C39F006E80FC /* FTStyleKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FTStyleKit; sourceTree = "<group>"; };
 		11BAFA972E364D9A00502C14 /* FlowTaleEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTaleEnvironment.swift; sourceTree = "<group>"; };
 		11EBA7582E872B67006543D4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -162,7 +161,6 @@
 				BB34C5072E28264C00238EA8 /* Localization */,
 				BB34C50A2E2836E000238EA8 /* Moderation */,
 				BB34C5192E29012A00238EA8 /* Navigation */,
-				112BE27B2E2AE3E0006E80FC /* ReduxKit */,
 				BB34C5062E28258A00238EA8 /* Settings */,
 				BB34C5152E28F97000238EA8 /* SnackBar */,
 				BB34C5052E252D7100238EA8 /* Speech */,
@@ -357,6 +355,7 @@
 			mainGroup = BBB6EF1A2C8C86240079D135;
 			packageReferences = (
 				11EBA75A2E872C32006543D4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				11EBA7B32E8861E0006543D4 /* XCRemoteSwiftPackageReference "reduxkit" */,
 			);
 			productRefGroup = BBB6EF242C8C86240079D135 /* Products */;
 			projectDirPath = "";
@@ -747,6 +746,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 12.3.0;
+			};
+		};
+		11EBA7B32E8861E0006543D4 /* XCRemoteSwiftPackageReference "reduxkit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/isaacakalanne1/reduxkit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
