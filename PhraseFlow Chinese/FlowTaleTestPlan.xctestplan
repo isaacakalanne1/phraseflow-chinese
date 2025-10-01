@@ -91,13 +91,6 @@
     },
     {
       "target" : {
-        "containerPath" : "container:ReduxKit",
-        "identifier" : "ReduxKitTests",
-        "name" : "ReduxKitTests"
-      }
-    },
-    {
-      "target" : {
         "containerPath" : "container:FTStyleKit",
         "identifier" : "FTStyleKitTests",
         "name" : "FTStyleKitTests"
