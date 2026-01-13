@@ -31,7 +31,7 @@ let audioReducer: Reducer<AudioState, AudioAction> = { state, action in
     case .stopMusic:
         newState.isPlayingMusic = false
     case .setMusicVolume(let volume):
-        newState.musicAudioPlayer.setVolume(volume.float, fadeDuration: 0.2)
+        newState.musicAudioPlayer.setVolume(volume.float, fadeDuration: 0.05)
     }
     return newState
 }

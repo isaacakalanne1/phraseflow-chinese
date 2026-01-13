@@ -11,9 +11,9 @@ public enum MusicVolume: Sendable {
     var float: Float {
         switch self {
         case .normal:
-            0.5
+            0.1
         case .quiet:
-            0.15
+            0.02
         }
     }
 }

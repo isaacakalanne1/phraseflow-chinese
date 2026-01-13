@@ -44,9 +44,11 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
             playRate: state.settings.speechSpeed.playRate
         )
         
-        let playRate = state.settings.speechSpeed.playRate
-        try? await Task.sleep(for: .milliseconds(Int((word.duration / Double(playRate)) * 1000)))
-        environment.unduckMusic()
+        Task.detached {
+            let playRate = state.settings.speechSpeed.playRate
+            try? await Task.sleep(for: .milliseconds(Int((word.duration / Double(playRate)) * 1000)))
+            environment.unduckMusic()
+        }
         
         return .showDefinition(word)
     case .saveAppSettings(let settings):

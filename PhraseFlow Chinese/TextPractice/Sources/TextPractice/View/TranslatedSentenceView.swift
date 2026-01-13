@@ -26,7 +26,9 @@ struct TranslatedSentenceView: View {
                         .padding(.horizontal, 12)
                         .padding(.vertical, 8)
                 }
+                .frame(maxHeight: .infinity)
                 .scrollIndicators(.hidden)
+                .scrollBounceBehavior(.basedOnSize)
             } else {
                 // No sentence selected state
                 VStack {

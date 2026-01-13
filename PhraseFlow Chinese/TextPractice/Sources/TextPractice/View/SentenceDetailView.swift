@@ -19,14 +19,12 @@ public struct SentenceDetailView: View {
             switch store.state.viewState {
             case .normal:
                 TranslatedSentenceView()
-                    .frame(maxHeight: .infinity)
                     .cardBackground()
             case .showDefinition:
                 DefinitionView(
                     isLoading: store.state.selectedDefinition == nil,
                     viewData: createViewData(definition: store.state.selectedDefinition)
                 )
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .cardBackground()
             }
         }
