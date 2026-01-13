@@ -12,7 +12,6 @@ import TextGeneration
 import Settings
 import Study
 
-@MainActor
 public class TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
     public var chapterSubject: CurrentValueSubject<Chapter?, Never>
     public var definitionsSubject: CurrentValueSubject<[Definition]?, Never> {
