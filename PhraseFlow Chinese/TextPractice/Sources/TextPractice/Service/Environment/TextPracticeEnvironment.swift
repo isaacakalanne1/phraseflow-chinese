@@ -26,15 +26,18 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
     public let audioEnvironment: AudioEnvironmentProtocol
     private let settingsEnvironment: SettingsEnvironmentProtocol
     public let studyEnvironment: StudyEnvironmentProtocol
+    private let saveChapterHandler: TextPracticeDataStoreProtocol?
     
     public init(
         audioEnvironment: AudioEnvironmentProtocol,
         settingsEnvironment: SettingsEnvironmentProtocol,
-        studyEnvironment: StudyEnvironmentProtocol
+        studyEnvironment: StudyEnvironmentProtocol,
+        saveChapterHandler: TextPracticeDataStoreProtocol? = nil
     ) {
         self.audioEnvironment = audioEnvironment
         self.settingsEnvironment = settingsEnvironment
         self.studyEnvironment = studyEnvironment
+        self.saveChapterHandler = saveChapterHandler
         
         chapterSubject = .init(nil)
         goToNextChapterSubject = .init(nil)
@@ -71,5 +74,9 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
     
     public func saveSentenceAudio(_ audio: Data, id: UUID) throws {
         try studyEnvironment.saveSentenceAudio(audio, id: id)
+    }
+
+    public func saveChapter(_ chapter: Chapter) throws {
+        try saveChapterHandler?.saveChapter(chapter)
     }
 }

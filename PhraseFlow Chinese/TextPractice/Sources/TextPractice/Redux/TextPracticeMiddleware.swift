@@ -180,7 +180,10 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
         }
         return .failedToDefineWord
         
-    case .updateCurrentSentence:
+    case .updateCurrentSentence(let sentence):
+        var chapterToSave = state.chapter
+        chapterToSave.currentSentence = sentence
+        try? environment.saveChapter(chapterToSave)
         return .clearDefinition
         
     case .setChapterAudioData(let audioData):

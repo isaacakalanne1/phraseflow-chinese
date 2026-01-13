@@ -32,4 +32,5 @@ public protocol TextPracticeEnvironmentProtocol {
     func setMusicVolume(_ volume: MusicVolume)
     func playSound(_ sound: AppSound)
     func saveSentenceAudio(_ audio: Data, id: UUID) throws
+    func saveChapter(_ chapter: Chapter) throws
 }

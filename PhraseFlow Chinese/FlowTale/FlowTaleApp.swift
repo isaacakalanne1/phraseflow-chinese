@@ -82,10 +82,13 @@ public struct FlowTaleRootView: View {
             settingsEnvironment: settingsEnvironment
         )
 
+        let storyDataStore = StoryDataStore()
+
         let textPracticeEnvironment = TextPracticeEnvironment(
             audioEnvironment: audioEnvironment,
             settingsEnvironment: settingsEnvironment,
-            studyEnvironment: studyEnvironment
+            studyEnvironment: studyEnvironment,
+            saveChapterHandler: storyDataStore
         )
 
         let translationServices = TranslationServices()
@@ -101,7 +104,7 @@ public struct FlowTaleRootView: View {
         )
         
         let textGenerationServices = TextGenerationServices()
-        let storyDataStore = StoryDataStore()
+        // storyDataStore init moved up
         let storyEnvironment = StoryEnvironment(
             audioEnvironment: audioEnvironment,
             settingsEnvironment: settingsEnvironment,
@@ -155,3 +158,5 @@ struct FlowTaleApp: App {
         }
     }
 }
+
+extension StoryDataStore: TextPracticeDataStoreProtocol {}

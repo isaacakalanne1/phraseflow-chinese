@@ -148,4 +148,11 @@ public class MockTextPracticeEnvironment: TextPracticeEnvironmentProtocol {
             throw error
         }
     }
+    
+    public var saveChapterSpy: Chapter?
+    public var saveChapterCalled = false
+    public func saveChapter(_ chapter: Chapter) throws {
+        saveChapterSpy = chapter
+        saveChapterCalled = true
+    }
 }

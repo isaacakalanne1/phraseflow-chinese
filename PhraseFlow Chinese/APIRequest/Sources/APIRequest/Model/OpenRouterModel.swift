@@ -19,7 +19,7 @@ public enum OpenRouterModel {
         case .geminiFlash:
             return "google/gemini-2.5-flash-lite"
         case .grok4Fast:
-            return "x-ai/grok-4-fast:free"
+            return "x-ai/grok-4-fast"
         case .gpt_4o_Mini:
             return "gpt-4o-mini-2024-07-18"
         }

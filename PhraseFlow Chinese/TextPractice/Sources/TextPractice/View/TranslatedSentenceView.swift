@@ -17,11 +17,16 @@ struct TranslatedSentenceView: View {
     var body: some View {
         VStack(spacing: 8) {
             if let sentence = store.state.chapter.currentSentence {
-                Text(sentence.original)
-                    .font(FTFont.bodyMedium.font)
-                    .foregroundColor(FTColor.primary.color)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
+                ScrollView {
+                    Text(sentence.original)
+                        .font(FTFont.bodyMedium.font)
+                        .foregroundColor(FTColor.primary.color)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                }
+                .scrollIndicators(.hidden)
             } else {
                 // No sentence selected state
                 VStack {
