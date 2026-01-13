@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct WordTimeStampData: Codable, Equatable, Hashable, Sendable {
+public struct WordTimeStampData: Codable, Equatable, Hashable, Sendable, Identifiable {
     public let id: UUID
     public var word: String
     public let time: Double

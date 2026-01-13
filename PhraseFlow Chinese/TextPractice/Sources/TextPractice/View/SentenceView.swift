@@ -121,9 +121,6 @@ public struct SentenceView: View {
         .onChange(of: store.state.chapter) {
             updateCurrentSentence()
         }
-        .onChange(of: currentPage) { _ in
-            wordFrames = [:]
-        }
     }
 
     private func updateCurrentSentence() {
@@ -200,11 +197,10 @@ public struct SentenceView: View {
     private func flowLayout(sentence: Sentence,
                             language: Language) -> some View {
         FlowLayout(spacing: 0, language: language) {
-            ForEach(Array(sentence.timestamps.enumerated()), id: \.offset) { index, word in
+            ForEach(sentence.timestamps) { word in
                 CharacterView(word: word, sentence: sentence)
-                    .id(word.id)
                     .opacity(opacity)
-                    .animation(.easeInOut.delay(Double(index) * 0.02), value: opacity)
+                    .animation(.easeInOut.delay(Double(sentence.timestamps.firstIndex(of: word) ?? 0) * 0.02), value: opacity)
                     .background(
                         GeometryReader { geo in
                             Color.clear
