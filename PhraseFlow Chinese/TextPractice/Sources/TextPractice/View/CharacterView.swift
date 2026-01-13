@@ -44,14 +44,5 @@ struct CharacterView: View {
                     }
             }
         }
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 0)
-                .onChanged { _ in
-                    store.dispatch(.selectWord(word))
-                }
-                .onEnded { _ in
-                    store.dispatch(.hideDefinition)
-                }
-        )
     }
 }

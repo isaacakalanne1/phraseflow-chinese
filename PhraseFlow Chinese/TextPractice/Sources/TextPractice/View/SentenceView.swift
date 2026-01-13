@@ -17,6 +17,8 @@ public struct SentenceView: View {
     @EnvironmentObject var store: TextPracticeStore
     @State private var opacity: Double = 0
     @State private var currentPage: Int = 0
+    @State private var wordFrames: [UUID: CGRect] = [:]
+    @State private var lastSelectedWordId: UUID? = nil
 
     var spokenWord: WordTimeStampData? {
         store.state.chapter.currentSpokenWord
@@ -48,6 +50,24 @@ public struct SentenceView: View {
             flowLayout(sentence: chapter.sentences[currentPage],
                        language: chapter.language)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .coordinateSpace(name: "sentenceView")
+                .gesture(
+                    DragGesture(minimumDistance: 0)
+                        .onChanged { value in
+                            let location = value.location
+                            if let wordId = wordFrames.first(where: { $0.value.contains(location) })?.key,
+                               wordId != lastSelectedWordId {
+                                if let word = chapter.sentences[currentPage].timestamps.first(where: { $0.id == wordId }) {
+                                    store.dispatch(.selectWord(word))
+                                    lastSelectedWordId = wordId
+                                }
+                            }
+                        }
+                        .onEnded { _ in
+                            lastSelectedWordId = nil
+                            store.dispatch(.hideDefinition)
+                        }
+                )
 
             paginationControls(totalPages: chapter.sentences.count,
                                chapter: chapter)
@@ -71,6 +91,9 @@ public struct SentenceView: View {
         }
         .onChange(of: store.state.chapter) {
             updateCurrentSentence()
+        }
+        .onChange(of: currentPage) { _ in
+            wordFrames = [:]
         }
     }
 
@@ -141,6 +164,17 @@ public struct SentenceView: View {
                     .id(word.id)
                     .opacity(opacity)
                     .animation(.easeInOut.delay(Double(index) * 0.02), value: opacity)
+                    .background(
+                        GeometryReader { geo in
+                            Color.clear
+                                .onAppear {
+                                    wordFrames[word.id] = geo.frame(in: .named("sentenceView"))
+                                }
+                                .onChange(of: geo.frame(in: .named("sentenceView"))) { newFrame in
+                                    wordFrames[word.id] = newFrame
+                                }
+                        }
+                    )
             }
         }
         .frame(maxWidth: .infinity, alignment: language.alignment)
