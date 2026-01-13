@@ -12,7 +12,7 @@ import TextGeneration
 import Settings
 import Study
 
-public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
+public class TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
     public var chapterSubject: CurrentValueSubject<Chapter?, Never>
     public var definitionsSubject: CurrentValueSubject<[Definition]?, Never> {
         studyEnvironment.definitionsSubject
@@ -28,6 +28,9 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
     public let studyEnvironment: StudyEnvironmentProtocol
     private let saveChapterHandler: TextPracticeDataStoreProtocol?
     
+    private var saveChapterSubject = PassthroughSubject<Chapter, Never>()
+    private var subscriptions = Set<AnyCancellable>()
+    
     public init(
         audioEnvironment: AudioEnvironmentProtocol,
         settingsEnvironment: SettingsEnvironmentProtocol,
@@ -42,6 +45,17 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
         chapterSubject = .init(nil)
         goToNextChapterSubject = .init(nil)
         chapterAudioDataSubject = .init(nil)
+        
+        setupDebouncedSave()
+    }
+    
+    private func setupDebouncedSave() {
+        saveChapterSubject
+            .debounce(for: .seconds(2), scheduler: RunLoop.main)
+            .sink { [weak self] chapter in
+                try? self?.saveChapter(chapter)
+            }
+            .store(in: &subscriptions)
     }
     
     public func saveAppSettings(_ settings: SettingsState) throws {
@@ -78,5 +92,9 @@ public struct TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
 
     public func saveChapter(_ chapter: Chapter) throws {
         try saveChapterHandler?.saveChapter(chapter)
+    }
+    
+    public func saveChapterDebounced(_ chapter: Chapter) {
+        saveChapterSubject.send(chapter)
     }
 }

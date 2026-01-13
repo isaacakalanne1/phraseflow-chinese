@@ -51,6 +51,7 @@ let textPracticeReducer: Reducer<TextPracticeState, TextPracticeAction> = { stat
         newState.chapter.currentPlaybackTime = time
     case .updateCurrentSentence(let sentence):
         newState.chapter.currentSentence = sentence
+        newState.chapter.currentPlaybackTime = sentence.timestamps.first?.time ?? 0
     case .playChapter:
         newState.isPlayingChapterAudio = true
     case .pauseChapter:

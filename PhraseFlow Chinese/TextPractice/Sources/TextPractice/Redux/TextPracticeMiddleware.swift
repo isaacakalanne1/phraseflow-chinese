@@ -186,7 +186,7 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
         }
         var chapterToSave = state.chapter
         chapterToSave.currentSentence = sentence
-        try? environment.saveChapter(chapterToSave)
+        environment.saveChapterDebounced(chapterToSave)
         return .clearDefinition
         
     case .setChapterAudioData(let audioData):
@@ -211,9 +211,11 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
             state.chapterAudioPlayer.rate = playRate
         }
         return nil
-    case .addDefinitions,
-            .setPlaybackTime,
-            .refreshAppSettings,
+    case .setPlaybackTime:
+        environment.saveChapterDebounced(state.chapter)
+        return nil
+    case .refreshAppSettings,
+            .addDefinitions,
             .hideDefinition,
             .failedToLoadDefinitions,
             .onDefinedWord,

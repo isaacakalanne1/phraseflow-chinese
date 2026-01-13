@@ -127,7 +127,15 @@ public struct SentenceView: View {
     }
 
     private func updateCurrentSentence() {
-        if let sentence = chapter.sentences.first(where: { $0.timestamps.contains { $0.id == spokenWord?.id } }) {
+        let sentenceToUse: Sentence? = {
+            if let spokenSentence = chapter.sentences.first(where: { $0.timestamps.contains { $0.id == spokenWord?.id } }) {
+                return spokenSentence
+            }
+            // If spokenWord is nil (e.g. at start), prefer the saved currentSentence
+            return chapter.currentSentence
+        }()
+        
+        if let sentence = sentenceToUse {
             let targetPage = sentenceIndex(sentence, in: chapter.sentences)
             currentPage = targetPage
             
