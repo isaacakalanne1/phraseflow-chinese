@@ -19,6 +19,7 @@ public struct SentenceView: View {
     @State private var currentPage: Int = 0
     @State private var wordFrames: [UUID: CGRect] = [:]
     @State private var lastSelectedWordId: UUID? = nil
+    @State private var isDraggingFromWord: Bool = false
 
     var spokenWord: WordTimeStampData? {
         store.state.chapter.currentSpokenWord
@@ -55,7 +56,34 @@ public struct SentenceView: View {
                     DragGesture(minimumDistance: 0)
                         .onChanged { value in
                             let location = value.location
-                            if let wordId = wordFrames.first(where: { $0.value.contains(location) })?.key,
+                            let startLocation = value.startLocation
+                            
+                            // 1. Ensure we only act if the gesture started on a word
+                            if !isDraggingFromWord {
+                                if wordFrames.values.contains(where: { $0.contains(startLocation) }) {
+                                    isDraggingFromWord = true
+                                } else {
+                                    return
+                                }
+                            }
+                            
+                            // 2. Find the word that best matches the current location (X-priority)
+                            // We sort by horizontal distance first, then vertical distance to the midY
+                            let sortedWords = wordFrames.map { (id: $0.key, frame: $0.value) }
+                                .sorted { a, b in
+                                    let distXA = max(0, a.frame.minX - location.x, location.x - a.frame.maxX)
+                                    let distXB = max(0, b.frame.minX - location.x, location.x - b.frame.maxX)
+                                    
+                                    if distXA != distXB {
+                                        return distXA < distXB
+                                    }
+                                    
+                                    let distYA = abs(a.frame.midY - location.y)
+                                    let distYB = abs(b.frame.midY - location.y)
+                                    return distYA < distYB
+                                }
+                            
+                            if let wordId = sortedWords.first?.id,
                                wordId != lastSelectedWordId {
                                 if let word = chapter.sentences[currentPage].timestamps.first(where: { $0.id == wordId }) {
                                     store.dispatch(.selectWord(word))
@@ -64,6 +92,7 @@ public struct SentenceView: View {
                             }
                         }
                         .onEnded { _ in
+                            isDraggingFromWord = false
                             lastSelectedWordId = nil
                             store.dispatch(.hideDefinition)
                         }
