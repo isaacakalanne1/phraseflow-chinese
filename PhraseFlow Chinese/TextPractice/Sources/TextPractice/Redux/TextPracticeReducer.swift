@@ -14,6 +14,9 @@ let textPracticeReducer: Reducer<TextPracticeState, TextPracticeAction> = { stat
     switch action {
     case .setChapter(let chapter):
         newState.chapter = chapter
+        if newState.chapter.currentSentence == nil {
+            newState.chapter.currentSentence = chapter.sentences.first
+        }
     case .addDefinitions(let definitions):
         for definition in definitions {
             let key = DefinitionKey(word: definition.timestampData.word,

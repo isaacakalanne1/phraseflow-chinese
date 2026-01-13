@@ -101,7 +101,11 @@ public struct SentenceView: View {
         if let sentence = chapter.sentences.first(where: { $0.timestamps.contains { $0.id == spokenWord?.id } }) {
             let targetPage = sentenceIndex(sentence, in: chapter.sentences)
             currentPage = targetPage
-            store.dispatch(.updateCurrentSentence(sentence))
+            
+            // Only update if the sentence has actually changed to avoid clearing definitions unnecessarily
+            if chapter.currentSentence?.id != sentence.id {
+                store.dispatch(.updateCurrentSentence(sentence))
+            }
         }
     }
 

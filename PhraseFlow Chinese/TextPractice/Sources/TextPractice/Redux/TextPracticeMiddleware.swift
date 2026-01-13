@@ -181,6 +181,9 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
         return .failedToDefineWord
         
     case .updateCurrentSentence(let sentence):
+        guard state.chapter.currentSentence?.id != sentence.id else {
+            return nil
+        }
         var chapterToSave = state.chapter
         chapterToSave.currentSentence = sentence
         try? environment.saveChapter(chapterToSave)
