@@ -258,7 +258,7 @@ final class StudyReducerTests {
         
         let newState = studyReducer(
             initialState,
-            .playStudySentence
+            .playStudySentence(.arrange)
         )
         
         #expect(newState == initialState)
@@ -294,7 +294,7 @@ final class StudyReducerTests {
         
         let newState = studyReducer(
             initialState,
-            .playStudyWord
+            .playStudyWord(.arrange)
         )
         
         #expect(newState == initialState)

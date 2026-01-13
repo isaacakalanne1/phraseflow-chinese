@@ -37,11 +37,19 @@ let textPracticeMiddleware: Middleware<TextPracticeState, TextPracticeAction, Te
         }
         return nil
     case .selectWord(let word):
+        environment.duckMusic()
         await state.chapterAudioPlayer.playAudio(
             fromSeconds: word.time,
             toSeconds: word.time + word.duration,
             playRate: state.settings.speechSpeed.playRate
         )
+        
+        let playRate = state.settings.speechSpeed.playRate
+        Task {
+            try? await Task.sleep(for: .milliseconds(Int((word.duration / Double(playRate)) * 1000)))
+            await environment.unduckMusic()
+        }
+        
         return .showDefinition(word)
     case .saveAppSettings(let settings):
         try? environment.saveAppSettings(settings)

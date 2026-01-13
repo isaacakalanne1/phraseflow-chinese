@@ -153,4 +153,14 @@ public class MockStudyEnvironment: StudyEnvironmentProtocol {
             throw error
         }
     }
+    
+    var duckMusicCalled = false
+    public func duckMusic() {
+        duckMusicCalled = true
+    }
+    
+    var unduckMusicCalled = false
+    public func unduckMusic() {
+        unduckMusicCalled = true
+    }
 }

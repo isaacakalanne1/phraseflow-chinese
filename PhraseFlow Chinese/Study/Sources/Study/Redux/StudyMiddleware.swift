@@ -11,8 +11,13 @@ import ReduxKit
 @MainActor
 let studyMiddleware: Middleware<StudyState, StudyAction, StudyEnvironmentProtocol> = { state, action, environment in
     switch action {
-    case .playStudyWord:
+    case .playStudyWord(let definition):
+        environment.duckMusic()
         await state.audioPlayer.playAudio()
+        
+        let duration = definition.timestampData.duration
+        try? await Task.sleep(for: .milliseconds(Int(duration * 1000)))
+        environment.unduckMusic()
         return nil
     case .prepareToPlayStudyWord(let definition):
         if let player = await definition.audioData?.createAVPlayer(fileExtension: "m4a") {
@@ -26,8 +31,18 @@ let studyMiddleware: Middleware<StudyState, StudyAction, StudyEnvironmentProtoco
         } else {
             return .failedToPrepareStudySentence
         }
-    case .playStudySentence:
+    case .playStudySentence(let definition):
+        environment.duckMusic()
         await state.sentenceAudioPlayer.playAudio()
+        
+        guard let first = definition.sentence.timestamps.first,
+              let last = definition.sentence.timestamps.last else {
+            environment.unduckMusic()
+            return nil
+        }
+        let duration = (last.time + last.duration) - first.time
+        try? await Task.sleep(for: .milliseconds(Int(duration * 1000)))
+        environment.unduckMusic()
         return nil
     case .pauseStudyAudio:
         state.audioPlayer.pause()

@@ -47,18 +47,18 @@ let studyReducer: Reducer<StudyState, StudyAction> = { state, action in
             newState.definitions.append(definition)
         }
         
-    case .prepareToPlayStudySentence,
+    case .playStudyWord,
             .playStudySentence,
-            .pauseStudyAudio,
             .prepareToPlayStudyWord,
-            .playStudyWord,
+            .prepareToPlayStudySentence,
             .failedToDeleteDefinition,
             .playSound,
             .loadDefinitions,
+            .onSavedDefinitions,
+            .failedToSaveDefinitions,
             .failedToLoadDefinitions,
             .saveDefinitions,
-            .onSavedDefinitions,
-            .failedToSaveDefinitions:
+            .pauseStudyAudio:
         break
     }
 

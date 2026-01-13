@@ -155,4 +155,21 @@ public class MockTextPracticeEnvironment: TextPracticeEnvironmentProtocol {
         saveChapterSpy = chapter
         saveChapterCalled = true
     }
+    
+    public var saveChapterDebouncedSpy: Chapter?
+    public var saveChapterDebouncedCalled = false
+    public func saveChapterDebounced(_ chapter: Chapter) {
+        saveChapterDebouncedSpy = chapter
+        saveChapterDebouncedCalled = true
+    }
+    
+    var duckMusicCalled = false
+    public func duckMusic() {
+        duckMusicCalled = true
+    }
+    
+    var unduckMusicCalled = false
+    public func unduckMusic() {
+        unduckMusicCalled = true
+    }
 }

@@ -12,13 +12,13 @@ import Settings
 
 enum StudyAction: Equatable, Sendable {
     case failedToPrepareStudyWord
-    case playStudyWord
+    case playStudyWord(Definition)
     case prepareToPlayStudySentence(Definition)
     case prepareToPlayStudyWord(Definition)
     case failedToPrepareStudySentence
     case onPreparedStudyWord(AVPlayer)
     case onPreparedStudySentence(AVPlayer)
-    case playStudySentence
+    case playStudySentence(Definition)
     case pauseStudyAudio
     case updateDisplayStatus(StudyDisplayStatus)
     

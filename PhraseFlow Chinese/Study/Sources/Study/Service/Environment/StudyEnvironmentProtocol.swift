@@ -28,4 +28,6 @@ public protocol StudyEnvironmentProtocol {
     func loadDefinitions() throws -> [Definition]
     func cleanupDefinitionsNotInChapters(_ chapters: [Chapter]) throws
     func cleanupOrphanedSentenceAudioFiles() throws
+    func duckMusic()
+    func unduckMusic()
 }

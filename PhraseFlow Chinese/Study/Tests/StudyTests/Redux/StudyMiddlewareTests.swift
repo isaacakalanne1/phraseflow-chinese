@@ -26,9 +26,10 @@ final class StudyMiddlewareTests {
         let audioPlayer = AVPlayer()
         let state: StudyState = .arrange(audioPlayer: audioPlayer)
         
+        let definition: Definition = .arrange
         let resultAction = await studyMiddleware(
             state,
-            .playStudyWord,
+            .playStudyWord(definition),
             mockEnvironment
         )
         
@@ -108,9 +109,10 @@ final class StudyMiddlewareTests {
         let sentenceAudioPlayer = AVPlayer()
         let state: StudyState = .arrange(sentenceAudioPlayer: sentenceAudioPlayer)
         
+        let definition: Definition = .arrange
         let resultAction = await studyMiddleware(
             state,
-            .playStudySentence,
+            .playStudySentence(definition),
             mockEnvironment
         )
         

@@ -135,4 +135,14 @@ public class MockAudioEnvironment: AudioEnvironmentProtocol {
         updatePlaybackRateSpy = playRate
         updatePlaybackRateCalled = true
     }
+    
+    var duckMusicCalled = false
+    public func duckMusic() {
+        duckMusicCalled = true
+    }
+    
+    var unduckMusicCalled = false
+    public func unduckMusic() {
+        unduckMusicCalled = true
+    }
 }

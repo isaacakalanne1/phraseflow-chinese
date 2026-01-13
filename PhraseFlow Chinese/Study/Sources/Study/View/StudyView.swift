@@ -53,7 +53,7 @@ public struct StudyView: View {
                             HStack {
                                 Spacer()
                                 Button {
-                                    store.dispatch(.playStudyWord)
+                                    store.dispatch(.playStudyWord(definition))
                                 } label: {
                                     SystemImageView(.speaker)
                                 }
@@ -99,7 +99,7 @@ public struct StudyView: View {
                                         .font(FTFont.bodyLarge.font)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Button {
-                                        store.dispatch(.playStudySentence)
+                                        store.dispatch(.playStudySentence(definition))
                                     } label: {
                                         SystemImageView(.speaker)
                                     }
@@ -156,7 +156,9 @@ public struct StudyView: View {
         if isDefinitionShown {
             goToNextDefinition()
         } else {
-            store.dispatch(.playStudyWord)
+            if let def = currentDefinition {
+                store.dispatch(.playStudyWord(def))
+            }
             withAnimation {
                 store.dispatch(.updateDisplayStatus(.allShown))
             }

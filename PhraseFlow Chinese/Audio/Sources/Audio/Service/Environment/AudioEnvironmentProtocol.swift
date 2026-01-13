@@ -18,4 +18,6 @@ public protocol AudioEnvironmentProtocol {
     func playMusic(_ music: MusicType, volume: MusicVolume) throws
     func stopMusic()
     func setMusicVolume(_ volume: MusicVolume)
+    func duckMusic()
+    func unduckMusic()
 }

@@ -34,4 +34,6 @@ public protocol TextPracticeEnvironmentProtocol {
     func saveSentenceAudio(_ audio: Data, id: UUID) throws
     func saveChapter(_ chapter: Chapter) throws
     func saveChapterDebounced(_ chapter: Chapter)
+    func duckMusic()
+    func unduckMusic()
 }

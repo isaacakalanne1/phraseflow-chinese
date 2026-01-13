@@ -73,4 +73,12 @@ public struct StudyEnvironment: StudyEnvironmentProtocol {
     public func cleanupOrphanedSentenceAudioFiles() throws {
         try dataStore.cleanupOrphanedSentenceAudioFiles()
     }
+    
+    public func duckMusic() {
+        audioEnvironment.duckMusic()
+    }
+    
+    public func unduckMusic() {
+        audioEnvironment.unduckMusic()
+    }
 }

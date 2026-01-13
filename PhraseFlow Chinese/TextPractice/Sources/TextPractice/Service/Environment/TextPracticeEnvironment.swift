@@ -12,6 +12,7 @@ import TextGeneration
 import Settings
 import Study
 
+@MainActor
 public class TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
     public var chapterSubject: CurrentValueSubject<Chapter?, Never>
     public var definitionsSubject: CurrentValueSubject<[Definition]?, Never> {
@@ -96,5 +97,13 @@ public class TextPracticeEnvironment: TextPracticeEnvironmentProtocol {
     
     public func saveChapterDebounced(_ chapter: Chapter) {
         saveChapterSubject.send(chapter)
+    }
+    
+    public func duckMusic() {
+        audioEnvironment.duckMusic()
+    }
+    
+    public func unduckMusic() {
+        audioEnvironment.unduckMusic()
     }
 }
